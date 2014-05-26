@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BLL</RootNamespace>
+    <AssemblyName>BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ShipComponents\BatteryPack.cs" />
+    <Compile Include="ShipComponents\CentralReactor.cs" />
+    <Compile Include="ShipComponents\CentralShield.cs" />
+    <Compile Include="ShipComponents\EnergyContainer.cs" />
+    <Compile Include="ShipComponents\Cannon.cs" />
+    <Compile Include="ShipComponents\CentralHeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\Gravolift.cs" />
+    <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\LaserCannon.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerAction.cs" />
+    <Compile Include="Reactor.cs" />
+    <Compile Include="ShipComponents\PulseCannon.cs" />
+    <Compile Include="ShipComponents\SideHeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\LightLaserCannon.cs" />
+    <Compile Include="ShipComponents\Shield.cs" />
+    <Compile Include="ShipComponents\SideLightLaserCannon.cs" />
+    <Compile Include="ShipComponents\SideReactor.cs" />
+    <Compile Include="ShipComponents\SideShield.cs" />
+    <Compile Include="SittingDuck.cs" />
+    <Compile Include="Damage.cs" />
+    <Compile Include="DamageResult.cs" />
+    <Compile Include="DamageType.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="ShipComponents\Station.cs" />
+    <Compile Include="Threats\Destroyer.cs" />
+    <Compile Include="Threats\EnergyCloud.cs" />
+    <Compile Include="Threats\ExternalThreat.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Threats\Fighter.cs" />
+    <Compile Include="Threats\MinorExternalThreat.cs" />
+    <Compile Include="Threats\ThreatType.cs" />
+    <Compile Include="Tracks\Track.cs" />
+    <Compile Include="Tracks\Track2.cs" />
+    <Compile Include="Tracks\Track3.cs" />
+    <Compile Include="Tracks\Track7.cs" />
+    <Compile Include="Tracks\Track6.cs" />
+    <Compile Include="Tracks\Track5.cs" />
+    <Compile Include="Tracks\Track4.cs" />
+    <Compile Include="Tracks\Track1.cs" />
+    <Compile Include="Tracks\TrackBreakpoint.cs" />
+    <Compile Include="Tracks\TrackBreakpointType.cs" />
+    <Compile Include="Tracks\TrackSection.cs" />
+    <Compile Include="Zone.cs" />
+    <Compile Include="ZoneType.cs" />
+    <Compile Include="ZoneTypes.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

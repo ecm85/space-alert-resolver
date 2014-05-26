@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleResolver", "ConsoleResolver\ConsoleResolver.csproj", "{6BA3C6E4-F7CE-43D1-BD85-3A91484670EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA3C6E4-F7CE-43D1-BD85-3A91484670EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA3C6E4-F7CE-43D1-BD85-3A91484670EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA3C6E4-F7CE-43D1-BD85-3A91484670EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA3C6E4-F7CE-43D1-BD85-3A91484670EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
