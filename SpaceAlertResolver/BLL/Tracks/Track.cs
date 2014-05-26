@@ -84,11 +84,13 @@ namespace BLL.Tracks
 							break;
 						case TrackBreakpointType.Z:
 							externalThreat.PerformZAction(sittingDuck);
-							//TODO: Handle survived case (Remove threat and score)
+							//TODO: Handle survived case (score)
 							break;
 					}
 				}
 			}
+			if (ThreatPositions[externalThreat] >= sections.Sum(section => section.Length) - 1)
+				ThreatPositions.Remove(externalThreat);
 		}
 	}
 }

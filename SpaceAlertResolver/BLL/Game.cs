@@ -65,7 +65,7 @@ namespace BLL
 			var damages = new List<Damage>();
 			foreach (var player in players)
 			{
-				var playerAction = player.Actions[currentTurn];
+				var playerAction = player.Actions[currentTurn - 1];
 				switch (playerAction)
 				{
 					case PlayerAction.A:

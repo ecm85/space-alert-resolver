@@ -31,7 +31,9 @@ namespace BLL.Threats
 
 		public virtual void TakeDamage(IList<Damage> damages)
 		{
-			remainingHealth -= (damages.Sum(damage => damage.Amount) - shields);
+			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
+			if (damageDealt > 0)
+				remainingHealth -= damageDealt;
 		}
 
 		protected ThreatType threatType;
