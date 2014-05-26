@@ -10,7 +10,7 @@ namespace ConsoleResolver
 {
 	public class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			var threats = new ExternalThreat[]
 			{
@@ -24,11 +24,16 @@ namespace ConsoleResolver
 				new Track3(ZoneType.Red),
 				new Track7(ZoneType.White)
 			};
-			var players = new []
+			var players = new[]
 			{
 				new Player
 				{
-					Actions = new PlayerAction[]{PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A,}
+					Actions =
+						new[]
+						{
+							PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A,
+							PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
+						}
 				}
 			};
 			const int numberOfTurns = 10;

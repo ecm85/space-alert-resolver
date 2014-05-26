@@ -14,7 +14,7 @@ namespace BLL.Threats
 
 		private readonly int totalHealth;
 		public int TotalHealth { get { return totalHealth; } }
-		private int remainingHealth;
+		protected int remainingHealth;
 		public int RemainingHealth { get { return remainingHealth; } }
 		
 		protected int shields;

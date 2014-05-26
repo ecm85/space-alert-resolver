@@ -64,10 +64,12 @@
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\Station.cs" />
+    <Compile Include="Threats\CryoshieldFighter.cs" />
     <Compile Include="Threats\Destroyer.cs" />
     <Compile Include="Threats\EnergyCloud.cs" />
     <Compile Include="Threats\ExternalThreat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Threats\ArmoredGrappler.cs" />
     <Compile Include="Threats\Fighter.cs" />
     <Compile Include="Threats\MinorExternalThreat.cs" />
     <Compile Include="Threats\ThreatType.cs" />
