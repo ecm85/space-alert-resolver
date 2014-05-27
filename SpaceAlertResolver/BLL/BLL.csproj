@@ -68,6 +68,7 @@
     <Compile Include="Threats\Destroyer.cs" />
     <Compile Include="Threats\EnergyCloud.cs" />
     <Compile Include="Threats\ExternalThreat.cs" />
+    <Compile Include="Threats\Threat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threats\ArmoredGrappler.cs" />
     <Compile Include="Threats\Fighter.cs" />
