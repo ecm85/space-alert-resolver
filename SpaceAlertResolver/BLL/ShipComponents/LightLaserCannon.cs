@@ -7,8 +7,8 @@ namespace BLL.ShipComponents
 {
 	public abstract class LightLaserCannon : LaserCannon
 	{
-		protected LightLaserCannon(BatteryPack source, ZoneType currentZoneType)
-			: base(source, 2, DamageType.LightLaser, currentZoneType)
+		protected LightLaserCannon(BatteryPack source, ZoneLocation currentZone)
+			: base(source, 2, DamageType.LightLaser, currentZone)
 		{
 		}
 	}

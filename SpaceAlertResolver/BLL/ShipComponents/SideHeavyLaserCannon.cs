@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class SideHeavyLaserCannon : HeavyLaserCannon
 	{
-		public SideHeavyLaserCannon(Reactor source, ZoneType currentZoneType) : base(source, 4, currentZoneType)
+		public SideHeavyLaserCannon(Reactor source, ZoneLocation currentZone) : base(source, 4, currentZone)
 		{
 		}
 	}

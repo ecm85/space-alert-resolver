@@ -7,31 +7,31 @@ namespace BLL.Threats
 {
 	public class Destroyer : MinorExternalThreat
 	{
-		public Destroyer(int timeAppears, ZoneType currentZoneType)
-			: base(2, 4, 2, 5, 2, timeAppears, currentZoneType)
+		public Destroyer(int timeAppears, Zone currentZone)
+			: base(2, 4, 2, 5, 2, timeAppears, currentZone)
 		{
 		}
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZoneType, 1);
+			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 1);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZoneType, 2);
+			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 2);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZoneType, 2);
+			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 2);
 		}
 
-		private static void DealDoubleDamageThroughShields(SittingDuck sittingDuck, ZoneType currentZoneType, int amount)
+		private static void DealDoubleDamageThroughShields(SittingDuck sittingDuck, Zone currentZone, int amount)
 		{
-			var damageResult = sittingDuck.TakeDamage(amount, currentZoneType);
+			var damageResult = sittingDuck.TakeDamage(amount, currentZone);
 			if (damageResult.DamageDone > 0)
-				sittingDuck.TakeDamage(damageResult.DamageDone, currentZoneType);
+				sittingDuck.TakeDamage(damageResult.DamageDone, currentZone);
 		}
 	}
 }

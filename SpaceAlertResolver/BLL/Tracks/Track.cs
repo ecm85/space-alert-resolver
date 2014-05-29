@@ -10,13 +10,13 @@ namespace BLL.Tracks
 	{
 		private IDictionary<ExternalThreat, int> ThreatPositions { get; set; }
 		public IEnumerable<ExternalThreat> ThreatsOnTrack { get { return ThreatPositions.Keys.ToList(); } }
-		public ZoneType ZoneType { get; private set; }
+		public Zone Zone { get; private set; }
 		private IDictionary<int, TrackBreakpoint> Breakpoints { get; set; }
 		private IList<TrackSection> sections;
 
-		protected Track(IEnumerable<TrackBreakpoint> breakpoints, ZoneType zoneType, IList<TrackSection> sections)
+		protected Track(IEnumerable<TrackBreakpoint> breakpoints, Zone zone, IList<TrackSection> sections)
 		{
-			ZoneType = zoneType;
+			Zone = zone;
 			ThreatPositions = new Dictionary<ExternalThreat, int>();
 			Breakpoints = breakpoints.ToDictionary(breakpoint => breakpoint.Position);
 			this.sections = sections;

@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Damage.cs" />
+    <Compile Include="EnumUtility.cs" />
+    <Compile Include="PlayerDamage.cs" />
     <Compile Include="ShipComponents\BatteryPack.cs" />
     <Compile Include="ShipComponents\CentralReactor.cs" />
     <Compile Include="ShipComponents\CentralShield.cs" />
@@ -59,7 +62,7 @@
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
     <Compile Include="SittingDuck.cs" />
-    <Compile Include="Damage.cs" />
+    <Compile Include="ThreatDamage.cs" />
     <Compile Include="DamageResult.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
@@ -86,8 +89,7 @@
     <Compile Include="Tracks\TrackBreakpointType.cs" />
     <Compile Include="Tracks\TrackSection.cs" />
     <Compile Include="Zone.cs" />
-    <Compile Include="ZoneType.cs" />
-    <Compile Include="ZoneTypes.cs" />
+    <Compile Include="ZoneLocation.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

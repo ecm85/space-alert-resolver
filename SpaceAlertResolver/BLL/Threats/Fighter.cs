@@ -7,24 +7,24 @@ namespace BLL.Threats
 {
 	public class Fighter : MinorExternalThreat
 	{
-		public Fighter(int timeAppears, ZoneType currentZoneType)
-			: base(2, 4, 2, 4, 3, timeAppears, currentZoneType)
+		public Fighter(int timeAppears, Zone currentZone)
+			: base(2, 4, 2, 4, 3, timeAppears, currentZone)
 		{
 		}
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(1, CurrentZoneType);
+			sittingDuck.TakeDamage(1, CurrentZone);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(2, CurrentZoneType);
+			sittingDuck.TakeDamage(2, CurrentZone);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(3, CurrentZoneType);
+			sittingDuck.TakeDamage(3, CurrentZone);
 		}
 	}
 }

@@ -5,11 +5,15 @@ using System.Text;
 
 namespace BLL
 {
-	public class Damage
+	public abstract class Damage
 	{
-		public int Amount { get; set; }
-		public DamageType DamageType { get; set; }
-		public ZoneType[] ZoneTypesAffected { get; set; }
-		public int Range { get; set; }
+		public int Amount { get; protected set; }
+		public DamageType DamageType { get; private set; }
+
+		protected Damage(int amount, DamageType damageType)
+		{
+			Amount = amount;
+			DamageType = damageType;
+		}
 	}
 }

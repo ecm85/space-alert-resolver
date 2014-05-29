@@ -11,7 +11,8 @@ namespace BLL
 		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers
 		public Station UpperStation { get; set; }
 		public Station LowerStation { get; set; }
-		private int totalDamage = 0;
+		public int TotalDamage { get; set; }
+		public ZoneLocation ZoneLocation { get; set; }
 
 		public DamageResult TakeDamage(int damage)
 		{
@@ -21,8 +22,8 @@ namespace BLL
 			var damageShielded = oldShields - newShields;
 			var damageDone = damage - damageShielded;
 			//TODO: Apply damageDone tokens
-			totalDamage += damageDone;
-			if (totalDamage > 7)
+			TotalDamage += damageDone;
+			if (TotalDamage >= 7)
 				throw new NotImplementedException("Losing hasn't been built yet!");
 			return new DamageResult
 			{

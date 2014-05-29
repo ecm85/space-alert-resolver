@@ -11,18 +11,18 @@ namespace BLL
 	{
 		//TODO: Internal threats
 		private readonly IList<ExternalThreat> threats;
-		private readonly IDictionary<ZoneType, Track> tracks;
+		private readonly IDictionary<Zone, Track> tracks;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private readonly List<ExternalThreat> defeatedThreats = new List<ExternalThreat>();
 		private int nextTurn;
 		private readonly int numberOfTurns;
 
-		public Game(IList<ExternalThreat> threats, IEnumerable<Track> tracks, IList<Player> players, int numberOfTurns)
+		public Game(SittingDuck sittingDuck, IList<ExternalThreat> threats, IEnumerable<Track> tracks, IList<Player> players, int numberOfTurns)
 		{
+			this.sittingDuck = sittingDuck;
 			this.threats = threats;
-			this.tracks = tracks.ToDictionary(track => track.ZoneType);
-			sittingDuck = new SittingDuck(players);
+			this.tracks = tracks.ToDictionary(track => track.Zone);
 			this.players = players;
 			this.numberOfTurns = numberOfTurns;
 			nextTurn = 1;
@@ -46,7 +46,7 @@ namespace BLL
 		private void AddNewThreatsToTracks(int currentTurn)
 		{
 			foreach (var newThreat in threats.Where(threat => threat.TimeAppears == currentTurn))
-				tracks[newThreat.CurrentZoneType].AddThreat(newThreat);
+				tracks[newThreat.CurrentZone].AddThreat(newThreat);
 		}
 
 		private IEnumerable<ExternalThreat> CurrentThreats
@@ -57,12 +57,12 @@ namespace BLL
 		private void MoveThreats()
 		{
 			foreach (var externalThreat in CurrentThreats)
-				tracks[externalThreat.CurrentZoneType].MoveThreat(externalThreat, sittingDuck);
+				tracks[externalThreat.CurrentZone].MoveThreat(externalThreat, sittingDuck);
 		}
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var damages = new List<Damage>();
+			var damages = new List<PlayerDamage>();
 			foreach (var player in players)
 			{
 				var playerAction = player.Actions[currentTurn - 1];
@@ -94,14 +94,14 @@ namespace BLL
 			ResolveDamage(damages);
 		}
 
-		private void ResolveDamage(IList<Damage> damages)
+		private void ResolveDamage(IList<PlayerDamage> damages)
 		{
 			var alreadyHitThreats = HitClosestThreats(damages);
 			HitAllThreatsWithPulse(damages, alreadyHitThreats);
 			defeatedThreats.AddRange(tracks.Values.SelectMany(track => track.RemoveDefeatedThreats()));
 		}
 
-		private void HitAllThreatsWithPulse(IEnumerable<Damage> damages, IEnumerable<ExternalThreat> alreadyHitThreats)
+		private void HitAllThreatsWithPulse(IEnumerable<PlayerDamage> damages, IEnumerable<ExternalThreat> alreadyHitThreats)
 		{
 			//Only one pulse cannon is currently supported.
 			var pulseDamage = damages.SingleOrDefault(damage => damage.DamageType == DamageType.Pulse);
@@ -113,18 +113,18 @@ namespace BLL
 				externalThreat.TakeDamage(new[] {pulseDamage});
 		}
 
-		private IEnumerable<ExternalThreat> HitClosestThreats(IList<Damage> damages)
+		private IEnumerable<ExternalThreat> HitClosestThreats(IList<PlayerDamage> damages)
 		{
 			var alreadyHitThreats = new List<ExternalThreat>();
-			foreach (var zoneType in ZoneTypes.All())
+			foreach (var zone in sittingDuck.Zones)
 			{
-				var track = tracks[zoneType];
+				var track = tracks[zone];
 				var closestThreatInZone = track.ClosestThreat();
 				if (closestThreatInZone != null)
 				{
 					var distanceToThreat = track.DistanceToThreat(closestThreatInZone);
 					closestThreatInZone.TakeDamage(
-						damages.Where(damage => damage.Range >= distanceToThreat && damage.ZoneTypesAffected.Contains(zoneType)).ToList());
+						damages.Where(damage => damage.Range >= distanceToThreat && damage.ZoneLocations.Contains(zone.ZoneLocation)).ToList());
 					alreadyHitThreats.Add(closestThreatInZone);
 				}
 			}

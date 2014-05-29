@@ -7,8 +7,8 @@ namespace BLL.Threats
 {
 	public abstract class MinorExternalThreat : ExternalThreat
 	{
-		protected MinorExternalThreat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears, ZoneType currentZoneType) : 
-			base(pointsForSurviving, pointsForDefeating, shields, health, speed, timeAppears, currentZoneType)
+		protected MinorExternalThreat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears, Zone currentZone) : 
+			base(pointsForSurviving, pointsForDefeating, shields, health, speed, timeAppears, currentZone)
 		{
 			threatType = ThreatType.MinorExternal;
 		}

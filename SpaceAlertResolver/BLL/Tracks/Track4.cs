@@ -7,8 +7,8 @@ namespace BLL.Tracks
 {
 	public class Track4 : Track
 	{
-		public Track4(ZoneType zoneType)
-			: base(GetBreakpoints(), zoneType, GetSections())
+		public Track4(Zone zone)
+			: base(GetBreakpoints(), zone, GetSections())
 		{
 		}
 

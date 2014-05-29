@@ -7,14 +7,14 @@ namespace BLL.Threats
 {
 	public class ArmoredGrappler : MinorExternalThreat
 	{
-		public ArmoredGrappler(int timeAppears, ZoneType currentZoneType)
-			: base(2, 4, 3, 4, 2, timeAppears, currentZoneType)
+		public ArmoredGrappler(int timeAppears, Zone currentZone)
+			: base(2, 4, 3, 4, 2, timeAppears, currentZone)
 		{
 		}
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(1, CurrentZoneType);
+			sittingDuck.TakeDamage(1, CurrentZone);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
@@ -25,7 +25,7 @@ namespace BLL.Threats
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(4, CurrentZoneType);
+			sittingDuck.TakeDamage(4, CurrentZone);
 		}
 	}
 }

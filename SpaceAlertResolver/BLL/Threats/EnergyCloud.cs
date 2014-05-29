@@ -7,32 +7,32 @@ namespace BLL.Threats
 {
 	public class EnergyCloud : MinorExternalThreat
 	{
-		public EnergyCloud(int timeAppears, ZoneType currentZoneType)
-			: base(2, 4, 3, 5, 2, timeAppears, currentZoneType)
+		public EnergyCloud(int timeAppears, Zone currentZone)
+			: base(2, 4, 3, 5, 2, timeAppears, currentZone)
 		{
 		}
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.DrainAllShields(ZoneTypes.All());
+			sittingDuck.DrainAllShields();
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(sittingDuck, CurrentZoneType, 1);
+			AttackOtherTwoZones(sittingDuck, CurrentZone, 1);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(sittingDuck, CurrentZoneType, 2);
+			AttackOtherTwoZones(sittingDuck, CurrentZone, 2);
 		}
 
-		private static void AttackOtherTwoZones(SittingDuck sittingDuck, ZoneType currentZoneType, int amount)
+		private static void AttackOtherTwoZones(SittingDuck sittingDuck, Zone currentZone, int amount)
 		{
-			sittingDuck.TakeDamage(amount, ZoneTypes.All().Except(new[] { currentZoneType }).ToArray());
+			sittingDuck.TakeDamage(amount, sittingDuck.Zones.Except(new[] { currentZone }).ToArray());
 		}
 
-		public override void TakeDamage(IList<Damage> damages)
+		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.DamageType == DamageType.Pulse);
 			if (hitByPulse)
