@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.Threats
+namespace BLL.Threats.External
 {
-	public class ArmoredGrappler : MinorExternalThreat
+	public class Fighter : MinorExternalThreat
 	{
-		public ArmoredGrappler(int timeAppears, Zone currentZone)
-			: base(2, 4, 3, 4, 2, timeAppears, currentZone)
+		public Fighter(int timeAppears, Zone currentZone)
+			: base(2, 4, 2, 4, 3, timeAppears, currentZone)
 		{
 		}
 
@@ -19,13 +19,12 @@ namespace BLL.Threats
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			if (RemainingHealth < TotalHealth)
-				remainingHealth++;
+			sittingDuck.TakeDamage(2, CurrentZone);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(4, CurrentZone);
+			sittingDuck.TakeDamage(3, CurrentZone);
 		}
 	}
 }

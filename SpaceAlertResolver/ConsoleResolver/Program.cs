@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BLL;
 using BLL.Threats;
+using BLL.Threats.External;
 using BLL.Tracks;
 
 namespace ConsoleResolver
