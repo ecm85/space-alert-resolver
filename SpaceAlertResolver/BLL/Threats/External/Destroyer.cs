@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class Destroyer : MinorExternalThreat
+	public class Destroyer : MinorWhiteExternalThreat
 	{
 		public Destroyer(int timeAppears, Zone currentZone)
-			: base(2, 4, 2, 5, 2, timeAppears, currentZone)
+			: base(2, 5, 2, timeAppears, currentZone)
 		{
 		}
 

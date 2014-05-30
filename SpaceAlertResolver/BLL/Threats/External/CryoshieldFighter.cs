@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class CryoshieldFighter : MinorExternalThreat
+	public class CryoshieldFighter : MinorWhiteExternalThreat
 	{
 		public CryoshieldFighter(int timeAppears, Zone currentZone)
-			: base(2, 4, 1, 4, 3, timeAppears, currentZone)
+			: base(1, 4, 3, timeAppears, currentZone)
 		{
 		}
 

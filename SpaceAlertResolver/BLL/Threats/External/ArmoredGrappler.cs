@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class ArmoredGrappler : MinorExternalThreat
+	public class ArmoredGrappler : MinorWhiteExternalThreat
 	{
 		public ArmoredGrappler(int timeAppears, Zone currentZone)
-			: base(2, 4, 3, 4, 2, timeAppears, currentZone)
+			: base(3, 4, 2, timeAppears, currentZone)
 		{
 		}
 

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class EnergyCloud : MinorExternalThreat
+	public class EnergyCloud : MinorWhiteExternalThreat
 	{
 		public EnergyCloud(int timeAppears, Zone currentZone)
-			: base(2, 4, 3, 5, 2, timeAppears, currentZone)
+			: base(3, 5, 2, timeAppears, currentZone)
 		{
 		}
 
