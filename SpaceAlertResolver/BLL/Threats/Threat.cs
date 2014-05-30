@@ -27,14 +27,6 @@ namespace BLL.Threats
 		public abstract void PerformZAction(SittingDuck sittingDuck);
 
 		public int TimeAppears { get; private set; }
-		
-
-		public virtual void TakeDamage(IList<PlayerDamage> damages)
-		{
-			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
-			if (damageDealt > 0)
-				remainingHealth -= damageDealt;
-		}
 
 		protected ThreatType threatType;
 		public ThreatType ThreatType { get { return threatType; } }

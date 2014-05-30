@@ -5,15 +5,10 @@ using System.Text;
 
 namespace BLL
 {
-	public enum PlayerAction
+	public enum ZoneLocation
 	{
-		None,
-		A,
-		B,
-		C,
-		MoveRed,
-		MoveBlue,
-		ChangeDeck,
-		BattleBots
+		Red,
+		White,
+		Blue
 	}
 }

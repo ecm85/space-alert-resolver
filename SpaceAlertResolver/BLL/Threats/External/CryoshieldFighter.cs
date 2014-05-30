@@ -16,17 +16,17 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(1, CurrentZone);
+			sittingDuck.TakeAttack(1, CurrentZone);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(2, CurrentZone);
+			sittingDuck.TakeAttack(2, CurrentZone);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeDamage(2, CurrentZone);
+			sittingDuck.TakeAttack(2, CurrentZone);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

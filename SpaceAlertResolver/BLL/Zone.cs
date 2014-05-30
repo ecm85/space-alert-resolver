@@ -14,7 +14,7 @@ namespace BLL
 		public int TotalDamage { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
 
-		public DamageResult TakeDamage(int damage)
+		public ExternalPlayerDamageResult TakeAttack(int damage)
 		{
 			var oldShields = UpperStation.EnergyContainer.Energy;
 			UpperStation.EnergyContainer.Energy -= damage;
@@ -25,11 +25,19 @@ namespace BLL
 			TotalDamage += damageDone;
 			if (TotalDamage >= 7)
 				throw new NotImplementedException("Losing hasn't been built yet!");
-			return new DamageResult
+			return new ExternalPlayerDamageResult
 			{
 				DamageDone = damageDone,
 				DamageShielded = damageShielded
 			};
+		}
+
+		public void TakeDamage(int damage)
+		{
+			//TODO: Apply damageDone tokens
+			TotalDamage += damage;
+			if (TotalDamage >= 7)
+				throw new NotImplementedException("Losing hasn't been built yet!");
 		}
 
 		public void DrainShields()

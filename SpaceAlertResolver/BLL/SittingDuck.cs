@@ -11,9 +11,8 @@ namespace BLL
 		public Zone BlueZone { get; private set; }
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
-
-		public IEnumerable<Zone> Zones { get { return new[] {BlueZone, WhiteZone, RedZone}; } }
-
+		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
+		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 
 		public SittingDuck(IEnumerable<Player> players)
 		{
@@ -25,32 +24,38 @@ namespace BLL
 			var upperRedStation = new Station
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
-				EnergyContainer = new SideShield(redReactor)
+				EnergyContainer = new SideShield(redReactor),
+				ZoneLocation = ZoneLocation.Red
 			};
 			var upperWhiteStation = new Station
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
-				EnergyContainer = new CentralShield(whiteReactor)
+				EnergyContainer = new CentralShield(whiteReactor),
+				ZoneLocation = ZoneLocation.White
 			};
 			var upperBlueStation = new Station
 			{
 				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
-				EnergyContainer = new SideShield(blueReactor)
+				EnergyContainer = new SideShield(blueReactor),
+				ZoneLocation = ZoneLocation.Blue
 			};
 			var lowerRedStation = new Station
 			{
 				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
-				EnergyContainer = redReactor
+				EnergyContainer = redReactor,
+				ZoneLocation = ZoneLocation.Red
 			};
 			var lowerWhiteStation = new Station
 			{
 				Cannon = new PulseCannon(whiteReactor),
-				EnergyContainer = whiteReactor
+				EnergyContainer = whiteReactor,
+				ZoneLocation = ZoneLocation.White
 			};
 			var lowerBlueStation = new Station
 			{
 				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
-				EnergyContainer = blueReactor
+				EnergyContainer = blueReactor,
+				ZoneLocation = ZoneLocation.Blue
 			};
 			upperRedStation.BluewardStation = upperWhiteStation;
 			upperRedStation.OppositeDeckStation = lowerRedStation;
@@ -71,14 +76,21 @@ namespace BLL
 			RedZone = new Zone {LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red};
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White};
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue};
+			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 		}
 
-		public DamageResult TakeDamage(int damage, params Zone[] zones)
+		public ExternalPlayerDamageResult TakeAttack(int damage, params Zone[] zones)
 		{
-			var damageResult = new DamageResult();
+			var damageResult = new ExternalPlayerDamageResult();
 			foreach (var zone in zones)
-				damageResult.AddDamage(zone.TakeDamage(damage));
+				damageResult.AddDamage(zone.TakeAttack(damage));
 			return damageResult;
+		}
+
+		public void TakeDamage(int damage, params ZoneLocation[] zones)
+		{
+			foreach (var zone in zones)
+				ZonesByLocation[zone].TakeDamage(damage);
 		}
 
 		public void DrainAllShields()

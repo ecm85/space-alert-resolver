@@ -29,9 +29,9 @@ namespace BLL.Threats.External
 
 		private static void DealDoubleDamageThroughShields(SittingDuck sittingDuck, Zone currentZone, int amount)
 		{
-			var damageResult = sittingDuck.TakeDamage(amount, currentZone);
+			var damageResult = sittingDuck.TakeAttack(amount, currentZone);
 			if (damageResult.DamageDone > 0)
-				sittingDuck.TakeDamage(damageResult.DamageDone, currentZone);
+				sittingDuck.TakeAttack(damageResult.DamageDone, currentZone);
 		}
 	}
 }

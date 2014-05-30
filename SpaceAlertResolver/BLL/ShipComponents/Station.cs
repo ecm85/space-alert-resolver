@@ -13,5 +13,6 @@ namespace BLL.ShipComponents
 		public Station OppositeDeckStation { get; set; }
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
+		public ZoneLocation ZoneLocation { get; set; }
 	}
 }

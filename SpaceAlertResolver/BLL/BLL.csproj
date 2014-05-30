@@ -40,7 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Damage.cs" />
-    <Compile Include="EnumUtility.cs" />
+    <Compile Include="EnumFactory.cs" />
+    <Compile Include="ExternalPlayerDamageResult.cs" />
     <Compile Include="PlayerDamage.cs" />
     <Compile Include="ShipComponents\BatteryPack.cs" />
     <Compile Include="ShipComponents\CentralReactor.cs" />
@@ -62,11 +63,10 @@
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
     <Compile Include="SittingDuck.cs" />
-    <Compile Include="ThreatDamage.cs" />
-    <Compile Include="DamageResult.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\Station.cs" />
+    <Compile Include="ThreatDamage.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
     <Compile Include="Threats\External\Destroyer.cs" />
     <Compile Include="Threats\External\EnergyCloud.cs" />
@@ -76,6 +76,7 @@
     <Compile Include="Threats\Internal\InternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\SkirmishersB.cs" />
     <Compile Include="Threats\Internal\SkirmishersA.cs" />
     <Compile Include="Threats\Threat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

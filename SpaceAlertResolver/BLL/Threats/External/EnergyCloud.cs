@@ -29,7 +29,7 @@ namespace BLL.Threats.External
 
 		private static void AttackOtherTwoZones(SittingDuck sittingDuck, Zone currentZone, int amount)
 		{
-			sittingDuck.TakeDamage(amount, sittingDuck.Zones.Except(new[] { currentZone }).ToArray());
+			sittingDuck.TakeAttack(amount, sittingDuck.Zones.Except(new[] { currentZone }).ToArray());
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

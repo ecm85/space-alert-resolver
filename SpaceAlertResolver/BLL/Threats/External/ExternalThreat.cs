@@ -14,5 +14,12 @@ namespace BLL.Threats.External
 		{
 			CurrentZone = currentZone;
 		}
+
+		public virtual void TakeDamage(IList<PlayerDamage> damages)
+		{
+			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
+			if (damageDealt > 0)
+				remainingHealth -= damageDealt;
+		}
 	}
 }

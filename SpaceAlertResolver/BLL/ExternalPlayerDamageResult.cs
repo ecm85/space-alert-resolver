@@ -5,15 +5,15 @@ using System.Text;
 
 namespace BLL
 {
-	public class DamageResult
+	public class ExternalPlayerDamageResult
 	{
 		public int DamageDone { get; set; }
 		public int DamageShielded { get; set; }
 
-		public void AddDamage(DamageResult damageResult)
+		public void AddDamage(ExternalPlayerDamageResult other)
 		{
-			DamageDone += damageResult.DamageDone;
-			DamageShielded += damageResult.DamageShielded;
+			DamageDone += other.DamageDone;
+			DamageShielded += other.DamageShielded;
 		}
 	}
 }
