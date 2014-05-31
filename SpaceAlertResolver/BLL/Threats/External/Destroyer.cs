@@ -14,24 +14,25 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 1);
+			Attack(1);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 2);
+			Attack(2);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			DealDoubleDamageThroughShields(sittingDuck, CurrentZone, 2);
+			Attack(2);
 		}
 
-		private static void DealDoubleDamageThroughShields(SittingDuck sittingDuck, Zone currentZone, int amount)
+		protected override ExternalPlayerDamageResult Attack(int amount)
 		{
-			var damageResult = sittingDuck.TakeAttack(amount, currentZone);
+			var damageResult = base.Attack(amount);
 			if (damageResult.DamageDone > 0)
-				sittingDuck.TakeAttack(damageResult.DamageDone, currentZone);
+				damageResult.AddDamage(base.Attack(damageResult.DamageDone));
+			return damageResult;
 		}
 	}
 }

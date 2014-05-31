@@ -29,5 +29,28 @@ namespace BLL.Threats.External
 			var newHealth = RemainingHealth + amount;
 			remainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
 		}
+
+		protected virtual ExternalPlayerDamageResult Attack(int amount)
+		{
+			return CurrentZone.TakeAttack(amount);
+		}
+
+		protected virtual ExternalPlayerDamageResult AttackAllZones(int amount, SittingDuck sittingDuck)
+		{
+			return AttackZones(amount, sittingDuck.Zones);
+		}
+
+		protected virtual ExternalPlayerDamageResult AttackOtherTwoZones(int amount, SittingDuck sittingDuck)
+		{
+			return AttackZones(amount, sittingDuck.Zones.Except(new[] { CurrentZone }));
+		}
+
+		private ExternalPlayerDamageResult AttackZones(int amount, IEnumerable<Zone> zones)
+		{
+			var result = new ExternalPlayerDamageResult();
+			foreach (var zone in zones)
+				result.AddDamage(zone.TakeAttack(amount));
+			return result;
+		}
 	}
 }

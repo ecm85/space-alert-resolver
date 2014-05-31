@@ -14,17 +14,19 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(1, sittingDuck.Zones);
+			AttackAllZones(1, sittingDuck);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, sittingDuck.Zones);
+			AttackAllZones(2, sittingDuck);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(3, sittingDuck.Zones);
+			AttackAllZones(3, sittingDuck);
 		}
+
+		//TODO: Cannot be targeted at distance 3
 	}
 }

@@ -14,19 +14,19 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 			speed++;
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(3, CurrentZone);
+			Attack(3);
 			shields++;
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(3, CurrentZone);
+			Attack(3);
 		}
 	}
 }

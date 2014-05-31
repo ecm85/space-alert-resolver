@@ -24,14 +24,14 @@ namespace BLL.Threats.External
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(4, sittingDuck.Zones);
+			AttackAllZones(4, sittingDuck);
 		}
 
 		public override void JumpingToHyperspace(SittingDuck sittingDuck)
 		{
 			PerformZAction(sittingDuck);
 		}
-		a
+		
 		//TODO: Cannot be targeted by rockets
 	}
 }

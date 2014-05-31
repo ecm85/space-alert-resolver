@@ -14,18 +14,17 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(1, CurrentZone);
+			Attack(1);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			if (RemainingHealth < TotalHealth)
-				remainingHealth++;
+			Repair(1);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(4, CurrentZone);
+			Attack(4);
 		}
 	}
 }

@@ -19,17 +19,12 @@ namespace BLL.Threats.External
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(sittingDuck, CurrentZone, 1);
+			AttackOtherTwoZones(1, sittingDuck);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(sittingDuck, CurrentZone, 2);
-		}
-
-		private static void AttackOtherTwoZones(SittingDuck sittingDuck, Zone currentZone, int amount)
-		{
-			sittingDuck.TakeAttack(amount, sittingDuck.Zones.Except(new[] { currentZone }).ToArray());
+			AttackOtherTwoZones(2, sittingDuck);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

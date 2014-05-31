@@ -79,19 +79,6 @@ namespace BLL
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 		}
 
-		public ExternalPlayerDamageResult TakeAttack(int damage, params Zone[] zones)
-		{
-			return TakeAttack(damage, zones.ToList());
-		}
-
-		public ExternalPlayerDamageResult TakeAttack(int damage, IEnumerable<Zone> zones)
-		{
-			var damageResult = new ExternalPlayerDamageResult();
-			foreach (var zone in zones)
-				damageResult.AddDamage(zone.TakeAttack(damage));
-			return damageResult;
-		}
-
 		public void TakeDamage(int damage, params ZoneLocation[] zones)
 		{
 			foreach (var zone in zones)

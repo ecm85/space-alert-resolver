@@ -14,18 +14,18 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 			Repair(2);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 		}
 
 		//TODO: Deal 1 damage to other threats on destroyed

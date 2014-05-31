@@ -7,32 +7,33 @@ namespace BLL.Threats.External
 {
 	public class CryoshieldFighter : MinorWhiteExternalThreat
 	{
+		private bool cryoshieldUp = true;
+
 		public CryoshieldFighter(int timeAppears, Zone currentZone)
 			: base(1, 4, 3, timeAppears, currentZone)
 		{
 		}
 
-		private bool shielded = true;
-
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(1, CurrentZone);
+			Attack(1);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			if (shielded && damages.Any())
-				shielded = false;
+			//TODO: Rules clarification: Does damage have to get through regular shield to take down cryoshield?
+			if (cryoshieldUp && damages.Any())
+				cryoshieldUp = false;
 			else
 				base.TakeDamage(damages);
 		}

@@ -9,7 +9,6 @@ namespace BLL.Threats.External
 	{
 		private bool cryoshieldUp = true;
 
-
 		public CryoshieldFrigate(int timeAppears, Zone currentZone)
 			: base(1, 7, 3, timeAppears, currentZone)
 		{
@@ -17,24 +16,23 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(2, CurrentZone);
+			Attack(2);
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(3, CurrentZone);
+			Attack(3);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			sittingDuck.TakeAttack(4, CurrentZone);
+			Attack(4);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			if (!damages.Any())
-				return;
-			if (cryoshieldUp) //TODO: Rules clarification: Does damage have to get through regular shield to take down cryoshield?
+			//TODO: Rules clarification: Does damage have to get through regular shield to take down cryoshield?
+			if (cryoshieldUp && damages.Any())
 				cryoshieldUp = false;
 			else
 				base.TakeDamage(damages);
