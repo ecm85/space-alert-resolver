@@ -78,13 +78,13 @@ namespace BLL.Tracks
 					switch (crossedBreakpoint.Type)
 					{
 						case TrackBreakpointType.X:
-							externalThreat.PeformXAction(sittingDuck);
+							externalThreat.PeformXAction();
 							break;
 						case TrackBreakpointType.Y:
-							externalThreat.PerformYAction(sittingDuck);
+							externalThreat.PerformYAction();
 							break;
 						case TrackBreakpointType.Z:
-							externalThreat.PerformZAction(sittingDuck);
+							externalThreat.PerformZAction();
 							//TODO: Handle survived case (score)
 							break;
 					}

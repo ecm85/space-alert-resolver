@@ -7,24 +7,24 @@ namespace BLL.Threats.External
 {
 	public class Maelstrom : SeriousWhiteExternalThreat
 	{
-		public Maelstrom(int timeAppears, Zone currentZone)
-			: base(3, 8, 2, timeAppears, currentZone)
+		public Maelstrom(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			sittingDuck.DrainAllShields();
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
-			AttackOtherTwoZones(2, sittingDuck);
+			AttackOtherTwoZones(2);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
-			AttackOtherTwoZones(3, sittingDuck);
+			AttackOtherTwoZones(3);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

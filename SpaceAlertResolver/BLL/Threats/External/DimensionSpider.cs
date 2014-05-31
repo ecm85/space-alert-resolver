@@ -7,29 +7,29 @@ namespace BLL.Threats.External
 {
 	public class DimensionSpider : SeriousWhiteExternalThreat
 	{
-		public DimensionSpider(int speed, int timeAppears, Zone currentZone)
-			: base(0, 13, speed, timeAppears, currentZone)
+		public DimensionSpider(int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(0, 13, speed, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			shields = 1;
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			shields++;
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
-			AttackAllZones(4, sittingDuck);
+			AttackAllZones(4);
 		}
 
-		public override void JumpingToHyperspace(SittingDuck sittingDuck)
+		public override void JumpingToHyperspace()
 		{
-			PerformZAction(sittingDuck);
+			PerformZAction();
 		}
 		
 		//TODO: Cannot be targeted by rockets

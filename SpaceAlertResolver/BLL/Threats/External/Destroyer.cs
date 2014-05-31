@@ -7,22 +7,22 @@ namespace BLL.Threats.External
 {
 	public class Destroyer : MinorWhiteExternalThreat
 	{
-		public Destroyer(int timeAppears, Zone currentZone)
-			: base(2, 5, 2, timeAppears, currentZone)
+		public Destroyer(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			Attack(1);
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			Attack(2);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			Attack(2);
 		}

@@ -7,24 +7,24 @@ namespace BLL.Threats.External
 {
 	public class PulseSatellite : SeriousWhiteExternalThreat
 	{
-		public PulseSatellite(int shields, int health, int speed, int timeAppears, Zone currentZone)
-			: base(shields, health, speed, timeAppears, currentZone)
+		public PulseSatellite(int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(shields, health, speed, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
-			AttackAllZones(1, sittingDuck);
+			AttackAllZones(1);
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
-			AttackAllZones(2, sittingDuck);
+			AttackAllZones(2);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
-			AttackAllZones(3, sittingDuck);
+			AttackAllZones(3);
 		}
 
 		//TODO: Cannot be targeted at distance 3

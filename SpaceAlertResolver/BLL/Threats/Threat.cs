@@ -20,11 +20,11 @@ namespace BLL.Threats
 		protected int speed;
 		public int Speed { get { return speed; } }
 
-		public abstract void PeformXAction(SittingDuck sittingDuck);
-		public abstract void PerformYAction(SittingDuck sittingDuck);
-		public abstract void PerformZAction(SittingDuck sittingDuck);
+		public abstract void PeformXAction();
+		public abstract void PerformYAction();
+		public abstract void PerformZAction();
 
-		public virtual void JumpingToHyperspace(SittingDuck sittingDuck)
+		public virtual void JumpingToHyperspace()
 		{
 			
 		}
@@ -39,13 +39,16 @@ namespace BLL.Threats
 			get { return RemainingHealth < TotalHealth; }
 		}
 
-		protected Threat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears)
+		protected readonly SittingDuck sittingDuck;
+
+		protected Threat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, SittingDuck sittingDuck)
 		{
 			this.pointsForSurviving = pointsForSurviving;
 			this.pointsForDefeating = pointsForDefeating;
 			totalHealth = remainingHealth = health;
 			this.speed = speed;
 			TimeAppears = timeAppears;
+			this.sittingDuck = sittingDuck;
 		}
 	}
 }

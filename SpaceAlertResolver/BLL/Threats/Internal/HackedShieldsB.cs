@@ -8,21 +8,21 @@ namespace BLL.Threats.Internal
 	public class HackedShieldsB : MinorWhiteInternalThreat
 	{
 		public HackedShieldsB(int timeAppears, SittingDuck sittingDuck)
-			: base(3, 2, timeAppears, sittingDuck.BlueZone.UpperStation, PlayerAction.B)
+			: base(3, 2, timeAppears, sittingDuck.BlueZone.UpperStation, PlayerAction.B, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			CurrentStation.EnergyContainer.Energy = 0;
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			CurrentStation.OppositeDeckStation.EnergyContainer.Energy = 0;
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			sittingDuck.TakeDamage(2, CurrentStation.ZoneLocation);
 		}

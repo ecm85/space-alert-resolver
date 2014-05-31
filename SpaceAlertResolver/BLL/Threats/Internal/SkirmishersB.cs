@@ -8,21 +8,21 @@ namespace BLL.Threats.Internal
 	public class SkirmishersB : MinorWhiteInternalThreat
 	{
 		protected SkirmishersB(int timeAppears, SittingDuck sittingDuck)
-			: base(1, 3, timeAppears, sittingDuck.BlueZone.UpperStation, PlayerAction.BattleBots)
+			: base(1, 3, timeAppears, sittingDuck.BlueZone.UpperStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			MoveBlue();
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			ChangeDecks();
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
 		}

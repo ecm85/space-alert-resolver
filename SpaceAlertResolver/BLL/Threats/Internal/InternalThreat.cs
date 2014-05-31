@@ -11,8 +11,8 @@ namespace BLL.Threats.Internal
 		public Station CurrentStation { get; protected set; }
 		public PlayerAction ActionType { get; private set; }
 
-		protected InternalThreat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType) :
-			base(pointsForSurviving, pointsForDefeating, health, speed, timeAppears)
+		protected InternalThreat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType, SittingDuck sittingDuck) :
+			base(pointsForSurviving, pointsForDefeating, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStation = currentStation;
 			ActionType = actionType;

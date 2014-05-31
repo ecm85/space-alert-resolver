@@ -10,22 +10,22 @@ namespace BLL.Threats.Internal
 		public bool grownUp;
 
 		public Alien(int health, int speed, int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots)
+			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			grownUp = true;
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			ChangeDecks();
 			//TODO: Deal (#players in new station) damage
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			throw new NotImplementedException("Losing is not yet implemented");
 		}

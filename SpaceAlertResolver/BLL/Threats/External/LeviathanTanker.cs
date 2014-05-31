@@ -7,23 +7,23 @@ namespace BLL.Threats.External
 {
 	public class LeviathanTanker : SeriousWhiteExternalThreat
 	{
-		public LeviathanTanker(int timeAppears, Zone currentZone)
-			: base(3, 8, 2, timeAppears, currentZone)
+		public LeviathanTanker(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			Attack(2);
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			Attack(2);
 			Repair(2);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			Attack(2);
 		}

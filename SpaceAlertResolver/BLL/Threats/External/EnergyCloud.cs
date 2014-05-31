@@ -7,24 +7,24 @@ namespace BLL.Threats.External
 {
 	public class EnergyCloud : MinorWhiteExternalThreat
 	{
-		public EnergyCloud(int timeAppears, Zone currentZone)
-			: base(3, 5, 2, timeAppears, currentZone)
+		public EnergyCloud(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(3, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			sittingDuck.DrainAllShields();
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
-			AttackOtherTwoZones(1, sittingDuck);
+			AttackOtherTwoZones(1);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
-			AttackOtherTwoZones(2, sittingDuck);
+			AttackOtherTwoZones(2);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

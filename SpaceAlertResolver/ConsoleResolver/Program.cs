@@ -36,9 +36,9 @@ namespace ConsoleResolver
 			};
 			var threats = new ExternalThreat[]
 			{
-				new Destroyer(7, sittingDuck.BlueZone),
-				new Fighter(4, sittingDuck.RedZone),
-				new Fighter(5, sittingDuck.WhiteZone)
+				new Destroyer(7, sittingDuck.BlueZone, sittingDuck),
+				new Fighter(4, sittingDuck.RedZone, sittingDuck),
+				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
 			};
 
 			const int numberOfTurns = 10;

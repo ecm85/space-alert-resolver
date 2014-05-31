@@ -9,22 +9,22 @@ namespace BLL.Threats.External
 	{
 		private bool cryoshieldUp = true;
 
-		public CryoshieldFrigate(int timeAppears, Zone currentZone)
-			: base(1, 7, 3, timeAppears, currentZone)
+		public CryoshieldFrigate(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(1, 7, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
-		public override void PeformXAction(SittingDuck sittingDuck)
+		public override void PeformXAction()
 		{
 			Attack(2);
 		}
 
-		public override void PerformYAction(SittingDuck sittingDuck)
+		public override void PerformYAction()
 		{
 			Attack(3);
 		}
 
-		public override void PerformZAction(SittingDuck sittingDuck)
+		public override void PerformZAction()
 		{
 			Attack(4);
 		}
