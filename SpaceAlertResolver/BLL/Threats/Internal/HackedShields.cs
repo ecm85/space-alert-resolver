@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class HackedShields : MinorWhiteInternalThreat
 	{
-		protected HackedShields(int timeAppears, Station station, SittingDuck sittingDuck)
+		protected HackedShields(int timeAppears, IStation station, SittingDuck sittingDuck)
 			: base(3, 2, timeAppears, station, PlayerAction.B, sittingDuck)
 		{
 		}

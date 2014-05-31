@@ -9,11 +9,11 @@ namespace BLL.Threats.Internal
 	public abstract class InternalThreat : Threat
 	{
 		//TODO: Extact common internal threat actions, like external
-		public IList<Station> CurrentStations { get; protected set; } 
-		public Station CurrentStation { get { return CurrentStations.Single(); } set { CurrentStations = new[] {value}; } }
+		public IList<IStation> CurrentStations { get; protected set; } 
+		public IStation CurrentStation { get { return CurrentStations.Single(); } set { CurrentStations = new[] {value}; } }
 		public PlayerAction ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType, SittingDuck sittingDuck) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IStation currentStation, PlayerAction actionType, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStation = currentStation;
@@ -21,7 +21,7 @@ namespace BLL.Threats.Internal
 		}
 
 		//TODO: Revisit all the ctors arguments
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<Station> currentStations, PlayerAction actionType, SittingDuck sittingDuck) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<IStation> currentStations, PlayerAction actionType, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStations = currentStations;
@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal
 			return new InternalPlayerDamageResult();
 		}
 
-		protected void MoveToNewStation(Station newStation)
+		protected void MoveToNewStation(IStation newStation)
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");

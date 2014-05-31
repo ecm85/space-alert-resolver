@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal
 	{
 		//TODO: Figure out this threat should behave (only interact with battlebots, fired either via c or from space via battlebots)
 		public Fissure(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, currentStation, actionType, sittingDuck)
+			: base(2, 2, timeAppears, sittingDuck.InterceptorStation1, PlayerAction.Interceptors, sittingDuck)
 		{
 		}
 

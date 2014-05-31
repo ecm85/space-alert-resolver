@@ -14,6 +14,7 @@ namespace BLL
 		MoveRed,
 		MoveBlue,
 		ChangeDeck,
-		BattleBots
+		BattleBots,
+		Interceptors
 	}
 }

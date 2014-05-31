@@ -6,7 +6,7 @@ using BLL.Threats.Internal;
 
 namespace BLL.ShipComponents
 {
-	public class Station
+	public class Station : IStation
 	{
 		//TODO: Rename to left/right, at least here?
 		public Station RedwardStation { get; set; }
@@ -15,12 +15,13 @@ namespace BLL.ShipComponents
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
-		public ISet<InternalThreat> Threats { get; set; }
+		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
 
 		public Station()
 		{
 			Players = new List<Player>();
+			Threats = new HashSet<InternalThreat>();
 		}
 
 		public void PerformBAction()

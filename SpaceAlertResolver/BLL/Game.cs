@@ -105,7 +105,7 @@ namespace BLL
 			ResolveDamage(damages);
 		}
 
-		private static void MovePlayer(Station newDestination, Player player)
+		private static void MovePlayer(IStation newDestination, Player player)
 		{
 			var newStation = newDestination ?? player.CurrentStation;
 			var oldStation = player.CurrentStation;

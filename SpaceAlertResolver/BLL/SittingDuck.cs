@@ -14,6 +14,7 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
+		public InterceptorStation InterceptorStation1 { get; set; }
 		public IEnumerable<ExternalThreat> CurrentExternalThreats { get; set; } //TODO: Set this
 
 		public SittingDuck(IEnumerable<Player> players)
