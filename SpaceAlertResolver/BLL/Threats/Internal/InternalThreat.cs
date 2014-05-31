@@ -18,11 +18,34 @@ namespace BLL.Threats.Internal
 			ActionType = actionType;
 		}
 
-		public virtual void TakeDamage(int damage)
+		public virtual InternalPlayerDamageResult TakeDamage(int damage)
 		{
 			var damageDealt = damage - shields;
 			if (damageDealt > 0)
 				remainingHealth -= damageDealt;
+			return new InternalPlayerDamageResult();
+		}
+
+		protected void MoveToNewStation(Station newStation)
+		{
+			CurrentStation.Threats.Remove(this);
+			CurrentStation = newStation;
+			CurrentStation.Threats.Add(this);
+		}
+
+		protected void MoveRed()
+		{
+			MoveToNewStation(CurrentStation.OppositeDeckStation);
+		}
+
+		protected void MoveBlue()
+		{
+			MoveToNewStation(CurrentStation.BluewardStation);
+		}
+
+		protected void ChangeDecks()
+		{
+			MoveToNewStation(CurrentStation.OppositeDeckStation);
 		}
 	}
 }

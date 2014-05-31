@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Tracks;
 
@@ -89,6 +88,13 @@ namespace BLL
 					case PlayerAction.ChangeDeck:
 						//TODO: Handle multiple people in lift
 						player.CurrentStation = player.CurrentStation.OppositeDeckStation;
+						break;
+					case PlayerAction.BattleBots:
+						if (!player.BattleBots.IsDisabled)
+						{
+							var result = player.CurrentStation.UseBattleBots();
+							player.BattleBots.IsDisabled = result.BattleBotsDisabled;
+						}
 						break;
 				}
 			}

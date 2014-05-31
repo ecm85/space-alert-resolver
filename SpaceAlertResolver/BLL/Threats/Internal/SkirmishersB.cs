@@ -14,12 +14,12 @@ namespace BLL.Threats.Internal
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			CurrentStation = CurrentStation.BluewardStation;
+			MoveBlue();
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			CurrentStation = CurrentStation.OppositeDeckStation;
+			ChangeDecks();
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
@@ -27,11 +27,11 @@ namespace BLL.Threats.Internal
 			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
 		}
 
-		public override void TakeDamage(int damage)
+		public override InternalPlayerDamageResult TakeDamage(int damage)
 		{
-			//TODO: Destroy battlebots
-			//TODO: handle actually having battlebots, only allow action if they have em, and disable battlebots when hit back
-			base.TakeDamage(damage);
+			var result = base.TakeDamage(damage);
+			result.BattleBotsDisabled = true;
+			return result;
 		}
 	}
 }

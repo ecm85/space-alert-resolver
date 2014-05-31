@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleBots.cs" />
     <Compile Include="Damage.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalPlayerDamageResult.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Threats\External\ExternalThreat.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\Internal\InternalPlayerDamageResult.cs" />
     <Compile Include="Threats\Internal\InternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />

@@ -10,5 +10,6 @@ namespace BLL
 	{
 		public IList<PlayerAction> Actions { get; set; }
 		public Station CurrentStation { get; set; }
+		public BattleBots BattleBots { get; set; }
 	}
 }

@@ -14,17 +14,24 @@ namespace BLL.Threats.Internal
 
 		public override void PeformXAction(SittingDuck sittingDuck)
 		{
-			CurrentStation = CurrentStation.RedwardStation;
+			MoveRed();
 		}
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			CurrentStation = CurrentStation.OppositeDeckStation;
+			ChangeDecks();
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
 			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
+		}
+
+		public override InternalPlayerDamageResult TakeDamage(int damage)
+		{
+			var result = base.TakeDamage(damage);
+			result.BattleBotsDisabled = true;
+			return result;
 		}
 	}
 }
