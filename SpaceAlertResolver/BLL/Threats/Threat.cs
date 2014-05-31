@@ -43,5 +43,11 @@ namespace BLL.Threats
 			TimeAppears = timeAppears;
 			this.sittingDuck = sittingDuck;
 		}
+
+		public void Repair(int amount)
+		{
+			var newHealth = RemainingHealth + amount;
+			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
+		}
 	}
 }

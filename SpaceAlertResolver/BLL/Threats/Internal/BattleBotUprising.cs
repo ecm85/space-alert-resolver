@@ -19,7 +19,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformYAction()
 		{
-			//TODO: Knock out all players in currentStations
+			//TODO: Knock out all players in currentStation
 		}
 
 		public override void PerformZAction()

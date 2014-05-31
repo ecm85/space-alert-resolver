@@ -24,12 +24,6 @@ namespace BLL.Threats.External
 				RemainingHealth -= damageDealt;
 		}
 
-		public void Repair(int amount)
-		{
-			var newHealth = RemainingHealth + amount;
-			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
-		}
-
 		protected virtual ExternalPlayerDamageResult Attack(int amount)
 		{
 			return CurrentZone.TakeAttack(amount);

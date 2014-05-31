@@ -18,7 +18,7 @@ namespace BLL.ShipComponents
 			if (storageCapsules <= 0)
 				return;
 			storageCapsules--;
-			Energy = capacity;
+			Energy = Capacity;
 		}
 	}
 }

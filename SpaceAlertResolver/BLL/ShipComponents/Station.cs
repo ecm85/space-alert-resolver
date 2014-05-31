@@ -39,6 +39,7 @@ namespace BLL.ShipComponents
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat == null)
+				//TODO: Handle C Actions
 				throw new NotImplementedException();
 			DamageThreat(firstCThreat);
 		}

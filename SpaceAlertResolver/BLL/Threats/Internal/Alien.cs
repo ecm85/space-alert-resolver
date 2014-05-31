@@ -27,7 +27,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			throw new NotImplementedException("Losing is not yet implemented");
+			//TODO: Lose
 		}
 
 		public override InternalPlayerDamageResult TakeDamage(int damage)

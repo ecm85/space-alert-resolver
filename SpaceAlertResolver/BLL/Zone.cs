@@ -24,7 +24,8 @@ namespace BLL
 			//TODO: Apply damageDone tokens
 			TotalDamage += damageDone;
 			if (TotalDamage >= 7)
-				throw new NotImplementedException("Losing hasn't been built yet!");
+				//TODO: Lose
+				throw new NotImplementedException();
 			return new ExternalPlayerDamageResult
 			{
 				DamageDone = damageDone,
@@ -37,7 +38,8 @@ namespace BLL
 			//TODO: Apply damageDone tokens
 			TotalDamage += damage;
 			if (TotalDamage >= 7)
-				throw new NotImplementedException("Losing hasn't been built yet!");
+				//TODO: Lose
+				throw new NotImplementedException();
 		}
 
 		public void DrainShields()

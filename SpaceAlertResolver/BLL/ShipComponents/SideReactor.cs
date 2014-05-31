@@ -15,7 +15,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformBAction()
 		{
-			var energyToPull = capacity - Energy;
+			var energyToPull = Capacity - Energy;
 			Source.Energy -= energyToPull;
 			Energy += energyToPull;
 		}

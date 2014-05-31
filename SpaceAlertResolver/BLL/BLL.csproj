@@ -96,6 +96,11 @@
     <Compile Include="Threats\Internal\Alien.cs" />
     <Compile Include="Threats\Internal\BattleBotUprising.cs" />
     <Compile Include="Threats\Internal\CentralLaserJam.cs" />
+    <Compile Include="Threats\Internal\Commandos.cs" />
+    <Compile Include="Threats\Internal\CommandosB.cs" />
+    <Compile Include="Threats\Internal\CommandosA.cs" />
+    <Compile Include="Threats\Internal\CrossedWires.cs" />
+    <Compile Include="Threats\Internal\Fissure.cs" />
     <Compile Include="Threats\Internal\HackedShields.cs" />
     <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\HackedShieldsB.cs" />
@@ -108,6 +113,7 @@
     <Compile Include="Threats\Internal\SaboteurB.cs" />
     <Compile Include="Threats\Internal\SeriousInternalThreat.cs" />
     <Compile Include="Threats\Internal\SeriousWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\Shambler.cs" />
     <Compile Include="Threats\Internal\Skirmishers.cs" />
     <Compile Include="Threats\Internal\SkirmishersA.cs" />
     <Compile Include="Threats\Internal\SkirmishersB.cs" />
