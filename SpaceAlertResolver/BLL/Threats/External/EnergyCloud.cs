@@ -31,7 +31,12 @@ namespace BLL.Threats.External
 		{
 			var hitByPulse = damages.Any(damage => damage.DamageType == DamageType.Pulse);
 			if (hitByPulse)
-				RemainingHealth -= damages.Sum(damage => damage.Amount);
+			{
+				var oldShields = shields;
+				shields = 0;
+				base.TakeDamage(damages);
+				shields = oldShields;
+			}
 			else
 				base.TakeDamage(damages);
 		}

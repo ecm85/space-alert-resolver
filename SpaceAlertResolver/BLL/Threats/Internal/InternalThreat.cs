@@ -33,6 +33,7 @@ namespace BLL.Threats.Internal
 		public virtual InternalPlayerDamageResult TakeDamage(int damage)
 		{
 			RemainingHealth -= damage;
+			CheckForDestroyed();
 			return new InternalPlayerDamageResult();
 		}
 

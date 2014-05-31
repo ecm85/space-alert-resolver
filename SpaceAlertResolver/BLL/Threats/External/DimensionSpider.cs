@@ -27,7 +27,7 @@ namespace BLL.Threats.External
 			AttackAllZones(4);
 		}
 
-		public override void JumpingToHyperspace()
+		public override void OnJumpingToHyperspace()
 		{
 			PerformZAction();
 		}

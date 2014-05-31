@@ -22,6 +22,7 @@ namespace BLL.Threats.External
 			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
 			if (damageDealt > 0)
 				RemainingHealth -= damageDealt;
+			CheckForDestroyed();
 		}
 
 		protected virtual ExternalPlayerDamageResult Attack(int amount)

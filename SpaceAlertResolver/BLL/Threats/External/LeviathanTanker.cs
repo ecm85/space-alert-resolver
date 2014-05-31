@@ -28,6 +28,13 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
-		//TODO: Deal 1 damage to other threats on destroyed
+		public override void OnDestroyed()
+		{
+			foreach (var threat in sittingDuck.CurrentExternalThreats)
+			{
+				threat.RemainingHealth -= 1;
+				threat.CheckForDestroyed();
+			}
+		}
 	}
 }

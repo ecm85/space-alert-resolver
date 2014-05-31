@@ -47,7 +47,7 @@ namespace BLL.ShipComponents
 		public InternalPlayerDamageResult UseBattleBots()
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
-			return firstBattleBotThreat == null ? null : firstBattleBotThreat.TakeDamage(1);
+			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat);
 		}
 
 		private InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
@@ -58,10 +58,10 @@ namespace BLL.ShipComponents
 				.FirstOrDefault();
 		}
 
-		private void DamageThreat(InternalThreat threat)
+		private InternalPlayerDamageResult DamageThreat(InternalThreat threat)
 		{
-			threat.TakeDamage(1);
-			//TODO: Handle killing it
+			return threat.TakeDamage(1);
+			//TODO: Handle removing from track and scoring
 		}
 	}
 }

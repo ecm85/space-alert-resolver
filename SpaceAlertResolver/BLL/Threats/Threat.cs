@@ -11,8 +11,8 @@ namespace BLL.Threats
 		public virtual int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
 
 		public int TimeAppears { get; private set; }
-		public int TotalHealth { get; private set; }
-		public int RemainingHealth { get; protected set; }
+		private int TotalHealth { get; set; }
+		public int RemainingHealth { get; set; }
 		public int Speed { get; protected set; }
 
 		private readonly ThreatType type;
@@ -20,13 +20,27 @@ namespace BLL.Threats
 
 		protected readonly SittingDuck sittingDuck;
 
+		private bool destroyed = false;
+
 		public abstract void PeformXAction();
 		public abstract void PerformYAction();
 		public abstract void PerformZAction();
 
-		public virtual void JumpingToHyperspace()
+		//TODO: Call this appropriately
+		public virtual void OnJumpingToHyperspace()
 		{
 			
+		}
+
+		public virtual void CheckForDestroyed()
+		{
+			if (!destroyed && RemainingHealth <= 0)
+				OnDestroyed();
+		}
+
+		public virtual void OnDestroyed()
+		{
+			destroyed = true;
 		}
 
 		protected bool IsDamaged

@@ -30,6 +30,10 @@ namespace BLL.Threats.External
 		}
 
 		//TODO: Cannot be targeted by rockets
-		//TODO: Deal 2 damage per breakpoint crossed on destroyed
+
+		public override void OnDestroyed()
+		{
+			Attack(2 * breakpointsCrossed);
+		}
 	}
 }

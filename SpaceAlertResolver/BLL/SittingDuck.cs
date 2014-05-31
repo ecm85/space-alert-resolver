@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Threats.External;
 
 namespace BLL
 {
@@ -13,6 +14,7 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
+		public IEnumerable<ExternalThreat> CurrentExternalThreats { get; set; } //TODO: Set this
 
 		public SittingDuck(IEnumerable<Player> players)
 		{
