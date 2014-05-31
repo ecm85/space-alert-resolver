@@ -10,8 +10,8 @@ namespace BLL.Threats.External
 		public Zone CurrentZone { get; protected set; }
 		protected int shields;
 
-		protected ExternalThreat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck) :
-			base(pointsForSurviving, pointsForDefeating, health, speed, timeAppears, sittingDuck)
+		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck) :
+			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			this.shields = shields;
 			CurrentZone = currentZone;
@@ -21,13 +21,13 @@ namespace BLL.Threats.External
 		{
 			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
 			if (damageDealt > 0)
-				remainingHealth -= damageDealt;
+				RemainingHealth -= damageDealt;
 		}
 
 		public void Repair(int amount)
 		{
 			var newHealth = RemainingHealth + amount;
-			remainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
+			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
 		}
 
 		protected virtual ExternalPlayerDamageResult Attack(int amount)

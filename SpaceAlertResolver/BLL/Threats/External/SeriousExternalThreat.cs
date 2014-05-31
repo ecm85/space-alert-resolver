@@ -7,10 +7,9 @@ namespace BLL.Threats.External
 {
 	public abstract class SeriousExternalThreat : ExternalThreat
 	{
-		protected SeriousExternalThreat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck)
-			: base(pointsForSurviving, pointsForDefeating, shields, health, speed, timeAppears, currentZone, sittingDuck)
+		protected SeriousExternalThreat(ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+			: base(ThreatType.SeriousExternal, difficulty, shields, health, speed, timeAppears, currentZone, sittingDuck)
 		{
-			threatType = ThreatType.SeriousExternal;
 		}
 	}
 }

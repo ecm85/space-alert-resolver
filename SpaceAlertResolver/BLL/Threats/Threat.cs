@@ -7,18 +7,18 @@ namespace BLL.Threats
 {
 	public abstract class Threat
 	{
-		private readonly int pointsForDefeating;
-		public int PointsForDefeating { get { return pointsForDefeating; } }
-		private readonly int pointsForSurviving;
-		public int PointsForSurviving { get { return pointsForSurviving; } }
+		public virtual int PointsForDefeating { get { return ThreatPoints.GetPointsForDefeating(type, difficulty); } }
+		public virtual int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
 
-		private readonly int totalHealth;
-		public int TotalHealth { get { return totalHealth; } }
-		protected int remainingHealth;
-		public int RemainingHealth { get { return remainingHealth; } }
+		public int TimeAppears { get; private set; }
+		public int TotalHealth { get; private set; }
+		public int RemainingHealth { get; protected set; }
+		public int Speed { get; protected set; }
 
-		protected int speed;
-		public int Speed { get { return speed; } }
+		private readonly ThreatType type;
+		private readonly ThreatDifficulty difficulty;
+
+		protected readonly SittingDuck sittingDuck;
 
 		public abstract void PeformXAction();
 		public abstract void PerformYAction();
@@ -29,24 +29,17 @@ namespace BLL.Threats
 			
 		}
 
-		public int TimeAppears { get; private set; }
-
-		protected ThreatType threatType;
-		public ThreatType ThreatType { get { return threatType; } }
-
 		protected bool IsDamaged
 		{
 			get { return RemainingHealth < TotalHealth; }
 		}
 
-		protected readonly SittingDuck sittingDuck;
-
-		protected Threat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, SittingDuck sittingDuck)
+		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, SittingDuck sittingDuck)
 		{
-			this.pointsForSurviving = pointsForSurviving;
-			this.pointsForDefeating = pointsForDefeating;
-			totalHealth = remainingHealth = health;
-			this.speed = speed;
+			this.difficulty = difficulty;
+			this.type = type;
+			TotalHealth = RemainingHealth = health;
+			Speed = speed;
 			TimeAppears = timeAppears;
 			this.sittingDuck = sittingDuck;
 		}

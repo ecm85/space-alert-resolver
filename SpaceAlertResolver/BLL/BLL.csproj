@@ -102,6 +102,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threats\External\ArmoredGrappler.cs" />
     <Compile Include="Threats\External\Fighter.cs" />
+    <Compile Include="Threats\ThreatDifficulty.cs" />
+    <Compile Include="Threats\ThreatPoints.cs" />
     <Compile Include="Threats\ThreatType.cs" />
     <Compile Include="Tracks\Track.cs" />
     <Compile Include="Tracks\Track2.cs" />

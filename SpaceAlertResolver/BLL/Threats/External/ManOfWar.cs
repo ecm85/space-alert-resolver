@@ -15,7 +15,7 @@ namespace BLL.Threats.External
 		public override void PeformXAction()
 		{
 			Attack(2);
-			speed++;
+			Speed++;
 		}
 
 		public override void PerformYAction()
