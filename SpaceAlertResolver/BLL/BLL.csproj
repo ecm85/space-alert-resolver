@@ -78,12 +78,15 @@
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
     <Compile Include="Threats\External\SeriousExternalThreat.cs" />
     <Compile Include="Threats\External\SeriousWhiteExternalThreat.cs" />
+    <Compile Include="Threats\Internal\Alien.cs" />
     <Compile Include="Threats\Internal\HackedShieldsB.cs" />
     <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\InternalPlayerDamageResult.cs" />
     <Compile Include="Threats\Internal\InternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\SeriousInternalThreat.cs" />
+    <Compile Include="Threats\Internal\SeriousWhiteInternalThreat.cs" />
     <Compile Include="Threats\Internal\SkirmishersB.cs" />
     <Compile Include="Threats\Internal\SkirmishersA.cs" />
     <Compile Include="Threats\Threat.cs" />
