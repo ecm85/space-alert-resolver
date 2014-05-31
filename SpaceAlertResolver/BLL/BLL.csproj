@@ -69,6 +69,7 @@
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ThreatDamage.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
+    <Compile Include="Threats\External\CryoshieldFrigate.cs" />
     <Compile Include="Threats\External\Destroyer.cs" />
     <Compile Include="Threats\External\DimensionSpider.cs" />
     <Compile Include="Threats\External\EnergyCloud.cs" />
