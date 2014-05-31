@@ -74,8 +74,11 @@
     <Compile Include="Threats\External\DimensionSpider.cs" />
     <Compile Include="Threats\External\EnergyCloud.cs" />
     <Compile Include="Threats\External\ExternalThreat.cs" />
+    <Compile Include="Threats\External\LeviathanTanker.cs" />
+    <Compile Include="Threats\External\ManOfWar.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\PulseSatellite.cs" />
     <Compile Include="Threats\External\SeriousExternalThreat.cs" />
     <Compile Include="Threats\External\SeriousWhiteExternalThreat.cs" />
     <Compile Include="Threats\Internal\Alien.cs" />

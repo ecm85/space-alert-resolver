@@ -17,7 +17,7 @@ namespace BLL.Threats
 		protected int remainingHealth;
 		public int RemainingHealth { get { return remainingHealth; } }
 
-		private readonly int speed;
+		protected int speed;
 		public int Speed { get { return speed; } }
 
 		public abstract void PeformXAction(SittingDuck sittingDuck);

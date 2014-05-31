@@ -23,5 +23,11 @@ namespace BLL.Threats.External
 			if (damageDealt > 0)
 				remainingHealth -= damageDealt;
 		}
+
+		public void Repair(int amount)
+		{
+			var newHealth = RemainingHealth + amount;
+			remainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
+		}
 	}
 }
