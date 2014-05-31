@@ -35,7 +35,6 @@ namespace BLL.Threats.External
 			base.TakeDamage(damages);
 			if (damages.Any(damage => damage.DamageType == DamageType.Rocket))
 				hitByRocket = true;
-			//TODO: Rules clarification: Does damage have to get through regular shield knock off course?
 		}
 	}
 }

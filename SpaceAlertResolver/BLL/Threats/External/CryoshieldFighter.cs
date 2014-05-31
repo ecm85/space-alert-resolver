@@ -31,7 +31,6 @@ namespace BLL.Threats.External
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			//TODO: Rules clarification: Does damage have to get through regular shield to take down cryoshield?
 			if (cryoshieldUp && damages.Any())
 				cryoshieldUp = false;
 			else
