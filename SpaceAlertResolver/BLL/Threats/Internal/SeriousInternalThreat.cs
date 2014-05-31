@@ -13,5 +13,11 @@ namespace BLL.Threats.Internal
 		{
 			threatType = ThreatType.SeriousInternal;
 		}
+
+		protected SeriousInternalThreat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, IList<Station> currentStations, PlayerAction actionType, SittingDuck sittingDuck)
+			: base(pointsForSurviving, pointsForDefeating, health, speed, timeAppears, currentStations, actionType, sittingDuck)
+		{
+			threatType = ThreatType.SeriousInternal;
+		}
 	}
 }

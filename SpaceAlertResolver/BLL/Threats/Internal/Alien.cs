@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal
 	{
 		public bool grownUp;
 
-		public Alien(int health, int speed, int timeAppears, SittingDuck sittingDuck)
+		public Alien(int timeAppears, SittingDuck sittingDuck)
 			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}

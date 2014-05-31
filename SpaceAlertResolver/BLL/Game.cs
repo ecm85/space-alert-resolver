@@ -9,7 +9,7 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Internal threats
+		//TODO: Maintain list of internal threats, move on each turn
 		private readonly IList<ExternalThreat> threats;
 		private readonly IDictionary<Zone, Track> tracks;
 		private readonly SittingDuck sittingDuck;
