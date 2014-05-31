@@ -16,8 +16,6 @@ namespace BLL.Threats
 		public int TotalHealth { get { return totalHealth; } }
 		protected int remainingHealth;
 		public int RemainingHealth { get { return remainingHealth; } }
-		
-		protected int shields;
 
 		private readonly int speed;
 		public int Speed { get { return speed; } }
@@ -31,11 +29,10 @@ namespace BLL.Threats
 		protected ThreatType threatType;
 		public ThreatType ThreatType { get { return threatType; } }
 
-		protected Threat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears)
+		protected Threat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears)
 		{
 			this.pointsForSurviving = pointsForSurviving;
 			this.pointsForDefeating = pointsForDefeating;
-			this.shields = shields;
 			totalHealth = remainingHealth = health;
 			this.speed = speed;
 			TimeAppears = timeAppears;

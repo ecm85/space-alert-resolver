@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal
 	public class SkirmishersA : MinorWhiteInternalThreat
 	{
 		protected SkirmishersA(int timeAppears, SittingDuck sittingDuck)
-			: base(0, 1, 3, timeAppears, sittingDuck.RedZone.UpperStation, PlayerAction.BattleBots)
+			: base(1, 3, timeAppears, sittingDuck.RedZone.UpperStation, PlayerAction.BattleBots)
 		{
 		}
 

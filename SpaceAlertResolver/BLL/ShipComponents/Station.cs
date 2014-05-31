@@ -17,13 +17,34 @@ namespace BLL.ShipComponents
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; set; }
 
+		public void PerformBAction()
+		{
+			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
+			if (firstBThreat == null)
+				EnergyContainer.PerformBAction();
+			else
+				DamageThreat(firstBThreat);
+		}
+
 		public InternalPlayerDamageResult UseBattleBots()
 		{
-			var firstBattleBotThreat = Threats
-				.Where(threat => threat.ActionType == PlayerAction.BattleBots)
-				.OrderBy(threat => threat.TimeAppears)
-				.FirstOrDefault();
+			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			return firstBattleBotThreat == null ? null : firstBattleBotThreat.TakeDamage(1);
+		}
+
+		private InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
+		{
+			return
+				Threats
+					.Where(threat => threat.ActionType == playerAction)
+					.OrderBy(threat => threat.TimeAppears)
+					.FirstOrDefault();
+		}
+
+		private void DamageThreat(InternalThreat threat)
+		{
+			threat.TakeDamage(1);
+			//TODO: Handle killing it
 		}
 	}
 }

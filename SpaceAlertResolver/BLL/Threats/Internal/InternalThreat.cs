@@ -11,8 +11,8 @@ namespace BLL.Threats.Internal
 		public Station CurrentStation { get; protected set; }
 		public PlayerAction ActionType { get; private set; }
 
-		protected InternalThreat(int pointsForSurviving, int pointsForDefeating, int shields, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType) :
-			base(pointsForSurviving, pointsForDefeating, shields, health, speed, timeAppears)
+		protected InternalThreat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType) :
+			base(pointsForSurviving, pointsForDefeating, health, speed, timeAppears)
 		{
 			CurrentStation = currentStation;
 			ActionType = actionType;
@@ -20,9 +20,7 @@ namespace BLL.Threats.Internal
 
 		public virtual InternalPlayerDamageResult TakeDamage(int damage)
 		{
-			var damageDealt = damage - shields;
-			if (damageDealt > 0)
-				remainingHealth -= damageDealt;
+			remainingHealth -= damage;
 			return new InternalPlayerDamageResult();
 		}
 

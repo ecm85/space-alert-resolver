@@ -75,7 +75,7 @@ namespace BLL
 							damages.Add(damage);
 						break;
 					case PlayerAction.B:
-						player.CurrentStation.EnergyContainer.PerformBAction();
+						player.CurrentStation.PerformBAction();
 						break;
 					case PlayerAction.C:
 						throw new NotImplementedException();

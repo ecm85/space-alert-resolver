@@ -74,6 +74,8 @@
     <Compile Include="Threats\External\ExternalThreat.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\Internal\HackedShieldsB.cs" />
+    <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\InternalPlayerDamageResult.cs" />
     <Compile Include="Threats\Internal\InternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
