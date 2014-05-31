@@ -68,6 +68,9 @@
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ThreatDamage.cs" />
+    <Compile Include="Threats\External\Amoeba.cs" />
+    <Compile Include="Threats\External\Gunship.cs" />
+    <Compile Include="Threats\External\Meteoroid.cs" />
     <Compile Include="Threats\External\Asteroid.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
     <Compile Include="Threats\External\CryoshieldFrigate.cs" />
@@ -82,10 +85,14 @@
     <Compile Include="Threats\External\ManOfWar.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\PlasmaticFighter.cs" />
+    <Compile Include="Threats\External\PulseBall.cs" />
     <Compile Include="Threats\External\PulseSatellite.cs" />
     <Compile Include="Threats\External\SeriousExternalThreat.cs" />
     <Compile Include="Threats\External\SeriousWhiteExternalThreat.cs" />
     <Compile Include="Threats\External\SpacecraftCarrier.cs" />
+    <Compile Include="Threats\External\SpinningSaucer.cs" />
+    <Compile Include="Threats\External\StealthFighter.cs" />
     <Compile Include="Threats\Internal\Alien.cs" />
     <Compile Include="Threats\Internal\BattleBotUprising.cs" />
     <Compile Include="Threats\Internal\CentralLaserJam.cs" />
