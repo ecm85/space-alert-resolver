@@ -24,6 +24,11 @@ namespace BLL.Threats
 		public abstract void PerformYAction(SittingDuck sittingDuck);
 		public abstract void PerformZAction(SittingDuck sittingDuck);
 
+		public virtual void JumpingToHyperspace(SittingDuck sittingDuck)
+		{
+			
+		}
+
 		public int TimeAppears { get; private set; }
 
 		protected ThreatType threatType;

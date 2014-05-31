@@ -70,10 +70,13 @@
     <Compile Include="ThreatDamage.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
     <Compile Include="Threats\External\Destroyer.cs" />
+    <Compile Include="Threats\External\DimensionSpider.cs" />
     <Compile Include="Threats\External\EnergyCloud.cs" />
     <Compile Include="Threats\External\ExternalThreat.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\SeriousExternalThreat.cs" />
+    <Compile Include="Threats\External\SeriousWhiteExternalThreat.cs" />
     <Compile Include="Threats\Internal\HackedShieldsB.cs" />
     <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\InternalPlayerDamageResult.cs" />

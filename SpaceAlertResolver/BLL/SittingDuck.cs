@@ -81,6 +81,11 @@ namespace BLL
 
 		public ExternalPlayerDamageResult TakeAttack(int damage, params Zone[] zones)
 		{
+			return TakeAttack(damage, zones.ToList());
+		}
+
+		public ExternalPlayerDamageResult TakeAttack(int damage, IEnumerable<Zone> zones)
+		{
 			var damageResult = new ExternalPlayerDamageResult();
 			foreach (var zone in zones)
 				damageResult.AddDamage(zone.TakeAttack(damage));

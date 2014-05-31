@@ -39,6 +39,7 @@ namespace BLL
 			{
 				MoveThreats();
 				//TODO: Calculate score
+				//TODO: Call JumpingToHyperspace on current threats
 			}
 			nextTurn++;
 		}
