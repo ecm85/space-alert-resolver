@@ -13,6 +13,7 @@ namespace BLL
 		public Station LowerStation { get; set; }
 		public int TotalDamage { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
+		public IList<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
 
 		public ExternalPlayerDamageResult TakeAttack(int damage)
 		{

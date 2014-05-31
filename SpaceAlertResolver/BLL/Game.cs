@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.ShipComponents;
 using BLL.Threats.External;
 using BLL.Tracks;
 
@@ -65,7 +66,7 @@ namespace BLL
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
 			var damages = new List<PlayerDamage>();
-			foreach (var player in players)
+			foreach (var player in players.Where(player => !player.IsKnockedOut))
 			{
 				var playerAction = player.Actions[currentTurn - 1];
 				switch (playerAction)
@@ -83,14 +84,14 @@ namespace BLL
 						player.CurrentStation.PerformCAction();
 						break;
 					case PlayerAction.MoveBlue:
-						player.CurrentStation = player.CurrentStation.BluewardStation ?? player.CurrentStation;
+						MovePlayer(player.CurrentStation.BluewardStation, player);
 						break;
 					case PlayerAction.MoveRed:
-						player.CurrentStation = player.CurrentStation.RedwardStation ?? player.CurrentStation;
+						MovePlayer(player.CurrentStation.RedwardStation, player);
 						break;
 					case PlayerAction.ChangeDeck:
 						//TODO: Handle multiple people in lift
-						player.CurrentStation = player.CurrentStation.OppositeDeckStation;
+						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
 						break;
 					case PlayerAction.BattleBots:
 						if (!player.BattleBots.IsDisabled)
@@ -102,6 +103,15 @@ namespace BLL
 				}
 			}
 			ResolveDamage(damages);
+		}
+
+		private static void MovePlayer(Station newDestination, Player player)
+		{
+			var newStation = newDestination ?? player.CurrentStation;
+			var oldStation = player.CurrentStation;
+			player.CurrentStation = newStation;
+			oldStation.Players.Remove(player);
+			newStation.Players.Add(player);
 		}
 
 		private void ResolveDamage(IList<PlayerDamage> damages)

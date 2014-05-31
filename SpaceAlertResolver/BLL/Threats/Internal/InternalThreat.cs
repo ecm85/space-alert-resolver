@@ -39,6 +39,8 @@ namespace BLL.Threats.Internal
 
 		protected void MoveToNewStation(Station newStation)
 		{
+			if (CurrentStations.Count != 1)
+				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
 			CurrentStation.Threats.Remove(this);
 			CurrentStation = newStation;
 			CurrentStation.Threats.Add(this);

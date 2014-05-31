@@ -33,8 +33,7 @@ namespace BLL.Threats.Internal
 
 		private bool IsAnyPlayerPresent()
 		{
-			//TODO: Return if any player present in current station
-			return false;
+			return CurrentStation.Players.Any();
 		}
 	}
 }

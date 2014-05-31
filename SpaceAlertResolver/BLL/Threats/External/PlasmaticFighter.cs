@@ -31,8 +31,8 @@ namespace BLL.Threats.External
 		{
 			var result = base.Attack(amount);
 			if (result.DamageShielded == 0)
-				//TODO: Knock out all players in current zone
-				throw new NotImplementedException();
+				foreach (var player in CurrentZone.Players)
+					player.IsKnockedOut = true;
 			return result;
 		}
 	}

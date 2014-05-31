@@ -14,17 +14,22 @@ namespace BLL.Threats.Internal
 
 		public override void PeformXAction()
 		{
-			//TODO: Knock out all players with an active battlebot squad (regardless of location)
+			var playersWithBattleBots = sittingDuck.Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
+			foreach (var player in playersWithBattleBots)
+				player.IsKnockedOut = true;
 		}
 
 		public override void PerformYAction()
 		{
-			//TODO: Knock out all players in currentStation
+			foreach (var player in CurrentStations.SelectMany(station => station.Players))
+				player.IsKnockedOut = true;
 		}
 
 		public override void PerformZAction()
 		{
-			//TODO: Knock out all players not on the bridge
+			var playersNotOnBridge = sittingDuck.Zones.SelectMany(zone => zone.Players).Except(sittingDuck.WhiteZone.UpperStation.Players);
+			foreach (var player in playersNotOnBridge)
+				player.IsKnockedOut = true;
 		}
 
 		//TODO: Extra 1 damage when hit by in both zones

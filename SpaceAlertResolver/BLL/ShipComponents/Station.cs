@@ -16,6 +16,12 @@ namespace BLL.ShipComponents
 		public Cannon Cannon { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; set; }
+		public IList<Player> Players { get; private set; }
+
+		public Station()
+		{
+			Players = new List<Player>();
+		}
 
 		public void PerformBAction()
 		{

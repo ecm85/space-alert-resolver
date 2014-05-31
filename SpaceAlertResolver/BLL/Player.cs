@@ -8,6 +8,7 @@ namespace BLL
 {
 	public class Player
 	{
+		public bool IsKnockedOut { get; set; }
 		public IList<PlayerAction> Actions { get; set; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }

@@ -19,7 +19,7 @@ namespace BLL.Threats.Internal
 			if (reactorHasEnergy)
 				currentReactor.Energy--;
 			else
-				sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
+				sittingDuck.TakeDamage(1, CurrentStation.ZoneLocation);
 		}
 
 		public override void PerformZAction()

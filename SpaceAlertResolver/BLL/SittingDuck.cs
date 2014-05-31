@@ -74,7 +74,10 @@ namespace BLL
 			lowerBlueStation.RedwardStation = lowerWhiteStation;
 			lowerBlueStation.OppositeDeckStation = upperBlueStation;
 			foreach (var player in players)
+			{
 				player.CurrentStation = upperWhiteStation;
+				upperWhiteStation.Players.Add(player);
+			}
 			RedZone = new Zone {LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red};
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White};
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue};

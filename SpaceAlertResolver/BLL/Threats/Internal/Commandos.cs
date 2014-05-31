@@ -20,7 +20,8 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			//TODO: Knock out all players in currentStation
+			foreach (var player in CurrentStation.Players)
+				player.IsKnockedOut = true;
 			sittingDuck.TakeDamage(4, CurrentStation.ZoneLocation);
 		}
 
