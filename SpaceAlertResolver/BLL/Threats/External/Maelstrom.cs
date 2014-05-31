@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class EnergyCloud : MinorWhiteExternalThreat
+	public class Maelstrom : SeriousWhiteExternalThreat
 	{
-		public EnergyCloud(int timeAppears, Zone currentZone)
-			: base(3, 5, 2, timeAppears, currentZone)
+		public Maelstrom(int timeAppears, Zone currentZone)
+			: base(3, 8, 2, timeAppears, currentZone)
 		{
 		}
 
@@ -19,12 +19,12 @@ namespace BLL.Threats.External
 
 		public override void PerformYAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(1, sittingDuck);
+			AttackOtherTwoZones(2, sittingDuck);
 		}
 
 		public override void PerformZAction(SittingDuck sittingDuck)
 		{
-			AttackOtherTwoZones(2, sittingDuck);
+			AttackOtherTwoZones(3, sittingDuck);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

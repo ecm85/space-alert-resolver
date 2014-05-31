@@ -34,6 +34,11 @@ namespace BLL.Threats
 		protected ThreatType threatType;
 		public ThreatType ThreatType { get { return threatType; } }
 
+		protected bool IsDamaged
+		{
+			get { return RemainingHealth < TotalHealth; }
+		}
+
 		protected Threat(int pointsForSurviving, int pointsForDefeating, int health, int speed, int timeAppears)
 		{
 			this.pointsForSurviving = pointsForSurviving;
