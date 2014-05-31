@@ -43,6 +43,10 @@
     <Compile Include="Damage.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalPlayerDamageResult.cs" />
+    <Compile Include="ShipComponents\BattleBotsComponent.cs" />
+    <Compile Include="ShipComponents\CComponent.cs" />
+    <Compile Include="ShipComponents\ComputerComponent.cs" />
+    <Compile Include="ShipComponents\InterceptorComponent.cs" />
     <Compile Include="ShipComponents\InterceptorStation.cs" />
     <Compile Include="PlayerDamage.cs" />
     <Compile Include="ShipComponents\BatteryPack.cs" />
@@ -59,12 +63,14 @@
     <Compile Include="PlayerAction.cs" />
     <Compile Include="Reactor.cs" />
     <Compile Include="ShipComponents\PulseCannon.cs" />
+    <Compile Include="ShipComponents\RocketsComponent.cs" />
     <Compile Include="ShipComponents\SideHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\LightLaserCannon.cs" />
     <Compile Include="ShipComponents\Shield.cs" />
     <Compile Include="ShipComponents\SideLightLaserCannon.cs" />
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
+    <Compile Include="ShipComponents\VisualConfirmationComponent.cs" />
     <Compile Include="SittingDuck.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
