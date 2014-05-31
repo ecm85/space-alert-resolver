@@ -8,6 +8,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
+		//TODO: Extact common internal threat actions, like external
 		public IList<Station> CurrentStations { get; protected set; } 
 		public Station CurrentStation { get { return CurrentStations.Single(); } set { CurrentStations = new[] {value}; } }
 		public PlayerAction ActionType { get; private set; }

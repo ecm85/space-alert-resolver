@@ -5,10 +5,10 @@ using System.Text;
 
 namespace BLL.Threats.Internal
 {
-	public class SkirmishersA : Skirmishers
+	public class SaboteurA : Saboteur
 	{
-		protected SkirmishersA(int timeAppears, SittingDuck sittingDuck)
-			: base(timeAppears, sittingDuck.RedZone.UpperStation, sittingDuck)
+		public SaboteurA(int timeAppears, SittingDuck sittingDuck)
+			: base(timeAppears, sittingDuck)
 		{
 		}
 

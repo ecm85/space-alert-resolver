@@ -26,6 +26,23 @@ namespace BLL.ShipComponents
 				DamageThreat(firstBThreat);
 		}
 
+		public PlayerDamage PerformAAction()
+		{
+			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
+			if (firstAThreat == null)
+				return Cannon.PerformAAction();
+			DamageThreat(firstAThreat);
+			return null;
+		}
+
+		public void PerformCAction()
+		{
+			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
+			if (firstCThreat == null)
+				throw new NotImplementedException();
+			DamageThreat(firstCThreat);
+		}
+
 		public InternalPlayerDamageResult UseBattleBots()
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
@@ -34,11 +51,10 @@ namespace BLL.ShipComponents
 
 		private InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
 		{
-			return
-				Threats
-					.Where(threat => threat.ActionType == playerAction)
-					.OrderBy(threat => threat.TimeAppears)
-					.FirstOrDefault();
+			return Threats
+				.Where(threat => threat.ActionType == playerAction)
+				.OrderBy(threat => threat.TimeAppears)
+				.FirstOrDefault();
 		}
 
 		private void DamageThreat(InternalThreat threat)

@@ -5,26 +5,11 @@ using System.Text;
 
 namespace BLL.Threats.Internal
 {
-	public class HackedShieldsA : MinorWhiteInternalThreat
+	public class HackedShieldsA : HackedShields
 	{
 		public HackedShieldsA(int timeAppears, SittingDuck sittingDuck)
-			: base(3, 2, timeAppears, sittingDuck.RedZone.UpperStation, PlayerAction.B, sittingDuck)
+			: base(timeAppears, sittingDuck.RedZone.UpperStation, sittingDuck)
 		{
-		}
-
-		public override void PeformXAction()
-		{
-			CurrentStation.EnergyContainer.Energy = 0;
-		}
-
-		public override void PerformYAction()
-		{
-			CurrentStation.OppositeDeckStation.EnergyContainer.Energy = 0;
-		}
-
-		public override void PerformZAction()
-		{
-			sittingDuck.TakeDamage(2, CurrentStation.ZoneLocation);
 		}
 	}
 }

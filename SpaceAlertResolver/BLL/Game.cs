@@ -10,6 +10,7 @@ namespace BLL
 	public class Game
 	{
 		//TODO: Maintain list of internal threats, move on each turn
+		//TODO: Don't remove threats after defeated?
 		private readonly IList<ExternalThreat> threats;
 		private readonly IDictionary<Zone, Track> tracks;
 		private readonly SittingDuck sittingDuck;
@@ -71,7 +72,7 @@ namespace BLL
 				{
 					case PlayerAction.A:
 						//TODO: Don't let a gun fire twice
-						var damage = player.CurrentStation.Cannon.PerformAAction();
+						var damage = player.CurrentStation.PerformAAction();
 						if (damage != null)
 							damages.Add(damage);
 						break;
@@ -79,7 +80,8 @@ namespace BLL
 						player.CurrentStation.PerformBAction();
 						break;
 					case PlayerAction.C:
-						throw new NotImplementedException();
+						player.CurrentStation.PerformCAction();
+						break;
 					case PlayerAction.MoveBlue:
 						player.CurrentStation = player.CurrentStation.BluewardStation ?? player.CurrentStation;
 						break;
