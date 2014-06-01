@@ -12,8 +12,6 @@ namespace BLL.Threats.Internal
 		{
 		}
 
-		//TODO: Final repair action requires and uses an energy from central reactor
-
 		public override void PeformXAction()
 		{
 			CurrentStation.OppositeDeckStation.EnergyContainer.Energy -= 1;
@@ -28,6 +26,21 @@ namespace BLL.Threats.Internal
 		{
 			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
 			sittingDuck.TakeDamage(1, EnumFactory.All<ZoneLocation>().Except(new [] {CurrentStation.ZoneLocation}));
+		}
+
+		public override InternalPlayerDamageResult TakeDamage(int damage)
+		{
+			if (RemainingHealth == 1)
+			{
+				var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
+				if (reactor.Energy > 1)
+				{
+					reactor.Energy--;
+					return base.TakeDamage(damage);
+				}
+				return null;
+			}
+			return base.TakeDamage(damage);
 		}
 	}
 }
