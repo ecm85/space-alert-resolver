@@ -15,13 +15,14 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		public InterceptorStation InterceptorStation1 { get; set; }
+		public InterceptorStation InterceptorStation { get; set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
 
+		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck(IEnumerable<Player> players)
 		{
 			CurrentInternalThreats = new List<InternalThreat>();
@@ -37,14 +38,15 @@ namespace BLL
 			Computer = computerComponent;
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
+			var interceptorStation = new InterceptorStation();
 			var upperRedStation = new Station
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
 				EnergyContainer = new SideShield(redReactor),
-				ZoneLocation = ZoneLocation.Red,
-				CComponent = new InterceptorComponent()
+				ZoneLocation = ZoneLocation.Red
 			};
-			
+			interceptorStation.InterceptorComponent = new InterceptorComponent(null, upperRedStation);
+			upperRedStation.CComponent = new InterceptorComponent(interceptorStation, null);
 			var upperWhiteStation = new Station
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
@@ -104,6 +106,7 @@ namespace BLL
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = new Gravolift() };
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = new Gravolift() };
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
+			InterceptorStation = interceptorStation;
 		}
 
 		public void TakeDamage(int damage, params ZoneLocation[] zones)

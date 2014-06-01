@@ -25,6 +25,8 @@ namespace BLL
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
+		//TODO: Allow this
+		public bool AllowVariableRangeInteceptors { get; set; }
 
 		public Game(
 			SittingDuck sittingDuck,
@@ -58,7 +60,6 @@ namespace BLL
 				PerformEndOfPhase();
 			if (currentTurn == NumberOfTurns)
 			{
-				
 				MoveThreats();
 				//TODO: Do last rocket
 				CalculateScore();
@@ -164,8 +165,7 @@ namespace BLL
 							player.CurrentStation.PerformBAction(player, currentTurn);
 							break;
 						case PlayerAction.C:
-							var cResult = player.CurrentStation.PerformCAction(player, currentTurn);
-							//TODO: Use cResult
+							player.CurrentStation.PerformCAction(player, currentTurn);
 							break;
 						case PlayerAction.MoveBlue:
 							MovePlayer(player.CurrentStation.BluewardStation, player);
@@ -183,10 +183,10 @@ namespace BLL
 							break;
 						case PlayerAction.BattleBots:
 							if (!player.BattleBots.IsDisabled)
-							{
-								var result = player.CurrentStation.UseBattleBots(player);
-								player.BattleBots.IsDisabled = result.BattleBotsDisabled;
-							}
+								player.CurrentStation.UseBattleBots(player);
+							break;
+						case PlayerAction.None:
+							player.CurrentStation.PerformNoAction(player);
 							break;
 					}
 				}
@@ -197,7 +197,8 @@ namespace BLL
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack());
-			ResolveDamage(damages);
+			var interceptorDamages = sittingDuck.InterceptorStation.PlayerInterceptorDamage;
+			ResolveDamage(damages, interceptorDamages);
 		}
 
 		private void PerformEndOfTurn()
@@ -221,8 +222,9 @@ namespace BLL
 			newStation.Players.Add(player);
 		}
 
-		private void ResolveDamage(IEnumerable<PlayerDamage> damages)
+		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)
 		{
+			//TODO: Use inteceptorDamages
 			if (!sittingDuck.CurrentExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();

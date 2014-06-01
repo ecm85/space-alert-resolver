@@ -27,7 +27,7 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
-		protected override ExternalPlayerDamageResult Attack(int amount)
+		protected override ExternalThreatDamageResult Attack(int amount)
 		{
 			var result = base.Attack(amount);
 			if (result.DamageShielded == 0)

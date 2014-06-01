@@ -25,6 +25,14 @@ namespace ConsoleResolver
 							PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
 						}
 						//Enumerable.Repeat(PlayerAction.None, 10).ToList()
+				},
+				new Player
+				{
+					Actions =
+					new []
+					{
+						PlayerAction.MoveRed, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.BattleBots
+					}
 				}
 			};
 			var sittingDuck = new SittingDuck(players);
@@ -36,14 +44,15 @@ namespace ConsoleResolver
 			};
 			var externalThreats = new ExternalThreat[]
 			{
-				new Destroyer(7, sittingDuck.BlueZone, sittingDuck),
+				//new Destroyer(7, sittingDuck.BlueZone, sittingDuck),
 				new Fighter(4, sittingDuck.RedZone, sittingDuck),
 				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
 			};
 			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
 			var internalThreats = new InternalThreat[]
 			{
-				new SkirmishersA(3, sittingDuck)
+				//new SkirmishersA(3, sittingDuck)
+				new Fissure(4, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
 			for(var i = 0; i < Game.NumberOfTurns; i++)

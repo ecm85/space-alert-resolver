@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal
 	public class Fissure : SeriousWhiteInternalThreat
 	{
 		public Fissure(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.InterceptorStation1, PlayerAction.Interceptors, sittingDuck)
+			: base(2, 2, timeAppears, sittingDuck.InterceptorStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 

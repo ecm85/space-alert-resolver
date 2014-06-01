@@ -43,11 +43,11 @@
     <Compile Include="Damage.cs" />
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="EnumFactory.cs" />
-    <Compile Include="ExternalPlayerDamageResult.cs" />
+    <Compile Include="ExternalThreatDamageResult.cs" />
+    <Compile Include="PlayerInterceptorDamage.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
     <Compile Include="ShipComponents\CComponent.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
-    <Compile Include="ShipComponents\CResult.cs" />
     <Compile Include="ShipComponents\InterceptorComponent.cs" />
     <Compile Include="ShipComponents\InterceptorStation.cs" />
     <Compile Include="PlayerDamage.cs" />
@@ -114,7 +114,6 @@
     <Compile Include="Threats\Internal\HackedShields.cs" />
     <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\HackedShieldsB.cs" />
-    <Compile Include="Threats\Internal\InternalPlayerDamageResult.cs" />
     <Compile Include="Threats\Internal\InternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />

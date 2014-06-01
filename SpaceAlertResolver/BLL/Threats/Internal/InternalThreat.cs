@@ -16,6 +16,7 @@ namespace BLL.Threats.Internal
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStation = currentStation;
+			currentStation.Threats.Add(this);
 			ActionType = actionType;
 		}
 
@@ -33,11 +34,10 @@ namespace BLL.Threats.Internal
 			get { return sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation]; }
 		}
 
-		public virtual InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
+		public virtual void TakeDamage(int damage, Player performingPlayer)
 		{
 			RemainingHealth -= damage;
 			CheckForDestroyed();
-			return new InternalPlayerDamageResult();
 		}
 
 		private void MoveToNewStation(IStation newStation)

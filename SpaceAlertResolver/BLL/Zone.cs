@@ -23,14 +23,14 @@ namespace BLL
 			DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
 		}
 
-		public ExternalPlayerDamageResult TakeAttack(int damage)
+		public ExternalThreatDamageResult TakeAttack(int damage)
 		{
 			var oldShields = UpperStation.EnergyContainer.Energy;
 			UpperStation.EnergyContainer.Energy -= damage;
 			var newShields = UpperStation.EnergyContainer.Energy;
 			var damageShielded = oldShields - newShields;
 			var damageDone = TakeDamage(damage - damageShielded);
-			return new ExternalPlayerDamageResult
+			return new ExternalThreatDamageResult
 			{
 				DamageDone = damageDone,
 				DamageShielded = damageShielded

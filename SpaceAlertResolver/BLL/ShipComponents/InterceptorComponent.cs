@@ -7,14 +7,38 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
-		public override CResult PerformCAction(Player performingPlayer)
+		private readonly IStation spacewardStation;
+		private readonly IStation shipwardStation;
+		public InterceptorComponent(IStation spacewardStation, IStation shipwardStation)
 		{
-			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled)
-				return new CResult
+			this.spacewardStation = spacewardStation;
+			this.shipwardStation = shipwardStation;
+		}
+
+		//Only legal to call from a regular station, or from an interceptor station if variable range interceptors are allowed
+		public override void PerformCAction(Player performingPlayer)
+		{
+			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && !spacewardStation.Players.Any())
+			{
+				if (spacewardStation != null)
 				{
-					TakeOffInInterceptors = true
-				};
-			return new CResult();
+					performingPlayer.CurrentStation = spacewardStation;
+					spacewardStation.UseInterceptors(performingPlayer);
+				}
+				else
+				{
+					//TODO: Player returns to ship and knocked out
+				}
+			}
+		}
+
+		public void PerformNoAction(Player performingPlayer)
+		{
+			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && shipwardStation != null)
+			{
+				performingPlayer.CurrentStation = shipwardStation;
+				shipwardStation.UseInterceptors(performingPlayer);
+			}
 		}
 	}
 }

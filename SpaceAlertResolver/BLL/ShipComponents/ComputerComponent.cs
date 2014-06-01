@@ -7,10 +7,9 @@ namespace BLL.ShipComponents
 {
 	public class ComputerComponent : CComponent
 	{
-		public override CResult PerformCAction(Player performingPlayer)
+		public override void PerformCAction(Player performingPlayer)
 		{
 			MaintenancePerformedThisPhase = true;
-			return new CResult();
 		}
 
 		public bool MaintenancePerformedThisPhase { get; private set; }

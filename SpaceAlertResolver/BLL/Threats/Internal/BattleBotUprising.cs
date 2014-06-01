@@ -41,10 +41,10 @@ namespace BLL.Threats.Internal
 			StationsHitThisTurn.Clear();
 		}
 
-		public override InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
+		public override void TakeDamage(int damage, Player performingPlayer)
 		{
 			StationsHitThisTurn.Add(performingPlayer.CurrentStation);
-			return base.TakeDamage(damage, performingPlayer);
+			base.TakeDamage(damage, performingPlayer);
 		}
 	}
 }

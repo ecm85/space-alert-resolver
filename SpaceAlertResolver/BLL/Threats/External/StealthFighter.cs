@@ -29,10 +29,9 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
-		public override void TakeDamage(IList<PlayerDamage> damages)
+		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			if (!stealthed)
-				base.TakeDamage(damages);
+			return !stealthed && base.CanBeTargetedBy(damage);
 		}
 	}
 }

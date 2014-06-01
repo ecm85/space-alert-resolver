@@ -42,7 +42,7 @@ namespace BLL.Threats.External
 			return isInRange && gunCanHitCurrentZone;
 		}
 
-		protected virtual ExternalPlayerDamageResult Attack(int amount)
+		protected virtual ExternalThreatDamageResult Attack(int amount)
 		{
 			return CurrentZone.TakeAttack(amount);
 		}

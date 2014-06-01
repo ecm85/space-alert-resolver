@@ -14,7 +14,9 @@ namespace BLL.ShipComponents
 		IList<Player> Players { get; }
 		void PerformBAction(Player performingPlayer, int currentTurn);
 		PlayerDamage PerformAAction(Player performingPlayer, int currentTurn);
-		CResult PerformCAction(Player performingPlayer, int currentTurn);
-		InternalPlayerDamageResult UseBattleBots(Player performingPlayer);
+		void PerformCAction(Player performingPlayer, int currentTurn);
+		void UseBattleBots(Player performingPlayer);
+		void UseInterceptors(Player performingPlayer);
+		void PerformNoAction(Player performingPlayer);
 	}
 }

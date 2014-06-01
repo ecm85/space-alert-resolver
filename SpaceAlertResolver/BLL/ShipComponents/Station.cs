@@ -42,23 +42,20 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
-		public CResult PerformCAction(Player performingPlayer, int currentTurn)
+		public void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat == null)
-			{
-				var cResult = CComponent.PerformCAction(performingPlayer);
-				//TODO: Use cResult (for interceptors)
-				return cResult;
-			}
-			DamageThreat(firstCThreat, performingPlayer);
-			return null;
+				CComponent.PerformCAction(performingPlayer);
+			else
+				DamageThreat(firstCThreat, performingPlayer);
 		}
 
-		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer)
+		public void UseBattleBots(Player performingPlayer)
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
-			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat, performingPlayer);
+			if (firstBattleBotThreat != null)
+				DamageThreat(firstBattleBotThreat, performingPlayer);
 		}
 
 		private InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
@@ -69,10 +66,21 @@ namespace BLL.ShipComponents
 				.FirstOrDefault();
 		}
 
-		private InternalPlayerDamageResult DamageThreat(InternalThreat threat, Player performingPlayer)
+		private void DamageThreat(InternalThreat threat, Player performingPlayer)
 		{
-			return threat.TakeDamage(1, performingPlayer);
-			//TODO: Handle removing from track, removing from ship.CurrentList and scoring
+			threat.TakeDamage(1, performingPlayer);
+			if (threat.RemainingHealth <= 0)
+			{
+				//TODO: Handle removing from track, removing from ship.CurrentList and scoring
+			}
+		}
+
+		public void PerformNoAction(Player performingPlayer)
+		{
+		}
+
+		public void UseInterceptors(Player performingPlayer)
+		{
 		}
 	}
 }

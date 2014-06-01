@@ -24,11 +24,10 @@ namespace BLL.Threats.Internal
 			Damage(4);
 		}
 
-		public override InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
+		public override void TakeDamage(int damage, Player performingPlayer)
 		{
-			var result = base.TakeDamage(damage, performingPlayer);
-			result.BattleBotsDisabled = true;
-			return result;
+			base.TakeDamage(damage, performingPlayer);
+			performingPlayer.BattleBots.IsDisabled = true;
 		}
 	}
 }

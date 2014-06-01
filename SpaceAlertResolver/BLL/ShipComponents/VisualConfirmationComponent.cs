@@ -11,10 +11,9 @@ namespace BLL.ShipComponents
 		private int BestConfirmationTurnThisPhase { get; set; }
 		public int TotalVisualConfirmationPoints { get; private set; }
 
-		public override CResult PerformCAction(Player performingPlayer)
+		public override void PerformCAction(Player performingPlayer)
 		{
 			NumberOfConfirmationsThisTurn++;
-			return new CResult();
 		}
 
 		public void PerformEndOfTurn()

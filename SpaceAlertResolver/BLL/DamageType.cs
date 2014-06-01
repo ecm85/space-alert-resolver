@@ -11,8 +11,8 @@ namespace BLL
 		LightLaser,
 		Pulse,
 		Rocket,
-		Interceptors,
-		ExternalThreat
+		InterceptorsMultiple,
+		InterceptorsSingle
 	}
 
 	public static class DamageTypeExtensions
@@ -28,11 +28,10 @@ namespace BLL
 					return BLL.DamageTargetType.All;
 				case DamageType.Rocket:
 					return BLL.DamageTargetType.Single;
-				case DamageType.Interceptors:
-					//TODO: How to indicate that the damage # changes depending on target
-					throw new NotImplementedException();
-				case DamageType.ExternalThreat:
-					throw new NotImplementedException();
+				case DamageType.InterceptorsMultiple:
+					return BLL.DamageTargetType.All;
+				case DamageType.InterceptorsSingle:
+					return BLL.DamageTargetType.Single;
 				default:
 					throw new InvalidOperationException();
 			}

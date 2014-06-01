@@ -7,6 +7,6 @@ namespace BLL.ShipComponents
 {
 	public abstract class CComponent
 	{
-		public abstract CResult PerformCAction(Player performingPlayer);
+		public abstract void PerformCAction(Player performingPlayer);
 	}
 }
