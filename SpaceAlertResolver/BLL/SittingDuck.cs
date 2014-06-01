@@ -15,7 +15,8 @@ namespace BLL
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public InterceptorStation InterceptorStation1 { get; set; }
-		public ComputerComponent Computer { get; set; }
+		public ComputerComponent Computer { get; private set; }
+		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IEnumerable<ExternalThreat> CurrentExternalThreats { get; set; } //TODO: Set this
 
 		public SittingDuck(IEnumerable<Player> players)
@@ -26,7 +27,9 @@ namespace BLL
 			var redBatteryPack = new BatteryPack();
 			var blueBatteryPack = new BatteryPack();
 			var computerComponent = new ComputerComponent();
+			var visualConfirmationComponent = new VisualConfirmationComponent();
 			Computer = computerComponent;
+			VisualConfirmationComponent = visualConfirmationComponent;
 			var upperRedStation = new Station
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
@@ -56,12 +59,13 @@ namespace BLL
 				ZoneLocation = ZoneLocation.Red,
 				CComponent = new BattleBotsComponent()
 			};
+			
 			var lowerWhiteStation = new Station
 			{
 				Cannon = new PulseCannon(whiteReactor),
 				EnergyContainer = whiteReactor,
 				ZoneLocation = ZoneLocation.White,
-				CComponent = new VisualConfirmationComponent()
+				CComponent = visualConfirmationComponent
 			};
 			var lowerBlueStation = new Station
 			{

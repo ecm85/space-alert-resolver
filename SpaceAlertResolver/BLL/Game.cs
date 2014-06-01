@@ -45,11 +45,19 @@ namespace BLL
 				//TODO: Calculate score
 				//TODO: Call JumpingToHyperspace on current threats
 			}
-			ResetTurn();
+			PerformEndOfTurn();
 			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 			if (isSecondTurnOfPhase)
 				CheckForComputer(currentTurn);
+			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
+			if (isEndOfPhase)
+				PerformEndOfPhase();
 			nextTurn++;
+		}
+
+		private void PerformEndOfPhase()
+		{
+			sittingDuck.VisualConfirmationComponent.PerformEndOfPhase();
 		}
 
 		private void CheckForComputer(int currentTurn)
@@ -128,10 +136,11 @@ namespace BLL
 			ResolveDamage(damages);
 		}
 
-		public void ResetTurn()
+		public void PerformEndOfTurn()
 		{
 			foreach (var zone in sittingDuck.Zones)
 				zone.Gravolift.Occupied = false;
+			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 		}
 
 		private static void MovePlayer(IStation newDestination, Player player)
