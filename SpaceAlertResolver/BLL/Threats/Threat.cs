@@ -29,7 +29,6 @@ namespace BLL.Threats
 		//TODO: Call this appropriately
 		public virtual void OnJumpingToHyperspace()
 		{
-			
 		}
 
 		public virtual void CheckForDestroyed()

@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal
 			DamageOtherTwoZones(1);
 		}
 
-		public override InternalPlayerDamageResult TakeDamage(int damage)
+		public override InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
 		{
 			if (RemainingHealth == 1)
 			{
@@ -36,11 +36,11 @@ namespace BLL.Threats.Internal
 				if (reactor.Energy > 1)
 				{
 					reactor.Energy--;
-					return base.TakeDamage(damage);
+					return base.TakeDamage(damage, performingPlayer);
 				}
 				return null;
 			}
-			return base.TakeDamage(damage);
+			return base.TakeDamage(damage, performingPlayer);
 		}
 	}
 }

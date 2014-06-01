@@ -30,9 +30,9 @@ namespace BLL.Threats.Internal
 			//TODO: Lose
 		}
 
-		public override InternalPlayerDamageResult TakeDamage(int damage)
+		public override InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
 		{
-			var result = base.TakeDamage(damage);
+			var result = base.TakeDamage(damage, performingPlayer);
 			if (grownUp)
 				result.BattleBotsDisabled = true;
 			return result;

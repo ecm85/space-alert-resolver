@@ -31,7 +31,7 @@ namespace BLL.ShipComponents
 			if (firstBThreat == null)
 				EnergyContainer.PerformBAction();
 			else
-				DamageThreat(firstBThreat);
+				DamageThreat(firstBThreat, performingPlayer);
 		}
 
 		public PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
@@ -39,7 +39,7 @@ namespace BLL.ShipComponents
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
 			if (firstAThreat == null)
 				return Cannon.PerformAAction();
-			DamageThreat(firstAThreat);
+			DamageThreat(firstAThreat, performingPlayer);
 			return null;
 		}
 
@@ -52,14 +52,14 @@ namespace BLL.ShipComponents
 				//TODO: Use cResult
 				return cResult;
 			}
-			DamageThreat(firstCThreat);
+			DamageThreat(firstCThreat, performingPlayer);
 			return null;
 		}
 
 		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn)
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
-			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat);
+			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat, performingPlayer);
 		}
 
 		private InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
@@ -70,9 +70,9 @@ namespace BLL.ShipComponents
 				.FirstOrDefault();
 		}
 
-		private InternalPlayerDamageResult DamageThreat(InternalThreat threat)
+		private InternalPlayerDamageResult DamageThreat(InternalThreat threat, Player performingPlayer)
 		{
-			return threat.TakeDamage(1);
+			return threat.TakeDamage(1, performingPlayer);
 			//TODO: Handle removing from track and scoring
 		}
 	}

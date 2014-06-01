@@ -5,6 +5,7 @@ using System.Text;
 using BLL.ShipComponents;
 using BLL.Threats;
 using BLL.Threats.External;
+using BLL.Threats.Internal;
 using BLL.Tracks;
 
 namespace BLL
@@ -22,7 +23,8 @@ namespace BLL
 		private int nextTurn;
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
-		private readonly List<ExternalThreat> currentExternalThreats;
+		private readonly IList<ExternalThreat> currentExternalThreats;
+		private readonly IList<InternalThreat> currentInternalThreats; 
 
 		public Game(SittingDuck sittingDuck, IList<ExternalThreat> allExternalThreats, IEnumerable<ExternalTrack> externalTracks, IList<Player> players)
 		{
@@ -32,6 +34,7 @@ namespace BLL
 			this.players = players;
 			nextTurn = 1;
 			currentExternalThreats = new List<ExternalThreat>();
+			currentInternalThreats = new List<InternalThreat>();
 		}
 
 		public void PerformTurn()
@@ -40,12 +43,6 @@ namespace BLL
 			AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
 			MoveThreats();
-			if (currentTurn == NumberOfTurns)
-			{
-				MoveThreats();
-				//TODO: Calculate score
-				//TODO: Call JumpingToHyperspace on current threats
-			}
 			PerformEndOfTurn();
 			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 			if (isSecondTurnOfPhase)
@@ -53,6 +50,13 @@ namespace BLL
 			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
 			if (isEndOfPhase)
 				PerformEndOfPhase();
+			if (currentTurn == NumberOfTurns)
+			{
+				MoveThreats();
+				//TODO: Do last rocket
+				//TODO: Calculate score
+				//TODO: Call JumpingToHyperspace on current threats
+			}
 			nextTurn++;
 		}
 
@@ -140,13 +144,16 @@ namespace BLL
 					}
 				}
 			}
+			foreach (var threat in currentInternalThreats)
+				threat.PerformEndOfPlayerActions();
+
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack());
 			ResolveDamage(damages);
 		}
 
-		public void PerformEndOfTurn()
+		private void PerformEndOfTurn()
 		{
 			foreach (var zone in sittingDuck.Zones)
 			{

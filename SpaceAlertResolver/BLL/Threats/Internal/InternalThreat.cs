@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => sittingDuck.ZonesByLocation[station.ZoneLocation]).ToList(); }
 		}
 
-		public virtual InternalPlayerDamageResult TakeDamage(int damage)
+		public virtual InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
 		{
 			RemainingHealth -= damage;
 			CheckForDestroyed();
@@ -88,5 +88,10 @@ namespace BLL.Threats.Internal
 			foreach (var zone in zones)
 				zone.TakeDamage(amount);
 		}
+
+		public virtual void PerformEndOfPlayerActions()
+		{
+		}
+
 	}
 }

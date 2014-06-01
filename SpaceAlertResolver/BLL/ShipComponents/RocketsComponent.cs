@@ -7,16 +7,21 @@ namespace BLL.ShipComponents
 {
 	public class RocketsComponent : CComponent
 	{
-		private readonly IList<Rocket> rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
-		public Rocket RocketFiredThisTurn { get; private set; }
+		public IList<Rocket> Rockets { get; private set; } 
+		private Rocket RocketFiredThisTurn { get; set; }
 		public Rocket RocketFiredLastTurn { get; private set; }
+
+		public RocketsComponent()
+		{
+			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
+		}
 
 		public override CResult PerformCAction(Player performingPlayer)
 		{
-			if (rockets.Any() && RocketFiredThisTurn == null)
+			if (Rockets.Any() && RocketFiredThisTurn == null)
 			{
-				var firedRocket = rockets.First();
-				rockets.Remove(firedRocket);
+				var firedRocket = Rockets.First();
+				Rockets.Remove(firedRocket);
 				RocketFiredThisTurn = firedRocket;
 			}
 			return new CResult();
