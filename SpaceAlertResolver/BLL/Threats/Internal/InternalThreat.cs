@@ -8,7 +8,6 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		//TODO: Extact common internal threat actions, like external
 		public IList<IStation> CurrentStations { get; protected set; } 
 		public IStation CurrentStation { get { return CurrentStations.Single(); } set { CurrentStations = new[] {value}; } }
 		public PlayerAction ActionType { get; private set; }
@@ -20,7 +19,6 @@ namespace BLL.Threats.Internal
 			ActionType = actionType;
 		}
 
-		//TODO: Revisit all the ctors arguments
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<IStation> currentStations, PlayerAction actionType, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
@@ -28,6 +26,15 @@ namespace BLL.Threats.Internal
 			foreach (var currentStation in CurrentStations)
 				currentStation.Threats.Add(this);
 			ActionType = actionType;
+		}
+
+		protected Zone CurrentZone
+		{
+			get { return sittingDuck.ZonesByLocation[CurrentZone.ZoneLocation]; }
+		}
+		private IList<Zone> CurrentZones
+		{
+			get { return CurrentStations.Select(station => sittingDuck.ZonesByLocation[station.ZoneLocation]).ToList(); }
 		}
 
 		public virtual InternalPlayerDamageResult TakeDamage(int damage)
@@ -59,6 +66,27 @@ namespace BLL.Threats.Internal
 		protected void ChangeDecks()
 		{
 			MoveToNewStation(CurrentStation.OppositeDeckStation);
+		}
+
+		protected void Damage(int amount)
+		{
+			sittingDuck.TakeDamage(amount, CurrentStation.ZoneLocation);
+		}
+
+		protected void DamageOtherTwoZones(int amount)
+		{
+			DamageZones(amount, sittingDuck.Zones.Except(new [] {CurrentZone}));
+		}
+
+		protected void DamageToAllZones(int amount)
+		{
+			DamageZones(amount, sittingDuck.Zones);
+		}
+
+		private void DamageZones(int amount, IEnumerable<Zone> zones)
+		{
+			foreach (var zone in zones)
+				zone.TakeDamage(amount);
 		}
 	}
 }

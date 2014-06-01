@@ -19,13 +19,13 @@ namespace BLL.Threats.Internal
 
 		public override void PerformYAction()
 		{
-			sittingDuck.TakeDamage(1, CurrentStation.ZoneLocation);
+			Damage(1);
 		}
 
 		public override void PerformZAction()
 		{
-			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
-			sittingDuck.TakeDamage(1, EnumFactory.All<ZoneLocation>().Except(new [] {CurrentStation.ZoneLocation}));
+			Damage(3);
+			DamageOtherTwoZones(1);
 		}
 
 		public override InternalPlayerDamageResult TakeDamage(int damage)

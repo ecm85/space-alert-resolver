@@ -20,7 +20,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			sittingDuck.TakeDamage(3, CurrentStation.ZoneLocation);
+			Damage(3);
 		}
 
 		public override InternalPlayerDamageResult TakeDamage(int damage)

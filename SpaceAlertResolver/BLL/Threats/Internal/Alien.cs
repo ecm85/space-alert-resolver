@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal
 		public override void PerformYAction()
 		{
 			ChangeDecks();
-			sittingDuck.TakeDamage(CurrentStation.Players.Count, CurrentStation.ZoneLocation);
+			Damage(CurrentStation.Players.Count);
 		}
 
 		public override void PerformZAction()

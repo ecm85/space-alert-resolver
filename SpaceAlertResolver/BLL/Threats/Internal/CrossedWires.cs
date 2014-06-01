@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal
 {
@@ -16,29 +17,35 @@ namespace BLL.Threats.Internal
 		{
 			var shield = CurrentStation.EnergyContainer;
 			var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
-			var roomForShields = shield.Capacity - shield.Energy;
-			var energyTransferredToShields = Math.Min(roomForShields, reactor.Energy);
-			shield.Energy += energyTransferredToShields;
-			reactor.Energy -= energyTransferredToShields;
-			sittingDuck.TakeDamage(reactor.Energy, CurrentStation.ZoneLocation);
-			reactor.Energy = 0;
+			TransferEnergyToShield(shield, reactor);
+			EnergyLeaksOut(reactor);
 		}
 
 		public override void PerformYAction()
 		{
 			var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
-			sittingDuck.TakeDamage(reactor.Energy, CurrentStation.ZoneLocation);
-			reactor.Energy = 0;
+			EnergyLeaksOut(reactor);
 		}
 
 		public override void PerformZAction()
 		{
-			foreach (var zone in sittingDuck.Zones)
-			{
-				var reactor = zone.LowerStation.EnergyContainer;
-				sittingDuck.TakeDamage(reactor.Energy, zone.ZoneLocation);
-				reactor.Energy = 0;
-			}
+			var allReactors = sittingDuck.Zones.Select(zone => zone.LowerStation.EnergyContainer);
+			foreach (var reactor in allReactors)
+				EnergyLeaksOut(reactor);
+		}
+
+		private void EnergyLeaksOut(EnergyContainer reactor)
+		{
+			Damage(reactor.Energy);
+			reactor.Energy = 0;
+		}
+
+		private static void TransferEnergyToShield(EnergyContainer shield, EnergyContainer reactor)
+		{
+			var roomForShields = shield.Capacity - shield.Energy;
+			var energyTransferredToShields = Math.Min(roomForShields, reactor.Energy);
+			shield.Energy += energyTransferredToShields;
+			reactor.Energy -= energyTransferredToShields;
 		}
 	}
 }

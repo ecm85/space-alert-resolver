@@ -15,21 +15,19 @@ namespace BLL.Threats.Internal
 		public override void PeformXAction()
 		{
 			var playersWithBattleBots = sittingDuck.Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
-			foreach (var player in playersWithBattleBots)
-				player.IsKnockedOut = true;
+			KnockOut(playersWithBattleBots);
 		}
 
 		public override void PerformYAction()
 		{
-			foreach (var player in CurrentStations.SelectMany(station => station.Players))
-				player.IsKnockedOut = true;
+			var playersInCurrentStations = CurrentStations.SelectMany(station => station.Players);
+			KnockOut(playersInCurrentStations);
 		}
 
 		public override void PerformZAction()
 		{
 			var playersNotOnBridge = sittingDuck.Zones.SelectMany(zone => zone.Players).Except(sittingDuck.WhiteZone.UpperStation.Players);
-			foreach (var player in playersNotOnBridge)
-				player.IsKnockedOut = true;
+			KnockOut(playersNotOnBridge);
 		}
 
 		//TODO: Extra 1 damage when hit by in both zones

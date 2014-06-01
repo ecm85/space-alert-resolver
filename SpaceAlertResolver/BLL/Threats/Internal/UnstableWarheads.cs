@@ -23,7 +23,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			sittingDuck.TakeDamage(RemainingHealth * 3, CurrentStation.ZoneLocation);
+			Damage(RemainingHealth * 3);
 		}
 	}
 }

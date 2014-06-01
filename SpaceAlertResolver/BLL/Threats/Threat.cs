@@ -63,5 +63,11 @@ namespace BLL.Threats
 			var newHealth = RemainingHealth + amount;
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
 		}
+
+		public void KnockOut(IEnumerable<Player> players)
+		{
+			foreach (var player in players)
+				player.IsKnockedOut = true;
+		}
 	}
 }

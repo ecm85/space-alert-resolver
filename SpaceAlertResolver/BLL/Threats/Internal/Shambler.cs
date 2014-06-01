@@ -21,14 +21,14 @@ namespace BLL.Threats.Internal
 		public override void PerformYAction()
 		{
 			if (IsAnyPlayerPresent())
-				sittingDuck.TakeDamage(2, CurrentStation.ZoneLocation);
+				Damage(2);
 			else
 				Repair(1);
 		}
 
 		public override void PerformZAction()
 		{
-			sittingDuck.TakeDamage(4, CurrentStation.ZoneLocation);
+			Damage(4);
 		}
 
 		private bool IsAnyPlayerPresent()

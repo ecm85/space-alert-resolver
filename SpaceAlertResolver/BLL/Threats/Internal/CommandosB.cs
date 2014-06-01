@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal
 			if (IsDamaged)
 				MoveRed();
 			else
-				sittingDuck.TakeDamage(2, CurrentStation.ZoneLocation);
+				Damage(2);
 		}
 	}
 }
