@@ -31,7 +31,10 @@ namespace BLL.Threats.External
 		{
 			PerformZAction();
 		}
-		
-		//TODO: Cannot be targeted by rockets
+
+		public override bool CanBeTargetedBy(PlayerDamage damage)
+		{
+			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);
+		}
 	}
 }

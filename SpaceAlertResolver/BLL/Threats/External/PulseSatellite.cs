@@ -27,6 +27,9 @@ namespace BLL.Threats.External
 			AttackAllZones(3);
 		}
 
-		//TODO: Cannot be targeted at distance 3
+		public override bool CanBeTargetedBy(PlayerDamage damage)
+		{
+			return damage.Range != 3 && base.CanBeTargetedBy(damage);
+		}
 	}
 }
