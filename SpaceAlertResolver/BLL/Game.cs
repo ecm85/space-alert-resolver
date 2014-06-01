@@ -81,7 +81,8 @@ namespace BLL
 						player.CurrentStation.PerformBAction();
 						break;
 					case PlayerAction.C:
-						player.CurrentStation.PerformCAction();
+						var cResult = player.CurrentStation.PerformCAction(player);
+						//TODO: Use cResult
 						break;
 					case PlayerAction.MoveBlue:
 						MovePlayer(player.CurrentStation.BluewardStation, player);

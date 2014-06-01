@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public abstract class CComponent
+	public class Rocket
 	{
-		public abstract CResult PerformCAction(Player performingPlayer);
 	}
 }

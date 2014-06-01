@@ -7,5 +7,14 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
+		public override CResult PerformCAction(Player performingPlayer)
+		{
+			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled)
+				return new CResult
+				{
+					TakeOffInInterceptors = true
+				};
+			return new CResult();
+		}
 	}
 }

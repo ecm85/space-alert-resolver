@@ -15,6 +15,7 @@ namespace BLL.ShipComponents
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
+
 		public void PerformBAction()
 		{
 			throw new NotImplementedException();
@@ -25,7 +26,7 @@ namespace BLL.ShipComponents
 			throw new NotImplementedException();
 		}
 
-		public void PerformCAction()
+		public CResult PerformCAction(Player performingPlayer)
 		{
 			throw new NotImplementedException();
 		}

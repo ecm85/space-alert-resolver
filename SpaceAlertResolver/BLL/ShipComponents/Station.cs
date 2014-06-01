@@ -14,6 +14,7 @@ namespace BLL.ShipComponents
 		public Station OppositeDeckStation { get; set; }
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
+		public CComponent CComponent { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
@@ -42,13 +43,17 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
-		public void PerformCAction()
+		public CResult PerformCAction(Player performingPlayer)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat == null)
-				//TODO: Handle C Actions
-				throw new NotImplementedException();
+			{
+				var cResult = CComponent.PerformCAction(performingPlayer);
+				//TODO: Use cResult
+				return cResult;
+			}
 			DamageThreat(firstCThreat);
+			return null;
 		}
 
 		public InternalPlayerDamageResult UseBattleBots()

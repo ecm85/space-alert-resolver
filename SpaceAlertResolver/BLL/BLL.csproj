@@ -46,6 +46,7 @@
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
     <Compile Include="ShipComponents\CComponent.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
+    <Compile Include="ShipComponents\CResult.cs" />
     <Compile Include="ShipComponents\InterceptorComponent.cs" />
     <Compile Include="ShipComponents\InterceptorStation.cs" />
     <Compile Include="PlayerDamage.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="PlayerAction.cs" />
     <Compile Include="Reactor.cs" />
     <Compile Include="ShipComponents\PulseCannon.cs" />
+    <Compile Include="ShipComponents\Rocket.cs" />
     <Compile Include="ShipComponents\RocketsComponent.cs" />
     <Compile Include="ShipComponents\SideHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\LightLaserCannon.cs" />

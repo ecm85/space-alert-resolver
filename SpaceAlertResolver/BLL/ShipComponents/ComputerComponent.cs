@@ -7,5 +7,12 @@ namespace BLL.ShipComponents
 {
 	public class ComputerComponent : CComponent
 	{
+		public override CResult PerformCAction(Player performingPlayer)
+		{
+			return new CResult
+			{
+				ComputerMaintainancePerformed = true
+			};
+		}
 	}
 }
