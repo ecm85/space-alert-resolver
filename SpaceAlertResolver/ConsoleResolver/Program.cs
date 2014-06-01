@@ -41,9 +41,8 @@ namespace ConsoleResolver
 				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
 			};
 
-			const int numberOfTurns = 10;
-			var game = new Game(sittingDuck, threats, tracks, players, numberOfTurns);
-			for(var i = 0; i < numberOfTurns; i++)
+			var game = new Game(sittingDuck, threats, tracks, players);
+			for(var i = 0; i < Game.NumberOfTurns; i++)
 				game.PerformTurn();
 			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
 				sittingDuck.BlueZone.TotalDamage,

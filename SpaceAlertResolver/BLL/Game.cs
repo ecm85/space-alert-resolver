@@ -18,33 +18,50 @@ namespace BLL
 		private readonly IList<Player> players;
 		private readonly List<ExternalThreat> defeatedThreats = new List<ExternalThreat>();
 		private int nextTurn;
-		private readonly int numberOfTurns;
+		public const int NumberOfTurns = 12;
+		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 
-		public Game(SittingDuck sittingDuck, IList<ExternalThreat> threats, IEnumerable<Track> tracks, IList<Player> players, int numberOfTurns)
+		public Game(SittingDuck sittingDuck, IList<ExternalThreat> threats, IEnumerable<Track> tracks, IList<Player> players)
 		{
 			this.sittingDuck = sittingDuck;
 			this.threats = threats;
 			this.tracks = tracks.ToDictionary(track => track.Zone);
 			this.players = players;
-			this.numberOfTurns = numberOfTurns;
 			nextTurn = 1;
 		}
 
 		public void PerformTurn()
 		{
-			//TODO: Handle computer
 			var currentTurn = nextTurn;
+			var isStartOfPhase = phaseStartTurns.Contains(currentTurn);
+			if (isStartOfPhase)
+				StartNewPhase();
 			AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
 			MoveThreats();
-			if (currentTurn == numberOfTurns)
+			if (currentTurn == NumberOfTurns)
 			{
 				MoveThreats();
 				//TODO: Calculate score
 				//TODO: Call JumpingToHyperspace on current threats
 			}
 			ResetTurn();
+			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
+			if (isSecondTurnOfPhase)
+				CheckForComputer(currentTurn);
 			nextTurn++;
+		}
+
+		private void CheckForComputer(int currentTurn)
+		{
+			if (!sittingDuck.Computer.MaintenancePerformed)
+				foreach (var player in players)
+					player.Shift(currentTurn);
+		}
+
+		private void StartNewPhase()
+		{
+			sittingDuck.Computer.MaintenancePerformed = false;
 		}
 
 		private void AddNewThreatsToTracks(int currentTurn)

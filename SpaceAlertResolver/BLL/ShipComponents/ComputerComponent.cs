@@ -9,10 +9,10 @@ namespace BLL.ShipComponents
 	{
 		public override CResult PerformCAction(Player performingPlayer)
 		{
-			return new CResult
-			{
-				ComputerMaintainancePerformed = true
-			};
+			MaintenancePerformed = true;
+			return new CResult();
 		}
+
+		public bool MaintenancePerformed { get; set; }
 	}
 }
