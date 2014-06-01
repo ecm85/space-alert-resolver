@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BattleBots.cs" />
     <Compile Include="Damage.cs" />
+    <Compile Include="DamageTargetType.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalPlayerDamageResult.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
@@ -135,16 +136,11 @@
     <Compile Include="Threats\ThreatDifficulty.cs" />
     <Compile Include="Threats\ThreatPoints.cs" />
     <Compile Include="Threats\ThreatType.cs" />
+    <Compile Include="Tracks\ExternalTrack.cs" />
     <Compile Include="Tracks\Track.cs" />
-    <Compile Include="Tracks\Track2.cs" />
-    <Compile Include="Tracks\Track3.cs" />
-    <Compile Include="Tracks\Track7.cs" />
-    <Compile Include="Tracks\Track6.cs" />
-    <Compile Include="Tracks\Track5.cs" />
-    <Compile Include="Tracks\Track4.cs" />
-    <Compile Include="Tracks\Track1.cs" />
     <Compile Include="Tracks\TrackBreakpoint.cs" />
     <Compile Include="Tracks\TrackBreakpointType.cs" />
+    <Compile Include="Tracks\TrackConfiguration.cs" />
     <Compile Include="Tracks\TrackSection.cs" />
     <Compile Include="Zone.cs" />
     <Compile Include="ZoneDebuff.cs" />

@@ -16,6 +16,7 @@ namespace BLL
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public InterceptorStation InterceptorStation1 { get; set; }
 		public ComputerComponent Computer { get; private set; }
+		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IEnumerable<ExternalThreat> CurrentExternalThreats { get; set; } //TODO: Set this
 
@@ -28,8 +29,10 @@ namespace BLL
 			var blueBatteryPack = new BatteryPack();
 			var computerComponent = new ComputerComponent();
 			var visualConfirmationComponent = new VisualConfirmationComponent();
+			var rocketsComponent = new RocketsComponent();
 			Computer = computerComponent;
 			VisualConfirmationComponent = visualConfirmationComponent;
+			RocketsComponent = rocketsComponent;
 			var upperRedStation = new Station
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
@@ -72,7 +75,7 @@ namespace BLL
 				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
 				EnergyContainer = blueReactor,
 				ZoneLocation = ZoneLocation.Blue,
-				CComponent = new RocketsComponent()
+				CComponent = rocketsComponent
 			};
 			upperRedStation.BluewardStation = upperWhiteStation;
 			upperRedStation.OppositeDeckStation = lowerRedStation;

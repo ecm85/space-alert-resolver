@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL;
-using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Tracks;
 
@@ -28,11 +27,11 @@ namespace ConsoleResolver
 				}
 			};
 			var sittingDuck = new SittingDuck(players);
-			var tracks = new Track[]
+			var tracks = new []
 			{
-				new Track1(sittingDuck.BlueZone),
-				new Track2(sittingDuck.RedZone),
-				new Track3(sittingDuck.WhiteZone)
+				new ExternalTrack(TrackConfiguration.Track1, sittingDuck.BlueZone), 
+				new ExternalTrack(TrackConfiguration.Track2, sittingDuck.RedZone), 
+				new ExternalTrack(TrackConfiguration.Track3, sittingDuck.WhiteZone), 
 			};
 			var threats = new ExternalThreat[]
 			{
@@ -48,6 +47,9 @@ namespace ConsoleResolver
 				sittingDuck.BlueZone.TotalDamage,
 				sittingDuck.RedZone.TotalDamage,
 				sittingDuck.WhiteZone.TotalDamage);
+			Console.WriteLine("Threats killed: {0}. Threats survived: {1}",
+				game.defeatedThreats.Count,
+				game.survivedThreats.Count);
 		}
 	}
 }

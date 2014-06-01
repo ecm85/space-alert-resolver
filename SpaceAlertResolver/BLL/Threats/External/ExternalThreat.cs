@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Tracks;
 
 namespace BLL.Threats.External
 {
@@ -9,6 +10,10 @@ namespace BLL.Threats.External
 	{
 		public Zone CurrentZone { get; protected set; }
 		protected int shields;
+		public ExternalTrack Track { get; set; }
+
+		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
+		public int TrackPosition  { get { return Track.threatPositions[this]; }}
 
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
@@ -23,6 +28,13 @@ namespace BLL.Threats.External
 			if (damageDealt > 0)
 				RemainingHealth -= damageDealt;
 			CheckForDestroyed();
+		}
+
+		public virtual bool CanBeTargetedBy(PlayerDamage damage)
+		{
+			var isInRange = damage.Range >= DistanceToShip;
+			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone.ZoneLocation);
+			return isInRange && gunCanHitCurrentZone;
 		}
 
 		protected virtual ExternalPlayerDamageResult Attack(int amount)

@@ -8,6 +8,5 @@ namespace BLL.ShipComponents
 	public class CResult
 	{
 		public bool TakeOffInInterceptors { get; set; }
-		public Rocket RocketFired { get; set; }
 	}
 }

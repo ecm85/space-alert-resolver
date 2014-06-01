@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Tracks;
 
@@ -12,22 +13,25 @@ namespace BLL
 	{
 		//TODO: Maintain list of internal threats, move on each turn
 		//TODO: Don't remove threats after defeated?
-		private readonly IList<ExternalThreat> threats;
-		private readonly IDictionary<Zone, Track> tracks;
+		private readonly IList<ExternalThreat> allExternalThreats;
+		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
-		private readonly List<ExternalThreat> defeatedThreats = new List<ExternalThreat>();
+		public readonly List<Threat> defeatedThreats = new List<Threat>();
+		public readonly List<Threat> survivedThreats = new List<Threat>();
 		private int nextTurn;
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
+		private readonly List<ExternalThreat> currentExternalThreats;
 
-		public Game(SittingDuck sittingDuck, IList<ExternalThreat> threats, IEnumerable<Track> tracks, IList<Player> players)
+		public Game(SittingDuck sittingDuck, IList<ExternalThreat> allExternalThreats, IEnumerable<ExternalTrack> externalTracks, IList<Player> players)
 		{
 			this.sittingDuck = sittingDuck;
-			this.threats = threats;
-			this.tracks = tracks.ToDictionary(track => track.Zone);
+			this.allExternalThreats = allExternalThreats;
+			this.externalTracks = externalTracks.ToDictionary(track => track.Zone);
 			this.players = players;
 			nextTurn = 1;
+			currentExternalThreats = new List<ExternalThreat>();
 		}
 
 		public void PerformTurn()
@@ -74,19 +78,27 @@ namespace BLL
 
 		private void AddNewThreatsToTracks(int currentTurn)
 		{
-			foreach (var newThreat in threats.Where(threat => threat.TimeAppears == currentTurn))
-				tracks[newThreat.CurrentZone].AddThreat(newThreat);
-		}
-
-		private IEnumerable<ExternalThreat> CurrentThreats
-		{
-			get { return tracks.SelectMany(track => track.Value.ThreatsOnTrack).OrderBy(threat => threat.TimeAppears).ToList(); }
+			foreach (var newThreat in allExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			{
+				var track = externalTracks[newThreat.CurrentZone];
+				track.AddThreat(newThreat);
+				newThreat.Track = track;
+				currentExternalThreats.Add(newThreat);
+			}
 		}
 
 		private void MoveThreats()
 		{
-			foreach (var externalThreat in CurrentThreats)
-				tracks[externalThreat.CurrentZone].MoveThreat(externalThreat, sittingDuck);
+			foreach (var externalThreat in currentExternalThreats)
+				externalTracks[externalThreat.CurrentZone].MoveThreat(externalThreat);
+			foreach (var track in externalTracks.Values)
+			{
+				var newlySurvivedThreats = track.ThreatsSurvived;
+				foreach (var survivedThreat in newlySurvivedThreats)
+					currentExternalThreats.Remove(survivedThreat);
+				track.RemoveThreats(newlySurvivedThreats);
+				survivedThreats.AddRange(newlySurvivedThreats);
+			}
 		}
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
@@ -94,45 +106,51 @@ namespace BLL
 			var damages = new List<PlayerDamage>();
 			foreach (var player in players.Where(player => !player.IsKnockedOut))
 			{
-				var playerAction = player.Actions[currentTurn - 1];
-				switch (playerAction)
+				if (player.Actions.Count >= currentTurn)
 				{
-					case PlayerAction.A:
-						//TODO: Don't let a gun fire twice
-						var damage = player.CurrentStation.PerformAAction(player, currentTurn);
-						if (damage != null)
-							damages.Add(damage);
-						break;
-					case PlayerAction.B:
-						player.CurrentStation.PerformBAction(player, currentTurn);
-						break;
-					case PlayerAction.C:
-						var cResult = player.CurrentStation.PerformCAction(player, currentTurn);
-						//TODO: Use cResult
-						break;
-					case PlayerAction.MoveBlue:
-						MovePlayer(player.CurrentStation.BluewardStation, player);
-						break;
-					case PlayerAction.MoveRed:
-						MovePlayer(player.CurrentStation.RedwardStation, player);
-						break;
-					case PlayerAction.ChangeDeck:
-						var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
-						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
-						if (currentZone.Gravolift.Occupied)
-							player.Shift(currentTurn);
-						else
-							currentZone.Gravolift.Occupied = true;
-						break;
-					case PlayerAction.BattleBots:
-						if (!player.BattleBots.IsDisabled)
-						{
-							var result = player.CurrentStation.UseBattleBots(player, currentTurn);
-							player.BattleBots.IsDisabled = result.BattleBotsDisabled;
-						}
-						break;
+					var playerAction = player.Actions[currentTurn - 1];
+					switch (playerAction)
+					{
+						case PlayerAction.A:
+							//TODO: Don't let a gun fire twice
+							var damage = player.CurrentStation.PerformAAction(player, currentTurn);
+							if (damage != null)
+								damages.Add(damage);
+							break;
+						case PlayerAction.B:
+							player.CurrentStation.PerformBAction(player, currentTurn);
+							break;
+						case PlayerAction.C:
+							var cResult = player.CurrentStation.PerformCAction(player, currentTurn);
+							//TODO: Use cResult
+							break;
+						case PlayerAction.MoveBlue:
+							MovePlayer(player.CurrentStation.BluewardStation, player);
+							break;
+						case PlayerAction.MoveRed:
+							MovePlayer(player.CurrentStation.RedwardStation, player);
+							break;
+						case PlayerAction.ChangeDeck:
+							var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
+							MovePlayer(player.CurrentStation.OppositeDeckStation, player);
+							if (currentZone.Gravolift.Occupied)
+								player.Shift(currentTurn);
+							else
+								currentZone.Gravolift.Occupied = true;
+							break;
+						case PlayerAction.BattleBots:
+							if (!player.BattleBots.IsDisabled)
+							{
+								var result = player.CurrentStation.UseBattleBots(player, currentTurn);
+								player.BattleBots.IsDisabled = result.BattleBotsDisabled;
+							}
+							break;
+					}
 				}
 			}
+			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
+			if (rocketFiredLastTurn != null)
+				damages.Add(rocketFiredLastTurn.PerformAttack());
 			ResolveDamage(damages);
 		}
 
@@ -141,6 +159,7 @@ namespace BLL
 			foreach (var zone in sittingDuck.Zones)
 				zone.Gravolift.Occupied = false;
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
+			sittingDuck.RocketsComponent.PerformEndOfTurn();
 		}
 
 		private static void MovePlayer(IStation newDestination, Player player)
@@ -152,41 +171,48 @@ namespace BLL
 			newStation.Players.Add(player);
 		}
 
-		private void ResolveDamage(IList<PlayerDamage> damages)
+		private void ResolveDamage(IEnumerable<PlayerDamage> damages)
 		{
-			var alreadyHitThreats = HitClosestThreats(damages);
-			HitAllThreatsWithPulse(damages, alreadyHitThreats);
-			defeatedThreats.AddRange(tracks.Values.SelectMany(track => track.RemoveDefeatedThreats()));
-		}
-
-		private void HitAllThreatsWithPulse(IEnumerable<PlayerDamage> damages, IEnumerable<ExternalThreat> alreadyHitThreats)
-		{
-			//Only one pulse cannon is currently supported.
-			var pulseDamage = damages.SingleOrDefault(damage => damage.DamageType == DamageType.Pulse);
-			if (pulseDamage == null)
+			if (!currentExternalThreats.Any())
 				return;
-			var allThreatsInPulseRange =
-				tracks.Values.SelectMany(track => track.GetThreatsWithinDistance(pulseDamage.Range)).Except(alreadyHitThreats);
-			foreach (var externalThreat in allThreatsInPulseRange)
-				externalThreat.TakeDamage(new[] {pulseDamage});
-		}
-
-		private IEnumerable<ExternalThreat> HitClosestThreats(IList<PlayerDamage> damages)
-		{
-			var alreadyHitThreats = new List<ExternalThreat>();
-			foreach (var zone in sittingDuck.Zones)
+			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
+			foreach (var damage in damages)
 			{
-				var track = tracks[zone];
-				var closestThreatInZone = track.ClosestThreat();
-				if (closestThreatInZone != null)
+				var threatsInRange = currentExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
+				switch (damage.DamageType.DamageTargetType())
 				{
-					var distanceToThreat = track.DistanceToThreat(closestThreatInZone);
-					closestThreatInZone.TakeDamage(
-						damages.Where(damage => damage.Range >= distanceToThreat && damage.ZoneLocations.Contains(zone.ZoneLocation)).ToList());
-					alreadyHitThreats.Add(closestThreatInZone);
+					case DamageTargetType.All:
+						foreach (var threat in threatsInRange)
+							AddToDamagesByThreat(threat, damage, damagesByThreat);
+						break;
+					case DamageTargetType.Single:
+						var threatHit = threatsInRange.OrderBy(threat => threat.TrackPosition).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
+						if (threatHit != null)
+							AddToDamagesByThreat(threatHit, damage, damagesByThreat);
+						break;
+					default:
+						throw new InvalidOperationException();
 				}
 			}
-			return alreadyHitThreats;
+			foreach (var threat in damagesByThreat.Keys)
+				threat.TakeDamage(damagesByThreat[threat]);
+			
+			var newlyDefeatedThreats = currentExternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
+			foreach (var defeatedThreat in newlyDefeatedThreats)
+				currentExternalThreats.Remove(defeatedThreat);
+			foreach (var track in externalTracks.Values)
+				track.RemoveThreats(newlyDefeatedThreats);
+			defeatedThreats.AddRange(newlyDefeatedThreats);
+		}
+
+		private static void AddToDamagesByThreat(
+			ExternalThreat threat,
+			PlayerDamage damage,
+			IDictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
+		{
+			if(!damagesByThreat.ContainsKey(threat) || damagesByThreat[threat] == null)
+				damagesByThreat[threat] = new List<PlayerDamage>();
+			damagesByThreat[threat].Add(damage);
 		}
 	}
 }
