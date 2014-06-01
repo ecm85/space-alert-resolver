@@ -12,10 +12,11 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Maintain list of internal threats, move on each turn
-		//TODO: Don't remove threats after defeated?
+		//TODO: Don't remove internal threats after survived - leave malfunctions somehow
 		private readonly IList<ExternalThreat> allExternalThreats;
+		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
+		private readonly InternalTrack internalTrack;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		public readonly List<Threat> defeatedThreats = new List<Threat>();
@@ -23,18 +24,22 @@ namespace BLL
 		private int nextTurn;
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
-		private readonly IList<ExternalThreat> currentExternalThreats;
-		private readonly IList<InternalThreat> currentInternalThreats; 
 
-		public Game(SittingDuck sittingDuck, IList<ExternalThreat> allExternalThreats, IEnumerable<ExternalTrack> externalTracks, IList<Player> players)
+		public Game(
+			SittingDuck sittingDuck,
+			IList<ExternalThreat> externalThreats,
+			IEnumerable<ExternalTrack> externalTracks,
+			IList<InternalThreat> internalThreats,
+			InternalTrack internalTrack,
+			IList<Player> players)
 		{
 			this.sittingDuck = sittingDuck;
-			this.allExternalThreats = allExternalThreats;
+			allExternalThreats = externalThreats;
+			allInternalThreats = internalThreats;
 			this.externalTracks = externalTracks.ToDictionary(track => track.Zone);
+			this.internalTrack = internalTrack;
 			this.players = players;
 			nextTurn = 1;
-			currentExternalThreats = new List<ExternalThreat>();
-			currentInternalThreats = new List<InternalThreat>();
 		}
 
 		public void PerformTurn()
@@ -80,22 +85,51 @@ namespace BLL
 				var track = externalTracks[newThreat.CurrentZone];
 				track.AddThreat(newThreat);
 				newThreat.Track = track;
-				currentExternalThreats.Add(newThreat);
+				sittingDuck.CurrentExternalThreats.Add(newThreat);
+			}
+			foreach (var newThreat in allInternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			{
+				internalTrack.AddThreat(newThreat);
+				sittingDuck.CurrentInternalThreats.Add(newThreat);
 			}
 		}
 
 		private void MoveThreats()
 		{
-			foreach (var externalThreat in currentExternalThreats)
-				externalTracks[externalThreat.CurrentZone].MoveThreat(externalThreat);
+			var moveCallByThreat = new Dictionary<Threat, Action>();
+			foreach (var externalThreat in sittingDuck.CurrentExternalThreats)
+				moveCallByThreat[externalThreat] = GetMoveCall(externalThreat);
+			foreach (var internalThreat in sittingDuck.CurrentInternalThreats)
+				moveCallByThreat[internalThreat] = GetMoveCall(internalThreat);
+			var allCurrentThreats = new List<Threat>()
+				.Concat(sittingDuck.CurrentExternalThreats)
+				.Concat(sittingDuck.CurrentInternalThreats)
+				.OrderBy(threat => threat.TimeAppears);
+			foreach (var threat in allCurrentThreats)
+				moveCallByThreat[threat]();
+
 			foreach (var track in externalTracks.Values)
-			{
-				var newlySurvivedThreats = track.ThreatsSurvived;
-				foreach (var survivedThreat in newlySurvivedThreats)
-					currentExternalThreats.Remove(survivedThreat);
-				track.RemoveThreats(newlySurvivedThreats);
-				survivedThreats.AddRange(newlySurvivedThreats);
-			}
+				RemoveSurvivedThreats(sittingDuck.CurrentExternalThreats, track);
+			RemoveSurvivedThreats(sittingDuck.CurrentInternalThreats, internalTrack);
+		}
+
+		private Action GetMoveCall(InternalThreat internalThreat)
+		{
+			return () => internalTrack.MoveThreat(internalThreat);
+		}
+
+		private Action GetMoveCall(ExternalThreat externalThreat)
+		{
+			return () => externalTracks[externalThreat.CurrentZone].MoveThreat(externalThreat);
+		}
+
+		private void RemoveSurvivedThreats<T>(IList<T> currentThreats, Track<T> track) where T : Threat
+		{
+			var newlySurvivedThreats = track.ThreatsSurvived;
+			foreach (var survivedThreat in newlySurvivedThreats)
+				currentThreats.Remove(survivedThreat);
+			track.RemoveThreats(newlySurvivedThreats);
+			survivedThreats.AddRange(newlySurvivedThreats);
 		}
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
@@ -144,7 +178,7 @@ namespace BLL
 					}
 				}
 			}
-			foreach (var threat in currentInternalThreats)
+			foreach (var threat in sittingDuck.CurrentInternalThreats)
 				threat.PerformEndOfPlayerActions();
 
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
@@ -176,12 +210,12 @@ namespace BLL
 
 		private void ResolveDamage(IEnumerable<PlayerDamage> damages)
 		{
-			if (!currentExternalThreats.Any())
+			if (!sittingDuck.CurrentExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
 			foreach (var damage in damages)
 			{
-				var threatsInRange = currentExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
+				var threatsInRange = sittingDuck.CurrentExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
 				switch (damage.DamageType.DamageTargetType())
 				{
 					case DamageTargetType.All:
@@ -199,10 +233,10 @@ namespace BLL
 			}
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
-			
-			var newlyDefeatedThreats = currentExternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
+
+			var newlyDefeatedThreats = sittingDuck.CurrentExternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
 			foreach (var defeatedThreat in newlyDefeatedThreats)
-				currentExternalThreats.Remove(defeatedThreat);
+				sittingDuck.CurrentExternalThreats.Remove(defeatedThreat);
 			foreach (var track in externalTracks.Values)
 				track.RemoveThreats(newlyDefeatedThreats);
 			defeatedThreats.AddRange(newlyDefeatedThreats);

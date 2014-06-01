@@ -24,8 +24,6 @@ namespace BLL.Tracks
 			threatPositions[threat] = sections.Sum(section => section.Length);
 		}
 
-		
-
 		public void RemoveThreats(IEnumerable<T> threats )
 		{
 			foreach (var threat in threats)
@@ -56,7 +54,6 @@ namespace BLL.Tracks
 							break;
 						case TrackBreakpointType.Z:
 							threat.PerformZAction();
-							//TODO: Handle survived case (score)
 							break;
 					}
 				}

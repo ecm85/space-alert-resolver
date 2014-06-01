@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal
 {
 	public class SkirmishersA : Skirmishers
 	{
-		protected SkirmishersA(int timeAppears, SittingDuck sittingDuck)
+		public SkirmishersA(int timeAppears, SittingDuck sittingDuck)
 			: base(timeAppears, sittingDuck.RedZone.UpperStation, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			MoveRed();
+			MoveBlue();
 		}
 	}
 }

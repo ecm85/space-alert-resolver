@@ -73,7 +73,7 @@ namespace BLL.ShipComponents
 		private InternalPlayerDamageResult DamageThreat(InternalThreat threat, Player performingPlayer)
 		{
 			return threat.TakeDamage(1, performingPlayer);
-			//TODO: Handle removing from track and scoring
+			//TODO: Handle removing from track, removing from ship.CurrentList and scoring
 		}
 	}
 }

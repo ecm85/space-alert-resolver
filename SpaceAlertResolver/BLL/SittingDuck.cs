@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
 using BLL.Threats.External;
+using BLL.Threats.Internal;
 
 namespace BLL
 {
@@ -18,10 +19,13 @@ namespace BLL
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
-		public IEnumerable<ExternalThreat> CurrentExternalThreats { get; set; } //TODO: Set this
+		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
+		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
 
 		public SittingDuck(IEnumerable<Player> players)
 		{
+			CurrentInternalThreats = new List<InternalThreat>();
+			CurrentExternalThreats = new List<ExternalThreat>();
 			var whiteReactor = new CentralReactor();
 			var redReactor = new SideReactor(whiteReactor);
 			var blueReactor = new SideReactor(whiteReactor);

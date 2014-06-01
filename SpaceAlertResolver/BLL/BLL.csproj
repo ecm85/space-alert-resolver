@@ -137,6 +137,7 @@
     <Compile Include="Threats\ThreatPoints.cs" />
     <Compile Include="Threats\ThreatType.cs" />
     <Compile Include="Tracks\ExternalTrack.cs" />
+    <Compile Include="Tracks\InternalTrack.cs" />
     <Compile Include="Tracks\Track.cs" />
     <Compile Include="Tracks\TrackBreakpoint.cs" />
     <Compile Include="Tracks\TrackBreakpointType.cs" />
