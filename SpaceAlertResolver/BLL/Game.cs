@@ -43,6 +43,7 @@ namespace BLL
 				//TODO: Calculate score
 				//TODO: Call JumpingToHyperspace on current threats
 			}
+			ResetTurn();
 			nextTurn++;
 		}
 
@@ -91,8 +92,12 @@ namespace BLL
 						MovePlayer(player.CurrentStation.RedwardStation, player);
 						break;
 					case PlayerAction.ChangeDeck:
-						//TODO: Handle multiple people in lift
+						var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
 						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
+						if (currentZone.Gravolift.Occupied)
+							player.Shift(currentTurn);
+						else
+							currentZone.Gravolift.Occupied = true;
 						break;
 					case PlayerAction.BattleBots:
 						if (!player.BattleBots.IsDisabled)
@@ -104,6 +109,12 @@ namespace BLL
 				}
 			}
 			ResolveDamage(damages);
+		}
+
+		public void ResetTurn()
+		{
+			foreach (var zone in sittingDuck.Zones)
+				zone.Gravolift.Occupied = false;
 		}
 
 		private static void MovePlayer(IStation newDestination, Player player)

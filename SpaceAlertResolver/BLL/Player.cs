@@ -12,5 +12,10 @@ namespace BLL
 		public IList<PlayerAction> Actions { get; set; }
 		public IStation CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
+
+		public void Shift(int currentTurn)
+		{
+			//TODO: Shift actions
+		}
 	}
 }
