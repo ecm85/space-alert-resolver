@@ -37,9 +37,6 @@ namespace BLL
 		public void PerformTurn()
 		{
 			var currentTurn = nextTurn;
-			var isStartOfPhase = phaseStartTurns.Contains(currentTurn);
-			if (isStartOfPhase)
-				StartNewPhase();
 			AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
 			MoveThreats();
@@ -62,18 +59,14 @@ namespace BLL
 		private void PerformEndOfPhase()
 		{
 			sittingDuck.VisualConfirmationComponent.PerformEndOfPhase();
+			sittingDuck.Computer.PerformEndOfPhase();
 		}
 
 		private void CheckForComputer(int currentTurn)
 		{
-			if (!sittingDuck.Computer.MaintenancePerformed)
+			if (!sittingDuck.Computer.MaintenancePerformedThisPhase)
 				foreach (var player in players)
 					player.Shift(currentTurn);
-		}
-
-		private void StartNewPhase()
-		{
-			sittingDuck.Computer.MaintenancePerformed = false;
 		}
 
 		private void AddNewThreatsToTracks(int currentTurn)
@@ -112,7 +105,6 @@ namespace BLL
 					switch (playerAction)
 					{
 						case PlayerAction.A:
-							//TODO: Don't let a gun fire twice
 							var damage = player.CurrentStation.PerformAAction(player, currentTurn);
 							if (damage != null)
 								damages.Add(damage);
@@ -157,7 +149,11 @@ namespace BLL
 		public void PerformEndOfTurn()
 		{
 			foreach (var zone in sittingDuck.Zones)
+			{
 				zone.Gravolift.Occupied = false;
+				zone.UpperStation.Cannon.PerformEndOfTurn();
+				zone.LowerStation.Cannon.PerformEndOfTurn();
+			}
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
 		}

@@ -13,11 +13,18 @@ namespace BLL.ShipComponents
 		private readonly DamageType damageType;
 		private readonly EnergyContainer source;
 
+		private bool firedThisTurn;
+
+		public void PerformEndOfTurn()
+		{
+			firedThisTurn = false;
+		}
 
 		public PlayerDamage PerformAAction()
 		{
-			if (source.Energy > 1)
+			if (!firedThisTurn && source.Energy > 1)
 			{
+				firedThisTurn = true;
 				source.Energy -= 1;
 				return new PlayerDamage(damage, damageType, range, zonesAffected);
 			}
