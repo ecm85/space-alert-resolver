@@ -7,7 +7,7 @@ namespace BLL
 {
 	public abstract class Damage
 	{
-		public int Amount { get; protected set; }
+		public int Amount { get; private set; }
 		public DamageType DamageType { get; private set; }
 
 		protected Damage(int amount, DamageType damageType)

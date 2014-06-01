@@ -15,7 +15,7 @@ namespace BLL.ShipComponents
 		{
 			get { return energy; }
 			// ReSharper disable once ValueParameterNotUsed
-			// Value is ignored to simulate infinite energy (since only doubles have an infinity constant).
+			// Value is ignored to simulate infinite energy (since only doubles have an infinity constant and energy is integral).
 			set { energy = 1; }
 		}
 

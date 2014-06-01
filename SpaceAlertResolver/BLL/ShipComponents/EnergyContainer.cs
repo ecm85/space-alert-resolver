@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public abstract class EnergyContainer
 	{
-		protected readonly int capacity;
+		private readonly int capacity;
 		public int Capacity { get { return capacity; } }
 		protected int energy;
 		public virtual int Energy { get { return energy; } set { energy = value > 0 ? value : 0; } }

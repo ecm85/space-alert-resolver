@@ -55,6 +55,7 @@ namespace ConsoleResolver
 			Console.WriteLine("Threats killed: {0}. Threats survived: {1}",
 				game.defeatedThreats.Count,
 				game.survivedThreats.Count);
+			Console.WriteLine("Total points: {0}", game.TotalPoints);
 		}
 	}
 }

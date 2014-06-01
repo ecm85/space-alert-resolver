@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal
 {
 	public class Alien : SeriousWhiteInternalThreat
 	{
-		public bool grownUp;
+		private bool grownUp;
 
 		public Alien(int timeAppears, SittingDuck sittingDuck)
 			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)

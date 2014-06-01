@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Threats
 {
 	public static class ThreatPoints
 	{
-		private static Dictionary<Tuple<ThreatType, ThreatDifficulty>, int> PointsForSurviving = new Dictionary<Tuple<ThreatType, ThreatDifficulty>, int>
+		private static readonly Dictionary<Tuple<ThreatType, ThreatDifficulty>, int> PointsForSurviving = new Dictionary<Tuple<ThreatType, ThreatDifficulty>, int>
 		{
 			{Tuple.Create(ThreatType.MinorExternal, ThreatDifficulty.White), 2},
 			{Tuple.Create(ThreatType.MinorExternal, ThreatDifficulty.Yellow), 3},

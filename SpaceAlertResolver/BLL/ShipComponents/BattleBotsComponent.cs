@@ -16,7 +16,7 @@ namespace BLL.ShipComponents
 					performingPlayer.BattleBots.IsDisabled = false;
 				return new CResult();
 			}
-			else if (battleBots != null)
+			if (battleBots != null)
 			{
 				performingPlayer.BattleBots = battleBots;
 				battleBots = null;

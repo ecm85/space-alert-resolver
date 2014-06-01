@@ -24,6 +24,7 @@ namespace BLL
 		private int nextTurn;
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
+		public int TotalPoints { get; private set; }
 
 		public Game(
 			SittingDuck sittingDuck,
@@ -57,12 +58,24 @@ namespace BLL
 				PerformEndOfPhase();
 			if (currentTurn == NumberOfTurns)
 			{
+				
 				MoveThreats();
 				//TODO: Do last rocket
-				//TODO: Calculate score
-				//TODO: Call JumpingToHyperspace on current threats
+				CalculateScore();
+				foreach (var threat in sittingDuck.CurrentExternalThreats)
+					threat.OnJumpingToHyperspace();
+				foreach (var threat in sittingDuck.CurrentInternalThreats)
+					threat.OnJumpingToHyperspace();
 			}
 			nextTurn++;
+		}
+
+		private void CalculateScore()
+		{
+			//TODO: include penalties in score, and break score up more?
+			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
+			TotalPoints += survivedThreats.Sum(threat => threat.PointsForSurviving);
+			TotalPoints += defeatedThreats.Sum(threat => threat.PointsForDefeating);
 		}
 
 		private void PerformEndOfPhase()
@@ -84,7 +97,7 @@ namespace BLL
 			{
 				var track = externalTracks[newThreat.CurrentZone];
 				track.AddThreat(newThreat);
-				newThreat.Track = track;
+				newThreat.SetTrack(track);
 				sittingDuck.CurrentExternalThreats.Add(newThreat);
 			}
 			foreach (var newThreat in allInternalThreats.Where(threat => threat.TimeAppears == currentTurn))
@@ -171,7 +184,7 @@ namespace BLL
 						case PlayerAction.BattleBots:
 							if (!player.BattleBots.IsDisabled)
 							{
-								var result = player.CurrentStation.UseBattleBots(player, currentTurn);
+								var result = player.CurrentStation.UseBattleBots(player);
 								player.BattleBots.IsDisabled = result.BattleBotsDisabled;
 							}
 							break;

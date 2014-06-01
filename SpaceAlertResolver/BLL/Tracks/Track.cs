@@ -8,39 +8,39 @@ namespace BLL.Tracks
 {
 	public abstract class Track<T> where T : Threat
 	{
-		public readonly IDictionary<T, int> threatPositions;
-		public readonly IDictionary<int, TrackBreakpoint> breakpoints;
+		public IDictionary<T, int> ThreatPositions { get; private set; }
+		private readonly IDictionary<int, TrackBreakpoint> breakpoints;
 		protected readonly IList<TrackSection> sections;
 
 		protected Track(TrackConfiguration trackConfiguration)
 		{
-			threatPositions = new Dictionary<T, int>();
+			ThreatPositions = new Dictionary<T, int>();
 			breakpoints = trackConfiguration.TrackBreakpoints().ToDictionary(breakpoint => breakpoint.Position);
 			sections = trackConfiguration.TrackSections();
 		}
 
 		public void AddThreat(T threat)
 		{
-			threatPositions[threat] = sections.Sum(section => section.Length);
+			ThreatPositions[threat] = sections.Sum(section => section.Length);
 		}
 
 		public void RemoveThreats(IEnumerable<T> threats )
 		{
 			foreach (var threat in threats)
-				threatPositions.Remove(threat);
+				ThreatPositions.Remove(threat);
 		}
 
 		public IList<T> ThreatsSurvived
 		{
-			get { return threatPositions.Keys.Where(threat => threatPositions[threat] <= 0).ToList(); }
+			get { return ThreatPositions.Keys.Where(threat => ThreatPositions[threat] <= 0).ToList(); }
 		}
 
 		public void MoveThreat(T threat)
 		{
 			for (var i = 0; i < threat.Speed; i++)
 			{
-				threatPositions[threat]--;
-				var newLocationOnTrack = threatPositions[threat];
+				ThreatPositions[threat]--;
+				var newLocationOnTrack = ThreatPositions[threat];
 				if (breakpoints.ContainsKey(newLocationOnTrack))
 				{
 					var crossedBreakpoint = breakpoints[newLocationOnTrack];

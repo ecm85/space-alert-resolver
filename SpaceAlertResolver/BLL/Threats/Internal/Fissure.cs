@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal
 			//TODO: Lose.
 		}
 
-		public override void OnDestroyed()
+		protected override void OnDestroyed()
 		{
 			foreach (var zone in sittingDuck.Zones)
 				zone.DebuffsBySource.Remove(this);

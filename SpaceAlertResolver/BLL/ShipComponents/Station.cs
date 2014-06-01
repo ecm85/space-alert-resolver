@@ -8,13 +8,12 @@ namespace BLL.ShipComponents
 {
 	public class Station : IStation
 	{
-		//TODO: Rename to left/right, at least here?
 		public Station RedwardStation { get; set; }
 		public Station BluewardStation { get; set; }
 		public Station OppositeDeckStation { get; set; }
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
-		public CComponent CComponent { get; set; }
+		public CComponent CComponent { private get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
@@ -49,14 +48,14 @@ namespace BLL.ShipComponents
 			if (firstCThreat == null)
 			{
 				var cResult = CComponent.PerformCAction(performingPlayer);
-				//TODO: Use cResult
+				//TODO: Use cResult (for interceptors)
 				return cResult;
 			}
 			DamageThreat(firstCThreat, performingPlayer);
 			return null;
 		}
 
-		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn)
+		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer)
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat, performingPlayer);

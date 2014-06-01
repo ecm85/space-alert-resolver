@@ -7,9 +7,9 @@ namespace BLL.ShipComponents
 {
 	public class VisualConfirmationComponent : CComponent
 	{
-		public int NumberOfConfirmationsThisTurn { get; set; }
-		public int BestConfirmationTurnThisPhase { get; set; }
-		public int TotalVisualConfirmationPoints { get; set; }
+		private int NumberOfConfirmationsThisTurn { get; set; }
+		private int BestConfirmationTurnThisPhase { get; set; }
+		public int TotalVisualConfirmationPoints { get; private set; }
 
 		public override CResult PerformCAction(Player performingPlayer)
 		{

@@ -9,13 +9,13 @@ namespace BLL
 {
 	public class Zone
 	{
-		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers
+		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
 		public Station UpperStation { get; set; }
 		public Station LowerStation { get; set; }
 		public Gravolift Gravolift { get; set; }
-		public int TotalDamage { get; set; }
+		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }
-		public IList<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
+		public IEnumerable<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
 		public IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; private set; }
 
 		public Zone()

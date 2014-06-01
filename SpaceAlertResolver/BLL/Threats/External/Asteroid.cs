@@ -34,7 +34,7 @@ namespace BLL.Threats.External
 			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
-		public override void OnDestroyed()
+		protected override void OnDestroyed()
 		{
 			Attack(2 * breakpointsCrossed);
 		}

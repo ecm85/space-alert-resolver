@@ -75,7 +75,7 @@ namespace BLL.Tracks
 			}
 		}
 
-		public static IList<TrackBreakpoint> TrackBreakpoints(this TrackConfiguration trackConfiguration)
+		public static IEnumerable<TrackBreakpoint> TrackBreakpoints(this TrackConfiguration trackConfiguration)
 		{
 			switch (trackConfiguration)
 			{

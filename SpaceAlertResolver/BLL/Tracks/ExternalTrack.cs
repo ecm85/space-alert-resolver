@@ -16,7 +16,7 @@ namespace BLL.Tracks
 
 		public int DistanceToThreat(ExternalThreat threat)
 		{
-			var distance = threatPositions[threat];
+			var distance = ThreatPositions[threat];
 			foreach (var section in sections.OrderBy(section => section.DistanceFromShip))
 			{
 				if (section.Length >= distance)

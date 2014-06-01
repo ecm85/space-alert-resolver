@@ -7,8 +7,8 @@ namespace BLL.Threats
 {
 	public abstract class Threat
 	{
-		public virtual int PointsForDefeating { get { return ThreatPoints.GetPointsForDefeating(type, difficulty); } }
-		public virtual int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
+		public int PointsForDefeating { get { return ThreatPoints.GetPointsForDefeating(type, difficulty); } }
+		public int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
 
 		public int TimeAppears { get; private set; }
 		private int TotalHealth { get; set; }
@@ -20,24 +20,23 @@ namespace BLL.Threats
 
 		protected readonly SittingDuck sittingDuck;
 
-		private bool destroyed = false;
+		private bool destroyed;
 
 		public abstract void PeformXAction();
 		public abstract void PerformYAction();
 		public abstract void PerformZAction();
 
-		//TODO: Call this appropriately
 		public virtual void OnJumpingToHyperspace()
 		{
 		}
 
-		public virtual void CheckForDestroyed()
+		public void CheckForDestroyed()
 		{
 			if (!destroyed && RemainingHealth <= 0)
 				OnDestroyed();
 		}
 
-		public virtual void OnDestroyed()
+		protected virtual void OnDestroyed()
 		{
 			destroyed = true;
 		}
@@ -57,13 +56,13 @@ namespace BLL.Threats
 			this.sittingDuck = sittingDuck;
 		}
 
-		public void Repair(int amount)
+		protected void Repair(int amount)
 		{
 			var newHealth = RemainingHealth + amount;
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
 		}
 
-		public void KnockOut(IEnumerable<Player> players)
+		protected static void KnockOut(IEnumerable<Player> players)
 		{
 			foreach (var player in players)
 				player.IsKnockedOut = true;

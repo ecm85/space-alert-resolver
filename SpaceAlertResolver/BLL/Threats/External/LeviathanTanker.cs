@@ -28,7 +28,7 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
-		public override void OnDestroyed()
+		protected override void OnDestroyed()
 		{
 			foreach (var threat in sittingDuck.CurrentExternalThreats)
 			{

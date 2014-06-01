@@ -8,12 +8,17 @@ namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public Zone CurrentZone { get; protected set; }
+		public Zone CurrentZone { get; private set; }
 		protected int shields;
-		public ExternalTrack Track { get; set; }
+		private ExternalTrack Track { get; set; }
+
+		public void SetTrack(ExternalTrack track)
+		{
+			Track = track;
+		}
 
 		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
-		public int TrackPosition  { get { return Track.threatPositions[this]; }}
+		public int TrackPosition  { get { return Track.ThreatPositions[this]; }}
 
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
@@ -42,22 +47,20 @@ namespace BLL.Threats.External
 			return CurrentZone.TakeAttack(amount);
 		}
 
-		protected virtual ExternalPlayerDamageResult AttackAllZones(int amount)
+		protected void AttackAllZones(int amount)
 		{
-			return AttackZones(amount, sittingDuck.Zones);
+			AttackZones(amount, sittingDuck.Zones);
 		}
 
-		protected virtual ExternalPlayerDamageResult AttackOtherTwoZones(int amount)
+		protected void AttackOtherTwoZones(int amount)
 		{
-			return AttackZones(amount, sittingDuck.Zones.Except(new[] { CurrentZone }));
+			AttackZones(amount, sittingDuck.Zones.Except(new[] { CurrentZone }));
 		}
 
-		private ExternalPlayerDamageResult AttackZones(int amount, IEnumerable<Zone> zones)
+		private void AttackZones(int amount, IEnumerable<Zone> zones)
 		{
-			var result = new ExternalPlayerDamageResult();
 			foreach (var zone in zones)
-				result.AddDamage(zone.TakeAttack(amount));
-			return result;
+				zone.TakeAttack(amount);
 		}
 	}
 }

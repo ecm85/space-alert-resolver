@@ -78,7 +78,6 @@
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\Station.cs" />
-    <Compile Include="ThreatDamage.cs" />
     <Compile Include="Threats\External\Amoeba.cs" />
     <Compile Include="Threats\External\Gunship.cs" />
     <Compile Include="Threats\External\Meteoroid.cs" />

@@ -8,8 +8,8 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		public IList<IStation> CurrentStations { get; protected set; } 
-		public IStation CurrentStation { get { return CurrentStations.Single(); } set { CurrentStations = new[] {value}; } }
+		protected IList<IStation> CurrentStations { get; private set; }
+		protected IStation CurrentStation { get { return CurrentStations.Single(); } private set { CurrentStations = new[] {value}; } }
 		public PlayerAction ActionType { get; private set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IStation currentStation, PlayerAction actionType, SittingDuck sittingDuck) :
@@ -30,11 +30,7 @@ namespace BLL.Threats.Internal
 
 		protected Zone CurrentZone
 		{
-			get { return sittingDuck.ZonesByLocation[CurrentZone.ZoneLocation]; }
-		}
-		private IList<Zone> CurrentZones
-		{
-			get { return CurrentStations.Select(station => sittingDuck.ZonesByLocation[station.ZoneLocation]).ToList(); }
+			get { return sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation]; }
 		}
 
 		public virtual InternalPlayerDamageResult TakeDamage(int damage, Player performingPlayer)
@@ -44,7 +40,7 @@ namespace BLL.Threats.Internal
 			return new InternalPlayerDamageResult();
 		}
 
-		protected void MoveToNewStation(IStation newStation)
+		private void MoveToNewStation(IStation newStation)
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
@@ -76,11 +72,6 @@ namespace BLL.Threats.Internal
 		protected void DamageOtherTwoZones(int amount)
 		{
 			DamageZones(amount, sittingDuck.Zones.Except(new [] {CurrentZone}));
-		}
-
-		protected void DamageToAllZones(int amount)
-		{
-			DamageZones(amount, sittingDuck.Zones);
 		}
 
 		private void DamageZones(int amount, IEnumerable<Zone> zones)

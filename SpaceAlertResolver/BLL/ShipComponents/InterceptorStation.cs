@@ -34,7 +34,7 @@ namespace BLL.ShipComponents
 			//TODO: Change to a further inteceptor station
 		}
 
-		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn)
+		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer)
 		{
 			//TODO: Change to attack with interceptors
 			return null;
