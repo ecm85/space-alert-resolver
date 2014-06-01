@@ -211,9 +211,10 @@ namespace BLL
 			}
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
+			sittingDuck.InterceptorStation.PerformEndOfTurn();
 		}
 
-		private static void MovePlayer(IStation newDestination, Player player)
+		private static void MovePlayer(Station newDestination, Player player)
 		{
 			var newStation = newDestination ?? player.CurrentStation;
 			var oldStation = player.CurrentStation;

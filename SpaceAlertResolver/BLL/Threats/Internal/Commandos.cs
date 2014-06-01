@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class Commandos : SeriousWhiteInternalThreat
 	{
-		protected Commandos(int timeAppears, IStation currentStation, SittingDuck sittingDuck)
+		protected Commandos(int timeAppears, Station currentStation, SittingDuck sittingDuck)
 			: base(2, 2, timeAppears, currentStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}

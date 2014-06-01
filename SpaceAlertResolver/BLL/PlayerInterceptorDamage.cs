@@ -7,5 +7,6 @@ namespace BLL
 {
 	public class PlayerInterceptorDamage
 	{
+		//TODO: Make method that returns one of two PlayerDamages depending on # of targets
 	}
 }

@@ -7,9 +7,9 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
-		private readonly IStation spacewardStation;
-		private readonly IStation shipwardStation;
-		public InterceptorComponent(IStation spacewardStation, IStation shipwardStation)
+		private readonly Station spacewardStation;
+		private readonly Station shipwardStation;
+		public InterceptorComponent(Station spacewardStation, Station shipwardStation)
 		{
 			this.spacewardStation = spacewardStation;
 			this.shipwardStation = shipwardStation;

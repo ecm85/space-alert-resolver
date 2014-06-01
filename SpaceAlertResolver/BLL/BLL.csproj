@@ -59,7 +59,7 @@
     <Compile Include="ShipComponents\CentralHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\Gravolift.cs" />
     <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
-    <Compile Include="ShipComponents\IStation.cs" />
+    <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerAction.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="SittingDuck.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="ShipComponents\Station.cs" />
+    <Compile Include="ShipComponents\StandardStation.cs" />
     <Compile Include="Threats\External\Amoeba.cs" />
     <Compile Include="Threats\External\Gunship.cs" />
     <Compile Include="Threats\External\Meteoroid.cs" />

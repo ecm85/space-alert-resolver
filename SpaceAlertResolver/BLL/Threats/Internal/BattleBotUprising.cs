@@ -8,12 +8,12 @@ namespace BLL.Threats.Internal
 {
 	public class BattleBotUprising : SeriousWhiteInternalThreat
 	{
-		private ISet<IStation> StationsHitThisTurn { get; set; }
+		private ISet<Station> StationsHitThisTurn { get; set; }
 
 		public BattleBotUprising(int timeAppears, SittingDuck sittingDuck)
-			: base(4, 2, timeAppears, new List<IStation> {sittingDuck.BlueZone.UpperStation, sittingDuck.RedZone.LowerStation}, PlayerAction.C, sittingDuck)
+			: base(4, 2, timeAppears, new List<Station> {sittingDuck.BlueZone.UpperStation, sittingDuck.RedZone.LowerStation}, PlayerAction.C, sittingDuck)
 		{
-			StationsHitThisTurn = new HashSet<IStation>();
+			StationsHitThisTurn = new HashSet<Station>();
 		}
 
 		public override void PeformXAction()

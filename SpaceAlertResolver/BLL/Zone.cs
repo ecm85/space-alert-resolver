@@ -10,8 +10,8 @@ namespace BLL
 	public class Zone
 	{
 		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
-		public Station UpperStation { get; set; }
-		public Station LowerStation { get; set; }
+		public StandardStation UpperStation { get; set; }
+		public StandardStation LowerStation { get; set; }
 		public Gravolift Gravolift { get; set; }
 		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }

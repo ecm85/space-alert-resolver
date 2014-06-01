@@ -39,7 +39,7 @@ namespace BLL
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
 			var interceptorStation = new InterceptorStation();
-			var upperRedStation = new Station
+			var upperRedStation = new StandardStation
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
 				EnergyContainer = new SideShield(redReactor),
@@ -47,21 +47,21 @@ namespace BLL
 			};
 			interceptorStation.InterceptorComponent = new InterceptorComponent(null, upperRedStation);
 			upperRedStation.CComponent = new InterceptorComponent(interceptorStation, null);
-			var upperWhiteStation = new Station
+			var upperWhiteStation = new StandardStation
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
 				EnergyContainer = new CentralShield(whiteReactor),
 				ZoneLocation = ZoneLocation.White,
 				CComponent = computerComponent
 			};
-			var upperBlueStation = new Station
+			var upperBlueStation = new StandardStation
 			{
 				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
 				EnergyContainer = new SideShield(blueReactor),
 				ZoneLocation = ZoneLocation.Blue,
 				CComponent = new BattleBotsComponent()
 			};
-			var lowerRedStation = new Station
+			var lowerRedStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
 				EnergyContainer = redReactor,
@@ -69,14 +69,14 @@ namespace BLL
 				CComponent = new BattleBotsComponent()
 			};
 			
-			var lowerWhiteStation = new Station
+			var lowerWhiteStation = new StandardStation
 			{
 				Cannon = new PulseCannon(whiteReactor),
 				EnergyContainer = whiteReactor,
 				ZoneLocation = ZoneLocation.White,
 				CComponent = visualConfirmationComponent
 			};
-			var lowerBlueStation = new Station
+			var lowerBlueStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
 				EnergyContainer = blueReactor,
