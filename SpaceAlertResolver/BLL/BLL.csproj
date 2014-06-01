@@ -147,6 +147,7 @@
     <Compile Include="Tracks\TrackBreakpointType.cs" />
     <Compile Include="Tracks\TrackSection.cs" />
     <Compile Include="Zone.cs" />
+    <Compile Include="ZoneDebuff.cs" />
     <Compile Include="ZoneLocation.cs" />
   </ItemGroup>
   <ItemGroup />
