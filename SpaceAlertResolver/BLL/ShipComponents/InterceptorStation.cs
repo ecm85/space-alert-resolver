@@ -16,24 +16,28 @@ namespace BLL.ShipComponents
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
 
-		public void PerformBAction()
+		public void PerformBAction(Player performingPlayer, int currentTurn)
 		{
-			throw new NotImplementedException();
+			performingPlayer.Shift(currentTurn);
 		}
 
-		public PlayerDamage PerformAAction()
+		public PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
 		{
-			throw new NotImplementedException();
+			performingPlayer.Shift(currentTurn);
+			return null;
 		}
 
-		public CResult PerformCAction(Player performingPlayer)
+		public CResult PerformCAction(Player performingPlayer, int currentTurn)
 		{
-			throw new NotImplementedException();
+			performingPlayer.Shift(currentTurn);
+			return null;
+			//TODO: Change to a further inteceptor station
 		}
 
-		public InternalPlayerDamageResult UseBattleBots()
+		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn)
 		{
-			throw new NotImplementedException();
+			//TODO: Change to attack with interceptors
+			return null;
 		}
 	}
 }

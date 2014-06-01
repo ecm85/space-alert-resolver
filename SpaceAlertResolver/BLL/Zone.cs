@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Threats.Internal;
 
 namespace BLL
 {
@@ -15,6 +16,12 @@ namespace BLL
 		public int TotalDamage { get; set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public IList<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
+		public IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; private set; }
+
+		public Zone()
+		{
+			DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
+		}
 
 		public ExternalPlayerDamageResult TakeAttack(int damage)
 		{
@@ -22,12 +29,7 @@ namespace BLL
 			UpperStation.EnergyContainer.Energy -= damage;
 			var newShields = UpperStation.EnergyContainer.Energy;
 			var damageShielded = oldShields - newShields;
-			var damageDone = damage - damageShielded;
-			//TODO: Apply damageDone tokens
-			TotalDamage += damageDone;
-			if (TotalDamage >= 7)
-				//TODO: Lose
-				throw new NotImplementedException();
+			var damageDone = TakeDamage(damage - damageShielded);
 			return new ExternalPlayerDamageResult
 			{
 				DamageDone = damageDone,
@@ -35,13 +37,17 @@ namespace BLL
 			};
 		}
 
-		public void TakeDamage(int damage)
+		public int TakeDamage(int damage)
 		{
+			var damageDone = DebuffsBySource.Values
+				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
+				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
 			//TODO: Apply damageDone tokens
-			TotalDamage += damage;
+			TotalDamage += damageDone;
 			if (TotalDamage >= 7)
 				//TODO: Lose
 				throw new NotImplementedException();
+			return damageDone;
 		}
 
 		public void DrainShields()

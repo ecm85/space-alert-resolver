@@ -74,15 +74,15 @@ namespace BLL
 				{
 					case PlayerAction.A:
 						//TODO: Don't let a gun fire twice
-						var damage = player.CurrentStation.PerformAAction();
+						var damage = player.CurrentStation.PerformAAction(player, currentTurn);
 						if (damage != null)
 							damages.Add(damage);
 						break;
 					case PlayerAction.B:
-						player.CurrentStation.PerformBAction();
+						player.CurrentStation.PerformBAction(player, currentTurn);
 						break;
 					case PlayerAction.C:
-						var cResult = player.CurrentStation.PerformCAction(player);
+						var cResult = player.CurrentStation.PerformCAction(player, currentTurn);
 						//TODO: Use cResult
 						break;
 					case PlayerAction.MoveBlue:
@@ -102,7 +102,7 @@ namespace BLL
 					case PlayerAction.BattleBots:
 						if (!player.BattleBots.IsDisabled)
 						{
-							var result = player.CurrentStation.UseBattleBots();
+							var result = player.CurrentStation.UseBattleBots(player, currentTurn);
 							player.BattleBots.IsDisabled = result.BattleBotsDisabled;
 						}
 						break;

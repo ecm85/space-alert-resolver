@@ -12,9 +12,9 @@ namespace BLL.ShipComponents
 		ZoneLocation ZoneLocation { get; set; }
 		ISet<InternalThreat> Threats { get; }
 		IList<Player> Players { get; }
-		void PerformBAction();
-		PlayerDamage PerformAAction();
-		CResult PerformCAction(Player performingPlayer);
-		InternalPlayerDamageResult UseBattleBots();
+		void PerformBAction(Player performingPlayer, int currentTurn);
+		PlayerDamage PerformAAction(Player performingPlayer, int currentTurn);
+		CResult PerformCAction(Player performingPlayer, int currentTurn);
+		InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn);
 	}
 }

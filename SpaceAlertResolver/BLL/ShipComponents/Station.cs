@@ -25,7 +25,7 @@ namespace BLL.ShipComponents
 			Threats = new HashSet<InternalThreat>();
 		}
 
-		public void PerformBAction()
+		public void PerformBAction(Player performingPlayer, int currentTurn)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
 			if (firstBThreat == null)
@@ -34,7 +34,7 @@ namespace BLL.ShipComponents
 				DamageThreat(firstBThreat);
 		}
 
-		public PlayerDamage PerformAAction()
+		public PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
 			if (firstAThreat == null)
@@ -43,7 +43,7 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
-		public CResult PerformCAction(Player performingPlayer)
+		public CResult PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat == null)
@@ -56,7 +56,7 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
-		public InternalPlayerDamageResult UseBattleBots()
+		public InternalPlayerDamageResult UseBattleBots(Player performingPlayer, int currentTurn)
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			return firstBattleBotThreat == null ? null : DamageThreat(firstBattleBotThreat);
