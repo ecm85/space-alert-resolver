@@ -20,6 +20,7 @@ namespace BLL
 		//TODO: Double actions
 		//TODO: Campaign repairs and damage carryover
 		//TODO: Let user select damage tokens
+		//TODO: include penalties in score, and break score up more?
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
@@ -32,7 +33,6 @@ namespace BLL
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
-		//TODO: Allow this
 		public bool AllowVariableRangeInteceptors { get; set; }
 
 		public Game(
@@ -75,7 +75,9 @@ namespace BLL
 			if (currentTurn == NumberOfTurns)
 			{
 				MoveThreats();
-				//TODO: Do last rocket
+				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
+				if (rocketFiredLastTurn != null)
+					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack()}, null);
 				CalculateScore();
 				foreach (var threat in sittingDuck.CurrentExternalThreats)
 					threat.OnJumpingToHyperspace();
@@ -87,7 +89,6 @@ namespace BLL
 
 		private void CalculateScore()
 		{
-			//TODO: include penalties in score, and break score up more?
 			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
 			TotalPoints += survivedThreats.Sum(threat => threat.PointsForSurviving);
 			TotalPoints += defeatedThreats.Sum(threat => threat.PointsForDefeating);
