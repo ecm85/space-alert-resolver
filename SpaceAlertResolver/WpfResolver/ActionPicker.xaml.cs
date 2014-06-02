@@ -59,5 +59,15 @@ namespace WpfResolver
 				}
 			};
 		}
+
+		private void FifthPlayerCheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			FifthPlayerTextBox.IsEnabled = FifthPlayerCheckBox.IsChecked ?? false;
+		}
+
+		private void FourthPlayerCheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			FourthPlayerTextBox.IsEnabled = FourthPlayerCheckBox.IsChecked ?? false;
+		}
 	}
 }

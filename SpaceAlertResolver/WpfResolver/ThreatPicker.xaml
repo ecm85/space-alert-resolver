@@ -1,8 +1,9 @@
 ﻿<Window x:Class="WpfResolver.ThreatPicker"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ThreatPicker" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="ThreatPicker" Height="300" Width="300"
+		Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+	<Grid>
+		
+	</Grid>
 </Window>

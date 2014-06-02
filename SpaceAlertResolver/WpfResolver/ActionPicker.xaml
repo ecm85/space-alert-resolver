@@ -1,8 +1,20 @@
 ﻿<Window x:Class="WpfResolver.ActionPicker"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ActionPicker" Height="352" Width="558">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="ActionPicker" Height="352" Width="558"
+		Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 	<Grid>
-
+		<TextBox Name="FirstPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="78,50,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+		<TextBox Name="SecondPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="78,102,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+		<TextBox Name="ThirdPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="78,151,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+		<TextBox Name="FourthPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="78,199,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="{Binding ElementName=FourthPlayerCheckBox, Path=IsChecked}"/>
+		<TextBox Name="FifthPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="78,249,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsEnabled="{Binding ElementName=FifthPlayerCheckBox, Path=IsChecked}"/>
+		<CheckBox Name="FourthPlayerCheckBox" Content="" HorizontalAlignment="Left" Margin="49,199,0,0" VerticalAlignment="Top" IsChecked="True"/>
+		<CheckBox Name="FifthPlayerCheckBox" Content="" HorizontalAlignment="Left" Margin="49,249,0,0" VerticalAlignment="Top"/>
+		<Label Content="Player 1" HorizontalAlignment="Left" Margin="78,25,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 2" HorizontalAlignment="Left" Margin="78,77,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 3" HorizontalAlignment="Left" Margin="78,126,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 4" HorizontalAlignment="Left" Margin="78,174,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 5" HorizontalAlignment="Left" Margin="78,227,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
 	</Grid>
 </Window>
