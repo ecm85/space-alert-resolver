@@ -14,33 +14,7 @@ namespace ConsoleResolver
 		static void Main()
 		{
 			
-			var players = new[]
-			{
-				new Player
-				{
-					Actions = new List<PlayerAction>
-					{
-						PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A,
-						PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
-					},
-					Index = 1
-				},
-				new Player
-				{
-					Actions = new List<PlayerAction>
-					{
-						PlayerAction.MoveRed, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.C, PlayerAction.BattleBots
-					},
-					Index = 2
-				},
-				new Player
-				{
-					Actions = new List<PlayerAction>
-					{
-						PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C
-					}
-				}
-			};
+			var players = GetPlayers();
 			var sittingDuck = new SittingDuck(players);
 			var externalTracks = new []
 			{
@@ -48,13 +22,14 @@ namespace ConsoleResolver
 				new ExternalTrack(TrackConfiguration.Track2, sittingDuck.RedZone),
 				new ExternalTrack(TrackConfiguration.Track3, sittingDuck.WhiteZone)
 			};
+			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
+
 			var externalThreats = new ExternalThreat[]
 			{
 				new Destroyer(3, sittingDuck.BlueZone, sittingDuck),
 				new Fighter(4, sittingDuck.RedZone, sittingDuck),
 				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
 			};
-			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
 			var internalThreats = new InternalThreat[]
 			{
 				new SkirmishersA(3, sittingDuck),
@@ -85,6 +60,53 @@ namespace ConsoleResolver
 				foreach (var token in zone.AllDamageTokensTaken)
 					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
 			}
+		}
+
+		private static Player[] GetPlayers()
+		{
+			var players = new[]
+			{
+				new Player
+				{
+					Actions =
+						new List<PlayerAction>
+						{
+							PlayerAction.None,
+							PlayerAction.ChangeDeck,
+							PlayerAction.B,
+							PlayerAction.ChangeDeck,
+							PlayerAction.A,
+							PlayerAction.A,
+							PlayerAction.A,
+							PlayerAction.A,
+							PlayerAction.A,
+							PlayerAction.A
+						},
+					Index = 1
+				},
+				new Player
+				{
+					Actions =
+						new List<PlayerAction>
+						{
+							PlayerAction.MoveRed,
+							PlayerAction.ChangeDeck,
+							PlayerAction.C,
+							PlayerAction.ChangeDeck,
+							PlayerAction.None,
+							PlayerAction.None,
+							PlayerAction.C,
+							PlayerAction.BattleBots
+						},
+					Index = 2
+				},
+				new Player
+				{
+					Actions =
+						new List<PlayerAction> {PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C}
+				}
+			};
+			return players;
 		}
 	}
 }

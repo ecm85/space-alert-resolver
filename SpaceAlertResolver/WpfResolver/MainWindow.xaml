@@ -1,0 +1,7 @@
+﻿<Window x:Class="WpfResolver.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		Title="Space Alert Resolver" Height="430" Width="377"
+		Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+	<Grid/>
+</Window>
