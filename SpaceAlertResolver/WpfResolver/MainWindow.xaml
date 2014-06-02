@@ -3,5 +3,13 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		Title="Space Alert Resolver" Height="430" Width="377"
 		Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-	<Grid/>
+	<Grid>
+		<Button Content="Set Actions" Click="SetPlayers" HorizontalAlignment="Left" Margin="24,37,0,0" VerticalAlignment="Top" Width="75"/>
+		<Button Content="Pick Tracks" Click="SetTracks" HorizontalAlignment="Left" Margin="24,85,0,0" VerticalAlignment="Top" Width="75"/>
+		<Button Content="Pick Threats" Click="SetThreats" HorizontalAlignment="Left" Margin="24,134,0,0" VerticalAlignment="Top" Width="75"/>
+		<Button Content="Resolve Game" Click="RunGame" HorizontalAlignment="Left" Margin="121,192,0,0" VerticalAlignment="Top" Width="114" Height="59"/>
+		<ScrollViewer HorizontalAlignment="Left" Height="100" Margin="24,272,0,0" VerticalAlignment="Top" Width="300">
+			<TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="108" Width="300"/>
+		</ScrollViewer>
+	</Grid>
 </Window>

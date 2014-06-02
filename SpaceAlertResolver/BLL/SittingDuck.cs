@@ -23,7 +23,7 @@ namespace BLL
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
 
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
-		public SittingDuck(IEnumerable<Player> players)
+		public SittingDuck()
 		{
 			CurrentInternalThreats = new List<InternalThreat>();
 			CurrentExternalThreats = new List<ExternalThreat>();
@@ -97,16 +97,21 @@ namespace BLL
 			lowerWhiteStation.OppositeDeckStation = upperWhiteStation;
 			lowerBlueStation.RedwardStation = lowerWhiteStation;
 			lowerBlueStation.OppositeDeckStation = upperBlueStation;
-			foreach (var player in players)
-			{
-				player.CurrentStation = upperWhiteStation;
-				upperWhiteStation.Players.Add(player);
-			}
+
 			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = new Gravolift() };
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = new Gravolift() };
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = new Gravolift() };
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 			InterceptorStation = interceptorStation;
+		}
+
+		public void SetPlayers(IEnumerable<Player> players)
+		{
+			foreach (var player in players)
+			{
+				player.CurrentStation = WhiteZone.UpperStation;
+				WhiteZone.UpperStation.Players.Add(player);
+			}
 		}
 
 		public void DrainAllShields()

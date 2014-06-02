@@ -15,7 +15,8 @@ namespace ConsoleResolver
 		{
 			
 			var players = GetPlayers();
-			var sittingDuck = new SittingDuck(players);
+			var sittingDuck = new SittingDuck();
+			sittingDuck.SetPlayers(players);
 			var externalTracks = new []
 			{
 				new ExternalTrack(TrackConfiguration.Track1, sittingDuck.BlueZone),
