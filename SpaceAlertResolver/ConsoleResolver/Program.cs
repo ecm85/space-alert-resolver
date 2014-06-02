@@ -22,13 +22,22 @@ namespace ConsoleResolver
 					{
 						PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A,
 						PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
-					}
+					},
+					Index = 1
 				},
 				new Player
 				{
 					Actions = new List<PlayerAction>
 					{
-						PlayerAction.MoveRed, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.BattleBots
+						PlayerAction.MoveRed, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.C, PlayerAction.BattleBots
+					},
+					Index = 2
+				},
+				new Player
+				{
+					Actions = new List<PlayerAction>
+					{
+						PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C
 					}
 				}
 			};
@@ -41,15 +50,15 @@ namespace ConsoleResolver
 			};
 			var externalThreats = new ExternalThreat[]
 			{
-				//new Destroyer(7, sittingDuck.BlueZone, sittingDuck),
+				new Destroyer(3, sittingDuck.BlueZone, sittingDuck),
 				new Fighter(4, sittingDuck.RedZone, sittingDuck),
 				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
 			};
 			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
 			var internalThreats = new InternalThreat[]
 			{
-				//new SkirmishersA(3, sittingDuck)
-				//new Fissure(4, sittingDuck)
+				new SkirmishersA(3, sittingDuck),
+				new Fissure(2, sittingDuck)
 				//new Alien(1, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);

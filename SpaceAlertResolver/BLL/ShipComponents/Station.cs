@@ -53,10 +53,6 @@ namespace BLL.ShipComponents
 		protected void DamageThreat(InternalThreat threat, Player performingPlayer)
 		{
 			threat.TakeDamage(1, performingPlayer);
-			if (threat.RemainingHealth <= 0)
-			{
-				//TODO: Handle removing from track, removing from ship.CurrentList and scoring
-			}
 		}
 	}
 }

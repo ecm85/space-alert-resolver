@@ -177,40 +177,8 @@ namespace BLL
 			foreach (var player in players.Where(player => !player.IsKnockedOut))
 			{
 				var playerAction = player.Actions[currentTurn];
-				switch (playerAction)
-				{
-					case PlayerAction.A:
-						var damage = player.CurrentStation.PerformAAction(player, currentTurn);
-						if (damage != null)
-							damages.Add(damage);
-						break;
-					case PlayerAction.B:
-						player.CurrentStation.PerformBAction(player, currentTurn);
-						break;
-					case PlayerAction.C:
-						player.CurrentStation.PerformCAction(player, currentTurn);
-						break;
-					case PlayerAction.MoveBlue:
-						MovePlayer(player.CurrentStation.BluewardStation, player);
-						break;
-					case PlayerAction.MoveRed:
-						MovePlayer(player.CurrentStation.RedwardStation, player);
-						break;
-					case PlayerAction.ChangeDeck:
-						var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
-						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
-						if (currentZone.Gravolift.ShiftsPlayers)
-							player.Shift(currentTurn + 1);
-						currentZone.Gravolift.SetOccupied();
-						break;
-					case PlayerAction.BattleBots:
-						if (!player.BattleBots.IsDisabled)
-							player.CurrentStation.UseBattleBots(player);
-						break;
-					case PlayerAction.None:
-						player.CurrentStation.PerformNoAction(player);
-						break;
-				}
+				PerformPlayerAction(currentTurn, playerAction, player, damages);
+				RemoveDefeatedInternalThreats();
 			}
 			foreach (var threat in sittingDuck.CurrentInternalThreats)
 				threat.PerformEndOfPlayerActions();
@@ -220,6 +188,44 @@ namespace BLL
 				damages.Add(rocketFiredLastTurn.PerformAttack());
 			var interceptorDamages = sittingDuck.InterceptorStation.PlayerInterceptorDamage;
 			ResolveDamage(damages, interceptorDamages);
+		}
+
+		private void PerformPlayerAction(int currentTurn, PlayerAction playerAction, Player player, List<PlayerDamage> damages)
+		{
+			switch (playerAction)
+			{
+				case PlayerAction.A:
+					var damage = player.CurrentStation.PerformAAction(player, currentTurn);
+					if (damage != null)
+						damages.Add(damage);
+					break;
+				case PlayerAction.B:
+					player.CurrentStation.PerformBAction(player, currentTurn);
+					break;
+				case PlayerAction.C:
+					player.CurrentStation.PerformCAction(player, currentTurn);
+					break;
+				case PlayerAction.MoveBlue:
+					MovePlayer(player.CurrentStation.BluewardStation, player);
+					break;
+				case PlayerAction.MoveRed:
+					MovePlayer(player.CurrentStation.RedwardStation, player);
+					break;
+				case PlayerAction.ChangeDeck:
+					var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
+					MovePlayer(player.CurrentStation.OppositeDeckStation, player);
+					if (currentZone.Gravolift.ShiftsPlayers)
+						player.Shift(currentTurn + 1);
+					currentZone.Gravolift.SetOccupied();
+					break;
+				case PlayerAction.BattleBots:
+					if (!player.BattleBots.IsDisabled)
+						player.CurrentStation.UseBattleBots(player);
+					break;
+				case PlayerAction.None:
+					player.CurrentStation.PerformNoAction(player);
+					break;
+			}
 		}
 
 		private void PerformEndOfTurn()
@@ -273,6 +279,20 @@ namespace BLL
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
 
+			RemoveDefeatedExternalThreats();
+		}
+
+		private void RemoveDefeatedInternalThreats()
+		{
+			var newlyDefeatedThreats = sittingDuck.CurrentInternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
+			foreach (var defeatedThreat in newlyDefeatedThreats)
+				sittingDuck.CurrentInternalThreats.Remove(defeatedThreat);
+			internalTrack.RemoveThreats(newlyDefeatedThreats);
+			defeatedThreats.AddRange(newlyDefeatedThreats);
+		}
+
+		private void RemoveDefeatedExternalThreats()
+		{
 			var newlyDefeatedThreats = sittingDuck.CurrentExternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
 			foreach (var defeatedThreat in newlyDefeatedThreats)
 				sittingDuck.CurrentExternalThreats.Remove(defeatedThreat);

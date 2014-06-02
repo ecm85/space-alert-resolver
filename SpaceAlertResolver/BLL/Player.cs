@@ -12,6 +12,7 @@ namespace BLL
 		public List<PlayerAction> Actions { get; set; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
+		public int Index { get; set; }
 
 		public void Shift(int turn)
 		{

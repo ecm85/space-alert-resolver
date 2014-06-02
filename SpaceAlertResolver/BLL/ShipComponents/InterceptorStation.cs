@@ -41,9 +41,7 @@ namespace BLL.ShipComponents
 			if (firstThreat == null)
 				PlayerInterceptorDamage = new PlayerInterceptorDamage();
 			else
-			{
 				DamageThreat(firstThreat, performingPlayer);
-			}
 		}
 
 		public override void PerformNoAction(Player performingPlayer)
