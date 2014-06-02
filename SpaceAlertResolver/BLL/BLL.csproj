@@ -42,6 +42,7 @@
     <Compile Include="BattleBots.cs" />
     <Compile Include="Damage.cs" />
     <Compile Include="DamageTargetType.cs" />
+    <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalThreatDamageResult.cs" />
     <Compile Include="LoseException.cs" />

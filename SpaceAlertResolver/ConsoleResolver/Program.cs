@@ -37,7 +37,7 @@ namespace ConsoleResolver
 			{
 				new ExternalTrack(TrackConfiguration.Track1, sittingDuck.BlueZone),
 				new ExternalTrack(TrackConfiguration.Track2, sittingDuck.RedZone),
-				new ExternalTrack(TrackConfiguration.Track3, sittingDuck.WhiteZone),
+				new ExternalTrack(TrackConfiguration.Track3, sittingDuck.WhiteZone)
 			};
 			var externalThreats = new ExternalThreat[]
 			{
@@ -50,10 +50,10 @@ namespace ConsoleResolver
 			{
 				//new SkirmishersA(3, sittingDuck)
 				//new Fissure(4, sittingDuck)
-				new Alien(1, sittingDuck)
+				//new Alien(1, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
-			int currentTurn = 0;
+			var currentTurn = 0;
 			try
 			{
 				for (currentTurn = 0; currentTurn < Game.NumberOfTurns; currentTurn++)
@@ -71,6 +71,11 @@ namespace ConsoleResolver
 				game.defeatedThreats.Count,
 				game.survivedThreats.Count);
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
+			foreach (var zone in sittingDuck.Zones)
+			{
+				foreach (var token in zone.AllDamageTokensTaken)
+					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
+			}
 		}
 	}
 }

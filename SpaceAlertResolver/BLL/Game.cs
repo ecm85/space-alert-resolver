@@ -12,6 +12,14 @@ namespace BLL
 {
 	public class Game
 	{
+		//TODO: Variable-range interceptors (see scattered todos)
+		//TODO: Heroic actions
+		//TODO: Specializations
+		//TODO: Yellow threats
+		//TODO: Red threats
+		//TODO: Double actions
+		//TODO: Campaign repairs and damage carryover
+		//TODO: Let user select damage tokens
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
@@ -191,10 +199,9 @@ namespace BLL
 					case PlayerAction.ChangeDeck:
 						var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
 						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
-						if (currentZone.Gravolift.Occupied)
+						if (currentZone.Gravolift.ShiftsPlayers)
 							player.Shift(currentTurn + 1);
-						else
-							currentZone.Gravolift.Occupied = true;
+						currentZone.Gravolift.SetOccupied();
 						break;
 					case PlayerAction.BattleBots:
 						if (!player.BattleBots.IsDisabled)
@@ -219,7 +226,7 @@ namespace BLL
 		{
 			foreach (var zone in sittingDuck.Zones)
 			{
-				zone.Gravolift.Occupied = false;
+				zone.Gravolift.PerformEndOfTurn();
 				zone.UpperStation.Cannon.PerformEndOfTurn();
 				zone.LowerStation.Cannon.PerformEndOfTurn();
 			}
@@ -239,7 +246,6 @@ namespace BLL
 
 		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)
 		{
-			//TODO: Use inteceptorDamages
 			if (!sittingDuck.CurrentExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();

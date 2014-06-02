@@ -7,9 +7,9 @@ namespace BLL.ShipComponents
 {
 	public abstract class Cannon
 	{
-		private readonly int damage;
+		protected int damage;
 		private readonly IList<ZoneLocation> zonesAffected;
-		private readonly int range;
+		protected int range;
 		private readonly DamageType damageType;
 		private readonly EnergyContainer source;
 
@@ -30,6 +30,11 @@ namespace BLL.ShipComponents
 			}
 			return null;
 		}
+
+		protected bool IsDamaged { get; set; }
+
+		public abstract void SetDamaged();
+		public abstract void Repair();
 
 		protected Cannon(EnergyContainer source, int damage, int range, DamageType damageType, ZoneLocation zoneAffected)
 			: this(source, damage, range, damageType, new[] { zoneAffected })

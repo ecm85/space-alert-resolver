@@ -11,5 +11,21 @@ namespace BLL.ShipComponents
 			: base(source, damage, 3, damageType, currentZone)
 		{
 		}
+
+		public override void SetDamaged()
+		{
+			var wasAlreadyDamaged = IsDamaged;
+			IsDamaged = true;
+			if (!wasAlreadyDamaged)
+				damage -= 1;
+		}
+
+		public override void Repair()
+		{
+			var wasAlreadyDamaged = IsDamaged;
+			IsDamaged = false;
+			if (wasAlreadyDamaged)
+				damage += 1;
+		}
 	}
 }

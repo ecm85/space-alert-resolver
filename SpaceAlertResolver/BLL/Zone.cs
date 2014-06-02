@@ -17,10 +17,15 @@ namespace BLL
 		public ZoneLocation ZoneLocation { get; set; }
 		public IEnumerable<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
 		public IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; private set; }
+		public List<DamageToken> CurrentDamageTokens  { get; private set; }
+		public List<DamageToken> AllDamageTokensTaken { get; private set; }
+		private readonly Random random = new Random();
 
 		public Zone()
 		{
 			DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
+			CurrentDamageTokens = new List<DamageToken>();
+			AllDamageTokensTaken = new List<DamageToken>();
 		}
 
 		public ExternalThreatDamageResult TakeAttack(int damage)
@@ -41,13 +46,55 @@ namespace BLL
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
 				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
-			//TODO: Apply damageDone tokens
+			var newDamageTokens = GetNewDamageTokens(damageDone);
+			CurrentDamageTokens.AddRange(newDamageTokens);
+			AllDamageTokensTaken.AddRange(newDamageTokens);
 			TotalDamage += damageDone;
+			var shipDestroyed = TotalDamage >= 7;
+			if (!shipDestroyed)
+			{
+				foreach (var token in newDamageTokens)
+				{
+					switch (token)
+					{
+						case DamageToken.BackCannon:
+							LowerStation.Cannon.SetDamaged();
+							break;
+						case DamageToken.FrontCannon:
+							UpperStation.Cannon.SetDamaged();
+							break;
+						case DamageToken.Gravolift:
+							Gravolift.SetDamaged();
+							break;
+						case DamageToken.Reactor:
+							LowerStation.EnergyContainer.SetDamaged();
+							break;
+						case DamageToken.Shield:
+							UpperStation.EnergyContainer.SetDamaged();
+							break;
+						case DamageToken.Structural:
+							break;
+					}
+				}
+			}
 			return new ThreatDamageResult
 			{
 				DamageDone = damageDone,
-				ShipDestroyed = TotalDamage >= 7
+				ShipDestroyed = shipDestroyed
 			};
+		}
+
+		private IList<DamageToken> GetNewDamageTokens(int count)
+		{
+			var openTokens = EnumFactory.All<DamageToken>().Except(CurrentDamageTokens).ToList();
+			var newDamageTokens = new List<DamageToken>();
+			for (var i = 0; i < count; i++)
+			{
+				var selectedToken = openTokens[random.Next(openTokens.Count)];
+				openTokens.Remove(selectedToken);
+				newDamageTokens.Add(selectedToken);
+			}
+			return newDamageTokens;
 		}
 
 		public void DrainShields()

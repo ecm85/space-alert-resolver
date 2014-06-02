@@ -7,6 +7,29 @@ namespace BLL.ShipComponents
 {
 	public class Gravolift
 	{
-		public bool Occupied { get; set; }
+		private bool Occupied { get; set; }
+
+		public void SetOccupied()
+		{
+			Occupied = true;
+		}
+
+		public void PerformEndOfTurn()
+		{
+			Occupied = false;
+		}
+
+		public bool ShiftsPlayers { get { return Occupied || IsDamaged; } }
+		private bool IsDamaged { get; set; }
+
+		public void SetDamaged()
+		{
+			IsDamaged = true;
+		}
+
+		public void Repair()
+		{
+			IsDamaged = false;
+		}
 	}
 }

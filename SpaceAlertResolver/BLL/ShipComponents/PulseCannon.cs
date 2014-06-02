@@ -10,5 +10,21 @@ namespace BLL.ShipComponents
 		public PulseCannon(Reactor source) : base(source, 1, 2, DamageType.Pulse, EnumFactory.All<ZoneLocation>())
 		{
 		}
+
+		public override void SetDamaged()
+		{
+			var wasAlreadyDamaged = IsDamaged;
+			IsDamaged = true;
+			if (!wasAlreadyDamaged)
+				range -= 1;
+		}
+
+		public override void Repair()
+		{
+			var wasAlreadyDamaged = IsDamaged;
+			IsDamaged = false;
+			if (wasAlreadyDamaged)
+				range += 1;
+		}
 	}
 }
