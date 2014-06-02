@@ -8,8 +8,14 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		protected IList<Station> CurrentStations { get; private set; }
-		protected Station CurrentStation { get { return CurrentStations.Single(); } private set { CurrentStations = new[] {value}; } }
+		public IList<Station> CurrentStations { get; private set; }
+
+		protected Station CurrentStation
+		{
+			get { return CurrentStations.Single(); }
+			set { CurrentStations = new[] {value}; }
+		}
+
 		public PlayerAction ActionType { get; private set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, Station currentStation, PlayerAction actionType, SittingDuck sittingDuck) :
@@ -89,6 +95,16 @@ namespace BLL.Threats.Internal
 
 		public virtual void PerformEndOfPlayerActions()
 		{
+		}
+
+		public IrreparableMalfunction GetIrreparableMalfunction()
+		{
+			if (ActionType == PlayerAction.BattleBots)
+				return null;
+			return new IrreparableMalfunction
+			{
+				ActionType = ActionType
+			};
 		}
 	}
 }

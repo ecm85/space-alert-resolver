@@ -261,6 +261,8 @@ namespace BLL
 						throw new InvalidOperationException();
 				}
 			}
+			AddInterceptorDamages(interceptorDamages, damagesByThreat);
+
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
 
@@ -270,6 +272,18 @@ namespace BLL
 			foreach (var track in externalTracks.Values)
 				track.RemoveThreats(newlyDefeatedThreats);
 			defeatedThreats.AddRange(newlyDefeatedThreats);
+		}
+
+		private void AddInterceptorDamages(PlayerInterceptorDamage interceptorDamages, Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
+		{
+			var interceptorDamagesMultiple = interceptorDamages.MultipleDamage;
+			var threatsHitByInterceptors =
+				sittingDuck.CurrentExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
+			if (threatsHitByInterceptors.Count() > 1)
+				foreach (var threat in threatsHitByInterceptors)
+					AddToDamagesByThreat(threat, interceptorDamagesMultiple, damagesByThreat);
+			else if (threatsHitByInterceptors.Count() == 1)
+				AddToDamagesByThreat(threatsHitByInterceptors.Single(), interceptorDamages.SingleDamage, damagesByThreat);
 		}
 
 		private static void AddToDamagesByThreat(

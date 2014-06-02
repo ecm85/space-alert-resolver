@@ -7,6 +7,14 @@ namespace BLL
 {
 	public class PlayerInterceptorDamage
 	{
-		//TODO: Make method that returns one of two PlayerDamages depending on # of targets
+		public PlayerDamage SingleDamage
+		{
+			get { return new PlayerDamage(3, DamageType.InterceptorsSingle, 1, EnumFactory.All<ZoneLocation>()); }
+		}
+
+		public PlayerDamage MultipleDamage
+		{
+			get {return new PlayerDamage(1, DamageType.InterceptorsMultiple, 1, EnumFactory.All<ZoneLocation>());}
+		}
 	}
 }
