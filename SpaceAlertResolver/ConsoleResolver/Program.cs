@@ -49,17 +49,19 @@ namespace ConsoleResolver
 			var internalThreats = new InternalThreat[]
 			{
 				//new SkirmishersA(3, sittingDuck)
-				new Fissure(4, sittingDuck)
+				//new Fissure(4, sittingDuck)
+				new Alien(1, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
+			int currentTurn = 0;
 			try
 			{
-				for (var i = 0; i < Game.NumberOfTurns; i++)
+				for (currentTurn = 0; currentTurn < Game.NumberOfTurns; currentTurn++)
 					game.PerformTurn();
 			}
 			catch (LoseException loseException)
 			{
-				Console.WriteLine("Killed by: {0}", loseException.Threat);
+				Console.WriteLine("Killed on turn {0} by: {1}", currentTurn, loseException.Threat);
 			}
 			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
 				sittingDuck.BlueZone.TotalDamage,

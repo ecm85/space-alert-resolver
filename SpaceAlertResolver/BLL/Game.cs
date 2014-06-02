@@ -168,7 +168,7 @@ namespace BLL
 			var damages = new List<PlayerDamage>();
 			foreach (var player in players.Where(player => !player.IsKnockedOut))
 			{
-				var playerAction = player.Actions[currentTurn - 1];
+				var playerAction = player.Actions[currentTurn];
 				switch (playerAction)
 				{
 					case PlayerAction.A:
@@ -261,7 +261,8 @@ namespace BLL
 						throw new InvalidOperationException();
 				}
 			}
-			AddInterceptorDamages(interceptorDamages, damagesByThreat);
+			if (interceptorDamages != null)
+				AddInterceptorDamages(interceptorDamages, damagesByThreat);
 
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
