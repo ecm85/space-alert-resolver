@@ -55,8 +55,15 @@ namespace ConsoleResolver
 				new Fissure(4, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
-			for(var i = 0; i < Game.NumberOfTurns; i++)
-				game.PerformTurn();
+			try
+			{
+				for (var i = 0; i < Game.NumberOfTurns; i++)
+					game.PerformTurn();
+			}
+			catch (LoseException loseException)
+			{
+				Console.WriteLine("Killed by: {0}", loseException.Threat);
+			}
 			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
 				sittingDuck.BlueZone.TotalDamage,
 				sittingDuck.RedZone.TotalDamage,

@@ -66,7 +66,7 @@ namespace BLL.Threats.Internal
 
 		protected void Damage(int amount)
 		{
-			sittingDuck.TakeDamage(amount, CurrentStation.ZoneLocation);
+			DamageZone(amount, CurrentZone);
 		}
 
 		protected void DamageOtherTwoZones(int amount)
@@ -77,12 +77,18 @@ namespace BLL.Threats.Internal
 		private void DamageZones(int amount, IEnumerable<Zone> zones)
 		{
 			foreach (var zone in zones)
-				zone.TakeDamage(amount);
+				DamageZone(amount, zone);
+		}
+
+		private void DamageZone(int amount, Zone zone)
+		{
+			var result = zone.TakeDamage(amount);
+			if (result.ShipDestroyed)
+				throw new LoseException(this);
 		}
 
 		public virtual void PerformEndOfPlayerActions()
 		{
 		}
-
 	}
 }

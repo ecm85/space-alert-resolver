@@ -109,17 +109,6 @@ namespace BLL
 			InterceptorStation = interceptorStation;
 		}
 
-		public void TakeDamage(int damage, params ZoneLocation[] zones)
-		{
-			TakeDamage(damage, zones.ToList());
-		}
-
-		private void TakeDamage(int damage, IEnumerable<ZoneLocation> zones)
-		{
-			foreach (var zone in zones)
-				ZonesByLocation[zone].TakeDamage(damage);
-		}
-
 		public void DrainAllShields()
 		{
 			BlueZone.DrainShields();

@@ -14,19 +14,20 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction()
 		{
-			Attack(2);
+			Attack(2 - AttackDecrement);
 		}
 
 		public override void PerformYAction()
 		{
-			AttackOtherTwoZones(3);
+			AttackOtherTwoZones(3 - AttackDecrement);
 		}
 
 		public override void PerformZAction()
 		{
-			AttackAllZones(4);
+			AttackAllZones(4 - AttackDecrement);
 		}
 
-		//TODO: Reduce attack if interceptors are out
+		private int AttackDecrement { get { return InterceptorsPresent ? 2 : 0; } }
+		private bool InterceptorsPresent { get { return sittingDuck.InterceptorStation.Players.Any(); } }
 	}
 }

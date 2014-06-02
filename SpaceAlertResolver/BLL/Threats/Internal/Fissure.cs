@@ -25,7 +25,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			//TODO: Lose.
+			throw new LoseException(this);
 		}
 
 		protected override void OnDestroyed()

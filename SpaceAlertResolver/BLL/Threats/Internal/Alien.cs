@@ -27,7 +27,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			//TODO: Lose
+			throw new LoseException(this);
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer)

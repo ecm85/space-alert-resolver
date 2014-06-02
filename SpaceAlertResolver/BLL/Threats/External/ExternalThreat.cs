@@ -44,7 +44,7 @@ namespace BLL.Threats.External
 
 		protected virtual ExternalThreatDamageResult Attack(int amount)
 		{
-			return CurrentZone.TakeAttack(amount);
+			return AttackZone(amount, CurrentZone);
 		}
 
 		protected void AttackAllZones(int amount)
@@ -60,7 +60,15 @@ namespace BLL.Threats.External
 		private void AttackZones(int amount, IEnumerable<Zone> zones)
 		{
 			foreach (var zone in zones)
-				zone.TakeAttack(amount);
+				AttackZone(amount, zone);
+		}
+
+		private ExternalThreatDamageResult AttackZone(int amount, Zone zone)
+		{
+			var result = zone.TakeAttack(amount);
+			if (result.ShipDestroyed)
+				throw new LoseException(this);
+			return result;
 		}
 	}
 }

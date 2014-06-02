@@ -5,15 +5,24 @@ using System.Text;
 
 namespace BLL
 {
-	public class ExternalThreatDamageResult
+	public class ExternalThreatDamageResult : ThreatDamageResult
 	{
-		public int DamageDone { get; set; }
 		public int DamageShielded { get; set; }
+
+		public ExternalThreatDamageResult()
+		{
+		}
+
+		public ExternalThreatDamageResult(ThreatDamageResult other)
+		{
+			DamageDone = other.DamageDone;
+			ShipDestroyed = other.ShipDestroyed;
+		}
 
 		public void AddDamage(ExternalThreatDamageResult other)
 		{
-			DamageDone += other.DamageDone;
-			DamageShielded += other.DamageShielded;
+			base.AddDamage(other);
+;			DamageShielded += other.DamageShielded;
 		}
 	}
 }

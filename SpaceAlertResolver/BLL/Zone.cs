@@ -30,24 +30,24 @@ namespace BLL
 			var newShields = UpperStation.EnergyContainer.Energy;
 			var damageShielded = oldShields - newShields;
 			var damageDone = TakeDamage(damage - damageShielded);
-			return new ExternalThreatDamageResult
+			return new ExternalThreatDamageResult(damageDone)
 			{
-				DamageDone = damageDone,
 				DamageShielded = damageShielded
 			};
 		}
 
-		public int TakeDamage(int damage)
+		public ThreatDamageResult TakeDamage(int damage)
 		{
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
 				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
 			//TODO: Apply damageDone tokens
 			TotalDamage += damageDone;
-			if (TotalDamage >= 7)
-				//TODO: Lose
-				throw new NotImplementedException();
-			return damageDone;
+			return new ThreatDamageResult
+			{
+				DamageDone = damageDone,
+				ShipDestroyed = TotalDamage >= 7
+			};
 		}
 
 		public void DrainShields()
