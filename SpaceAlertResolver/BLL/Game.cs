@@ -41,7 +41,14 @@ namespace BLL
 			this.externalTracks = externalTracks.ToDictionary(track => track.Zone);
 			this.internalTrack = internalTrack;
 			this.players = players;
-			nextTurn = 1;
+			PadPlayerActions();
+			nextTurn = 0;
+		}
+
+		private void PadPlayerActions()
+		{
+			foreach (var player in players)
+				player.Actions.AddRange(Enumerable.Repeat(PlayerAction.None, NumberOfTurns - player.Actions.Count));
 		}
 
 		public void PerformTurn()
@@ -88,7 +95,7 @@ namespace BLL
 		{
 			if (!sittingDuck.Computer.MaintenancePerformedThisPhase)
 				foreach (var player in players)
-					player.Shift(currentTurn);
+					player.Shift(currentTurn + 1);
 		}
 
 		private void AddNewThreatsToTracks(int currentTurn)
@@ -161,44 +168,41 @@ namespace BLL
 			var damages = new List<PlayerDamage>();
 			foreach (var player in players.Where(player => !player.IsKnockedOut))
 			{
-				if (player.Actions.Count >= currentTurn)
+				var playerAction = player.Actions[currentTurn - 1];
+				switch (playerAction)
 				{
-					var playerAction = player.Actions[currentTurn - 1];
-					switch (playerAction)
-					{
-						case PlayerAction.A:
-							var damage = player.CurrentStation.PerformAAction(player, currentTurn);
-							if (damage != null)
-								damages.Add(damage);
-							break;
-						case PlayerAction.B:
-							player.CurrentStation.PerformBAction(player, currentTurn);
-							break;
-						case PlayerAction.C:
-							player.CurrentStation.PerformCAction(player, currentTurn);
-							break;
-						case PlayerAction.MoveBlue:
-							MovePlayer(player.CurrentStation.BluewardStation, player);
-							break;
-						case PlayerAction.MoveRed:
-							MovePlayer(player.CurrentStation.RedwardStation, player);
-							break;
-						case PlayerAction.ChangeDeck:
-							var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
-							MovePlayer(player.CurrentStation.OppositeDeckStation, player);
-							if (currentZone.Gravolift.Occupied)
-								player.Shift(currentTurn);
-							else
-								currentZone.Gravolift.Occupied = true;
-							break;
-						case PlayerAction.BattleBots:
-							if (!player.BattleBots.IsDisabled)
-								player.CurrentStation.UseBattleBots(player);
-							break;
-						case PlayerAction.None:
-							player.CurrentStation.PerformNoAction(player);
-							break;
-					}
+					case PlayerAction.A:
+						var damage = player.CurrentStation.PerformAAction(player, currentTurn);
+						if (damage != null)
+							damages.Add(damage);
+						break;
+					case PlayerAction.B:
+						player.CurrentStation.PerformBAction(player, currentTurn);
+						break;
+					case PlayerAction.C:
+						player.CurrentStation.PerformCAction(player, currentTurn);
+						break;
+					case PlayerAction.MoveBlue:
+						MovePlayer(player.CurrentStation.BluewardStation, player);
+						break;
+					case PlayerAction.MoveRed:
+						MovePlayer(player.CurrentStation.RedwardStation, player);
+						break;
+					case PlayerAction.ChangeDeck:
+						var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
+						MovePlayer(player.CurrentStation.OppositeDeckStation, player);
+						if (currentZone.Gravolift.Occupied)
+							player.Shift(currentTurn + 1);
+						else
+							currentZone.Gravolift.Occupied = true;
+						break;
+					case PlayerAction.BattleBots:
+						if (!player.BattleBots.IsDisabled)
+							player.CurrentStation.UseBattleBots(player);
+						break;
+					case PlayerAction.None:
+						player.CurrentStation.PerformNoAction(player);
+						break;
 				}
 			}
 			foreach (var threat in sittingDuck.CurrentInternalThreats)

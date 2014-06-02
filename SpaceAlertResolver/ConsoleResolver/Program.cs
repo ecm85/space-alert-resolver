@@ -18,18 +18,15 @@ namespace ConsoleResolver
 			{
 				new Player
 				{
-					Actions =
-						new[]
-						{
-							PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A,
-							PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
-						}
-						//Enumerable.Repeat(PlayerAction.None, 10).ToList()
+					Actions = new List<PlayerAction>
+					{
+						PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.B, PlayerAction.ChangeDeck, PlayerAction.A,
+						PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A, PlayerAction.A
+					}
 				},
 				new Player
 				{
-					Actions =
-					new []
+					Actions = new List<PlayerAction>
 					{
 						PlayerAction.MoveRed, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.C, PlayerAction.BattleBots
 					}
