@@ -44,6 +44,6 @@ namespace BLL.ShipComponents
 				Capacity++;
 		}
 
-		public abstract void PerformBAction();
+		public abstract void PerformBAction(bool isHeroic);
 	}
 }

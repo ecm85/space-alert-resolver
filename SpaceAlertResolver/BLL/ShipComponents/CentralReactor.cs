@@ -13,12 +13,15 @@ namespace BLL.ShipComponents
 		{
 		}
 
-		public override void PerformBAction()
+		public override void PerformBAction(bool isHeroic)
 		{
 			if (storageCapsules <= 0)
 				return;
+			var oldEnergy = Energy;
 			storageCapsules--;
 			Energy = Capacity;
+			if (isHeroic && Energy > oldEnergy)
+				Energy++;
 		}
 	}
 }

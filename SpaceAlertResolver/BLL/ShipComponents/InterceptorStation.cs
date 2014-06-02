@@ -10,13 +10,13 @@ namespace BLL.ShipComponents
 		public InterceptorComponent InterceptorComponent { private get; set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
-		public override void PerformBAction(Player performingPlayer, int currentTurn)
+		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
 			InterceptorComponent.PerformNoAction(performingPlayer);
 		}
 
-		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
+		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
 			InterceptorComponent.PerformNoAction(performingPlayer);
@@ -30,18 +30,18 @@ namespace BLL.ShipComponents
 			//TODO: Change to a further interceptor station instead, if variable range interceptors are in use
 		}
 
-		public override void UseBattleBots(Player performingPlayer)
+		public override void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
-			UseInterceptors(performingPlayer);
+			UseInterceptors(performingPlayer, isHeroic);
 		}
 
-		public override void UseInterceptors(Player performingPlayer)
+		public override void UseInterceptors(Player performingPlayer, bool isHeroic)
 		{
 			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			if (firstThreat == null)
-				PlayerInterceptorDamage = new PlayerInterceptorDamage();
+				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic);
 			else
-				DamageThreat(firstThreat, performingPlayer);
+				DamageThreat(firstThreat, performingPlayer, isHeroic);
 		}
 
 		public override void PerformNoAction(Player performingPlayer)

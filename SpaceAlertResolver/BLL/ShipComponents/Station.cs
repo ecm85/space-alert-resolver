@@ -24,16 +24,16 @@ namespace BLL.ShipComponents
 			IrreparableMalfunctions = new List<IrreparableMalfunction>();
 		}
 
-		public abstract void PerformBAction(Player performingPlayer, int currentTurn);
-		public abstract PlayerDamage PerformAAction(Player performingPlayer, int currentTurn);
+		public abstract void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic);
+		public abstract PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract void PerformCAction(Player performingPlayer, int currentTurn);
-		public abstract void UseBattleBots(Player performingPlayer);
+		public abstract void UseBattleBots(Player performingPlayer, bool isHeroic);
 
 		public virtual void PerformNoAction(Player performingPlayer)
 		{
 		}
 
-		public virtual void UseInterceptors(Player performingPlayer)
+		public virtual void UseInterceptors(Player performingPlayer, bool isHeroic)
 		{
 		}
 
@@ -50,9 +50,10 @@ namespace BLL.ShipComponents
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
 		}
 
-		protected void DamageThreat(InternalThreat threat, Player performingPlayer)
+		protected void DamageThreat(InternalThreat threat, Player performingPlayer, bool isHeroic)
 		{
-			threat.TakeDamage(1, performingPlayer);
+			var damage = isHeroic ? 2 : 1;
+			threat.TakeDamage(damage, performingPlayer, isHeroic);
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace BLL.ShipComponents
 				if (spacewardStation != null)
 				{
 					performingPlayer.CurrentStation = spacewardStation;
-					spacewardStation.UseInterceptors(performingPlayer);
+					spacewardStation.UseInterceptors(performingPlayer, false);
 				}
 				else
 				{
@@ -37,7 +37,7 @@ namespace BLL.ShipComponents
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && shipwardStation != null)
 			{
 				performingPlayer.CurrentStation = shipwardStation;
-				shipwardStation.UseInterceptors(performingPlayer);
+				shipwardStation.UseInterceptors(performingPlayer, false);
 			}
 		}
 	}

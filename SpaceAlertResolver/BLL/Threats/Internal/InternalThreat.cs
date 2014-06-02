@@ -40,7 +40,7 @@ namespace BLL.Threats.Internal
 			get { return sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation]; }
 		}
 
-		public virtual void TakeDamage(int damage, Player performingPlayer)
+		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
 			RemainingHealth -= damage;
 			CheckForDestroyed();

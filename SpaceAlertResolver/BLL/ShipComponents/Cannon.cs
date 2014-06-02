@@ -20,13 +20,13 @@ namespace BLL.ShipComponents
 			firedThisTurn = false;
 		}
 
-		public PlayerDamage PerformAAction()
+		public PlayerDamage PerformAAction(bool isHeroic)
 		{
 			if (!firedThisTurn && source.Energy > 1)
 			{
 				firedThisTurn = true;
 				source.Energy -= 1;
-				return new PlayerDamage(damage, damageType, range, zonesAffected);
+				return new PlayerDamage(isHeroic ? damage + 1 : damage, damageType, range, zonesAffected);
 			}
 			return null;
 		}

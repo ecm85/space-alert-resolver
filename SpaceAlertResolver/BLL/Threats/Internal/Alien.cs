@@ -30,10 +30,10 @@ namespace BLL.Threats.Internal
 			throw new LoseException(this);
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
-			base.TakeDamage(damage, performingPlayer);
-			if (grownUp)
+			base.TakeDamage(damage, performingPlayer, isHeroic);
+			if (grownUp && !isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 	}

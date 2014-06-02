@@ -13,7 +13,6 @@ namespace BLL
 	public class Game
 	{
 		//TODO: Variable-range interceptors (see scattered todos)
-		//TODO: Heroic actions
 		//TODO: Specializations
 		//TODO: Yellow threats
 		//TODO: Red threats
@@ -196,12 +195,12 @@ namespace BLL
 			switch (playerAction)
 			{
 				case PlayerAction.A:
-					var damage = player.CurrentStation.PerformAAction(player, currentTurn);
+					var damage = player.CurrentStation.PerformAAction(player, currentTurn, false);
 					if (damage != null)
 						damages.Add(damage);
 					break;
 				case PlayerAction.B:
-					player.CurrentStation.PerformBAction(player, currentTurn);
+					player.CurrentStation.PerformBAction(player, currentTurn, false);
 					break;
 				case PlayerAction.C:
 					player.CurrentStation.PerformCAction(player, currentTurn);
@@ -221,11 +220,39 @@ namespace BLL
 					break;
 				case PlayerAction.BattleBots:
 					if (!player.BattleBots.IsDisabled)
-						player.CurrentStation.UseBattleBots(player);
+						player.CurrentStation.UseBattleBots(player, false);
 					break;
 				case PlayerAction.None:
 					player.CurrentStation.PerformNoAction(player);
 					break;
+				case PlayerAction.HeroicA:
+					player.CurrentStation.PerformAAction(player, currentTurn, true);
+					break;
+				case PlayerAction.HeroicB:
+					player.CurrentStation.PerformBAction(player, currentTurn, true);
+					break;
+				case PlayerAction.HeroicBattleBots:
+					player.CurrentStation.UseBattleBots(player, true);
+					break;
+				case PlayerAction.TeleportBlueLower:
+					MovePlayer(sittingDuck.BlueZone.LowerStation, player);
+					break;
+				case PlayerAction.TeleportBlueUpper:
+					MovePlayer(sittingDuck.BlueZone.UpperStation, player);
+					break;
+				case PlayerAction.TeleportWhiteLower:
+					MovePlayer(sittingDuck.WhiteZone.LowerStation, player);
+					break;
+				case PlayerAction.TeleportWhiteUpper:
+					MovePlayer(sittingDuck.WhiteZone.UpperStation, player);
+					break;
+				case PlayerAction.TeleportRedLower:
+					MovePlayer(sittingDuck.RedZone.LowerStation, player);
+					break;
+				case PlayerAction.TeleportRedUpper:
+					MovePlayer(sittingDuck.RedZone.UpperStation, player);
+					break;
+				
 			}
 		}
 

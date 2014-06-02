@@ -7,40 +7,40 @@ namespace BLL.ShipComponents
 {
 	public class StandardStation : Station
 	{
-		public override void PerformBAction(Player performingPlayer, int currentTurn)
+		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
 			if (firstBThreat != null)
-				DamageThreat(firstBThreat, performingPlayer);
+				DamageThreat(firstBThreat, performingPlayer, isHeroic);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
-				EnergyContainer.PerformBAction();
+				EnergyContainer.PerformBAction(isHeroic);
 		}
 
-		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
+		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
 			if (firstAThreat != null)
 			{
-				DamageThreat(firstAThreat, performingPlayer);
+				DamageThreat(firstAThreat, performingPlayer, isHeroic);
 				return null;
 			}
-			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction() : null;
+			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic) : null;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat != null)
-				DamageThreat(firstCThreat, performingPlayer);
+				DamageThreat(firstCThreat, performingPlayer, false);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
 				CComponent.PerformCAction(performingPlayer);
 		}
 
-		public override void UseBattleBots(Player performingPlayer)
+		public override void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			if (firstBattleBotThreat != null)
-				DamageThreat(firstBattleBotThreat, performingPlayer);
+				DamageThreat(firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 	}
 }

@@ -14,11 +14,13 @@ namespace BLL.ShipComponents
 			Source = source;
 		}
 
-		public override void PerformBAction()
+		public override void PerformBAction(bool isHeroic)
 		{
 			var energyToPull = Capacity - Energy;
 			Source.Energy -= energyToPull;
 			Energy += energyToPull;
+			if (energyToPull > 0 && isHeroic)
+				Energy++;
 		}
 	}
 }

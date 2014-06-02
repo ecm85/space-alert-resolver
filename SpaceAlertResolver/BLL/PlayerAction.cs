@@ -14,6 +14,15 @@ namespace BLL
 		MoveRed,
 		MoveBlue,
 		ChangeDeck,
-		BattleBots
+		BattleBots,
+		HeroicA,
+		HeroicB,
+		HeroicBattleBots,
+		TeleportBlueUpper,
+		TeleportBlueLower,
+		TeleportWhiteUpper,
+		TeleportWhiteLower,
+		TeleportRedUpper,
+		TeleportRedLower
 	}
 }
