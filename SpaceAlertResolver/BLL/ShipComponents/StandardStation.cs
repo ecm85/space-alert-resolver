@@ -10,28 +10,30 @@ namespace BLL.ShipComponents
 		public override void PerformBAction(Player performingPlayer, int currentTurn)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
-			if (firstBThreat == null)
-				EnergyContainer.PerformBAction();
-			else
+			if (firstBThreat != null)
 				DamageThreat(firstBThreat, performingPlayer);
+			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
+				EnergyContainer.PerformBAction();
 		}
 
 		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
-			if (firstAThreat == null)
-				return Cannon.PerformAAction();
-			DamageThreat(firstAThreat, performingPlayer);
-			return null;
+			if (firstAThreat != null)
+			{
+				DamageThreat(firstAThreat, performingPlayer);
+				return null;
+			}
+			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction() : null;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
-			if (firstCThreat == null)
-				CComponent.PerformCAction(performingPlayer);
-			else
+			if (firstCThreat != null)
 				DamageThreat(firstCThreat, performingPlayer);
+			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
+				CComponent.PerformCAction(performingPlayer);
 		}
 
 		public override void UseBattleBots(Player performingPlayer)

@@ -12,7 +12,6 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Don't remove internal threats after survived - leave malfunctions somehow
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
@@ -124,6 +123,7 @@ namespace BLL
 
 			foreach (var track in externalTracks.Values)
 				RemoveSurvivedThreats(sittingDuck.CurrentExternalThreats, track);
+			AddMalfunctionsForSurvivedInternalThreats();
 			RemoveSurvivedThreats(sittingDuck.CurrentInternalThreats, internalTrack);
 		}
 
@@ -135,6 +135,16 @@ namespace BLL
 		private Action GetMoveCall(ExternalThreat externalThreat)
 		{
 			return () => externalTracks[externalThreat.CurrentZone].MoveThreat(externalThreat);
+		}
+
+		private void AddMalfunctionsForSurvivedInternalThreats()
+		{
+			var newlySurvivedThreats = internalTrack.ThreatsSurvived;
+			foreach (var threat in newlySurvivedThreats)
+			{
+				foreach(var station in threat.CurrentStations)
+					station.IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
+			}
 		}
 
 		private void RemoveSurvivedThreats<T>(IList<T> currentThreats, Track<T> track) where T : Threat

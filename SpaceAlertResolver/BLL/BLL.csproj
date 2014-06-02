@@ -117,6 +117,7 @@
     <Compile Include="Threats\Internal\HackedShieldsA.cs" />
     <Compile Include="Threats\Internal\HackedShieldsB.cs" />
     <Compile Include="Threats\Internal\InternalThreat.cs" />
+    <Compile Include="Threats\Internal\IrreparableMalfunction.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />
     <Compile Include="Threats\Internal\Saboteur.cs" />

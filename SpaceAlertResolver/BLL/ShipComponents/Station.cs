@@ -15,11 +15,13 @@ namespace BLL.ShipComponents
 		public ZoneLocation ZoneLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
+		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
 
 		protected Station()
 		{
 			Players = new List<Player>();
 			Threats = new HashSet<InternalThreat>();
+			IrreparableMalfunctions = new List<IrreparableMalfunction>();
 		}
 
 		public abstract void PerformBAction(Player performingPlayer, int currentTurn);
@@ -41,6 +43,11 @@ namespace BLL.ShipComponents
 				.Where(threat => threat.ActionType == playerAction)
 				.OrderBy(threat => threat.TimeAppears)
 				.FirstOrDefault();
+		}
+
+		protected bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
+		{
+			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
 		}
 
 		protected void DamageThreat(InternalThreat threat, Player performingPlayer)
