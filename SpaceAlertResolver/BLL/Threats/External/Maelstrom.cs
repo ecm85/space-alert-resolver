@@ -34,7 +34,7 @@ namespace BLL.Threats.External
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			var hitByPulse = damages.Any(damage => damage.DamageType == DamageType.Pulse);
+			var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);
 			if (hitByPulse)
 			{
 				var oldShields = shields;

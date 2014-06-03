@@ -34,7 +34,7 @@ namespace BLL.Threats.External
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);
+			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 	}
 }

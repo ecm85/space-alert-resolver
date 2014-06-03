@@ -8,12 +8,12 @@ namespace BLL
 	public abstract class Damage
 	{
 		public int Amount { get; private set; }
-		public DamageType DamageType { get; private set; }
+		public PlayerDamageType PlayerDamageType { get; private set; }
 
-		protected Damage(int amount, DamageType damageType)
+		protected Damage(int amount, PlayerDamageType playerDamageType)
 		{
 			Amount = amount;
-			DamageType = damageType;
+			PlayerDamageType = playerDamageType;
 		}
 	}
 }

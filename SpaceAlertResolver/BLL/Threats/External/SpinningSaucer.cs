@@ -37,7 +37,7 @@ namespace BLL.Threats.External
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			if (damages.Any(damage => damage.DamageType == DamageType.Rocket))
+			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
 				hitByRocket = true;
 			base.TakeDamage(damages);
 		}

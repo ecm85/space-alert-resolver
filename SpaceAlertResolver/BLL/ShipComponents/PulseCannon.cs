@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class PulseCannon : Cannon
 	{
-		public PulseCannon(Reactor source) : base(source, 1, 2, DamageType.Pulse, EnumFactory.All<ZoneLocation>())
+		public PulseCannon(Reactor source) : base(source, 1, 2, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>())
 		{
 		}
 

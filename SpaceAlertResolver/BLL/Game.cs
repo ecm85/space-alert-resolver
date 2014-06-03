@@ -286,7 +286,7 @@ namespace BLL
 			foreach (var damage in damages)
 			{
 				var threatsInRange = sittingDuck.CurrentExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
-				switch (damage.DamageType.DamageTargetType())
+				switch (damage.PlayerDamageType.DamageTargetType())
 				{
 					case DamageTargetType.All:
 						foreach (var threat in threatsInRange)

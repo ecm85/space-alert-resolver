@@ -10,8 +10,8 @@ namespace BLL
 		public int Range { get; private set; }
 		public IList<ZoneLocation> ZoneLocations { get; private set; }
 
-		public PlayerDamage(int amount, DamageType damageType, int range, IList<ZoneLocation> zoneLocations)
-			: base(amount, damageType)
+		public PlayerDamage(int amount, PlayerDamageType playerDamageType, int range, IList<ZoneLocation> zoneLocations)
+			: base(amount, playerDamageType)
 		{
 			Range = range;
 			ZoneLocations = zoneLocations;

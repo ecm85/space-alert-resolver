@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL
 {
-	public enum DamageType
+	public enum PlayerDamageType
 	{
 		HeavyLaser,
 		LightLaser,
@@ -17,20 +17,20 @@ namespace BLL
 
 	public static class DamageTypeExtensions
 	{
-		public static DamageTargetType DamageTargetType(this DamageType damageType)
+		public static DamageTargetType DamageTargetType(this PlayerDamageType playerDamageType)
 		{
-			switch (damageType)
+			switch (playerDamageType)
 			{
-				case DamageType.HeavyLaser:
-				case DamageType.LightLaser:
+				case PlayerDamageType.HeavyLaser:
+				case PlayerDamageType.LightLaser:
 					return BLL.DamageTargetType.Single;
-				case DamageType.Pulse:
+				case PlayerDamageType.Pulse:
 					return BLL.DamageTargetType.All;
-				case DamageType.Rocket:
+				case PlayerDamageType.Rocket:
 					return BLL.DamageTargetType.Single;
-				case DamageType.InterceptorsMultiple:
+				case PlayerDamageType.InterceptorsMultiple:
 					return BLL.DamageTargetType.All;
-				case DamageType.InterceptorsSingle:
+				case PlayerDamageType.InterceptorsSingle:
 					return BLL.DamageTargetType.Single;
 				default:
 					throw new InvalidOperationException();

@@ -7,8 +7,8 @@ namespace BLL.ShipComponents
 {
 	public abstract class LaserCannon : Cannon
 	{
-		protected LaserCannon(EnergyContainer source, int damage, DamageType damageType, ZoneLocation currentZone)
-			: base(source, damage, 3, damageType, currentZone)
+		protected LaserCannon(EnergyContainer source, int damage, PlayerDamageType playerDamageType, ZoneLocation currentZone)
+			: base(source, damage, 3, playerDamageType, currentZone)
 		{
 		}
 

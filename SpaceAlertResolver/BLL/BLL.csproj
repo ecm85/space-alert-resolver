@@ -78,7 +78,7 @@
     <Compile Include="ShipComponents\SideShield.cs" />
     <Compile Include="ShipComponents\VisualConfirmationComponent.cs" />
     <Compile Include="SittingDuck.cs" />
-    <Compile Include="DamageType.cs" />
+    <Compile Include="PlayerDamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\StandardStation.cs" />
     <Compile Include="ThreatDamageResult.cs" />
