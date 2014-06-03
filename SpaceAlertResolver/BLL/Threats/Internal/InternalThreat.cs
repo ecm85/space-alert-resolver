@@ -35,11 +35,6 @@ namespace BLL.Threats.Internal
 			ActionType = actionType;
 		}
 
-		protected Zone CurrentZone
-		{
-			get { return sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation]; }
-		}
-
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
 			RemainingHealth -= damage;
@@ -72,23 +67,17 @@ namespace BLL.Threats.Internal
 
 		protected void Damage(int amount)
 		{
-			DamageZone(amount, CurrentZone);
+			Damage(amount, new [] {CurrentStation.ZoneLocation});
 		}
 
 		protected void DamageOtherTwoZones(int amount)
 		{
-			DamageZones(amount, sittingDuck.Zones.Except(new [] {CurrentZone}));
+			Damage(amount, EnumFactory.All<ZoneLocation>().Except(new [] {CurrentStation.ZoneLocation}).ToList());
 		}
 
-		private void DamageZones(int amount, IEnumerable<Zone> zones)
+		private void Damage(int amount, IList<ZoneLocation> zones)
 		{
-			foreach (var zone in zones)
-				DamageZone(amount, zone);
-		}
-
-		private void DamageZone(int amount, Zone zone)
-		{
-			var result = zone.TakeDamage(amount);
+			var result = sittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 		}

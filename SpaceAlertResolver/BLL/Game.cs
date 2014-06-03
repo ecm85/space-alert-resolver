@@ -22,7 +22,7 @@ namespace BLL
 		//TODO: include penalties in score, and break score up more?
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
-		private readonly IDictionary<Zone, ExternalTrack> externalTracks;
+		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;
 		private readonly InternalTrack internalTrack;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
@@ -45,7 +45,7 @@ namespace BLL
 			this.sittingDuck = sittingDuck;
 			allExternalThreats = externalThreats;
 			allInternalThreats = internalThreats;
-			this.externalTracks = externalTracks.ToDictionary(track => track.Zone);
+			this.externalTracks = externalTracks.ToDictionary(track => track.Zone.ZoneLocation);
 			this.internalTrack = internalTrack;
 			this.players = players;
 			PadPlayerActions();

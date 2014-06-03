@@ -40,12 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleBots.cs" />
-    <Compile Include="Damage.cs" />
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalThreatBuff.cs" />
-    <Compile Include="ExternalThreatDamageResult.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
@@ -81,7 +79,9 @@
     <Compile Include="PlayerDamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\StandardStation.cs" />
+    <Compile Include="ThreatDamage.cs" />
     <Compile Include="ThreatDamageResult.cs" />
+    <Compile Include="ThreatDamageType.cs" />
     <Compile Include="Threats\External\Amoeba.cs" />
     <Compile Include="Threats\External\Gunship.cs" />
     <Compile Include="Threats\External\Marauder.cs" />

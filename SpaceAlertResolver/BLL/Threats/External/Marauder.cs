@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Marauder : MinorYellowExternalThreat
 	{
-		public Marauder(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public Marauder(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(1, 6, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

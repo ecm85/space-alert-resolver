@@ -122,5 +122,34 @@ namespace BLL
 			RedZone.DrainShields();
 			WhiteZone.DrainShields();
 		}
+
+		public ThreatDamageResult TakeAttack(ThreatDamage damage)
+		{
+			var result = new ThreatDamageResult();
+			foreach (var zone in damage.ZoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+			{
+				bool isDestroyed;
+				switch (damage.ThreatDamageType)
+				{
+					case ThreatDamageType.Internal:
+					case ThreatDamageType.IgnoresShields:
+						isDestroyed = zone.TakeDamage(damage.Amount);
+						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						break;
+					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
+						var amount = damage.Amount;
+						if (InterceptorStation.Players.Any())
+							amount -= 2;
+						isDestroyed = zone.TakeAttack(amount, ThreatDamageType.Standard);
+						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						break;
+					default:
+						isDestroyed = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
+						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						break;
+				}
+			}
+			return result;
+		}
 	}
 }

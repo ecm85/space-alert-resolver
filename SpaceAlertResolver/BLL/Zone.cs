@@ -28,20 +28,22 @@ namespace BLL
 			AllDamageTokensTaken = new List<DamageToken>();
 		}
 
-		public ExternalThreatDamageResult TakeAttack(int damage)
+		public bool TakeAttack(int amount, ThreatDamageType damageType)
 		{
 			var oldShields = UpperStation.EnergyContainer.Energy;
-			UpperStation.EnergyContainer.Energy -= damage;
+			UpperStation.EnergyContainer.Energy -= amount;
 			var newShields = UpperStation.EnergyContainer.Energy;
 			var damageShielded = oldShields - newShields;
-			var damageDone = TakeDamage(damage - damageShielded);
-			return new ExternalThreatDamageResult(damageDone)
-			{
-				DamageShielded = damageShielded
-			};
+			var damageDone = amount - damageShielded;
+			if (damageType == ThreatDamageType.DoubleDamageThroughShields)
+				damageDone *= 2;
+			if (damageShielded == 0 && damageDone > 0 && damageType == ThreatDamageType.Plasmatic)
+				foreach (var player in Players)
+					player.IsKnockedOut = true;
+			return TakeDamage(damageDone);
 		}
 
-		public ThreatDamageResult TakeDamage(int damage)
+		public bool TakeDamage(int damage)
 		{
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
@@ -77,11 +79,7 @@ namespace BLL
 					}
 				}
 			}
-			return new ThreatDamageResult
-			{
-				DamageDone = damageDone,
-				ShipDestroyed = shipDestroyed
-			};
+			return shipDestroyed;
 		}
 
 		private IList<DamageToken> GetNewDamageTokens(int count)

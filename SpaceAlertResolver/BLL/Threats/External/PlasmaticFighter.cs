@@ -7,37 +7,29 @@ namespace BLL.Threats.External
 {
 	public class PlasmaticFighter : MinorWhiteExternalThreat
 	{
-		public PlasmaticFighter(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public PlasmaticFighter(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			Attack(1);
+			Attack(1, ThreatDamageType.Plasmatic);
 		}
 
 		public override void PerformYAction()
 		{
-			Attack(1);
+			Attack(1, ThreatDamageType.Plasmatic);
 		}
 
 		public override void PerformZAction()
 		{
-			Attack(2);
+			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
 		public static string GetDisplayName()
 		{
 			return "Plasmatic Fighter";
-		}
-
-		protected override ExternalThreatDamageResult Attack(int amount)
-		{
-			var result = base.Attack(amount);
-			if (result.DamageShielded == 0)
-				KnockOut(CurrentZone.Players);
-			return result;
 		}
 	}
 }

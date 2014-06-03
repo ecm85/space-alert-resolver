@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class LeviathanTanker : SeriousWhiteExternalThreat
 	{
-		public LeviathanTanker(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public LeviathanTanker(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

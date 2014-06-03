@@ -8,7 +8,7 @@ namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public Zone CurrentZone { get; private set; }
+		public ZoneLocation CurrentZone { get; private set; }
 		protected int shields;
 		private ExternalTrack Track { get; set; }
 
@@ -20,7 +20,7 @@ namespace BLL.Threats.External
 		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
 		public int TrackPosition  { get { return Track.ThreatPositions[this]; }}
 
-		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck) :
+		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			this.shields = shields;
@@ -39,38 +39,32 @@ namespace BLL.Threats.External
 		public virtual bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			var isInRange = damage.Range >= DistanceToShip;
-			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone.ZoneLocation);
+			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
 			return isInRange && gunCanHitCurrentZone;
 		}
 
-		protected virtual ExternalThreatDamageResult Attack(int amount)
+		protected void Attack(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
-			return AttackZone(amount, CurrentZone);
+			Attack(amount, threatDamageType, new [] {CurrentZone});
 		}
 
-		protected void AttackAllZones(int amount)
+		protected void AttackAllZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
-			AttackZones(amount, sittingDuck.Zones);
+			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>());
 		}
 
-		protected void AttackOtherTwoZones(int amount)
+		protected void AttackOtherTwoZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
-			AttackZones(amount, sittingDuck.Zones.Except(new[] { CurrentZone }));
+			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}
 
-		private void AttackZones(int amount, IEnumerable<Zone> zones)
-		{
-			foreach (var zone in zones)
-				AttackZone(amount, zone);
-		}
-
-		private ExternalThreatDamageResult AttackZone(int amount, Zone zone)
+		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
 			var bonusAttacks = sittingDuck.CurrentThreatBuffs.Values.Count(buff => buff == ExternalThreatBuff.BonusAttack);
-			var result = zone.TakeAttack(amount + bonusAttacks);
+			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations);
+			var result = sittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
-			return result;
 		}
 	}
 }

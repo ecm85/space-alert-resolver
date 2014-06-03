@@ -27,9 +27,9 @@ namespace ConsoleResolver
 
 			var externalThreats = new ExternalThreat[]
 			{
-				new Destroyer(3, sittingDuck.BlueZone, sittingDuck),
-				new Fighter(4, sittingDuck.RedZone, sittingDuck),
-				new Fighter(5, sittingDuck.WhiteZone, sittingDuck)
+				new Destroyer(3, ZoneLocation.Blue, sittingDuck),
+				new Fighter(4, ZoneLocation.Red, sittingDuck),
+				new Fighter(5, ZoneLocation.White, sittingDuck)
 			};
 			var internalThreats = new InternalThreat[]
 			{

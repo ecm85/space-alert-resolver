@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class DimensionSpider : SeriousWhiteExternalThreat
 	{
-		public DimensionSpider(int speed, int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public DimensionSpider(int speed, int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(0, 13, speed, timeAppears, currentZone, sittingDuck)
 		{
 		}

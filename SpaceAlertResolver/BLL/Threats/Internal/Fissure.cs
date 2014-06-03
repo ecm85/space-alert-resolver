@@ -14,7 +14,7 @@ namespace BLL.Threats.Internal
 
 		public override void PeformXAction()
 		{
-			CurrentZone.DebuffsBySource[this] = ZoneDebuff.DoubleDamage;
+			sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation].DebuffsBySource[this] = ZoneDebuff.DoubleDamage;
 		}
 
 		public override void PerformYAction()

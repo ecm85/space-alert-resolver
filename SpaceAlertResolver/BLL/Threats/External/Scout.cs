@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Scout : MinorYellowExternalThreat
 	{
-		public Scout(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public Scout(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(1, 3, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
@@ -25,8 +25,7 @@ namespace BLL.Threats.External
 
 		public override void PerformZAction()
 		{
-			//TODO: attack 3, ignoring shields
-			throw new NotImplementedException();
+			Attack(3, ThreatDamageType.IgnoresShields);
 		}
 
 		protected override void OnDestroyed()

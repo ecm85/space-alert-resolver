@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Maelstrom : SeriousWhiteExternalThreat
 	{
-		public Maelstrom(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public Maelstrom(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

@@ -7,32 +7,29 @@ namespace BLL.Threats.External
 {
 	public class SpacecraftCarrier : SeriousWhiteExternalThreat
 	{
-		public SpacecraftCarrier(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public SpacecraftCarrier(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(3, 6, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			Attack(2 - AttackDecrement);
+			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
 		public override void PerformYAction()
 		{
-			AttackOtherTwoZones(3 - AttackDecrement);
+			AttackOtherTwoZones(3, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
 		public override void PerformZAction()
 		{
-			AttackAllZones(4 - AttackDecrement);
+			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
 		public static string GetDisplayName()
 		{
 			return "Spacecraft Carrier";
 		}
-
-		private int AttackDecrement { get { return InterceptorsPresent ? 2 : 0; } }
-		private bool InterceptorsPresent { get { return sittingDuck.InterceptorStation.Players.Any(); } }
 	}
 }

@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class EnergyCloud : MinorWhiteExternalThreat
 	{
-		public EnergyCloud(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public EnergyCloud(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(3, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

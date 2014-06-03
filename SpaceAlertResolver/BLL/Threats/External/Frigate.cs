@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Frigate : SeriousWhiteExternalThreat
 	{
-		public Frigate(int timeAppears, Zone currentZone, SittingDuck sittingDuck)
+		public Frigate(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
 			: base(2, 7, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

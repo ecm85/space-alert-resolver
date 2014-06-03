@@ -78,7 +78,7 @@ namespace WpfResolver
 				.Select(threat => Activator.CreateInstance(
 					threat.Type,
 					threat.TimeAppears,
-					sittingDuck.ZonesByLocation[threat.Zone.Value],
+					threat.Zone.Value,
 					sittingDuck))
 				.Cast<ExternalThreat>()
 				.ToList();
