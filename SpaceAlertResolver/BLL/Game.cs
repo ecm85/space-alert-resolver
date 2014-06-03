@@ -71,7 +71,7 @@ namespace BLL
 			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
 			if (isEndOfPhase)
 				PerformEndOfPhase();
-			if (currentTurn == NumberOfTurns)
+			if (currentTurn == NumberOfTurns - 1)
 			{
 				MoveThreats();
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
