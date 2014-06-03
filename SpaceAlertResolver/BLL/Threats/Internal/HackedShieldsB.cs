@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal
 		{
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Hacked Shields I1-05";
 		}

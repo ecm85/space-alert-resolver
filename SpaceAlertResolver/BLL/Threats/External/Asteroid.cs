@@ -39,7 +39,7 @@ namespace BLL.Threats.External
 			Attack(2 * breakpointsCrossed);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Asteroid";
 		}

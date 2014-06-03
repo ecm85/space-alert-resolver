@@ -29,7 +29,7 @@ namespace BLL.Threats.External
 			Attack(RemainingHealth * 2);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Interstellar Octopus";
 		}

@@ -67,7 +67,5 @@ namespace BLL.Threats
 			foreach (var player in players)
 				player.IsKnockedOut = true;
 		}
-
-		public abstract string GetDisplayName();
 	}
 }

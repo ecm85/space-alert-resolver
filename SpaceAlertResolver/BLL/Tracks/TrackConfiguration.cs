@@ -18,6 +18,29 @@ namespace BLL.Tracks
 
 	public static class TrackConfigurationExtensions
 	{
+		public static string DisplayName(this TrackConfiguration trackConfiguration)
+		{
+			switch (trackConfiguration)
+			{
+				case TrackConfiguration.Track1:
+					return "Track 1 (T1)";
+				case TrackConfiguration.Track2:
+					return "Track 2 (T2)";
+				case TrackConfiguration.Track3:
+					return "Track 3 (T3)";
+				case TrackConfiguration.Track4:
+					return "Track 4 (T4)";
+				case TrackConfiguration.Track5:
+					return "Track 5 (T5)";
+				case TrackConfiguration.Track6:
+					return "Track 6 (T6)";
+				case TrackConfiguration.Track7:
+					return "Track 7 (T7)";
+				default:
+					throw new InvalidOperationException();
+			}
+		}
+
 		public static IList<TrackSection> TrackSections(this TrackConfiguration trackConfiguration)
 		{
 			switch (trackConfiguration)

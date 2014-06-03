@@ -29,7 +29,7 @@ namespace BLL.Threats.External
 			Attack(4);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Cryoshield Frigate";
 		}

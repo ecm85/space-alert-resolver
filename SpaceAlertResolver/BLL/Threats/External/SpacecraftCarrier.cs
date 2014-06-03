@@ -27,7 +27,7 @@ namespace BLL.Threats.External
 			AttackAllZones(4 - AttackDecrement);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Spacecraft Carrier";
 		}

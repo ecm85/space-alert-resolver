@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal
 			DamageOtherTwoZones(1);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Central Laser Jam";
 		}

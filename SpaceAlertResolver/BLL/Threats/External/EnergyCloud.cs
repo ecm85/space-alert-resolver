@@ -27,7 +27,7 @@ namespace BLL.Threats.External
 			AttackOtherTwoZones(2);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Energy Cloud";
 		}

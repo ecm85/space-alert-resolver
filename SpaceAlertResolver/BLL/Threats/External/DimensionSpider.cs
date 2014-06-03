@@ -32,7 +32,7 @@ namespace BLL.Threats.External
 			PerformZAction();
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Dimension Spider";
 		}

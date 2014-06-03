@@ -25,7 +25,7 @@ namespace BLL.Threats.External
 			Attack(RemainingHealth);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Meteoroid";
 		}

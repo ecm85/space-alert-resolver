@@ -34,7 +34,7 @@ namespace BLL.Threats.Internal
 			KnockOut(playersNotOnBridge);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "BattleBot Uprising";
 		}

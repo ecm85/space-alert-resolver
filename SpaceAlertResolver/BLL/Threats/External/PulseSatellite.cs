@@ -27,7 +27,7 @@ namespace BLL.Threats.External
 			AttackAllZones(3);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Pulse Satellite";
 		}

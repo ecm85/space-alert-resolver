@@ -31,7 +31,7 @@ namespace BLL.Threats.Internal
 			Damage(4);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Shambler";
 		}

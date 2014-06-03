@@ -20,7 +20,7 @@ namespace BLL.Threats.Internal
 				Damage(2);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Commandos SI1-02";
 		}

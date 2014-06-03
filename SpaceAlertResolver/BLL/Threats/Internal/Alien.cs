@@ -30,7 +30,7 @@ namespace BLL.Threats.Internal
 			throw new LoseException(this);
 		}
 
-		public override string GetDisplayName()
+		public static string GetDisplayName()
 		{
 			return "Alien";
 		}
