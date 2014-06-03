@@ -33,5 +33,10 @@ namespace BLL.Threats.Internal
 			foreach (var zone in sittingDuck.Zones)
 				zone.DebuffsBySource.Remove(this);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Fissure";
+		}
 	}
 }

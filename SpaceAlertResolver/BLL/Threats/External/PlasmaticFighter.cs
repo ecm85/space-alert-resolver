@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Plasmatic Fighter";
+		}
+
 		protected override ExternalThreatDamageResult Attack(int amount)
 		{
 			var result = base.Attack(amount);

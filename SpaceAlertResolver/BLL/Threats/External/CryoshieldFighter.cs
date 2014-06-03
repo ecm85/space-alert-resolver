@@ -29,6 +29,11 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Cryoshield Fighter";
+		}
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())

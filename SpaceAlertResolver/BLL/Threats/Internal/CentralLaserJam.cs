@@ -28,6 +28,11 @@ namespace BLL.Threats.Internal
 			DamageOtherTwoZones(1);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Central Laser Jam";
+		}
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
 			if (RemainingHealth == 1)

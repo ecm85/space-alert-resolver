@@ -36,5 +36,10 @@ namespace BLL.Threats.External
 				threat.CheckForDestroyed();
 			}
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Leviathan Tanker";
+		}
 	}
 }

@@ -16,5 +16,10 @@ namespace BLL.Threats.Internal
 		{
 			MoveBlue();
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Skirmishers I1-01";
+		}
 	}
 }

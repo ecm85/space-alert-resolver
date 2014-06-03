@@ -30,6 +30,11 @@ namespace BLL.Threats.External
 				Attack(5);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Spinning Saucer";
+		}
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (damages.Any(damage => damage.DamageType == DamageType.Rocket))

@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Destroyer";
+		}
+
 		protected override ExternalThreatDamageResult Attack(int amount)
 		{
 			var damageResult = base.Attack(amount);

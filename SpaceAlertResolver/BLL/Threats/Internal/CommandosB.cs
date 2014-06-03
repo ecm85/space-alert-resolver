@@ -19,5 +19,10 @@ namespace BLL.Threats.Internal
 			else
 				Damage(2);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Commandos SI1-02";
+		}
 	}
 }

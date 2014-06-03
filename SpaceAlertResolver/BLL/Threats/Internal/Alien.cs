@@ -30,6 +30,11 @@ namespace BLL.Threats.Internal
 			throw new LoseException(this);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Alien";
+		}
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic);

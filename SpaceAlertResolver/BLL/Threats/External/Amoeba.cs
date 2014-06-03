@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			Attack(5);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Amoeba";
+		}
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);

@@ -28,5 +28,10 @@ namespace BLL.Threats.External
 		{
 			Attack(3);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Man-Of-War";
+		}
 	}
 }

@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			AttackAllZones(4 - AttackDecrement);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Spacecraft Carrier";
+		}
+
 		private int AttackDecrement { get { return InterceptorsPresent ? 2 : 0; } }
 		private bool InterceptorsPresent { get { return sittingDuck.InterceptorStation.Players.Any(); } }
 	}

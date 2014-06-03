@@ -34,6 +34,11 @@ namespace BLL.Threats.Internal
 				EnergyLeaksOut(reactor);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Crossed Wires";
+		}
+
 		private void EnergyLeaksOut(EnergyContainer reactor)
 		{
 			Damage(reactor.Energy);

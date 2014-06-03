@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			AttackOtherTwoZones(3);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Maelstrom";
+		}
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.DamageType == DamageType.Pulse);

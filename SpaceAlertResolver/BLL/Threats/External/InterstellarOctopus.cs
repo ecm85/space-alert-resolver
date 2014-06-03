@@ -29,6 +29,11 @@ namespace BLL.Threats.External
 			Attack(RemainingHealth * 2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Interstellar Octopus";
+		}
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);

@@ -24,5 +24,10 @@ namespace BLL.Threats.Internal
 		{
 			Damage(RemainingHealth * 3);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Unstable Warheads";
+		}
 	}
 }

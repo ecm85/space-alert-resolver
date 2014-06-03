@@ -26,5 +26,10 @@ namespace BLL.Threats.External
 		{
 			Attack(4);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Armored Grappler";
+		}
 	}
 }

@@ -27,6 +27,11 @@ namespace BLL.Threats.External
 			AttackOtherTwoZones(2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Energy Cloud";
+		}
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.DamageType == DamageType.Pulse);

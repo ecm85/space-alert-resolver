@@ -11,5 +11,10 @@ namespace BLL.Threats.Internal
 			: base(timeAppears, sittingDuck.RedZone.UpperStation, sittingDuck)
 		{
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Hacked Shields I1-06";
+		}
 	}
 }

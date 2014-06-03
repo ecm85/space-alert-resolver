@@ -32,6 +32,11 @@ namespace BLL.Threats.External
 			PerformZAction();
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Dimension Spider";
+		}
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.DamageType != DamageType.Rocket && base.CanBeTargetedBy(damage);

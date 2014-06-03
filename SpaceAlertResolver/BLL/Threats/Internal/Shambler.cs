@@ -31,6 +31,11 @@ namespace BLL.Threats.Internal
 			Damage(4);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Shambler";
+		}
+
 		private bool IsAnyPlayerPresent()
 		{
 			return CurrentStation.Players.Any();

@@ -34,6 +34,11 @@ namespace BLL.Threats.Internal
 			KnockOut(playersNotOnBridge);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "BattleBot Uprising";
+		}
+
 		public override void PerformEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))

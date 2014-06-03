@@ -26,5 +26,10 @@ namespace BLL.Threats.External
 		{
 			Attack(3);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Gunship";
+		}
 	}
 }

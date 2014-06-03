@@ -29,6 +29,11 @@ namespace BLL.Threats.External
 			Attack(2);
 		}
 
+		public override string GetDisplayName()
+		{
+			return "Stealth Fighter";
+		}
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return !stealthed && base.CanBeTargetedBy(damage);

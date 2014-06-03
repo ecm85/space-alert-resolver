@@ -26,5 +26,10 @@ namespace BLL.Threats.External
 		{
 			AttackAllZones(2);
 		}
+
+		public override string GetDisplayName()
+		{
+			return "Pulse Ball";
+		}
 	}
 }
