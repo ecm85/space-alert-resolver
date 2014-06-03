@@ -36,6 +36,7 @@ namespace BLL.Threats.External
 
 		protected override void OnDestroyed()
 		{
+			base.OnDestroyed();
 			Attack(2 * breakpointsCrossed);
 		}
 

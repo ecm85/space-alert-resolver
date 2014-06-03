@@ -29,7 +29,8 @@ namespace BLL.Threats.External
 
 		public virtual void TakeDamage(IList<PlayerDamage> damages)
 		{
-			var damageDealt = damages.Sum(damage => damage.Amount) - shields;
+			var bonusShields = sittingDuck.CurrentThreatBuffs.Values.Count(buff => buff == ExternalThreatBuff.BonusShield);
+			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= damageDealt;
 			CheckForDestroyed();
@@ -65,7 +66,8 @@ namespace BLL.Threats.External
 
 		private ExternalThreatDamageResult AttackZone(int amount, Zone zone)
 		{
-			var result = zone.TakeAttack(amount);
+			var bonusAttacks = sittingDuck.CurrentThreatBuffs.Values.Count(buff => buff == ExternalThreatBuff.BonusAttack);
+			var result = zone.TakeAttack(amount + bonusAttacks);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 			return result;

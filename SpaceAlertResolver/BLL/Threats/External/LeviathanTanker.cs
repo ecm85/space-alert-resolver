@@ -30,6 +30,7 @@ namespace BLL.Threats.External
 
 		protected override void OnDestroyed()
 		{
+			base.OnDestroyed();
 			foreach (var threat in sittingDuck.CurrentExternalThreats)
 			{
 				threat.RemainingHealth -= 1;

@@ -44,6 +44,7 @@
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
+    <Compile Include="ExternalThreatBuff.cs" />
     <Compile Include="ExternalThreatDamageResult.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="ThreatDamageResult.cs" />
     <Compile Include="Threats\External\Amoeba.cs" />
     <Compile Include="Threats\External\Gunship.cs" />
+    <Compile Include="Threats\External\Marauder.cs" />
     <Compile Include="Threats\External\Meteoroid.cs" />
     <Compile Include="Threats\External\Asteroid.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
@@ -98,11 +100,15 @@
     <Compile Include="Threats\External\ManOfWar.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\MinorYellowExternalThreat.cs" />
+    <Compile Include="Threats\External\PhantomFighter.cs" />
     <Compile Include="Threats\External\PlasmaticFighter.cs" />
     <Compile Include="Threats\External\PulseBall.cs" />
     <Compile Include="Threats\External\PulseSatellite.cs" />
+    <Compile Include="Threats\External\Scout.cs" />
     <Compile Include="Threats\External\SeriousExternalThreat.cs" />
     <Compile Include="Threats\External\SeriousWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\SeriousYellowExternalThreat.cs" />
     <Compile Include="Threats\External\SpacecraftCarrier.cs" />
     <Compile Include="Threats\External\SpinningSaucer.cs" />
     <Compile Include="Threats\External\StealthFighter.cs" />
@@ -121,11 +127,13 @@
     <Compile Include="Threats\Internal\IrreparableMalfunction.cs" />
     <Compile Include="Threats\Internal\MinorInternalThreat.cs" />
     <Compile Include="Threats\Internal\MinorWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\MinorYellowInternalThreat.cs" />
     <Compile Include="Threats\Internal\Saboteur.cs" />
     <Compile Include="Threats\Internal\SaboteurA.cs" />
     <Compile Include="Threats\Internal\SaboteurB.cs" />
     <Compile Include="Threats\Internal\SeriousInternalThreat.cs" />
     <Compile Include="Threats\Internal\SeriousWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\SeriousYellowInternalThreat.cs" />
     <Compile Include="Threats\Internal\Shambler.cs" />
     <Compile Include="Threats\Internal\Skirmishers.cs" />
     <Compile Include="Threats\Internal\SkirmishersA.cs" />

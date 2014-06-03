@@ -30,6 +30,7 @@ namespace BLL.Threats.Internal
 
 		protected override void OnDestroyed()
 		{
+			base.OnDestroyed();
 			foreach (var zone in sittingDuck.Zones)
 				zone.DebuffsBySource.Remove(this);
 		}
