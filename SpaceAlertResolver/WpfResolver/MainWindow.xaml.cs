@@ -15,11 +15,7 @@ namespace WpfResolver
 
 	public partial class MainWindow
 	{
-		private InternalTrack internalTrack;
-		private IList<ExternalTrack> externalTracks;
-		private IList<Player> players;
-		private IList<InternalThreat> internalThreats;
-		private IList<ExternalThreat> externalThreats;
+
 		private readonly SittingDuck sittingDuck = new SittingDuck();
 
 		public MainWindow()
@@ -27,36 +23,14 @@ namespace WpfResolver
 			InitializeComponent();
 		}
 
-		private void SetPlayers(object sender, RoutedEventArgs routedEventArgs)
+		private void ResolveGame(object sender, RoutedEventArgs routedEventArgs)
 		{
-			var actionPicker = new ActionPicker();
-			actionPicker.ShowDialog();
-			if (actionPicker.Players.Any())
-				players = actionPicker.Players;
-		}
+			var players = new List<Player>();
+			var externalThreats = new List<ExternalThreat>();
+			var externalTracks = new List<ExternalTrack>();
+			var internalThreats = new List<InternalThreat>();
+			var internalTrack = new InternalTrack(TrackConfiguration.Track1);
 
-		private void SetTracks(object sender, RoutedEventArgs routedEventArgs)
-		{
-			var trackPicker = new TrackPicker(sittingDuck);
-			trackPicker.ShowDialog();
-			if (trackPicker.ExternalTracks.Any())
-				externalTracks = trackPicker.ExternalTracks;
-			if (trackPicker.InternalTrack != null)
-				internalTrack = trackPicker.InternalTrack;
-		}
-
-		private void SetThreats(object sender, RoutedEventArgs routedEventArgs)
-		{
-			var threatPicker = new ThreatPicker(sittingDuck);
-			threatPicker.ShowDialog();
-			if (threatPicker.InternalThreats.Any())
-				internalThreats = threatPicker.InternalThreats;
-			if (threatPicker.ExternalThreats.Any())
-				externalThreats = threatPicker.ExternalThreats;
-		}
-
-		private void RunGame(object sender, RoutedEventArgs routedEventArgs)
-		{
 			sittingDuck.SetPlayers(players);
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
 

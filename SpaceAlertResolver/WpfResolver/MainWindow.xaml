@@ -1,15 +1,77 @@
 ﻿<Window x:Class="WpfResolver.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		Title="Space Alert Resolver" Height="430" Width="377"
+		Title="Space Alert Resolver" Height="595" Width="689"
 		Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 	<Grid>
-		<Button Content="Set Actions" Click="SetPlayers" HorizontalAlignment="Left" Margin="24,37,0,0" VerticalAlignment="Top" Width="75"/>
-		<Button Content="Pick Tracks" Click="SetTracks" HorizontalAlignment="Left" Margin="24,85,0,0" VerticalAlignment="Top" Width="75"/>
-		<Button Content="Pick Threats" Click="SetThreats" HorizontalAlignment="Left" Margin="24,134,0,0" VerticalAlignment="Top" Width="75"/>
-		<Button Content="Resolve Game" Click="RunGame" HorizontalAlignment="Left" Margin="121,192,0,0" VerticalAlignment="Top" Width="114" Height="59"/>
-		<ScrollViewer HorizontalAlignment="Left" Height="100" Margin="24,272,0,0" VerticalAlignment="Top" Width="300">
-			<TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="108" Width="300"/>
+		<Button Name="ResolveGameButton" Content="Resolve Game" Click="ResolveGame" HorizontalAlignment="Left" Margin="302,163,0,0" VerticalAlignment="Top" Width="157" Height="33"/>
+		<ScrollViewer HorizontalAlignment="Left" Height="345" Margin="285,211,0,0" VerticalAlignment="Top" Width="383">
+			<TextBlock x:Name="StatusTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="345" Width="373"/>
 		</ScrollViewer>
+		<TextBox x:Name="FirstPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="314,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+		<TextBox x:Name="SecondPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="314,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+		<TextBox x:Name="ThirdPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="314,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+		<TextBox x:Name="FourthPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="314,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsChecked, ElementName=FourthPlayerCheckBox}"/>
+		<TextBox x:Name="FifthPlayerTextBox" HorizontalAlignment="Left" Height="23" Margin="314,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="{Binding IsChecked, ElementName=FifthPlayerCheckBox}"/>
+		<CheckBox x:Name="FourthPlayerCheckBox" Content="" HorizontalAlignment="Left" Margin="439,100,0,0" VerticalAlignment="Top" IsChecked="True" Height="20" Width="17"/>
+		<CheckBox x:Name="FifthPlayerCheckBox" Content="" HorizontalAlignment="Left" Margin="439,129,0,0" VerticalAlignment="Top"/>
+		<Label Content="Player 1" HorizontalAlignment="Left" Margin="256,10,0,0" VerticalAlignment="Top" Height="25" Width="53"/>
+		<Label Content="Player 2" HorizontalAlignment="Left" Margin="256,37,0,0" VerticalAlignment="Top" Height="25" Width="53"/>
+		<Label Content="Player 3" HorizontalAlignment="Left" Margin="256,64,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 4" HorizontalAlignment="Left" Margin="256,91,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<Label Content="Player 5" HorizontalAlignment="Left" Margin="256,122,0,0" VerticalAlignment="Top" Height="25" Width="67"/>
+		<ComboBox Name="RedTrackPicker" HorizontalAlignment="Left" Margin="98,13,0,0" VerticalAlignment="Top" Width="120"/>
+		<ComboBox Name="WhiteTrackPicker" HorizontalAlignment="Left" Margin="98,40,0,0" VerticalAlignment="Top" Width="120"/>
+		<ComboBox Name="BlueTrackPicker" HorizontalAlignment="Left" Margin="98,67,0,0" VerticalAlignment="Top" Width="120"/>
+		<ComboBox Name="InternalTrackPicker" HorizontalAlignment="Left" Margin="98,94,0,0" VerticalAlignment="Top" Width="120"/>
+		<Label Content="Red Track" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
+		<Label Content="White Track" HorizontalAlignment="Left" Margin="9,37,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
+		<Label Content="Blue Track" HorizontalAlignment="Left" Margin="9,64,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
+		<Label Content="Internal Track" HorizontalAlignment="Left" Margin="9,91,0,0" VerticalAlignment="Top" Height="25" Width="84"/>
+		<ListBox Name="CurrentThreatList" HorizontalAlignment="Left" Height="148" Margin="10,377,0,0" VerticalAlignment="Top" Width="270"/>
+		<Button Name="RemoveSelectedThreats" Content="Remove Selected" HorizontalAlignment="Left" Margin="10,530,0,0" VerticalAlignment="Top" Width="116" Height="26"/>
+		<GroupBox Header="Add Threat" HorizontalAlignment="Left" Margin="10,152,0,0" VerticalAlignment="Top" Height="220" Width="270" BorderThickness="1">
+			<Grid>
+				<RadioButton Content="Serious Internal" GroupName="ThreatType" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+				<RadioButton Content="Minor Internal" GroupName="ThreatType" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" IsChecked="true"/>
+				<RadioButton Content="Serious External" GroupName="ThreatType" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+				<RadioButton Content="Minor Internal" GroupName="ThreatType" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" IsChecked="true"/>
+				<RadioButton Content="White" GroupName="ThreatDifficulty" HorizontalAlignment="Left" Margin="134,13,0,0" VerticalAlignment="Top" IsChecked="true"/>
+				<RadioButton Content="Yellow" GroupName="ThreatDifficulty" HorizontalAlignment="Left" Margin="134,34,0,0" VerticalAlignment="Top" IsEnabled="false"/>
+				<RadioButton Content="Red" GroupName="ThreatDifficulty" HorizontalAlignment="Left" Margin="134,55,0,0" VerticalAlignment="Top" IsEnabled="false"/>
+				<ComboBox Name="NewThreatPicker" HorizontalAlignment="Left" Margin="9,133,0,0" VerticalAlignment="Top" Width="120"/>
+				<ComboBox Name="NewThreatZonePicker" HorizontalAlignment="Left" Margin="134,133,0,0" VerticalAlignment="Top" Width="72" />
+				<Button Name="AddNewThreatButton" Content="Add Threat" HorizontalAlignment="Left" Margin="9,166,0,0" VerticalAlignment="Top" Width="75"/>
+				<Label Content="New Threat" HorizontalAlignment="Left" Margin="9,110,0,0" VerticalAlignment="Top"/>
+				<Label Content="Zone" HorizontalAlignment="Left" Margin="134,110,0,0" VerticalAlignment="Top"/>
+			</Grid>
+		</GroupBox>
+		<Button Name="RemoveAllCurrentThreats" Content="Remove All" HorizontalAlignment="Left" Margin="170,530,0,0" VerticalAlignment="Top" Width="110" Height="26"/>
+		<TextBlock HorizontalAlignment="Left" Margin="486,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="196" Width="185">
+			Legend:
+			<LineBreak />
+			<Underline>a</Underline> action
+			<LineBreak />
+			<Underline>b</Underline> action
+			<LineBreak />
+			<Underline>c</Underline> action
+			<LineBreak />
+			&gt;
+			<LineBreak />
+			&lt;
+			<LineBreak />
+			change <Underline>d</Underline>ecks
+			<LineBreak />
+			battleb<Underline>o</Underline>ts
+			<LineBreak />
+			Heroic <Underline>A</Underline> action
+			<LineBreak />
+			Heroic <Underline>B</Underline> action
+			<LineBreak />
+			Heroic battleb<Underline>O</Underline>ts
+			<LineBreak />
+			Heroic movement - Numpad 1-6
+			<LineBreak />
+		</TextBlock>
 	</Grid>
 </Window>
