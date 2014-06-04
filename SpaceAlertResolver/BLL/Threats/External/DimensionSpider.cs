@@ -14,12 +14,12 @@ namespace BLL.Threats.External
 
 		public override void PeformXAction()
 		{
-			shields = 1;
+			Shields = 1;
 		}
 
 		public override void PerformYAction()
 		{
-			shields++;
+			Shields++;
 		}
 
 		public override void PerformZAction()

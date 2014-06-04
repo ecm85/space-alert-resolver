@@ -86,7 +86,10 @@
     <Compile Include="ThreatDamageType.cs" />
     <Compile Include="Threats\External\Amoeba.cs" />
     <Compile Include="Threats\External\Gunship.cs" />
+    <Compile Include="Threats\External\Jellyfish.cs" />
+    <Compile Include="Threats\External\Kamikaze.cs" />
     <Compile Include="Threats\External\Marauder.cs" />
+    <Compile Include="Threats\External\MegashieldDestroyer.cs" />
     <Compile Include="Threats\External\Meteoroid.cs" />
     <Compile Include="Threats\External\Asteroid.cs" />
     <Compile Include="Threats\External\CryoshieldFighter.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Threats\External\LeviathanTanker.cs" />
     <Compile Include="Threats\External\Maelstrom.cs" />
     <Compile Include="Threats\External\ManOfWar.cs" />
+    <Compile Include="Threats\External\MiniCarrier.cs" />
     <Compile Include="Threats\External\MinorExternalThreat.cs" />
     <Compile Include="Threats\External\MinorWhiteExternalThreat.cs" />
     <Compile Include="Threats\External\MinorYellowExternalThreat.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Threats\External\SpacecraftCarrier.cs" />
     <Compile Include="Threats\External\SpinningSaucer.cs" />
     <Compile Include="Threats\External\StealthFighter.cs" />
+    <Compile Include="Threats\External\Swarm.cs" />
     <Compile Include="Threats\Internal\Alien.cs" />
     <Compile Include="Threats\Internal\BattleBotUprising.cs" />
     <Compile Include="Threats\Internal\CentralLaserJam.cs" />

@@ -5,43 +5,43 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class PhantomFighter : MinorYellowExternalThreat
+	public class Swarm : MinorYellowExternalThreat
 	{
-		private bool phantomMode = true;
-
-		public PhantomFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 3, 3, timeAppears, currentZone, sittingDuck)
+		public Swarm(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
+			: base(0, 3, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			phantomMode = false;
+			Attack(1);
 		}
 
 		public override void PerformYAction()
 		{
 			Attack(2);
+			AttackOtherTwoZones(1);
 		}
 
 		public override void PerformZAction()
 		{
 			Attack(3);
+			AttackOtherTwoZones(2);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			base.TakeDamage(damages.Where(damage => damage.PlayerDamageType != PlayerDamageType.Rocket).ToList());
+			TakeDamage(damages, 1);
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return !phantomMode && base.CanBeTargetedBy(damage);
+			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
 		public static string GetDisplayName()
 		{
-			return "Phantom Fighter";
+			return "Swarm";
 		}
 	}
 }

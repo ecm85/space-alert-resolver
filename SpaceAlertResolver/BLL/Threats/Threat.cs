@@ -11,7 +11,7 @@ namespace BLL.Threats
 		public int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
 
 		public int TimeAppears { get; private set; }
-		private int TotalHealth { get; set; }
+		protected int TotalHealth { get; set; }
 		public int RemainingHealth { get; set; }
 		public int Speed { get; protected set; }
 

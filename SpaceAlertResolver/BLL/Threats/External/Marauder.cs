@@ -32,5 +32,10 @@ namespace BLL.Threats.External
 			sittingDuck.CurrentThreatBuffs.Remove(this);
 			base.OnDestroyed();
 		}
+
+		public static string GetDisplayName()
+		{
+			return "Marauder";
+		}
 	}
 }

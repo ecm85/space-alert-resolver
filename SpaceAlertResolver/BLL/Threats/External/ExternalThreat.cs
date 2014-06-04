@@ -9,7 +9,9 @@ namespace BLL.Threats.External
 	public abstract class ExternalThreat : Threat
 	{
 		public ZoneLocation CurrentZone { get; private set; }
-		protected int shields;
+		//TODO: This won't work with negative shields. Figure out how to handle both Jellyfish and megashield and look at other consumers of Shields
+		private int shields;
+		protected int Shields { get { return shields; } set { shields = value > 0 ? value : 0;} }
 		private ExternalTrack Track { get; set; }
 
 		public void SetTrack(ExternalTrack track)
@@ -23,16 +25,21 @@ namespace BLL.Threats.External
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
-			this.shields = shields;
+			this.Shields = shields;
 			CurrentZone = currentZone;
 		}
 
 		public virtual void TakeDamage(IList<PlayerDamage> damages)
 		{
+			TakeDamage(damages, null);
+		}
+
+		protected virtual void TakeDamage(IList<PlayerDamage> damages, int? maxDamageTaken)
+		{
 			var bonusShields = sittingDuck.CurrentThreatBuffs.Values.Count(buff => buff == ExternalThreatBuff.BonusShield);
-			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
+			var damageDealt = damages.Sum(damage => damage.Amount) - (Shields + bonusShields);
 			if (damageDealt > 0)
-				RemainingHealth -= damageDealt;
+				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
 			CheckForDestroyed();
 		}
 

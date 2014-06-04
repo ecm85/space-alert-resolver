@@ -22,6 +22,7 @@ namespace BLL
 		//TODO: include penalties in score, and break score up more?
 		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
 		//TODO: Revisit all things on ISittingDuck
+		//TODO: Threat factory, threat enum
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;

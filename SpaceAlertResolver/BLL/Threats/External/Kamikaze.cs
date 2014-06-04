@@ -5,33 +5,33 @@ using System.Text;
 
 namespace BLL.Threats.External
 {
-	public class ManOfWar : SeriousWhiteExternalThreat
+	public class Kamikaze : MinorYellowExternalThreat
 	{
-		public ManOfWar(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 9, 1, timeAppears, currentZone, sittingDuck)
+		public Kamikaze(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
+			: base(2, 5, 4, timeAppears, currentZone, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			Attack(2);
 			Speed++;
+			Shields = 1;
 		}
 
 		public override void PerformYAction()
 		{
-			Attack(3);
-			Shields++;
+			Speed++;
+			Shields = 0;
 		}
 
 		public override void PerformZAction()
 		{
-			Attack(3);
+			Attack(6);
 		}
 
 		public static string GetDisplayName()
 		{
-			return "Man-Of-War";
+			return "Kamikaze";
 		}
 	}
 }
