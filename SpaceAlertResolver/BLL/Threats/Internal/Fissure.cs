@@ -14,7 +14,6 @@ namespace BLL.Threats.Internal
 
 		public override void PeformXAction()
 		{
-			//TODO: This only worked by accident before. What 'zone' is interceptor station? 
 			sittingDuck.ZonesByLocation[ZoneLocation.Red].DebuffsBySource[this] = ZoneDebuff.DoubleDamage;
 		}
 

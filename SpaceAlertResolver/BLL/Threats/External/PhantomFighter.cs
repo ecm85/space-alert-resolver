@@ -29,6 +29,11 @@ namespace BLL.Threats.External
 			Attack(3);
 		}
 
+		public override void TakeDamage(IList<PlayerDamage> damages)
+		{
+			base.TakeDamage(damages.Where(damage => damage.PlayerDamageType != PlayerDamageType.Rocket).ToList());
+		}
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return !phantomMode && base.CanBeTargetedBy(damage);
