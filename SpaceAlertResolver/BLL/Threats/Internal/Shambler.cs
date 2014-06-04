@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal
 {
 	public class Shambler : SeriousWhiteInternalThreat
 	{
-		public Shambler(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)
+		public Shambler(int timeAppears, ISittingDuck sittingDuck)
+			: base(2, 2, timeAppears, StationLocation.LowerWhite, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal
 
 		private bool IsAnyPlayerPresent()
 		{
-			return CurrentStation.Players.Any();
+			return sittingDuck.StationByLocation[CurrentStation].Players.Any();
 		}
 	}
 }

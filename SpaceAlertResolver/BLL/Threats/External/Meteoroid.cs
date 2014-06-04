@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Meteoroid : MinorWhiteExternalThreat
 	{
-		public Meteoroid(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Meteoroid(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(0, 5, 5, timeAppears, currentZone, sittingDuck)
 		{
 		}

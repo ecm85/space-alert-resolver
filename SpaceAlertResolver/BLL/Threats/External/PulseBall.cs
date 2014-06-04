@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class PulseBall : MinorWhiteExternalThreat
 	{
-		public PulseBall(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public PulseBall(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(1, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

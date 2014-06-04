@@ -8,22 +8,22 @@ namespace BLL.Threats.Internal
 {
 	public class CrossedWires : SeriousWhiteInternalThreat
 	{
-		public CrossedWires(int timeAppears, SittingDuck sittingDuck)
-			: base(4, 3, timeAppears, sittingDuck.WhiteZone.UpperStation, PlayerAction.B, sittingDuck)
+		public CrossedWires(int timeAppears, ISittingDuck sittingDuck)
+			: base(4, 3, timeAppears, StationLocation.UpperWhite, PlayerAction.B, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			var shield = CurrentStation.EnergyContainer;
-			var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
-			TransferEnergyToShield(shield, reactor);
+			sittingDuck.TransferEnergyToShields(new [] {CurrentZone});
+			sittingDuck.EnergyLeaksOut(new[] {CurrentZone});
+			var reactor = sittingDuck.ZonesByLocation[CurrentZone].LowerStation.EnergyContainer;
 			EnergyLeaksOut(reactor);
 		}
 
 		public override void PerformYAction()
 		{
-			var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
+			var reactor = sittingDuck.ZonesByLocation[CurrentZone].LowerStation.EnergyContainer;
 			EnergyLeaksOut(reactor);
 		}
 
@@ -43,14 +43,6 @@ namespace BLL.Threats.Internal
 		{
 			Damage(reactor.Energy);
 			reactor.Energy = 0;
-		}
-
-		private static void TransferEnergyToShield(EnergyContainer shield, EnergyContainer reactor)
-		{
-			var roomForShields = shield.Capacity - shield.Energy;
-			var energyTransferredToShields = Math.Min(roomForShields, reactor.Energy);
-			shield.Energy += energyTransferredToShields;
-			reactor.Energy -= energyTransferredToShields;
 		}
 	}
 }

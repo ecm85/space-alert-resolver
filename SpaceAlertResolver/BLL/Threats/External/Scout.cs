@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Scout : MinorYellowExternalThreat
 	{
-		public Scout(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Scout(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(1, 3, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

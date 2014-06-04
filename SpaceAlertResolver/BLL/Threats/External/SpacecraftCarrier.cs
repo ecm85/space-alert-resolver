@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class SpacecraftCarrier : SeriousWhiteExternalThreat
 	{
-		public SpacecraftCarrier(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public SpacecraftCarrier(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(3, 6, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

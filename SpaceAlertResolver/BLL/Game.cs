@@ -20,6 +20,8 @@ namespace BLL
 		//TODO: Campaign repairs and damage carryover
 		//TODO: Let user select damage tokens
 		//TODO: include penalties in score, and break score up more?
+		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
+		//TODO: Revisit all things on ISittingDuck
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;
@@ -158,7 +160,7 @@ namespace BLL
 			foreach (var threat in newlySurvivedThreats)
 			{
 				foreach(var station in threat.CurrentStations)
-					station.IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
+					sittingDuck.StationByLocation[station].IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
 			}
 		}
 
@@ -212,7 +214,7 @@ namespace BLL
 					MovePlayer(player.CurrentStation.RedwardStation, player);
 					break;
 				case PlayerAction.ChangeDeck:
-					var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.ZoneLocation];
+					var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.StationLocation.ZoneLocation()];
 					MovePlayer(player.CurrentStation.OppositeDeckStation, player);
 					if (currentZone.Gravolift.ShiftsPlayers)
 						player.Shift(currentTurn + 1);

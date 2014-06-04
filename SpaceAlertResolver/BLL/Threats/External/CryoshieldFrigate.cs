@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 	{
 		private bool cryoshieldUp = true;
 
-		public CryoshieldFrigate(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public CryoshieldFrigate(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(1, 7, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

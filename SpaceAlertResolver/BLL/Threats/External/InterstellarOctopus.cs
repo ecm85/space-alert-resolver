@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class InterstellarOctopus : SeriousWhiteExternalThreat
 	{
-		public InterstellarOctopus(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public InterstellarOctopus(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(1, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

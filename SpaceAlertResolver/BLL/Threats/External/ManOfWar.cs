@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class ManOfWar : SeriousWhiteExternalThreat
 	{
-		public ManOfWar(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public ManOfWar(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(2, 9, 1, timeAppears, currentZone, sittingDuck)
 		{
 		}

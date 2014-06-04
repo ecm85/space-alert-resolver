@@ -8,13 +8,14 @@ using BLL.Threats.Internal;
 
 namespace BLL
 {
-	public class SittingDuck
+	public class SittingDuck : ISittingDuck
 	{
 		public Zone BlueZone { get; private set; }
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
+		public IDictionary<StationLocation, Station> StationByLocation { get; private set; }
 		public InterceptorStation InterceptorStation { get; set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
@@ -40,12 +41,15 @@ namespace BLL
 			Computer = computerComponent;
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
-			var interceptorStation = new InterceptorStation();
+			var interceptorStation = new InterceptorStation
+			{
+				StationLocation = StationLocation.Interceptor
+			};
 			var upperRedStation = new StandardStation
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
 				EnergyContainer = new SideShield(redReactor),
-				ZoneLocation = ZoneLocation.Red
+				StationLocation = StationLocation.UpperRed
 			};
 			interceptorStation.InterceptorComponent = new InterceptorComponent(null, upperRedStation);
 			upperRedStation.CComponent = new InterceptorComponent(interceptorStation, null);
@@ -53,21 +57,21 @@ namespace BLL
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
 				EnergyContainer = new CentralShield(whiteReactor),
-				ZoneLocation = ZoneLocation.White,
+				StationLocation = StationLocation.UpperWhite,
 				CComponent = computerComponent
 			};
 			var upperBlueStation = new StandardStation
 			{
 				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
 				EnergyContainer = new SideShield(blueReactor),
-				ZoneLocation = ZoneLocation.Blue,
+				StationLocation = StationLocation.UpperBlue,
 				CComponent = new BattleBotsComponent()
 			};
 			var lowerRedStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
 				EnergyContainer = redReactor,
-				ZoneLocation = ZoneLocation.Red,
+				StationLocation = StationLocation.LowerRed,
 				CComponent = new BattleBotsComponent()
 			};
 			
@@ -75,14 +79,14 @@ namespace BLL
 			{
 				Cannon = new PulseCannon(whiteReactor),
 				EnergyContainer = whiteReactor,
-				ZoneLocation = ZoneLocation.White,
+				StationLocation = StationLocation.LowerWhite,
 				CComponent = visualConfirmationComponent
 			};
 			var lowerBlueStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
 				EnergyContainer = blueReactor,
-				ZoneLocation = ZoneLocation.Blue,
+				StationLocation = StationLocation.LowerBlue,
 				CComponent = rocketsComponent
 			};
 			upperRedStation.BluewardStation = upperWhiteStation;
@@ -104,6 +108,10 @@ namespace BLL
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = new Gravolift() };
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = new Gravolift() };
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
+			StationByLocation = Zones
+				.SelectMany(zone => new[] {zone.LowerStation, zone.UpperStation})
+				.Concat(new Station[] {interceptorStation})
+				.ToDictionary(station => station.StationLocation);
 			InterceptorStation = interceptorStation;
 		}
 
@@ -116,11 +124,16 @@ namespace BLL
 			}
 		}
 
-		public void DrainAllShields()
+		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			BlueZone.DrainShields();
-			RedZone.DrainShields();
-			WhiteZone.DrainShields();
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DrainShields();
+		}
+
+		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DrainShields(amount);
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
@@ -150,6 +163,48 @@ namespace BLL
 				}
 			}
 			return result;
+		}
+
+		public int GetPlayerCount(StationLocation station)
+		{
+			return StationByLocation[station].Players.Count;
+		}
+
+		public void KnockOutPlayersWithBattleBots()
+		{
+			var playersWithBattleBots = Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
+			KnockOut(playersWithBattleBots);
+		}
+
+		public void KnockOutPlayers(IEnumerable<StationLocation> locations)
+		{
+			var players = locations.SelectMany(location => StationByLocation[location].Players);
+			KnockOut(players);
+		}
+
+		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				TransferEnergyToShield(zone.UpperStation.EnergyContainer, zone.LowerStation.EnergyContainer);
+		}
+
+		public void EnergyLeaksOut(IEnumerable<ZoneLocation> zoneLocations)
+		{
+			throw new NotImplementedException();
+		}
+
+		private static void TransferEnergyToShield(EnergyContainer shield, EnergyContainer reactor)
+		{
+			var roomForShields = shield.Capacity - shield.Energy;
+			var energyTransferredToShields = Math.Min(roomForShields, reactor.Energy);
+			shield.Energy += energyTransferredToShields;
+			reactor.Energy -= energyTransferredToShields;
+		}
+
+		private static void KnockOut(IEnumerable<Player> players)
+		{
+			foreach (var player in players)
+				player.IsKnockedOut = true;
 		}
 	}
 }

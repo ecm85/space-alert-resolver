@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Marauder : MinorYellowExternalThreat
 	{
-		public Marauder(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Marauder(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(1, 6, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}
@@ -19,9 +19,7 @@ namespace BLL.Threats.External
 
 		public override void PerformYAction()
 		{
-			var allShields = sittingDuck.Zones.Select(zone => zone.UpperStation.EnergyContainer);
-			foreach (var shield in allShields)
-				shield.Energy -= 1;
+			sittingDuck.DrainShields(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
 		public override void PerformZAction()

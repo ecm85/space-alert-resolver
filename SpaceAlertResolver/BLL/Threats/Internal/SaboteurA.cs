@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal
 {
 	public class SaboteurA : Saboteur
 	{
-		public SaboteurA(int timeAppears, SittingDuck sittingDuck)
+		public SaboteurA(int timeAppears, ISittingDuck sittingDuck)
 			: base(timeAppears, sittingDuck)
 		{
 		}

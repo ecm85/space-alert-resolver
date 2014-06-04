@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal
 {
 	public class SkirmishersA : Skirmishers
 	{
-		public SkirmishersA(int timeAppears, SittingDuck sittingDuck)
-			: base(timeAppears, sittingDuck.RedZone.UpperStation, sittingDuck)
+		public SkirmishersA(int timeAppears, ISittingDuck sittingDuck)
+			: base(timeAppears, StationLocation.UpperRed, sittingDuck)
 		{
 		}
 

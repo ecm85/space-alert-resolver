@@ -44,6 +44,7 @@
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalThreatBuff.cs" />
+    <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="PlayerDamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\StandardStation.cs" />
+    <Compile Include="StationLocation.cs" />
     <Compile Include="ThreatDamage.cs" />
     <Compile Include="ThreatDamageResult.cs" />
     <Compile Include="ThreatDamageType.cs" />

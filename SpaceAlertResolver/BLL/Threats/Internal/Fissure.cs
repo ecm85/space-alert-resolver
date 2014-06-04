@@ -7,14 +7,15 @@ namespace BLL.Threats.Internal
 {
 	public class Fissure : SeriousWhiteInternalThreat
 	{
-		public Fissure(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.InterceptorStation, PlayerAction.BattleBots, sittingDuck)
+		public Fissure(int timeAppears, ISittingDuck sittingDuck)
+			: base(2, 2, timeAppears, StationLocation.Interceptor, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			sittingDuck.ZonesByLocation[CurrentStation.ZoneLocation].DebuffsBySource[this] = ZoneDebuff.DoubleDamage;
+			//TODO: This only worked by accident before. What 'zone' is interceptor station? 
+			sittingDuck.ZonesByLocation[ZoneLocation.Red].DebuffsBySource[this] = ZoneDebuff.DoubleDamage;
 		}
 
 		public override void PerformYAction()

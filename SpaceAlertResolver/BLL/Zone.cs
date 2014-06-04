@@ -99,5 +99,10 @@ namespace BLL
 		{
 			UpperStation.EnergyContainer.Energy = 0;
 		}
+
+		public void DrainShields(int amount)
+		{
+			UpperStation.EnergyContainer.Energy -= amount;
+		}
 	}
 }

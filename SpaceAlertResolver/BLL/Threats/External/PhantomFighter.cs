@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 	{
 		private bool phantomMode = true;
 
-		public PhantomFighter(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public PhantomFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(3, 3, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

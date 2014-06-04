@@ -18,7 +18,7 @@ namespace BLL.Threats
 		private readonly ThreatType type;
 		private readonly ThreatDifficulty difficulty;
 
-		protected readonly SittingDuck sittingDuck;
+		protected readonly ISittingDuck sittingDuck;
 
 		private bool destroyed;
 
@@ -46,7 +46,7 @@ namespace BLL.Threats
 			get { return RemainingHealth < TotalHealth; }
 		}
 
-		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, SittingDuck sittingDuck)
+		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, ISittingDuck sittingDuck)
 		{
 			this.difficulty = difficulty;
 			this.type = type;
@@ -60,12 +60,6 @@ namespace BLL.Threats
 		{
 			var newHealth = RemainingHealth + amount;
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
-		}
-
-		protected static void KnockOut(IEnumerable<Player> players)
-		{
-			foreach (var player in players)
-				player.IsKnockedOut = true;
 		}
 	}
 }

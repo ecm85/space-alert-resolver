@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal
 {
 	public class CentralLaserJam : MinorWhiteInternalThreat
 	{
-		public CentralLaserJam(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.WhiteZone.UpperStation, PlayerAction.A, sittingDuck)
+		public CentralLaserJam(int timeAppears, ISittingDuck sittingDuck)
+			: base(2, 2, timeAppears, StationLocation.UpperWhite, PlayerAction.A, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			CurrentStation.OppositeDeckStation.EnergyContainer.Energy -= 1;
+			sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer.Energy -= 1;
 		}
 
 		public override void PerformYAction()
@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal
 		{
 			if (RemainingHealth == 1)
 			{
-				var reactor = CurrentStation.OppositeDeckStation.EnergyContainer;
+				var reactor = sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer;
 				if (reactor.Energy > 1)
 				{
 					reactor.Energy--;

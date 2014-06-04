@@ -20,7 +20,7 @@ namespace BLL.Threats.External
 		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
 		public int TrackPosition  { get { return Track.ThreatPositions[this]; }}
 
-		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck) :
+		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			this.shields = shields;

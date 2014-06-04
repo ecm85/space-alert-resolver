@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 	{
 		private bool stealthed = true;
 
-		public StealthFighter(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public StealthFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

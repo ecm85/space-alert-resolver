@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class PlasmaticFighter : MinorWhiteExternalThreat
 	{
-		public PlasmaticFighter(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public PlasmaticFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

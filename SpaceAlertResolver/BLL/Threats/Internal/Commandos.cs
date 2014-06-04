@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal
 {
 	public abstract class Commandos : SeriousWhiteInternalThreat
 	{
-		protected Commandos(int timeAppears, Station currentStation, SittingDuck sittingDuck)
+		protected Commandos(int timeAppears, StationLocation currentStation, ISittingDuck sittingDuck)
 			: base(2, 2, timeAppears, currentStation, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
@@ -20,7 +19,7 @@ namespace BLL.Threats.Internal
 
 		public override void PerformZAction()
 		{
-			KnockOut(CurrentStation.Players);
+			sittingDuck.KnockOutPlayers(new [] {CurrentStation});
 			Damage(4);
 		}
 

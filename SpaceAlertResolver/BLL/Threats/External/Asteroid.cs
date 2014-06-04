@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 	{
 		private int breakpointsCrossed;
 
-		public Asteroid(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Asteroid(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(0, 9, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}

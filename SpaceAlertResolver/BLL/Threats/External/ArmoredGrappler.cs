@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class ArmoredGrappler : MinorWhiteExternalThreat
 	{
-		public ArmoredGrappler(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public ArmoredGrappler(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(3, 4, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

@@ -12,7 +12,7 @@ namespace BLL.ShipComponents
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
 		public CComponent CComponent { protected get; set; }
-		public ZoneLocation ZoneLocation { get; set; }
+		public StationLocation StationLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }

@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal
 {
 	public class UnstableWarheads : MinorWhiteInternalThreat
 	{
-		public UnstableWarheads(int timeAppears, SittingDuck sittingDuck)
-			: base(sittingDuck.RocketsComponent.Rockets.Count, 3, timeAppears, sittingDuck.BlueZone.LowerStation, PlayerAction.C, sittingDuck)
+		public UnstableWarheads(int timeAppears, ISittingDuck sittingDuck)
+			: base(sittingDuck.RocketsComponent.Rockets.Count, 3, timeAppears, StationLocation.LowerBlue, PlayerAction.C, sittingDuck)
 		{
 		}
 

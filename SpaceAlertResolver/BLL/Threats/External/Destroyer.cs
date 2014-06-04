@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Destroyer : MinorWhiteExternalThreat
 	{
-		public Destroyer(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Destroyer(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

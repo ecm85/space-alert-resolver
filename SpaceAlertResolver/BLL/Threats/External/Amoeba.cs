@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Amoeba : MinorWhiteExternalThreat
 	{
-		public Amoeba(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Amoeba(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(0, 8, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

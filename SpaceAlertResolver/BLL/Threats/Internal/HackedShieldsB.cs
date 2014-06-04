@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal
 {
 	public class HackedShieldsB : HackedShields
 	{
-		public HackedShieldsB(int timeAppears, SittingDuck sittingDuck)
-			: base(timeAppears, sittingDuck.BlueZone.UpperStation, sittingDuck)
+		public HackedShieldsB(int timeAppears, ISittingDuck sittingDuck)
+			: base(timeAppears, StationLocation.UpperBlue, sittingDuck)
 		{
 		}
 

@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal
 {
 	public abstract class Saboteur : MinorWhiteInternalThreat
 	{
-		protected Saboteur(int timeAppears, SittingDuck sittingDuck)
-			: base(1, 4, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)
+		protected Saboteur(int timeAppears, ISittingDuck sittingDuck)
+			: base(1, 4, timeAppears, StationLocation.LowerWhite, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
 		public override void PerformYAction()
 		{
-			var currentReactor = CurrentStation.EnergyContainer;
+			var currentReactor = sittingDuck.StationByLocation[CurrentStation].EnergyContainer;
 			var reactorHasEnergy = currentReactor.Energy > 1;
 			if (reactorHasEnergy)
 				currentReactor.Energy--;

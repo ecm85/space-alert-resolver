@@ -7,7 +7,7 @@ namespace BLL.Threats.External
 {
 	public class Gunship : MinorWhiteExternalThreat
 	{
-		public Gunship(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public Gunship(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
 		{
 		}

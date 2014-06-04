@@ -9,8 +9,8 @@ namespace BLL.Threats.Internal
 	{
 		private bool grownUp;
 
-		public Alien(int timeAppears, SittingDuck sittingDuck)
-			: base(2, 2, timeAppears, sittingDuck.WhiteZone.LowerStation, PlayerAction.BattleBots, sittingDuck)
+		public Alien(int timeAppears, ISittingDuck sittingDuck)
+			: base(2, 2, timeAppears, StationLocation.LowerWhite, PlayerAction.BattleBots, sittingDuck)
 		{
 		}
 
@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal
 		public override void PerformYAction()
 		{
 			ChangeDecks();
-			Damage(CurrentStation.Players.Count);
+			Damage(sittingDuck.GetPlayerCount(CurrentStation));
 		}
 
 		public override void PerformZAction()

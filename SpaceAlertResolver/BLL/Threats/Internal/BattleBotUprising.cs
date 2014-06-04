@@ -2,36 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal
 {
 	public class BattleBotUprising : SeriousWhiteInternalThreat
 	{
-		private ISet<Station> StationsHitThisTurn { get; set; }
+		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public BattleBotUprising(int timeAppears, SittingDuck sittingDuck)
-			: base(4, 2, timeAppears, new List<Station> {sittingDuck.BlueZone.UpperStation, sittingDuck.RedZone.LowerStation}, PlayerAction.C, sittingDuck)
+		public BattleBotUprising(int timeAppears, ISittingDuck sittingDuck)
+			: base(4, 2, timeAppears, new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerAction.C, sittingDuck)
 		{
-			StationsHitThisTurn = new HashSet<Station>();
+			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
 		public override void PeformXAction()
 		{
-			var playersWithBattleBots = sittingDuck.Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
-			KnockOut(playersWithBattleBots);
+			sittingDuck.KnockOutPlayersWithBattleBots();
 		}
 
 		public override void PerformYAction()
 		{
-			var playersInCurrentStations = CurrentStations.SelectMany(station => station.Players);
-			KnockOut(playersInCurrentStations);
+			sittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
 		public override void PerformZAction()
 		{
-			var playersNotOnBridge = sittingDuck.Zones.SelectMany(zone => zone.Players).Except(sittingDuck.WhiteZone.UpperStation.Players);
-			KnockOut(playersNotOnBridge);
+			sittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
 		}
 
 		public static string GetDisplayName()
@@ -48,7 +44,7 @@ namespace BLL.Threats.Internal
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
-			StationsHitThisTurn.Add(performingPlayer.CurrentStation);
+			StationsHitThisTurn.Add(performingPlayer.CurrentStation.StationLocation);
 			base.TakeDamage(damage, performingPlayer, isHeroic);
 		}
 	}

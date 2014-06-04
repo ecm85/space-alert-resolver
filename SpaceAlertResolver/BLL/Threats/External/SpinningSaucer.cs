@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 	{
 		private bool hitByRocket;
 
-		public SpinningSaucer(int timeAppears, ZoneLocation currentZone, SittingDuck sittingDuck)
+		public SpinningSaucer(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
 			: base(4, 3, 3, timeAppears, currentZone, sittingDuck)
 		{
 		}
