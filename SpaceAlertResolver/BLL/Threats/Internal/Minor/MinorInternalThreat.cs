@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.Threats.Internal
+namespace BLL.Threats.Internal.Minor
 {
 	public abstract class MinorInternalThreat : InternalThreat
 	{

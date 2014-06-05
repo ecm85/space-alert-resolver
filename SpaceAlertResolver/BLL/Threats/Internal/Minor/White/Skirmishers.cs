@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
-namespace BLL.Threats.Internal
+namespace BLL.Threats.Internal.Minor.White
 {
 	public abstract class Skirmishers : MinorWhiteInternalThreat
 	{

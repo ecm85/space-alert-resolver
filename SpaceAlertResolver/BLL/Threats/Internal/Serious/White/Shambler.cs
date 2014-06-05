@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.Threats.Internal
+namespace BLL.Threats.Internal.Serious.White
 {
 	public class Shambler : SeriousWhiteInternalThreat
 	{

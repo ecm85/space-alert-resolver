@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
 
-namespace BLL.Threats.Internal
+namespace BLL.Threats.Internal.Serious.White
 {
 	public class CrossedWires : SeriousWhiteInternalThreat
 	{

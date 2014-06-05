@@ -11,6 +11,8 @@ using BLL.Threats.External;
 using BLL.Threats.External.Minor.White;
 using BLL.Threats.External.Serious.White;
 using BLL.Threats.Internal;
+using BLL.Threats.Internal.Minor.White;
+using BLL.Threats.Internal.Serious.White;
 using BLL.Tracks;
 
 namespace WpfResolver

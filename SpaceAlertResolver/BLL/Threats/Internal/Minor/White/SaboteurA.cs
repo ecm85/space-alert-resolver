@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.Threats.Internal
+namespace BLL.Threats.Internal.Minor.White
 {
-	public class SaboteurB : Saboteur
+	public class SaboteurA : Saboteur
 	{
-		public SaboteurB(int timeAppears, ISittingDuck sittingDuck)
+		public SaboteurA(int timeAppears, ISittingDuck sittingDuck)
 			: base(timeAppears, sittingDuck)
 		{
 		}
 
 		public override void PeformXAction()
 		{
-			MoveBlue();
+			MoveRed();
 		}
 
 		public static string GetDisplayName()
 		{
-			return "Saboteur I1-03";
+			return "Saboteur I1-04";
 		}
 	}
 }
