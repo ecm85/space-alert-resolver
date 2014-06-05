@@ -37,6 +37,7 @@ namespace BLL.Tracks
 
 		public void MoveThreat(T threat)
 		{
+			//TODO: Check if this works correctly if speed is altered while looping (should only loop for original amount)
 			threat.BeforeMove();
 			for (var i = 0; i < threat.Speed; i++)
 			{

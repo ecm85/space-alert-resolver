@@ -39,6 +39,7 @@ namespace BLL.Threats.Internal
 			ActionType = actionType;
 		}
 
+		//TODO: Respect isHeroic here instead of in the ship
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
 			RemainingHealth -= damage;

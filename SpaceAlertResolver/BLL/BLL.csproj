@@ -91,6 +91,7 @@
     <Compile Include="Threats\External\Minor\Yellow\Marauder.cs" />
     <Compile Include="Threats\External\Minor\Yellow\MegashieldDestroyer.cs" />
     <Compile Include="Threats\External\Minor\White\Meteoroid.cs" />
+    <Compile Include="Threats\External\Minor\Yellow\MinorAsteroid.cs" />
     <Compile Include="Threats\External\Minor\Yellow\PhasingFighter.cs" />
     <Compile Include="Threats\External\Serious\White\Asteroid.cs" />
     <Compile Include="Threats\External\Minor\White\CryoshieldFighter.cs" />
@@ -115,6 +116,15 @@
     <Compile Include="Threats\External\Minor\Yellow\Scout.cs" />
     <Compile Include="Threats\External\Serious\SeriousExternalThreat.cs" />
     <Compile Include="Threats\External\Serious\White\SeriousWhiteExternalThreat.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\Behemoth.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\Juggernaut.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\MajorAsteroid.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\MotherSwarm.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\NebulaCrab.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\Nemesis.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\PhasingFrigate.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\PlasmaticFrigate.cs" />
+    <Compile Include="Threats\External\Serious\Yellow\PsionicSatellite.cs" />
     <Compile Include="Threats\External\Serious\Yellow\SeriousYellowExternalThreat.cs" />
     <Compile Include="Threats\External\Serious\White\SpacecraftCarrier.cs" />
     <Compile Include="Threats\External\Minor\White\SpinningSaucer.cs" />

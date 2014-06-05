@@ -317,6 +317,9 @@ namespace BLL
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
 
+			foreach (var threat in sittingDuck.CurrentExternalThreats)
+				threat.PerformEndOfComputeDamage();
+
 			RemoveDefeatedExternalThreats();
 		}
 

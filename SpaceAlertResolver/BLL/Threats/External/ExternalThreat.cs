@@ -48,6 +48,11 @@ namespace BLL.Threats.External
 			return isInRange && gunCanHitCurrentZone;
 		}
 
+		protected void AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
+		{
+			Attack(amount, threatDamageType, zones);
+		}
+
 		protected void Attack(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			Attack(amount, threatDamageType, new [] {CurrentZone});
@@ -70,6 +75,10 @@ namespace BLL.Threats.External
 			var result = sittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
+		}
+
+		public virtual void PerformEndOfComputeDamage()
+		{
 		}
 	}
 }
