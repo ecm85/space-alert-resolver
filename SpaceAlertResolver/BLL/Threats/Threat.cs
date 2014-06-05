@@ -20,7 +20,7 @@ namespace BLL.Threats
 
 		protected readonly ISittingDuck sittingDuck;
 
-		private bool destroyed;
+		public bool IsDestroyed { get; set; }
 
 		public abstract void PeformXAction();
 		public abstract void PerformYAction();
@@ -32,13 +32,13 @@ namespace BLL.Threats
 
 		public void CheckForDestroyed()
 		{
-			if (!destroyed && RemainingHealth <= 0)
+			if (!IsDestroyed && RemainingHealth <= 0)
 				OnDestroyed();
 		}
 
 		protected virtual void OnDestroyed()
 		{
-			destroyed = true;
+			IsDestroyed = true;
 		}
 
 		protected bool IsDamaged
@@ -60,6 +60,18 @@ namespace BLL.Threats
 		{
 			var newHealth = RemainingHealth + amount;
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
+		}
+
+		public virtual void PerformEndOfTurn()
+		{
+		}
+
+		public virtual void BeforeMove()
+		{
+		}
+
+		public virtual void AfterMove()
+		{
 		}
 	}
 }

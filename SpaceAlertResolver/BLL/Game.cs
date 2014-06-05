@@ -23,6 +23,7 @@ namespace BLL
 		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
 		//TODO: Revisit all things on ISittingDuck
 		//TODO: Threat factory, threat enum
+		//TODO: Pick perform or on for event names. Stop using both!
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;
@@ -139,6 +140,8 @@ namespace BLL
 			foreach (var threat in allCurrentThreats)
 				moveCallByThreat[threat]();
 
+			RemoveDefeatedExternalThreats();
+			RemoveDefeatedInternalThreats();
 			foreach (var track in externalTracks.Values)
 				RemoveSurvivedThreats(sittingDuck.CurrentExternalThreats, track);
 			AddMalfunctionsForSurvivedInternalThreats();
@@ -270,6 +273,10 @@ namespace BLL
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
 			sittingDuck.InterceptorStation.PerformEndOfTurn();
+			foreach (var threat in sittingDuck.CurrentExternalThreats)
+				threat.PerformEndOfTurn();
+			foreach(var threat in sittingDuck.CurrentExternalThreats)
+				threat.PerformEndOfTurn();
 		}
 
 		private static void MovePlayer(Station newDestination, Player player)
@@ -315,7 +322,7 @@ namespace BLL
 
 		private void RemoveDefeatedInternalThreats()
 		{
-			var newlyDefeatedThreats = sittingDuck.CurrentInternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
+			var newlyDefeatedThreats = sittingDuck.CurrentInternalThreats.Where(externalThreat => externalThreat.IsDestroyed).ToList();
 			foreach (var defeatedThreat in newlyDefeatedThreats)
 				sittingDuck.CurrentInternalThreats.Remove(defeatedThreat);
 			internalTrack.RemoveThreats(newlyDefeatedThreats);
@@ -324,7 +331,7 @@ namespace BLL
 
 		private void RemoveDefeatedExternalThreats()
 		{
-			var newlyDefeatedThreats = sittingDuck.CurrentExternalThreats.Where(externalThreat => externalThreat.RemainingHealth <= 0).ToList();
+			var newlyDefeatedThreats = sittingDuck.CurrentExternalThreats.Where(externalThreat => externalThreat.IsDestroyed).ToList();
 			foreach (var defeatedThreat in newlyDefeatedThreats)
 				sittingDuck.CurrentExternalThreats.Remove(defeatedThreat);
 			foreach (var track in externalTracks.Values)

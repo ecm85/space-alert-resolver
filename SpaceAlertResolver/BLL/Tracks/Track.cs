@@ -37,6 +37,7 @@ namespace BLL.Tracks
 
 		public void MoveThreat(T threat)
 		{
+			threat.BeforeMove();
 			for (var i = 0; i < threat.Speed; i++)
 			{
 				ThreatPositions[threat]--;
@@ -58,6 +59,7 @@ namespace BLL.Tracks
 					}
 				}
 			}
+			threat.AfterMove();
 		}
 	}
 }

@@ -32,7 +32,7 @@ namespace BLL.Threats.External
 			TakeDamage(damages, null);
 		}
 
-		protected virtual void TakeDamage(IList<PlayerDamage> damages, int? maxDamageTaken)
+		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
 		{
 			var bonusShields = sittingDuck.CurrentThreatBuffs.Values.Count(buff => buff == ExternalThreatBuff.BonusShield);
 			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);

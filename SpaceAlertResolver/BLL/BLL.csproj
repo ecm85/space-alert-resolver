@@ -91,6 +91,7 @@
     <Compile Include="Threats\External\Minor\Yellow\Marauder.cs" />
     <Compile Include="Threats\External\Minor\Yellow\MegashieldDestroyer.cs" />
     <Compile Include="Threats\External\Minor\White\Meteoroid.cs" />
+    <Compile Include="Threats\External\Minor\Yellow\PhasingFighter.cs" />
     <Compile Include="Threats\External\Serious\White\Asteroid.cs" />
     <Compile Include="Threats\External\Minor\White\CryoshieldFighter.cs" />
     <Compile Include="Threats\External\Serious\White\CryoshieldFrigate.cs" />
