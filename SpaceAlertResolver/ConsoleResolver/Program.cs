@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using BLL;
 using BLL.Threats.External;
-using BLL.Threats.External.MinorExternal.White;
+using BLL.Threats.External.Minor.White;
 using BLL.Threats.Internal;
 using BLL.Tracks;
 

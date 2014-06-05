@@ -8,8 +8,8 @@ using System.Windows;
 using BLL;
 using BLL.Threats;
 using BLL.Threats.External;
-using BLL.Threats.External.MinorExternal.White;
-using BLL.Threats.External.SeriousExternal.White;
+using BLL.Threats.External.Minor.White;
+using BLL.Threats.External.Serious.White;
 using BLL.Threats.Internal;
 using BLL.Tracks;
 
