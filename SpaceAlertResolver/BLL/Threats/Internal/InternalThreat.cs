@@ -15,12 +15,19 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new[] {value}; }
 		}
 
+		//TODO: Set track, to allow to know position and add threats
+
 		protected ZoneLocation CurrentZone
 		{
 			get { return CurrentStation.ZoneLocation(); }
 		}
 
-		public PlayerAction ActionType { get; private set; }
+		protected IList<ZoneLocation> CurrentZones
+		{
+			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
+		}
+
+		public PlayerAction ActionType { get; protected set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
@@ -80,7 +87,7 @@ namespace BLL.Threats.Internal
 			Damage(amount, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}
 
-		private void Damage(int amount, IList<ZoneLocation> zones)
+		protected void Damage(int amount, IList<ZoneLocation> zones)
 		{
 			var result = sittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));
 			if (result.ShipDestroyed)

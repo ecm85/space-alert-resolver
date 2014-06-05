@@ -8,6 +8,13 @@ namespace BLL.ShipComponents
 	public class BattleBotsComponent : CComponent
 	{
 		private BattleBots battleBots = new BattleBots();
+
+		public void DisableBattleBots()
+		{
+			if (battleBots != null)
+				battleBots.IsDisabled = true;
+		}
+
 		public override void PerformCAction(Player performingPlayer)
 		{
 			if (performingPlayer.BattleBots != null)

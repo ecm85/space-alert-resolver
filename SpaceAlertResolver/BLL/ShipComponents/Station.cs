@@ -11,7 +11,7 @@ namespace BLL.ShipComponents
 		public StandardStation OppositeDeckStation { get; set; }
 		public EnergyContainer EnergyContainer { get; set; }
 		public Cannon Cannon { get; set; }
-		public CComponent CComponent { protected get; set; }
+		public CComponent CComponent { get; set; }
 		public StationLocation StationLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }

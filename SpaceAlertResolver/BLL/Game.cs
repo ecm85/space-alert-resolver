@@ -24,6 +24,7 @@ namespace BLL
 		//TODO: Revisit all things on ISittingDuck
 		//TODO: Threat factory, threat enum
 		//TODO: Pick perform or on for event names. Stop using both!
+		//TODO: Change all threat display names to include threat #
 		private readonly IList<ExternalThreat> allExternalThreats;
 		private readonly IList<InternalThreat> allInternalThreats;
 		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;

@@ -30,7 +30,7 @@ namespace BLL.Threats
 		{
 		}
 
-		public void CheckForDestroyed()
+		public virtual void CheckForDestroyed()
 		{
 			if (!IsDestroyed && RemainingHealth <= 0)
 				OnDestroyed();

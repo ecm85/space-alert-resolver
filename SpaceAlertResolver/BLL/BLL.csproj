@@ -130,6 +130,12 @@
     <Compile Include="Threats\External\Minor\White\SpinningSaucer.cs" />
     <Compile Include="Threats\External\Minor\White\StealthFighter.cs" />
     <Compile Include="Threats\External\Minor\Yellow\Swarm.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\Ninja.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\PowerPackOverload.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\Slime.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\Troopers.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\TroopersA.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\TroopersB.cs" />
     <Compile Include="Threats\Internal\Serious\White\Alien.cs" />
     <Compile Include="Threats\Internal\Serious\White\BattleBotUprising.cs" />
     <Compile Include="Threats\Internal\Minor\White\CentralLaserJam.cs" />
