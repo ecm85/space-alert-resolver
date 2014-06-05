@@ -21,7 +21,7 @@ namespace BLL.Threats.External
 		public override void PerformYAction()
 		{
 			Attack(3);
-			Shields++;
+			shields++;
 		}
 
 		public override void PerformZAction()

@@ -30,8 +30,8 @@ namespace BLL.Threats.External
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages);
-			if (damages.Any(damage => damage.Amount > 0))
-				Shields--;
+			if (damages.Any(damage => damage.Amount > 0) && shields > 0)
+				shields--;
 		}
 
 		public static string GetDisplayName()
