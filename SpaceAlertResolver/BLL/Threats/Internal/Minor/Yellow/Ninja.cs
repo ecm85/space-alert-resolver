@@ -45,7 +45,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			if (RemainingHealth <= 0)
 			{
-				if (PoisonedPlayers.Any())
+				if (!PoisonedPlayers.Any())
 					OnDestroyed();
 				else
 					ActionType = PlayerAction.None;

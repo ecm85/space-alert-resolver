@@ -12,7 +12,7 @@ namespace BLL
 	{
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffs { get; }
+		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
 		IList<ExternalThreat> CurrentExternalThreats { get; }
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
 		int GetPlayerCount(StationLocation station);

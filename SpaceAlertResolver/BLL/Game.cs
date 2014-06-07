@@ -25,14 +25,13 @@ namespace BLL
 		//TODO: Threat factory, threat enum
 		//TODO: Pick perform or on for event names. Stop using both!
 		//TODO: Change all threat display names to include threat #
-		private readonly IList<ExternalThreat> allExternalThreats;
-		private readonly IList<InternalThreat> allInternalThreats;
+		//TODO: Change who holds threats, who removes them, etc
+		public IList<ExternalThreat> AllExternalThreats { get; private set; }
+		public IList<InternalThreat> AllInternalThreats { get; private set; }
 		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;
 		private readonly InternalTrack internalTrack;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
-		public readonly List<Threat> defeatedThreats = new List<Threat>();
-		public readonly List<Threat> survivedThreats = new List<Threat>();
 		private int nextTurn;
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
@@ -48,8 +47,8 @@ namespace BLL
 			IList<Player> players)
 		{
 			this.sittingDuck = sittingDuck;
-			allExternalThreats = externalThreats;
-			allInternalThreats = internalThreats;
+			AllExternalThreats = externalThreats;
+			AllInternalThreats = internalThreats;
 			this.externalTracks = externalTracks.ToDictionary(track => track.Zone.ZoneLocation);
 			this.internalTrack = internalTrack;
 			this.players = players;
@@ -94,8 +93,8 @@ namespace BLL
 		private void CalculateScore()
 		{
 			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
-			TotalPoints += survivedThreats.Sum(threat => threat.PointsForSurviving);
-			TotalPoints += defeatedThreats.Sum(threat => threat.PointsForDefeating);
+			TotalPoints += AllInternalThreats.Sum(threat => threat.Points);
+			TotalPoints += AllExternalThreats.Sum(threat => threat.Points);
 		}
 
 		private void PerformEndOfPhase()
@@ -113,22 +112,24 @@ namespace BLL
 
 		private void AddNewThreatsToTracks(int currentTurn)
 		{
-			foreach (var newThreat in allExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			foreach (var newThreat in AllExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
 			{
 				var track = externalTracks[newThreat.CurrentZone];
 				track.AddThreat(newThreat);
 				newThreat.SetTrack(track);
 				sittingDuck.CurrentExternalThreats.Add(newThreat);
 			}
-			foreach (var newThreat in allInternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			foreach (var newThreat in AllInternalThreats.Where(threat => threat.TimeAppears == currentTurn))
 			{
 				internalTrack.AddThreat(newThreat);
+				newThreat.SetTrack(internalTrack);
 				sittingDuck.CurrentInternalThreats.Add(newThreat);
 			}
 		}
 
 		private void MoveThreats()
 		{
+			//TODO: Clean this up
 			var moveCallByThreat = new Dictionary<Threat, Action>();
 			foreach (var externalThreat in sittingDuck.CurrentExternalThreats)
 				moveCallByThreat[externalThreat] = GetMoveCall(externalThreat);
@@ -175,7 +176,6 @@ namespace BLL
 			foreach (var survivedThreat in newlySurvivedThreats)
 				currentThreats.Remove(survivedThreat);
 			track.RemoveThreats(newlySurvivedThreats);
-			survivedThreats.AddRange(newlySurvivedThreats);
 		}
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
@@ -259,7 +259,6 @@ namespace BLL
 				case PlayerAction.TeleportRedUpper:
 					MovePlayer(sittingDuck.RedZone.UpperStation, player);
 					break;
-				
 			}
 		}
 
@@ -330,7 +329,6 @@ namespace BLL
 			foreach (var defeatedThreat in newlyDefeatedThreats)
 				sittingDuck.CurrentInternalThreats.Remove(defeatedThreat);
 			internalTrack.RemoveThreats(newlyDefeatedThreats);
-			defeatedThreats.AddRange(newlyDefeatedThreats);
 		}
 
 		private void RemoveDefeatedExternalThreats()
@@ -340,7 +338,6 @@ namespace BLL
 				sittingDuck.CurrentExternalThreats.Remove(defeatedThreat);
 			foreach (var track in externalTracks.Values)
 				track.RemoveThreats(newlyDefeatedThreats);
-			defeatedThreats.AddRange(newlyDefeatedThreats);
 		}
 
 		private void AddInterceptorDamages(PlayerInterceptorDamage interceptorDamages, Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)

@@ -62,5 +62,17 @@ namespace BLL.Tracks
 			}
 			threat.AfterMove();
 		}
+
+		public int DistanceToThreat(T threat)
+		{
+			var distance = ThreatPositions[threat];
+			foreach (var section in sections.OrderBy(section => section.DistanceFromShip))
+			{
+				if (section.Length >= distance)
+					return section.DistanceFromShip;
+				distance -= section.Length;
+			}
+			throw new InvalidOperationException();
+		}
 	}
 }

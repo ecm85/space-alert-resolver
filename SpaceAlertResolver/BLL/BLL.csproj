@@ -133,6 +133,8 @@
     <Compile Include="Threats\Internal\Minor\Yellow\Ninja.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\PowerPackOverload.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\Slime.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\SlimeA.cs" />
+    <Compile Include="Threats\Internal\Minor\Yellow\SlimeB.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\Troopers.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\TroopersA.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\TroopersB.cs" />

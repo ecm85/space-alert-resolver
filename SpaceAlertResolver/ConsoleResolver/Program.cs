@@ -56,8 +56,8 @@ namespace ConsoleResolver
 				sittingDuck.RedZone.TotalDamage,
 				sittingDuck.WhiteZone.TotalDamage);
 			Console.WriteLine("Threats killed: {0}. Threats survived: {1}",
-				game.defeatedThreats.Count,
-				game.survivedThreats.Count);
+				game.AllExternalThreats.Count(threat => threat.IsDefeated) + game.AllInternalThreats.Count(threat => threat.IsDefeated),
+				game.AllExternalThreats.Count(threat => threat.IsSurvived) + game.AllInternalThreats.Count(threat => threat.IsSurvived));
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
 			foreach (var zone in sittingDuck.Zones)
 			{

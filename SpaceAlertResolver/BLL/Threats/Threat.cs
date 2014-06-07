@@ -7,8 +7,20 @@ namespace BLL.Threats
 {
 	public abstract class Threat
 	{
-		public int PointsForDefeating { get { return ThreatPoints.GetPointsForDefeating(type, difficulty); } }
-		public int PointsForSurviving { get { return ThreatPoints.GetPointsForSurviving(type, difficulty); } }
+		public virtual int Points
+		{
+			get
+			{
+				return IsDefeated ?
+					ThreatPoints.GetPointsForDefeating(type, difficulty) :
+					IsSurvived ?
+						ThreatPoints.GetPointsForSurviving(type, difficulty) :
+						0;
+			}
+		}
+
+		public virtual bool IsDefeated {get { return IsDestroyed; }}
+		public abstract bool IsSurvived { get; }
 
 		public int TimeAppears { get; private set; }
 		protected int TotalHealth { get; set; }

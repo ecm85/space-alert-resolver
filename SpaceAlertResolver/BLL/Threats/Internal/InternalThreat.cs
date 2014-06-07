@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal
 {
@@ -15,7 +16,13 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new[] {value}; }
 		}
 
-		//TODO: Set track, to allow to know position and add threats
+		protected InternalTrack Track { get; set; }
+		public override bool IsSurvived { get { return !IsDestroyed && (!Track.ThreatPositions.ContainsKey(this) || Track.ThreatPositions[this] <= 0); } }
+
+		public void SetTrack(InternalTrack track)
+		{
+			Track = track;
+		}
 
 		protected ZoneLocation CurrentZone
 		{
@@ -64,7 +71,7 @@ namespace BLL.Threats.Internal
 
 		protected void MoveRed()
 		{
-			MoveToNewStation(sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.StationLocation);
+			MoveToNewStation(sittingDuck.StationByLocation[CurrentStation].RedwardStation.StationLocation);
 		}
 
 		protected void MoveBlue()

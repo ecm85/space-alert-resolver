@@ -22,12 +22,12 @@ namespace BLL
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
-		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffs { get; private set; }
+		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; private set; }
 
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
-			CurrentThreatBuffs = new Dictionary<ExternalThreat, ExternalThreatBuff>();
+			CurrentThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
 			CurrentInternalThreats = new List<InternalThreat>();
 			CurrentExternalThreats = new List<ExternalThreat>();
 			var whiteReactor = new CentralReactor();
