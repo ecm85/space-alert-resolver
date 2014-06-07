@@ -10,13 +10,16 @@ namespace BLL.Threats.Internal
 	{
 		public IList<StationLocation> CurrentStations { get; private set; }
 
+		protected readonly int? totalInaccessibility;
+		protected int? remainingInaccessibility;
+
 		protected StationLocation CurrentStation
 		{
 			get { return CurrentStations.Single(); }
 			set { CurrentStations = new[] {value}; }
 		}
 
-		protected InternalTrack Track { get; set; }
+		protected InternalTrack Track { get; private set; }
 		public override bool IsSurvived { get { return !IsDestroyed && (!Track.ThreatPositions.ContainsKey(this) || Track.ThreatPositions[this] <= 0); } }
 
 		public void SetTrack(InternalTrack track)
@@ -34,29 +37,40 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		public PlayerAction ActionType { get; protected set; }
+		public PlayerAction ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStation = currentStation;
 			sittingDuck.StationByLocation[currentStation].Threats.Add(this);
 			ActionType = actionType;
+			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStations = currentStations;
 			foreach (var currentStation in CurrentStations)
 				sittingDuck.StationByLocation[currentStation].Threats.Add(this);
 			ActionType = actionType;
+			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
 		//TODO: Respect isHeroic here instead of in the ship
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
-			RemainingHealth -= damage;
+			var damageRemaining = damage;
+			if (remainingInaccessibility.HasValue)
+			{
+				var previousInaccessibility = remainingInaccessibility.Value;
+				remainingInaccessibility -= damageRemaining;
+				remainingInaccessibility = remainingInaccessibility < 0 ? 0 : remainingInaccessibility;
+				damageRemaining -= previousInaccessibility;
+			}
+			if (damageRemaining > 0)
+				RemainingHealth -= damage;
 			CheckForDestroyed();
 		}
 
@@ -129,6 +143,12 @@ namespace BLL.Threats.Internal
 			{
 				ActionType = ActionType
 			};
+		}
+
+		public override void PerformEndOfTurn()
+		{
+			base.PerformEndOfTurn();
+			remainingInaccessibility = totalInaccessibility;
 		}
 	}
 }

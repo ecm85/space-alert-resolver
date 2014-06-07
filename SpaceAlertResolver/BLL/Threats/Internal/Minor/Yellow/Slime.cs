@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public abstract class Slime : MinorYellowInternalThreat
 	{
-		//TODO: Players entering location with slime are delayed
+		//TODO: Players entering location with slime are delayed, and this effect persists past z
 
 		private readonly IList<Slime> currentProgeny;
 

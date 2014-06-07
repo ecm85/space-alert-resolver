@@ -35,6 +35,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
 		{
+			//TODO: This is incorrect. if remaining health is 2 and damage is 2, need to still drain reactors
 			if (RemainingHealth == 1)
 			{
 				var reactor = sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer;
