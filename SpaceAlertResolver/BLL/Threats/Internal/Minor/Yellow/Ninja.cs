@@ -16,7 +16,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			//TODO: Send drones into adjacent stations
 			//Until ninja is destroyed or performs Z, anyone starting or ending is those stations is poisoned
-			//TODO: Maybe make drone tokens that poison people, are worth no points and have no threat action?
 			throw new NotImplementedException();
 		}
 
@@ -48,7 +47,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				if (!PoisonedPlayers.Any())
 					OnDestroyed();
 				else
-					ActionType = PlayerAction.None;
+					RemoveFromStation(CurrentStation);
 			}
 		}
 

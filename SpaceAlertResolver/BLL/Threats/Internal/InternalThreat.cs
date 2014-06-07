@@ -64,9 +64,20 @@ namespace BLL.Threats.Internal
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
-			sittingDuck.StationByLocation[CurrentStation].Threats.Remove(this);
-			CurrentStation = newStation;
-			sittingDuck.StationByLocation[CurrentStation].Threats.Add(this);
+			RemoveFromStation(CurrentStation);
+			AddToStation(newStation);
+		}
+
+		protected void RemoveFromStation(StationLocation stationToRemoveFrom)
+		{
+			sittingDuck.StationByLocation[stationToRemoveFrom].Threats.Remove(this);
+			CurrentStations.Remove(stationToRemoveFrom);
+		}
+
+		protected void AddToStation(StationLocation stationToMoveTo)
+		{
+			sittingDuck.StationByLocation[stationToMoveTo].Threats.Add(this);
+			CurrentStations.Add(stationToMoveTo);
 		}
 
 		protected void MoveRed()
