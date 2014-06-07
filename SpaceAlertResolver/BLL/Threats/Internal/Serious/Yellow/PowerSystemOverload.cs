@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
-namespace BLL.Threats.Internal.Minor.Yellow
+namespace BLL.Threats.Internal.Serious.Yellow
 {
-	public class PowerPackOverload : MinorYellowInternalThreat
+	public class PowerSystemOverload : SeriousYellowInternalThreat
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public PowerPackOverload(int timeAppears, ISittingDuck sittingDuck)
+		public PowerSystemOverload(int timeAppears, ISittingDuck sittingDuck)
 			: base(
-				4,
+				7,
 				3,
 				timeAppears,
-				new List<StationLocation> {StationLocation.LowerBlue, StationLocation.LowerRed},
-				PlayerAction.A,
+				new List<StationLocation> {StationLocation.LowerRed, StationLocation.LowerWhite, StationLocation.LowerBlue},
+				PlayerAction.B,
 				sittingDuck)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
@@ -24,32 +23,28 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public static string GetDisplayName()
 		{
-			return "Power Pack Overload";
+			return "Power System Overload";
 		}
 
 		public override void PeformXAction()
 		{
-			((BattleBotsComponent)sittingDuck.RedZone.LowerStation.CComponent).DisableBattleBots();
-			var rockets = sittingDuck.RocketsComponent.Rockets;
-			if (rockets.Any())
-				rockets.Remove(rockets.First());
+			sittingDuck.DrainReactors(new[] { ZoneLocation.White }, 2);
 		}
 
 		public override void PerformYAction()
 		{
-			Repair(1);
+			sittingDuck.DrainReactors(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(CurrentStations);
-			Damage(3, CurrentZones);
+			DamageAllZones(3);
 		}
 
 		public override void PerformEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(1, null, false, CurrentStation);
+				base.TakeDamage(2, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
 		}
 

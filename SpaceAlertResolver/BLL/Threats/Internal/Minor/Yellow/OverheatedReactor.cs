@@ -25,7 +25,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PerformYAction()
 		{
-			((CentralReactor)sittingDuck.StationByLocation[CurrentStation].EnergyContainer).StorageCapsules -= 1;
+			sittingDuck.DrainReactors(new[] {ZoneLocation.White}, 1);
 		}
 
 		public override void PerformZAction()

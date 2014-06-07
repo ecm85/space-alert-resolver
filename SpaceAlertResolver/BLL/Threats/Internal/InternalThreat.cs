@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		public IList<StationLocation> CurrentStations { get; private set; }
+		public List<StationLocation> CurrentStations { get; private set; }
 
 		protected readonly int? totalInaccessibility;
 		protected int? remainingInaccessibility;
@@ -49,7 +48,7 @@ namespace BLL.Threats.Internal
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStations = currentStations;

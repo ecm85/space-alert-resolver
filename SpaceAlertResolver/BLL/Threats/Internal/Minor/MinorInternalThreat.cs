@@ -12,8 +12,8 @@ namespace BLL.Threats.Internal.Minor
 		{
 		}
 
-		protected MinorInternalThreat(ThreatDifficulty difficulty, int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null) :
-			base(ThreatType.MinorExternal, difficulty, health, speed, timeAppears, currentStations, actionType, sittingDuck, accessibility)
+		protected MinorInternalThreat(ThreatDifficulty difficulty, int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null) :
+			base((ThreatType)ThreatType.MinorExternal, difficulty, health, speed, timeAppears, currentStations, actionType, sittingDuck, inaccessibility: accessibility)
 		{
 		}
 	}

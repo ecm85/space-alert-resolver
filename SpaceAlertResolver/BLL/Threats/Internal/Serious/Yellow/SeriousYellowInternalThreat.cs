@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 		}
 
-		protected SeriousYellowInternalThreat(int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null)
+		protected SeriousYellowInternalThreat(int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null)
 			: base(ThreatDifficulty.Yellow, health, speed, timeAppears, currentStations, actionType, sittingDuck, accessibility)
 		{
 		}

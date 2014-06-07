@@ -95,22 +95,22 @@ namespace BLL
 			return newDamageTokens;
 		}
 
-		public void DrainShields()
+		public void DrainShield()
 		{
 			UpperStation.EnergyContainer.Energy = 0;
 		}
 
-		public void DrainShields(int amount)
+		public void DrainShield(int amount)
 		{
 			UpperStation.EnergyContainer.Energy -= amount;
 		}
 
-		public void DrainReactors()
+		public void DrainReactor()
 		{
 			LowerStation.EnergyContainer.Energy = 0;
 		}
 
-		public void DrainReactors(int amount)
+		public void DrainReactor(int amount)
 		{
 			LowerStation.EnergyContainer.Energy -= amount;
 		}

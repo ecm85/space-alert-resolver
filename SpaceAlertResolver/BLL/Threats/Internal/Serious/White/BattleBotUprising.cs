@@ -44,7 +44,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			StationsHitThisTurn.Add(performingPlayer.CurrentStation.StationLocation);
+			StationsHitThisTurn.Add(stationLocation);
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}

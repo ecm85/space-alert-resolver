@@ -19,8 +19,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			foreach(var zone in sittingDuck.Zones)
-				zone.DrainReactors(1);
+			sittingDuck.DrainAllReactors(1);
 		}
 
 		public override void PerformYAction()

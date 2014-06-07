@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		protected SeriousWhiteInternalThreat(int health, int speed, int timeAppears, IList<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null) :
+		protected SeriousWhiteInternalThreat(int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? accessibility = null) :
 			base(ThreatDifficulty.White, health, speed, timeAppears, currentStations, actionType, sittingDuck, accessibility)
 		{
 		}

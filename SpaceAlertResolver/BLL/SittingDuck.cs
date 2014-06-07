@@ -127,13 +127,45 @@ namespace BLL
 		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShields();
+				zone.DrainShield();
 		}
 
 		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShields(amount);
+				zone.DrainShield(amount);
+		}
+
+		public void DrainAllShields(int amount)
+		{
+			DrainShields(EnumFactory.All<ZoneLocation>(), amount);
+		}
+
+		public void DrainAllShields()
+		{
+			DrainShields(EnumFactory.All<ZoneLocation>());
+		}
+
+		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DrainReactor();
+		}
+
+		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DrainReactor(amount);
+		}
+
+		public void DrainAllReactors(int amount)
+		{
+			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
+		}
+
+		public void DrainAllReactors()
+		{
+			DrainReactors(EnumFactory.All<ZoneLocation>());
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)

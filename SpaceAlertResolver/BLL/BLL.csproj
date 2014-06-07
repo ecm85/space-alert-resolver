@@ -164,6 +164,7 @@
     <Compile Include="Threats\Internal\Serious\Yellow\Contamination.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\NuclearDevice.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\PhasingMineLayer.cs" />
+    <Compile Include="Threats\Internal\Serious\Yellow\PowerSystemOverload.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\SeriousYellowInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\White\Shambler.cs" />
     <Compile Include="Threats\Internal\Minor\White\Skirmishers.cs" />

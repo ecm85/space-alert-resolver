@@ -12,6 +12,13 @@ namespace BLL
 	{
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		void DrainAllShields(int amount);
+		void DrainAllShields();
+		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
+		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		void DrainAllReactors(int amount);
+		void DrainAllReactors();
+
 		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
 		IList<ExternalThreat> CurrentExternalThreats { get; }
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
