@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal
@@ -59,7 +60,7 @@ namespace BLL.Threats.Internal
 		}
 
 		//TODO: Respect isHeroic here instead of in the ship
-		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
+		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var damageRemaining = damage;
 			if (remainingInaccessibility.HasValue)

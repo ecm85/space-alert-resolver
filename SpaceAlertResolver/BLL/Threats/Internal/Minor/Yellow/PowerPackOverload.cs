@@ -44,14 +44,14 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		public override void PerformEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(1, null, false);
+				base.TakeDamage(1, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			StationsHitThisTurn.Add(performingPlayer.CurrentStation.StationLocation);
-			base.TakeDamage(damage, performingPlayer, isHeroic);
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace BLL.ShipComponents
 		protected void DamageThreat(InternalThreat threat, Player performingPlayer, bool isHeroic)
 		{
 			var damage = isHeroic ? 2 : 1;
-			threat.TakeDamage(damage, performingPlayer, isHeroic);
+			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
 		}
 	}
 }

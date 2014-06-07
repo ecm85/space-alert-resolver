@@ -23,9 +23,9 @@ namespace BLL.Threats.Internal.Serious.White
 			Damage(4);
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic);
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

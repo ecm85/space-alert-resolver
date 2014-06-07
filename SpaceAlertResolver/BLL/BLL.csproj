@@ -161,6 +161,7 @@
     <Compile Include="Threats\Internal\Minor\White\SaboteurB.cs" />
     <Compile Include="Threats\Internal\Serious\SeriousInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\White\SeriousWhiteInternalThreat.cs" />
+    <Compile Include="Threats\Internal\Serious\Yellow\Contamination.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\NuclearDevice.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\PhasingMineLayer.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\SeriousYellowInternalThreat.cs" />
