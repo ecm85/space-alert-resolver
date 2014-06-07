@@ -275,7 +275,7 @@ namespace BLL
 			sittingDuck.InterceptorStation.PerformEndOfTurn();
 			foreach (var threat in sittingDuck.CurrentExternalThreats)
 				threat.PerformEndOfTurn();
-			foreach(var threat in sittingDuck.CurrentExternalThreats)
+			foreach(var threat in sittingDuck.CurrentInternalThreats)
 				threat.PerformEndOfTurn();
 		}
 

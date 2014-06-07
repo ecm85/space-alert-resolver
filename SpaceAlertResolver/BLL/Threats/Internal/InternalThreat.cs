@@ -16,7 +16,7 @@ namespace BLL.Threats.Internal
 		protected StationLocation CurrentStation
 		{
 			get { return CurrentStations.Single(); }
-			set { CurrentStations = new[] {value}; }
+			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
 		protected InternalTrack Track { get; private set; }

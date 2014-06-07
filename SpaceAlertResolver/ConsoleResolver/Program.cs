@@ -8,6 +8,7 @@ using BLL.Threats.External.Minor.White;
 using BLL.Threats.Internal;
 using BLL.Threats.Internal.Minor.White;
 using BLL.Threats.Internal.Serious.White;
+using BLL.Threats.Internal.Serious.Yellow;
 using BLL.Tracks;
 
 namespace ConsoleResolver
@@ -37,7 +38,8 @@ namespace ConsoleResolver
 			var internalThreats = new InternalThreat[]
 			{
 				new SkirmishersA(3, sittingDuck),
-				new Fissure(2, sittingDuck)
+				new Fissure(2, sittingDuck),
+				new NuclearDevice(5, sittingDuck)
 				//new Alien(1, sittingDuck)
 			};
 			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
@@ -107,7 +109,18 @@ namespace ConsoleResolver
 				new Player
 				{
 					Actions =
-						new List<PlayerAction> {PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C}
+						new List<PlayerAction> {PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.C},
+						Index = 3
+				},
+				new Player
+				{
+					Actions = new List<PlayerAction>{PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.C},
+					Index = 4
+				},
+				new Player
+				{
+					Actions = new List<PlayerAction>{PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.C},
+					Index = 5
 				}
 			};
 			return players;
