@@ -24,6 +24,9 @@ namespace BLL
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
 		int GetPlayerCount(StationLocation station);
 		void KnockOutPlayersWithBattleBots();
+		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
+		void KnockOutPlayersWithoutBattleBots();
+		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
 		void EnergyLeaksOut(IEnumerable<ZoneLocation> zoneLocations);

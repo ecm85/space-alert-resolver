@@ -162,9 +162,12 @@
     <Compile Include="Threats\Internal\Serious\SeriousInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\White\SeriousWhiteInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\Contamination.cs" />
+    <Compile Include="Threats\Internal\Serious\Yellow\Executioner.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\NuclearDevice.cs" />
+    <Compile Include="Threats\Internal\Serious\Yellow\PhasingAnomaly.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\PhasingMineLayer.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\PowerSystemOverload.cs" />
+    <Compile Include="Threats\Internal\Serious\Yellow\Seeker.cs" />
     <Compile Include="Threats\Internal\Serious\Yellow\SeriousYellowInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\White\Shambler.cs" />
     <Compile Include="Threats\Internal\Minor\White\Skirmishers.cs" />

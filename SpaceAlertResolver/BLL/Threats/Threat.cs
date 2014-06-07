@@ -9,14 +9,17 @@ namespace BLL.Threats
 	{
 		public virtual int Points
 		{
-			get
-			{
-				return IsDefeated ?
-					ThreatPoints.GetPointsForDefeating(type, difficulty) :
-					IsSurvived ?
-						ThreatPoints.GetPointsForSurviving(type, difficulty) :
-						0;
-			}
+			get { return IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
+		}
+
+		protected virtual int GetPointsForDefeating()
+		{
+			return ThreatPoints.GetPointsForDefeating(type, difficulty);
+		}
+
+		protected virtual int GetPointsForSurviving()
+		{
+			return ThreatPoints.GetPointsForSurviving(type, difficulty);
 		}
 
 		public virtual bool IsDefeated {get { return IsDestroyed; }}

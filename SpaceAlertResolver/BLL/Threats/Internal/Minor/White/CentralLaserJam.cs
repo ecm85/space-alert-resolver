@@ -35,18 +35,14 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			//TODO: This is incorrect. if remaining health is 2 and damage is 2, need to still drain reactors
-			if (RemainingHealth == 1)
-			{
-				var reactor = sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer;
-				if (reactor.Energy > 1)
-				{
-					reactor.Energy--;
-					base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-				}
-			}
-			else
+			var reactor = sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer;
+			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
+			var reactorHasEnergy = reactor.Energy > 1;
+			var canTakeDamage = !remainingDamageWillDestroyThreat || reactorHasEnergy;
+			if (canTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			if (remainingDamageWillDestroyThreat)
+				reactor.Energy--;
 		}
 	}
 }

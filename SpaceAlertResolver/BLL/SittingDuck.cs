@@ -208,6 +208,30 @@ namespace BLL
 			KnockOut(playersWithBattleBots);
 		}
 
+		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
+		{
+			var playersWithBattleBots = locations
+				.Select(location => StationByLocation[location])
+				.SelectMany(zone => zone.Players)
+				.Where(player => player.BattleBots != null);
+			KnockOut(playersWithBattleBots);
+		}
+
+		public void KnockOutPlayersWithoutBattleBots()
+		{
+			var playersWithBattleBots = Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots == null);
+			KnockOut(playersWithBattleBots);
+		}
+
+		public void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations)
+		{
+			var playersWithBattleBots = locations
+				.Select(location => StationByLocation[location])
+				.SelectMany(zone => zone.Players)
+				.Where(player => player.BattleBots == null);
+			KnockOut(playersWithBattleBots);
+		}
+
 		public void KnockOutPlayers(IEnumerable<StationLocation> locations)
 		{
 			var players = locations.SelectMany(location => StationByLocation[location].Players);
