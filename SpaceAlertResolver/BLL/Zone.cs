@@ -104,5 +104,15 @@ namespace BLL
 		{
 			UpperStation.EnergyContainer.Energy -= amount;
 		}
+
+		public void DrainReactors()
+		{
+			LowerStation.EnergyContainer.Energy = 0;
+		}
+
+		public void DrainReactors(int amount)
+		{
+			LowerStation.EnergyContainer.Energy -= amount;
+		}
 	}
 }

@@ -70,5 +70,39 @@ namespace BLL.Test
 			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
+
+		[TestMethod]
+		public void TestShiftMultipleTimesSameTurn()
+		{
+			var player = new Player
+			{
+				Actions = new List<PlayerAction>
+				{
+					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
+				}
+			};
+
+			player.Shift(2);
+			player.Shift(2);
+			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck };
+			CollectionAssert.AreEqual(expectedActions, player.Actions);
+		}
+
+		[TestMethod]
+		public void TestShiftMultipleTimesConsecutiveTurns()
+		{
+			var player = new Player
+			{
+				Actions = new List<PlayerAction>
+				{
+					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
+				}
+			};
+
+			player.Shift(2);
+			player.Shift(3);
+			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.None, PlayerAction.C};
+			CollectionAssert.AreEqual(expectedActions, player.Actions);
+		}
 	}
 }

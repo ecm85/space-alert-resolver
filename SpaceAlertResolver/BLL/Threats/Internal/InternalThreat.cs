@@ -94,6 +94,11 @@ namespace BLL.Threats.Internal
 			Damage(amount, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}
 
+		protected void DamageAllZones(int amount)
+		{
+			Damage(amount, EnumFactory.All<ZoneLocation>());
+		}
+
 		protected void Damage(int amount, IList<ZoneLocation> zones)
 		{
 			var result = sittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));

@@ -9,6 +9,12 @@ namespace BLL.ShipComponents
 	{
 		private int storageCapsules = 3;
 
+		public int StorageCapsules
+		{
+			get { return storageCapsules; }
+			set { storageCapsules = value < 0 ? 0 : value; }
+		}
+
 		public CentralReactor() : base(5, 3)
 		{
 		}
