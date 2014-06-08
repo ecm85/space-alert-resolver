@@ -14,11 +14,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void PerformYAction()
 		{
-			var currentReactor = sittingDuck.StationByLocation[CurrentStation].EnergyContainer;
-			var reactorHasEnergy = currentReactor.Energy > 1;
-			if (reactorHasEnergy)
-				currentReactor.Energy--;
-			else
+			if (sittingDuck.DrainReactors(CurrentZones, 1) == 0)
 				Damage(1);
 		}
 

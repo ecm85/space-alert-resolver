@@ -21,7 +21,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PerformYAction()
 		{
-			sittingDuck.StationByLocation[CurrentStation].EnergyContainer.Energy--;
+			sittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformZAction()

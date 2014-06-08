@@ -120,7 +120,8 @@ namespace BLL
 		{
 			var oldEnergy = LowerStation.EnergyContainer.Energy;
 			LowerStation.EnergyContainer.Energy -= amount;
-			return oldEnergy;
+			var currentEnergy = LowerStation.EnergyContainer.Energy;
+			return oldEnergy - currentEnergy;
 		}
 	}
 }

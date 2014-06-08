@@ -15,15 +15,16 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		public IDictionary<StationLocation, Station> StationByLocation { get; private set; }
+		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
 		public InterceptorStation InterceptorStation { get; set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
+
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
-		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; private set; }
+		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
 
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
@@ -111,7 +112,7 @@ namespace BLL
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = new Gravolift() };
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = new Gravolift() };
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
-			StationByLocation = Zones
+			StationsByLocation = Zones
 				.SelectMany(zone => new[] {zone.LowerStation, zone.UpperStation})
 				.Concat(new Station[] {interceptorStation})
 				.ToDictionary(station => station.StationLocation);
@@ -203,13 +204,13 @@ namespace BLL
 
 		public int GetPlayerCount(StationLocation station)
 		{
-			return StationByLocation[station].Players.Count;
+			return StationsByLocation[station].Players.Count;
 		}
 
 		public int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations)
 		{
 			return locations
-				.Select(location => StationByLocation[location])
+				.Select(location => StationsByLocation[location])
 				.SelectMany(station => station.Players)
 				.Count(player => player.IsPoisoned);
 		}
@@ -223,7 +224,7 @@ namespace BLL
 		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
 		{
 			var playersWithBattleBots = locations
-				.Select(location => StationByLocation[location])
+				.Select(location => StationsByLocation[location])
 				.SelectMany(zone => zone.Players)
 				.Where(player => player.BattleBots != null);
 			KnockOut(playersWithBattleBots);
@@ -238,7 +239,7 @@ namespace BLL
 		public void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations)
 		{
 			var playersWithBattleBots = locations
-				.Select(location => StationByLocation[location])
+				.Select(location => StationsByLocation[location])
 				.SelectMany(zone => zone.Players)
 				.Where(player => player.BattleBots == null);
 			KnockOut(playersWithBattleBots);
@@ -247,7 +248,7 @@ namespace BLL
 		public void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations)
 		{
 			var poisonedPlayers = locations
-				.Select(location => StationByLocation[location])
+				.Select(location => StationsByLocation[location])
 				.SelectMany(zone => zone.Players)
 				.Where(player => player.IsPoisoned);
 			KnockOut(poisonedPlayers);
@@ -255,7 +256,7 @@ namespace BLL
 
 		public void KnockOutPlayers(IEnumerable<StationLocation> locations)
 		{
-			var players = locations.SelectMany(location => StationByLocation[location].Players);
+			var players = locations.SelectMany(location => StationsByLocation[location].Players);
 			KnockOut(players);
 		}
 
@@ -263,6 +264,11 @@ namespace BLL
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 				TransferEnergyToShield(zone.UpperStation.EnergyContainer, zone.LowerStation.EnergyContainer);
+		}
+
+		public int GetEnergyInStation(StationLocation currentStation)
+		{
+			return StationsByLocation[currentStation].EnergyContainer.Energy;
 		}
 
 		private static void TransferEnergyToShield(EnergyContainer shield, EnergyContainer reactor)
@@ -335,6 +341,23 @@ namespace BLL
 		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
 		{
 			CurrentExternalThreatBuffsBySource.Remove(source);
+		}
+
+		public void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.Threats.Add(threat);
+		}
+
+		public void RemoveInternalThreatFromStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.Threats.Remove(threat);
+		}
+
+		public IEnumerable<InternalThreat> GetThreatsInStation(StationLocation stationLocation)
+		{
+			return StationsByLocation[stationLocation].Threats;
 		}
 	}
 }

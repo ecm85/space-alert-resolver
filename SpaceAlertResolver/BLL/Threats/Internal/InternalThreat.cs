@@ -10,8 +10,8 @@ namespace BLL.Threats.Internal
 	{
 		public List<StationLocation> CurrentStations { get; private set; }
 
-		protected readonly int? totalInaccessibility;
-		protected int? remainingInaccessibility;
+		private readonly int? totalInaccessibility;
+		private int? remainingInaccessibility;
 
 		protected StationLocation CurrentStation
 		{
@@ -40,20 +40,15 @@ namespace BLL.Threats.Internal
 		public PlayerAction ActionType { get; private set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
-			base(type, difficulty, health, speed, timeAppears, sittingDuck)
+			this(type, difficulty, health, speed, timeAppears, new List<StationLocation> {currentStation}, actionType, sittingDuck, inaccessibility)
 		{
-			CurrentStation = currentStation;
-			sittingDuck.StationByLocation[currentStation].Threats.Add(this);
-			ActionType = actionType;
-			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
 			base(type, difficulty, health, speed, timeAppears, sittingDuck)
 		{
 			CurrentStations = currentStations;
-			foreach (var currentStation in CurrentStations)
-				sittingDuck.StationByLocation[currentStation].Threats.Add(this);
+			sittingDuck.AddInternalThreatToStations(CurrentStations, this);
 			ActionType = actionType;
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
@@ -74,39 +69,41 @@ namespace BLL.Threats.Internal
 			CheckForDestroyed();
 		}
 
-		private void MoveToNewStation(StationLocation newStation)
+		private void MoveToNewStation(StationLocation? newStation)
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
+			if (!newStation.HasValue)
+				throw new InvalidOperationException("Moved wrongly.");
 			RemoveFromStation(CurrentStation);
-			AddToStation(newStation);
+			AddToStation(newStation.Value);
 		}
 
 		protected void RemoveFromStation(StationLocation stationToRemoveFrom)
 		{
-			sittingDuck.StationByLocation[stationToRemoveFrom].Threats.Remove(this);
+			sittingDuck.RemoveInternalThreatFromStations(new [] {stationToRemoveFrom}, this);
 			CurrentStations.Remove(stationToRemoveFrom);
 		}
 
 		protected void AddToStation(StationLocation stationToMoveTo)
 		{
-			sittingDuck.StationByLocation[stationToMoveTo].Threats.Add(this);
+			sittingDuck.AddInternalThreatToStations(new [] {stationToMoveTo}, this);
 			CurrentStations.Add(stationToMoveTo);
 		}
 
 		protected void MoveRed()
 		{
-			MoveToNewStation(sittingDuck.StationByLocation[CurrentStation].RedwardStation.StationLocation);
+			MoveToNewStation(CurrentStation.RedwardStationLocation());
 		}
 
 		protected void MoveBlue()
 		{
-			MoveToNewStation(sittingDuck.StationByLocation[CurrentStation].BluewardStation.StationLocation);
+			MoveToNewStation(CurrentStation.BluewardStationLocation());
 		}
 
 		protected void ChangeDecks()
 		{
-			MoveToNewStation(sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.StationLocation);
+			MoveToNewStation(CurrentStation.OppositeStationLocation());
 		}
 
 		protected void Damage(int amount)

@@ -21,7 +21,6 @@ namespace BLL
 		//TODO: Let user select damage tokens
 		//TODO: include penalties in score, and break score up more?
 		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
-		//TODO: Revisit all things on ISittingDuck
 		//TODO: Threat factory, threat enum
 		//TODO: Pick perform or on for event names. Stop using both!
 		//TODO: Change all threat display names to include threat #
@@ -166,7 +165,7 @@ namespace BLL
 			foreach (var threat in newlySurvivedThreats)
 			{
 				foreach(var station in threat.CurrentStations)
-					sittingDuck.StationByLocation[station].IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
+					sittingDuck.StationsByLocation[station].IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
 			}
 		}
 

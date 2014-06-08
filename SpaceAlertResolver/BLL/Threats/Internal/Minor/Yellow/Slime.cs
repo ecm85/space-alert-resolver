@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
@@ -30,13 +29,13 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected abstract Slime CreateProgeny();
 
-		protected void Spread(StandardStation station)
+		protected void Spread(StationLocation? stationLocation)
 		{
-			if (station != null && !station.Threats.Any(threat => threat is Slime))
+			if (stationLocation != null && !sittingDuck.GetThreatsInStation(stationLocation.Value).Any(threat => threat is Slime))
 			{
 				var newProgeny = CreateProgeny();
 				currentProgeny.Add(newProgeny);
-				station.Threats.Add(CreateProgeny());
+				sittingDuck.AddInternalThreatToStations(new [] {stationLocation.Value}, CreateProgeny());
 				Track.ThreatPositions[newProgeny] = Track.ThreatPositions[this];
 				sittingDuck.CurrentInternalThreats.Add(newProgeny);
 				newProgeny.SetTrack(Track);

@@ -14,7 +14,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void PeformXAction()
 		{
-			sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer.Energy -= 1;
+			sittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformYAction()
@@ -35,14 +35,13 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			var reactor = sittingDuck.StationByLocation[CurrentStation].OppositeDeckStation.EnergyContainer;
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
-			var reactorHasEnergy = reactor.Energy > 1;
-			var canTakeDamage = !remainingDamageWillDestroyThreat || reactorHasEnergy;
-			if (canTakeDamage)
-				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			var energyDrained = 0;
 			if (remainingDamageWillDestroyThreat)
-				reactor.Energy--;
+				energyDrained = sittingDuck.DrainReactors(CurrentZones, 1);
+			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
+			if (!cannotTakeDamage)
+				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

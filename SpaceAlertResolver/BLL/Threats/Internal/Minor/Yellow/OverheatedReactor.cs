@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
@@ -20,12 +19,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			Damage(sittingDuck.StationByLocation[CurrentStation].EnergyContainer.Energy);
+			Damage(sittingDuck.GetEnergyInStation(CurrentStation));
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainReactors(new[] {ZoneLocation.White}, 1);
+			sittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformZAction()

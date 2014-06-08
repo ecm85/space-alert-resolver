@@ -29,8 +29,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PerformYAction()
 		{
-			var leftStation = sittingDuck.StationByLocation[CurrentStation].RedwardStation;
-			Spread(leftStation);
+			var redwardStation = CurrentStation.RedwardStationLocation();
+			Spread(redwardStation);
 		}
 
 		private class ProgenySlime : SlimeA
@@ -48,7 +48,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override Slime CreateProgeny()
 		{
-			return new ProgenySlime(TimeAppears, sittingDuck.StationByLocation[CurrentStation].RedwardStation.StationLocation, sittingDuck);
+			var newSlimeLocation = CurrentStation.RedwardStationLocation();
+			if (!newSlimeLocation.HasValue)
+				throw new InvalidOperationException("Tried to spread to invalid station.");
+			return new ProgenySlime(TimeAppears, newSlimeLocation.Value, sittingDuck);
 		}
 	}
 }

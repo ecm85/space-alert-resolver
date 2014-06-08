@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		private bool IsAnyPlayerPresent()
 		{
-			return sittingDuck.StationByLocation[CurrentStation].Players.Any();
+			return sittingDuck.GetPlayerCount(CurrentStation) != 0;
 		}
 	}
 }
