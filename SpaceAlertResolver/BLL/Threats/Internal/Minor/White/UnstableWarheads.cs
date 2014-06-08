@@ -8,8 +8,9 @@ namespace BLL.Threats.Internal.Minor.White
 	public class UnstableWarheads : MinorWhiteInternalThreat
 	{
 		public UnstableWarheads(int timeAppears, ISittingDuck sittingDuck)
-			: base(sittingDuck.RocketsComponent.Rockets.Count, 3, timeAppears, StationLocation.LowerBlue, PlayerAction.C, sittingDuck)
+			: base(sittingDuck.GetRocketCount(), 3, timeAppears, StationLocation.LowerBlue, PlayerAction.C, sittingDuck)
 		{
+			sittingDuck.RocketsModified += (sender, args) => RemainingHealth = sittingDuck.GetRocketCount();
 		}
 
 		public override void PeformXAction()

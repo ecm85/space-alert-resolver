@@ -24,9 +24,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			var rockets = sittingDuck.RocketsComponent.Rockets;
-			if (rockets.Any())
-				rockets.Remove(rockets.First());
+			sittingDuck.RemoveRocket();
 		}
 
 		public override void PerformYAction()

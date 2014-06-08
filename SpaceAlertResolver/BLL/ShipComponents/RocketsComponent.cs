@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class RocketsComponent : CComponent
 	{
-		public IList<Rocket> Rockets { get; private set; } 
+		public List<Rocket> Rockets { get; private set; } 
 		private Rocket RocketFiredThisTurn { get; set; }
 		public Rocket RocketFiredLastTurn { get; private set; }
 

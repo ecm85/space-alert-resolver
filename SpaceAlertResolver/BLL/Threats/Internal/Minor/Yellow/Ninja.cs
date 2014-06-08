@@ -28,10 +28,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			if (RemainingHealth != 0)
 			{
-				var rockets = sittingDuck.RocketsComponent.Rockets;
-				foreach (var rocket in rockets)
+				var remainingRocketCount = sittingDuck.GetRocketCount();
+				for (var i = 0; i < remainingRocketCount; i++)
 					sittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
-				rockets.Clear();
+				sittingDuck.RemoveAllRockets();
 			}
 			else
 				OnDestroyed();

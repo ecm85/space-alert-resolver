@@ -31,11 +31,14 @@ namespace BLL
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
 		IList<ExternalThreat> CurrentExternalThreats { get; }
+		IList<InternalThreat> CurrentInternalThreats { get; }
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
+		event EventHandler RocketsModified;
+		int GetRocketCount();
+		bool RemoveRocket();
+		int RemoveAllRockets();
 
 		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
 		IDictionary<StationLocation, Station> StationByLocation { get; }
-		RocketsComponent RocketsComponent { get; }
-		IList<InternalThreat> CurrentInternalThreats { get; }
 	}
 }

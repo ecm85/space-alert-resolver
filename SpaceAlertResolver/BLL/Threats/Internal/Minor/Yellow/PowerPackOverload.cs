@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
@@ -30,9 +29,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		public override void PeformXAction()
 		{
 			sittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
-			var rockets = sittingDuck.RocketsComponent.Rockets;
-			if (rockets.Any())
-				rockets.Remove(rockets.First());
+			sittingDuck.RemoveRocket();
 		}
 
 		public override void PerformYAction()

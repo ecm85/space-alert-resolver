@@ -297,5 +297,30 @@ namespace BLL
 			foreach (var stationLocation in stationLocations.Where(stationLocation => BattleBotsComponentsByLocation.ContainsKey(stationLocation)))
 				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
 		}
+
+		public event EventHandler RocketsModified;
+
+		public int GetRocketCount()
+		{
+			return RocketsComponent.Rockets.Count;
+		}
+
+		public bool RemoveRocket()
+		{
+			var rockets = RocketsComponent.Rockets;
+			var removedRocket = rockets.Any();
+			rockets.Remove(rockets.First());
+			RocketsModified(new object(), new EventArgs());
+			return removedRocket;
+		}
+
+		public int RemoveAllRockets()
+		{
+			var rockets = RocketsComponent.Rockets;
+			var removedRockets = rockets.Count;
+			rockets.Clear();
+			RocketsModified(new object(), new EventArgs());
+			return removedRockets;
+		}
 	}
 }
