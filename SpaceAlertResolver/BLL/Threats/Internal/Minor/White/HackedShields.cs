@@ -14,12 +14,12 @@ namespace BLL.Threats.Internal.Minor.White
 
 		public override void PeformXAction()
 		{
-			sittingDuck.ZonesByLocation[CurrentZone].UpperStation.EnergyContainer.Energy = 0;
+			sittingDuck.DrainShields(new [] {CurrentZone});
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.ZonesByLocation[CurrentZone].LowerStation.EnergyContainer.Energy = 0;
+			sittingDuck.DrainReactors(new [] {CurrentZone});
 		}
 
 		public override void PerformZAction()

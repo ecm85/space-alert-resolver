@@ -29,7 +29,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			((BattleBotsComponent)sittingDuck.RedZone.LowerStation.CComponent).DisableBattleBots();
+			sittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
 			var rockets = sittingDuck.RocketsComponent.Rockets;
 			if (rockets.Any())
 				rockets.Remove(rockets.First());

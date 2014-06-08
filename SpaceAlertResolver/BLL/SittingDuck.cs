@@ -22,6 +22,8 @@ namespace BLL
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
+		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
+
 		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; private set; }
 
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
@@ -60,19 +62,21 @@ namespace BLL
 				StationLocation = StationLocation.UpperWhite,
 				CComponent = computerComponent
 			};
+			var upperBlueBattleBots = new BattleBotsComponent();
 			var upperBlueStation = new StandardStation
 			{
 				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
 				EnergyContainer = new SideShield(blueReactor),
 				StationLocation = StationLocation.UpperBlue,
-				CComponent = new BattleBotsComponent()
+				CComponent = upperBlueBattleBots
 			};
+			var lowerRedBattleBots = new BattleBotsComponent();
 			var lowerRedStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
 				EnergyContainer = redReactor,
 				StationLocation = StationLocation.LowerRed,
-				CComponent = new BattleBotsComponent()
+				CComponent = lowerRedBattleBots
 			};
 			
 			var lowerWhiteStation = new StandardStation
@@ -113,6 +117,11 @@ namespace BLL
 				.Concat(new Station[] {interceptorStation})
 				.ToDictionary(station => station.StationLocation);
 			InterceptorStation = interceptorStation;
+			BattleBotsComponentsByLocation = new Dictionary<StationLocation, BattleBotsComponent>
+			{
+				{StationLocation.UpperBlue, upperBlueBattleBots},
+				{StationLocation.LowerRed, lowerRedBattleBots}
+			};
 		}
 
 		public void SetPlayers(IEnumerable<Player> players)
@@ -124,48 +133,44 @@ namespace BLL
 			}
 		}
 
-		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations)
+		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShield();
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainShield());
 		}
 
-		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShield(amount);
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainShield(amount));
 		}
 
-		public void DrainAllShields(int amount)
+		public int DrainAllShields(int amount)
 		{
-			DrainShields(EnumFactory.All<ZoneLocation>(), amount);
+			return DrainShields(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
-		public void DrainAllShields()
+		public int DrainAllShields()
 		{
-			DrainShields(EnumFactory.All<ZoneLocation>());
+			return DrainShields(EnumFactory.All<ZoneLocation>());
 		}
 
-		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
+		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainReactor();
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainReactor());
 		}
 
-		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainReactor(amount);
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainReactor(amount));
 		}
 
-		public void DrainAllReactors(int amount)
+		public int DrainAllReactors(int amount)
 		{
-			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
+			return DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
-		public void DrainAllReactors()
+		public int DrainAllReactors()
 		{
-			DrainReactors(EnumFactory.All<ZoneLocation>());
+			return DrainReactors(EnumFactory.All<ZoneLocation>());
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
@@ -202,6 +207,14 @@ namespace BLL
 			return StationByLocation[station].Players.Count;
 		}
 
+		public int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations)
+		{
+			return locations
+				.Select(location => StationByLocation[location])
+				.SelectMany(station => station.Players)
+				.Count(player => player.IsPoisoned);
+		}
+
 		public void KnockOutPlayersWithBattleBots()
 		{
 			var playersWithBattleBots = Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
@@ -232,6 +245,15 @@ namespace BLL
 			KnockOut(playersWithBattleBots);
 		}
 
+		public void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations)
+		{
+			var poisonedPlayers = locations
+				.Select(location => StationByLocation[location])
+				.SelectMany(zone => zone.Players)
+				.Where(player => player.IsPoisoned);
+			KnockOut(poisonedPlayers);
+		}
+
 		public void KnockOutPlayers(IEnumerable<StationLocation> locations)
 		{
 			var players = locations.SelectMany(location => StationByLocation[location].Players);
@@ -242,11 +264,6 @@ namespace BLL
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 				TransferEnergyToShield(zone.UpperStation.EnergyContainer, zone.LowerStation.EnergyContainer);
-		}
-
-		public void EnergyLeaksOut(IEnumerable<ZoneLocation> zoneLocations)
-		{
-			throw new NotImplementedException();
 		}
 
 		private static void TransferEnergyToShield(EnergyContainer shield, EnergyContainer reactor)
@@ -261,6 +278,24 @@ namespace BLL
 		{
 			foreach (var player in players)
 				player.IsKnockedOut = true;
+		}
+
+		public void AddDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DebuffsBySource[source] = debuff;
+		}
+
+		public void RemoveDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source)
+		{
+			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+				zone.DebuffsBySource.Remove(source);
+		}
+
+		public void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations)
+		{
+			foreach (var stationLocation in stationLocations.Where(stationLocation => BattleBotsComponentsByLocation.ContainsKey(stationLocation)))
+				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
 		}
 	}
 }

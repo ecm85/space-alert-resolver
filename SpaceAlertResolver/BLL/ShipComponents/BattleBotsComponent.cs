@@ -9,7 +9,7 @@ namespace BLL.ShipComponents
 	{
 		private BattleBots battleBots = new BattleBots();
 
-		public void DisableBattleBots()
+		public void DisableInactiveBattleBots()
 		{
 			if (battleBots != null)
 				battleBots.IsDisabled = true;

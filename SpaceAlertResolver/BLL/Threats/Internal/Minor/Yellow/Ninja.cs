@@ -35,31 +35,24 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			}
 			else
 				OnDestroyed();
-			foreach (var player in PoisonedPlayers)
-				player.IsKnockedOut = true;
+			sittingDuck.KnockOutPoisonedPlayers(EnumFactory.All<StationLocation>());
 			//TODO: Remove drones
 		}
 
 		public override void CheckForDestroyed()
 		{
-			if (RemainingHealth <= 0)
-			{
-				if (!PoisonedPlayers.Any())
-					OnDestroyed();
-				else
-					RemoveFromStation(CurrentStation);
-			}
+			if (RemainingHealth > 0)
+				return;
+			if (sittingDuck.GetPoisonedPlayerCount(EnumFactory.All<StationLocation>()) == 0)
+				OnDestroyed();
+			else
+				RemoveFromStation(CurrentStation);
 		}
 
 		protected override void OnDestroyed()
 		{
 			//TODO: Remove drones
 			base.OnDestroyed();
-		}
-
-		private IEnumerable<Player> PoisonedPlayers
-		{
-			get { return sittingDuck.Zones.SelectMany(zone => zone.Players).Where(player => player.IsPoisoned).ToList(); }
 		}
 
 		public static string GetDisplayName()

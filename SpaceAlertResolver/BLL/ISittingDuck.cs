@@ -10,37 +10,32 @@ namespace BLL
 {
 	public interface ISittingDuck
 	{
-		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
-		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		void DrainAllShields(int amount);
-		void DrainAllShields();
-		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
-		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		void DrainAllReactors(int amount);
-		void DrainAllReactors();
-
-		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
-		IList<ExternalThreat> CurrentExternalThreats { get; }
+		int DrainShields(IEnumerable<ZoneLocation> zoneLocations);
+		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		int DrainAllShields(int amount);
+		int DrainAllShields();
+		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
+		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		int DrainAllReactors(int amount);
+		int DrainAllReactors();
+		void AddDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
+		void RemoveDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
 		int GetPlayerCount(StationLocation station);
+		int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations);
 		void KnockOutPlayersWithBattleBots();
 		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPlayersWithoutBattleBots();
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
+		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
-		void EnergyLeaksOut(IEnumerable<ZoneLocation> zoneLocations);
+		IList<ExternalThreat> CurrentExternalThreats { get; }
+		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
-		Zone BlueZone { get; }
-		Zone WhiteZone { get; }
-		Zone RedZone { get; }
-		IDictionary<ZoneLocation, Zone> ZonesByLocation { get; }
-		IEnumerable<Zone> Zones { get; }
+		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
 		IDictionary<StationLocation, Station> StationByLocation { get; }
-		InterceptorStation InterceptorStation { get; set; }
-		ComputerComponent Computer { get; }
 		RocketsComponent RocketsComponent { get; }
-		VisualConfirmationComponent VisualConfirmationComponent { get; }
 		IList<InternalThreat> CurrentInternalThreats { get; }
 	}
 }

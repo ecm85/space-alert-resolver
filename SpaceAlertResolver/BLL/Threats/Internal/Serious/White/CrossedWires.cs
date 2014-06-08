@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
 {
@@ -16,22 +15,18 @@ namespace BLL.Threats.Internal.Serious.White
 		public override void PeformXAction()
 		{
 			sittingDuck.TransferEnergyToShields(new [] {CurrentZone});
-			sittingDuck.EnergyLeaksOut(new[] {CurrentZone});
-			var reactor = sittingDuck.ZonesByLocation[CurrentZone].LowerStation.EnergyContainer;
-			EnergyLeaksOut(reactor);
+			EnergyLeaksOut(CurrentZone);
 		}
 
 		public override void PerformYAction()
 		{
-			var reactor = sittingDuck.ZonesByLocation[CurrentZone].LowerStation.EnergyContainer;
-			EnergyLeaksOut(reactor);
+			EnergyLeaksOut(CurrentZone);
 		}
 
 		public override void PerformZAction()
 		{
-			var allReactors = sittingDuck.Zones.Select(zone => zone.LowerStation.EnergyContainer);
-			foreach (var reactor in allReactors)
-				EnergyLeaksOut(reactor);
+			foreach (var zoneLocation in EnumFactory.All<ZoneLocation>())
+				EnergyLeaksOut(zoneLocation);
 		}
 
 		public static string GetDisplayName()
@@ -39,10 +34,10 @@ namespace BLL.Threats.Internal.Serious.White
 			return "Crossed Wires";
 		}
 
-		private void EnergyLeaksOut(EnergyContainer reactor)
+		private void EnergyLeaksOut(ZoneLocation zoneLocation)
 		{
-			Damage(reactor.Energy);
-			reactor.Energy = 0;
+			var energyDrained = sittingDuck.DrainShields(new[] { zoneLocation });
+			Damage(energyDrained);
 		}
 	}
 }
