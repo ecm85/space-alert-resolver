@@ -14,7 +14,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			sittingDuck.CurrentThreatBuffsBySource[this] = ExternalThreatBuff.BonusShield;
+			sittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusShield, this);
 		}
 
 		public override void PerformYAction()
@@ -29,7 +29,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void OnDestroyed()
 		{
-			sittingDuck.CurrentThreatBuffsBySource.Remove(this);
+			sittingDuck.RemoveExternalThreatBuffForSource(this);
 			base.OnDestroyed();
 		}
 

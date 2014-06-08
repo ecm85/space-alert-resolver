@@ -14,7 +14,9 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		public override void PeformXAction()
 		{
-			sittingDuck.CurrentThreatBuffsBySource[this] = ExternalThreatBuff.BonusAttack;
+			//TODO: This currently buffs itself and should not.
+			//Can this be fixed just by changing the z to an attack 2?
+			sittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
 		}
 
 		public override void PerformYAction()
@@ -30,7 +32,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void OnDestroyed()
 		{
-			sittingDuck.CurrentThreatBuffsBySource.Remove(this);
+			sittingDuck.RemoveExternalThreatBuffForSource(this);
 			base.OnDestroyed();
 		}
 

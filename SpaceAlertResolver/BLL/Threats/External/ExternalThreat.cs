@@ -36,7 +36,7 @@ namespace BLL.Threats.External
 
 		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
 		{
-			var bonusShields = sittingDuck.CurrentThreatBuffsBySource.Values.Count(buff => buff == ExternalThreatBuff.BonusShield);
+			var bonusShields = sittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
 			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
@@ -72,7 +72,7 @@ namespace BLL.Threats.External
 
 		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
-			var bonusAttacks = sittingDuck.CurrentThreatBuffsBySource.Values.Count(buff => buff == ExternalThreatBuff.BonusAttack);
+			var bonusAttacks = sittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations);
 			var result = sittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)

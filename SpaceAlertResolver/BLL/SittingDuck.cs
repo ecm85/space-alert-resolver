@@ -23,13 +23,12 @@ namespace BLL
 		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
 		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
-
-		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; private set; }
+		public IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; private set; }
 
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
-			CurrentThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
+			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
 			CurrentInternalThreats = new List<InternalThreat>();
 			CurrentExternalThreats = new List<ExternalThreat>();
 			var whiteReactor = new CentralReactor();
@@ -280,13 +279,13 @@ namespace BLL
 				player.IsKnockedOut = true;
 		}
 
-		public void AddDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source)
+		public void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 				zone.DebuffsBySource[source] = debuff;
 		}
 
-		public void RemoveDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source)
+		public void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 				zone.DebuffsBySource.Remove(source);
@@ -321,6 +320,21 @@ namespace BLL
 			rockets.Clear();
 			RocketsModified(new object(), new EventArgs());
 			return removedRockets;
+		}
+
+		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()
+		{
+			return CurrentExternalThreatBuffsBySource.Values.ToList();
+		}
+
+		public void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source)
+		{
+			CurrentExternalThreatBuffsBySource[source] = buff;
+		}
+
+		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
+		{
+			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 	}
 }

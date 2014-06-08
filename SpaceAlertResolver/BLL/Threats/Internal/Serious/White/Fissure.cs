@@ -14,12 +14,12 @@ namespace BLL.Threats.Internal.Serious.White
 
 		public override void PeformXAction()
 		{
-			sittingDuck.AddDebuff(new [] {ZoneLocation.Red}, ZoneDebuff.DoubleDamage, this);
+			sittingDuck.AddZoneDebuff(new [] {ZoneLocation.Red}, ZoneDebuff.DoubleDamage, this);
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.AddDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.DoubleDamage, this);
+			sittingDuck.AddZoneDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.DoubleDamage, this);
 		}
 
 		public override void PerformZAction()
@@ -30,7 +30,7 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void OnDestroyed()
 		{
 			base.OnDestroyed();
-			sittingDuck.RemoveDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
+			sittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 		}
 
 		public static string GetDisplayName()

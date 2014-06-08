@@ -18,8 +18,8 @@ namespace BLL
 		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
 		int DrainAllReactors(int amount);
 		int DrainAllReactors();
-		void AddDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
-		void RemoveDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
+		void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
+		void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
 		int GetPlayerCount(StationLocation station);
 		int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations);
@@ -37,8 +37,10 @@ namespace BLL
 		int GetRocketCount();
 		bool RemoveRocket();
 		int RemoveAllRockets();
-
-		IDictionary<ExternalThreat, ExternalThreatBuff> CurrentThreatBuffsBySource { get; }
+		IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs();
+		void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source);
+		void RemoveExternalThreatBuffForSource(ExternalThreat source);
+			
 		IDictionary<StationLocation, Station> StationByLocation { get; }
 	}
 }
