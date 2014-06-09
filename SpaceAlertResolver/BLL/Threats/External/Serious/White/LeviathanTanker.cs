@@ -32,11 +32,7 @@ namespace BLL.Threats.External.Serious.White
 		{
 			base.OnHealthReducedToZero();
 			foreach (var threat in ThreatController.ExternalThreats)
-			{
-				//TODO: Make this a 'take damage' method, and in nemesis
-				threat.RemainingHealth -= 1;
-				threat.CheckDefeated();
-			}
+				threat.TakeIrreducibleDamage(1);
 		}
 
 		public static string GetDisplayName()

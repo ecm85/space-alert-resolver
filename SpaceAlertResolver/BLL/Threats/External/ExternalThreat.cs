@@ -41,6 +41,12 @@ namespace BLL.Threats.External
 			CurrentZone = currentZone;
 		}
 
+		public virtual void TakeIrreducibleDamage(int amount)
+		{
+			RemainingHealth -= amount;
+			CheckDefeated();
+		}
+
 		public virtual void TakeDamage(IList<PlayerDamage> damages)
 		{
 			TakeDamage(damages, null);
@@ -62,6 +68,11 @@ namespace BLL.Threats.External
 			var isInRange = damage.Range >= DistanceToShip;
 			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
 			return isInRange && gunCanHitCurrentZone;
+		}
+
+		public virtual bool IsPriorityTargetFor(PlayerDamage damage)
+		{
+			return false;
 		}
 
 		protected void AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType threatDamageType = ThreatDamageType.Standard)

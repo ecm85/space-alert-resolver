@@ -18,15 +18,13 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override void PerformXAction()
 		{
 			Attack(1);
-			RemainingHealth--;
-			CheckDefeated();
+			TakeIrreducibleDamage(1);
 		}
 
 		public override void PerformYAction()
 		{
 			Attack(2);
-			RemainingHealth -= 2;
-			CheckDefeated();
+			TakeIrreducibleDamage(2);
 		}
 
 		public override void PerformZAction()

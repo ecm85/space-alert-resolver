@@ -48,7 +48,11 @@ namespace BLL.Threats.External.Minor.Yellow
 			base.PerformEndOfTurn();
 		}
 
-		//TODO: Rules clarification: Can this be hit by the leviathan tanker?
+		public override void TakeIrreducibleDamage(int amount)
+		{
+			if (!isPhased)
+				base.TakeIrreducibleDamage(amount);
+		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{

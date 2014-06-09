@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
-using BLL.Threats;
 using BLL.Threats.External;
-using BLL.Threats.Internal;
-using BLL.Tracks;
 
 namespace BLL
 {
@@ -207,6 +204,7 @@ namespace BLL
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
 			foreach (var damage in damages)
 			{
+				var priorityThreatsInRange = ThreatController.ExternalThreats.Where(threat => threat.IsPriorityTargetFor(damage) && threat.CanBeTargetedBy(damage)).ToList();
 				var threatsInRange = ThreatController.ExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
 				switch (damage.PlayerDamageType.DamageTargetType())
 				{
@@ -215,9 +213,15 @@ namespace BLL
 							AddToDamagesByThreat(threat, damage, damagesByThreat);
 						break;
 					case DamageTargetType.Single:
-						var threatHit = threatsInRange.OrderBy(threat => threat.Position).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
-						if (threatHit != null)
-							AddToDamagesByThreat(threatHit, damage, damagesByThreat);
+						var priorityThreatHit = priorityThreatsInRange.OrderBy(threat => threat.TimeAppears).FirstOrDefault();
+						if (priorityThreatHit != null)
+							AddToDamagesByThreat(priorityThreatHit, damage, damagesByThreat);
+						else
+						{
+							var threatHit = threatsInRange.OrderBy(threat => threat.Position).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
+							if (threatHit != null)
+								AddToDamagesByThreat(threatHit, damage, damagesByThreat);
+						}
 						break;
 					default:
 						throw new InvalidOperationException();

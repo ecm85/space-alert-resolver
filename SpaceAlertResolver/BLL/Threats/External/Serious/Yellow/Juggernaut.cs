@@ -7,7 +7,6 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class Juggernaut : SeriousYellowExternalThreat
 	{
-		//TODO: Rockets always target it, even at distance 3
 		public Juggernaut()
 			: base(3, 10, 1)
 		{
@@ -40,6 +39,16 @@ namespace BLL.Threats.External.Serious.Yellow
 			base.TakeDamage(damages);
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
 				shields++;
+		}
+
+		public override bool IsPriorityTargetFor(PlayerDamage damage)
+		{
+			return damage.PlayerDamageType == PlayerDamageType.Rocket;
+		}
+
+		public override bool CanBeTargetedBy(PlayerDamage damage)
+		{
+			return base.CanBeTargetedBy(damage) || (IsOnTrack() && damage.PlayerDamageType == PlayerDamageType.Rocket);
 		}
 	}
 }

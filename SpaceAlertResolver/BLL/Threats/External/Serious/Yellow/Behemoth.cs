@@ -40,12 +40,11 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			//TODO: Rules clarification: Heroic action turns 9 into 10?
 			var interceptorDamages = damages.SingleOrDefault(damage => damage.PlayerDamageType == PlayerDamageType.InterceptorsSingle);
 			if (interceptorDamages != null)
 			{
 				var strongerInterceptorDamages = new PlayerDamage(
-					9,
+					interceptorDamages.Amount + 6,
 					PlayerDamageType.InterceptorsSingle,
 					interceptorDamages.Range,
 					interceptorDamages.ZoneLocations);
