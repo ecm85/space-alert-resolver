@@ -12,18 +12,18 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.TransferEnergyToShields(new [] {CurrentZone});
 			EnergyLeaksOut(CurrentZone);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			EnergyLeaksOut(CurrentZone);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			foreach (var zoneLocation in EnumFactory.All<ZoneLocation>())
 				EnergyLeaksOut(zoneLocation);

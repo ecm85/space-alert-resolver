@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainShields(EnumFactory.All<ZoneLocation>());
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			AttackOtherTwoZones(2);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			AttackOtherTwoZones(3);
 		}

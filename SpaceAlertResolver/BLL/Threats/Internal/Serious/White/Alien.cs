@@ -14,18 +14,18 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			grownUp = true;
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			ChangeDecks();
 			Damage(SittingDuck.GetPlayerCount(CurrentStation));
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			throw new LoseException(this);
 		}

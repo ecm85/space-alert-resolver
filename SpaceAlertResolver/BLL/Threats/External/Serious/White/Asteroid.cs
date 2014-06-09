@@ -14,17 +14,17 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			breakpointsCrossed++;
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			breakpointsCrossed++;
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Attack(RemainingHealth);
 		}

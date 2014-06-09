@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			shields = 1;
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			shields++;
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(4);
 		}
@@ -30,7 +30,7 @@ namespace BLL.Threats.External.Serious.White
 		public override void OnJumpingToHyperspace()
 		{
 			if (HasBeenPlaced)
-				PerformZAction();
+				PerformZAction(-1);
 		}
 
 		public static string GetDisplayName()

@@ -12,19 +12,19 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			//TODO: Send drones into adjacent stations
 			//Until ninja is destroyed or performs Z, anyone starting or ending is those stations is poisoned
 			throw new NotImplementedException();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPoisonedPlayers(EnumFactory.All<StationLocation>());
 

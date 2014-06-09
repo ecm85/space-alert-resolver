@@ -32,23 +32,23 @@ namespace BLL
 				threat.OnJumpingToHyperspace();
 		}
 
-		public void MoveAllThreats()
+		public void MoveAllThreats(int currentTurn)
 		{
 			var allCurrentThreats = new List<Threat>()
 				.Concat(ExternalThreats)
 				.Concat(InternalThreats)
 				.OrderBy(threat => threat.TimeAppears);
 			foreach (var threat in allCurrentThreats)
-				threat.Move();
+				threat.Move(currentTurn);
 		}
 
-		public void MoveExternalThreatsExcept(IEnumerable<ExternalThreat> threatsToNotMove, int amount)
+		public void MoveExternalThreatsExcept(IEnumerable<ExternalThreat> threatsToNotMove, int amount, int currentTurn)
 		{
 			var threatsToMove = ExternalThreats
 				.Except(threatsToNotMove)
 				.OrderBy(threat => threat.TimeAppears);
 			foreach (var threat in threatsToMove)
-				threat.Move(amount);
+				threat.Move(amount, currentTurn);
 		}
 
 		public void PerformEndOfPlayerActions()

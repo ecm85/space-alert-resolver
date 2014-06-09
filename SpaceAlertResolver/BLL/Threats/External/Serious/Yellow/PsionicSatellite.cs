@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
-			//TODO: Shift all players (need current turn)
+			SittingDuck.ShiftPlayers(new [] {CurrentZone}, currentTurn + 1);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
-			//TODO: Shift all players (need current turn)
+			SittingDuck.ShiftPlayers(EnumFactory.All<ZoneLocation>(), currentTurn + 1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			//TODO: Exclude interceptors?
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());

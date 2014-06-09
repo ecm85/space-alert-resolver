@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Phasing Mine Layer";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			LayMine();
 			if (wasPhasedAtStartOfTurn)
@@ -33,13 +33,13 @@ namespace BLL.Threats.Internal.Serious.Yellow
 				MoveRed();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			LayMine();
 			ChangeDecks();
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			LayMine();
 			DetonateMines();

@@ -15,19 +15,19 @@ namespace BLL.Threats.External.Serious.Yellow
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			Attack(1);
 			TakeIrreducibleDamage(1);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Attack(2);
 			TakeIrreducibleDamage(2);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			throw new LoseException(this);
 		}

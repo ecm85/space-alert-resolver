@@ -40,9 +40,9 @@ namespace BLL.Threats
 
 		protected ISittingDuck SittingDuck { get; set; }
 
-		public abstract void PerformXAction();
-		public abstract void PerformYAction();
-		public abstract void PerformZAction();
+		public abstract void PerformXAction(int currentTurn);
+		public abstract void PerformYAction(int currentTurn);
+		public abstract void PerformZAction(int currentTurn);
 
 		public virtual void OnJumpingToHyperspace()
 		{
@@ -102,7 +102,7 @@ namespace BLL.Threats
 		{
 		}
 
-		public abstract void Move();
+		public abstract void Move(int currentTurn);
 		
 		public virtual bool IsOnTrack()
 		{

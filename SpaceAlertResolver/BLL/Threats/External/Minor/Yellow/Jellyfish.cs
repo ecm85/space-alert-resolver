@@ -12,19 +12,19 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			AttackAllZones(1);
 			HealHalfDamage();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			AttackAllZones(1);
 			HealHalfDamage();
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(2);
 		}

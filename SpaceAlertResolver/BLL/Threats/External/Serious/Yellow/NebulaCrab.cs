@@ -12,18 +12,18 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			shields = 4;
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Speed += 2;
 			shields = 2;
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			AttackSpecificZones(5, new[] {ZoneLocation.Red, ZoneLocation.Blue});
 		}

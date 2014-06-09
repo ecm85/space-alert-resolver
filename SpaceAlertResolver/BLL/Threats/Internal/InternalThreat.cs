@@ -200,17 +200,17 @@ namespace BLL.Threats.Internal
 			remainingInaccessibility = totalInaccessibility;
 		}
 
-		public override void Move()
+		public override void Move(int currentTurn)
 		{
-			Move(Speed);
+			Move(Speed, currentTurn);
 		}
 
-		private void Move(int amount)
+		private void Move(int amount, int currentTurn)
 		{
 			if (!IsOnTrack())
 				return;
 			BeforeMove();
-			Track.MoveThreat(this, amount);
+			Track.MoveThreat(this, amount, currentTurn);
 			AfterMove();
 		}
 	}

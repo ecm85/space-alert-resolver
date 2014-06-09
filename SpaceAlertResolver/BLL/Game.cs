@@ -52,7 +52,7 @@ namespace BLL
 			var currentTurn = nextTurn;
 			ThreatController.AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
-			ThreatController.MoveAllThreats();
+			ThreatController.MoveAllThreats(currentTurn);
 			PerformEndOfTurn();
 			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 			if (isSecondTurnOfPhase)
@@ -62,7 +62,7 @@ namespace BLL
 				PerformEndOfPhase();
 			if (currentTurn == NumberOfTurns - 1)
 			{
-				ThreatController.MoveAllThreats();
+				ThreatController.MoveAllThreats(currentTurn + 1);
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack()}, null);

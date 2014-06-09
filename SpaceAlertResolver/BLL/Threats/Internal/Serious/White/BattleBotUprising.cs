@@ -15,17 +15,17 @@ namespace BLL.Threats.Internal.Serious.White
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayersWithBattleBots();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
 		}

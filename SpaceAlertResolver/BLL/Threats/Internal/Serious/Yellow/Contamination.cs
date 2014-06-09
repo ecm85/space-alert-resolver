@@ -27,18 +27,17 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Contamination";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
-			throw new NotImplementedException();
-			//TODO: Delay players in each of current stations
+			SittingDuck.ShiftPlayers(CurrentStations, currentTurn + 1);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Damage(1, CurrentZones);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
 			//TODO: This effect persists

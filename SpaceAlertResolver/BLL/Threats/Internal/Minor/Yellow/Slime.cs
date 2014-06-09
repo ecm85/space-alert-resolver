@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			currentProgeny = new List<Slime>();
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Damage(2);
 		}

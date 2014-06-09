@@ -22,12 +22,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Slime I2-02";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DisableInactiveBattlebots(new[] { StationLocation.LowerRed });
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			var bluewardStation = CurrentStation.BluewardStationLocation();
 			Spread(bluewardStation);

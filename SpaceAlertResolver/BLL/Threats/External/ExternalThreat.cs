@@ -108,17 +108,17 @@ namespace BLL.Threats.External
 		{
 		}
 
-		public override void Move()
+		public override void Move(int currentTurn)
 		{
-			Move(Speed);
+			Move(Speed, currentTurn);
 		}
 
-		public void Move(int amount)
+		public void Move(int amount, int currentTurn)
 		{
 			if (!IsOnTrack())
 				return;
 			BeforeMove();
-			Track.MoveThreat(this, amount);
+			Track.MoveThreat(this, amount, currentTurn);
 			AfterMove();
 		}
 	}

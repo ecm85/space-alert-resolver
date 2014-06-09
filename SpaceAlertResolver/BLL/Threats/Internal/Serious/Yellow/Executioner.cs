@@ -17,19 +17,19 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Executioner";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			MoveRed();
 			SittingDuck.KnockOutPlayersWithoutBattleBots(new [] {CurrentStation});
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			ChangeDecks();
 			SittingDuck.KnockOutPlayersWithoutBattleBots(new[] { CurrentStation });
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Damage(3);
 		}

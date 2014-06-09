@@ -24,12 +24,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Phasing Anomaly";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			//TODO: Disrupt upper white cannon optics
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			switch (numberOfYsCrossed)
 			{
@@ -45,7 +45,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			numberOfYsCrossed++;
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
 			Damage(3);

@@ -17,17 +17,17 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return ThreatPoints.GetPointsForDefeatingSeeker();
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			MoveToMostPlayers();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			MoveToMostPlayers();
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Damage(5);
 			SittingDuck.KnockOutPlayers(CurrentStations);

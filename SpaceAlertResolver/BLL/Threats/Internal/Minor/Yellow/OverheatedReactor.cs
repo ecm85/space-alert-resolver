@@ -17,17 +17,17 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Overheated Reactor";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			Damage(SittingDuck.GetEnergyInStation(CurrentStation));
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Damage(3);
 		}

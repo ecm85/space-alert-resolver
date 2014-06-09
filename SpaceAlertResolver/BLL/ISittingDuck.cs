@@ -50,5 +50,7 @@ namespace BLL
 		int GetRocketCount();
 		bool RemoveRocket();
 		int RemoveAllRockets();
+		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
+		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
 	}
 }

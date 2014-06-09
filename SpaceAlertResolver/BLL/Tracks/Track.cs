@@ -22,7 +22,7 @@ namespace BLL.Tracks
 			return sections.Sum(section => section.Length);
 		}
 
-		public void MoveThreat(T threat, int amount)
+		public void MoveThreat(T threat, int amount, int currentTurn)
 		{
 			if (!threat.Position.HasValue)
 				throw new InvalidOperationException("Tried to move threat not on the track.");
@@ -35,13 +35,13 @@ namespace BLL.Tracks
 					switch (crossedBreakpoint)
 					{
 						case TrackBreakpointType.X:
-							threat.PerformXAction();
+							threat.PerformXAction(currentTurn);
 							break;
 						case TrackBreakpointType.Y:
-							threat.PerformYAction();
+							threat.PerformYAction(currentTurn);
 							break;
 						case TrackBreakpointType.Z:
-							threat.PerformZAction();
+							threat.PerformZAction(currentTurn);
 							threat.OnReachingEndOfTrack();
 							break;
 					}

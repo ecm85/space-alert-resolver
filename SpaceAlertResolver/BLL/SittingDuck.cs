@@ -324,6 +324,18 @@ namespace BLL
 			return removedRockets;
 		}
 
+		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
+		{
+			foreach (var player in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).SelectMany(zone => zone.Players))
+				player.Shift(turnToShift);
+		}
+
+		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift)
+		{
+			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
+				player.Shift(turnToShift);
+		}
+
 		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()
 		{
 			return CurrentExternalThreatBuffsBySource.Values.ToList();

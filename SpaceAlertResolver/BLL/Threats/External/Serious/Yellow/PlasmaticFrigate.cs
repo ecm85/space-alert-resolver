@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Attack(4, ThreatDamageType.Plasmatic);
 		}

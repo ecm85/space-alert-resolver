@@ -24,17 +24,17 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Power System Overload";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(new[] { ZoneLocation.White }, 2);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			DamageAllZones(3);
 		}

@@ -24,18 +24,18 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Power Pack Overload";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
 			SittingDuck.RemoveRocket();
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Repair(1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
 			Damage(3, CurrentZones);

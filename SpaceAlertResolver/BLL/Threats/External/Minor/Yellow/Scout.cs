@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
-			ThreatController.MoveExternalThreatsExcept(new [] {this}, 1);
+			ThreatController.MoveExternalThreatsExcept(new [] {this}, 1, currentTurn);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Attack(2, ThreatDamageType.IgnoresShields);
 		}

@@ -17,19 +17,19 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Juggernaut";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			Speed += 2;
 			Attack(2);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			Speed += 2;
 			Attack(3);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Attack(7);
 		}

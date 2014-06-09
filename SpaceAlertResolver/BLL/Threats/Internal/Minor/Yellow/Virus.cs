@@ -17,17 +17,17 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Virus";
 		}
 
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainAllReactors(1);
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
-			//TODO: Shift all players
+			SittingDuck.ShiftPlayers(EnumFactory.All<ZoneLocation>(), currentTurn + 1);
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			DamageAllZones(1);
 		}

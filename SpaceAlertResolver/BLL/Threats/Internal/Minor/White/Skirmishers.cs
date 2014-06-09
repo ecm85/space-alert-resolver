@@ -12,12 +12,12 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 		}
 
-		public override void PerformYAction()
+		public override void PerformYAction(int currentTurn)
 		{
 			ChangeDecks();
 		}
 
-		public override void PerformZAction()
+		public override void PerformZAction(int currentTurn)
 		{
 			Damage(3);
 		}

@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class SaboteurB : Saboteur
 	{
-		public override void PerformXAction()
+		public override void PerformXAction(int currentTurn)
 		{
 			MoveBlue();
 		}
