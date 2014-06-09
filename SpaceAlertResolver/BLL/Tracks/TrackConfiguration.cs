@@ -98,58 +98,58 @@ namespace BLL.Tracks
 			}
 		}
 
-		public static IEnumerable<TrackBreakpoint> TrackBreakpoints(this TrackConfiguration trackConfiguration)
+		public static IDictionary<int, TrackBreakpointType> TrackBreakpoints(this TrackConfiguration trackConfiguration)
 		{
 			switch (trackConfiguration)
 			{
 				case TrackConfiguration.Track1:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 8, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{8, TrackBreakpointType.X},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track2:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 5, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{5, TrackBreakpointType.X},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track3:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 8, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 3, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{8, TrackBreakpointType.X},
+						{3, TrackBreakpointType.Y},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track4:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 9, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 5, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{9, TrackBreakpointType.X},
+						{5, TrackBreakpointType.Y},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track5:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 11, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 7, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{11, TrackBreakpointType.X},
+						{7, TrackBreakpointType.Y},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track6:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 10, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 7, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 3, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{10, TrackBreakpointType.X},
+						{7, TrackBreakpointType.Y},
+						{3, TrackBreakpointType.Y},
+						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track7:
-					return new[]
+					return new Dictionary<int, TrackBreakpointType>
 					{
-						new TrackBreakpoint{Position = 12, Type = TrackBreakpointType.X},
-						new TrackBreakpoint{Position = 8, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 5, Type = TrackBreakpointType.Y},
-						new TrackBreakpoint{Position = 1, Type = TrackBreakpointType.Z}
+						{12, TrackBreakpointType.X},
+						{8, TrackBreakpointType.Y},
+						{5, TrackBreakpointType.Y},
+						{1, TrackBreakpointType.Z}
 					};
 				default:
 					throw new InvalidOperationException();

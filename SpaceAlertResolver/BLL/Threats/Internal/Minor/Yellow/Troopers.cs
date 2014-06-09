@@ -7,12 +7,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public abstract class Troopers : MinorYellowInternalThreat
 	{
-		protected Troopers(int timeAppears, StationLocation currentStation, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, currentStation, PlayerAction.BattleBots, sittingDuck)
+		protected Troopers(StationLocation currentStation)
+			: base(2, 2, currentStation, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			ChangeDecks();
 		}
@@ -22,9 +22,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			Damage(4);
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

@@ -7,12 +7,12 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class Shambler : SeriousWhiteInternalThreat
 	{
-		public Shambler(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, StationLocation.LowerWhite, PlayerAction.BattleBots, sittingDuck)
+		public Shambler()
+			: base(2, 2, StationLocation.LowerWhite, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			if (IsAnyPlayerPresent())
 				MoveBlue();
@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		private bool IsAnyPlayerPresent()
 		{
-			return sittingDuck.GetPlayerCount(CurrentStation) != 0;
+			return SittingDuck.GetPlayerCount(CurrentStation) != 0;
 		}
 	}
 }

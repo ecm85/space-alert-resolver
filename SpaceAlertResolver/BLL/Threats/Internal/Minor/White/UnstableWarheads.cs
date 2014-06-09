@@ -7,13 +7,24 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class UnstableWarheads : MinorWhiteInternalThreat
 	{
-		public UnstableWarheads(int timeAppears, ISittingDuck sittingDuck)
-			: base(sittingDuck.GetRocketCount(), 3, timeAppears, StationLocation.LowerBlue, PlayerAction.C, sittingDuck)
+		public UnstableWarheads()
+			: base(3, 3, StationLocation.LowerBlue, PlayerAction.C)
 		{
-			sittingDuck.RocketsModified += (sender, args) => RemainingHealth = sittingDuck.GetRocketCount();
 		}
 
-		public override void PeformXAction()
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			SetHealthToRemainingRockets(null, null);
+			SittingDuck.RocketsModified += SetHealthToRemainingRockets;
+		}
+
+		private void SetHealthToRemainingRockets(object sender, EventArgs eventArgs)
+		{
+			RemainingHealth = SittingDuck.GetRocketCount();
+		}
+
+		public override void PerformXAction()
 		{
 		}
 
@@ -24,6 +35,18 @@ namespace BLL.Threats.Internal.Minor.White
 		public override void PerformZAction()
 		{
 			Damage(RemainingHealth * 3);
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
+			base.OnHealthReducedToZero();
+		}
+
+		public override void OnReachingEndOfTrack()
+		{
+			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
+			base.OnReachingEndOfTrack();
 		}
 
 		public static string GetDisplayName()

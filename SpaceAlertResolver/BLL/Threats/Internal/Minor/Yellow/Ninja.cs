@@ -7,12 +7,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class Ninja : MinorYellowInternalThreat
 	{
-		public Ninja(int timeAppears, ISittingDuck sittingDuck)
-			: base(3, 2, timeAppears, StationLocation.LowerBlue, PlayerAction.BattleBots, sittingDuck)
+		public Ninja()
+			: base(3, 2, StationLocation.LowerBlue, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			//TODO: Send drones into adjacent stations
 			//Until ninja is destroyed or performs Z, anyone starting or ending is those stations is poisoned
@@ -21,37 +21,37 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainReactors(CurrentZones, 1);
+			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformZAction()
 		{
+			SittingDuck.KnockOutPoisonedPlayers(EnumFactory.All<StationLocation>());
+
 			if (RemainingHealth != 0)
 			{
-				var removedRocketCount = sittingDuck.RemoveAllRockets();
+				var removedRocketCount = SittingDuck.RemoveAllRockets();
 				for (var i = 0; i < removedRocketCount; i++)
-					sittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
+					SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
 			}
 			else
-				OnDestroyed();
-			sittingDuck.KnockOutPoisonedPlayers(EnumFactory.All<StationLocation>());
-			//TODO: Remove drones
+				isDefeated = true;
+			
 		}
 
-		public override void CheckForDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			if (RemainingHealth > 0)
-				return;
-			if (sittingDuck.GetPoisonedPlayerCount(EnumFactory.All<StationLocation>()) == 0)
-				OnDestroyed();
+			var anyPlayersPoisoned = SittingDuck.GetPoisonedPlayerCount(EnumFactory.All<StationLocation>()) == 0;
+			base.OnHealthReducedToZero(!anyPlayersPoisoned);
+		}
+
+		public override void OnReachingEndOfTrack()
+		{
+			if (isDefeated)
+				Position = null;
 			else
-				RemoveFromStation(CurrentStation);
-		}
-
-		protected override void OnDestroyed()
-		{
+				base.OnReachingEndOfTrack();
 			//TODO: Remove drones
-			base.OnDestroyed();
 		}
 
 		public static string GetDisplayName()

@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class PlasmaticFighter : MinorWhiteExternalThreat
 	{
-		public PlasmaticFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
+		public PlasmaticFighter()
+			: base(2, 4, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1, ThreatDamageType.Plasmatic);
 		}

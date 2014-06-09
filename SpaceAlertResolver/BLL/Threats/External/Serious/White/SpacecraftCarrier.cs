@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class SpacecraftCarrier : SeriousWhiteExternalThreat
 	{
-		public SpacecraftCarrier(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 6, 2, timeAppears, currentZone, sittingDuck)
+		public SpacecraftCarrier()
+			: base(3, 6, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}

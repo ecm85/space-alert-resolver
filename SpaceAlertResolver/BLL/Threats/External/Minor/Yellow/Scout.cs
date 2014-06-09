@@ -7,33 +7,30 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Scout : MinorYellowExternalThreat
 	{
-		public Scout(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 3, 2, timeAppears, currentZone, sittingDuck)
+		public Scout()
+			: base(1, 3, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			//TODO: This currently buffs itself and should not.
-			//Can this be fixed just by changing the z to an attack 2?
-			sittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
+			SittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
 		}
 
 		public override void PerformYAction()
 		{
-			//TODO: Other threats advance 1 square
-			throw new NotImplementedException();
+			ThreatController.MoveExternalThreatsExcept(new [] {this}, 1);
 		}
 
 		public override void PerformZAction()
 		{
-			Attack(3, ThreatDamageType.IgnoresShields);
+			Attack(2, ThreatDamageType.IgnoresShields);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			sittingDuck.RemoveExternalThreatBuffForSource(this);
-			base.OnDestroyed();
+			SittingDuck.RemoveExternalThreatBuffForSource(this);
+			base.OnHealthReducedToZero();
 		}
 
 		public static string GetDisplayName()

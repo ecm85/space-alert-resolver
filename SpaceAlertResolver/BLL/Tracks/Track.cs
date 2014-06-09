@@ -8,64 +8,50 @@ namespace BLL.Tracks
 {
 	public abstract class Track<T> where T : Threat
 	{
-		public IDictionary<T, int> ThreatPositions { get; private set; }
-		private readonly IDictionary<int, TrackBreakpoint> breakpoints;
-		protected readonly IList<TrackSection> sections;
+		private readonly IDictionary<int, TrackBreakpointType> breakpoints;
+		private readonly IList<TrackSection> sections;
 
 		protected Track(TrackConfiguration trackConfiguration)
 		{
-			ThreatPositions = new Dictionary<T, int>();
-			breakpoints = trackConfiguration.TrackBreakpoints().ToDictionary(breakpoint => breakpoint.Position);
+			breakpoints = trackConfiguration.TrackBreakpoints();
 			sections = trackConfiguration.TrackSections();
 		}
 
-		public void AddThreat(T threat)
+		public int GetStartingPosition()
 		{
-			ThreatPositions[threat] = sections.Sum(section => section.Length);
+			return sections.Sum(section => section.Length);
 		}
 
-		public void RemoveThreats(IEnumerable<T> threats )
+		public void MoveThreat(T threat, int amount)
 		{
-			foreach (var threat in threats)
-				ThreatPositions.Remove(threat);
-		}
-
-		public IList<T> ThreatsSurvived
-		{
-			get { return ThreatPositions.Keys.Where(threat => ThreatPositions[threat] <= 0).ToList(); }
-		}
-
-		public void MoveThreat(T threat)
-		{
-			//TODO: Check if this works correctly if speed is altered while looping (should only loop for original amount)
-			threat.BeforeMove();
-			for (var i = 0; i < threat.Speed; i++)
+			if (!threat.Position.HasValue)
+				throw new InvalidOperationException("Tried to move threat not on the track.");
+			for (var i = 0; i < amount && threat.IsOnTrack(); i++)
 			{
-				ThreatPositions[threat]--;
-				var newLocationOnTrack = ThreatPositions[threat];
-				if (breakpoints.ContainsKey(newLocationOnTrack))
+				threat.Position--;
+				if (breakpoints.ContainsKey(threat.Position.GetValueOrDefault()))
 				{
-					var crossedBreakpoint = breakpoints[newLocationOnTrack];
-					switch (crossedBreakpoint.Type)
+					var crossedBreakpoint = breakpoints[threat.Position.GetValueOrDefault()];
+					switch (crossedBreakpoint)
 					{
 						case TrackBreakpointType.X:
-							threat.PeformXAction();
+							threat.PerformXAction();
 							break;
 						case TrackBreakpointType.Y:
 							threat.PerformYAction();
 							break;
 						case TrackBreakpointType.Z:
 							threat.PerformZAction();
+							threat.OnReachingEndOfTrack();
 							break;
 					}
 				}
 			}
-			threat.AfterMove();
 		}
 
 		public int DistanceToThreat(T threat)
 		{
-			var distance = ThreatPositions[threat];
+			var distance = threat.Position;
 			foreach (var section in sections.OrderBy(section => section.DistanceFromShip))
 			{
 				if (section.Length >= distance)

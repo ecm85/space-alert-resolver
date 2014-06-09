@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class CentralLaserJam : MinorWhiteInternalThreat
 	{
-		public CentralLaserJam(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, StationLocation.UpperWhite, PlayerAction.A, sittingDuck)
+		public CentralLaserJam()
+			: base(2, 2, StationLocation.UpperWhite, PlayerAction.A)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DrainReactors(CurrentZones, 1);
+			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformYAction()
@@ -33,15 +33,15 @@ namespace BLL.Threats.Internal.Minor.White
 			return "Central Laser Jam";
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
 			var energyDrained = 0;
 			if (remainingDamageWillDestroyThreat)
-				energyDrained = sittingDuck.DrainReactors(CurrentZones, 1);
+				energyDrained = SittingDuck.DrainReactors(CurrentZones, 1);
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
-				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+				base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

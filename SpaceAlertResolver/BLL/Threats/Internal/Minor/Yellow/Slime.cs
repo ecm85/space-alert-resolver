@@ -11,8 +11,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		private readonly IList<Slime> currentProgeny;
 
-		protected Slime(int timeAppears, StationLocation currentStation, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, currentStation, PlayerAction.BattleBots, sittingDuck)
+		protected Slime(StationLocation currentStation)
+			: base(2, 2, currentStation, PlayerAction.BattleBots)
 		{
 			currentProgeny = new List<Slime>();
 		}
@@ -31,14 +31,14 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected void Spread(StationLocation? stationLocation)
 		{
-			if (stationLocation != null && !sittingDuck.GetThreatsInStation(stationLocation.Value).Any(threat => threat is Slime))
+			if (stationLocation != null && !SittingDuck.GetThreatsInStation(stationLocation.Value).Any(threat => threat is Slime))
 			{
 				var newProgeny = CreateProgeny();
+				newProgeny.Initialize(SittingDuck, ThreatController, TimeAppears);
 				currentProgeny.Add(newProgeny);
-				sittingDuck.AddInternalThreatToStations(new [] {stationLocation.Value}, CreateProgeny());
-				Track.ThreatPositions[newProgeny] = Track.ThreatPositions[this];
-				sittingDuck.CurrentInternalThreats.Add(newProgeny);
-				newProgeny.SetTrack(Track);
+				SittingDuck.AddInternalThreatToStations(new [] {stationLocation.Value}, newProgeny);
+				newProgeny.PlaceOnTrack(Track, Position);
+				ThreatController.InternalThreats.Add(newProgeny);
 			}
 		}
 	}

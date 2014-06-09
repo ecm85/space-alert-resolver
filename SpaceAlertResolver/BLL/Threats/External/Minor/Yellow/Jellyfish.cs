@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Jellyfish : MinorYellowExternalThreat
 	{
-		public Jellyfish(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(-2, 13, 2, timeAppears, currentZone, sittingDuck)
+		public Jellyfish()
+			: base(-2, 13, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			AttackAllZones(1);
 			HealHalfDamage();

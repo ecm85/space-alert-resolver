@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class PulseBall : MinorWhiteExternalThreat
 	{
-		public PulseBall(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 5, 2, timeAppears, currentZone, sittingDuck)
+		public PulseBall()
+			: base(1, 5, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			AttackAllZones(1);
 		}

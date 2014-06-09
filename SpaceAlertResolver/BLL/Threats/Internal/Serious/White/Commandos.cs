@@ -7,25 +7,25 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public abstract class Commandos : SeriousWhiteInternalThreat
 	{
-		protected Commandos(int timeAppears, StationLocation currentStation, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, currentStation, PlayerAction.BattleBots, sittingDuck)
+		protected Commandos(StationLocation currentStation)
+			: base(2, 2, currentStation, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			ChangeDecks();
 		}
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(new [] {CurrentStation});
+			SittingDuck.KnockOutPlayers(new [] {CurrentStation});
 			Damage(4);
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

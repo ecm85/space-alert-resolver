@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class Virus : MinorYellowInternalThreat
 	{
-		public Virus(int timeAppears, ISittingDuck sittingDuck)
-			: base(3, 3, timeAppears, StationLocation.UpperWhite, PlayerAction.C, sittingDuck)
+		public Virus()
+			: base(3, 3, StationLocation.UpperWhite, PlayerAction.C)
 		{
 		}
 
@@ -17,9 +17,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Virus";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DrainAllReactors(1);
+			SittingDuck.DrainAllReactors(1);
 		}
 
 		public override void PerformYAction()

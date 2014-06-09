@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Kamikaze : MinorYellowExternalThreat
 	{
-		public Kamikaze(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 5, 4, timeAppears, currentZone, sittingDuck)
+		public Kamikaze()
+			: base(2, 5, 4)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Speed++;
 			shields = 1;

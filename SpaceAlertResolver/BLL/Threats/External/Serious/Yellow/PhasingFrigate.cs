@@ -10,12 +10,12 @@ namespace BLL.Threats.External.Serious.Yellow
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		public PhasingFrigate(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 7, 2, timeAppears, currentZone, sittingDuck)
+		public PhasingFrigate()
+			: base(2, 7, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(wasPhasedAtStartOfTurn ? 1 : 2);
 		}
@@ -30,13 +30,13 @@ namespace BLL.Threats.External.Serious.Yellow
 			Attack(wasPhasedAtStartOfTurn ? 3 : 4);
 		}
 
-		public override void BeforeMove()
+		protected override void BeforeMove()
 		{
 			base.BeforeMove();
 			isPhased = false;
 		}
 
-		public override void AfterMove()
+		protected override void AfterMove()
 		{
 			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;

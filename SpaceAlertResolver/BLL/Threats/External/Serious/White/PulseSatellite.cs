@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class PulseSatellite : SeriousWhiteExternalThreat
 	{
-		public PulseSatellite(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
+		public PulseSatellite()
+			: base(2, 4, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			AttackAllZones(1);
 		}

@@ -9,25 +9,25 @@ namespace BLL.Threats.Internal.Serious.White
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public BattleBotUprising(int timeAppears, ISittingDuck sittingDuck)
-			: base(4, 2, timeAppears, new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerAction.C, sittingDuck)
+		public BattleBotUprising()
+			: base(4, 2,new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerAction.C)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.KnockOutPlayersWithBattleBots();
+			SittingDuck.KnockOutPlayersWithBattleBots();
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.KnockOutPlayers(CurrentStations);
+			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
+			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
 		}
 
 		public static string GetDisplayName()
@@ -35,17 +35,18 @@ namespace BLL.Threats.Internal.Serious.White
 			return "BattleBot Uprising";
 		}
 
-		public override void PerformEndOfPlayerActions()
+		protected override void PerformEndOfPlayerActionsOnTrack()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(1, null, false, CurrentStation);
+				base.TakeDamageOnTrack(1, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
+			base.PerformEndOfPlayerActionsOnTrack();
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			StationsHitThisTurn.Add(stationLocation);
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

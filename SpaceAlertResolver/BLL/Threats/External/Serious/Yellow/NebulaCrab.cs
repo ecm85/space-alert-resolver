@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class NebulaCrab : SeriousYellowExternalThreat
 	{
-		public NebulaCrab(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 7, 2, timeAppears, currentZone, sittingDuck)
+		public NebulaCrab()
+			: base(2, 7, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			shields = 4;
 		}

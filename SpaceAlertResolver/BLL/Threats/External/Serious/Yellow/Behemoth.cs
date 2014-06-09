@@ -7,8 +7,8 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class Behemoth : SeriousYellowExternalThreat
 	{
-		public Behemoth(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(4, 7, 2, timeAppears, currentZone, sittingDuck)
+		public Behemoth()
+			: base(4, 7, 2)
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Behemoth";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 2)
@@ -51,7 +51,7 @@ namespace BLL.Threats.External.Serious.Yellow
 					interceptorDamages.ZoneLocations);
 				damages.Remove(interceptorDamages);
 				damages.Add(strongerInterceptorDamages);
-				sittingDuck.KnockOutPlayers(new [] {StationLocation.Interceptor});
+				SittingDuck.KnockOutPlayers(new [] {StationLocation.Interceptor});
 			}
 			base.TakeDamage(damages);
 		}

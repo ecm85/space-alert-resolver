@@ -9,24 +9,24 @@ namespace BLL.Threats.External.Serious.Yellow
 	{
 		private int healthAtStartOfTurn;
 
-		public Nemesis(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 9, 3, timeAppears, currentZone, sittingDuck)
+		public Nemesis()
+			: base(1, 9, 3)
 		{
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 			RemainingHealth--;
-			CheckForDestroyed();
+			CheckDefeated();
 		}
 
 		public override void PerformYAction()
 		{
 			Attack(2);
 			RemainingHealth -= 2;
-			CheckForDestroyed();
+			CheckDefeated();
 		}
 
 		public override void PerformZAction()
@@ -34,11 +34,11 @@ namespace BLL.Threats.External.Serious.Yellow
 			throw new LoseException(this);
 		}
 
-		public override void PerformEndOfComputeDamage()
+		public override void PerformEndOfDamageResolution()
 		{
 			if (healthAtStartOfTurn > RemainingHealth)
 				AttackAllZones(1);
-			base.PerformEndOfComputeDamage();
+			base.PerformEndOfDamageResolution();
 		}
 
 		public static string GetDisplayName()

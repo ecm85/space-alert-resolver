@@ -84,6 +84,7 @@
     <Compile Include="ThreatDamage.cs" />
     <Compile Include="ThreatDamageResult.cs" />
     <Compile Include="ThreatDamageType.cs" />
+    <Compile Include="ThreatController.cs" />
     <Compile Include="Threats\External\Minor\White\Amoeba.cs" />
     <Compile Include="Threats\External\Minor\White\Gunship.cs" />
     <Compile Include="Threats\External\Minor\Yellow\Jellyfish.cs" />
@@ -184,7 +185,6 @@
     <Compile Include="Tracks\ExternalTrack.cs" />
     <Compile Include="Tracks\InternalTrack.cs" />
     <Compile Include="Tracks\Track.cs" />
-    <Compile Include="Tracks\TrackBreakpoint.cs" />
     <Compile Include="Tracks\TrackBreakpointType.cs" />
     <Compile Include="Tracks\TrackConfiguration.cs" />
     <Compile Include="Tracks\TrackSection.cs" />

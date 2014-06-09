@@ -17,11 +17,11 @@ namespace ConsoleResolver
 	{
 		static void Main()
 		{
-			
+
 			var players = GetPlayers();
 			var sittingDuck = new SittingDuck();
 			sittingDuck.SetPlayers(players);
-			var externalTracks = new []
+			var externalTracks = new[]
 			{
 				new ExternalTrack(TrackConfiguration.Track1, sittingDuck.BlueZone),
 				new ExternalTrack(TrackConfiguration.Track2, sittingDuck.RedZone),
@@ -29,20 +29,23 @@ namespace ConsoleResolver
 			};
 			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
 
-			var externalThreats = new ExternalThreat[]
-			{
-				new Destroyer(3, ZoneLocation.Blue, sittingDuck),
-				new Fighter(4, ZoneLocation.Red, sittingDuck),
-				new Fighter(5, ZoneLocation.White, sittingDuck)
-			};
-			var internalThreats = new InternalThreat[]
-			{
-				new SkirmishersA(3, sittingDuck),
-				new Fissure(2, sittingDuck),
-				new NuclearDevice(5, sittingDuck)
-				//new Alien(1, sittingDuck)
-			};
-			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
+			var destroyer = new Destroyer();
+			var fighter1 = new Fighter();
+			var fighter2 = new Fighter();
+			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
+			var skirmishers = new SkirmishersA();
+			var fissure = new Fissure();
+			var nuclearDevice = new NuclearDevice();
+			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
+			var externalTracksByZone = externalTracks.ToDictionary(track => track.Zone.ZoneLocation);
+			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
+			destroyer.Initialize(sittingDuck, threatController, 3, ZoneLocation.Blue);
+			fighter1.Initialize(sittingDuck, threatController, 4, ZoneLocation.Red);
+			fighter2.Initialize(sittingDuck, threatController, 5, ZoneLocation.White);
+			skirmishers.Initialize(sittingDuck, threatController, 3);
+			fissure.Initialize(sittingDuck, threatController, 2);
+			nuclearDevice.Initialize(sittingDuck, threatController, 5);
+			var game = new Game(sittingDuck, players, threatController);
 			var currentTurn = 0;
 			try
 			{
@@ -58,8 +61,8 @@ namespace ConsoleResolver
 				sittingDuck.RedZone.TotalDamage,
 				sittingDuck.WhiteZone.TotalDamage);
 			Console.WriteLine("Threats killed: {0}. Threats survived: {1}",
-				game.AllExternalThreats.Count(threat => threat.IsDefeated) + game.AllInternalThreats.Count(threat => threat.IsDefeated),
-				game.AllExternalThreats.Count(threat => threat.IsSurvived) + game.AllInternalThreats.Count(threat => threat.IsSurvived));
+				game.ThreatController.ExternalThreats.Count(threat => threat.IsDefeated) + game.ThreatController.InternalThreats.Count(threat => threat.IsDefeated),
+				game.ThreatController.ExternalThreats.Count(threat => threat.IsSurvived) + game.ThreatController.InternalThreats.Count(threat => threat.IsSurvived));
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
 			foreach (var zone in sittingDuck.Zones)
 			{

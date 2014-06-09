@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class Frigate : SeriousWhiteExternalThreat
 	{
-		public Frigate(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 7, 2, timeAppears, currentZone, sittingDuck)
+		public Frigate()
+			: base(2, 7, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2);
 		}

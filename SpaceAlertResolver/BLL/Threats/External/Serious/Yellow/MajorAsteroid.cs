@@ -9,8 +9,8 @@ namespace BLL.Threats.External.Serious.Yellow
 	{
 		private int breakpointsCrossed;
 
-		public MajorAsteroid(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(0, 11, 2, timeAppears, currentZone, sittingDuck)
+		public MajorAsteroid()
+			: base(0, 11, 2)
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Major Asteroid";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			breakpointsCrossed++;
 		}
@@ -39,9 +39,9 @@ namespace BLL.Threats.External.Serious.Yellow
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			base.OnDestroyed();
+			base.OnHealthReducedToZero();
 			Attack(3 * breakpointsCrossed);
 		}
 	}

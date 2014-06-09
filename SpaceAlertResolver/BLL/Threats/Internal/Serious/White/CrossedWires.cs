@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class CrossedWires : SeriousWhiteInternalThreat
 	{
-		public CrossedWires(int timeAppears, ISittingDuck sittingDuck)
-			: base(4, 3, timeAppears, StationLocation.UpperWhite, PlayerAction.B, sittingDuck)
+		public CrossedWires()
+			: base(4, 3, StationLocation.UpperWhite, PlayerAction.B)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.TransferEnergyToShields(new [] {CurrentZone});
+			SittingDuck.TransferEnergyToShields(new [] {CurrentZone});
 			EnergyLeaksOut(CurrentZone);
 		}
 
@@ -36,7 +36,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		private void EnergyLeaksOut(ZoneLocation zoneLocation)
 		{
-			var energyDrained = sittingDuck.DrainShields(new[] { zoneLocation });
+			var energyDrained = SittingDuck.DrainShields(new[] { zoneLocation });
 			Damage(energyDrained);
 		}
 	}

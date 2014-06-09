@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class PlasmaticFrigate : SeriousYellowExternalThreat
 	{
-		public PlasmaticFrigate(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 7, 2, timeAppears, currentZone, sittingDuck)
+		public PlasmaticFrigate()
+			: base(2, 7, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2, ThreatDamageType.Plasmatic);
 		}

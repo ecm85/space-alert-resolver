@@ -14,7 +14,6 @@ namespace BLL
 	{
 		//TODO: Variable-range interceptors (see scattered todos)
 		//TODO: Specializations
-		//TODO: Yellow threats
 		//TODO: Red threats
 		//TODO: Double actions
 		//TODO: Campaign repairs and damage carryover
@@ -24,11 +23,6 @@ namespace BLL
 		//TODO: Threat factory, threat enum
 		//TODO: Pick perform or on for event names. Stop using both!
 		//TODO: Change all threat display names to include threat #
-		//TODO: Change who holds threats, who removes them, etc
-		public IList<ExternalThreat> AllExternalThreats { get; private set; }
-		public IList<InternalThreat> AllInternalThreats { get; private set; }
-		private readonly IDictionary<ZoneLocation, ExternalTrack> externalTracks;
-		private readonly InternalTrack internalTrack;
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -36,20 +30,15 @@ namespace BLL
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public bool AllowVariableRangeInteceptors { get; set; }
+		public ThreatController ThreatController { get; private set; }
 
 		public Game(
 			SittingDuck sittingDuck,
-			IList<ExternalThreat> externalThreats,
-			IEnumerable<ExternalTrack> externalTracks,
-			IList<InternalThreat> internalThreats,
-			InternalTrack internalTrack,
-			IList<Player> players)
+			IList<Player> players,
+			ThreatController threatController)
 		{
 			this.sittingDuck = sittingDuck;
-			AllExternalThreats = externalThreats;
-			AllInternalThreats = internalThreats;
-			this.externalTracks = externalTracks.ToDictionary(track => track.Zone.ZoneLocation);
-			this.internalTrack = internalTrack;
+			ThreatController = threatController;
 			this.players = players;
 			PadPlayerActions();
 			nextTurn = 0;
@@ -64,9 +53,9 @@ namespace BLL
 		public void PerformTurn()
 		{
 			var currentTurn = nextTurn;
-			AddNewThreatsToTracks(currentTurn);
+			ThreatController.AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
-			MoveThreats();
+			ThreatController.MoveAllThreats();
 			PerformEndOfTurn();
 			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 			if (isSecondTurnOfPhase)
@@ -76,15 +65,12 @@ namespace BLL
 				PerformEndOfPhase();
 			if (currentTurn == NumberOfTurns - 1)
 			{
-				MoveThreats();
+				ThreatController.MoveAllThreats();
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack()}, null);
 				CalculateScore();
-				foreach (var threat in sittingDuck.CurrentExternalThreats)
-					threat.OnJumpingToHyperspace();
-				foreach (var threat in sittingDuck.CurrentInternalThreats)
-					threat.OnJumpingToHyperspace();
+				ThreatController.JumpingToHyperspace();
 			}
 			nextTurn++;
 		}
@@ -92,8 +78,8 @@ namespace BLL
 		private void CalculateScore()
 		{
 			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
-			TotalPoints += AllInternalThreats.Sum(threat => threat.Points);
-			TotalPoints += AllExternalThreats.Sum(threat => threat.Points);
+			TotalPoints += ThreatController.InternalThreats.Sum(threat => threat.Points);
+			TotalPoints += ThreatController.ExternalThreats.Sum(threat => threat.Points);
 		}
 
 		private void PerformEndOfPhase()
@@ -109,74 +95,6 @@ namespace BLL
 					player.Shift(currentTurn + 1);
 		}
 
-		private void AddNewThreatsToTracks(int currentTurn)
-		{
-			foreach (var newThreat in AllExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
-			{
-				var track = externalTracks[newThreat.CurrentZone];
-				track.AddThreat(newThreat);
-				newThreat.SetTrack(track);
-				sittingDuck.CurrentExternalThreats.Add(newThreat);
-			}
-			foreach (var newThreat in AllInternalThreats.Where(threat => threat.TimeAppears == currentTurn))
-			{
-				internalTrack.AddThreat(newThreat);
-				newThreat.SetTrack(internalTrack);
-				sittingDuck.CurrentInternalThreats.Add(newThreat);
-			}
-		}
-
-		private void MoveThreats()
-		{
-			//TODO: Clean this up
-			var moveCallByThreat = new Dictionary<Threat, Action>();
-			foreach (var externalThreat in sittingDuck.CurrentExternalThreats)
-				moveCallByThreat[externalThreat] = GetMoveCall(externalThreat);
-			foreach (var internalThreat in sittingDuck.CurrentInternalThreats)
-				moveCallByThreat[internalThreat] = GetMoveCall(internalThreat);
-			var allCurrentThreats = new List<Threat>()
-				.Concat(sittingDuck.CurrentExternalThreats)
-				.Concat(sittingDuck.CurrentInternalThreats)
-				.OrderBy(threat => threat.TimeAppears);
-			foreach (var threat in allCurrentThreats)
-				moveCallByThreat[threat]();
-
-			RemoveDefeatedExternalThreats();
-			RemoveDefeatedInternalThreats();
-			foreach (var track in externalTracks.Values)
-				RemoveSurvivedThreats(sittingDuck.CurrentExternalThreats, track);
-			AddMalfunctionsForSurvivedInternalThreats();
-			RemoveSurvivedThreats(sittingDuck.CurrentInternalThreats, internalTrack);
-		}
-
-		private Action GetMoveCall(InternalThreat internalThreat)
-		{
-			return () => internalTrack.MoveThreat(internalThreat);
-		}
-
-		private Action GetMoveCall(ExternalThreat externalThreat)
-		{
-			return () => externalTracks[externalThreat.CurrentZone].MoveThreat(externalThreat);
-		}
-
-		private void AddMalfunctionsForSurvivedInternalThreats()
-		{
-			var newlySurvivedThreats = internalTrack.ThreatsSurvived;
-			foreach (var threat in newlySurvivedThreats)
-			{
-				foreach(var station in threat.CurrentStations)
-					sittingDuck.StationsByLocation[station].IrreparableMalfunctions.Add(threat.GetIrreparableMalfunction());
-			}
-		}
-
-		private void RemoveSurvivedThreats<T>(IList<T> currentThreats, Track<T> track) where T : Threat
-		{
-			var newlySurvivedThreats = track.ThreatsSurvived;
-			foreach (var survivedThreat in newlySurvivedThreats)
-				currentThreats.Remove(survivedThreat);
-			track.RemoveThreats(newlySurvivedThreats);
-		}
-
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
 			var damages = new List<PlayerDamage>();
@@ -184,10 +102,8 @@ namespace BLL
 			{
 				var playerAction = player.Actions[currentTurn];
 				PerformPlayerAction(currentTurn, playerAction, player, damages);
-				RemoveDefeatedInternalThreats();
 			}
-			foreach (var threat in sittingDuck.CurrentInternalThreats)
-				threat.PerformEndOfPlayerActions();
+			ThreatController.PerformEndOfPlayerActions();
 
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
@@ -272,10 +188,7 @@ namespace BLL
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
 			sittingDuck.InterceptorStation.PerformEndOfTurn();
-			foreach (var threat in sittingDuck.CurrentExternalThreats)
-				threat.PerformEndOfTurn();
-			foreach(var threat in sittingDuck.CurrentInternalThreats)
-				threat.PerformEndOfTurn();
+			ThreatController.PerformEndOfTurn();
 		}
 
 		private static void MovePlayer(Station newDestination, Player player)
@@ -289,12 +202,12 @@ namespace BLL
 
 		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)
 		{
-			if (!sittingDuck.CurrentExternalThreats.Any())
+			if (!ThreatController.ExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
 			foreach (var damage in damages)
 			{
-				var threatsInRange = sittingDuck.CurrentExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
+				var threatsInRange = ThreatController.ExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
 				switch (damage.PlayerDamageType.DamageTargetType())
 				{
 					case DamageTargetType.All:
@@ -302,7 +215,7 @@ namespace BLL
 							AddToDamagesByThreat(threat, damage, damagesByThreat);
 						break;
 					case DamageTargetType.Single:
-						var threatHit = threatsInRange.OrderBy(threat => threat.TrackPosition).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
+						var threatHit = threatsInRange.OrderBy(threat => threat.Position).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
 						if (threatHit != null)
 							AddToDamagesByThreat(threatHit, damage, damagesByThreat);
 						break;
@@ -316,34 +229,13 @@ namespace BLL
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);
 
-			foreach (var threat in sittingDuck.CurrentExternalThreats)
-				threat.PerformEndOfComputeDamage();
-
-			RemoveDefeatedExternalThreats();
-		}
-
-		private void RemoveDefeatedInternalThreats()
-		{
-			var newlyDefeatedThreats = sittingDuck.CurrentInternalThreats.Where(externalThreat => externalThreat.IsDestroyed).ToList();
-			foreach (var defeatedThreat in newlyDefeatedThreats)
-				sittingDuck.CurrentInternalThreats.Remove(defeatedThreat);
-			internalTrack.RemoveThreats(newlyDefeatedThreats);
-		}
-
-		private void RemoveDefeatedExternalThreats()
-		{
-			var newlyDefeatedThreats = sittingDuck.CurrentExternalThreats.Where(externalThreat => externalThreat.IsDestroyed).ToList();
-			foreach (var defeatedThreat in newlyDefeatedThreats)
-				sittingDuck.CurrentExternalThreats.Remove(defeatedThreat);
-			foreach (var track in externalTracks.Values)
-				track.RemoveThreats(newlyDefeatedThreats);
+			ThreatController.PerformEndOfDamageResolution();
 		}
 
 		private void AddInterceptorDamages(PlayerInterceptorDamage interceptorDamages, Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
 		{
 			var interceptorDamagesMultiple = interceptorDamages.MultipleDamage;
-			var threatsHitByInterceptors =
-				sittingDuck.CurrentExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
+			var threatsHitByInterceptors = ThreatController.ExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
 			if (threatsHitByInterceptors.Count() > 1)
 				foreach (var threat in threatsHitByInterceptors)
 					AddToDamagesByThreat(threat, interceptorDamagesMultiple, damagesByThreat);

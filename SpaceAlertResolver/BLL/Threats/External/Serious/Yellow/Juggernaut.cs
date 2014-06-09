@@ -8,8 +8,8 @@ namespace BLL.Threats.External.Serious.Yellow
 	public class Juggernaut : SeriousYellowExternalThreat
 	{
 		//TODO: Rockets always target it, even at distance 3
-		public Juggernaut(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 10, 1, timeAppears, currentZone, sittingDuck)
+		public Juggernaut()
+			: base(3, 10, 1)
 		{
 		}
 
@@ -18,7 +18,7 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Juggernaut";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Speed += 2;
 			Attack(2);

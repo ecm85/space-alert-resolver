@@ -7,14 +7,14 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class Maelstrom : SeriousWhiteExternalThreat
 	{
-		public Maelstrom(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
+		public Maelstrom()
+			: base(3, 8, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DrainShields(EnumFactory.All<ZoneLocation>());
+			SittingDuck.DrainShields(EnumFactory.All<ZoneLocation>());
 		}
 
 		public override void PerformYAction()

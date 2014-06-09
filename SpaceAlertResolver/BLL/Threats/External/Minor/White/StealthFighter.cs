@@ -9,12 +9,12 @@ namespace BLL.Threats.External.Minor.White
 	{
 		private bool stealthed = true;
 
-		public StealthFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
+		public StealthFighter()
+			: base(2, 4, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			stealthed = false;
 		}

@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class TroopersA : Troopers
 	{
-		public TroopersA(int timeAppears, ISittingDuck sittingDuck)
-			: base(timeAppears, StationLocation.LowerBlue, sittingDuck)
+		public TroopersA()
+			: base(StationLocation.LowerBlue)
 		{
 		}
 

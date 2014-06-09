@@ -13,7 +13,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private readonly IList<StationLocation> mineLocations;
 		private StationLocation? currentPhasedOutLocation;
 
-		public PhasingMineLayer(int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck) : base(health, speed, timeAppears, currentStation, actionType, sittingDuck)
+		public PhasingMineLayer(PlayerAction actionType)
+			: base(2, 2, StationLocation.UpperWhite, actionType)
 		{
 			mineLocations = new List<StationLocation>();
 		}
@@ -23,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Phasing Mine Layer";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			LayMine();
 			if (wasPhasedAtStartOfTurn)
@@ -44,7 +45,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			DetonateMines();
 		}
 
-		public override void BeforeMove()
+		protected override void BeforeMove()
 		{
 			base.BeforeMove();
 			if (isPhased)
@@ -57,7 +58,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			isPhased = false;
 		}
 
-		public override void AfterMove()
+		protected override void AfterMove()
 		{
 			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;
@@ -70,7 +71,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		public override void PerformEndOfTurn()
 		{
-			wasPhasedAtStartOfTurn = isPhased;
+			if (IsOnTrack() || isPhased)
+				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
 		}
 
@@ -84,9 +86,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			Damage(2, mineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

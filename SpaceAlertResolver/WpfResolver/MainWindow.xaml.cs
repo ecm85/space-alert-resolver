@@ -71,7 +71,7 @@ namespace WpfResolver
 
 		private void ResolveGame(object sender, RoutedEventArgs routedEventArgs)
 		{
-			var actionLists = new List<string> {FirstPlayerTextBox.Text, SecondPlayerTextBox.Text, ThirdPlayerTextBox.Text};
+			var actionLists = new List<string> { FirstPlayerTextBox.Text, SecondPlayerTextBox.Text, ThirdPlayerTextBox.Text };
 			if (FourthPlayerCheckBox.IsChecked.HasValue && FourthPlayerCheckBox.IsChecked.Value)
 				actionLists.Add(FourthPlayerTextBox.Text);
 			if (FifthPlayerCheckBox.IsChecked.HasValue && FifthPlayerCheckBox.IsChecked.Value)
@@ -86,7 +86,7 @@ namespace WpfResolver
 					sittingDuck))
 				.Cast<ExternalThreat>()
 				.ToList();
-			var externalTracks = new []
+			var externalTracks = new[]
 			{
 				new ExternalTrack(((Track)RedTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.RedZone),
 				new ExternalTrack(((Track)WhiteTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.WhiteZone),
@@ -103,7 +103,7 @@ namespace WpfResolver
 			var internalTrack = new InternalTrack(((Track)InternalTrackPicker.SelectedItem).TrackConfiguration);
 
 			sittingDuck.SetPlayers(players);
-			var game = new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
+			Game game = null; //new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);
 
 			var currentTurn = 0;
 			try
@@ -120,9 +120,9 @@ namespace WpfResolver
 				sittingDuck.BlueZone.TotalDamage,
 				sittingDuck.RedZone.TotalDamage,
 				sittingDuck.WhiteZone.TotalDamage);
-			StatusTextBlock.Text += string.Format("Threats killed: {0}. Threats survived: {1}",
-				game.AllExternalThreats.Count(threat => threat.IsDefeated) + game.AllInternalThreats.Count(threat => threat.IsDefeated),
-				game.AllExternalThreats.Count(threat => threat.IsSurvived) + game.AllInternalThreats.Count(threat => threat.IsSurvived));
+			//StatusTextBlock.Text += string.Format("Threats killed: {0}. Threats survived: {1}",
+			//	game.AllExternalThreats.Count(threat => threat.IsDefeated) + game.AllInternalThreats.Count(threat => threat.IsDefeated),
+			//	game.AllExternalThreats.Count(threat => threat.IsSurvived) + game.AllInternalThreats.Count(threat => threat.IsSurvived));
 			StatusTextBlock.Text += string.Format("Total points: {0}", game.TotalPoints);
 			foreach (var zone in sittingDuck.Zones)
 			{

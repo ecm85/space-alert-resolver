@@ -7,13 +7,13 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class SlimeA : Slime
 	{
-		public SlimeA(int timeAppears, ISittingDuck sittingDuck)
-			: base(timeAppears, StationLocation.LowerBlue, sittingDuck)
+		public SlimeA()
+			: base(StationLocation.LowerBlue)
 		{
 		}
 
-		protected SlimeA(int timeAppears, StationLocation stationLocation, ISittingDuck sittingDuck)
-			: base(timeAppears, stationLocation, sittingDuck)
+		protected SlimeA(StationLocation stationLocation)
+			: base(stationLocation)
 		{
 		}
 
@@ -22,9 +22,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Slime I2-01";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.RemoveRocket();
+			SittingDuck.RemoveRocket();
 		}
 
 		public override void PerformYAction()
@@ -35,8 +35,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		private class ProgenySlime : SlimeA
 		{
-			public ProgenySlime(int timeAppears, StationLocation stationLocation, ISittingDuck sittingDuck)
-				: base(timeAppears, stationLocation, sittingDuck)
+			public ProgenySlime(StationLocation stationLocation)
+				: base(stationLocation)
 			{
 			}
 
@@ -51,7 +51,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			var newSlimeLocation = CurrentStation.RedwardStationLocation();
 			if (!newSlimeLocation.HasValue)
 				throw new InvalidOperationException("Tried to spread to invalid station.");
-			return new ProgenySlime(TimeAppears, newSlimeLocation.Value, sittingDuck);
+			return new ProgenySlime(newSlimeLocation.Value);
 		}
 	}
 }

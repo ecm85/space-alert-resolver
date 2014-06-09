@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class PsionicSatellite : SeriousYellowExternalThreat
 	{
-		public PsionicSatellite(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
+		public PsionicSatellite()
+			: base(2, 5, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			//TODO: Shift all players (need current turn)
 		}
@@ -25,7 +25,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override void PerformZAction()
 		{
 			//TODO: Exclude interceptors?
-			sittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
+			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
 		}
 
 		public static string GetDisplayName()

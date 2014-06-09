@@ -7,11 +7,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class Contamination : SeriousYellowInternalThreat
 	{
-		public Contamination(int timeAppears, ISittingDuck sittingDuck)
+		public Contamination()
 			: base(
 				3,
 				2,
-				timeAppears,
 				new List<StationLocation>
 				{
 					StationLocation.UpperBlue,
@@ -19,8 +18,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 					StationLocation.LowerBlue,
 					StationLocation.LowerRed
 				},
-				PlayerAction.BattleBots,
-				sittingDuck)
+				PlayerAction.BattleBots)
 		{
 		}
 
@@ -29,7 +27,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Contamination";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			throw new NotImplementedException();
 			//TODO: Delay players in each of current stations
@@ -42,13 +40,13 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(CurrentStations);
+			SittingDuck.KnockOutPlayers(CurrentStations);
 			//TODO: This effect persists
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			CurrentStations.Remove(stationLocation);
 		}
 	}

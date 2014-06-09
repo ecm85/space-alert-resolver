@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class LeviathanTanker : SeriousWhiteExternalThreat
 	{
-		public LeviathanTanker(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 8, 2, timeAppears, currentZone, sittingDuck)
+		public LeviathanTanker()
+			: base(3, 8, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2);
 		}
@@ -28,13 +28,14 @@ namespace BLL.Threats.External.Serious.White
 			Attack(2);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			base.OnDestroyed();
-			foreach (var threat in sittingDuck.CurrentExternalThreats)
+			base.OnHealthReducedToZero();
+			foreach (var threat in ThreatController.ExternalThreats)
 			{
+				//TODO: Make this a 'take damage' method, and in nemesis
 				threat.RemainingHealth -= 1;
-				threat.CheckForDestroyed();
+				threat.CheckDefeated();
 			}
 		}
 

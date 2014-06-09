@@ -7,8 +7,8 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class MiniCarrier : MinorYellowExternalThreat
 	{
-		public MiniCarrier(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
+		public MiniCarrier()
+			: base(2, 5, 2)
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace BLL.Threats.External.Minor.Yellow
 			return "Mini-Carrier";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}

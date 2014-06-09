@@ -9,14 +9,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public PowerPackOverload(int timeAppears, ISittingDuck sittingDuck)
+		public PowerPackOverload()
 			: base(
 				4,
 				3,
-				timeAppears,
 				new List<StationLocation> {StationLocation.LowerBlue, StationLocation.LowerRed},
-				PlayerAction.A,
-				sittingDuck)
+				PlayerAction.A)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
@@ -26,10 +24,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Power Pack Overload";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
-			sittingDuck.RemoveRocket();
+			SittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
+			SittingDuck.RemoveRocket();
 		}
 
 		public override void PerformYAction()
@@ -39,21 +37,22 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(CurrentStations);
+			SittingDuck.KnockOutPlayers(CurrentStations);
 			Damage(3, CurrentZones);
 		}
 
-		public override void PerformEndOfPlayerActions()
+		protected override void PerformEndOfPlayerActionsOnTrack()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(1, null, false, CurrentStation);
+				base.TakeDamageOnTrack(1, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
+			base.PerformEndOfPlayerActionsOnTrack();
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			StationsHitThisTurn.Add(stationLocation);
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

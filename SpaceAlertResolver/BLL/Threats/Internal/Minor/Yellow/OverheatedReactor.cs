@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class OverheatedReactor : MinorYellowInternalThreat
 	{
-		public OverheatedReactor(int timeAppears, ISittingDuck sittingDuck)
-			: base(3, 2, timeAppears, StationLocation.LowerWhite, PlayerAction.B, sittingDuck)
+		public OverheatedReactor()
+			: base(3, 2, StationLocation.LowerWhite, PlayerAction.B)
 		{
 		}
 
@@ -17,14 +17,14 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Overheated Reactor";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			Damage(sittingDuck.GetEnergyInStation(CurrentStation));
+			Damage(SittingDuck.GetEnergyInStation(CurrentStation));
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainReactors(CurrentZones, 1);
+			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
 		public override void PerformZAction()
@@ -32,10 +32,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			Damage(3);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			base.OnDestroyed();
-			sittingDuck.KnockOutPlayers(new [] {StationLocation.LowerBlue, StationLocation.LowerRed});
+			base.OnHealthReducedToZero();
+			SittingDuck.KnockOutPlayers(new [] {StationLocation.LowerBlue, StationLocation.LowerRed});
 		}
 	}
 }

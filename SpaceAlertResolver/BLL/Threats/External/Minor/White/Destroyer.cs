@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class Destroyer : MinorWhiteExternalThreat
 	{
-		public Destroyer(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
+		public Destroyer()
+			: base(2, 5, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}

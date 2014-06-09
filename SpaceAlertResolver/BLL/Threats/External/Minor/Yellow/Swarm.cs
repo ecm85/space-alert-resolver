@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Swarm : MinorYellowExternalThreat
 	{
-		public Swarm(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(0, 3, 2, timeAppears, currentZone, sittingDuck)
+		public Swarm()
+			: base(0, 3, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 		}

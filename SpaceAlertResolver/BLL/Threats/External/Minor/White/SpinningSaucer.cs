@@ -9,12 +9,12 @@ namespace BLL.Threats.External.Minor.White
 	{
 		private bool hitByRocket;
 
-		public SpinningSaucer(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(4, 3, 3, timeAppears, currentZone, sittingDuck)
+		public SpinningSaucer()
+			: base(4, 3, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 		}

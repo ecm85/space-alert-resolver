@@ -40,9 +40,6 @@ namespace BLL
 		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 
-		IList<ExternalThreat> CurrentExternalThreats { get; }
-		IList<InternalThreat> CurrentInternalThreats { get; }
-
 		void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat);
 		void RemoveInternalThreatFromStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat);
 		IEnumerable<InternalThreat> GetThreatsInStation(StationLocation stationLocation);

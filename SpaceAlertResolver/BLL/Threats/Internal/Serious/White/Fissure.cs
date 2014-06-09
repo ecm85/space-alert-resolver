@@ -7,19 +7,19 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class Fissure : SeriousWhiteInternalThreat
 	{
-		public Fissure(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, StationLocation.Interceptor, PlayerAction.BattleBots, sittingDuck)
+		public Fissure()
+			: base(2, 2, StationLocation.Interceptor, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.AddZoneDebuff(new [] {ZoneLocation.Red}, ZoneDebuff.DoubleDamage, this);
+			SittingDuck.AddZoneDebuff(new [] {ZoneLocation.Red}, ZoneDebuff.DoubleDamage, this);
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.AddZoneDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.DoubleDamage, this);
+			SittingDuck.AddZoneDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.DoubleDamage, this);
 		}
 
 		public override void PerformZAction()
@@ -27,10 +27,10 @@ namespace BLL.Threats.Internal.Serious.White
 			throw new LoseException(this);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			base.OnDestroyed();
-			sittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
+			base.OnHealthReducedToZero();
+			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 		}
 
 		public static string GetDisplayName()

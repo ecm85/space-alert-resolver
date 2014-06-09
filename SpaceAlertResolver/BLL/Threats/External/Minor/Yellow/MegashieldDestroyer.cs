@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class MegashieldDestroyer : MinorYellowExternalThreat
 	{
-		public MegashieldDestroyer(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(4, 3, 2, timeAppears, currentZone, sittingDuck)
+		public MegashieldDestroyer()
+			: base(4, 3, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}

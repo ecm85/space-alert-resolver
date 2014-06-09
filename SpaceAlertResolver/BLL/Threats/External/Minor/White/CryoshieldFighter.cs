@@ -9,12 +9,12 @@ namespace BLL.Threats.External.Minor.White
 	{
 		private bool cryoshieldUp = true;
 
-		public CryoshieldFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 4, 3, timeAppears, currentZone, sittingDuck)
+		public CryoshieldFighter()
+			: base(1, 4, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 		}

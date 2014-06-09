@@ -7,12 +7,7 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class SaboteurA : Saboteur
 	{
-		public SaboteurA(int timeAppears, ISittingDuck sittingDuck)
-			: base(timeAppears, sittingDuck)
-		{
-		}
-
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			MoveRed();
 		}

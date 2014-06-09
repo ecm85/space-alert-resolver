@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class DimensionSpider : SeriousWhiteExternalThreat
 	{
-		public DimensionSpider(int speed, int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(0, 13, speed, timeAppears, currentZone, sittingDuck)
+		public DimensionSpider()
+			: base(0, 13, 1)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			shields = 1;
 		}
@@ -29,7 +29,8 @@ namespace BLL.Threats.External.Serious.White
 
 		public override void OnJumpingToHyperspace()
 		{
-			PerformZAction();
+			if (HasBeenPlaced)
+				PerformZAction();
 		}
 
 		public static string GetDisplayName()

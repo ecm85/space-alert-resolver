@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using BLL.Tracks;
@@ -12,20 +13,31 @@ namespace BLL.Threats.External
 		protected int shields;
 		private ExternalTrack Track { get; set; }
 
-		public override bool IsSurvived { get { return !IsDestroyed && (!Track.ThreatPositions.ContainsKey(this) || Track.ThreatPositions[this] <= 0); } }
+		public void PlaceOnTrack(ExternalTrack track)
+		{
+			PlaceOnTrack(track, track.GetStartingPosition());
+		}
 
-		public void SetTrack(ExternalTrack track)
+		private void PlaceOnTrack(ExternalTrack track, int? trackPosition)
 		{
 			Track = track;
+			Position = trackPosition;
+			HasBeenPlaced = true;
 		}
 
 		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
-		public int TrackPosition  { get { return Track.ThreatPositions[this]; }}
 
-		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck) :
-			base(type, difficulty, health, speed, timeAppears, sittingDuck)
+		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed) :
+			base(type, difficulty, health, speed)
 		{
 			this.shields = shields;
+		}
+
+		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		{
+			SittingDuck = sittingDuck;
+			ThreatController = threatController;
+			TimeAppears = timeAppears;
 			CurrentZone = currentZone;
 		}
 
@@ -36,15 +48,17 @@ namespace BLL.Threats.External
 
 		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
 		{
-			var bonusShields = sittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
+			var bonusShields = SittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
 			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
-			CheckForDestroyed();
+			CheckDefeated();
 		}
 
 		public virtual bool CanBeTargetedBy(PlayerDamage damage)
 		{
+			if (!IsOnTrack())
+				return false;
 			var isInRange = damage.Range >= DistanceToShip;
 			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
 			return isInRange && gunCanHitCurrentZone;
@@ -72,15 +86,29 @@ namespace BLL.Threats.External
 
 		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
-			var bonusAttacks = sittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
+			var bonusAttacks = SittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations);
-			var result = sittingDuck.TakeAttack(damage);
+			var result = SittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 		}
 
-		public virtual void PerformEndOfComputeDamage()
+		public virtual void PerformEndOfDamageResolution()
 		{
+		}
+
+		public override void Move()
+		{
+			Move(Speed);
+		}
+
+		public void Move(int amount)
+		{
+			if (!IsOnTrack())
+				return;
+			BeforeMove();
+			Track.MoveThreat(this, amount);
+			AfterMove();
 		}
 	}
 }

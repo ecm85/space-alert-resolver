@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class Executioner : SeriousYellowInternalThreat
 	{
-		public Executioner(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, StationLocation.UpperBlue, PlayerAction.BattleBots, sittingDuck)
+		public Executioner()
+			: base(2, 2, StationLocation.UpperBlue, PlayerAction.BattleBots)
 		{
 		}
 
@@ -17,16 +17,16 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Executioner";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			MoveRed();
-			sittingDuck.KnockOutPlayersWithoutBattleBots(new [] {CurrentStation});
+			SittingDuck.KnockOutPlayersWithoutBattleBots(new [] {CurrentStation});
 		}
 
 		public override void PerformYAction()
 		{
 			ChangeDecks();
-			sittingDuck.KnockOutPlayersWithoutBattleBots(new[] { CurrentStation });
+			SittingDuck.KnockOutPlayersWithoutBattleBots(new[] { CurrentStation });
 		}
 
 		public override void PerformZAction()
@@ -34,9 +34,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			Damage(3);
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

@@ -9,8 +9,8 @@ namespace BLL.Threats.External.Minor.Yellow
 	{
 		private int breakpointsCrossed;
 
-		public MinorAsteroid(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(0, 7, 4, timeAppears, currentZone, sittingDuck)
+		public MinorAsteroid()
+			: base(0, 7, 4)
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace BLL.Threats.External.Minor.Yellow
 			return "Minor Asteroid";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			breakpointsCrossed++;
 		}
@@ -39,9 +39,9 @@ namespace BLL.Threats.External.Minor.Yellow
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			base.OnDestroyed();
+			base.OnHealthReducedToZero();
 			Attack(1 * breakpointsCrossed);
 		}
 	}

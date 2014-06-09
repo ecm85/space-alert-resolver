@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class Fighter : MinorWhiteExternalThreat
 	{
-		public Fighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 4, 3, timeAppears, currentZone, sittingDuck)
+		public Fighter()
+			: base(2, 4, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 		}

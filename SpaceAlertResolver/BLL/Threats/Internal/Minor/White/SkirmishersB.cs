@@ -7,12 +7,12 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class SkirmishersB : Skirmishers
 	{
-		public SkirmishersB(int timeAppears, ISittingDuck sittingDuck)
-			: base(timeAppears, StationLocation.UpperBlue, sittingDuck)
+		public SkirmishersB()
+			: base(StationLocation.UpperBlue)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			MoveRed();
 		}

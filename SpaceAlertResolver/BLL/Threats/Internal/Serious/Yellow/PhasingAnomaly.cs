@@ -14,8 +14,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private StationLocation? currentPhasedOutLocation;
 		private int numberOfYsCrossed;
 		
-		public PhasingAnomaly(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 3, timeAppears, StationLocation.UpperWhite, PlayerAction.C, sittingDuck, 1)
+		public PhasingAnomaly()
+			: base(2, 3, StationLocation.UpperWhite, PlayerAction.C, 1)
 		{
 		}
 
@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Phasing Anomaly";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			//TODO: Disrupt upper white cannon optics
 		}
@@ -47,12 +47,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		public override void PerformZAction()
 		{
-			sittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
+			SittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
 			Damage(3);
 			//TODO: Disruption effects persists (means have to track whats disrupted)
 		}
 
-		public override void BeforeMove()
+		protected override void BeforeMove()
 		{
 			base.BeforeMove();
 			if (isPhased)
@@ -65,7 +65,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			isPhased = false;
 		}
 
-		public override void AfterMove()
+		protected override void AfterMove()
 		{
 			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;

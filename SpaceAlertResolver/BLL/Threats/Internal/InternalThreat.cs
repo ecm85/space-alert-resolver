@@ -8,7 +8,9 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		public List<StationLocation> CurrentStations { get; private set; }
+		//TODO: Clean up single vs multiple stations
+
+		protected List<StationLocation> CurrentStations { get; private set; }
 
 		private readonly int? totalInaccessibility;
 		private int? remainingInaccessibility;
@@ -20,11 +22,17 @@ namespace BLL.Threats.Internal
 		}
 
 		protected InternalTrack Track { get; private set; }
-		public override bool IsSurvived { get { return !IsDestroyed && (!Track.ThreatPositions.ContainsKey(this) || Track.ThreatPositions[this] <= 0); } }
 
-		public void SetTrack(InternalTrack track)
+		public void PlaceOnTrack(InternalTrack track)
+		{
+			PlaceOnTrack(track, track.GetStartingPosition());
+		}
+
+		protected void PlaceOnTrack(InternalTrack track, int? trackPosition)
 		{
 			Track = track;
+			Position = trackPosition;
+			HasBeenPlaced = true;
 		}
 
 		protected ZoneLocation CurrentZone
@@ -37,24 +45,39 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
+
 		public PlayerAction ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, StationLocation currentStation, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
-			this(type, difficulty, health, speed, timeAppears, new List<StationLocation> {currentStation}, actionType, sittingDuck, inaccessibility)
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction actionType, int? inaccessibility = null) :
+			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
 		{
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, int timeAppears, List<StationLocation> currentStations, PlayerAction actionType, ISittingDuck sittingDuck, int? inaccessibility = null) :
-			base(type, difficulty, health, speed, timeAppears, sittingDuck)
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerAction actionType, int? inaccessibility = null) :
+			base(type, difficulty, health, speed)
 		{
 			CurrentStations = currentStations;
-			sittingDuck.AddInternalThreatToStations(CurrentStations, this);
 			ActionType = actionType;
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
+		public virtual void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			SittingDuck = sittingDuck;
+			sittingDuck.AddInternalThreatToStations(CurrentStations, this);
+			ThreatController = threatController;
+			TimeAppears = timeAppears;
+		}
+
+		public void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		{
+			if (!IsOnTrack())
+				return;
+			TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
+		}
+
 		//TODO: Respect isHeroic here instead of in the ship
-		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected virtual void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var damageRemaining = damage;
 			if (remainingInaccessibility.HasValue)
@@ -66,7 +89,7 @@ namespace BLL.Threats.Internal
 			}
 			if (damageRemaining > 0)
 				RemainingHealth -= damage;
-			CheckForDestroyed();
+			CheckDefeated();
 		}
 
 		private void MoveToNewStation(StationLocation? newStation)
@@ -81,13 +104,13 @@ namespace BLL.Threats.Internal
 
 		protected void RemoveFromStation(StationLocation stationToRemoveFrom)
 		{
-			sittingDuck.RemoveInternalThreatFromStations(new [] {stationToRemoveFrom}, this);
+			SittingDuck.RemoveInternalThreatFromStations(new [] {stationToRemoveFrom}, this);
 			CurrentStations.Remove(stationToRemoveFrom);
 		}
 
 		protected void AddToStation(StationLocation stationToMoveTo)
 		{
-			sittingDuck.AddInternalThreatToStations(new [] {stationToMoveTo}, this);
+			SittingDuck.AddInternalThreatToStations(new [] {stationToMoveTo}, this);
 			CurrentStations.Add(stationToMoveTo);
 		}
 
@@ -123,15 +146,44 @@ namespace BLL.Threats.Internal
 
 		protected void Damage(int amount, IList<ZoneLocation> zones)
 		{
-			var result = sittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));
+			var result = SittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 		}
 
-		public virtual void PerformEndOfPlayerActions()
+		public void PerformEndOfPlayerActions()
+		{
+			if (!IsOnTrack())
+				return;
+			PerformEndOfPlayerActionsOnTrack();
+		}
+
+		protected virtual void PerformEndOfPlayerActionsOnTrack()
 		{
 		}
 
+		public override void OnReachingEndOfTrack()
+		{
+			base.OnReachingEndOfTrack();
+			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
+			CurrentStations.Clear();
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			base.OnHealthReducedToZero();
+			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
+			CurrentStations.Clear();
+		}
+
+		protected override void OnHealthReducedToZero(bool clearPosition)
+		{
+			base.OnHealthReducedToZero(clearPosition);
+			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
+			CurrentStations.Clear();
+		}
+
+		//TODO: Add irreparable malfunctions to ship here
 		public IrreparableMalfunction GetIrreparableMalfunction()
 		{
 			if (ActionType == PlayerAction.BattleBots)
@@ -142,10 +194,24 @@ namespace BLL.Threats.Internal
 			};
 		}
 
-		public override void PerformEndOfTurn()
+		protected override void PerformEndOfTurnOnTrack()
 		{
-			base.PerformEndOfTurn();
+			base.PerformEndOfTurnOnTrack();
 			remainingInaccessibility = totalInaccessibility;
+		}
+
+		public override void Move()
+		{
+			Move(Speed);
+		}
+
+		private void Move(int amount)
+		{
+			if (!IsOnTrack())
+				return;
+			BeforeMove();
+			Track.MoveThreat(this, amount);
+			AfterMove();
 		}
 	}
 }

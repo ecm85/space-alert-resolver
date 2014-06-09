@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class Gunship : MinorWhiteExternalThreat
 	{
-		public Gunship(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 5, 2, timeAppears, currentZone, sittingDuck)
+		public Gunship()
+			: base(2, 5, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2);
 		}

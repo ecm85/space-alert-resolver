@@ -20,8 +20,6 @@ namespace BLL
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
-		public IList<ExternalThreat> CurrentExternalThreats { get; private set; }
-		public IList<InternalThreat> CurrentInternalThreats { get; private set; }
 
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
@@ -30,8 +28,6 @@ namespace BLL
 		public SittingDuck()
 		{
 			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
-			CurrentInternalThreats = new List<InternalThreat>();
-			CurrentExternalThreats = new List<ExternalThreat>();
 			var whiteReactor = new CentralReactor();
 			var redReactor = new SideReactor(whiteReactor);
 			var blueReactor = new SideReactor(whiteReactor);

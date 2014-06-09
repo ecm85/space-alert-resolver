@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class ManOfWar : SeriousWhiteExternalThreat
 	{
-		public ManOfWar(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(2, 9, 1, timeAppears, currentZone, sittingDuck)
+		public ManOfWar()
+			: base(2, 9, 1)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2);
 			Speed++;

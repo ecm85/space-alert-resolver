@@ -9,14 +9,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public PowerSystemOverload(int timeAppears, ISittingDuck sittingDuck)
+		public PowerSystemOverload()
 			: base(
 				7,
 				3,
-				timeAppears,
 				new List<StationLocation> {StationLocation.LowerRed, StationLocation.LowerWhite, StationLocation.LowerBlue},
-				PlayerAction.B,
-				sittingDuck)
+				PlayerAction.B)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
@@ -26,14 +24,14 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Power System Overload";
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DrainReactors(new[] { ZoneLocation.White }, 2);
+			SittingDuck.DrainReactors(new[] { ZoneLocation.White }, 2);
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainReactors(EnumFactory.All<ZoneLocation>(), 1);
+			SittingDuck.DrainReactors(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
 		public override void PerformZAction()
@@ -41,17 +39,18 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			DamageAllZones(3);
 		}
 
-		public override void PerformEndOfPlayerActions()
+		protected override void PerformEndOfPlayerActionsOnTrack()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(2, null, false, CurrentStation);
+				base.TakeDamageOnTrack(2, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
+			base.PerformEndOfPlayerActionsOnTrack();
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			StationsHitThisTurn.Add(stationLocation);
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

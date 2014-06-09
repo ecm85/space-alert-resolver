@@ -7,8 +7,8 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class CommandosB : Commandos
 	{
-		public CommandosB(int timeAppears, ISittingDuck sittingDuck)
-			: base(timeAppears, StationLocation.UpperBlue, sittingDuck)
+		public CommandosB()
+			: base(StationLocation.UpperBlue)
 		{
 		}
 

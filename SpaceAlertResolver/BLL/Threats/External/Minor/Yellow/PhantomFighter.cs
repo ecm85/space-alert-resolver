@@ -9,12 +9,12 @@ namespace BLL.Threats.External.Minor.Yellow
 	{
 		private bool phantomMode = true;
 
-		public PhantomFighter(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(3, 3, 3, timeAppears, currentZone, sittingDuck)
+		public PhantomFighter()
+			: base(3, 3, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			phantomMode = false;
 		}

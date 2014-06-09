@@ -9,12 +9,12 @@ namespace BLL.Threats.Internal.Serious.White
 	{
 		private bool grownUp;
 
-		public Alien(int timeAppears, ISittingDuck sittingDuck)
-			: base(2, 2, timeAppears, StationLocation.LowerWhite, PlayerAction.BattleBots, sittingDuck)
+		public Alien()
+			: base(2, 2, StationLocation.LowerWhite, PlayerAction.BattleBots)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			grownUp = true;
 		}
@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal.Serious.White
 		public override void PerformYAction()
 		{
 			ChangeDecks();
-			Damage(sittingDuck.GetPlayerCount(CurrentStation));
+			Damage(SittingDuck.GetPlayerCount(CurrentStation));
 		}
 
 		public override void PerformZAction()
@@ -35,9 +35,9 @@ namespace BLL.Threats.Internal.Serious.White
 			return "Alien";
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
 			if (grownUp && !isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

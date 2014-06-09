@@ -7,19 +7,19 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public abstract class HackedShields : MinorWhiteInternalThreat
 	{
-		protected HackedShields(int timeAppears, StationLocation station, ISittingDuck sittingDuck)
-			: base(3, 2, timeAppears, station, PlayerAction.B, sittingDuck)
+		protected HackedShields(StationLocation station)
+			: base(3, 2, station, PlayerAction.B)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.DrainShields(new [] {CurrentZone});
+			SittingDuck.DrainShields(new [] {CurrentZone});
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainReactors(new [] {CurrentZone});
+			SittingDuck.DrainReactors(new [] {CurrentZone});
 		}
 
 		public override void PerformZAction()

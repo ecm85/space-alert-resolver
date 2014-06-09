@@ -7,8 +7,8 @@ namespace BLL.Threats.External.Serious.White
 {
 	public abstract class SeriousWhiteExternalThreat : SeriousExternalThreat
 	{
-		protected SeriousWhiteExternalThreat(int shields, int health, int speed, int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck) :
-			base(ThreatDifficulty.White, shields, health, speed, timeAppears, currentZone, sittingDuck)
+		protected SeriousWhiteExternalThreat(int shields, int health, int speed) :
+			base(ThreatDifficulty.White, shields, health, speed)
 		{
 		}
 	}

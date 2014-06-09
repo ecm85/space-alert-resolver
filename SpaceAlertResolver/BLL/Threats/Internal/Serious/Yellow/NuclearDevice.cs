@@ -7,12 +7,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class NuclearDevice : SeriousYellowInternalThreat
 	{
-		public NuclearDevice(int timeAppears, ISittingDuck sittingDuck)
-			: base(1, 4, timeAppears, StationLocation.LowerWhite, PlayerAction.C, sittingDuck, 2)
+		public NuclearDevice()
+			: base(1, 4, StationLocation.LowerWhite, PlayerAction.C, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Speed++;
 		}

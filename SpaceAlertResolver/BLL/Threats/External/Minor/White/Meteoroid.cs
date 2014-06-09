@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class Meteoroid : MinorWhiteExternalThreat
 	{
-		public Meteoroid(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(0, 5, 5, timeAppears, currentZone, sittingDuck)
+		public Meteoroid()
+			: base(0, 5, 5)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 		}
 

@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class InterstellarOctopus : SeriousWhiteExternalThreat
 	{
-		public InterstellarOctopus(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 8, 2, timeAppears, currentZone, sittingDuck)
+		public InterstellarOctopus()
+			: base(1, 8, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			if (IsDamaged)
 				AttackAllZones(1);

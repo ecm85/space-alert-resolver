@@ -7,12 +7,12 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class MotherSwarm : SeriousYellowExternalThreat
 	{
-		public MotherSwarm(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 6, 2, timeAppears, currentZone, sittingDuck)
+		public MotherSwarm()
+			: base(1, 6, 2)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(1);
 		}

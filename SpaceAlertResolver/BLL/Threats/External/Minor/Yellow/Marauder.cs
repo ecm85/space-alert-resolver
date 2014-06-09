@@ -7,19 +7,19 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Marauder : MinorYellowExternalThreat
 	{
-		public Marauder(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 6, 3, timeAppears, currentZone, sittingDuck)
+		public Marauder()
+			: base(1, 6, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
-			sittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusShield, this);
+			SittingDuck.AddExternalThreatBuff(ExternalThreatBuff.BonusShield, this);
 		}
 
 		public override void PerformYAction()
 		{
-			sittingDuck.DrainShields(EnumFactory.All<ZoneLocation>(), 1);
+			SittingDuck.DrainShields(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
 		public override void PerformZAction()
@@ -27,10 +27,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			Attack(4);
 		}
 
-		protected override void OnDestroyed()
+		protected override void OnHealthReducedToZero()
 		{
-			sittingDuck.RemoveExternalThreatBuffForSource(this);
-			base.OnDestroyed();
+			SittingDuck.RemoveExternalThreatBuffForSource(this);
+			base.OnHealthReducedToZero();
 		}
 
 		public static string GetDisplayName()

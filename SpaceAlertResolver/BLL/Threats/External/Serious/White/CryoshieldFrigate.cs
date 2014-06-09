@@ -9,12 +9,12 @@ namespace BLL.Threats.External.Serious.White
 	{
 		private bool cryoshieldUp = true;
 
-		public CryoshieldFrigate(int timeAppears, ZoneLocation currentZone, ISittingDuck sittingDuck)
-			: base(1, 7, 3, timeAppears, currentZone, sittingDuck)
+		public CryoshieldFrigate()
+			: base(1, 7, 3)
 		{
 		}
 
-		public override void PeformXAction()
+		public override void PerformXAction()
 		{
 			Attack(2);
 		}
