@@ -97,30 +97,30 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var damages = new List<PlayerDamage>();
-			foreach (var player in players.Where(player => !player.IsKnockedOut))
-			{
-				var playerAction = player.Actions[currentTurn];
-				PerformPlayerAction(currentTurn, playerAction, player, damages);
-			}
+			var damages = players
+				.Where(player => !player.IsKnockedOut)
+				.Select(player => PerformPlayerAction(currentTurn, player.Actions[currentTurn], player))
+				.Where(damage => damage != null)
+				.ToList();
 			ThreatController.PerformEndOfPlayerActions();
 
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack());
 			var interceptorDamages = sittingDuck.InterceptorStation.PlayerInterceptorDamage;
+			var targetingAssistanceProvided = sittingDuck.InterceptorStation.Players.Any() || sittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+			if (!targetingAssistanceProvided)
+				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
 			ResolveDamage(damages, interceptorDamages);
 		}
 
-		private void PerformPlayerAction(int currentTurn, PlayerAction playerAction, Player player, List<PlayerDamage> damages)
+		private PlayerDamage PerformPlayerAction(int currentTurn, PlayerAction playerAction, Player player)
 		{
 			switch (playerAction)
 			{
 				case PlayerAction.A:
 					var damage = player.CurrentStation.PerformAAction(player, currentTurn, false);
-					if (damage != null)
-						damages.Add(damage);
-					break;
+					return damage;
 				case PlayerAction.B:
 					player.CurrentStation.PerformBAction(player, currentTurn, false);
 					break;
@@ -175,6 +175,7 @@ namespace BLL
 					MovePlayer(sittingDuck.RedZone.UpperStation, player);
 					break;
 			}
+			return null;
 		}
 
 		private void PerformEndOfTurn()

@@ -27,5 +27,10 @@ namespace BLL.ShipComponents
 			if (wasAlreadyDamaged)
 				damage += 1;
 		}
+
+		protected override PlayerDamage GetPlayerDamage(int amount)
+		{
+			return new PlayerDamage(amount, playerDamageType, range, zonesAffected, DisruptedOptics);
+		}
 	}
 }

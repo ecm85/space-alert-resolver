@@ -7,7 +7,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class PhasingAnomaly : SeriousYellowInternalThreat
 	{
-		//TODO: To handle this threat, going to have to calculate damage differently, because only after end of actions do we know if anyone has used the interceptors or visual confirmation to allow firing
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
@@ -33,7 +32,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			//TODO: Disrupt upper white cannon optics
+			SittingDuck.AddZoneDebuff(new [] {ZoneLocation.White}, ZoneDebuff.DisruptedOptics, this);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -41,10 +40,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			switch (numberOfYsCrossed)
 			{
 				case 0:
-					//TODO: Disrupt both red zone cannon optics
+					SittingDuck.AddZoneDebuff(new[] { ZoneLocation.Red }, ZoneDebuff.DisruptedOptics, this);
 					break;
 				case 1:
-					//TODO: Disrupt both blue zone cannon optics
+					SittingDuck.AddZoneDebuff(new[] { ZoneLocation.Blue }, ZoneDebuff.DisruptedOptics, this);
 					break;
 				default:
 					throw new InvalidOperationException("Invalid number of Y's crossed.");
@@ -56,7 +55,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			SittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
 			Damage(3);
-			//TODO: Disruption effects persists (means have to track whats disrupted)
 		}
 
 		private void PerformBeforeMove()
@@ -90,6 +88,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void OnHealthReducedToZero()
 		{
+			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
 			base.OnHealthReducedToZero();

@@ -7,6 +7,7 @@ namespace BLL
 {
 	public enum ZoneDebuff
 	{
-		DoubleDamage
+		DoubleDamage,
+		DisruptedOptics
 	}
 }

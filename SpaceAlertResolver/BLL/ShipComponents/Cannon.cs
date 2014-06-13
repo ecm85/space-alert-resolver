@@ -8,10 +8,11 @@ namespace BLL.ShipComponents
 	public abstract class Cannon
 	{
 		protected int damage;
-		private readonly IList<ZoneLocation> zonesAffected;
+		protected readonly IList<ZoneLocation> zonesAffected;
 		protected int range;
-		private readonly PlayerDamageType playerDamageType;
+		protected readonly PlayerDamageType playerDamageType;
 		private readonly EnergyContainer source;
+		public bool DisruptedOptics { get; set; }
 
 		private bool firedThisTurn;
 
@@ -26,9 +27,15 @@ namespace BLL.ShipComponents
 			{
 				firedThisTurn = true;
 				source.Energy -= 1;
-				return new PlayerDamage(isHeroic ? damage + 1 : damage, playerDamageType, range, zonesAffected);
+				var amount = isHeroic ? damage + 1 : damage;
+				return GetPlayerDamage(amount);
 			}
 			return null;
+		}
+
+		protected virtual PlayerDamage GetPlayerDamage(int amount)
+		{
+			return new PlayerDamage(amount, playerDamageType, range, zonesAffected);
 		}
 
 		protected bool IsDamaged { get; set; }

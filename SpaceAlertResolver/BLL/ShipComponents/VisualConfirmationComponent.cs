@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class VisualConfirmationComponent : CComponent
 	{
-		private int NumberOfConfirmationsThisTurn { get; set; }
+		public int NumberOfConfirmationsThisTurn { get; private set; }
 		private int BestConfirmationTurnThisPhase { get; set; }
 		public int TotalVisualConfirmationPoints { get; private set; }
 

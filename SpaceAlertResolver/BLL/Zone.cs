@@ -16,7 +16,7 @@ namespace BLL
 		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public IEnumerable<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
-		public IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; private set; }
+		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; set; }
 		public List<DamageToken> CurrentDamageTokens  { get; private set; }
 		public List<DamageToken> AllDamageTokensTaken { get; private set; }
 		private readonly Random random = new Random();
@@ -122,6 +122,25 @@ namespace BLL
 			LowerStation.EnergyContainer.Energy -= amount;
 			var currentEnergy = LowerStation.EnergyContainer.Energy;
 			return oldEnergy - currentEnergy;
+		}
+
+		public void AddDebuff(ZoneDebuff debuff, InternalThreat source)
+		{
+			DebuffsBySource[source] = debuff;
+			UpdateOptics();
+		}
+
+		private void UpdateOptics()
+		{
+			var opticsDisrupted = DebuffsBySource.Values.Contains(ZoneDebuff.DisruptedOptics);
+			UpperStation.Cannon.DisruptedOptics = opticsDisrupted;
+			LowerStation.Cannon.DisruptedOptics = opticsDisrupted;
+		}
+
+		public void RemoveDebuffForSource(InternalThreat source)
+		{
+			DebuffsBySource.Remove(source);
+			UpdateOptics();
 		}
 	}
 }

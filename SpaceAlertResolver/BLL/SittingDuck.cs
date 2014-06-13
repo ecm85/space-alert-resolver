@@ -286,13 +286,13 @@ namespace BLL
 		public void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DebuffsBySource[source] = debuff;
+				zone.AddDebuff(debuff, source);
 		}
 
 		public void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DebuffsBySource.Remove(source);
+				zone.RemoveDebuffForSource(source);
 		}
 
 		public void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations)
