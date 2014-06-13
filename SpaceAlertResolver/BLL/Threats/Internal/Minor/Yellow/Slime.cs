@@ -8,7 +8,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public abstract class Slime : MinorYellowInternalThreat
 	{
 		//TODO: Players entering location with slime are delayed, and this effect persists past z
-		//TODO: Does adding the progeny slime while being moved make the progeny slime move too? (It shouldn't).
 
 		private readonly IList<Slime> currentProgeny;
 

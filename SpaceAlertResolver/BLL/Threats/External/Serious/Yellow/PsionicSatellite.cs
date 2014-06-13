@@ -19,6 +19,7 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
+			//TODO: Exclude interceptors?
 			SittingDuck.ShiftPlayers(EnumFactory.All<ZoneLocation>(), currentTurn + 1);
 		}
 

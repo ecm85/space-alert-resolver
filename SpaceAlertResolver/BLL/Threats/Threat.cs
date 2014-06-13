@@ -43,7 +43,7 @@ namespace BLL.Threats
 		}
 
 		public virtual bool IsDefeated { get; protected set; }
-		public bool IsSurvived { get; private set; }
+		public virtual bool IsSurvived { get; private set; }
 
 		public int TimeAppears { get; protected set; }
 		protected int TotalHealth { get; private set; }

@@ -44,6 +44,16 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			{
 				get { return 0; }
 			}
+
+			public override bool IsDefeated
+			{
+				get { return false; }
+			}
+
+			public override bool IsSurvived 
+			{
+				get { return false; }
+			}
 		}
 
 		protected override Slime CreateProgeny(StationLocation stationLocation)

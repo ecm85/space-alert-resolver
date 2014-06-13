@@ -33,6 +33,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
+			//TODO: Exclude interceptors?
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
 		}
 
