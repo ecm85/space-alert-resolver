@@ -12,43 +12,53 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			//TODO: Send drones into adjacent stations
 			//Until ninja is destroyed or performs Z, anyone starting or ending is those stations is poisoned
 			throw new NotImplementedException();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.DrainReactors(CurrentZones, 1);
+			if(!IsDefeated)
+				SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPoisonedPlayers(EnumFactory.All<StationLocation>());
 
-			if (RemainingHealth != 0)
+			if (!IsDefeated)
 			{
-				var removedRocketCount = SittingDuck.RemoveAllRockets();
+				var removedRocketCount = SittingDuck.GetRocketCount();
+				SittingDuck.RemoveAllRockets();
 				for (var i = 0; i < removedRocketCount; i++)
 					SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
 			}
-			else
-				isDefeated = true;
-			
 		}
 
 		protected override void OnHealthReducedToZero()
 		{
 			var anyPlayersPoisoned = SittingDuck.GetPoisonedPlayerCount(EnumFactory.All<StationLocation>()) == 0;
-			base.OnHealthReducedToZero(!anyPlayersPoisoned);
+			if (anyPlayersPoisoned)
+			{
+				IsDefeated = true;
+				SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
+				CurrentStations.Clear();
+				ThreatController.EndOfTurn -= PerformEndOfTurn;
+			}
+			else
+				base.OnHealthReducedToZero();
 		}
 
-		public override void OnReachingEndOfTrack()
+		protected override void OnReachingEndOfTrack()
 		{
-			if (isDefeated)
+			if (IsDefeated)
+			{
 				Position = null;
+				ThreatController.ThreatsMove -= PerformMove;
+			}
 			else
 				base.OnReachingEndOfTrack();
 			//TODO: Remove drones

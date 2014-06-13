@@ -18,8 +18,11 @@ namespace BLL
 		//TODO: include penalties in score, and break score up more?
 		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
 		//TODO: Threat factory, threat enum
-		//TODO: Pick perform or on for event names. Stop using both!
+		//TODO: Pick perform or on for event names. Stop using both! Maybe Do?
 		//TODO: Change all threat display names to include threat #
+		//TODO: Add threats OnThreatTerminated method and move common calls from both On methods into it (and in all children)
+		//TODO: Make damage an event
+		//TODO: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -52,7 +55,7 @@ namespace BLL
 			var currentTurn = nextTurn;
 			ThreatController.AddNewThreatsToTracks(currentTurn);
 			PerformPlayerActionsAndResolveDamage(currentTurn);
-			ThreatController.MoveAllThreats(currentTurn);
+			ThreatController.MoveThreats(currentTurn);
 			PerformEndOfTurn();
 			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 			if (isSecondTurnOfPhase)
@@ -62,12 +65,12 @@ namespace BLL
 				PerformEndOfPhase();
 			if (currentTurn == NumberOfTurns - 1)
 			{
-				ThreatController.MoveAllThreats(currentTurn + 1);
+				ThreatController.MoveThreats(currentTurn + 1);
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack()}, null);
 				CalculateScore();
-				ThreatController.JumpingToHyperspace();
+				ThreatController.JumpToHyperspace();
 			}
 			nextTurn++;
 		}
@@ -199,13 +202,13 @@ namespace BLL
 
 		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)
 		{
-			if (!ThreatController.ExternalThreats.Any())
+			if (!ThreatController.DamageableExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
 			foreach (var damage in damages)
 			{
-				var priorityThreatsInRange = ThreatController.ExternalThreats.Where(threat => threat.IsPriorityTargetFor(damage) && threat.CanBeTargetedBy(damage)).ToList();
-				var threatsInRange = ThreatController.ExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
+				var priorityThreatsInRange = ThreatController.DamageableExternalThreats.Where(threat => threat.IsPriorityTargetFor(damage) && threat.CanBeTargetedBy(damage)).ToList();
+				var threatsInRange = ThreatController.DamageableExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
 				switch (damage.PlayerDamageType.DamageTargetType())
 				{
 					case DamageTargetType.All:

@@ -21,18 +21,10 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		protected InternalTrack Track { get; private set; }
-
-		public void PlaceOnTrack(InternalTrack track)
+		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			PlaceOnTrack(track, track.GetStartingPosition());
-		}
-
-		protected void PlaceOnTrack(InternalTrack track, int? trackPosition)
-		{
-			Track = track;
-			Position = trackPosition;
-			HasBeenPlaced = true;
+			ThreatController.EndOfTurn += PerformEndOfTurn;
+			base.PlaceOnTrack(track, trackPosition);
 		}
 
 		protected ZoneLocation CurrentZone
@@ -44,7 +36,6 @@ namespace BLL.Threats.Internal
 		{
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
-
 
 		public PlayerAction ActionType { get; private set; }
 
@@ -69,15 +60,8 @@ namespace BLL.Threats.Internal
 			TimeAppears = timeAppears;
 		}
 
-		public void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
-		{
-			if (!IsOnTrack())
-				return;
-			TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
-		}
-
 		//TODO: Respect isHeroic here instead of in the ship
-		protected virtual void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var damageRemaining = damage;
 			if (remainingInaccessibility.HasValue)
@@ -151,22 +135,12 @@ namespace BLL.Threats.Internal
 				throw new LoseException(this);
 		}
 
-		public void PerformEndOfPlayerActions()
-		{
-			if (!IsOnTrack())
-				return;
-			PerformEndOfPlayerActionsOnTrack();
-		}
-
-		protected virtual void PerformEndOfPlayerActionsOnTrack()
-		{
-		}
-
-		public override void OnReachingEndOfTrack()
+		protected override void OnReachingEndOfTrack()
 		{
 			base.OnReachingEndOfTrack();
 			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
+			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
 
 		protected override void OnHealthReducedToZero()
@@ -174,13 +148,7 @@ namespace BLL.Threats.Internal
 			base.OnHealthReducedToZero();
 			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
-		}
-
-		protected override void OnHealthReducedToZero(bool clearPosition)
-		{
-			base.OnHealthReducedToZero(clearPosition);
-			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
-			CurrentStations.Clear();
+			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
 
 		//TODO: Add irreparable malfunctions to ship here
@@ -194,24 +162,9 @@ namespace BLL.Threats.Internal
 			};
 		}
 
-		protected override void PerformEndOfTurnOnTrack()
+		protected virtual void PerformEndOfTurn()
 		{
-			base.PerformEndOfTurnOnTrack();
 			remainingInaccessibility = totalInaccessibility;
-		}
-
-		public override void Move(int currentTurn)
-		{
-			Move(Speed, currentTurn);
-		}
-
-		private void Move(int amount, int currentTurn)
-		{
-			if (!IsOnTrack())
-				return;
-			BeforeMove();
-			Track.MoveThreat(this, amount, currentTurn);
-			AfterMove();
 		}
 	}
 }

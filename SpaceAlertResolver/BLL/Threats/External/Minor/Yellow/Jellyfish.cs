@@ -12,26 +12,26 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			AttackAllZones(1);
 			HealHalfDamage();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			AttackAllZones(1);
 			HealHalfDamage();
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(2);
 		}
 
 		private void HealHalfDamage()
 		{
-			RemainingHealth += (TotalHealth - RemainingHealth) / 2;
+			Repair((TotalHealth - RemainingHealth) / 2);
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)

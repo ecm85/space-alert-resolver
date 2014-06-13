@@ -17,17 +17,17 @@ namespace BLL.Threats.External.Minor.Yellow
 			return "Mini-Carrier";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			AttackOtherTwoZones(3, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}

@@ -24,7 +24,14 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Phasing Mine Layer";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+		}
+
+		protected override void PerformXAction(int currentTurn)
 		{
 			LayMine();
 			if (wasPhasedAtStartOfTurn)
@@ -33,21 +40,20 @@ namespace BLL.Threats.Internal.Serious.Yellow
 				MoveRed();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			LayMine();
 			ChangeDecks();
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			LayMine();
 			DetonateMines();
 		}
 
-		protected override void BeforeMove()
+		private void PerformBeforeMove()
 		{
-			base.BeforeMove();
 			if (isPhased)
 			{
 				if (!currentPhasedOutLocation.HasValue)
@@ -58,9 +64,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			isPhased = false;
 		}
 
-		protected override void AfterMove()
+		private void PerformAfterMove()
 		{
-			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;
 			if (isPhased)
 			{
@@ -69,9 +74,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			}
 		}
 
-		public override void PerformEndOfTurn()
+		protected override void PerformEndOfTurn()
 		{
-			if (IsOnTrack() || isPhased)
+			if (isPhased)
 				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
 		}
@@ -86,11 +91,25 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			Damage(2, mineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
 		}
 
-		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+			base.OnHealthReducedToZero();
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+			base.OnReachingEndOfTrack();
 		}
 	}
 }

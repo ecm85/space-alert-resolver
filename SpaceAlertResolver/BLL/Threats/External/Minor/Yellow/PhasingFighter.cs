@@ -15,48 +15,68 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears, currentZone);
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+			ThreatController.EndOfTurn += PerformEndOfTurn;
+		}
+
+		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(1);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(wasPhasedAtStartOfTurn ? 1 : 2);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(wasPhasedAtStartOfTurn ? 2 : 3);
 		}
 
-		protected override void BeforeMove()
+		private void PerformBeforeMove()
 		{
-			base.BeforeMove();
 			isPhased = false;
 		}
 
-		protected override void AfterMove()
+		private void PerformAfterMove()
 		{
-			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;
 		}
 
-		public override void PerformEndOfTurn()
+		public override bool IsDamageable
 		{
-			wasPhasedAtStartOfTurn = isPhased;
-			base.PerformEndOfTurn();
+			get { return base.IsDamageable && !isPhased; }
 		}
 
-		public override void TakeIrreducibleDamage(int amount)
+		private void PerformEndOfTurn()
 		{
-			if (!isPhased)
-				base.TakeIrreducibleDamage(amount);
+			wasPhasedAtStartOfTurn = isPhased;
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return !isPhased && base.CanBeTargetedBy(damage);
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			BeforeMove -= PerformBeforeMove;
+			AfterMove -= PerformAfterMove;
+			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			base.OnHealthReducedToZero();
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			BeforeMove -= PerformBeforeMove;
+			AfterMove -= PerformAfterMove;
+			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			base.OnReachingEndOfTrack();
 		}
 
 		public static string GetDisplayName()

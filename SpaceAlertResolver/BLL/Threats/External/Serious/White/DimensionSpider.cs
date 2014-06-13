@@ -12,22 +12,28 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears, currentZone);
+			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
+		}
+
+		protected override void PerformXAction(int currentTurn)
 		{
 			shields = 1;
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			shields++;
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(4);
 		}
 
-		public override void OnJumpingToHyperspace()
+		private void OnJumpingToHyperspace()
 		{
 			if (HasBeenPlaced)
 				PerformZAction(-1);
@@ -41,6 +47,18 @@ namespace BLL.Threats.External.Serious.White
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			base.OnHealthReducedToZero();
+			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			base.OnReachingEndOfTrack();
+			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 	}
 }

@@ -7,9 +7,16 @@ namespace BLL.ShipComponents
 {
 	public class RocketsComponent : CComponent
 	{
-		public List<Rocket> Rockets { get; private set; } 
+		private List<Rocket> Rockets { get; set; } 
 		private Rocket RocketFiredThisTurn { get; set; }
 		public Rocket RocketFiredLastTurn { get; private set; }
+
+		public int RocketCount
+		{
+			get { return Rockets.Count; }
+		}
+
+		public event Action RocketsModified = () => { };
 
 		public RocketsComponent()
 		{
@@ -23,6 +30,7 @@ namespace BLL.ShipComponents
 				var firedRocket = Rockets.First();
 				Rockets.Remove(firedRocket);
 				RocketFiredThisTurn = firedRocket;
+				RocketsModified();
 			}
 		}
 
@@ -30,6 +38,18 @@ namespace BLL.ShipComponents
 		{
 			RocketFiredLastTurn = RocketFiredThisTurn;
 			RocketFiredThisTurn = null;
+		}
+
+		public void RemoveRocket()
+		{
+			Rockets.Remove(Rockets.First());
+			RocketsModified();
+		}
+
+		public void RemoveAllRockets()
+		{
+			Rockets.Clear();
+			RocketsModified();
 		}
 	}
 }

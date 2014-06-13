@@ -15,28 +15,33 @@ namespace BLL.Threats.External.Serious.Yellow
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		public override void PerformXAction(int currentTurn)
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		{
+			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
+			threatController.EndOfTurn += PerformEndOfTurn;
+		}
+
+		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(1);
 			TakeIrreducibleDamage(1);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(2);
 			TakeIrreducibleDamage(2);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			throw new LoseException(this);
 		}
 
-		public override void PerformEndOfDamageResolution()
+		private void PerformEndOfDamageResolution()
 		{
 			if (healthAtStartOfTurn > RemainingHealth)
 				AttackAllZones(1);
-			base.PerformEndOfDamageResolution();
 		}
 
 		public static string GetDisplayName()
@@ -44,10 +49,16 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Nemesis";
 		}
 
-		public override void PerformEndOfTurn()
+		private void PerformEndOfTurn()
 		{
-			base.PerformEndOfTurn();
 			healthAtStartOfTurn = RemainingHealth;
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			base.OnHealthReducedToZero();
+			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
+			ThreatController.EndOfTurn += PerformEndOfTurn;
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			if (IsDamaged)
 				MoveRed();

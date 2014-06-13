@@ -17,19 +17,19 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Juggernaut";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			Speed += 2;
 			Attack(2);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			Speed += 2;
 			Attack(3);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(7);
 		}
@@ -48,7 +48,7 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return base.CanBeTargetedBy(damage) || (IsOnTrack() && damage.PlayerDamageType == PlayerDamageType.Rocket);
+			return base.CanBeTargetedBy(damage) || damage.PlayerDamageType == PlayerDamageType.Rocket;
 		}
 	}
 }

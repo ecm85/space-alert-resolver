@@ -19,17 +19,17 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Major Asteroid";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			breakpointsCrossed++;
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			breakpointsCrossed++;
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(RemainingHealth);
 		}

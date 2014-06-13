@@ -46,10 +46,10 @@ namespace BLL
 
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
-		event EventHandler RocketsModified;
+		event Action RocketsModified;
 		int GetRocketCount();
-		bool RemoveRocket();
-		int RemoveAllRockets();
+		void RemoveRocket();
+		void RemoveAllRockets();
 		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
 		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
 	}

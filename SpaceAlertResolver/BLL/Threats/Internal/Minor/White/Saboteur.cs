@@ -12,13 +12,14 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
-			if (SittingDuck.DrainReactors(CurrentZones, 1) == 0)
+			var energyDrained = SittingDuck.DrainReactors(CurrentZones, 1);
+			if (energyDrained == 0)
 				Damage(1);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(2);
 		}

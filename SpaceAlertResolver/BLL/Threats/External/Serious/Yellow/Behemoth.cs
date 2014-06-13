@@ -17,21 +17,21 @@ namespace BLL.Threats.External.Serious.Yellow
 			return "Behemoth";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 2)
 				Attack(2);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 3)
 				Attack(3);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 6)

@@ -19,17 +19,24 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 		}
 
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+		}
+
 		public static string GetDisplayName()
 		{
 			return "Phasing Anomaly";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			//TODO: Disrupt upper white cannon optics
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			switch (numberOfYsCrossed)
 			{
@@ -45,16 +52,15 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			numberOfYsCrossed++;
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
 			Damage(3);
 			//TODO: Disruption effects persists (means have to track whats disrupted)
 		}
 
-		protected override void BeforeMove()
+		private void PerformBeforeMove()
 		{
-			base.BeforeMove();
 			if (isPhased)
 			{
 				if (!currentPhasedOutLocation.HasValue)
@@ -65,9 +71,8 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			isPhased = false;
 		}
 
-		protected override void AfterMove()
+		private void PerformAfterMove()
 		{
-			base.AfterMove();
 			isPhased = !wasPhasedAtStartOfTurn;
 			if (isPhased)
 			{
@@ -76,10 +81,25 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			}
 		}
 
-		public override void PerformEndOfTurn()
+		protected override void PerformEndOfTurn()
 		{
-			wasPhasedAtStartOfTurn = isPhased;
+			if (isPhased)
+				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+			base.OnHealthReducedToZero();
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			BeforeMove += PerformBeforeMove;
+			AfterMove += PerformAfterMove;
+			base.OnReachingEndOfTrack();
 		}
 	}
 }

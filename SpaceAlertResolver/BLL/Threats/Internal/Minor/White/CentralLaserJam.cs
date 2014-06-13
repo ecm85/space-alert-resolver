@@ -12,17 +12,17 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(CurrentZones, 1);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			Damage(1);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(3);
 			DamageOtherTwoZones(1);
@@ -33,7 +33,7 @@ namespace BLL.Threats.Internal.Minor.White
 			return "Central Laser Jam";
 		}
 
-		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
 			var energyDrained = 0;
@@ -41,7 +41,7 @@ namespace BLL.Threats.Internal.Minor.White
 				energyDrained = SittingDuck.DrainReactors(CurrentZones, 1);
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
-				base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
+				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
 	}
 }

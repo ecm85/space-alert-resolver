@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			MoveRed();
 		}

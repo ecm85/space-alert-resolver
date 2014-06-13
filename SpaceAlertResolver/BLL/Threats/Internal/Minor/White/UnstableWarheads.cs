@@ -15,24 +15,24 @@ namespace BLL.Threats.Internal.Minor.White
 		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
 		{
 			base.Initialize(sittingDuck, threatController, timeAppears);
-			SetHealthToRemainingRockets(null, null);
+			SetHealthToRemainingRockets();
 			SittingDuck.RocketsModified += SetHealthToRemainingRockets;
 		}
 
-		private void SetHealthToRemainingRockets(object sender, EventArgs eventArgs)
+		private void SetHealthToRemainingRockets()
 		{
 			RemainingHealth = SittingDuck.GetRocketCount();
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(RemainingHealth * 3);
 		}
@@ -43,7 +43,7 @@ namespace BLL.Threats.Internal.Minor.White
 			base.OnHealthReducedToZero();
 		}
 
-		public override void OnReachingEndOfTrack()
+		protected override void OnReachingEndOfTrack()
 		{
 			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
 			base.OnReachingEndOfTrack();

@@ -21,13 +21,13 @@ namespace ConsoleResolver
 			var players = GetPlayers();
 			var sittingDuck = new SittingDuck();
 			sittingDuck.SetPlayers(players);
-			var externalTracks = new[]
+			var externalTracksByZone = new Dictionary<ZoneLocation, Track>
 			{
-				new ExternalTrack(TrackConfiguration.Track1, sittingDuck.BlueZone),
-				new ExternalTrack(TrackConfiguration.Track2, sittingDuck.RedZone),
-				new ExternalTrack(TrackConfiguration.Track3, sittingDuck.WhiteZone)
+				{ZoneLocation.Blue, new Track(TrackConfiguration.Track1)},
+				{ZoneLocation.Red, new Track(TrackConfiguration.Track2)},
+				{ZoneLocation.White, new Track(TrackConfiguration.Track3)},
 			};
-			var internalTrack = new InternalTrack(TrackConfiguration.Track4);
+			var internalTrack = new Track(TrackConfiguration.Track4);
 
 			var destroyer = new Destroyer();
 			var fighter1 = new Fighter();
@@ -37,7 +37,6 @@ namespace ConsoleResolver
 			var fissure = new Fissure();
 			var nuclearDevice = new NuclearDevice();
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
-			var externalTracksByZone = externalTracks.ToDictionary(track => track.Zone.ZoneLocation);
 			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
 			destroyer.Initialize(sittingDuck, threatController, 3, ZoneLocation.Blue);
 			fighter1.Initialize(sittingDuck, threatController, 4, ZoneLocation.Red);

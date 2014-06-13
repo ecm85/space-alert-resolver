@@ -14,18 +14,18 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			grownUp = true;
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			ChangeDecks();
 			Damage(SittingDuck.GetPlayerCount(CurrentStation));
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			throw new LoseException(this);
 		}
@@ -35,9 +35,9 @@ namespace BLL.Threats.Internal.Serious.White
 			return "Alien";
 		}
 
-		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (grownUp && !isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}

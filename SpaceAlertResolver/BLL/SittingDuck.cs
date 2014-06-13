@@ -20,6 +20,7 @@ namespace BLL
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
+		public event Action RocketsModified = () => { };
 
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
@@ -39,6 +40,7 @@ namespace BLL
 			Computer = computerComponent;
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
+			rocketsComponent.RocketsModified += () => RocketsModified();
 			var interceptorStation = new InterceptorStation
 			{
 				StationLocation = StationLocation.Interceptor
@@ -299,29 +301,19 @@ namespace BLL
 				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
 		}
 
-		public event EventHandler RocketsModified;
-
 		public int GetRocketCount()
 		{
-			return RocketsComponent.Rockets.Count;
+			return RocketsComponent.RocketCount;
 		}
 
-		public bool RemoveRocket()
+		public void RemoveRocket()
 		{
-			var rockets = RocketsComponent.Rockets;
-			var removedRocket = rockets.Any();
-			rockets.Remove(rockets.First());
-			RocketsModified(new object(), new EventArgs());
-			return removedRocket;
+			RocketsComponent.RemoveRocket();
 		}
 
-		public int RemoveAllRockets()
+		public void RemoveAllRockets()
 		{
-			var rockets = RocketsComponent.Rockets;
-			var removedRockets = rockets.Count;
-			rockets.Clear();
-			RocketsModified(new object(), new EventArgs());
-			return removedRockets;
+			RocketsComponent.RemoveAllRockets();
 		}
 
 		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)

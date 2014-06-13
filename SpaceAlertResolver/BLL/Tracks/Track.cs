@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.Threats;
 
 namespace BLL.Tracks
 {
-	public abstract class Track<T> where T : Threat
+	public class Track
 	{
 		private readonly IDictionary<int, TrackBreakpointType> breakpoints;
 		private readonly IList<TrackSection> sections;
 
-		protected Track(TrackConfiguration trackConfiguration)
+		public Track(TrackConfiguration trackConfiguration)
 		{
 			breakpoints = trackConfiguration.TrackBreakpoints();
 			sections = trackConfiguration.TrackSections();
@@ -22,36 +21,16 @@ namespace BLL.Tracks
 			return sections.Sum(section => section.Length);
 		}
 
-		public void MoveThreat(T threat, int amount, int currentTurn)
+		public TrackBreakpointType? MoveSingle(int currentPosition)
 		{
-			if (!threat.Position.HasValue)
-				throw new InvalidOperationException("Tried to move threat not on the track.");
-			for (var i = 0; i < amount && threat.IsOnTrack(); i++)
-			{
-				threat.Position--;
-				if (breakpoints.ContainsKey(threat.Position.GetValueOrDefault()))
-				{
-					var crossedBreakpoint = breakpoints[threat.Position.GetValueOrDefault()];
-					switch (crossedBreakpoint)
-					{
-						case TrackBreakpointType.X:
-							threat.PerformXAction(currentTurn);
-							break;
-						case TrackBreakpointType.Y:
-							threat.PerformYAction(currentTurn);
-							break;
-						case TrackBreakpointType.Z:
-							threat.PerformZAction(currentTurn);
-							threat.OnReachingEndOfTrack();
-							break;
-					}
-				}
-			}
+			var newPosition = currentPosition;
+			newPosition--;
+			return breakpoints.ContainsKey(newPosition) ? breakpoints[newPosition] : (TrackBreakpointType?)null;
 		}
 
-		public int DistanceToThreat(T threat)
+		public int DistanceToThreat(int position)
 		{
-			var distance = threat.Position;
+			var distance = position;
 			foreach (var section in sections.OrderBy(section => section.DistanceFromShip))
 			{
 				if (section.Length >= distance)

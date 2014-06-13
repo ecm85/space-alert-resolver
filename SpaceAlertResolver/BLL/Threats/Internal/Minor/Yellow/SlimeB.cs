@@ -22,12 +22,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Slime I2-02";
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DisableInactiveBattlebots(new[] { StationLocation.LowerRed });
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			var bluewardStation = CurrentStation.BluewardStationLocation();
 			Spread(bluewardStation);
@@ -46,12 +46,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			}
 		}
 
-		protected override Slime CreateProgeny()
+		protected override Slime CreateProgeny(StationLocation stationLocation)
 		{
-			var newSlimeLocation = CurrentStation.BluewardStationLocation();
-			if (!newSlimeLocation.HasValue)
-				throw new InvalidOperationException("Tried to spread to invalid station.");
-			return new ProgenySlime(newSlimeLocation.Value);
+			return new ProgenySlime(stationLocation);
 		}
 	}
 }

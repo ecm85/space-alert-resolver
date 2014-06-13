@@ -17,26 +17,26 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return ThreatPoints.GetPointsForDefeatingSeeker();
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			MoveToMostPlayers();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			MoveToMostPlayers();
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(5);
 			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
-		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
-			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
-			if (isDefeated)
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+			if (IsDefeated)
 				performingPlayer.IsKnockedOut = true;
 		}
 

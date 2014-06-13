@@ -12,13 +12,13 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			if (IsAnyPlayerPresent())
 				MoveBlue();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			if (IsAnyPlayerPresent())
 				Damage(2);
@@ -26,7 +26,7 @@ namespace BLL.Threats.Internal.Serious.White
 				Repair(1);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(4);
 		}

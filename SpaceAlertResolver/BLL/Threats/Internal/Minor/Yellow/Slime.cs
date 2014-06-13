@@ -8,6 +8,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public abstract class Slime : MinorYellowInternalThreat
 	{
 		//TODO: Players entering location with slime are delayed, and this effect persists past z
+		//TODO: Does adding the progeny slime while being moved make the progeny slime move too? (It shouldn't).
 
 		private readonly IList<Slime> currentProgeny;
 
@@ -17,7 +18,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			currentProgeny = new List<Slime>();
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Damage(2);
 		}
@@ -27,17 +28,17 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			get { return base.IsDefeated && currentProgeny.All(progeny => progeny.IsDefeated); }
 		}
 
-		protected abstract Slime CreateProgeny();
+		protected abstract Slime CreateProgeny(StationLocation stationLocation);
 
 		protected void Spread(StationLocation? stationLocation)
 		{
 			if (stationLocation != null && !SittingDuck.GetThreatsInStation(stationLocation.Value).Any(threat => threat is Slime))
 			{
-				var newProgeny = CreateProgeny();
+				var newProgeny = CreateProgeny(stationLocation.Value);
 				newProgeny.Initialize(SittingDuck, ThreatController, TimeAppears);
 				currentProgeny.Add(newProgeny);
 				SittingDuck.AddInternalThreatToStations(new [] {stationLocation.Value}, newProgeny);
-				newProgeny.PlaceOnTrack(Track, Position);
+				newProgeny.PlaceOnTrack(Track, Position.GetValueOrDefault());
 				ThreatController.InternalThreats.Add(newProgeny);
 			}
 		}

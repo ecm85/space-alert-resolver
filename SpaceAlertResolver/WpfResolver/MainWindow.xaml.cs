@@ -86,12 +86,12 @@ namespace WpfResolver
 					sittingDuck))
 				.Cast<ExternalThreat>()
 				.ToList();
-			var externalTracks = new[]
-			{
-				new ExternalTrack(((Track)RedTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.RedZone),
-				new ExternalTrack(((Track)WhiteTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.WhiteZone),
-				new ExternalTrack(((Track)BlueTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.BlueZone)
-			};
+			//var externalTracks = new[]
+			//{
+			//	new ExternalTrack(((Track)RedTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.RedZone),
+			//	new ExternalTrack(((Track)WhiteTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.WhiteZone),
+			//	new ExternalTrack(((Track)BlueTrackPicker.SelectedItem).TrackConfiguration, sittingDuck.BlueZone)
+			//};
 			var internalThreats = threatsInGame
 				.Where(threat => threat.Zone == null)
 				.Select(threat => Activator.CreateInstance(
@@ -100,7 +100,7 @@ namespace WpfResolver
 					sittingDuck))
 				.Cast<InternalThreat>()
 				.ToList();
-			var internalTrack = new InternalTrack(((Track)InternalTrackPicker.SelectedItem).TrackConfiguration);
+			//var internalTrack = new InternalTrack(((Track)InternalTrackPicker.SelectedItem).TrackConfiguration);
 
 			sittingDuck.SetPlayers(players);
 			Game game = null; //new Game(sittingDuck, externalThreats, externalTracks, internalThreats, internalTrack, players);

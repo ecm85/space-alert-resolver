@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using BLL.Tracks;
@@ -11,21 +10,14 @@ namespace BLL.Threats.External
 	{
 		public ZoneLocation CurrentZone { get; private set; }
 		protected int shields;
-		private ExternalTrack Track { get; set; }
 
-		public void PlaceOnTrack(ExternalTrack track)
+		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			PlaceOnTrack(track, track.GetStartingPosition());
+			ThreatController.ExternalThreatsMove += PerformMove;
+			base.PlaceOnTrack(track, trackPosition);
 		}
 
-		private void PlaceOnTrack(ExternalTrack track, int? trackPosition)
-		{
-			Track = track;
-			Position = trackPosition;
-			HasBeenPlaced = true;
-		}
-
-		private int DistanceToShip { get { return Track.DistanceToThreat(this); } }
+		private int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
 
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed) :
 			base(type, difficulty, health, speed)
@@ -33,13 +25,15 @@ namespace BLL.Threats.External
 			this.shields = shields;
 		}
 
-		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		public virtual void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
 		{
 			SittingDuck = sittingDuck;
 			ThreatController = threatController;
 			TimeAppears = timeAppears;
 			CurrentZone = currentZone;
 		}
+
+		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; }}
 
 		public virtual void TakeIrreducibleDamage(int amount)
 		{
@@ -63,8 +57,6 @@ namespace BLL.Threats.External
 
 		public virtual bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			if (!IsOnTrack())
-				return false;
 			var isInRange = damage.Range >= DistanceToShip;
 			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
 			return isInRange && gunCanHitCurrentZone;
@@ -104,22 +96,16 @@ namespace BLL.Threats.External
 				throw new LoseException(this);
 		}
 
-		public virtual void PerformEndOfDamageResolution()
+		protected override void OnHealthReducedToZero()
 		{
+			ThreatController.ExternalThreatsMove -= PerformMove;
+			base.OnHealthReducedToZero();
 		}
 
-		public override void Move(int currentTurn)
+		protected override void OnReachingEndOfTrack()
 		{
-			Move(Speed, currentTurn);
-		}
-
-		public void Move(int amount, int currentTurn)
-		{
-			if (!IsOnTrack())
-				return;
-			BeforeMove();
-			Track.MoveThreat(this, amount, currentTurn);
-			AfterMove();
+			ThreatController.ExternalThreatsMove -= PerformMove;
+			base.OnReachingEndOfTrack();
 		}
 	}
 }

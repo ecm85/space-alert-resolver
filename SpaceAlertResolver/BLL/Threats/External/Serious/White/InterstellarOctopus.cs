@@ -12,19 +12,19 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			if (IsDamaged)
 				AttackAllZones(1);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			if (IsDamaged)
 				AttackAllZones(2);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(RemainingHealth * 2);
 		}

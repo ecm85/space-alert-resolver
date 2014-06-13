@@ -12,17 +12,17 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PerformXAction(int currentTurn)
+		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(3, ThreatDamageType.DoubleDamageThroughShields);
 		}

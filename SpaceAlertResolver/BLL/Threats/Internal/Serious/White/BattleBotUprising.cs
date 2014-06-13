@@ -15,17 +15,23 @@ namespace BLL.Threats.Internal.Serious.White
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
-		public override void PerformXAction(int currentTurn)
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
+		}
+
+		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayersWithBattleBots();
 		}
 
-		public override void PerformYAction(int currentTurn)
+		protected override void PerformYAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
-		public override void PerformZAction(int currentTurn)
+		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite}));
 		}
@@ -35,18 +41,29 @@ namespace BLL.Threats.Internal.Serious.White
 			return "BattleBot Uprising";
 		}
 
-		protected override void PerformEndOfPlayerActionsOnTrack()
+		private void PerformEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamageOnTrack(1, null, false, CurrentStation);
+				base.TakeDamage(1, null, false, CurrentStation);
 			StationsHitThisTurn.Clear();
-			base.PerformEndOfPlayerActionsOnTrack();
 		}
 
-		protected override void TakeDamageOnTrack(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			StationsHitThisTurn.Add(stationLocation);
-			base.TakeDamageOnTrack(damage, performingPlayer, isHeroic, stationLocation);
+			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			base.OnHealthReducedToZero();
+			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			base.OnReachingEndOfTrack();
+			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
 		}
 	}
 }
