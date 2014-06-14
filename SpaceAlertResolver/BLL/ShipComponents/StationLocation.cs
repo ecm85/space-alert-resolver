@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BLL
+namespace BLL.ShipComponents
 {
 	public enum StationLocation
 	{
@@ -24,13 +21,13 @@ namespace BLL
 			{
 				case StationLocation.UpperBlue:
 				case StationLocation.LowerBlue:
-					return BLL.ZoneLocation.Blue;
+					return ShipComponents.ZoneLocation.Blue;
 				case StationLocation.UpperWhite:
 				case StationLocation.LowerWhite:
-					return BLL.ZoneLocation.White;
+					return ShipComponents.ZoneLocation.White;
 				case StationLocation.UpperRed:
 				case StationLocation.LowerRed:
-					return BLL.ZoneLocation.Red;
+					return ShipComponents.ZoneLocation.Red;
 				//case StationLocation.Interceptor: //TODO: ??
 				default:
 					throw new InvalidOperationException();

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using BLL.ShipComponents;
 using BLL.Threats.Internal;
 
-namespace BLL
+namespace BLL.ShipComponents
 {
 	public class Zone
 	{

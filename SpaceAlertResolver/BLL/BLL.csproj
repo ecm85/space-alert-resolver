@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BattleBots.cs" />
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
@@ -47,6 +46,7 @@
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
+    <Compile Include="ShipComponents\BattleBots.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
     <Compile Include="ShipComponents\CComponent.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
@@ -61,11 +61,11 @@
     <Compile Include="ShipComponents\CentralHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\Gravolift.cs" />
     <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\Reactor.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerAction.cs" />
-    <Compile Include="Reactor.cs" />
     <Compile Include="ShipComponents\PulseCannon.cs" />
     <Compile Include="ShipComponents\Rocket.cs" />
     <Compile Include="ShipComponents\RocketsComponent.cs" />
@@ -75,12 +75,14 @@
     <Compile Include="ShipComponents\SideLightLaserCannon.cs" />
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
+    <Compile Include="ShipComponents\StationLocation.cs" />
     <Compile Include="ShipComponents\VisualConfirmationComponent.cs" />
+    <Compile Include="ShipComponents\Zone.cs" />
+    <Compile Include="ShipComponents\ZoneLocation.cs" />
     <Compile Include="SittingDuck.cs" />
     <Compile Include="PlayerDamageType.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="ShipComponents\StandardStation.cs" />
-    <Compile Include="StationLocation.cs" />
     <Compile Include="ThreatDamage.cs" />
     <Compile Include="ThreatDamageResult.cs" />
     <Compile Include="ThreatDamageType.cs" />
@@ -186,9 +188,7 @@
     <Compile Include="Tracks\TrackBreakpointType.cs" />
     <Compile Include="Tracks\TrackConfiguration.cs" />
     <Compile Include="Tracks\TrackSection.cs" />
-    <Compile Include="Zone.cs" />
     <Compile Include="ZoneDebuff.cs" />
-    <Compile Include="ZoneLocation.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

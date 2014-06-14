@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows;
 using BLL;
+using BLL.ShipComponents;
 using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.External.Minor.White;

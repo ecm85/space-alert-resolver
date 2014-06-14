@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.ShipComponents;
 using BLL.Threats.Internal.Serious.Yellow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
