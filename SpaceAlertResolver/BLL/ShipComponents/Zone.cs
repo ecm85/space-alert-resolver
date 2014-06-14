@@ -10,9 +10,9 @@ namespace BLL.ShipComponents
 		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
 		public StandardStation UpperStation { get; set; }
 		public StandardStation LowerStation { get; set; }
-		public Gravolift Gravolift { get; set; }
 		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }
+		public Gravolift Gravolift { get; set; }
 		public IEnumerable<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; set; }
 		public List<DamageToken> CurrentDamageTokens  { get; private set; }

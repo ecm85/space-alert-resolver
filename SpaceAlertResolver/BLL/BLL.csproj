@@ -45,7 +45,9 @@
     <Compile Include="ExternalThreatBuff.cs" />
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
+    <Compile Include="MovementController.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
+    <Compile Include="ShipComponents\Airlock.cs" />
     <Compile Include="ShipComponents\BattleBots.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
     <Compile Include="ShipComponents\CComponent.cs" />

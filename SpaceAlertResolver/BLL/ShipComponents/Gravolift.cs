@@ -9,7 +9,14 @@ namespace BLL.ShipComponents
 	{
 		private bool Occupied { get; set; }
 
-		public void SetOccupied()
+		public void Use(Player performingPlayer, int currentTurn, bool isHeroic)
+		{
+			if (ShiftsPlayers && !isHeroic)
+				performingPlayer.Shift(currentTurn + 1);
+			SetOccupied();
+		}
+
+		private void SetOccupied()
 		{
 			Occupied = true;
 		}
@@ -19,7 +26,7 @@ namespace BLL.ShipComponents
 			Occupied = false;
 		}
 
-		public bool ShiftsPlayers { get { return Occupied || IsDamaged; } }
+		private bool ShiftsPlayers { get { return Occupied || IsDamaged; } }
 		private bool IsDamaged { get; set; }
 
 		public void SetDamaged()

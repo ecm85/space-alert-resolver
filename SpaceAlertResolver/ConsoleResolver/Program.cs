@@ -124,6 +124,11 @@ namespace ConsoleResolver
 				{
 					Actions = new List<PlayerAction>{PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.C},
 					Index = 5
+				},
+				new Player
+				{
+					Actions = new List<PlayerAction>{PlayerAction.TeleportBlueLower, PlayerAction.TeleportRedUpper, PlayerAction.TeleportWhiteLower, PlayerAction.TeleportWhiteUpper},
+					Index = 6
 				}
 			};
 			return players;

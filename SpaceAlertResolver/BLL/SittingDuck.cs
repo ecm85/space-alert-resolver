@@ -13,10 +13,10 @@ namespace BLL
 		public Zone BlueZone { get; private set; }
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
-		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
+		private IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
-		public InterceptorStation InterceptorStation { get; set; }
+		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
+		public InterceptorStation InterceptorStation { get; private set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
@@ -28,6 +28,12 @@ namespace BLL
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
+			//TODO: Create all airlocks and gravolifts, set in stations and zones
+			var redGravolift = new Gravolift();
+			var whiteGravolift = new Gravolift();
+			var blueGravolift = new Gravolift();
+			var redAirlock = new Airlock();
+			var blueAirlock = new Airlock();
 			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
 			var whiteReactor = new CentralReactor();
 			var redReactor = new SideReactor(whiteReactor);
@@ -49,7 +55,9 @@ namespace BLL
 			{
 				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
 				EnergyContainer = new SideShield(redReactor),
-				StationLocation = StationLocation.UpperRed
+				StationLocation = StationLocation.UpperRed,
+				BluewardAirlock = redAirlock,
+				Gravolift = redGravolift
 			};
 			interceptorStation.InterceptorComponent = new InterceptorComponent(null, upperRedStation);
 			upperRedStation.CComponent = new InterceptorComponent(interceptorStation, null);
@@ -58,7 +66,10 @@ namespace BLL
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
 				EnergyContainer = new CentralShield(whiteReactor),
 				StationLocation = StationLocation.UpperWhite,
-				CComponent = computerComponent
+				CComponent = computerComponent,
+				BluewardAirlock = blueAirlock,
+				RedwardAirlock = redAirlock,
+				Gravolift = whiteGravolift
 			};
 			var upperBlueBattleBots = new BattleBotsComponent();
 			var upperBlueStation = new StandardStation
@@ -66,7 +77,9 @@ namespace BLL
 				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
 				EnergyContainer = new SideShield(blueReactor),
 				StationLocation = StationLocation.UpperBlue,
-				CComponent = upperBlueBattleBots
+				CComponent = upperBlueBattleBots,
+				RedwardAirlock = blueAirlock,
+				Gravolift = blueGravolift
 			};
 			var lowerRedBattleBots = new BattleBotsComponent();
 			var lowerRedStation = new StandardStation
@@ -74,7 +87,9 @@ namespace BLL
 				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
 				EnergyContainer = redReactor,
 				StationLocation = StationLocation.LowerRed,
-				CComponent = lowerRedBattleBots
+				CComponent = lowerRedBattleBots,
+				BluewardAirlock = redAirlock,
+				Gravolift = redGravolift
 			};
 			
 			var lowerWhiteStation = new StandardStation
@@ -82,33 +97,24 @@ namespace BLL
 				Cannon = new PulseCannon(whiteReactor),
 				EnergyContainer = whiteReactor,
 				StationLocation = StationLocation.LowerWhite,
-				CComponent = visualConfirmationComponent
+				CComponent = visualConfirmationComponent,
+				BluewardAirlock = blueAirlock,
+				RedwardAirlock = redAirlock,
+				Gravolift = whiteGravolift
 			};
 			var lowerBlueStation = new StandardStation
 			{
 				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
 				EnergyContainer = blueReactor,
 				StationLocation = StationLocation.LowerBlue,
-				CComponent = rocketsComponent
+				CComponent = rocketsComponent,
+				RedwardAirlock = blueAirlock,
+				Gravolift = blueGravolift
 			};
-			upperRedStation.BluewardStation = upperWhiteStation;
-			upperRedStation.OppositeDeckStation = lowerRedStation;
-			upperWhiteStation.RedwardStation = upperRedStation;
-			upperWhiteStation.BluewardStation = upperBlueStation;
-			upperWhiteStation.OppositeDeckStation = lowerWhiteStation;
-			upperBlueStation.RedwardStation = upperWhiteStation;
-			upperBlueStation.OppositeDeckStation = lowerBlueStation;
-			lowerRedStation.BluewardStation = lowerWhiteStation;
-			lowerRedStation.OppositeDeckStation = upperRedStation;
-			lowerWhiteStation.RedwardStation = lowerRedStation;
-			lowerWhiteStation.BluewardStation = lowerBlueStation;
-			lowerWhiteStation.OppositeDeckStation = upperWhiteStation;
-			lowerBlueStation.RedwardStation = lowerWhiteStation;
-			lowerBlueStation.OppositeDeckStation = upperBlueStation;
 
-			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = new Gravolift() };
-			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = new Gravolift() };
-			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = new Gravolift() };
+			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = redGravolift};
+			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = whiteGravolift};
+			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = blueGravolift};
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 			StationsByLocation = Zones
 				.SelectMany(zone => new[] {zone.LowerStation, zone.UpperStation})

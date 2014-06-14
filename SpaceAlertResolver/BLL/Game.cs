@@ -31,6 +31,7 @@ namespace BLL
 		public int TotalPoints { get; private set; }
 		public bool AllowVariableRangeInteceptors { get; set; }
 		public ThreatController ThreatController { get; private set; }
+		private readonly MovementController movementController;
 
 		public Game(
 			SittingDuck sittingDuck,
@@ -42,6 +43,10 @@ namespace BLL
 			this.players = players;
 			PadPlayerActions();
 			nextTurn = 0;
+			movementController = new MovementController
+			{
+				SittingDuck = sittingDuck
+			};
 		}
 
 		private void PadPlayerActions()
@@ -128,17 +133,13 @@ namespace BLL
 					player.CurrentStation.PerformCAction(player, currentTurn);
 					break;
 				case PlayerAction.MoveBlue:
-					MovePlayer(player.CurrentStation.BluewardStation, player);
+					movementController.MoveBlue(player, currentTurn);
 					break;
 				case PlayerAction.MoveRed:
-					MovePlayer(player.CurrentStation.RedwardStation, player);
+					movementController.MoveRed(player, currentTurn);
 					break;
 				case PlayerAction.ChangeDeck:
-					var currentZone = sittingDuck.ZonesByLocation[player.CurrentStation.StationLocation.ZoneLocation()];
-					MovePlayer(player.CurrentStation.OppositeDeckStation, player);
-					if (currentZone.Gravolift.ShiftsPlayers)
-						player.Shift(currentTurn + 1);
-					currentZone.Gravolift.SetOccupied();
+					movementController.ChangeDeck(player, currentTurn);
 					break;
 				case PlayerAction.BattleBots:
 					if (!player.BattleBots.IsDisabled)
@@ -157,22 +158,22 @@ namespace BLL
 					player.CurrentStation.UseBattleBots(player, true);
 					break;
 				case PlayerAction.TeleportBlueLower:
-					MovePlayer(sittingDuck.BlueZone.LowerStation, player);
+					movementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
 					break;
 				case PlayerAction.TeleportBlueUpper:
-					MovePlayer(sittingDuck.BlueZone.UpperStation, player);
+					movementController.MoveHeroically(player, StationLocation.UpperBlue, currentTurn);
 					break;
 				case PlayerAction.TeleportWhiteLower:
-					MovePlayer(sittingDuck.WhiteZone.LowerStation, player);
+					movementController.MoveHeroically(player, StationLocation.LowerWhite, currentTurn);
 					break;
 				case PlayerAction.TeleportWhiteUpper:
-					MovePlayer(sittingDuck.WhiteZone.UpperStation, player);
+					movementController.MoveHeroically(player, StationLocation.UpperWhite, currentTurn);
 					break;
 				case PlayerAction.TeleportRedLower:
-					MovePlayer(sittingDuck.RedZone.LowerStation, player);
+					movementController.MoveHeroically(player, StationLocation.LowerRed, currentTurn);
 					break;
 				case PlayerAction.TeleportRedUpper:
-					MovePlayer(sittingDuck.RedZone.UpperStation, player);
+					movementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
 					break;
 			}
 			return null;
@@ -190,15 +191,6 @@ namespace BLL
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
 			sittingDuck.InterceptorStation.PerformEndOfTurn();
 			ThreatController.PerformEndOfTurn();
-		}
-
-		private static void MovePlayer(Station newDestination, Player player)
-		{
-			var newStation = newDestination ?? player.CurrentStation;
-			var oldStation = player.CurrentStation;
-			player.CurrentStation = newStation;
-			oldStation.Players.Remove(player);
-			newStation.Players.Add(player);
 		}
 
 		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)

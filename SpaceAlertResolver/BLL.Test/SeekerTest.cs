@@ -77,7 +77,7 @@ namespace BLL.Test
 		{
 			const StationLocation currentLocation = StationLocation.LowerWhite;
 			Test_MoveToMostPlayers_Helper(
-				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 4 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },
+				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 3 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },
 				currentLocation,
 				StationLocation.LowerWhite);
 		}
