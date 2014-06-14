@@ -19,14 +19,12 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO: Exclude interceptors?
-			SittingDuck.ShiftPlayers(EnumFactory.All<ZoneLocation>(), currentTurn + 1);
+			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>().Except(new [] {StationLocation.Interceptor}), currentTurn + 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			//TODO: Exclude interceptors?
-			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
+			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] { StationLocation.Interceptor }));
 		}
 
 		public static string GetDisplayName()

@@ -15,7 +15,7 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
+		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
 		public InterceptorStation InterceptorStation { get; set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
@@ -141,16 +141,6 @@ namespace BLL
 			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainShield(amount));
 		}
 
-		public int DrainAllShields(int amount)
-		{
-			return DrainShields(EnumFactory.All<ZoneLocation>(), amount);
-		}
-
-		public int DrainAllShields()
-		{
-			return DrainShields(EnumFactory.All<ZoneLocation>());
-		}
-
 		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainReactor());
@@ -161,14 +151,9 @@ namespace BLL
 			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).Sum(zone => zone.DrainReactor(amount));
 		}
 
-		public int DrainAllReactors(int amount)
+		public void DrainAllReactors(int amount)
 		{
-			return DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
-		}
-
-		public int DrainAllReactors()
-		{
-			return DrainReactors(EnumFactory.All<ZoneLocation>());
+			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
@@ -213,24 +198,12 @@ namespace BLL
 				.Count(player => player.IsPoisoned);
 		}
 
-		public void KnockOutPlayersWithBattleBots()
-		{
-			var playersWithBattleBots = Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots != null);
-			KnockOut(playersWithBattleBots);
-		}
-
 		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
 		{
 			var playersWithBattleBots = locations
 				.Select(location => StationsByLocation[location])
 				.SelectMany(zone => zone.Players)
 				.Where(player => player.BattleBots != null);
-			KnockOut(playersWithBattleBots);
-		}
-
-		public void KnockOutPlayersWithoutBattleBots()
-		{
-			var playersWithBattleBots = Zones.SelectMany(zone => zone.Players).Where(player => player.BattleBots == null);
 			KnockOut(playersWithBattleBots);
 		}
 

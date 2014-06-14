@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.ShiftPlayers(EnumFactory.All<ZoneLocation>(), currentTurn + 1);
+			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>().Except(new [] {StationLocation.Interceptor}), currentTurn + 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)

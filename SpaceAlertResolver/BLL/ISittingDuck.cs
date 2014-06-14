@@ -13,12 +13,9 @@ namespace BLL
 
 		int DrainShields(IEnumerable<ZoneLocation> zoneLocations);
 		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		int DrainAllShields(int amount);
-		int DrainAllShields();
 		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
 		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		int DrainAllReactors(int amount);
-		int DrainAllReactors();
+		void DrainAllReactors(int amount);
 
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
 		int GetEnergyInStation(StationLocation currentStation);
@@ -33,9 +30,7 @@ namespace BLL
 		int GetPlayerCount(StationLocation station);
 		int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations);
 
-		void KnockOutPlayersWithBattleBots();
 		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
-		void KnockOutPlayersWithoutBattleBots();
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
