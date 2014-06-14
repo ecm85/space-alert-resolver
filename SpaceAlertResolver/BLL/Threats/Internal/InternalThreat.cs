@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal
 		private readonly int? totalInaccessibility;
 		private int? remainingInaccessibility;
 
-		protected StationLocation CurrentStation
+		internal StationLocation CurrentStation
 		{
 			get { return CurrentStations.Single(); }
 			set { CurrentStations = new List<StationLocation>{value}; }
@@ -76,7 +76,7 @@ namespace BLL.Threats.Internal
 			CheckDefeated();
 		}
 
-		private void MoveToNewStation(StationLocation? newStation)
+		protected void MoveToNewStation(StationLocation? newStation)
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");

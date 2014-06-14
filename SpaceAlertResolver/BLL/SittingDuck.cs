@@ -200,7 +200,7 @@ namespace BLL
 			return result;
 		}
 
-		public int GetPlayerCount(StationLocation station)
+		public virtual int GetPlayerCount(StationLocation station)
 		{
 			return StationsByLocation[station].Players.Count;
 		}

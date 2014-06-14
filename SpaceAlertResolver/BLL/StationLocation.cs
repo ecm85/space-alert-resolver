@@ -86,7 +86,7 @@ namespace BLL
 				case StationLocation.LowerWhite:
 					return StationLocation.UpperWhite;
 				case StationLocation.LowerBlue:
-					return StationLocation.LowerBlue;
+					return StationLocation.UpperBlue;
 				default:
 					return null;
 			}

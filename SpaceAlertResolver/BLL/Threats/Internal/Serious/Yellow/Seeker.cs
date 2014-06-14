@@ -45,9 +45,22 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			return "Seeker";
 		}
 
-		private void MoveToMostPlayers()
+		internal void MoveToMostPlayers()
 		{
-			//TODO: Move to most players
+			var adjacentStationGroup = new[]
+			{
+				CurrentStation.RedwardStationLocation(),
+				CurrentStation.BluewardStationLocation(),
+				CurrentStation.OppositeStationLocation()
+			}
+			.Where(station => station != null)
+			.Select(station => new {Station = station.Value, PlayerCount = SittingDuck.GetPlayerCount(station.Value)})
+			.GroupBy(station => station.PlayerCount)
+			.OrderByDescending(group => group.Key)
+			.FirstOrDefault();
+
+			if (adjacentStationGroup != null && adjacentStationGroup.Count() == 1)
+				MoveToNewStation(adjacentStationGroup.Single().Station);
 		}
 	}
 }

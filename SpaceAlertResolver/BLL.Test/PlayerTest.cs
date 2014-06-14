@@ -8,7 +8,7 @@ namespace BLL.Test
 	public class PlayerTest
 	{
 		[TestMethod]
-		public void TestShiftNoBlanks()
+		public void Test_Shift_NoBlanks()
 		{
 			var player = new Player
 			{
@@ -24,7 +24,7 @@ namespace BLL.Test
 		}
 
 		[TestMethod]
-		public void TestShiftWithBlanks()
+		public void Test_Shift_WithBlanks()
 		{
 			var player = new Player
 			{
@@ -40,7 +40,7 @@ namespace BLL.Test
 		}
 
 		[TestMethod]
-		public void TestShiftAtBlank()
+		public void Test_Shift_AtBlank()
 		{
 			var player = new Player
 			{
@@ -56,7 +56,7 @@ namespace BLL.Test
 		}
 
 		[TestMethod]
-		public void TestShiftLastBlank()
+		public void Test_Shift_LastBlank()
 		{
 			var player = new Player
 			{
@@ -72,7 +72,7 @@ namespace BLL.Test
 		}
 
 		[TestMethod]
-		public void TestShiftMultipleTimesSameTurn()
+		public void Test_Shift_MultipleTimesSameTurn()
 		{
 			var player = new Player
 			{
@@ -89,7 +89,7 @@ namespace BLL.Test
 		}
 
 		[TestMethod]
-		public void TestShiftMultipleTimesConsecutiveTurns()
+		public void Test_Shift_MultipleTimesConsecutiveTurns()
 		{
 			var player = new Player
 			{
