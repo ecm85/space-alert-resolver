@@ -146,7 +146,7 @@ namespace BLL
 						player.CurrentStation.UseBattleBots(player, false);
 					break;
 				case PlayerAction.None:
-					player.CurrentStation.PerformNoAction(player);
+					player.CurrentStation.PerformNoAction(player, currentTurn);
 					break;
 				case PlayerAction.HeroicA:
 					player.CurrentStation.PerformAAction(player, currentTurn, true);

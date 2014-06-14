@@ -8,14 +8,23 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public abstract class Slime : MinorYellowInternalThreat
 	{
-		//TODO: Players entering location with slime are delayed, and this effect persists past z
-
 		private readonly IList<Slime> currentProgeny;
 
 		protected Slime(StationLocation currentStation)
 			: base(2, 2, currentStation, PlayerAction.BattleBots)
 		{
 			currentProgeny = new List<Slime>();
+		}
+
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			sittingDuck.SubscribeToMoveIn(CurrentStations, DelayPlayer);
+		}
+
+		private static void DelayPlayer(Player performingPlayer, int currentTurn)
+		{
+			performingPlayer.Shift(currentTurn + 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -26,6 +35,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		public override bool IsDefeated
 		{
 			get { return base.IsDefeated && currentProgeny.All(progeny => progeny.IsDefeated); }
+		}
+
+		protected override void OnHealthReducedToZero()
+		{
+			SittingDuck.UnsubscribeFromMoveIn(CurrentStations, DelayPlayer);
+			base.OnHealthReducedToZero();
 		}
 
 		protected abstract Slime CreateProgeny(StationLocation stationLocation);

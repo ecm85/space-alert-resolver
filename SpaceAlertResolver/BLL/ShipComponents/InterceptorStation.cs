@@ -19,20 +19,20 @@ namespace BLL.ShipComponents
 		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 		}
 
 		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 			return null;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 			//TODO: Change to a further interceptor station instead, if variable range interceptors are in use
 		}
 
@@ -59,7 +59,7 @@ namespace BLL.ShipComponents
 			return false;
 		}
 
-		public override void PerformMoveIn(Player performingPlayer)
+		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
 		{
 			throw new InvalidOperationException("Cannot move to interceptor station by normal means");
 		}
@@ -88,9 +88,9 @@ namespace BLL.ShipComponents
 				DamageThreat(firstThreat, performingPlayer, isHeroic);
 		}
 
-		public override void PerformNoAction(Player performingPlayer)
+		public override void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
-			InterceptorComponent.PerformNoAction(performingPlayer);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 		}
 
 		public void PerformEndOfTurn()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Threats.Internal;
@@ -11,6 +12,8 @@ namespace BLL.ShipComponents
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
 		public virtual EnergyContainer EnergyContainer { get; set; }
+		public event Action<Player, int> MoveIn = (player, i) => { };
+		public event Action<Player, int> MoveOut = (player, i) => { };
 
 		protected Station()
 		{
@@ -25,12 +28,12 @@ namespace BLL.ShipComponents
 		public abstract bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn);
 		public abstract bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn);
-		public abstract void PerformMoveIn(Player performingPlayer);
+		public abstract void PerformMoveIn(Player performingPlayer, int currentTurn);
 		public abstract bool CanMoveOutTowardsRed();
 		public abstract bool CanMoveOutTowardsOppositeDeck();
 		public abstract bool CanMoveOutTowardsBlue();
 
-		public virtual void PerformNoAction(Player performingPlayer)
+		public virtual void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
 		}
 
@@ -50,6 +53,16 @@ namespace BLL.ShipComponents
 		{
 			var damage = isHeroic ? 2 : 1;
 			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
+		}
+
+		protected void OnMoveIn(Player performingPlayer, int currentTurn)
+		{
+			MoveIn(performingPlayer, currentTurn);
+		}
+
+		protected void OnMoveOut(Player performingPlayer, int currentTurn)
+		{
+			MoveOut(performingPlayer, currentTurn);
 		}
 	}
 }

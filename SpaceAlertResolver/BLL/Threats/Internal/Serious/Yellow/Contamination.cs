@@ -41,7 +41,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
-			//TODO: This effect persists
+			SittingDuck.SubscribeToMoveIn(CurrentStations, KnockOutPlayer);
+		}
+
+		private void KnockOutPlayer(Player performingPlayer, int currentTurn)
+		{
+			performingPlayer.IsKnockedOut = true;
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)

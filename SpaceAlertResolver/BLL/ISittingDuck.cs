@@ -48,5 +48,10 @@ namespace BLL
 		void RemoveAllRockets();
 		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
 		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
+
+		void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
+		void SubscribeToMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
+		void UnsubscribeFromMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
+		void UnsubscribeFromMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
 	}
 }

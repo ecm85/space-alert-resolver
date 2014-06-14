@@ -10,8 +10,6 @@ namespace BLL
 	{
 		public SittingDuck SittingDuck { get; set; }
 
-		//TODO: Make poison and delay effects actually happen
-
 		public void ChangeDeck(Player player, int currentTurn)
 		{
 			var newStation = SittingDuck.StationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
@@ -19,7 +17,7 @@ namespace BLL
 			{
 				var movedOut = player.CurrentStation.PerformMoveOutTowardsOppositeDeck(player, currentTurn, false);
 				if (movedOut)
-					newStation.PerformMoveIn(player);
+					newStation.PerformMoveIn(player, currentTurn);
 			}
 		}
 
@@ -30,7 +28,7 @@ namespace BLL
 			{
 				var movedOut = player.CurrentStation.PerformMoveOutTowardsBlue(player, currentTurn);
 				if (movedOut)
-					newStation.PerformMoveIn(player);
+					newStation.PerformMoveIn(player, currentTurn);
 			}
 		}
 
@@ -41,7 +39,7 @@ namespace BLL
 			{
 				var movedOut = player.CurrentStation.PerformMoveOutTowardsRed(player, currentTurn);
 				if (movedOut)
-					newStation.PerformMoveIn(player);
+					newStation.PerformMoveIn(player, currentTurn);
 			}
 		}
 
@@ -59,7 +57,7 @@ namespace BLL
 			var finalDestination = path.First(
 				pathLocation => pathLocation.Index >= path.Count - 1 ||
 				!CanMoveOut(pathLocation.Station, path[pathLocation.Index + 1].Station.StationLocation));
-			finalDestination.Station.PerformMoveIn(performingPlayer);
+			finalDestination.Station.PerformMoveIn(performingPlayer, currentTurn);
 		}
 
 		private static bool MoveOut(

@@ -8,6 +8,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class Ninja : MinorYellowInternalThreat
 	{
+		private IList<StationLocation> droneLocations = new List<StationLocation>();
+
 		public Ninja()
 			: base(3, 2, StationLocation.LowerBlue, PlayerAction.BattleBots)
 		{
@@ -15,9 +17,22 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			//TODO: Send drones into adjacent stations
-			//Until ninja is destroyed or performs Z, anyone starting or ending is those stations is poisoned
-			throw new NotImplementedException();
+			droneLocations = AdjacentLocations();
+			SittingDuck.SubscribeToMoveIn(droneLocations, PoisonPlayer);
+			SittingDuck.SubscribeToMoveOut(droneLocations, PoisonPlayer);
+		}
+
+		private void PoisonPlayer(Player performingPlayer, int currentTurn)
+		{
+			performingPlayer.IsPoisoned = true;
+		}
+
+		private IList<StationLocation> AdjacentLocations()
+		{
+			return new [] {CurrentStation.BluewardStationLocation(), CurrentStation.RedwardStationLocation(), CurrentStation.OppositeStationLocation()}
+				.Where(stationLocation => stationLocation != null)
+				.Select(stationLocation => stationLocation.Value)
+				.ToList();
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -51,6 +66,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			}
 			else
 				base.OnHealthReducedToZero();
+			SittingDuck.UnsubscribeFromMoveIn(droneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMoveOut(droneLocations, PoisonPlayer);
 		}
 
 		protected override void OnReachingEndOfTrack()
@@ -62,7 +79,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			}
 			else
 				base.OnReachingEndOfTrack();
-			//TODO: Remove drones
+			SittingDuck.UnsubscribeFromMoveIn(droneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMoveOut(droneLocations, PoisonPlayer);
 		}
 
 		public static string GetDisplayName()

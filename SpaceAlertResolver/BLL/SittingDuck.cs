@@ -28,7 +28,6 @@ namespace BLL
 		//TODO: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
-			//TODO: Create all airlocks and gravolifts, set in stations and zones
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();
 			var blueGravolift = new Gravolift();
@@ -305,6 +304,30 @@ namespace BLL
 		{
 			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
 				player.Shift(turnToShift);
+		}
+
+		public void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.MoveIn += handler;
+		}
+
+		public void SubscribeToMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.MoveOut += handler;
+		}
+
+		public void UnsubscribeFromMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.MoveIn -= handler;
+		}
+
+		public void UnsubscribeFromMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.MoveOut -= handler;
 		}
 
 		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()

@@ -64,7 +64,7 @@ namespace BLL.ShipComponents
 		{
 			if (!CanMoveOutTowardsRed())
 				return false;
-			//TODO: MoveOut Event
+			OnMoveOut(performingPlayer, currentTurn);
 			Players.Remove(performingPlayer);
 			performingPlayer.CurrentStation = null;
 			return true;
@@ -72,7 +72,7 @@ namespace BLL.ShipComponents
 
 		public override bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
-			//TODO: MoveOut Event
+			OnMoveOut(performingPlayer, currentTurn);
 			Gravolift.Use(performingPlayer, currentTurn, isHeroic);
 			Players.Remove(performingPlayer);
 			performingPlayer.CurrentStation = null;
@@ -83,15 +83,15 @@ namespace BLL.ShipComponents
 		{
 			if (!CanMoveOutTowardsBlue())
 				return false;
-			//TODO: MoveOut Event
+			OnMoveOut(performingPlayer, currentTurn);
 			Players.Remove(performingPlayer);
 			performingPlayer.CurrentStation = null;
 			return true;
 		}
 
-		public override void PerformMoveIn(Player performingPlayer)
+		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
 		{
-			//TODO: MoveIn event
+			OnMoveIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
 		}

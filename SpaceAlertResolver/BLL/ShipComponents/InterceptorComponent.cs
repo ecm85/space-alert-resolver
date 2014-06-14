@@ -32,11 +32,12 @@ namespace BLL.ShipComponents
 			}
 		}
 
-		public void PerformNoAction(Player performingPlayer)
+		public void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && shipwardStation != null)
 			{
-				performingPlayer.CurrentStation = shipwardStation;
+				performingPlayer.CurrentStation.Players.Remove(performingPlayer);
+				shipwardStation.PerformMoveIn(performingPlayer, currentTurn);
 				shipwardStation.UseInterceptors(performingPlayer, false);
 			}
 		}
