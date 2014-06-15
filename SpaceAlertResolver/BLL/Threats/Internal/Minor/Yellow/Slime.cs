@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
@@ -16,10 +17,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			currentProgeny = new List<Slime>();
 		}
 
-		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.Initialize(sittingDuck, threatController, timeAppears);
-			sittingDuck.SubscribeToMoveIn(CurrentStations, DelayPlayer);
+			base.PlaceOnTrack(track, trackPosition);
+			SittingDuck.SubscribeToMoveIn(CurrentStations, DelayPlayer);
 		}
 
 		private static void DelayPlayer(Player performingPlayer, int currentTurn)

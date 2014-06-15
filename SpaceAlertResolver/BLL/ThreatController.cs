@@ -11,7 +11,7 @@ namespace BLL
 {
 	public class ThreatController
 	{
-		private IDictionary<ZoneLocation, Track> ExternalTracks { get; set; }
+		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
 		private Track InternalTrack { get; set; }
 		public IList<ExternalThreat> ExternalThreats { get; private set; }
 		public IList<InternalThreat> InternalThreats { get; private set; }

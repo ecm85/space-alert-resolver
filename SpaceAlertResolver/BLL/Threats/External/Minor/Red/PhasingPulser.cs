@@ -6,13 +6,13 @@ using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Red
 {
-	public class PhasingDestroyer : MinorRedExternalThreat
+	public class PhasingPulser : MinorRedExternalThreat
 	{
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		public PhasingDestroyer()
-			: base(2, 5, 2)
+		public PhasingPulser()
+			: base(1, 6, 2)
 		{
 		}
 
@@ -26,17 +26,17 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
+			AttackAllZones(wasPhasedAtStartOfTurn ? 0 : 1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 1 : 2, ThreatDamageType.DoubleDamageThroughShields);
+			AttackAllZones(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 2 : 3, ThreatDamageType.DoubleDamageThroughShields);
+			AttackAllZones(wasPhasedAtStartOfTurn ? 2 : 3);
 		}
 
 		private void PerformBeforeMove()
@@ -74,7 +74,7 @@ namespace BLL.Threats.External.Minor.Red
 
 		public static string GetDisplayName()
 		{
-			return "Phasing Destroyer";
+			return "Phasing Fighter";
 		}
 	}
 }

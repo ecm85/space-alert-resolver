@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Red
 {
@@ -17,9 +17,9 @@ namespace BLL.Threats.External.Minor.Red
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
+		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.Initialize(sittingDuck, threatController, timeAppears, currentZone);
+			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn += PerformEndOfTurn;
 		}

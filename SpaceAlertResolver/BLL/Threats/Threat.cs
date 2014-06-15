@@ -30,7 +30,7 @@ namespace BLL.Threats
 			get { return !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
 		}
 
-		protected Track Track { get; private set; }
+		protected Track Track { get; set; }
 
 		protected virtual int GetPointsForDefeating()
 		{
@@ -113,6 +113,8 @@ namespace BLL.Threats
 		{
 			BeforeMove();
 			var newPosition = Position - amount;
+			//TODO: Red threats: Need to fix this to allow jumpers (need to get all the breakpoints before performing any
+			//And perhaps need to not perform certain breakpoints if threat dies after one of them
 			while (Position != null && Position > newPosition)
 			{
 				var crossedBreakpoint = Track.MoveSingle(Position.Value);
