@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.KnockOutPlayersWithBattleBots(EnumFactory.All<StationLocation>().Except(new[] { StationLocation.Interceptor }));
+			SittingDuck.KnockOutPlayersWithBattleBots(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()));
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -34,7 +34,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] {StationLocation.UpperWhite, StationLocation.Interceptor}));
+			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()).Except(new[] { StationLocation.UpperWhite }));
 		}
 
 		public static string GetDisplayName()

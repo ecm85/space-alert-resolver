@@ -20,12 +20,12 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>().Except(new [] {StationLocation.Interceptor}), currentTurn + 1);
+			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()), currentTurn + 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Except(new[] { StationLocation.Interceptor }));
+			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()));
 		}
 
 		public static string GetDisplayName()
@@ -35,7 +35,7 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return damage.Range != 3 && base.CanBeTargetedBy(damage);
+			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);
 		}
 	}
 }

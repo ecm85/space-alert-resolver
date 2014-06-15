@@ -10,11 +10,38 @@ namespace BLL.ShipComponents
 		LowerWhite,
 		UpperBlue,
 		LowerBlue,
-		Interceptor
+		Interceptor1,
+		Interceptor2,
+		Interceptor3
 	}
 
 	public static class StationLocationExtensions
 	{
+		public static bool IsOnShip(this StationLocation stationLocation)
+		{
+			switch (stationLocation)
+			{
+				case StationLocation.UpperBlue:
+				case StationLocation.LowerBlue:
+				case StationLocation.UpperWhite:
+				case StationLocation.LowerWhite:
+				case StationLocation.UpperRed:
+				case StationLocation.LowerRed:
+					return true;
+				case StationLocation.Interceptor1:
+				case StationLocation.Interceptor2:
+				case StationLocation.Interceptor3:
+					return false;
+				default:
+					throw new InvalidOperationException("Invalid StationLocation encountered.");
+			}
+		}
+
+		public static bool IsInterceptorStationLocation(this StationLocation stationLocation)
+		{
+			return !stationLocation.IsOnShip();
+		}
+
 		public static ZoneLocation ZoneLocation(this StationLocation stationLocation)
 		{
 			switch (stationLocation)
@@ -28,7 +55,9 @@ namespace BLL.ShipComponents
 				case StationLocation.UpperRed:
 				case StationLocation.LowerRed:
 					return ShipComponents.ZoneLocation.Red;
-				case StationLocation.Interceptor:
+				case StationLocation.Interceptor1:
+				case StationLocation.Interceptor2:
+				case StationLocation.Interceptor3:
 					throw new InvalidOperationException("Cannot get zone location for interceptor station.");
 				default:
 					throw new InvalidOperationException("Invalid StationLocation encountered.");
@@ -85,6 +114,51 @@ namespace BLL.ShipComponents
 					return StationLocation.UpperWhite;
 				case StationLocation.LowerBlue:
 					return StationLocation.UpperBlue;
+				default:
+					return null;
+			}
+		}
+
+		public static StationLocation? ShipwardLocation(this StationLocation stationLocation)
+		{
+			switch (stationLocation)
+			{
+				case StationLocation.Interceptor3:
+					return StationLocation.Interceptor2;
+				case StationLocation.Interceptor2:
+					return StationLocation.Interceptor1;
+				case StationLocation.Interceptor1:
+					return StationLocation.UpperRed;
+				default:
+					return null;
+			}
+		}
+
+		public static StationLocation? SpacewardLocation(this StationLocation stationLocation)
+		{
+			switch (stationLocation)
+			{
+				case StationLocation.UpperRed:
+					return StationLocation.Interceptor1;
+				case StationLocation.Interceptor1:
+					return StationLocation.Interceptor2;
+				case StationLocation.Interceptor2:
+					return StationLocation.Interceptor3;
+				default:
+					return null;
+			}
+		}
+
+		public static int? DistanceFromShip(this StationLocation stationLocation)
+		{
+			switch (stationLocation)
+			{
+				case StationLocation.Interceptor3:
+					return 3;
+				case StationLocation.Interceptor2:
+					return 2;
+				case StationLocation.Interceptor1:
+					return 1;
 				default:
 					return null;
 			}

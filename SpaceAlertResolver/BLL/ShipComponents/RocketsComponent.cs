@@ -23,7 +23,7 @@ namespace BLL.ShipComponents
 			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
 		}
 
-		public override void PerformCAction(Player performingPlayer)
+		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			if (Rockets.Any() && RocketFiredThisTurn == null)
 			{

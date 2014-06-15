@@ -128,7 +128,7 @@ namespace BLL.Threats.Internal
 
 		protected void Damage(int amount, IList<ZoneLocation> zones)
 		{
-			var result = SittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Internal, zones));
+			var result = SittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.IgnoresShields, zones));
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 		}

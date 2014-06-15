@@ -10,6 +10,11 @@ namespace BLL.ShipComponents
 		public InterceptorComponent InterceptorComponent { private get; set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
+		public InterceptorStation()
+		{
+			MoveIn += UseBattleBots;
+		}
+
 		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
@@ -25,37 +30,49 @@ namespace BLL.ShipComponents
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			//TODO: VR Interceptors: Change to a further interceptor station instead, if variable range interceptors are in use
+			InterceptorComponent.PerformCAction(performingPlayer, currentTurn);
 		}
 
-		public override void UseBattleBots(Player performingPlayer, bool isHeroic)
+		private void UseBattleBots(Player performingPlayer, int currentTurn)
 		{
-			UseInterceptors(performingPlayer, isHeroic);
+			UseBattleBots(performingPlayer, currentTurn, false);
+		}
+
+		public override void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic)
+		{
+			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
+			if (firstThreat == null)
+				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic, performingPlayer, StationLocation.DistanceFromShip().GetValueOrDefault());
+			else
+				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
 		}
 
 		public override bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
 		{
 			performingPlayer.Shift(currentTurn);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 			return false;
 		}
 
 		public override bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 			return false;
 		}
 
 		public override bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn)
 		{
 			performingPlayer.Shift(currentTurn);
+			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
 			return false;
 		}
 
 		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
 		{
-			throw new InvalidOperationException("Cannot move to interceptor station by normal means");
+			Players.Add(performingPlayer);
+			performingPlayer.CurrentStation = this;
+			OnMoveIn(performingPlayer, currentTurn);
 		}
 
 		public override bool CanMoveOutTowardsRed()
@@ -71,15 +88,6 @@ namespace BLL.ShipComponents
 		public override bool CanMoveOutTowardsBlue()
 		{
 			return false;
-		}
-
-		public override void UseInterceptors(Player performingPlayer, bool isHeroic)
-		{
-			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
-			if (firstThreat == null)
-				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic);
-			else
-				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
 		}
 
 		public override void PerformNoAction(Player performingPlayer, int currentTurn)

@@ -11,8 +11,8 @@ namespace BLL.ShipComponents
 		public StationLocation StationLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
-		public event Action<Player, int> MoveIn = (player, i) => { };
-		public event Action<Player, int> MoveOut = (player, i) => { };
+		public event Action<Player, int> MoveIn = (performingPlayer, currentTurn) => { };
+		public event Action<Player, int> MoveOut = (performingPlayer, currentTurn) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
 
 		protected Station()
@@ -25,7 +25,7 @@ namespace BLL.ShipComponents
 		public abstract void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract void PerformCAction(Player performingPlayer, int currentTurn);
-		public abstract void UseBattleBots(Player performingPlayer, bool isHeroic);
+		public abstract void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn);
 		public abstract bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic);
 		public abstract bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn);
@@ -35,10 +35,6 @@ namespace BLL.ShipComponents
 		public abstract bool CanMoveOutTowardsBlue();
 
 		public virtual void PerformNoAction(Player performingPlayer, int currentTurn)
-		{
-		}
-
-		public virtual void UseInterceptors(Player performingPlayer, bool isHeroic)
 		{
 		}
 

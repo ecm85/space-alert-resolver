@@ -39,12 +39,12 @@ namespace ConsoleResolver
 			var nuclearDevice = new NuclearDevice();
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
 			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
-			destroyer.Initialize(sittingDuck, threatController, 3, ZoneLocation.Blue);
-			fighter1.Initialize(sittingDuck, threatController, 4, ZoneLocation.Red);
-			fighter2.Initialize(sittingDuck, threatController, 5, ZoneLocation.White);
-			skirmishers.Initialize(sittingDuck, threatController, 3);
+			destroyer.Initialize(sittingDuck, threatController, 4, ZoneLocation.Blue);
+			fighter1.Initialize(sittingDuck, threatController, 5, ZoneLocation.Red);
+			fighter2.Initialize(sittingDuck, threatController, 6, ZoneLocation.White);
+			skirmishers.Initialize(sittingDuck, threatController, 4);
 			fissure.Initialize(sittingDuck, threatController, 2);
-			nuclearDevice.Initialize(sittingDuck, threatController, 5);
+			nuclearDevice.Initialize(sittingDuck, threatController, 6);
 			var game = new Game(sittingDuck, players, threatController);
 			var currentTurn = 0;
 			try
@@ -54,7 +54,7 @@ namespace ConsoleResolver
 			}
 			catch (LoseException loseException)
 			{
-				Console.WriteLine("Killed on turn {0} by: {1}", currentTurn, loseException.Threat);
+				Console.WriteLine("Killed on turn {0} by: {1}", currentTurn + 1, loseException.Threat);
 			}
 			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
 				sittingDuck.BlueZone.TotalDamage,
@@ -103,9 +103,11 @@ namespace ConsoleResolver
 							PlayerAction.C,
 							PlayerAction.ChangeDeck,
 							PlayerAction.None,
-							PlayerAction.None,
 							PlayerAction.C,
-							PlayerAction.BattleBots
+							PlayerAction.BattleBots,
+							PlayerAction.C,
+							PlayerAction.BattleBots,
+							PlayerAction.A
 						},
 					Index = 2
 				},

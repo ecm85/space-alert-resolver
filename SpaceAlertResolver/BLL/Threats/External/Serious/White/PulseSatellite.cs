@@ -34,7 +34,7 @@ namespace BLL.Threats.External.Serious.White
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return damage.Range != 3 && base.CanBeTargetedBy(damage);
+			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);
 		}
 	}
 }

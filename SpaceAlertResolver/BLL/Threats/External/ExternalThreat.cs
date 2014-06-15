@@ -18,7 +18,7 @@ namespace BLL.Threats.External
 			base.PlaceOnTrack(track, trackPosition);
 		}
 
-		private int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
+		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
 
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed) :
 			base(type, difficulty, health, speed)
@@ -58,7 +58,7 @@ namespace BLL.Threats.External
 
 		public virtual bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			var isInRange = damage.Range >= DistanceToShip;
+			var isInRange = damage.AffectedDistance.Contains(DistanceToShip);
 			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
 			return isInRange && gunCanHitCurrentZone;
 		}
@@ -91,7 +91,7 @@ namespace BLL.Threats.External
 		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
 			var bonusAttacks = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
-			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations);
+			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations, DistanceToShip);
 			var result = SittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);

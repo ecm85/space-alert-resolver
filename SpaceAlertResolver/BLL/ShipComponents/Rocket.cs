@@ -7,9 +7,9 @@ namespace BLL.ShipComponents
 {
 	public class Rocket
 	{
-		public PlayerDamage PerformAttack()
+		public PlayerDamage PerformAttack(Player performingPlayer)
 		{
-			return new PlayerDamage(3, PlayerDamageType.Rocket, 2, EnumFactory.All<ZoneLocation>());
+			return new PlayerDamage(3, PlayerDamageType.Rocket, new [] {1, 2}, EnumFactory.All<ZoneLocation>(), performingPlayer);
 		}
 	}
 }

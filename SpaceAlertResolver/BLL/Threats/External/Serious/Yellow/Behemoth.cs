@@ -47,11 +47,12 @@ namespace BLL.Threats.External.Serious.Yellow
 				var strongerInterceptorDamages = new PlayerDamage(
 					interceptorDamages.Amount + 6,
 					PlayerDamageType.InterceptorsSingle,
-					interceptorDamages.Range,
-					interceptorDamages.ZoneLocations);
+					interceptorDamages.AffectedDistance,
+					interceptorDamages.ZoneLocations,
+					interceptorDamages.PerformingPlayer);
 				damages.Remove(interceptorDamages);
 				damages.Add(strongerInterceptorDamages);
-				SittingDuck.KnockOutPlayers(new [] {StationLocation.Interceptor});
+				interceptorDamages.PerformingPlayer.IsKnockedOut = true;
 			}
 			base.TakeDamage(damages);
 		}

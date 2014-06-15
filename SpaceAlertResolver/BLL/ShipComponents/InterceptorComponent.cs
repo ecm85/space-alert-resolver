@@ -7,23 +7,24 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
-		private readonly Station spacewardStation;
+		private readonly InterceptorStation spacewardStation;
 		private readonly Station shipwardStation;
-		public InterceptorComponent(Station spacewardStation, Station shipwardStation)
+		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation)
 		{
 			this.spacewardStation = spacewardStation;
 			this.shipwardStation = shipwardStation;
 		}
 
-		//Only legal to call from a regular station, or from an interceptor station if variable range interceptors are allowed
-		public override void PerformCAction(Player performingPlayer)
+		//TODO: VR Interceptors: Only allow one person in space at a time, not just in the destination zone
+		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && !spacewardStation.Players.Any())
 			{
-				if (spacewardStation != null)
+				var currentDistanceFromShip = performingPlayer.CurrentStation.StationLocation.DistanceFromShip();
+				if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
 				{
-					performingPlayer.CurrentStation = spacewardStation;
-					spacewardStation.UseInterceptors(performingPlayer, false);
+					performingPlayer.CurrentStation.Players.Remove(performingPlayer);
+					spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
 				}
 				else
 				{
@@ -38,7 +39,6 @@ namespace BLL.ShipComponents
 			{
 				performingPlayer.CurrentStation.Players.Remove(performingPlayer);
 				shipwardStation.PerformMoveIn(performingPlayer, currentTurn);
-				shipwardStation.UseInterceptors(performingPlayer, false);
 			}
 		}
 	}

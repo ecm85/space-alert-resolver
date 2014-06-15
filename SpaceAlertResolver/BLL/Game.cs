@@ -9,7 +9,6 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Feature: Variable-range interceptors
 		//TODO: Feature: Specializations
 		//TODO: Feature: Red threats
 		//TODO: Feature: Double actions
@@ -27,7 +26,6 @@ namespace BLL
 		public const int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
-		public bool AllowVariableRangeInteceptors { get; set; }
 		public ThreatController ThreatController { get; private set; }
 		private readonly MovementController movementController;
 
@@ -71,7 +69,8 @@ namespace BLL
 				ThreatController.MoveThreats(currentTurn + 1);
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
-					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack()}, null);
+					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
+				//TODO: VR Interceptors: Players still in space at distance 2 or 3 are knocked out and battlebots disabled
 				CalculateScore();
 				ThreatController.JumpToHyperspace();
 			}
@@ -109,9 +108,13 @@ namespace BLL
 
 			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
-				damages.Add(rocketFiredLastTurn.PerformAttack());
-			var interceptorDamages = sittingDuck.InterceptorStation.PlayerInterceptorDamage;
-			var targetingAssistanceProvided = sittingDuck.InterceptorStation.Players.Any() || sittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+				damages.Add(rocketFiredLastTurn.PerformAttack(null));
+			var interceptorDamages = sittingDuck.InterceptorStations
+				.Select(station => station.PlayerInterceptorDamage)
+				.Where(damage => damage != null);
+			var anyPlayersInInterceptors = sittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
+			var visualConfirmationPerformed = sittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+			var targetingAssistanceProvided = anyPlayersInInterceptors || visualConfirmationPerformed;
 			if (!targetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
 			ResolveDamage(damages, interceptorDamages);
@@ -140,8 +143,7 @@ namespace BLL
 					movementController.ChangeDeck(player, currentTurn);
 					break;
 				case PlayerAction.BattleBots:
-					if (!player.BattleBots.IsDisabled)
-						player.CurrentStation.UseBattleBots(player, false);
+					player.CurrentStation.UseBattleBots(player, currentTurn, false);
 					break;
 				case PlayerAction.None:
 					player.CurrentStation.PerformNoAction(player, currentTurn);
@@ -153,7 +155,7 @@ namespace BLL
 					player.CurrentStation.PerformBAction(player, currentTurn, true);
 					break;
 				case PlayerAction.HeroicBattleBots:
-					player.CurrentStation.UseBattleBots(player, true);
+					player.CurrentStation.UseBattleBots(player, currentTurn, true);
 					break;
 				case PlayerAction.TeleportBlueLower:
 					movementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
@@ -187,11 +189,12 @@ namespace BLL
 			}
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();
-			sittingDuck.InterceptorStation.PerformEndOfTurn();
+			foreach (var interceptorStation in sittingDuck.InterceptorStations)
+				interceptorStation.PerformEndOfTurn();
 			ThreatController.PerformEndOfTurn();
 		}
 
-		private void ResolveDamage(IEnumerable<PlayerDamage> damages, PlayerInterceptorDamage interceptorDamages)
+		private void ResolveDamage(IEnumerable<PlayerDamage> damages, IEnumerable<PlayerInterceptorDamage> interceptorDamages)
 		{
 			if (!ThreatController.DamageableExternalThreats.Any())
 				return;
@@ -221,8 +224,8 @@ namespace BLL
 						throw new InvalidOperationException();
 				}
 			}
-			if (interceptorDamages != null)
-				AddInterceptorDamages(interceptorDamages, damagesByThreat);
+			foreach(var interceptorDamage in interceptorDamages)
+				AddInterceptorDamages(interceptorDamage, damagesByThreat);
 
 			foreach (var threat in damagesByThreat.Keys)
 				threat.TakeDamage(damagesByThreat[threat]);

@@ -45,7 +45,7 @@ namespace BLL.ShipComponents
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
 				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
-			var newDamageTokens = GetNewDamageTokens(damageDone);
+			var newDamageTokens = GetNewDamageTokens(Math.Min(damageDone, 6 - TotalDamage ));
 			CurrentDamageTokens.AddRange(newDamageTokens);
 			AllDamageTokensTaken.AddRange(newDamageTokens);
 			TotalDamage += damageDone;

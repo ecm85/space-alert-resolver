@@ -15,7 +15,7 @@ namespace BLL
 		private IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
-		public InterceptorStation InterceptorStation { get; private set; }
+		public IList<InterceptorStation> InterceptorStations { get; private set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		private CentralReactor CentralReactor { get; set; }
@@ -23,7 +23,6 @@ namespace BLL
 		public event Action RocketsModified = () => { };
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 
-		//TODO: VR Interceptors: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
 			var redGravolift = new Gravolift();
@@ -44,9 +43,17 @@ namespace BLL
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
 			rocketsComponent.RocketsModified += () => RocketsModified();
-			var interceptorStation = new InterceptorStation
+			var interceptorStation1 = new InterceptorStation
 			{
-				StationLocation = StationLocation.Interceptor
+				StationLocation = StationLocation.Interceptor1
+			};
+			var interceptorStation2 = new InterceptorStation
+			{
+				StationLocation = StationLocation.Interceptor2
+			};
+			var interceptorStation3 = new InterceptorStation
+			{
+				StationLocation = StationLocation.Interceptor3
 			};
 			var upperRedStation = new UpperStation
 			{
@@ -56,8 +63,10 @@ namespace BLL
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift
 			};
-			interceptorStation.InterceptorComponent = new InterceptorComponent(null, upperRedStation);
-			upperRedStation.CComponent = new InterceptorComponent(interceptorStation, null);
+			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation);
+			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1);
+			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2);
+			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null);
 			var upperWhiteStation = new UpperStation
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
@@ -113,11 +122,12 @@ namespace BLL
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = whiteGravolift};
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = blueGravolift};
 			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
+			InterceptorStations = new [] {interceptorStation1, interceptorStation2, interceptorStation3};
 			StationsByLocation = Zones
-				.SelectMany(zone => new StandardStation[] {zone.LowerStation, zone.UpperStation})
-				.Concat(new Station[] {interceptorStation})
+				.SelectMany(zone => new Station[] {zone.LowerStation, zone.UpperStation})
+				.Concat(InterceptorStations)
 				.ToDictionary(station => station.StationLocation);
-			InterceptorStation = interceptorStation;
+
 			BattleBotsComponentsByLocation = new Dictionary<StationLocation, BattleBotsComponent>
 			{
 				{StationLocation.UpperBlue, upperBlueBattleBots},
@@ -173,6 +183,8 @@ namespace BLL
 			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
+
+
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
 		{
 			var result = new ThreatDamageResult();
@@ -181,15 +193,19 @@ namespace BLL
 				bool isDestroyed;
 				switch (damage.ThreatDamageType)
 				{
-					case ThreatDamageType.Internal:
 					case ThreatDamageType.IgnoresShields:
 						isDestroyed = zone.TakeDamage(damage.Amount);
 						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
 						break;
 					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
 						var amount = damage.Amount;
-						if (InterceptorStation.Players.Any())
-							amount -= 2;
+						if (damage.DistanceToSource != null)
+						{
+							var stationsBetweenThreatAndShip = InterceptorStations
+								.Where(station => station.StationLocation.DistanceFromShip() <= damage.DistanceToSource);
+							if (stationsBetweenThreatAndShip.Any(station => station.Players.Any()))
+								amount -= 2;
+						}
 						isDestroyed = zone.TakeAttack(amount, ThreatDamageType.Standard);
 						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
 						break;

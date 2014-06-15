@@ -11,7 +11,6 @@ namespace BLL
 		IgnoresShields,
 		Plasmatic,
 		DoubleDamageThroughShields,
-		ReducedByTwoAgainstInterceptors,
-		Internal
+		ReducedByTwoAgainstInterceptors
 	}
 }

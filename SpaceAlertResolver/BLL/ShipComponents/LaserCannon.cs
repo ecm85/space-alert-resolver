@@ -8,7 +8,7 @@ namespace BLL.ShipComponents
 	public abstract class LaserCannon : Cannon
 	{
 		protected LaserCannon(EnergyContainer source, int damage, PlayerDamageType playerDamageType, ZoneLocation currentZone)
-			: base(source, damage, 3, playerDamageType, currentZone)
+			: base(source, damage, new [] {1, 2, 3}, playerDamageType, currentZone)
 		{
 		}
 
@@ -28,9 +28,9 @@ namespace BLL.ShipComponents
 				damage += 1;
 		}
 
-		protected override PlayerDamage GetPlayerDamage(int amount)
+		protected override PlayerDamage GetPlayerDamage(int amount, Player performingPlayer)
 		{
-			return new PlayerDamage(amount, playerDamageType, range, zonesAffected, DisruptedOptics);
+			return new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer, DisruptedOptics);
 		}
 	}
 }

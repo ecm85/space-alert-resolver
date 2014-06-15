@@ -36,7 +36,7 @@ namespace BLL.ShipComponents
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
 				return null;
 			}
-			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic) : null;
+			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer) : null;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
@@ -45,11 +45,13 @@ namespace BLL.ShipComponents
 			if (firstCThreat != null)
 				DamageThreat(1, firstCThreat, performingPlayer, false);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
-				CComponent.PerformCAction(performingPlayer);
+				CComponent.PerformCAction(performingPlayer, currentTurn);
 		}
 
-		public override void UseBattleBots(Player performingPlayer, bool isHeroic)
+		public override void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
+			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
+				return;
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			if (firstBattleBotThreat != null)
 				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);

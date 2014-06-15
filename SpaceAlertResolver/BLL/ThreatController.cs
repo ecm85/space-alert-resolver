@@ -39,10 +39,10 @@ namespace BLL
 
 		public void AddNewThreatsToTracks(int currentTurn)
 		{
-			foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn + 1))
 				newThreat.PlaceOnTrack(ExternalTracks[newThreat.CurrentZone]);
 
-			foreach (var newThreat in InternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			foreach (var newThreat in InternalThreats.Where(threat => threat.TimeAppears == currentTurn + 1))
 				newThreat.PlaceOnTrack(InternalTrack);
 		}
 
