@@ -41,20 +41,19 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			var interceptorDamages = damages.SingleOrDefault(damage => damage.PlayerDamageType == PlayerDamageType.InterceptorsSingle);
+			var modifiedDamages = damages.ToList();
+			var interceptorDamages = modifiedDamages.SingleOrDefault(damage => damage.PlayerDamageType == PlayerDamageType.InterceptorsSingle);
 			if (interceptorDamages != null)
 			{
-				var strongerInterceptorDamages = new PlayerDamage(
-					interceptorDamages.Amount + 6,
-					PlayerDamageType.InterceptorsSingle,
-					interceptorDamages.AffectedDistance,
-					interceptorDamages.ZoneLocations,
-					interceptorDamages.PerformingPlayer);
-				damages.Remove(interceptorDamages);
-				damages.Add(strongerInterceptorDamages);
+				var strongerInterceptorDamages = new PlayerDamage(interceptorDamages)
+				{
+					Amount = interceptorDamages.Amount + 6
+				};
 				interceptorDamages.PerformingPlayer.IsKnockedOut = true;
+				modifiedDamages.Remove(interceptorDamages);
+				modifiedDamages.Add(strongerInterceptorDamages);
 			}
-			base.TakeDamage(damages);
+			base.TakeDamage(modifiedDamages);
 		}
 	}
 }

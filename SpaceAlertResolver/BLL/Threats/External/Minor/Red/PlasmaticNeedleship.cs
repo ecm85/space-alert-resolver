@@ -3,39 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.Threats.External.Minor.Yellow
+namespace BLL.Threats.External.Minor.Red
 {
-	public class Scout : MinorYellowExternalThreat
+	public class PlasmaticNeedleship : MinorRedExternalThreat
 	{
-		public Scout()
-			: base(1, 3, 2)
+		public PlasmaticNeedleship()
+			: base(1, 3, 3)
 		{
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			ThreatController.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
+			Attack(1, ThreatDamageType.Plasmatic);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			ThreatController.MoveExternalThreats(currentTurn, 1);
+			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(2, ThreatDamageType.IgnoresShields);
-		}
-
-		protected override void OnHealthReducedToZero()
-		{
-			ThreatController.RemoveExternalThreatBuffForSource(this);
-			base.OnHealthReducedToZero();
+			Attack(4, ThreatDamageType.Plasmatic);
 		}
 
 		public static string GetDisplayName()
 		{
-			return "Scout";
+			return "Plasmatic Needleship";
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)

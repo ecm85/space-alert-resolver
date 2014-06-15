@@ -184,8 +184,6 @@ namespace BLL
 			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
-
-
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
 		{
 			var result = new ThreatDamageResult();
