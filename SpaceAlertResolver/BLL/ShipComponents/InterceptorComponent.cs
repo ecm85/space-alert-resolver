@@ -9,26 +9,36 @@ namespace BLL.ShipComponents
 	{
 		private readonly InterceptorStation spacewardStation;
 		private readonly Station shipwardStation;
-		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation)
+		public bool InterceptorsAvailable { get; set; }
+		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation, bool interceptorsAvailable = false)
 		{
 			this.spacewardStation = spacewardStation;
 			this.shipwardStation = shipwardStation;
+			InterceptorsAvailable = interceptorsAvailable;
 		}
 
-		//TODO: VR Interceptors: Only allow one person in space at a time, not just in the destination zone
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && !spacewardStation.Players.Any())
 			{
-				var currentDistanceFromShip = performingPlayer.CurrentStation.StationLocation.DistanceFromShip();
-				if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
+				if (InterceptorsAvailable)
 				{
-					performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-					spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
+					performingPlayer.IsUsingInterceptors = true;
+					InterceptorsAvailable = false;
 				}
-				else
+				if (performingPlayer.IsUsingInterceptors)
 				{
-					//TODO: VR Interceptors: Player returns to ship and knocked out
+					var currentDistanceFromShip = performingPlayer.CurrentStation.StationLocation.DistanceFromShip();
+					if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
+					{
+						performingPlayer.CurrentStation.Players.Remove(performingPlayer);
+						spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
+					}
+					else
+					{
+						performingPlayer.IsKnockedOut = true;
+						performingPlayer.BattleBots.IsDisabled = true;
+					}
 				}
 			}
 		}

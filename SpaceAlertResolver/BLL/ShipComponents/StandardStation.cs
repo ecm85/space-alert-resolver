@@ -91,6 +91,12 @@ namespace BLL.ShipComponents
 			OnMoveIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
+			if (performingPlayer.IsUsingInterceptors)
+			{
+				var interceptorComponent = (InterceptorComponent)CComponent;
+				interceptorComponent.InterceptorsAvailable = true;
+				performingPlayer.IsUsingInterceptors = false;
+			}
 		}
 
 		public override bool CanMoveOutTowardsRed()

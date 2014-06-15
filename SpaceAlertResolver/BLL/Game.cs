@@ -70,7 +70,11 @@ namespace BLL
 				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
-				//TODO: VR Interceptors: Players still in space at distance 2 or 3 are knocked out and battlebots disabled
+				foreach(var player in sittingDuck.InterceptorStations.Where(station => station.StationLocation.DistanceFromShip() > 1).SelectMany(station => station.Players))
+				{
+					player.IsKnockedOut = true;
+					player.BattleBots.IsDisabled = true;
+				}
 				CalculateScore();
 				ThreatController.JumpToHyperspace();
 			}

@@ -66,7 +66,7 @@ namespace BLL
 			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation);
 			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1);
 			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2);
-			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null);
+			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null, true);
 			var upperWhiteStation = new UpperStation
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
