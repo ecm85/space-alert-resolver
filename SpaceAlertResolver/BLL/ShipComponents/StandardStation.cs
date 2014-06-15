@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL.Threats.Internal;
 
 namespace BLL.ShipComponents
 {
-	public class StandardStation : Station
+	public abstract class StandardStation : Station
 	{
 		public Gravolift Gravolift { get; set; }
 		public Airlock BluewardAirlock { get; set; }
 		public Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; set; }
 
-		protected bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
+		protected abstract void RefillEnergy(bool isHeroic);
+
+		private bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
 		{
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
 		}
@@ -24,7 +25,7 @@ namespace BLL.ShipComponents
 			if (firstBThreat != null)
 				DamageThreat(firstBThreat, performingPlayer, isHeroic);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
-				EnergyContainer.PerformBAction(isHeroic);
+				RefillEnergy(isHeroic);
 		}
 
 		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)

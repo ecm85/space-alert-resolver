@@ -7,9 +7,8 @@ namespace BLL.ShipComponents
 {
 	public class Zone
 	{
-		//TODO: Code Cleanup: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
-		public StandardStation UpperStation { get; set; }
-		public StandardStation LowerStation { get; set; }
+		public UpperStation UpperStation { get; set; }
+		public LowerStation LowerStation { get; set; }
 		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public Gravolift Gravolift { get; set; }
@@ -28,9 +27,9 @@ namespace BLL.ShipComponents
 
 		public bool TakeAttack(int amount, ThreatDamageType damageType)
 		{
-			var oldShields = UpperStation.EnergyContainer.Energy;
-			UpperStation.EnergyContainer.Energy -= amount;
-			var newShields = UpperStation.EnergyContainer.Energy;
+			var oldShields = UpperStation.Shield.Energy;
+			UpperStation.Shield.Energy -= amount;
+			var newShields = UpperStation.Shield.Energy;
 			var damageShielded = oldShields - newShields;
 			var damageDone = amount - damageShielded;
 			if (damageType == ThreatDamageType.DoubleDamageThroughShields)
@@ -67,10 +66,10 @@ namespace BLL.ShipComponents
 							Gravolift.SetDamaged();
 							break;
 						case DamageToken.Reactor:
-							LowerStation.EnergyContainer.SetDamaged();
+							LowerStation.Reactor.SetDamaged();
 							break;
 						case DamageToken.Shield:
-							UpperStation.EnergyContainer.SetDamaged();
+							UpperStation.Shield.SetDamaged();
 							break;
 						case DamageToken.Structural:
 							break;
@@ -95,30 +94,26 @@ namespace BLL.ShipComponents
 
 		public int DrainShield()
 		{
-			var oldEnergy = UpperStation.EnergyContainer.Energy;
-			UpperStation.EnergyContainer.Energy = 0;
+			var oldEnergy = UpperStation.Shield.Energy;
+			UpperStation.Shield.Energy = 0;
 			return oldEnergy;
 		}
 
-		public int DrainShield(int amount)
+		public void DrainShield(int amount)
 		{
-			var oldEnergy = UpperStation.EnergyContainer.Energy;
-			UpperStation.EnergyContainer.Energy -= amount;
-			return oldEnergy;
+			UpperStation.Shield.Energy -= amount;
 		}
 
-		public int DrainReactor()
+		public void DrainReactor()
 		{
-			var oldEnergy = LowerStation.EnergyContainer.Energy;
-			LowerStation.EnergyContainer.Energy = 0;
-			return oldEnergy;
+			LowerStation.Reactor.Energy = 0;
 		}
 
 		public int DrainReactor(int amount)
 		{
-			var oldEnergy = LowerStation.EnergyContainer.Energy;
-			LowerStation.EnergyContainer.Energy -= amount;
-			var currentEnergy = LowerStation.EnergyContainer.Energy;
+			var oldEnergy = LowerStation.Reactor.Energy;
+			LowerStation.Reactor.Energy -= amount;
+			var currentEnergy = LowerStation.Reactor.Energy;
 			return oldEnergy - currentEnergy;
 		}
 
@@ -139,6 +134,11 @@ namespace BLL.ShipComponents
 		{
 			DebuffsBySource.Remove(source);
 			UpdateOptics();
+		}
+
+		public int GetEnergyInReactor()
+		{
+			return LowerStation.Reactor.Energy;
 		}
 	}
 }

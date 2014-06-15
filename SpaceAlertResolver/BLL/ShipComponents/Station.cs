@@ -11,7 +11,6 @@ namespace BLL.ShipComponents
 		public StationLocation StationLocation { get; set; }
 		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
-		public virtual EnergyContainer EnergyContainer { get; set; }
 		public event Action<Player, int> MoveIn = (player, i) => { };
 		public event Action<Player, int> MoveOut = (player, i) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }

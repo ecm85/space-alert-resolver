@@ -12,14 +12,15 @@ namespace BLL
 	{
 		ThreatDamageResult TakeAttack(ThreatDamage damage);
 
-		int DrainShields(IEnumerable<ZoneLocation> zoneLocations);
-		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
-		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
+		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
+		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		int DrainShield(ZoneLocation zoneLocation);
+		int DrainReactor(ZoneLocation zoneLocation, int amount);
 		void DrainAllReactors(int amount);
 
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
-		int GetEnergyInStation(StationLocation currentStation);
 
 		void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
 		void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
@@ -55,5 +56,7 @@ namespace BLL
 		void UnsubscribeFromMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
 
 		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
+		void DestroyFuelCapsule();
+		int GetEnergyInReactor(ZoneLocation currentZone);
 	}
 }

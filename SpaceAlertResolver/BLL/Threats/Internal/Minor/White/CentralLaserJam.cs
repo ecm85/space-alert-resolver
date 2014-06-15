@@ -39,7 +39,7 @@ namespace BLL.Threats.Internal.Minor.White
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
 			var energyDrained = 0;
 			if (remainingDamageWillDestroyThreat)
-				energyDrained = SittingDuck.DrainReactors(CurrentZones, 1);
+				energyDrained = SittingDuck.DrainReactor(CurrentZone, 1);
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);

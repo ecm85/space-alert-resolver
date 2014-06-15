@@ -10,12 +10,6 @@ namespace BLL.ShipComponents
 		public InterceptorComponent InterceptorComponent { private get; set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
-		public override EnergyContainer EnergyContainer
-		{
-			get { throw new InvalidOperationException("Interceptor station has no energy container."); }
-			set { throw new InvalidOperationException("Interceptor station has no energy container."); }
-		}
-
 		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			performingPlayer.Shift(currentTurn);

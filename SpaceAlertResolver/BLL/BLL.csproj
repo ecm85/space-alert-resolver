@@ -63,6 +63,7 @@
     <Compile Include="ShipComponents\CentralHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\Gravolift.cs" />
     <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\LowerStation.cs" />
     <Compile Include="ShipComponents\Reactor.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
     <Compile Include="ShipComponents\StationLocation.cs" />
+    <Compile Include="ShipComponents\UpperStation.cs" />
     <Compile Include="ShipComponents\VisualConfirmationComponent.cs" />
     <Compile Include="ShipComponents\Zone.cs" />
     <Compile Include="ShipComponents\ZoneLocation.cs" />

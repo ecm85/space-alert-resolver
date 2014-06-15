@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var energyDrained = SittingDuck.DrainReactors(CurrentZones, 1);
+			var energyDrained = SittingDuck.DrainReactor(CurrentZone, 1);
 			if (energyDrained == 0)
 				Damage(1);
 		}

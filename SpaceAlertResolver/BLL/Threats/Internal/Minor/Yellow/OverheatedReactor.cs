@@ -20,12 +20,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Damage(SittingDuck.GetEnergyInStation(CurrentStation));
+			Damage(SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.DrainReactors(CurrentZones, 1);
+			SittingDuck.DestroyFuelCapsule();
 		}
 
 		protected override void PerformZAction(int currentTurn)

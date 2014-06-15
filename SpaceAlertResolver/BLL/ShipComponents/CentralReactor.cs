@@ -7,12 +7,12 @@ namespace BLL.ShipComponents
 {
 	public class CentralReactor : Reactor
 	{
-		private int storageCapsules = 3;
+		private int fuelCapsules = 3;
 
-		public int StorageCapsules
+		public int FuelCapsules
 		{
-			get { return storageCapsules; }
-			set { storageCapsules = value < 0 ? 0 : value; }
+			get { return fuelCapsules; }
+			set { fuelCapsules = value < 0 ? 0 : value; }
 		}
 
 		public CentralReactor() : base(5, 3)
@@ -21,10 +21,10 @@ namespace BLL.ShipComponents
 
 		public override void PerformBAction(bool isHeroic)
 		{
-			if (storageCapsules <= 0)
+			if (fuelCapsules <= 0)
 				return;
 			var oldEnergy = Energy;
-			storageCapsules--;
+			fuelCapsules--;
 			Energy = Capacity;
 			if (isHeroic && Energy > oldEnergy)
 				Energy++;

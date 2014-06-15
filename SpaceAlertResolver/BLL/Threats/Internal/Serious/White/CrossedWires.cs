@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		private void EnergyLeaksOut(ZoneLocation zoneLocation)
 		{
-			var energyDrained = SittingDuck.DrainShields(new[] { zoneLocation });
+			var energyDrained = SittingDuck.DrainShield(zoneLocation);
 			Damage(energyDrained);
 		}
 	}
