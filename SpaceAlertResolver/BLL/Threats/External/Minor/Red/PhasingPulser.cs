@@ -74,7 +74,7 @@ namespace BLL.Threats.External.Minor.Red
 
 		public static string GetDisplayName()
 		{
-			return "Phasing Fighter";
+			return "Phasing Pulser";
 		}
 	}
 }
