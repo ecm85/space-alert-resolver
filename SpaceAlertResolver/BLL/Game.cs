@@ -20,6 +20,7 @@ namespace BLL
 		//TODO: Feature: Change all threat display names to include threat #
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Code Cleanup: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
+		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
