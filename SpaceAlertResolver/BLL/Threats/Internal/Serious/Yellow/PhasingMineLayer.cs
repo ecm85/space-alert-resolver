@@ -99,18 +99,11 @@ namespace BLL.Threats.Internal.Serious.Yellow
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
-			base.OnHealthReducedToZero();
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 		}
 	}
 }

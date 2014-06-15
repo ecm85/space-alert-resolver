@@ -64,20 +64,12 @@ namespace BLL.Threats.External.Minor.Yellow
 			return !isPhased && base.CanBeTargetedBy(damage);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
 			BeforeMove -= PerformBeforeMove;
 			AfterMove -= PerformAfterMove;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
-			base.OnHealthReducedToZero();
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			BeforeMove -= PerformBeforeMove;
-			AfterMove -= PerformAfterMove;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 		}
 
 		public static string GetDisplayName()

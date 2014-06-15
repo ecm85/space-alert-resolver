@@ -23,7 +23,7 @@ namespace BLL.ShipComponents
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
 			if (firstBThreat != null)
-				DamageThreat(firstBThreat, performingPlayer, isHeroic);
+				DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
 				RefillEnergy(isHeroic);
 		}
@@ -33,7 +33,7 @@ namespace BLL.ShipComponents
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
 			if (firstAThreat != null)
 			{
-				DamageThreat(firstAThreat, performingPlayer, isHeroic);
+				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
 				return null;
 			}
 			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic) : null;
@@ -43,7 +43,7 @@ namespace BLL.ShipComponents
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
 			if (firstCThreat != null)
-				DamageThreat(firstCThreat, performingPlayer, false);
+				DamageThreat(1, firstCThreat, performingPlayer, false);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
 				CComponent.PerformCAction(performingPlayer);
 		}
@@ -52,7 +52,7 @@ namespace BLL.ShipComponents
 		{
 			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
 			if (firstBattleBotThreat != null)
-				DamageThreat(firstBattleBotThreat, performingPlayer, isHeroic);
+				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 
 		public override bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)

@@ -36,7 +36,7 @@ namespace BLL.Threats.External
 
 		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; }}
 
-		public virtual void TakeIrreducibleDamage(int amount)
+		public void TakeIrreducibleDamage(int amount)
 		{
 			RemainingHealth -= amount;
 			CheckDefeated();
@@ -49,7 +49,7 @@ namespace BLL.Threats.External
 
 		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
 		{
-			var bonusShields = SittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
+			var bonusShields = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
 			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
@@ -90,23 +90,17 @@ namespace BLL.Threats.External
 
 		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
-			var bonusAttacks = SittingDuck.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
+			var bonusAttacks = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations);
 			var result = SittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
 			ThreatController.ExternalThreatsMove -= PerformMove;
-			base.OnHealthReducedToZero();
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			ThreatController.ExternalThreatsMove -= PerformMove;
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 		}
 	}
 }

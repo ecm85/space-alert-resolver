@@ -9,8 +9,6 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		//TODO: Code Cleanup: Clean up single vs multiple stations
-
 		protected List<StationLocation> CurrentStations { get; private set; }
 
 		private readonly int? totalInaccessibility;
@@ -61,7 +59,6 @@ namespace BLL.Threats.Internal
 			TimeAppears = timeAppears;
 		}
 
-		//TODO: Code Cleanup: Respect isHeroic here instead of in the ship
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var damageRemaining = damage;
@@ -139,15 +136,12 @@ namespace BLL.Threats.Internal
 		protected override void OnReachingEndOfTrack()
 		{
 			base.OnReachingEndOfTrack();
-			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
-			CurrentStations.Clear();
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			AddIrreparableMalfunction();
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
-			base.OnHealthReducedToZero();
+			base.OnThreatTerminated();
 			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
 			ThreatController.EndOfTurn -= PerformEndOfTurn;

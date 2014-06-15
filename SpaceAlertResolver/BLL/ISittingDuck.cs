@@ -25,10 +25,6 @@ namespace BLL
 		void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
 		void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
 
-		IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs();
-		void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source);
-		void RemoveExternalThreatBuffForSource(ExternalThreat source);
-
 		int GetPlayerCount(StationLocation station);
 		int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations);
 

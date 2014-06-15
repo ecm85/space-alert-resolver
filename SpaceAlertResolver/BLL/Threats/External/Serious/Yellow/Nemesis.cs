@@ -55,11 +55,11 @@ namespace BLL.Threats.External.Serious.Yellow
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
-			base.OnHealthReducedToZero();
-			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			base.OnThreatTerminated();
+			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
+			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
 	}
 }

@@ -50,15 +50,9 @@ namespace BLL.Threats.External.Serious.White
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
-			base.OnHealthReducedToZero();
-			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 	}

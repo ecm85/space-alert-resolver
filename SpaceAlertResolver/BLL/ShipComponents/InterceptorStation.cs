@@ -79,7 +79,7 @@ namespace BLL.ShipComponents
 			if (firstThreat == null)
 				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic);
 			else
-				DamageThreat(firstThreat, performingPlayer, isHeroic);
+				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
 		}
 
 		public override void PerformNoAction(Player performingPlayer, int currentTurn)

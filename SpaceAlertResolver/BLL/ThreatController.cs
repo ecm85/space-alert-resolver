@@ -21,7 +21,8 @@ namespace BLL
 		public event Action EndOfPlayerActions = () => { };
 		public event Action EndOfTurn = () => { };
 		public event Action EndOfDamageResolution = () => { };
-
+		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
+		
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
 			get { return ExternalThreats.Where(threat => threat.IsDamageable); }
@@ -33,6 +34,7 @@ namespace BLL
 			ExternalTracks = externalTracks;
 			ExternalThreats = externalThreats;
 			InternalThreats = internalThreats;
+			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
 		}
 
 		public void AddNewThreatsToTracks(int currentTurn)
@@ -72,6 +74,21 @@ namespace BLL
 		public void PerformEndOfDamageResolution()
 		{
 			EndOfDamageResolution();
+		}
+
+		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()
+		{
+			return CurrentExternalThreatBuffsBySource.Values.ToList();
+		}
+
+		public void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source)
+		{
+			CurrentExternalThreatBuffsBySource[source] = buff;
+		}
+
+		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
+		{
+			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 	}
 }

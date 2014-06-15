@@ -90,16 +90,14 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		protected override void OnHealthReducedToZero()
 		{
 			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
 			base.OnHealthReducedToZero();
 		}
 
-		protected override void OnReachingEndOfTrack()
+		protected override void OnThreatTerminated()
 		{
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 		}
 	}
 }

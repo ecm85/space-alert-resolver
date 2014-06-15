@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
-using BLL.Threats.External;
 using BLL.Threats.Internal;
 
 namespace BLL
@@ -22,9 +21,7 @@ namespace BLL
 		private CentralReactor CentralReactor { get; set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event Action RocketsModified = () => { };
-
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
-		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
 
 		//TODO: VR Interceptors: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
@@ -34,7 +31,6 @@ namespace BLL
 			var blueGravolift = new Gravolift();
 			var redAirlock = new Airlock();
 			var blueAirlock = new Airlock();
-			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
 			var whiteReactor = new CentralReactor();
 			CentralReactor = whiteReactor;
 			var redReactor = new SideReactor(whiteReactor);
@@ -355,21 +351,6 @@ namespace BLL
 		public int GetEnergyInReactor(ZoneLocation currentZone)
 		{
 			return ZonesByLocation[currentZone].GetEnergyInReactor();
-		}
-
-		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()
-		{
-			return CurrentExternalThreatBuffsBySource.Values.ToList();
-		}
-
-		public void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source)
-		{
-			CurrentExternalThreatBuffsBySource[source] = buff;
-		}
-
-		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
-		{
-			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 
 		public void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)

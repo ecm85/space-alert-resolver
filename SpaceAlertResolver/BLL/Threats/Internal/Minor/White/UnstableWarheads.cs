@@ -38,16 +38,10 @@ namespace BLL.Threats.Internal.Minor.White
 			Damage(RemainingHealth * 3);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
 			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
-			base.OnHealthReducedToZero();
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 		}
 
 		public static string GetDisplayName()

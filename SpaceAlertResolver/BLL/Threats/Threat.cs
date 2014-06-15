@@ -69,16 +69,20 @@ namespace BLL.Threats
 
 		protected virtual void OnReachingEndOfTrack()
 		{
-			ThreatController.ThreatsMove -= PerformMove;
 			IsSurvived = true;
-			Position = null;
+			OnThreatTerminated();
 		}
 
 		protected virtual void OnHealthReducedToZero()
 		{
 			IsDefeated = true;
-			ThreatController.ThreatsMove -= PerformMove;
+			OnThreatTerminated();
+		}
+
+		protected virtual void OnThreatTerminated()
+		{
 			Position = null;
+			ThreatController.ThreatsMove -= PerformMove;
 		}
 
 		protected bool IsDamaged

@@ -50,9 +50,8 @@ namespace BLL.ShipComponents
 				.FirstOrDefault();
 		}
 
-		protected void DamageThreat(InternalThreat threat, Player performingPlayer, bool isHeroic)
+		protected void DamageThreat(int damage, InternalThreat threat, Player performingPlayer, bool isHeroic)
 		{
-			var damage = isHeroic ? 2 : 1;
 			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
 		}
 

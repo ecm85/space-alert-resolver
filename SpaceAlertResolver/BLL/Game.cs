@@ -16,11 +16,9 @@ namespace BLL
 		//TODO: Feature: Campaign repairs and damage carryover
 		//TODO: Feature: Let user select damage tokens
 		//TODO: Feature: include penalties in score, and break score up more?
-		//TODO: Code Cleanup: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
 		//TODO: Code Cleanup: Threat factory, threat enum
 		//TODO: Code Cleanup: Pick perform or on for event names. Stop using both! Maybe Do?
 		//TODO: Feature: Change all threat display names to include threat #
-		//TODO: Code Cleanup: Add threats OnThreatTerminated method and move common calls from both On methods into it (and in all children)
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Code Cleanup: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
 		private readonly SittingDuck sittingDuck;

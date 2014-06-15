@@ -28,10 +28,10 @@ namespace BLL.Threats.Internal.Serious.White
 			throw new LoseException(this);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
-			base.OnHealthReducedToZero();
 			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
+			base.OnThreatTerminated();
 		}
 
 		public static string GetDisplayName()

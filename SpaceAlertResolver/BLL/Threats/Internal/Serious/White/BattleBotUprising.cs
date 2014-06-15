@@ -55,15 +55,9 @@ namespace BLL.Threats.Internal.Serious.White
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
 
-		protected override void OnHealthReducedToZero()
+		protected override void OnThreatTerminated()
 		{
-			base.OnHealthReducedToZero();
-			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			base.OnReachingEndOfTrack();
+			base.OnThreatTerminated();
 			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
 		}
 	}
