@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		//TODO: Clean up single vs multiple stations
+		//TODO: Code Cleanup: Clean up single vs multiple stations
 
 		protected List<StationLocation> CurrentStations { get; private set; }
 
@@ -61,7 +61,7 @@ namespace BLL.Threats.Internal
 			TimeAppears = timeAppears;
 		}
 
-		//TODO: Respect isHeroic here instead of in the ship
+		//TODO: Code Cleanup: Respect isHeroic here instead of in the ship
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
 		{
 			var damageRemaining = damage;
@@ -142,6 +142,7 @@ namespace BLL.Threats.Internal
 			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			AddIrreparableMalfunction();
 		}
 
 		protected override void OnHealthReducedToZero()
@@ -152,15 +153,12 @@ namespace BLL.Threats.Internal
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
 
-		//TODO: Add irreparable malfunctions to ship here
-		public IrreparableMalfunction GetIrreparableMalfunction()
+		private void AddIrreparableMalfunction()
 		{
-			if (ActionType == PlayerAction.BattleBots)
-				return null;
-			return new IrreparableMalfunction
-			{
-				ActionType = ActionType
-			};
+			if (ActionType != PlayerAction.BattleBots)
+				SittingDuck.AddIrreparableMalfunctionToStations(
+					CurrentStations,
+					new IrreparableMalfunction {ActionType = ActionType});
 		}
 
 		protected virtual void PerformEndOfTurn()

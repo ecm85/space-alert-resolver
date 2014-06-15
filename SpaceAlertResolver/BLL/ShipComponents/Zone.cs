@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class Zone
 	{
-		//TODO: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
+		//TODO: Code Cleanup: Make UpperStation and LowerStation classes and have them have a reactor and shield instead of two EnergyContainers?
 		public StandardStation UpperStation { get; set; }
 		public StandardStation LowerStation { get; set; }
 		public int TotalDamage { get; private set; }

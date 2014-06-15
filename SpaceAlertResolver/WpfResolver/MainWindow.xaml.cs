@@ -18,15 +18,15 @@ using BLL.Tracks;
 
 namespace WpfResolver
 {
-	//TODO: Don't allow same track multiple times
-	//TODO: Don't allow same threat multiple times
-	//TODO: Don't allow to click 'remove all threats' unless there are threats
-	//TODO: Don't allow to click 'remove selected threats' unless there are threats selected
-	//TODO: Don't allow to click 'add new threat' if haven't picked a track (if applicable), a threat, and a time appears
-	//TODO: Don't allow multiple internal or external threats at the same time
-	//TODO: Don't allow 'Resolve' unless at least one threat is picked, actions are picked, and all 4 tracks are picked
-	//TODO: Stop relying on the nullability of track in ThreatInGame - make two lists of threats?
-	//TODO: Format output better
+	//TODO: UI: Don't allow same track multiple times
+	//TODO: UI: Don't allow same threat multiple times
+	//TODO: UI: Don't allow to click 'remove all threats' unless there are threats
+	//TODO: UI: Don't allow to click 'remove selected threats' unless there are threats selected
+	//TODO: UI: Don't allow to click 'add new threat' if haven't picked a track (if applicable), a threat, and a time appears
+	//TODO: UI: Don't allow multiple internal or external threats at the same time
+	//TODO: UI: Don't allow 'Resolve' unless at least one threat is picked, actions are picked, and all 4 tracks are picked
+	//TODO: UI: Stop relying on the nullability of track in ThreatInGame - make two lists of threats?
+	//TODO: UI: Format output better
 
 	public partial class MainWindow
 	{

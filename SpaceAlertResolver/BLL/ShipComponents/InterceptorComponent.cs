@@ -27,7 +27,7 @@ namespace BLL.ShipComponents
 				}
 				else
 				{
-					//TODO: Player returns to ship and knocked out
+					//TODO: VR Interceptors: Player returns to ship and knocked out
 				}
 			}
 		}

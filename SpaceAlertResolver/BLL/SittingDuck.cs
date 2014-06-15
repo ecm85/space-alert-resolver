@@ -25,7 +25,7 @@ namespace BLL
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
 
-		//TODO: Wire up all 3 stations if variable range interceptors are allowed
+		//TODO: VR Interceptors: Wire up all 3 stations if variable range interceptors are allowed
 		public SittingDuck()
 		{
 			var redGravolift = new Gravolift();
@@ -328,6 +328,12 @@ namespace BLL
 		{
 			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
 				station.MoveOut -= handler;
+		}
+
+		public void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction)
+		{
+			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
+				station.IrreparableMalfunctions.Add(malfunction);
 		}
 
 		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()

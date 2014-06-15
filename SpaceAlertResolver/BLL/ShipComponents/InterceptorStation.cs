@@ -33,7 +33,7 @@ namespace BLL.ShipComponents
 		{
 			performingPlayer.Shift(currentTurn);
 			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			//TODO: Change to a further interceptor station instead, if variable range interceptors are in use
+			//TODO: VR Interceptors: Change to a further interceptor station instead, if variable range interceptors are in use
 		}
 
 		public override void UseBattleBots(Player performingPlayer, bool isHeroic)

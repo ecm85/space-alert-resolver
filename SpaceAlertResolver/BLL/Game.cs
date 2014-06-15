@@ -9,20 +9,20 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Variable-range interceptors (see scattered todos)
-		//TODO: Specializations
-		//TODO: Red threats
-		//TODO: Double actions
-		//TODO: Campaign repairs and damage carryover
-		//TODO: Let user select damage tokens
-		//TODO: include penalties in score, and break score up more?
-		//TODO: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
-		//TODO: Threat factory, threat enum
-		//TODO: Pick perform or on for event names. Stop using both! Maybe Do?
-		//TODO: Change all threat display names to include threat #
-		//TODO: Add threats OnThreatTerminated method and move common calls from both On methods into it (and in all children)
-		//TODO: Make damage an event
-		//TODO: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
+		//TODO: Feature: Variable-range interceptors
+		//TODO: Feature: Specializations
+		//TODO: Feature: Red threats
+		//TODO: Feature: Double actions
+		//TODO: Feature: Campaign repairs and damage carryover
+		//TODO: Feature: Let user select damage tokens
+		//TODO: Feature: include penalties in score, and break score up more?
+		//TODO: Code Cleanup: Make threat buff container a separate object instead of a list on ISittingDuck, make a ctor argument to external threats
+		//TODO: Code Cleanup: Threat factory, threat enum
+		//TODO: Code Cleanup: Pick perform or on for event names. Stop using both! Maybe Do?
+		//TODO: Feature: Change all threat display names to include threat #
+		//TODO: Code Cleanup: Add threats OnThreatTerminated method and move common calls from both On methods into it (and in all children)
+		//TODO: Code Cleanup: Make damage an event
+		//TODO: Code Cleanup: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;

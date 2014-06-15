@@ -28,9 +28,10 @@ namespace BLL.ShipComponents
 				case StationLocation.UpperRed:
 				case StationLocation.LowerRed:
 					return ShipComponents.ZoneLocation.Red;
-				//case StationLocation.Interceptor: //TODO: ??
+				case StationLocation.Interceptor:
+					throw new InvalidOperationException("Cannot get zone location for interceptor station.");
 				default:
-					throw new InvalidOperationException();
+					throw new InvalidOperationException("Invalid StationLocation encountered.");
 			}
 		}
 

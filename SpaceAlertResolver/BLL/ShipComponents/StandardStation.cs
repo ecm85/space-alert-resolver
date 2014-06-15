@@ -12,12 +12,6 @@ namespace BLL.ShipComponents
 		public Airlock BluewardAirlock { get; set; }
 		public Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; set; }
-		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
-
-		public StandardStation()
-		{
-			IrreparableMalfunctions = new List<IrreparableMalfunction>();
-		}
 
 		protected bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
 		{

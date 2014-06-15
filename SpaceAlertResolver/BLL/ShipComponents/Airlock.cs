@@ -7,8 +7,8 @@ namespace BLL.ShipComponents
 {
 	public class Airlock
 	{
-		//TODO: Make damageable by breached airlock
-		//TODO: Make threats respect airlock too
+		//TODO: Red Threats: Make damageable by breached airlock
+		//TODO: Red Threats: Make threats respect airlock too
 		public bool CanUse { get { return true; }}
 	}
 }

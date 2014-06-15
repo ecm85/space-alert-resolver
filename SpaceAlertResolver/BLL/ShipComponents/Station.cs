@@ -14,11 +14,13 @@ namespace BLL.ShipComponents
 		public virtual EnergyContainer EnergyContainer { get; set; }
 		public event Action<Player, int> MoveIn = (player, i) => { };
 		public event Action<Player, int> MoveOut = (player, i) => { };
+		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
 
 		protected Station()
 		{
 			Players = new List<Player>();
 			Threats = new HashSet<InternalThreat>();
+			IrreparableMalfunctions = new List<IrreparableMalfunction>();
 		}
 
 		public abstract void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic);
