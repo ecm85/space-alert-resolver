@@ -186,15 +186,18 @@ namespace BLL
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
 		{
-			var result = new ThreatDamageResult();
+			var shipDestroyed = false;
+			var damageShielded = 0;
+			ThreatDamageResult damageResult;
 			foreach (var zone in damage.ZoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 			{
 				bool isDestroyed;
 				switch (damage.ThreatDamageType)
 				{
 					case ThreatDamageType.IgnoresShields:
-						isDestroyed = zone.TakeDamage(damage.Amount);
-						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						damageResult = zone.TakeDamage(damage.Amount);
+						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
+						damageShielded += damageResult.DamageShielded;
 						break;
 					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
 						var amount = damage.Amount;
@@ -205,16 +208,18 @@ namespace BLL
 							if (stationsBetweenThreatAndShip.Any(station => station.Players.Any()))
 								amount -= 2;
 						}
-						isDestroyed = zone.TakeAttack(amount, ThreatDamageType.Standard);
-						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						damageResult = zone.TakeAttack(amount, ThreatDamageType.Standard);
+						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
+						damageShielded += damageResult.DamageShielded;
 						break;
 					default:
-						isDestroyed = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
-						result.ShipDestroyed = result.ShipDestroyed || isDestroyed;
+						damageResult = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
+						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
+						damageShielded += damageResult.DamageShielded;
 						break;
 				}
 			}
-			return result;
+			return new ThreatDamageResult{DamageShielded = damageShielded, ShipDestroyed = shipDestroyed};
 		}
 
 		public virtual int GetPlayerCount(StationLocation station)

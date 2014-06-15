@@ -92,6 +92,7 @@
     <Compile Include="ThreatDamageResult.cs" />
     <Compile Include="ThreatDamageType.cs" />
     <Compile Include="ThreatController.cs" />
+    <Compile Include="Threats\External\Minor\Red\EnergySnake.cs" />
     <Compile Include="Threats\External\Minor\Red\PolarizedFighter.cs" />
     <Compile Include="Threats\External\Minor\Red\MinorRedExternalThreat.cs" />
     <Compile Include="Threats\External\Minor\Red\PhasingDestroyer.cs" />

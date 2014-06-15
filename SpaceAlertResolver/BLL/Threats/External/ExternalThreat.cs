@@ -73,9 +73,9 @@ namespace BLL.Threats.External
 			Attack(amount, threatDamageType, zones);
 		}
 
-		protected void Attack(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
+		protected ThreatDamageResult Attack(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
-			Attack(amount, threatDamageType, new [] {CurrentZone});
+			return Attack(amount, threatDamageType, new[] { CurrentZone });
 		}
 
 		protected void AttackAllZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
@@ -88,13 +88,14 @@ namespace BLL.Threats.External
 			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}
 
-		private void Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
+		private ThreatDamageResult Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
 			var bonusAttacks = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusAttack);
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations, DistanceToShip);
 			var result = SittingDuck.TakeAttack(damage);
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
+			return result;
 		}
 
 		protected override void OnThreatTerminated()

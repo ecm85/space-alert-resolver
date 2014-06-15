@@ -25,7 +25,7 @@ namespace BLL.ShipComponents
 			AllDamageTokensTaken = new List<DamageToken>();
 		}
 
-		public bool TakeAttack(int amount, ThreatDamageType damageType)
+		public ThreatDamageResult TakeAttack(int amount, ThreatDamageType damageType)
 		{
 			var oldShields = UpperStation.Shield.Energy;
 			UpperStation.Shield.Energy -= amount;
@@ -37,10 +37,12 @@ namespace BLL.ShipComponents
 			if (damageShielded == 0 && damageDone > 0 && damageType == ThreatDamageType.Plasmatic)
 				foreach (var player in Players)
 					player.IsKnockedOut = true;
-			return TakeDamage(damageDone);
+			var damageResult = TakeDamage(damageDone);
+			damageResult.DamageShielded = damageShielded;
+			return damageResult;
 		}
 
-		public bool TakeDamage(int damage)
+		public ThreatDamageResult TakeDamage(int damage)
 		{
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
@@ -76,7 +78,7 @@ namespace BLL.ShipComponents
 					}
 				}
 			}
-			return shipDestroyed;
+			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
 		}
 
 		private IList<DamageToken> GetNewDamageTokens(int count)
