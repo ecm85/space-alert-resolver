@@ -63,10 +63,11 @@ namespace BLL
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift
 			};
-			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation);
-			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1);
-			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2);
-			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null, true);
+			var interceptors = new Interceptors();
+			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation, interceptors);
+			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1, interceptors);
+			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2, interceptors);
+			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null, interceptors);
 			var upperWhiteStation = new UpperStation
 			{
 				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),

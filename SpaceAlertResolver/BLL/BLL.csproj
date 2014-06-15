@@ -53,6 +53,7 @@
     <Compile Include="ShipComponents\CComponent.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
     <Compile Include="ShipComponents\InterceptorComponent.cs" />
+    <Compile Include="ShipComponents\Interceptors.cs" />
     <Compile Include="ShipComponents\InterceptorStation.cs" />
     <Compile Include="PlayerDamage.cs" />
     <Compile Include="ShipComponents\BatteryPack.cs" />

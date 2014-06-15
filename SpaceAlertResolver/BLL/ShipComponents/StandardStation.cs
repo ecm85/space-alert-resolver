@@ -91,11 +91,10 @@ namespace BLL.ShipComponents
 			OnMoveIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
-			if (performingPlayer.IsUsingInterceptors)
+			if (performingPlayer.Interceptors != null)
 			{
-				var interceptorComponent = (InterceptorComponent)CComponent;
-				interceptorComponent.InterceptorsAvailable = true;
-				performingPlayer.IsUsingInterceptors = false;
+				performingPlayer.Interceptors.PlayerOperating = null;
+				performingPlayer.Interceptors = null;
 			}
 		}
 

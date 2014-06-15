@@ -9,43 +9,42 @@ namespace BLL.ShipComponents
 	{
 		private readonly InterceptorStation spacewardStation;
 		private readonly Station shipwardStation;
-		public bool InterceptorsAvailable { get; set; }
-		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation, bool interceptorsAvailable = false)
+		public Interceptors Interceptors { get; set; }
+		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation, Interceptors interceptors)
 		{
 			this.spacewardStation = spacewardStation;
 			this.shipwardStation = shipwardStation;
-			InterceptorsAvailable = interceptorsAvailable;
+			Interceptors = interceptors;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
-			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && !spacewardStation.Players.Any())
+			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && Interceptors.PlayerOperating == null)
 			{
-				if (InterceptorsAvailable)
+				Interceptors.PlayerOperating = performingPlayer;
+				performingPlayer.Interceptors = Interceptors;
+			}
+
+			if (performingPlayer.Interceptors != null)
+			{
+				var currentDistanceFromShip = performingPlayer.CurrentStation.StationLocation.DistanceFromShip();
+				if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
 				{
-					performingPlayer.IsUsingInterceptors = true;
-					InterceptorsAvailable = false;
+					performingPlayer.CurrentStation.Players.Remove(performingPlayer);
+					spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
 				}
-				if (performingPlayer.IsUsingInterceptors)
+				else
 				{
-					var currentDistanceFromShip = performingPlayer.CurrentStation.StationLocation.DistanceFromShip();
-					if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
-					{
-						performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-						spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
-					}
-					else
-					{
-						performingPlayer.IsKnockedOut = true;
+					performingPlayer.IsKnockedOut = true;
+					if (performingPlayer.BattleBots != null)
 						performingPlayer.BattleBots.IsDisabled = true;
-					}
 				}
 			}
 		}
 
 		public void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
-			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && shipwardStation != null)
+			if (shipwardStation != null && performingPlayer.Interceptors != null)
 			{
 				performingPlayer.CurrentStation.Players.Remove(performingPlayer);
 				shipwardStation.PerformMoveIn(performingPlayer, currentTurn);
