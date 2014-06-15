@@ -90,7 +90,7 @@ namespace BLL.Threats
 			get { return RemainingHealth < TotalHealth; }
 		}
 
-		protected void Repair(int amount)
+		public void Repair(int amount)
 		{
 			var newHealth = RemainingHealth + amount;
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;

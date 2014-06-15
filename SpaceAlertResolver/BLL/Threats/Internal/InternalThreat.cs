@@ -23,6 +23,7 @@ namespace BLL.Threats.Internal
 		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			ThreatController.EndOfTurn += PerformEndOfTurn;
+			ThreatController.InternalThreatsMove += PerformMove;
 			base.PlaceOnTrack(track, trackPosition);
 		}
 
@@ -145,6 +146,7 @@ namespace BLL.Threats.Internal
 			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			ThreatController.InternalThreatsMove -= PerformMove;
 		}
 
 		private void AddIrreparableMalfunction()

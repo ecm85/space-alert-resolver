@@ -188,10 +188,9 @@ namespace BLL
 		{
 			var shipDestroyed = false;
 			var damageShielded = 0;
-			ThreatDamageResult damageResult;
 			foreach (var zone in damage.ZoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 			{
-				bool isDestroyed;
+				ThreatDamageResult damageResult;
 				switch (damage.ThreatDamageType)
 				{
 					case ThreatDamageType.IgnoresShields:
@@ -371,6 +370,12 @@ namespace BLL
 		public int GetEnergyInReactor(ZoneLocation currentZone)
 		{
 			return ZonesByLocation[currentZone].GetEnergyInReactor();
+		}
+
+		public void KnockOutCaptain()
+		{
+			var captain = Zones.SelectMany(zone => zone.Players).Single(player => player.IsCaptain);
+			captain.IsKnockedOut = true;
 		}
 
 		public void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)

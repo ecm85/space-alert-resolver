@@ -39,11 +39,19 @@ namespace BLL
 			ThreatController = threatController;
 			this.players = players;
 			PadPlayerActions();
+			SetCaptain();
 			nextTurn = 0;
 			movementController = new MovementController
 			{
 				SittingDuck = sittingDuck
 			};
+		}
+
+		private void SetCaptain()
+		{
+			players[0].IsCaptain = true;
+			foreach (var player in players.Except(new[] {players[0]}))
+				player.IsCaptain = false;
 		}
 
 		private void PadPlayerActions()

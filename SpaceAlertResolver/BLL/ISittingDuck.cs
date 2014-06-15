@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
-using BLL.Threats.External;
 using BLL.Threats.Internal;
 
 namespace BLL
@@ -54,5 +53,6 @@ namespace BLL
 		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
 		void DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation currentZone);
+		void KnockOutCaptain();
 	}
 }

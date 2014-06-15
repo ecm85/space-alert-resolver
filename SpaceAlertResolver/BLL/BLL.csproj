@@ -112,6 +112,15 @@
     <Compile Include="Threats\External\Minor\White\Meteoroid.cs" />
     <Compile Include="Threats\External\Minor\Yellow\MinorAsteroid.cs" />
     <Compile Include="Threats\External\Minor\Yellow\PhasingFighter.cs" />
+    <Compile Include="Threats\External\Serious\Red\EnergyDragon.cs" />
+    <Compile Include="Threats\External\Serious\Red\Leaper.cs" />
+    <Compile Include="Threats\External\Serious\Red\MegashieldManOfWar.cs" />
+    <Compile Include="Threats\External\Serious\Red\Overlord.cs" />
+    <Compile Include="Threats\External\Serious\Red\Planetoid.cs" />
+    <Compile Include="Threats\External\Serious\Red\PolarizedFrigate.cs" />
+    <Compile Include="Threats\External\Serious\Red\SeriousRedExternalThreat.cs" />
+    <Compile Include="Threats\External\Serious\Red\SuperCarrier.cs" />
+    <Compile Include="Threats\External\Serious\Red\TransmitterSatellite.cs" />
     <Compile Include="Threats\External\Serious\White\Asteroid.cs" />
     <Compile Include="Threats\External\Minor\White\CryoshieldFighter.cs" />
     <Compile Include="Threats\External\Serious\White\CryoshieldFrigate.cs" />
@@ -141,6 +150,7 @@
     <Compile Include="Threats\External\Serious\Yellow\MotherSwarm.cs" />
     <Compile Include="Threats\External\Serious\Yellow\NebulaCrab.cs" />
     <Compile Include="Threats\External\Serious\Yellow\Nemesis.cs" />
+    <Compile Include="Threats\External\Serious\Red\PhasingManOfWar.cs" />
     <Compile Include="Threats\External\Serious\Yellow\PhasingFrigate.cs" />
     <Compile Include="Threats\External\Serious\Yellow\PlasmaticFrigate.cs" />
     <Compile Include="Threats\External\Serious\Yellow\PsionicSatellite.cs" />

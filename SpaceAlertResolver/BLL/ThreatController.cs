@@ -17,6 +17,7 @@ namespace BLL
 		public IList<InternalThreat> InternalThreats { get; private set; }
 		public event Action<int> ThreatsMove = turn => { };
 		public event Action<int, int> ExternalThreatsMove = (turn, amount) => { };
+		public event Action<int, int> InternalThreatsMove = (turn, amount) => { };
 		public event Action JumpingToHyperspace = () => { };
 		public event Action EndOfPlayerActions = () => { };
 		public event Action EndOfTurn = () => { };
@@ -54,6 +55,11 @@ namespace BLL
 		public void MoveExternalThreats(int currentTurn, int amount)
 		{
 			ExternalThreatsMove(currentTurn, amount);
+		}
+
+		public void MoveInternalThreats(int currentTurn, int amount)
+		{
+			InternalThreatsMove(currentTurn, amount);
 		}
 
 		public void JumpToHyperspace()
