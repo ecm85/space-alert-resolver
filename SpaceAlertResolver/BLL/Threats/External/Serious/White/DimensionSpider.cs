@@ -37,7 +37,10 @@ namespace BLL.Threats.External.Serious.White
 		private void OnJumpingToHyperspace()
 		{
 			if (HasBeenPlaced)
+			{
 				PerformZAction(-1);
+				OnReachingEndOfTrack();
+			}
 		}
 
 		public static string GetDisplayName()
