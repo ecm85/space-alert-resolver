@@ -5,25 +5,23 @@ using System.Text;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
-namespace BLL.Threats.Internal.Serious.Yellow
+namespace BLL.Threats.Internal.Minor.Red
 {
-	public class PhasingMineLayer : SeriousYellowInternalThreat
+	public class PhasingTroopers : MinorRedInternalThreat
 	{
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		private readonly IList<StationLocation> mineLocations;
 		private StationLocation? currentPhasedOutLocation;
 
-		public PhasingMineLayer()
+		public PhasingTroopers()
 			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
 		{
-			mineLocations = new List<StationLocation>();
 		}
 
 		public static string GetDisplayName()
 		{
-			return "Phasing Mine Layer";
+			return "Phasing Troopers";
 		}
 
 		protected override void PlaceOnTrack(Track track, int trackPosition)
@@ -35,23 +33,18 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			LayMine();
-			if (wasPhasedAtStartOfTurn)
-				MoveBlue();
-			else
-				MoveRed();
+			if (!wasPhasedAtStartOfTurn)
+				ChangeDecks();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			LayMine();
-			ChangeDecks();
+			MoveRed();
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			LayMine();
-			DetonateMines();
+			Damage(wasPhasedAtStartOfTurn ? 3 : 4);
 		}
 
 		private void PerformBeforeMove()
@@ -81,16 +74,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (isPhased)
 				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
-		}
-
-		private void LayMine()
-		{
-			mineLocations.Add(CurrentStation);
-		}
-
-		private void DetonateMines()
-		{
-			Damage(2, mineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)

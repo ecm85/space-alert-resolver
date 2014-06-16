@@ -21,6 +21,7 @@ namespace BLL
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Code Cleanup: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
+		//TODO: Bug: Internal threats currently can be hit from start, even if they havne't shown up yet.
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;

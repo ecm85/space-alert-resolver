@@ -159,6 +159,8 @@
     <Compile Include="Threats\External\Minor\White\SpinningSaucer.cs" />
     <Compile Include="Threats\External\Minor\White\StealthFighter.cs" />
     <Compile Include="Threats\External\Minor\Yellow\Swarm.cs" />
+    <Compile Include="Threats\Internal\Minor\Red\MinorRedInternalThreat.cs" />
+    <Compile Include="Threats\Internal\Minor\Red\PhasingTroopers.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\Ninja.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\OverheatedReactor.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\PowerPackOverload.cs" />
