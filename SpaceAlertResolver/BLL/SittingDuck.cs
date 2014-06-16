@@ -23,7 +23,7 @@ namespace BLL
 		public event Action RocketsModified = () => { };
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 
-		public SittingDuck()
+		public SittingDuck(ThreatController threatController)
 		{
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();
@@ -45,15 +45,18 @@ namespace BLL
 			rocketsComponent.RocketsModified += () => RocketsModified();
 			var interceptorStation1 = new InterceptorStation
 			{
-				StationLocation = StationLocation.Interceptor1
+				StationLocation = StationLocation.Interceptor1,
+				ThreatController = threatController
 			};
 			var interceptorStation2 = new InterceptorStation
 			{
-				StationLocation = StationLocation.Interceptor2
+				StationLocation = StationLocation.Interceptor2,
+				ThreatController = threatController
 			};
 			var interceptorStation3 = new InterceptorStation
 			{
-				StationLocation = StationLocation.Interceptor3
+				StationLocation = StationLocation.Interceptor3,
+				ThreatController = threatController
 			};
 			var upperRedStation = new UpperStation
 			{
@@ -61,7 +64,8 @@ namespace BLL
 				Shield = new SideShield(redReactor),
 				StationLocation = StationLocation.UpperRed,
 				BluewardAirlock = redAirlock,
-				Gravolift = redGravolift
+				Gravolift = redGravolift,
+				ThreatController = threatController
 			};
 			var interceptors = new Interceptors();
 			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation, interceptors);
@@ -76,7 +80,8 @@ namespace BLL
 				CComponent = computerComponent,
 				BluewardAirlock = blueAirlock,
 				RedwardAirlock = redAirlock,
-				Gravolift = whiteGravolift
+				Gravolift = whiteGravolift,
+				ThreatController = threatController
 			};
 			var upperBlueBattleBots = new BattleBotsComponent();
 			var upperBlueStation = new UpperStation
@@ -86,7 +91,8 @@ namespace BLL
 				StationLocation = StationLocation.UpperBlue,
 				CComponent = upperBlueBattleBots,
 				RedwardAirlock = blueAirlock,
-				Gravolift = blueGravolift
+				Gravolift = blueGravolift,
+				ThreatController = threatController
 			};
 			var lowerRedBattleBots = new BattleBotsComponent();
 			var lowerRedStation = new LowerStation
@@ -96,7 +102,8 @@ namespace BLL
 				StationLocation = StationLocation.LowerRed,
 				CComponent = lowerRedBattleBots,
 				BluewardAirlock = redAirlock,
-				Gravolift = redGravolift
+				Gravolift = redGravolift,
+				ThreatController = threatController
 			};
 
 			var lowerWhiteStation = new LowerStation
@@ -107,7 +114,8 @@ namespace BLL
 				CComponent = visualConfirmationComponent,
 				BluewardAirlock = blueAirlock,
 				RedwardAirlock = redAirlock,
-				Gravolift = whiteGravolift
+				Gravolift = whiteGravolift,
+				ThreatController = threatController
 			};
 			var lowerBlueStation = new LowerStation
 			{
@@ -116,7 +124,8 @@ namespace BLL
 				StationLocation = StationLocation.LowerBlue,
 				CComponent = rocketsComponent,
 				RedwardAirlock = blueAirlock,
-				Gravolift = blueGravolift
+				Gravolift = blueGravolift,
+				ThreatController = threatController
 			};
 
 			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = redGravolift};
@@ -376,23 +385,6 @@ namespace BLL
 		{
 			var captain = Zones.SelectMany(zone => zone.Players).Single(player => player.IsCaptain);
 			captain.IsKnockedOut = true;
-		}
-
-		public void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)
-		{
-			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.Threats.Add(threat);
-		}
-
-		public void RemoveInternalThreatFromStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat)
-		{
-			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.Threats.Remove(threat);
-		}
-
-		public IEnumerable<InternalThreat> GetThreatsInStation(StationLocation stationLocation)
-		{
-			return StationsByLocation[stationLocation].Threats;
 		}
 	}
 }

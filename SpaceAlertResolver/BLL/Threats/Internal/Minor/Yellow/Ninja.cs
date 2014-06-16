@@ -60,7 +60,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			if (anyPlayersPoisoned)
 			{
 				IsDefeated = true;
-				SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 				CurrentStations.Clear();
 				ThreatController.EndOfTurn -= PerformEndOfTurn;
 			}

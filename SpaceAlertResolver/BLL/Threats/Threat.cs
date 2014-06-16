@@ -24,6 +24,8 @@ namespace BLL.Threats
 			ThreatController.ThreatsMove += PerformMove;
 		}
 
+		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
+
 		protected bool HasBeenPlaced { get; private set; }
 		public virtual int Points
 		{

@@ -48,14 +48,13 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected void Spread(StationLocation? stationLocation)
 		{
-			if (stationLocation != null && !SittingDuck.GetThreatsInStation(stationLocation.Value).Any(threat => threat is Slime))
+			if (stationLocation != null && !ThreatController.DamageableInternalThreats.Any(threat => threat is Slime && threat.CurrentStation == stationLocation))
 			{
 				var newProgeny = CreateProgeny(stationLocation.Value);
 				newProgeny.Initialize(SittingDuck, ThreatController, TimeAppears);
 				currentProgeny.Add(newProgeny);
-				SittingDuck.AddInternalThreatToStations(new [] {stationLocation.Value}, newProgeny);
 				newProgeny.PlaceOnTrack(Track, Position.GetValueOrDefault());
-				ThreatController.InternalThreats.Add(newProgeny);
+				ThreatController.AddInternalThreat(newProgeny);
 			}
 		}
 	}

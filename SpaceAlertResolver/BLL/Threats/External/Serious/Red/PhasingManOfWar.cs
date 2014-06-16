@@ -60,11 +60,6 @@ namespace BLL.Threats.External.Serious.Red
 			wasPhasedAtStartOfTurn = isPhased;
 		}
 
-		public override bool CanBeTargetedBy(PlayerDamage damage)
-		{
-			return !isPhased && base.CanBeTargetedBy(damage);
-		}
-
 		protected override void OnThreatTerminated()
 		{
 			BeforeMove -= PerformBeforeMove;

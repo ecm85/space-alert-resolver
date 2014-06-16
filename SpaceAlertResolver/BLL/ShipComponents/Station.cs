@@ -9,16 +9,15 @@ namespace BLL.ShipComponents
 	{
 		public CComponent CComponent { get; set; }
 		public StationLocation StationLocation { get; set; }
-		public ISet<InternalThreat> Threats { get; private set; }
 		public IList<Player> Players { get; private set; }
 		public event Action<Player, int> MoveIn = (performingPlayer, currentTurn) => { };
 		public event Action<Player, int> MoveOut = (performingPlayer, currentTurn) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
+		public ThreatController ThreatController { get; set; }
 
 		protected Station()
 		{
 			Players = new List<Player>();
-			Threats = new HashSet<InternalThreat>();
 			IrreparableMalfunctions = new List<IrreparableMalfunction>();
 		}
 
@@ -40,8 +39,8 @@ namespace BLL.ShipComponents
 
 		protected InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
 		{
-			return Threats
-				.Where(threat => threat.ActionType == playerAction)
+			return ThreatController.DamageableInternalThreats
+				.Where(threat => threat.ActionType == playerAction && threat.CurrentStations.Contains(StationLocation))
 				.OrderBy(threat => threat.TimeAppears)
 				.FirstOrDefault();
 		}

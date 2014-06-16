@@ -34,8 +34,6 @@ namespace BLL.Threats.External
 			CurrentZone = currentZone;
 		}
 
-		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; }}
-
 		public void TakeIrreducibleDamage(int amount)
 		{
 			RemainingHealth -= amount;
@@ -60,7 +58,7 @@ namespace BLL.Threats.External
 		{
 			var isInRange = damage.AffectedDistance.Contains(DistanceToShip);
 			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
-			return isInRange && gunCanHitCurrentZone;
+			return IsDamageable && isInRange && gunCanHitCurrentZone;
 		}
 
 		public virtual bool IsPriorityTargetFor(PlayerDamage damage)

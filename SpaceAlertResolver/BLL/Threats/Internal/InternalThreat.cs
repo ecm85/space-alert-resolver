@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		protected List<StationLocation> CurrentStations { get; private set; }
+		public List<StationLocation> CurrentStations { get; private set; }
 
 		private readonly int? totalInaccessibility;
 		private int? remainingInaccessibility;
@@ -55,7 +55,6 @@ namespace BLL.Threats.Internal
 		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
 		{
 			SittingDuck = sittingDuck;
-			sittingDuck.AddInternalThreatToStations(CurrentStations, this);
 			ThreatController = threatController;
 			TimeAppears = timeAppears;
 		}
@@ -81,20 +80,8 @@ namespace BLL.Threats.Internal
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
 			if (!newStation.HasValue)
 				throw new InvalidOperationException("Moved wrongly.");
-			RemoveFromStation(CurrentStation);
-			AddToStation(newStation.Value);
-		}
-
-		protected void RemoveFromStation(StationLocation stationToRemoveFrom)
-		{
-			SittingDuck.RemoveInternalThreatFromStations(new [] {stationToRemoveFrom}, this);
-			CurrentStations.Remove(stationToRemoveFrom);
-		}
-
-		protected void AddToStation(StationLocation stationToMoveTo)
-		{
-			SittingDuck.AddInternalThreatToStations(new [] {stationToMoveTo}, this);
-			CurrentStations.Add(stationToMoveTo);
+			CurrentStations.Remove(CurrentStation);
+			CurrentStations.Add(newStation.Value);
 		}
 
 		protected void MoveRed()
@@ -143,7 +130,6 @@ namespace BLL.Threats.Internal
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.RemoveInternalThreatFromStations(CurrentStations, this);
 			CurrentStations.Clear();
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			ThreatController.InternalThreatsMove -= PerformMove;

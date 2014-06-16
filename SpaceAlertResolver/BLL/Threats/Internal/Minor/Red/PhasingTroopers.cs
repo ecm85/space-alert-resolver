@@ -12,8 +12,6 @@ namespace BLL.Threats.Internal.Minor.Red
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		private StationLocation? currentPhasedOutLocation;
-
 		public PhasingTroopers()
 			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
 		{
@@ -49,24 +47,12 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		private void PerformBeforeMove()
 		{
-			if (isPhased)
-			{
-				if (!currentPhasedOutLocation.HasValue)
-					throw new InvalidOperationException("At phase in, old station wasn't set to phase back into.");
-				CurrentStation = currentPhasedOutLocation.Value;
-				AddToStation(CurrentStation);
-			}
 			isPhased = false;
 		}
 
 		private void PerformAfterMove()
 		{
 			isPhased = !wasPhasedAtStartOfTurn;
-			if (isPhased)
-			{
-				currentPhasedOutLocation = CurrentStation;
-				RemoveFromStation(CurrentStation);
-			}
 		}
 
 		protected override void PerformEndOfTurn()
@@ -74,6 +60,11 @@ namespace BLL.Threats.Internal.Minor.Red
 			if (isPhased)
 				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
+		}
+
+		public override bool IsDamageable
+		{
+			get { return base.IsDamageable && !isPhased; }
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)

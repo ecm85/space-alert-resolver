@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Tracks;
@@ -13,8 +14,8 @@ namespace BLL
 	{
 		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
 		private Track InternalTrack { get; set; }
-		public IList<ExternalThreat> ExternalThreats { get; private set; }
-		public IList<InternalThreat> InternalThreats { get; private set; }
+		private IList<ExternalThreat> ExternalThreats { get; set; }
+		private IList<InternalThreat> InternalThreats { get; set; }
 		public event Action<int> ThreatsMove = turn => { };
 		public event Action<int, int> ExternalThreatsMove = (turn, amount) => { };
 		public event Action<int, int> InternalThreatsMove = (turn, amount) => { };
@@ -27,6 +28,26 @@ namespace BLL
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
 			get { return ExternalThreats.Where(threat => threat.IsDamageable); }
+		}
+
+		public IEnumerable<InternalThreat> DamageableInternalThreats
+		{
+			get { return InternalThreats.Where(threat => threat.IsDamageable); }
+		}
+
+		public IEnumerable<Threat> DefeatedThreats
+		{
+			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Where(threat => threat.IsDefeated); }
+		}
+
+		public IEnumerable<Threat> SurvivedThreats
+		{
+			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Where(threat => threat.IsSurvived); }
+		}
+
+		public int TotalThreatPoints
+		{
+			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Sum(threat => threat.Points); }
 		}
 
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
@@ -95,6 +116,11 @@ namespace BLL
 		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
 		{
 			CurrentExternalThreatBuffsBySource.Remove(source);
+		}
+
+		public void AddInternalThreat(InternalThreat newThreat)
+		{
+			InternalThreats.Add(newThreat);
 		}
 	}
 }

@@ -12,7 +12,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		private StationLocation? currentPhasedOutLocation;
 		private int numberOfYsCrossed;
 		
 		public PhasingAnomaly()
@@ -61,24 +60,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private void PerformBeforeMove()
 		{
-			if (isPhased)
-			{
-				if (!currentPhasedOutLocation.HasValue)
-					throw new InvalidOperationException("At phase in, old station wasn't set to phase back into.");
-				CurrentStation = currentPhasedOutLocation.Value;
-				AddToStation(CurrentStation);
-			}
 			isPhased = false;
 		}
 
 		private void PerformAfterMove()
 		{
 			isPhased = !wasPhasedAtStartOfTurn;
-			if (isPhased)
-			{
-				currentPhasedOutLocation = CurrentStation;
-				RemoveFromStation(CurrentStation);
-			}
 		}
 
 		protected override void PerformEndOfTurn()
@@ -86,6 +73,11 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (isPhased)
 				wasPhasedAtStartOfTurn = isPhased;
 			base.PerformEndOfTurn();
+		}
+
+		public override bool IsDamageable
+		{
+			get { return base.IsDamageable && !isPhased; }
 		}
 
 		protected override void OnHealthReducedToZero()

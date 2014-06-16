@@ -19,9 +19,7 @@ namespace BLL
 		//TODO: Code Cleanup: Pick perform or on for event names. Stop using both! Maybe Do?
 		//TODO: Feature: Change all threat display names to include threat #
 		//TODO: Code Cleanup: Make damage an event
-		//TODO: Code Cleanup: Figure out a way to not double-enter internal threats locations (in both the threat and the station)
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
-		//TODO: Bug: Internal threats currently can be hit from start, even if they havne't shown up yet.
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -94,8 +92,7 @@ namespace BLL
 		private void CalculateScore()
 		{
 			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
-			TotalPoints += ThreatController.InternalThreats.Sum(threat => threat.Points);
-			TotalPoints += ThreatController.ExternalThreats.Sum(threat => threat.Points);
+			TotalPoints += ThreatController.TotalThreatPoints;
 		}
 
 		private void PerformEndOfPhase()
@@ -250,7 +247,7 @@ namespace BLL
 		private void AddInterceptorDamages(PlayerInterceptorDamage interceptorDamages, Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
 		{
 			var interceptorDamagesMultiple = interceptorDamages.MultipleDamage;
-			var threatsHitByInterceptors = ThreatController.ExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
+			var threatsHitByInterceptors = ThreatController.DamageableExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
 			if (threatsHitByInterceptors.Count() > 1)
 				foreach (var threat in threatsHitByInterceptors)
 					AddToDamagesByThreat(threat, interceptorDamagesMultiple, damagesByThreat);

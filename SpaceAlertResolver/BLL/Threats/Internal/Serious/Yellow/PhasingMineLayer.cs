@@ -13,7 +13,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private bool wasPhasedAtStartOfTurn;
 
 		private readonly IList<StationLocation> mineLocations;
-		private StationLocation? currentPhasedOutLocation;
 
 		public PhasingMineLayer()
 			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
@@ -56,24 +55,17 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private void PerformBeforeMove()
 		{
-			if (isPhased)
-			{
-				if (!currentPhasedOutLocation.HasValue)
-					throw new InvalidOperationException("At phase in, old station wasn't set to phase back into.");
-				CurrentStation = currentPhasedOutLocation.Value;
-				AddToStation(CurrentStation);
-			}
 			isPhased = false;
 		}
 
 		private void PerformAfterMove()
 		{
 			isPhased = !wasPhasedAtStartOfTurn;
-			if (isPhased)
-			{
-				currentPhasedOutLocation = CurrentStation;
-				RemoveFromStation(CurrentStation);
-			}
+		}
+
+		public override bool IsDamageable
+		{
+			get { return base.IsDamageable && !isPhased; }
 		}
 
 		protected override void PerformEndOfTurn()

@@ -32,7 +32,7 @@ namespace WpfResolver
 	{
 		private readonly IDictionary<ThreatType, IList<Threat>> threatsByType;
 		private readonly ObservableCollection<ThreatInGame> threatsInGame;
-		private readonly SittingDuck sittingDuck = new SittingDuck();
+		private readonly SittingDuck sittingDuck;// = new SittingDuck();
 
 		public MainWindow()
 		{

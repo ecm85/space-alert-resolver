@@ -20,8 +20,7 @@ namespace ConsoleResolver
 		{
 
 			var players = GetPlayers();
-			var sittingDuck = new SittingDuck();
-			sittingDuck.SetPlayers(players);
+			
 			var externalTracksByZone = new Dictionary<ZoneLocation, Track>
 			{
 				{ZoneLocation.Blue, new Track(TrackConfiguration.Track1)},
@@ -29,7 +28,6 @@ namespace ConsoleResolver
 				{ZoneLocation.White, new Track(TrackConfiguration.Track3)},
 			};
 			var internalTrack = new Track(TrackConfiguration.Track4);
-
 			var destroyer = new Destroyer();
 			var fighter1 = new Fighter();
 			var fighter2 = new Fighter();
@@ -39,6 +37,8 @@ namespace ConsoleResolver
 			var nuclearDevice = new NuclearDevice();
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
 			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
+			var sittingDuck = new SittingDuck(threatController);
+			sittingDuck.SetPlayers(players);
 			destroyer.Initialize(sittingDuck, threatController, 4, ZoneLocation.Blue);
 			fighter1.Initialize(sittingDuck, threatController, 5, ZoneLocation.Red);
 			fighter2.Initialize(sittingDuck, threatController, 6, ZoneLocation.White);
@@ -60,9 +60,7 @@ namespace ConsoleResolver
 				sittingDuck.BlueZone.TotalDamage,
 				sittingDuck.RedZone.TotalDamage,
 				sittingDuck.WhiteZone.TotalDamage);
-			Console.WriteLine("Threats killed: {0}. Threats survived: {1}",
-				game.ThreatController.ExternalThreats.Count(threat => threat.IsDefeated) + game.ThreatController.InternalThreats.Count(threat => threat.IsDefeated),
-				game.ThreatController.ExternalThreats.Count(threat => threat.IsSurvived) + game.ThreatController.InternalThreats.Count(threat => threat.IsSurvived));
+			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", threatController.DefeatedThreats.Count(), threatController.SurvivedThreats.Count());
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
 			foreach (var zone in sittingDuck.Zones)
 			{

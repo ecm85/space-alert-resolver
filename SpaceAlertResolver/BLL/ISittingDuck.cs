@@ -32,10 +32,6 @@ namespace BLL
 		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 
-		void AddInternalThreatToStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat);
-		void RemoveInternalThreatFromStations(IEnumerable<StationLocation> stationLocations, InternalThreat threat);
-		IEnumerable<InternalThreat> GetThreatsInStation(StationLocation stationLocation);
-
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
 		event Action RocketsModified;
