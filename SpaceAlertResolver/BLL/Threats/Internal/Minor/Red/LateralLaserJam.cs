@@ -4,34 +4,37 @@ using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
 
-namespace BLL.Threats.Internal.Minor.White
+namespace BLL.Threats.Internal.Minor.Red
 {
-	public class CentralLaserJam : MinorWhiteInternalThreat
+	public class LateralLaserJam : MinorRedInternalThreat
 	{
-		public CentralLaserJam()
-			: base(2, 2, StationLocation.UpperWhite, PlayerAction.A)
+		public LateralLaserJam()
+			: base(3, 3, new List<StationLocation>(), PlayerAction.A)
 		{
+		}
+
+		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		{
+			base.Initialize(sittingDuck, threatController, timeAppears);
+			CurrentStation = TimeAppears % 2 == 0 ? StationLocation.UpperBlue : StationLocation.UpperRed;
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainReactors(CurrentZones, 1);
+			SittingDuck.DrainReactor(CurrentZone, 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Damage(1);
+			Damage(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
+			var otherZone = CurrentZone == ZoneLocation.Blue ? ZoneLocation.Red : ZoneLocation.Blue;
 			Damage(3);
-			DamageOtherTwoZones(1);
-		}
-
-		public static string GetDisplayName()
-		{
-			return "Central Laser Jam";
+			Damage(2, new[] {ZoneLocation.White});
+			Damage(1, new [] {otherZone});
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
@@ -43,6 +46,11 @@ namespace BLL.Threats.Internal.Minor.White
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
+		}
+
+		public static string GetDisplayName()
+		{
+			return "Lateral Laser Jam";
 		}
 	}
 }

@@ -49,10 +49,11 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			performingPlayer.IsKnockedOut = true;
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-			CurrentStations.Remove(stationLocation);
+			if (stationLocation != null)
+				CurrentStations.Remove(stationLocation.Value);
 		}
 	}
 }

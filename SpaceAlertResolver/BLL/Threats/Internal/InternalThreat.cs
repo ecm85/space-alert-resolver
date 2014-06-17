@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal
 	{
 		public List<StationLocation> CurrentStations { get; private set; }
 
-		private readonly int? totalInaccessibility;
+		protected int? totalInaccessibility;
 		private int? remainingInaccessibility;
 
 		internal StationLocation CurrentStation
@@ -52,14 +52,14 @@ namespace BLL.Threats.Internal
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
-		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		public virtual void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
 		{
 			SittingDuck = sittingDuck;
 			ThreatController = threatController;
 			TimeAppears = timeAppears;
 		}
 
-		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			var damageRemaining = damage;
 			if (remainingInaccessibility.HasValue)

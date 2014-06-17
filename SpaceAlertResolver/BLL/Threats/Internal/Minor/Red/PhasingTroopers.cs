@@ -7,19 +7,14 @@ using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.Red
 {
-	public class PhasingTroopers : MinorRedInternalThreat
+	public abstract class PhasingTroopers : MinorRedInternalThreat
 	{
 		private bool isPhased;
 		private bool wasPhasedAtStartOfTurn;
 
-		public PhasingTroopers()
-			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
+		protected PhasingTroopers(StationLocation currentStation)
+			: base(2, 2, currentStation, PlayerAction.BattleBots)
 		{
-		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Troopers";
 		}
 
 		protected override void PlaceOnTrack(Track track, int trackPosition)
@@ -33,11 +28,6 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			if (!wasPhasedAtStartOfTurn)
 				ChangeDecks();
-		}
-
-		protected override void PerformYAction(int currentTurn)
-		{
-			MoveRed();
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -67,7 +57,7 @@ namespace BLL.Threats.Internal.Minor.Red
 			get { return base.IsDamageable && !isPhased; }
 		}
 
-		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation stationLocation)
+		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)

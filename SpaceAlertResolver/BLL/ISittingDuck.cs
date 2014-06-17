@@ -31,6 +31,7 @@ namespace BLL
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
+		void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
 
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
@@ -47,7 +48,7 @@ namespace BLL
 		void UnsubscribeFromMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
 
 		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
-		void DestroyFuelCapsule();
+		bool DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation currentZone);
 		void KnockOutCaptain();
 	}

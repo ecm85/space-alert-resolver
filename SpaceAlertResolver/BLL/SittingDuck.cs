@@ -276,6 +276,12 @@ namespace BLL
 			KnockOut(players);
 		}
 
+		public void KnockOutPlayers(IEnumerable<ZoneLocation> locations)
+		{
+			var players = locations.SelectMany(location => ZonesByLocation[location].Players);
+			KnockOut(players);
+		}
+
 		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
@@ -371,9 +377,11 @@ namespace BLL
 				station.IrreparableMalfunctions.Add(malfunction);
 		}
 
-		public void DestroyFuelCapsule()
+		public bool DestroyFuelCapsule()
 		{
+			var oldFuelCapsules = CentralReactor.FuelCapsules;
 			CentralReactor.FuelCapsules--;
+			return CentralReactor.FuelCapsules < oldFuelCapsules;
 		}
 
 		public int GetEnergyInReactor(ZoneLocation currentZone)
