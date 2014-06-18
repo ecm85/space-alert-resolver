@@ -73,6 +73,9 @@ namespace BLL
 			ThreatsMove(currentTurn);
 		}
 
+		//TODO: For all 'extra movement things' respect is damageable? or unsubscribe from those events in the threats?
+		//TODO: Make sure all phasing threats unsubscribe from events they don't care about
+		//TODO: Ninja and rabid beast need to not move after killed but before z
 		public void MoveExternalThreats(int currentTurn, int amount)
 		{
 			ExternalThreatsMove(currentTurn, amount);

@@ -166,10 +166,9 @@ namespace BLL
 				zone.DrainShield(amount);
 		}
 
-		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
+		public void DrainReactor(ZoneLocation zoneLocation)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainReactor();
+			ZonesByLocation[zoneLocation].DrainReactor();
 		}
 
 		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
@@ -393,6 +392,12 @@ namespace BLL
 		{
 			var captain = Zones.SelectMany(zone => zone.Players).Single(player => player.IsCaptain);
 			captain.IsKnockedOut = true;
+		}
+
+		public void InfectPlayers(StationLocation currentStation)
+		{
+			foreach (var player in StationsByLocation[currentStation].Players)
+				player.IsInfected = true;
 		}
 	}
 }

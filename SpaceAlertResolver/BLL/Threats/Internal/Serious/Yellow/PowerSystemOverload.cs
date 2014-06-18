@@ -34,7 +34,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainReactors(new[] { ZoneLocation.White }, 2);
+			SittingDuck.DrainReactor(ZoneLocation.White, 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)

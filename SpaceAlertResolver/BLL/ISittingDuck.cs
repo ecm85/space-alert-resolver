@@ -13,9 +13,9 @@ namespace BLL
 
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
 		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
 		int DrainShield(ZoneLocation zoneLocation);
+		void DrainReactor(ZoneLocation zoneLocation);
 		int DrainReactor(ZoneLocation zoneLocation, int amount);
 		void DrainAllReactors(int amount);
 
@@ -51,5 +51,6 @@ namespace BLL
 		bool DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation currentZone);
 		void KnockOutCaptain();
+		void InfectPlayers(StationLocation currentStation);
 	}
 }

@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void PerformYAction(int currentTurn)
 		{
 			if(!IsDefeated)
-				SittingDuck.DrainReactors(CurrentZones, 1);
+				SittingDuck.DrainReactor(CurrentZone, 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)

@@ -16,6 +16,7 @@ namespace BLL
 		public int Index { get; set; }
 		public bool IsPoisoned { get; set; }
 		public bool IsCaptain { get; set; }
+		public bool IsInfected { get; set; }
 
 		public void Shift(int turn)
 		{
