@@ -43,5 +43,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
+
+		public static string GetDisplayName()
+		{
+			return "Rabid Beast";
+		}
 	}
 }

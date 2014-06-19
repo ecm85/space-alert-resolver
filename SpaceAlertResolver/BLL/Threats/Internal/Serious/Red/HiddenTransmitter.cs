@@ -6,9 +6,9 @@ using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
-	public class HiddenTransmitter : SeriousRedInternalThreat
+	public abstract class HiddenTransmitter : SeriousRedInternalThreat
 	{
-		public HiddenTransmitter()
+		protected HiddenTransmitter(StationLocation stationLocation)
 			: base(3, 2, StationLocation.LowerRed, PlayerAction.C, 1)
 		{
 		}
@@ -16,7 +16,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void PerformXAction(int currentTurn)
 		{
 			totalInaccessibility = 0;
-			//TODO: Calls in external threat in red zone
+			//TODO: Calls in external threat in current zone
 			//TODO: Points
 			//Killed before x: worth 8 + internal threat points
 			//Killed after x: worth 8, internal threat worth normal points
@@ -26,14 +26,8 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO: Move all threats in red zone
+			//TODO: Move all threats in current zone
 			throw new NotImplementedException();
-		}
-
-		protected override void PerformZAction(int currentTurn)
-		{
-			SittingDuck.DrainReactor(CurrentZone);
-			Damage(4);
 		}
 	}
 }

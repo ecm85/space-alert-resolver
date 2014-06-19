@@ -33,5 +33,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			//TODO: all players change decks
 		}
+
+		public static string GetDisplayName()
+		{
+			return "Space Time Vortex";
+		}
 	}
 }
