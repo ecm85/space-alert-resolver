@@ -181,6 +181,7 @@
     <Compile Include="Threats\Internal\Serious\Red\HiddenTransmitter.cs" />
     <Compile Include="Threats\Internal\Serious\Red\RabidBeast.cs" />
     <Compile Include="Threats\Internal\Serious\Red\SeriousRedInternalThreat.cs" />
+    <Compile Include="Threats\Internal\Serious\Red\Siren.cs" />
     <Compile Include="Threats\Internal\Serious\White\Alien.cs" />
     <Compile Include="Threats\Internal\Serious\White\BattleBotUprising.cs" />
     <Compile Include="Threats\Internal\Minor\White\CentralLaserJam.cs" />
