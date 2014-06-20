@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		public List<StationLocation> CurrentStations { get; private set; }
+		protected List<StationLocation> CurrentStations { get; private set; }
 
 		protected int? totalInaccessibility;
 		private int? remainingInaccessibility;
@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		public PlayerAction ActionType { get; private set; }
+		protected PlayerAction ActionType { get; set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction actionType, int? inaccessibility = null) :
 			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
@@ -146,6 +146,11 @@ namespace BLL.Threats.Internal
 		protected virtual void PerformEndOfTurn()
 		{
 			remainingInaccessibility = totalInaccessibility;
+		}
+
+		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerAction playerAction, Player performingPlayer)
+		{
+			return ActionType == playerAction && CurrentStations.Contains(stationLocation);
 		}
 	}
 }

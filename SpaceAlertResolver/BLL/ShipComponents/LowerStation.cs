@@ -12,5 +12,10 @@ namespace BLL.ShipComponents
 		{
 			Reactor.PerformBAction(isHeroic);
 		}
+
+		public override void DrainEnergyContainer(int amount)
+		{
+			Reactor.Energy -= amount;
+		}
 	}
 }

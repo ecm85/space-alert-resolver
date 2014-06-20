@@ -12,5 +12,10 @@ namespace BLL.ShipComponents
 		{
 			Shield.PerformBAction(isHeroic);
 		}
+
+		public override void DrainEnergyContainer(int amount)
+		{
+			Shield.Energy -= amount;
+		}
 	}
 }

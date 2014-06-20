@@ -21,7 +21,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
-			var firstBThreat = GetFirstThreatOfType(PlayerAction.B);
+			var firstBThreat = GetFirstThreatOfType(PlayerAction.B, performingPlayer);
 			if (firstBThreat != null)
 				DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
@@ -30,7 +30,7 @@ namespace BLL.ShipComponents
 
 		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
-			var firstAThreat = GetFirstThreatOfType(PlayerAction.A);
+			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
 			if (firstAThreat != null)
 			{
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
@@ -41,7 +41,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn)
 		{
-			var firstCThreat = GetFirstThreatOfType(PlayerAction.C);
+			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
 			if (firstCThreat != null)
 				DamageThreat(1, firstCThreat, performingPlayer, false);
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
@@ -52,7 +52,7 @@ namespace BLL.ShipComponents
 		{
 			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
 				return;
-			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
+			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots, performingPlayer);
 			if (firstBattleBotThreat != null)
 				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}

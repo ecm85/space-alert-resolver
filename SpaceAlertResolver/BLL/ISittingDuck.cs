@@ -15,9 +15,10 @@ namespace BLL
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
 		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
 		int DrainShield(ZoneLocation zoneLocation);
-		void DrainReactor(ZoneLocation zoneLocation);
+		int DrainReactor(ZoneLocation zoneLocation);
 		int DrainReactor(ZoneLocation zoneLocation, int amount);
 		void DrainAllReactors(int amount);
+		void DrainEnergyContainer(StationLocation stationLocation, int amount);
 
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
 

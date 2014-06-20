@@ -166,9 +166,9 @@ namespace BLL
 				zone.DrainShield(amount);
 		}
 
-		public void DrainReactor(ZoneLocation zoneLocation)
+		public int DrainReactor(ZoneLocation zoneLocation)
 		{
-			ZonesByLocation[zoneLocation].DrainReactor();
+			return ZonesByLocation[zoneLocation].DrainReactor();
 		}
 
 		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
@@ -190,6 +190,11 @@ namespace BLL
 		public void DrainAllReactors(int amount)
 		{
 			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
+		}
+
+		public void DrainEnergyContainer(StationLocation stationLocation, int amount)
+		{
+			StationsByLocation[stationLocation].DrainEnergyContainer(amount);
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)

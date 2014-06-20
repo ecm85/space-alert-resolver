@@ -37,10 +37,10 @@ namespace BLL.ShipComponents
 		{
 		}
 
-		protected InternalThreat GetFirstThreatOfType(PlayerAction playerAction)
+		protected InternalThreat GetFirstThreatOfType(PlayerAction playerAction, Player performingPlayer)
 		{
 			return ThreatController.DamageableInternalThreats
-				.Where(threat => threat.ActionType == playerAction && threat.CurrentStations.Contains(StationLocation))
+				.Where(threat => threat.CanBeTargetedBy(StationLocation, playerAction, performingPlayer))
 				.OrderBy(threat => threat.TimeAppears)
 				.FirstOrDefault();
 		}
@@ -59,5 +59,7 @@ namespace BLL.ShipComponents
 		{
 			MoveOut(performingPlayer, currentTurn);
 		}
+
+		public abstract void DrainEnergyContainer(int amount);
 	}
 }

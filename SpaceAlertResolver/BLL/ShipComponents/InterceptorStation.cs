@@ -40,7 +40,7 @@ namespace BLL.ShipComponents
 
 		public override void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
-			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots);
+			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots, performingPlayer);
 			if (firstThreat == null)
 				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic, performingPlayer, StationLocation.DistanceFromShip().GetValueOrDefault());
 			else
@@ -93,6 +93,11 @@ namespace BLL.ShipComponents
 		public override void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
 			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
+		}
+
+		public override void DrainEnergyContainer(int amount)
+		{
+			throw new InvalidOperationException();
 		}
 
 		public void PerformEndOfTurn()

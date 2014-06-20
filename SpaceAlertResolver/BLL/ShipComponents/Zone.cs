@@ -106,9 +106,12 @@ namespace BLL.ShipComponents
 			UpperStation.Shield.Energy -= amount;
 		}
 
-		public void DrainReactor()
+		public int DrainReactor()
 		{
+			var oldEnergy = LowerStation.Reactor.Energy;
 			LowerStation.Reactor.Energy = 0;
+			var currentEnergy = LowerStation.Reactor.Energy;
+			return oldEnergy - currentEnergy;
 		}
 
 		public int DrainReactor(int amount)

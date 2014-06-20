@@ -178,9 +178,11 @@
     <Compile Include="Threats\Internal\Minor\Yellow\TroopersA.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\TroopersB.cs" />
     <Compile Include="Threats\Internal\Minor\Yellow\Virus.cs" />
+    <Compile Include="Threats\Internal\Serious\Red\CyberGremlin.cs" />
     <Compile Include="Threats\Internal\Serious\Red\HiddenTransmitter.cs" />
     <Compile Include="Threats\Internal\Serious\Red\HiddenTransmitterB.cs" />
     <Compile Include="Threats\Internal\Serious\Red\HiddenTransmitterA.cs" />
+    <Compile Include="Threats\Internal\Serious\Red\Parasite.cs" />
     <Compile Include="Threats\Internal\Serious\Red\RabidBeast.cs" />
     <Compile Include="Threats\Internal\Serious\Red\SeriousRedInternalThreat.cs" />
     <Compile Include="Threats\Internal\Serious\Red\Siren.cs" />
