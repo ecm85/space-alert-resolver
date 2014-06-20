@@ -74,7 +74,7 @@ namespace BLL.Threats.Internal
 			CheckDefeated();
 		}
 
-		protected void MoveToNewStation(StationLocation? newStation)
+		private void MoveToNewStation(StationLocation? newStation)
 		{
 			if (CurrentStations.Count != 1)
 				throw new InvalidOperationException("Cannot move a threat that exists in more than 1 zone.");
@@ -84,17 +84,49 @@ namespace BLL.Threats.Internal
 			CurrentStations.Add(newStation.Value);
 		}
 
-		protected void MoveRed()
+		internal void MoveRed()
 		{
-			MoveToNewStation(CurrentStation.RedwardStationLocation());
+			if (CanMoveRed())
+				MoveToNewStation(CurrentStation.RedwardStationLocation());
 		}
 
-		protected void MoveBlue()
+		private bool CanMoveRed()
 		{
-			MoveToNewStation(CurrentStation.BluewardStationLocation());
+			switch (CurrentZone)
+			{
+				case ZoneLocation.Red:
+					return false;
+				case ZoneLocation.White:
+					return SittingDuck.RedAirlockIsBreached;
+				case ZoneLocation.Blue:
+					return SittingDuck.BlueAirlockIsBreached;
+				default:
+					throw new InvalidOperationException("Invalid zone location encountered");
+			}
 		}
 
-		protected void ChangeDecks()
+		internal void MoveBlue()
+		{
+			if (CanMoveBlue())
+				MoveToNewStation(CurrentStation.BluewardStationLocation());
+		}
+
+		private bool CanMoveBlue()
+		{
+			switch (CurrentZone)
+			{
+				case ZoneLocation.Blue:
+					return false;
+				case ZoneLocation.White:
+					return SittingDuck.BlueAirlockIsBreached;
+				case ZoneLocation.Red:
+					return SittingDuck.RedAirlockIsBreached;
+				default:
+					throw new InvalidOperationException("Invalid zone location encountered");
+			}
+		}
+
+		internal void ChangeDecks()
 		{
 			MoveToNewStation(CurrentStation.OppositeStationLocation());
 		}

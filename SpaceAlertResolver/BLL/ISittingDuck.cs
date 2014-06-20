@@ -53,5 +53,10 @@ namespace BLL
 		int GetEnergyInReactor(ZoneLocation currentZone);
 		void KnockOutCaptain();
 		void InfectPlayers(StationLocation currentStation);
+		void BreachRedAirlock();
+		void BreachBlueAirlock();
+		void RepairAllAirlockBreaches();
+		bool RedAirlockIsBreached { get; }
+		bool BlueAirlockIsBreached { get; }
 	}
 }

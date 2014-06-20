@@ -22,6 +22,8 @@ namespace BLL
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event Action RocketsModified = () => { };
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
+		private Airlock BlueAirlock { get; set; }
+		private Airlock RedAirlock { get; set; }
 
 		public SittingDuck(ThreatController threatController)
 		{
@@ -127,7 +129,8 @@ namespace BLL
 				Gravolift = blueGravolift,
 				ThreatController = threatController
 			};
-
+			BlueAirlock = blueAirlock;
+			RedAirlock = redAirlock;
 			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = redGravolift};
 			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = whiteGravolift};
 			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = blueGravolift};
@@ -404,5 +407,24 @@ namespace BLL
 			foreach (var player in StationsByLocation[currentStation].Players)
 				player.IsInfected = true;
 		}
+
+		public void BreachRedAirlock()
+		{
+			BlueAirlock.Breached = true;
+		}
+
+		public void BreachBlueAirlock()
+		{
+			RedAirlock.Breached = true;
+		}
+
+		public void RepairAllAirlockBreaches()
+		{
+			BlueAirlock.Breached = false;
+			RedAirlock.Breached = false;
+		}
+
+		public bool RedAirlockIsBreached { get { return RedAirlock.Breached; } }
+		public bool BlueAirlockIsBreached { get { return BlueAirlock.Breached; }}
 	}
 }

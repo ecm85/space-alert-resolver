@@ -50,18 +50,18 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			var adjacentStationGroup = new[]
 			{
-				CurrentStation.RedwardStationLocation(),
-				CurrentStation.BluewardStationLocation(),
-				CurrentStation.OppositeStationLocation()
+				new {NewStation = CurrentStation.RedwardStationLocation(), MoveCommand = new Action(MoveRed)},
+				new {NewStation = CurrentStation.BluewardStationLocation(), MoveCommand = new Action(MoveBlue)},
+				new {NewStation = CurrentStation.OppositeStationLocation(), MoveCommand = new Action(ChangeDecks)}
 			}
-			.Where(station => station != null)
-			.Select(station => new {Station = station.Value, PlayerCount = SittingDuck.GetPlayerCount(station.Value)})
+			.Where(station => station.NewStation != null)
+			.Select(station => new {Station = station, PlayerCount = SittingDuck.GetPlayerCount(station.NewStation.Value)})
 			.GroupBy(station => station.PlayerCount)
 			.OrderByDescending(group => group.Key)
 			.FirstOrDefault();
 
 			if (adjacentStationGroup != null && adjacentStationGroup.Count() == 1)
-				MoveToNewStation(adjacentStationGroup.Single().Station);
+				adjacentStationGroup.Single().Station.MoveCommand();
 		}
 	}
 }

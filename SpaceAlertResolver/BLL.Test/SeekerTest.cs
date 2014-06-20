@@ -85,7 +85,7 @@ namespace BLL.Test
 		private void Test_MoveToMostPlayers_Helper(Dictionary<StationLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var seeker = new Seeker{CurrentStation = currentStation};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict);
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null);
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;

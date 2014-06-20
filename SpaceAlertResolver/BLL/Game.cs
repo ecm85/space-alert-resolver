@@ -10,7 +10,6 @@ namespace BLL
 	public class Game
 	{
 		//TODO: Feature: Specializations
-		//TODO: Feature: Red threats
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
 		//TODO: Feature: Let user select damage tokens
@@ -20,6 +19,7 @@ namespace BLL
 		//TODO: Feature: Change all threat display names to include threat #
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
+		//TODO: Code Cleanup: Make reusable threat 'components'
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;

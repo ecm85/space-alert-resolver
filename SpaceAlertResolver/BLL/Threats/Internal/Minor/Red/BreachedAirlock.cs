@@ -15,14 +15,12 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			//TODO: Red zone doors are sealed
-			throw new NotImplementedException();
+			SittingDuck.BreachRedAirlock();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO All doors are sealed
-			throw new NotImplementedException();
+			SittingDuck.BreachBlueAirlock();
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -34,7 +32,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			//TODO: Remove sealed doors
+			SittingDuck.RepairAllAirlockBreaches();
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
