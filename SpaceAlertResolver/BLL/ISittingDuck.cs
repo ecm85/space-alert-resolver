@@ -50,13 +50,14 @@ namespace BLL
 
 		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
 		bool DestroyFuelCapsule();
-		int GetEnergyInReactor(ZoneLocation currentZone);
+		int GetEnergyInReactor(ZoneLocation zoneLocation);
 		void KnockOutCaptain();
-		void InfectPlayers(StationLocation currentStation);
+		void InfectPlayers(StationLocation stationLocation);
 		void BreachRedAirlock();
 		void BreachBlueAirlock();
 		void RepairAllAirlockBreaches();
 		bool RedAirlockIsBreached { get; }
 		bool BlueAirlockIsBreached { get; }
+		int GetDamageToZone(ZoneLocation zoneLocation);
 	}
 }

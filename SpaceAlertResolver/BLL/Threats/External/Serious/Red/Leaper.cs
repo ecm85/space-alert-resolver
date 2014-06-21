@@ -24,21 +24,21 @@ namespace BLL.Threats.External.Serious.Red
 		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(1);
-			Jump(CurrentZone.BluewardZoneLocation());
+			Jump(CurrentZone.BluewardZoneLocationWithWrapping());
 			Attack(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(2);
-			Jump(CurrentZone.RedwardZoneLocation());
+			Jump(CurrentZone.RedwardZoneLocationWithWrapping());
 			Attack(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			Attack(4);
-			Jump(CurrentZone.BluewardZoneLocation());
+			Jump(CurrentZone.BluewardZoneLocationWithWrapping());
 			Attack(1);
 		}
 

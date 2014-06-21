@@ -391,9 +391,9 @@ namespace BLL
 			return CentralReactor.FuelCapsules < oldFuelCapsules;
 		}
 
-		public int GetEnergyInReactor(ZoneLocation currentZone)
+		public int GetEnergyInReactor(ZoneLocation zoneLocation)
 		{
-			return ZonesByLocation[currentZone].GetEnergyInReactor();
+			return ZonesByLocation[zoneLocation].GetEnergyInReactor();
 		}
 
 		public void KnockOutCaptain()
@@ -402,9 +402,9 @@ namespace BLL
 			captain.IsKnockedOut = true;
 		}
 
-		public void InfectPlayers(StationLocation currentStation)
+		public void InfectPlayers(StationLocation stationLocation)
 		{
-			foreach (var player in StationsByLocation[currentStation].Players)
+			foreach (var player in StationsByLocation[stationLocation].Players)
 				player.IsInfected = true;
 		}
 
@@ -426,5 +426,10 @@ namespace BLL
 
 		public bool RedAirlockIsBreached { get { return RedAirlock.Breached; } }
 		public bool BlueAirlockIsBreached { get { return BlueAirlock.Breached; }}
+
+		public virtual int GetDamageToZone(ZoneLocation zoneLocation)
+		{
+			return ZonesByLocation[zoneLocation].TotalDamage;
+		}
 	}
 }

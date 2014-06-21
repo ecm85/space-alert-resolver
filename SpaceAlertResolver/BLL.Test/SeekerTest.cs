@@ -15,70 +15,63 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerBlueMovesUp()
 		{
-			const StationLocation currentLocation = StationLocation.LowerBlue;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 2 }, { StationLocation.UpperBlue, 3 } },
-				currentLocation,
+				StationLocation.LowerBlue,
 				StationLocation.UpperBlue);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerBlueMovesRed()
 		{
-			const StationLocation currentLocation = StationLocation.LowerBlue;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 3 }, { StationLocation.UpperBlue, 2 } },
-				currentLocation,
+				StationLocation.LowerBlue,
 				StationLocation.LowerWhite);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerBlueStays()
 		{
-			const StationLocation currentLocation = StationLocation.LowerBlue;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 2 }, { StationLocation.UpperBlue, 2 } },
-				currentLocation,
+				StationLocation.LowerBlue,
 				StationLocation.LowerBlue);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerWhiteMovesUp()
 		{
-			const StationLocation currentLocation = StationLocation.LowerWhite;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 2 }, { StationLocation.UpperWhite, 3 } , {StationLocation.LowerRed, 2}},
-				currentLocation,
+				StationLocation.LowerWhite,
 				StationLocation.UpperWhite);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerWhiteMovesRed()
 		{
-			const StationLocation currentLocation = StationLocation.LowerWhite;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 2 }, { StationLocation.UpperWhite, 3 }, { StationLocation.LowerRed, 4 } },
-				currentLocation,
+				StationLocation.LowerWhite,
 				StationLocation.LowerRed);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerWhiteMovesBlue()
 		{
-			const StationLocation currentLocation = StationLocation.LowerWhite;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 5 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },
-				currentLocation,
+				StationLocation.LowerWhite,
 				StationLocation.LowerBlue);
 		}
 
 		[TestMethod]
 		public void Test_MoveToMostPlayers_LowerWhiteStays()
 		{
-			const StationLocation currentLocation = StationLocation.LowerWhite;
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 3 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },
-				currentLocation,
+				StationLocation.LowerWhite,
 				StationLocation.LowerWhite);
 		}
 

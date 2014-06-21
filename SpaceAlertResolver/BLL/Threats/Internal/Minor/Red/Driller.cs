@@ -29,9 +29,32 @@ namespace BLL.Threats.Internal.Minor.Red
 			Damage(4);
 		}
 
-		private void MoveTowardsMostDamagedZone()
+		internal void MoveTowardsMostDamagedZone()
 		{
-			//TODO: Move towards most damaged zone
+			var currentZone = (ZoneLocation?)CurrentZone;
+
+			var zones =
+				new []
+				{
+					new {NewZone = currentZone, MoveCommand = new Action(() => { })},
+					new {NewZone = currentZone.BluewardZoneLocation(), MoveCommand = new Action(MoveBlue)},
+					new {NewZone = currentZone.BluewardZoneLocation().BluewardZoneLocation(), MoveCommand = new Action(MoveBlue)},
+					new {NewZone = currentZone.RedwardZoneLocation(), MoveCommand = new Action(MoveRed)},
+					new {NewZone = currentZone.RedwardZoneLocation().RedwardZoneLocation(), MoveCommand = new Action(MoveRed)}
+				}
+				.Where(zone => zone.NewZone != null)
+				.ToList();
+			
+			var mostDamagedZoneGroup = zones
+				.Select(zone => new { Zone = zone, DamageTaken = SittingDuck.GetDamageToZone(zone.NewZone.Value) })
+				.GroupBy(zone => zone.DamageTaken)
+				.OrderByDescending(group => group.Key)
+				.First();
+
+			if (mostDamagedZoneGroup.Count() == 1)
+				mostDamagedZoneGroup.Single().Zone.MoveCommand();
+			else
+				zones.Single(zone => zone.NewZone.Value == ZoneLocation.White).MoveCommand();
 		}
 
 		public static string GetDisplayName()

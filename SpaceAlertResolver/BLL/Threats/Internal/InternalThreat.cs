@@ -97,9 +97,9 @@ namespace BLL.Threats.Internal
 				case ZoneLocation.Red:
 					return false;
 				case ZoneLocation.White:
-					return SittingDuck.RedAirlockIsBreached;
+					return !SittingDuck.RedAirlockIsBreached;
 				case ZoneLocation.Blue:
-					return SittingDuck.BlueAirlockIsBreached;
+					return !SittingDuck.BlueAirlockIsBreached;
 				default:
 					throw new InvalidOperationException("Invalid zone location encountered");
 			}
@@ -118,9 +118,9 @@ namespace BLL.Threats.Internal
 				case ZoneLocation.Blue:
 					return false;
 				case ZoneLocation.White:
-					return SittingDuck.BlueAirlockIsBreached;
+					return !SittingDuck.BlueAirlockIsBreached;
 				case ZoneLocation.Red:
-					return SittingDuck.RedAirlockIsBreached;
+					return !SittingDuck.RedAirlockIsBreached;
 				default:
 					throw new InvalidOperationException("Invalid zone location encountered");
 			}

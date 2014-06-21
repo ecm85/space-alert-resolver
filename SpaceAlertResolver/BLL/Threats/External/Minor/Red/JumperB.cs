@@ -15,7 +15,7 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override ZoneLocation JumpDestination
 		{
-			get { return CurrentZone.BluewardZoneLocation(); }
+			get { return CurrentZone.BluewardZoneLocationWithWrapping(); }
 		}
 	}
 }

@@ -48,20 +48,23 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		internal void MoveToMostPlayers()
 		{
-			var adjacentStationGroup = new[]
-			{
-				new {NewStation = CurrentStation.RedwardStationLocation(), MoveCommand = new Action(MoveRed)},
-				new {NewStation = CurrentStation.BluewardStationLocation(), MoveCommand = new Action(MoveBlue)},
-				new {NewStation = CurrentStation.OppositeStationLocation(), MoveCommand = new Action(ChangeDecks)}
-			}
-			.Where(station => station.NewStation != null)
-			.Select(station => new {Station = station, PlayerCount = SittingDuck.GetPlayerCount(station.NewStation.Value)})
-			.GroupBy(station => station.PlayerCount)
-			.OrderByDescending(group => group.Key)
-			.FirstOrDefault();
+			var adjacentStations =
+				new[]
+				{
+					new {NewStation = CurrentStation.RedwardStationLocation(), MoveCommand = new Action(MoveRed)},
+					new {NewStation = CurrentStation.BluewardStationLocation(), MoveCommand = new Action(MoveBlue)},
+					new {NewStation = CurrentStation.OppositeStationLocation(), MoveCommand = new Action(ChangeDecks)}
+				}
+				.Where(station => station.NewStation != null);
 
-			if (adjacentStationGroup != null && adjacentStationGroup.Count() == 1)
-				adjacentStationGroup.Single().Station.MoveCommand();
+			var adjacentStationGroupWithMostPlayers = adjacentStations
+				.Select(station => new {Station = station, PlayerCount = SittingDuck.GetPlayerCount(station.NewStation.Value)})
+				.GroupBy(station => station.PlayerCount)
+				.OrderByDescending(group => group.Key)
+				.First();
+
+			if (adjacentStationGroupWithMostPlayers.Count() == 1)
+				adjacentStationGroupWithMostPlayers.Single().Station.MoveCommand();
 		}
 	}
 }
