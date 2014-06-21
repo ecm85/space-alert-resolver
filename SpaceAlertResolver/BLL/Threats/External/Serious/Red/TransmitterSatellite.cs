@@ -39,7 +39,7 @@ namespace BLL.Threats.External.Serious.Red
 			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
 		}
 
-		public override int GetPointsForSurviving()
+		protected override int GetPointsForSurviving()
 		{
 			return 4;
 		}

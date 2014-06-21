@@ -47,7 +47,7 @@ namespace BLL.Threats.External.Minor.Red
 			return threatToCallIn.GetPointsForDefeating();
 		}
 
-		public override int GetPointsForSurviving()
+		protected override int GetPointsForSurviving()
 		{
 			return 0;
 		}

@@ -44,7 +44,18 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private void SabotageAllSystems()
 		{
-			throw new NotImplementedException();
+			var newThreats = new[]
+			{
+				new Sabotage(type, difficulty, CurrentStation, PlayerAction.A),
+				new Sabotage(type, difficulty, CurrentStation, PlayerAction.B),
+				new Sabotage(type, difficulty, CurrentStation, PlayerAction.C)
+			};
+			foreach (var newThreat in newThreats)
+			{
+				newThreat.Initialize(SittingDuck, ThreatController, TimeAppears);
+				newThreat.PlaceOnTrack();
+				ThreatController.AddInternalThreat(newThreat);
+			}
 		}
 
 		protected override void OnHealthReducedToZero()
@@ -56,6 +67,47 @@ namespace BLL.Threats.Internal.Serious.Red
 		public static string GetDisplayName()
 		{
 			return "Cyber Gremlin";
+		}
+
+		private class Sabotage : InternalThreat
+		{
+			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerAction actionType)
+				: base(threatType, threatDifficulty, 1, 0, currentStation, actionType)
+			{
+			}
+
+			protected override void PerformXAction(int currentTurn)
+			{
+			}
+
+			protected override void PerformYAction(int currentTurn)
+			{
+			}
+
+			protected override void PerformZAction(int currentTurn)
+			{
+			}
+
+			public override int Points
+			{
+				get { return 0; }
+			}
+
+			public override bool IsDefeated
+			{
+				get { return false; }
+			}
+
+			public override bool IsSurvived
+			{
+				get { return false; }
+			}
+
+			public void PlaceOnTrack()
+			{
+				Position = -1;
+				HasBeenPlaced = true;
+			}
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace BLL.Threats
 
 		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
 
-		protected bool HasBeenPlaced { get; private set; }
+		protected bool HasBeenPlaced { get; set; }
 		public virtual int Points
 		{
 			get { return !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
@@ -39,7 +39,7 @@ namespace BLL.Threats
 			return ThreatPoints.GetPointsForDefeating(type, difficulty);
 		}
 
-		public virtual int GetPointsForSurviving()
+		protected virtual int GetPointsForSurviving()
 		{
 			return ThreatPoints.GetPointsForSurviving(type, difficulty);
 		}
@@ -47,15 +47,15 @@ namespace BLL.Threats
 		public virtual bool IsDefeated { get; protected set; }
 		public virtual bool IsSurvived { get; private set; }
 
-		public int TimeAppears { get; set; }
+		public int TimeAppears { get; protected set; }
 		protected int TotalHealth { get; private set; }
 		protected int RemainingHealth { get; set; }
 		public int Speed { get; set; }
 		public int? Position { get; protected set; }
 		protected ThreatController ThreatController { get; set; }
 
-		private readonly ThreatType type;
-		private readonly ThreatDifficulty difficulty;
+		protected readonly ThreatType type;
+		protected readonly ThreatDifficulty difficulty;
 
 		protected ISittingDuck SittingDuck { get; set; }
 

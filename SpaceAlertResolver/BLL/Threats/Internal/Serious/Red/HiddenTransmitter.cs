@@ -21,7 +21,6 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			totalInaccessibility = 0;
 			CallInExternalThreat(currentTurn);
-			throw new NotImplementedException();
 		}
 
 		private void CallInExternalThreat(int currentTurn)
@@ -37,7 +36,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
 		}
 
-		public override int GetPointsForSurviving()
+		protected override int GetPointsForSurviving()
 		{
 			return 4;
 		}

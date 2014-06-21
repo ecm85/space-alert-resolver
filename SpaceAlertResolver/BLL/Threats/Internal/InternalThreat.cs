@@ -182,7 +182,7 @@ namespace BLL.Threats.Internal
 
 		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerAction playerAction, Player performingPlayer)
 		{
-			return ActionType == playerAction && CurrentStations.Contains(stationLocation);
+			return IsDamageable && ActionType == playerAction && CurrentStations.Contains(stationLocation);
 		}
 	}
 }
