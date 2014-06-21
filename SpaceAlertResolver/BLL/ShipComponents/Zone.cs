@@ -27,11 +27,26 @@ namespace BLL.ShipComponents
 
 		public ThreatDamageResult TakeAttack(int amount, ThreatDamageType damageType)
 		{
-			var oldShields = UpperStation.Shield.Energy;
-			UpperStation.Shield.Energy -= amount;
-			var newShields = UpperStation.Shield.Energy;
-			var damageShielded = oldShields - newShields;
-			var damageDone = amount - damageShielded;
+			var damageShielded = 0;
+			var damageDone = amount;
+			if (damageType != ThreatDamageType.IgnoresShields)
+			{
+				var reversedShields = DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields);
+				var ineffectiveShields = DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields);
+				if (reversedShields)
+				{
+					damageDone += UpperStation.Shield.Energy;
+					UpperStation.Shield.Energy = 0;
+				}
+				else if(!ineffectiveShields)
+				{
+					var oldShields = UpperStation.Shield.Energy;
+					UpperStation.Shield.Energy -= amount;
+					var newShields = UpperStation.Shield.Energy;
+					damageShielded = oldShields - newShields;
+					damageDone -= damageShielded;
+				}
+			}
 			if (damageType == ThreatDamageType.DoubleDamageThroughShields)
 				damageDone *= 2;
 			if (damageShielded == 0 && damageDone > 0 && damageType == ThreatDamageType.Plasmatic)
@@ -42,7 +57,7 @@ namespace BLL.ShipComponents
 			return damageResult;
 		}
 
-		public ThreatDamageResult TakeDamage(int damage)
+		private ThreatDamageResult TakeDamage(int damage)
 		{
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)

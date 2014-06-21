@@ -13,6 +13,7 @@ namespace BLL.ShipComponents
 		protected readonly PlayerDamageType playerDamageType;
 		private readonly EnergyContainer source;
 		public bool DisruptedOptics { get; set; }
+		public event Action CannonFired = () => { };
 
 		private bool firedThisTurn;
 
@@ -21,13 +22,14 @@ namespace BLL.ShipComponents
 			firedThisTurn = false;
 		}
 
-		public PlayerDamage PerformAAction(bool isHeroic, Player performingPlayer)
+		public virtual PlayerDamage PerformAAction(bool isHeroic, Player performingPlayer)
 		{
 			if (!firedThisTurn && source.Energy > 1)
 			{
 				firedThisTurn = true;
 				source.Energy -= 1;
 				var amount = isHeroic ? damage + 1 : damage;
+				CannonFired();
 				return GetPlayerDamage(amount, performingPlayer);
 			}
 			return null;

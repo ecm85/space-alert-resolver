@@ -27,14 +27,13 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			//TODO: Adds ignore-shields debuff
-			throw new NotImplementedException();
+			SittingDuck.AddZoneDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.IneffectiveShields, this);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO: Add reversed-shields debuff
-			throw new NotImplementedException();
+			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
+			SittingDuck.AddZoneDebuff(EnumFactory.All<ZoneLocation>(), ZoneDebuff.ReversedShields, this);
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -45,7 +44,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			//TODO: Remove debuffs
+			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 		}
 
 		protected override void OnThreatTerminated()

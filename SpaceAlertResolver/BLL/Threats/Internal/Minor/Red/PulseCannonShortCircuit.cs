@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.Red
 {
 	public class PulseCannonShortCircuit : MinorRedInternalThreat
 	{
-		//TODO: Attack 1 on all zones when central laser cannon is fired
-
 		public PulseCannonShortCircuit()
 			: base(2, 2, StationLocation.LowerWhite, PlayerAction.A, 1)
 		{
+		}
+
+		protected override void PlaceOnTrack(Track track, int trackPosition)
+		{
+			base.PlaceOnTrack(track, trackPosition);
+			SittingDuck.CentralLaserCannonFired += HandleCentralLaerCannonFired;
+		}
+
+		private void HandleCentralLaerCannonFired()
+		{
+			AttackAllZones(1);
 		}
 
 		public static string GetDisplayName()
@@ -42,6 +52,12 @@ namespace BLL.Threats.Internal.Minor.Red
 		private void AttackAllZones(int amount)
 		{
 			SittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Standard, EnumFactory.All<ZoneLocation>()));
+		}
+
+		protected override void OnThreatTerminated()
+		{
+			base.OnThreatTerminated();
+			SittingDuck.CentralLaserCannonFired -= HandleCentralLaerCannonFired;
 		}
 	}
 }

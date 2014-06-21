@@ -37,6 +37,7 @@ namespace BLL
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
 		event Action RocketsModified;
+		event Action CentralLaserCannonFired;
 		int GetRocketCount();
 		void RemoveRocket();
 		void RemoveAllRockets();

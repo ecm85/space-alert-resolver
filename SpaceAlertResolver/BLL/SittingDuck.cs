@@ -21,6 +21,7 @@ namespace BLL
 		private CentralReactor CentralReactor { get; set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event Action RocketsModified = () => { };
+		public event Action CentralLaserCannonFired = () => { };
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private Airlock BlueAirlock { get; set; }
 		private Airlock RedAirlock { get; set; }
@@ -74,9 +75,11 @@ namespace BLL
 			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1, interceptors);
 			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2, interceptors);
 			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null, interceptors);
+			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
+			centralHeavyLaserCannon.CannonFired += () => CentralLaserCannonFired();
 			var upperWhiteStation = new UpperStation
 			{
-				Cannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White),
+				Cannon = centralHeavyLaserCannon,
 				Shield = new CentralShield(whiteReactor),
 				StationLocation = StationLocation.UpperWhite,
 				CComponent = computerComponent,
@@ -209,11 +212,6 @@ namespace BLL
 				ThreatDamageResult damageResult;
 				switch (damage.ThreatDamageType)
 				{
-					case ThreatDamageType.IgnoresShields:
-						damageResult = zone.TakeDamage(damage.Amount);
-						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
-						damageShielded += damageResult.DamageShielded;
-						break;
 					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
 						var amount = damage.Amount;
 						if (damage.DistanceToSource != null)
