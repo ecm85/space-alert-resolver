@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Minor.Red
 {
 	public class SealedCapsule : MinorRedExternalThreat
 	{
-		public SealedCapsule()
+		private readonly InternalThreat threatToCallIn;
+
+		public SealedCapsule(InternalThreat threatToCallIn)
 			: base(4, 4, 4)
 		{
+			this.threatToCallIn = threatToCallIn;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -25,12 +29,27 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			var extraSpeed = TotalHealth - RemainingHealth < 2;
-			//TODO: Calls in internal threat, possibly with an extra speed
-			//TODO: Points
-			//Killed before z: worth internal threat points
-			//Hits Z: worth no points, internal threat worth normal points (0 for leaving on track, reg surviving or killing)
-			throw new NotImplementedException();
+			CallInInternalThreat(currentTurn);
+			var newthreatGetsExtraSpeed = TotalHealth - RemainingHealth < 2;
+			if (newthreatGetsExtraSpeed)
+				threatToCallIn.Speed++;
+		}
+
+		private void CallInInternalThreat(int currentTurn)
+		{
+			threatToCallIn.Initialize(SittingDuck, ThreatController, 1000 + currentTurn);
+			threatToCallIn.PlaceOnTrack(ThreatController.InternalTrack);
+			ThreatController.AddInternalThreat(threatToCallIn);
+		}
+
+		public override int GetPointsForDefeating()
+		{
+			return threatToCallIn.GetPointsForDefeating();
+		}
+
+		public override int GetPointsForSurviving()
+		{
+			return 0;
 		}
 
 		public static string GetDisplayName()

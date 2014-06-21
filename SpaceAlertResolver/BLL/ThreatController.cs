@@ -13,7 +13,7 @@ namespace BLL
 	public class ThreatController
 	{
 		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
-		private Track InternalTrack { get; set; }
+		public Track InternalTrack { get; set; }
 		private IList<ExternalThreat> ExternalThreats { get; set; }
 		private IList<InternalThreat> InternalThreats { get; set; }
 		public event Action<int> ThreatsMove = turn => { };
@@ -76,6 +76,7 @@ namespace BLL
 		//TODO: For all 'extra movement things' respect is damageable? or unsubscribe from those events in the threats?
 		//TODO: Make sure all phasing threats unsubscribe from events they don't care about
 		//TODO: Ninja and rabid beast need to not move after killed but before z if no poisoned/infected players
+		//TODO: Make sure this doesn't move the source
 		public void MoveExternalThreats(int currentTurn, int amount)
 		{
 			ExternalThreatsMove(currentTurn, amount);
@@ -124,6 +125,11 @@ namespace BLL
 		public void AddInternalThreat(InternalThreat newThreat)
 		{
 			InternalThreats.Add(newThreat);
+		}
+
+		public void AddExternalThreat(ExternalThreat newThreat)
+		{
+			ExternalThreats.Add(newThreat);
 		}
 	}
 }

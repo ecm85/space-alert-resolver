@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.Red
 {
@@ -13,9 +14,9 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 		}
 
-		public override void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		protected override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.Initialize(sittingDuck, threatController, timeAppears);
+			base.PlaceOnTrack(track, trackPosition);
 			CurrentStation = TimeAppears % 2 == 0 ? StationLocation.UpperBlue : StationLocation.UpperRed;
 		}
 

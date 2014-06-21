@@ -9,7 +9,7 @@ namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public ZoneLocation CurrentZone { get; private set; }
+		public ZoneLocation CurrentZone { get; set; }
 		protected int shields;
 
 		protected override void PlaceOnTrack(Track track, int trackPosition)

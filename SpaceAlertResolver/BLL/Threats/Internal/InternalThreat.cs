@@ -52,7 +52,7 @@ namespace BLL.Threats.Internal
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
-		public virtual void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
+		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
 		{
 			SittingDuck = sittingDuck;
 			ThreatController = threatController;

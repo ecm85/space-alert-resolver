@@ -34,12 +34,12 @@ namespace BLL.Threats
 
 		protected Track Track { get; set; }
 
-		protected virtual int GetPointsForDefeating()
+		public virtual int GetPointsForDefeating()
 		{
 			return ThreatPoints.GetPointsForDefeating(type, difficulty);
 		}
 
-		private int GetPointsForSurviving()
+		public virtual int GetPointsForSurviving()
 		{
 			return ThreatPoints.GetPointsForSurviving(type, difficulty);
 		}
@@ -47,10 +47,10 @@ namespace BLL.Threats
 		public virtual bool IsDefeated { get; protected set; }
 		public virtual bool IsSurvived { get; private set; }
 
-		public int TimeAppears { get; protected set; }
+		public int TimeAppears { get; set; }
 		protected int TotalHealth { get; private set; }
 		protected int RemainingHealth { get; set; }
-		protected int Speed { get; set; }
+		public int Speed { get; set; }
 		public int? Position { get; protected set; }
 		protected ThreatController ThreatController { get; set; }
 

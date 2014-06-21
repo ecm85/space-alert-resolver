@@ -13,7 +13,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 		}
 
-		protected override int GetPointsForDefeating()
+		public override int GetPointsForDefeating()
 		{
 			return ThreatPoints.GetPointsForDefeatingSeeker();
 		}

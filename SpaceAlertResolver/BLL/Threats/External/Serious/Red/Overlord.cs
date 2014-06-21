@@ -7,20 +7,37 @@ namespace BLL.Threats.External.Serious.Red
 {
 	public class Overlord : SeriousRedExternalThreat
 	{
-		public Overlord()
+		private readonly ExternalThreat threatToCallIn;
+		private bool calledInThreat;
+
+		public Overlord(ExternalThreat threatToCallIn)
 			: base(5, 14, 2)
 		{
+			this.threatToCallIn = threatToCallIn;
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
 			shields = 4;
-			//TODO: Calls in external threat in current zone
-			//TODO: Points
-			//Killed before x: worth 8 + internal threat points
-			//Killed after x: worth 8, internal threat worth normal points
-			//Hits Z: worth 4, internal threat worth normal points
-			throw new NotImplementedException();
+			CallInExternalThreat(currentTurn);
+		}
+
+		public override int GetPointsForDefeating()
+		{
+			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
+		}
+
+		public override int GetPointsForSurviving()
+		{
+			return 4;
+		}
+
+		private void CallInExternalThreat(int currentTurn)
+		{
+			threatToCallIn.Initialize(SittingDuck, ThreatController, 1000 + currentTurn, CurrentZone);
+			threatToCallIn.PlaceOnTrack(ThreatController.ExternalTracks[CurrentZone]);
+			ThreatController.AddExternalThreat(threatToCallIn);
+			calledInThreat = true;
 		}
 
 		protected override void PerformYAction(int currentTurn)
