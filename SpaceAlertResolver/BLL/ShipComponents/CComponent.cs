@@ -7,6 +7,6 @@ namespace BLL.ShipComponents
 {
 	public abstract class CComponent
 	{
-		public abstract void PerformCAction(Player performingPlayer, int currentTurn);
+		public abstract void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvanced = false);
 	}
 }

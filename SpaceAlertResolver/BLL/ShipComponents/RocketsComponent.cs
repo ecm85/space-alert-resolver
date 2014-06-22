@@ -23,14 +23,23 @@ namespace BLL.ShipComponents
 			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
 		{
-			if (Rockets.Any() && RocketFiredThisTurn == null)
+			if (RocketFiredLastTurn == null)
 			{
-				var firedRocket = Rockets.First();
-				Rockets.Remove(firedRocket);
-				RocketFiredThisTurn = firedRocket;
-				RocketsModified();
+				if (Rockets.Any())
+				{
+					var canFireDoubleRocket = RocketCount > 1;
+					var firedRocket = Rockets.First();
+					Rockets.Remove(firedRocket);
+					RocketFiredThisTurn = firedRocket;
+					if (advancedUsage && canFireDoubleRocket)
+					{
+						Rockets.Remove(Rockets.First());
+						firedRocket.IsDoubleRocket = true;
+					}
+					RocketsModified();
+				}
 			}
 		}
 

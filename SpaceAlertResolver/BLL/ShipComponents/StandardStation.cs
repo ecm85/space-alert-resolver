@@ -14,6 +14,7 @@ namespace BLL.ShipComponents
 		public Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; set; }
 		public MovementController MovementController { get; set; }
+		public SittingDuck SittingDuck { get; set; }
 
 		protected abstract void RefillEnergy(bool isHeroic);
 
@@ -42,13 +43,17 @@ namespace BLL.ShipComponents
 			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer) : null;
 		}
 
-		private void PerformCAction(Player performingPlayer, int currentTurn)
+		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool advanced = false)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
 			if (firstCThreat != null)
-				DamageThreat(1, firstCThreat, performingPlayer, false);
+			{
+				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
+					DamageThreat(1, firstCThreat, performingPlayer, false);
+			}
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
-				CComponent.PerformCAction(performingPlayer, currentTurn);
+				CComponent.PerformCAction(performingPlayer, currentTurn, advanced);
+
 		}
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)
@@ -194,6 +199,7 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.PulseGunner:
 					break;
 				case PlayerSpecialization.Rocketeer:
+					PerformCAction(player, currentTurn, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
 					break;
@@ -224,6 +230,7 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.PulseGunner:
 					break;
 				case PlayerSpecialization.Rocketeer:
+					SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation].PerformCAction(player, currentTurn, false, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
 					break;

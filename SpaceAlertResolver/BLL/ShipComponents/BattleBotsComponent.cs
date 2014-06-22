@@ -15,7 +15,7 @@ namespace BLL.ShipComponents
 				battleBots.IsDisabled = true;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvanced = false)
 		{
 			if (performingPlayer.BattleBots != null)
 			{

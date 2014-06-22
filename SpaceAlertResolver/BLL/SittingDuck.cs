@@ -71,7 +71,8 @@ namespace BLL
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 			var interceptors = new Interceptors();
 			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation, interceptors);
@@ -90,7 +91,8 @@ namespace BLL
 				RedwardAirlock = redAirlock,
 				Gravolift = whiteGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 			var upperBlueBattleBots = new BattleBotsComponent();
 			var upperBlueStation = new UpperStation
@@ -102,7 +104,8 @@ namespace BLL
 				RedwardAirlock = blueAirlock,
 				Gravolift = blueGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 			var lowerRedBattleBots = new BattleBotsComponent();
 			var lowerRedStation = new LowerStation
@@ -114,7 +117,8 @@ namespace BLL
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 
 			var lowerWhiteStation = new LowerStation
@@ -127,7 +131,8 @@ namespace BLL
 				RedwardAirlock = redAirlock,
 				Gravolift = whiteGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 			var lowerBlueStation = new LowerStation
 			{
@@ -138,7 +143,8 @@ namespace BLL
 				RedwardAirlock = blueAirlock,
 				Gravolift = blueGravolift,
 				ThreatController = threatController,
-				MovementController = movementController
+				MovementController = movementController,
+				SittingDuck = this
 			};
 			BlueAirlock = blueAirlock;
 			RedAirlock = redAirlock;

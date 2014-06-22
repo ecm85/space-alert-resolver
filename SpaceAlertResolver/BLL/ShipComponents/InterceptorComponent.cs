@@ -17,7 +17,7 @@ namespace BLL.ShipComponents
 			Interceptors = interceptors;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
 		{
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && Interceptors.PlayerOperating == null)
 			{

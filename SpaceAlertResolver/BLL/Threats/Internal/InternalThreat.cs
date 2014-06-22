@@ -181,5 +181,10 @@ namespace BLL.Threats.Internal
 		{
 			return IsDamageable && ActionType == playerAction && CurrentStations.Contains(stationLocation);
 		}
+
+		public bool NextDamageWillDestroyThreat()
+		{
+			return remainingInaccessibility == 0 && RemainingHealth == 1;
+		}
 	}
 }
