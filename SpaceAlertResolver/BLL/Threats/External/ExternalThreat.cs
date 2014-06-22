@@ -40,8 +40,14 @@ namespace BLL.Threats.External
 
 		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
 		{
+			var damageSum = damages.Sum(damage => damage.Amount);
+			TakeDamage(damageSum, maxDamageTaken);
+		}
+
+		protected virtual void TakeDamage(int damageSum, int? maxDamageTaken)
+		{
 			var bonusShields = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatBuff.BonusShield);
-			var damageDealt = damages.Sum(damage => damage.Amount) - (shields + bonusShields);
+			var damageDealt = damageSum - (shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
 			CheckDefeated();

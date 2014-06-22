@@ -29,17 +29,11 @@ namespace BLL.Threats.External.Serious.Red
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			//TODO: Code cleanup: Do this better, since it will copy the range and type of a single laser damage atm
-			var modifiedDamages = damages.ToList();
-			var laserDamages = modifiedDamages.Where(damage => damage.PlayerDamageType == PlayerDamageType.LightLaser || damage.PlayerDamageType == PlayerDamageType.HeavyLaser).ToList();
-			if (laserDamages.Any())
-			{
-				var laserDamageTotal = (int)Math.Ceiling(laserDamages.Sum(laserDamage => laserDamage.Amount) / 2.0);
-				modifiedDamages = modifiedDamages.Except(laserDamages).ToList();
-				var halfLaserDamage = new PlayerDamage(laserDamages.First()) { PerformingPlayer = null, Amount = laserDamageTotal };
-				modifiedDamages.Add(halfLaserDamage);
-			}
-			base.TakeDamage(modifiedDamages);
+			var laserDamages = damages.Where(damage => damage.PlayerDamageType == PlayerDamageType.LightLaser || damage.PlayerDamageType == PlayerDamageType.HeavyLaser).ToList();
+			var otherDamages = damages.Except(laserDamages).ToList();
+			var laserDamageSum = (int)Math.Ceiling(laserDamages.Sum(laserDamage => laserDamage.Amount) / 2.0);
+			var otherDamageSum = otherDamages.Sum(damage => damage.Amount);
+			TakeDamage(laserDamageSum + otherDamageSum, null);
 		}
 
 		public static string GetDisplayName()
