@@ -89,6 +89,7 @@ namespace BLL
 		{
 			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
 			TotalPoints += ThreatController.TotalThreatPoints;
+			TotalPoints += players.Sum(player => player.BonusPoints);
 		}
 
 		private void PerformEndOfPhase()

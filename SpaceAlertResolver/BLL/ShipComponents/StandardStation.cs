@@ -187,6 +187,8 @@ namespace BLL.ShipComponents
 			switch (player.BasicSpecialization)
 			{
 				case PlayerSpecialization.DataAnalyst:
+					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerWhite);
+					player.BonusPoints++;
 					break;
 				case PlayerSpecialization.EnergyTechnician:
 					break;
@@ -199,7 +201,7 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.PulseGunner:
 					break;
 				case PlayerSpecialization.Rocketeer:
-					PerformCAction(player, currentTurn, StationLocation == StationLocation.LowerBlue);
+					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
 					break;
@@ -218,6 +220,7 @@ namespace BLL.ShipComponents
 			switch (player.BasicSpecialization)
 			{
 				case PlayerSpecialization.DataAnalyst:
+					SittingDuck.StandardStationsByLocation[StationLocation.UpperWhite].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.EnergyTechnician:
 					break;
@@ -230,7 +233,7 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.PulseGunner:
 					break;
 				case PlayerSpecialization.Rocketeer:
-					SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation].PerformCAction(player, currentTurn, false, true);
+					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
 					break;

@@ -17,6 +17,7 @@ namespace BLL
 		public bool IsCaptain { get; set; }
 		public PlayerSpecialization? BasicSpecialization { get; set; }
 		public PlayerSpecialization? AdvancedSpecialization { get; set; }
+		public int BonusPoints { get; set; }
 
 		public void Shift(int turn, bool repeatPreviousAction = false)
 		{
