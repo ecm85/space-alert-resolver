@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
@@ -15,7 +16,17 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 		}
 
-		//TODO: Set Player to first player that moves
+		public override void PlaceOnTrack(Track track, int trackPosition)
+		{
+			base.PlaceOnTrack(track, trackPosition);
+			SittingDuck.SubscribeToMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
+		}
+
+		private void AttachToPlayer(Player performingPlayer, int currentTurn)
+		{
+			attachedPlayer = performingPlayer;
+			SittingDuck.UnsubscribeFromMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
+		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
@@ -25,7 +36,10 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO: Knocks out other players in station
+			var otherPlayersInStation = SittingDuck.GetPlayersInStation(attachedPlayer.CurrentStation.StationLocation)
+				.Except(new [] {attachedPlayer});
+			foreach (var player in otherPlayersInStation)
+				player.IsKnockedOut = true;
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -51,6 +65,12 @@ namespace BLL.Threats.Internal.Serious.Red
 		public override bool CanBeTargetedBy(StationLocation stationLocation, PlayerAction playerAction, Player performingPlayer)
 		{
 			return ActionType == playerAction && CurrentStations.Contains(performingPlayer.CurrentStation.StationLocation) && performingPlayer != attachedPlayer;
+		}
+
+		protected override void OnThreatTerminated()
+		{
+			base.OnThreatTerminated();
+			SittingDuck.UnsubscribeFromMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
 
 		public static string GetDisplayName()
