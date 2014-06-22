@@ -23,6 +23,8 @@ namespace BLL
 		TeleportWhiteUpper,
 		TeleportWhiteLower,
 		TeleportRedUpper,
-		TeleportRedLower
+		TeleportRedLower,
+		BasicSpecialization,
+		AdvancedSpecialization
 	}
 }

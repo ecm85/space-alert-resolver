@@ -21,21 +21,7 @@ namespace BLL.ShipComponents
 			IrreparableMalfunctions = new List<IrreparableMalfunction>();
 		}
 
-		public abstract void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic);
-		public abstract PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic);
-		public abstract void PerformCAction(Player performingPlayer, int currentTurn);
-		public abstract void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic);
-		public abstract bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn);
-		public abstract bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic);
-		public abstract bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn);
 		public abstract void PerformMoveIn(Player performingPlayer, int currentTurn);
-		public abstract bool CanMoveOutTowardsRed();
-		public abstract bool CanMoveOutTowardsOppositeDeck();
-		public abstract bool CanMoveOutTowardsBlue();
-
-		public virtual void PerformNoAction(Player performingPlayer, int currentTurn)
-		{
-		}
 
 		protected InternalThreat GetFirstThreatOfType(PlayerAction playerAction, Player performingPlayer)
 		{
@@ -60,6 +46,6 @@ namespace BLL.ShipComponents
 			MoveOut(performingPlayer, currentTurn);
 		}
 
-		public abstract void DrainEnergyContainer(int amount);
+		public abstract PlayerDamage[] PerformPlayerAction(Player player, PlayerAction action, int currentTurn);
 	}
 }

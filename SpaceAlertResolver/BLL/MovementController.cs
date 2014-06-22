@@ -12,10 +12,11 @@ namespace BLL
 
 		public void ChangeDeck(Player player, int currentTurn)
 		{
-			var newStation = SittingDuck.StationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
+			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
-				var movedOut = player.CurrentStation.PerformMoveOutTowardsOppositeDeck(player, currentTurn, false);
+				var movedOut = oldStation.PerformMoveOutTowardsOppositeDeck(player, currentTurn, false);
 				if (movedOut)
 					newStation.PerformMoveIn(player, currentTurn);
 			}
@@ -23,10 +24,11 @@ namespace BLL
 
 		public void MoveBlue(Player player, int currentTurn)
 		{
-			var newStation = SittingDuck.StationsByLocation[player.CurrentStation.StationLocation.BluewardStationLocation().GetValueOrDefault()];
+			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.BluewardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
-				var movedOut = player.CurrentStation.PerformMoveOutTowardsBlue(player, currentTurn);
+				var movedOut = oldStation.PerformMoveOutTowardsBlue(player, currentTurn);
 				if (movedOut)
 					newStation.PerformMoveIn(player, currentTurn);
 			}
@@ -34,10 +36,11 @@ namespace BLL
 
 		public void MoveRed(Player player, int currentTurn)
 		{
-			var newStation = SittingDuck.StationsByLocation[player.CurrentStation.StationLocation.RedwardStationLocation().GetValueOrDefault()];
+			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.RedwardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
-				var movedOut = player.CurrentStation.PerformMoveOutTowardsRed(player, currentTurn);
+				var movedOut = oldStation.PerformMoveOutTowardsRed(player, currentTurn);
 				if (movedOut)
 					newStation.PerformMoveIn(player, currentTurn);
 			}
@@ -46,12 +49,13 @@ namespace BLL
 		public void MoveHeroically(Player performingPlayer, StationLocation newStationLocation, int currentTurn)
 		{
 			var currentStationLocation = performingPlayer.CurrentStation.StationLocation;
+			var currentStation = SittingDuck.StandardStationsByLocation[currentStationLocation];
 			var path = Path(currentStationLocation, newStationLocation)
-				.Select(stationLocation => SittingDuck.StationsByLocation[stationLocation])
+				.Select(stationLocation => SittingDuck.StandardStationsByLocation[stationLocation])
 				.Select((station, index) => new {Station = station, Index = index})
 				.ToList();
 			var firstDestination = path.First();
-			var movedOut = MoveOut(performingPlayer, currentTurn, performingPlayer.CurrentStation, firstDestination.Station.StationLocation);
+			var movedOut = MoveOut(performingPlayer, currentTurn, currentStation, firstDestination.Station.StationLocation);
 			if (!movedOut)
 				return;
 			var finalDestination = path.First(
@@ -63,7 +67,7 @@ namespace BLL
 		private static bool MoveOut(
 			Player performingPlayer,
 			int currentTurn,
-			Station fromStation,
+			StandardStation fromStation,
 			StationLocation toStationLocation)
 		{
 			if (toStationLocation == fromStation.StationLocation.OppositeStationLocation())
@@ -75,7 +79,7 @@ namespace BLL
 			throw new InvalidOperationException("Could not find a path to heroically move out of current station");
 		}
 
-		private static bool CanMoveOut(Station fromStation, StationLocation toStationLocation)
+		private static bool CanMoveOut(StandardStation fromStation, StationLocation toStationLocation)
 		{
 			if (toStationLocation == fromStation.StationLocation.OppositeStationLocation())
 				return fromStation.CanMoveOutTowardsOppositeDeck();

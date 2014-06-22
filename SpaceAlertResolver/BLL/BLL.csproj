@@ -47,6 +47,7 @@
     <Compile Include="LoseException.cs" />
     <Compile Include="MovementController.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
+    <Compile Include="PlayerSpecialization.cs" />
     <Compile Include="ShipComponents\Airlock.cs" />
     <Compile Include="ShipComponents\BattleBots.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />

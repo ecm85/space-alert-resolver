@@ -15,6 +15,8 @@ namespace BLL
 		public BattleBots BattleBots { get; set; }
 		public int Index { get; set; }
 		public bool IsCaptain { get; set; }
+		public PlayerSpecialization? BasicSpecialization { get; set; }
+		public PlayerSpecialization? AdvancedSpecialization { get; set; }
 
 		public void Shift(int turn, bool repeatPreviousAction = false)
 		{

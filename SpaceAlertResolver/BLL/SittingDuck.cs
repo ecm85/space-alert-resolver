@@ -15,6 +15,7 @@ namespace BLL
 		private IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
+		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }
 		public IList<InterceptorStation> InterceptorStations { get; private set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
@@ -28,6 +29,7 @@ namespace BLL
 
 		public SittingDuck(ThreatController threatController)
 		{
+			var movementController = new MovementController {SittingDuck = this};
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();
 			var blueGravolift = new Gravolift();
@@ -68,7 +70,8 @@ namespace BLL
 				StationLocation = StationLocation.UpperRed,
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 			var interceptors = new Interceptors();
 			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation, interceptors);
@@ -86,7 +89,8 @@ namespace BLL
 				BluewardAirlock = blueAirlock,
 				RedwardAirlock = redAirlock,
 				Gravolift = whiteGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 			var upperBlueBattleBots = new BattleBotsComponent();
 			var upperBlueStation = new UpperStation
@@ -97,7 +101,8 @@ namespace BLL
 				CComponent = upperBlueBattleBots,
 				RedwardAirlock = blueAirlock,
 				Gravolift = blueGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 			var lowerRedBattleBots = new BattleBotsComponent();
 			var lowerRedStation = new LowerStation
@@ -108,7 +113,8 @@ namespace BLL
 				CComponent = lowerRedBattleBots,
 				BluewardAirlock = redAirlock,
 				Gravolift = redGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 
 			var lowerWhiteStation = new LowerStation
@@ -120,7 +126,8 @@ namespace BLL
 				BluewardAirlock = blueAirlock,
 				RedwardAirlock = redAirlock,
 				Gravolift = whiteGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 			var lowerBlueStation = new LowerStation
 			{
@@ -130,7 +137,8 @@ namespace BLL
 				CComponent = rocketsComponent,
 				RedwardAirlock = blueAirlock,
 				Gravolift = blueGravolift,
-				ThreatController = threatController
+				ThreatController = threatController,
+				MovementController = movementController
 			};
 			BlueAirlock = blueAirlock;
 			RedAirlock = redAirlock;
@@ -142,6 +150,9 @@ namespace BLL
 			StationsByLocation = Zones
 				.SelectMany(zone => new Station[] {zone.LowerStation, zone.UpperStation})
 				.Concat(InterceptorStations)
+				.ToDictionary(station => station.StationLocation);
+			StandardStationsByLocation = Zones
+				.SelectMany(zone => new StandardStation[] {zone.LowerStation, zone.UpperStation})
 				.ToDictionary(station => station.StationLocation);
 
 			BattleBotsComponentsByLocation = new Dictionary<StationLocation, BattleBotsComponent>
@@ -200,7 +211,7 @@ namespace BLL
 
 		public void DrainEnergyContainer(StationLocation stationLocation, int amount)
 		{
-			StationsByLocation[stationLocation].DrainEnergyContainer(amount);
+			StandardStationsByLocation[stationLocation].DrainEnergyContainer(amount);
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)

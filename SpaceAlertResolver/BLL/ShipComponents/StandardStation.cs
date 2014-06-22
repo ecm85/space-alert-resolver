@@ -7,10 +7,13 @@ namespace BLL.ShipComponents
 {
 	public abstract class StandardStation : Station
 	{
+		public abstract void DrainEnergyContainer(int amount);
+
 		public Gravolift Gravolift { get; set; }
 		public Airlock BluewardAirlock { get; set; }
 		public Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; set; }
+		public MovementController MovementController { get; set; }
 
 		protected abstract void RefillEnergy(bool isHeroic);
 
@@ -19,7 +22,7 @@ namespace BLL.ShipComponents
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
 		}
 
-		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
+		private void PerformBAction(Player performingPlayer, bool isHeroic)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B, performingPlayer);
 			if (firstBThreat != null)
@@ -28,7 +31,7 @@ namespace BLL.ShipComponents
 				RefillEnergy(isHeroic);
 		}
 
-		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
+		private PlayerDamage PerformAAction(Player performingPlayer, bool isHeroic)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
 			if (firstAThreat != null)
@@ -39,7 +42,7 @@ namespace BLL.ShipComponents
 			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer) : null;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn)
+		private void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
 			if (firstCThreat != null)
@@ -48,7 +51,7 @@ namespace BLL.ShipComponents
 				CComponent.PerformCAction(performingPlayer, currentTurn);
 		}
 
-		public override void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic)
+		private void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
 			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
 				return;
@@ -57,7 +60,7 @@ namespace BLL.ShipComponents
 				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 
-		public override bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
+		public bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
 		{
 			if (!CanMoveOutTowardsRed())
 				return false;
@@ -67,7 +70,7 @@ namespace BLL.ShipComponents
 			return true;
 		}
 
-		public override bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic)
+		public bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
 			OnMoveOut(performingPlayer, currentTurn);
 			Gravolift.Use(performingPlayer, currentTurn, isHeroic);
@@ -76,7 +79,7 @@ namespace BLL.ShipComponents
 			return true;
 		}
 
-		public override bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn)
+		public bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn)
 		{
 			if (!CanMoveOutTowardsBlue())
 				return false;
@@ -98,19 +101,140 @@ namespace BLL.ShipComponents
 			}
 		}
 
-		public override bool CanMoveOutTowardsRed()
+		public bool CanMoveOutTowardsRed()
 		{
 			return RedwardAirlock != null && RedwardAirlock.CanUse;
 		}
 
-		public override bool CanMoveOutTowardsOppositeDeck()
+		public bool CanMoveOutTowardsOppositeDeck()
 		{
 			return true;
 		}
 
-		public override bool CanMoveOutTowardsBlue()
+		public bool CanMoveOutTowardsBlue()
 		{
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
+		}
+
+		public override PlayerDamage[] PerformPlayerAction(Player player, PlayerAction action, int currentTurn)
+		{
+			switch (action)
+			{
+				case PlayerAction.A:
+					return new [] {PerformAAction(player, false)};
+				case PlayerAction.B:
+					PerformBAction(player, false);
+					break;
+				case PlayerAction.C:
+					PerformCAction(player, currentTurn);
+					break;
+				case PlayerAction.MoveBlue:
+					MovementController.MoveBlue(player, currentTurn);
+					break;
+				case PlayerAction.MoveRed:
+					MovementController.MoveRed(player, currentTurn);
+					break;
+				case PlayerAction.ChangeDeck:
+					MovementController.ChangeDeck(player, currentTurn);
+					break;
+				case PlayerAction.BattleBots:
+					UseBattleBots(player, false);
+					break;
+				case PlayerAction.None:
+					break;
+				case PlayerAction.HeroicA:
+					PerformAAction(player, true);
+					break;
+				case PlayerAction.HeroicB:
+					PerformBAction(player, true);
+					break;
+				case PlayerAction.HeroicBattleBots:
+					UseBattleBots(player, true);
+					break;
+				case PlayerAction.TeleportBlueLower:
+					MovementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
+					break;
+				case PlayerAction.TeleportBlueUpper:
+					MovementController.MoveHeroically(player, StationLocation.UpperBlue, currentTurn);
+					break;
+				case PlayerAction.TeleportWhiteLower:
+					MovementController.MoveHeroically(player, StationLocation.LowerWhite, currentTurn);
+					break;
+				case PlayerAction.TeleportWhiteUpper:
+					MovementController.MoveHeroically(player, StationLocation.UpperWhite, currentTurn);
+					break;
+				case PlayerAction.TeleportRedLower:
+					MovementController.MoveHeroically(player, StationLocation.LowerRed, currentTurn);
+					break;
+				case PlayerAction.TeleportRedUpper:
+					MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
+					break;
+				case PlayerAction.BasicSpecialization:
+					return PerformBasicSpecialization(player, currentTurn);
+				case PlayerAction.AdvancedSpecialization:
+					return PerformAdvancedSpecialization(player, currentTurn);
+			}
+			return null;
+		}
+
+		private PlayerDamage[] PerformAdvancedSpecialization(Player player, int currentTurn)
+		{
+			switch (player.BasicSpecialization)
+			{
+				case PlayerSpecialization.DataAnalyst:
+					break;
+				case PlayerSpecialization.EnergyTechnician:
+					break;
+				case PlayerSpecialization.Hypernavigator:
+					break;
+				case PlayerSpecialization.Mechanic:
+					break;
+				case PlayerSpecialization.Medic:
+					break;
+				case PlayerSpecialization.PulseGunner:
+					break;
+				case PlayerSpecialization.Rocketeer:
+					break;
+				case PlayerSpecialization.SpecialOps:
+					break;
+				case PlayerSpecialization.SquadLeader:
+					break;
+				case PlayerSpecialization.Teleporter:
+					break;
+				default:
+					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
+			}
+			return null;
+		}
+
+		private PlayerDamage[] PerformBasicSpecialization(Player player, int currentTurn)
+		{
+			switch (player.BasicSpecialization)
+			{
+				case PlayerSpecialization.DataAnalyst:
+					break;
+				case PlayerSpecialization.EnergyTechnician:
+					break;
+				case PlayerSpecialization.Hypernavigator:
+					break;
+				case PlayerSpecialization.Mechanic:
+					break;
+				case PlayerSpecialization.Medic:
+					break;
+				case PlayerSpecialization.PulseGunner:
+					break;
+				case PlayerSpecialization.Rocketeer:
+					break;
+				case PlayerSpecialization.SpecialOps:
+					break;
+				case PlayerSpecialization.SquadLeader:
+					break;
+				case PlayerSpecialization.Teleporter:
+					break;
+				default:
+					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
+			}
+			return null;
 		}
 	}
 }

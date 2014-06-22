@@ -15,57 +15,23 @@ namespace BLL.ShipComponents
 			MoveIn += UseBattleBots;
 		}
 
-		public override void PerformBAction(Player performingPlayer, int currentTurn, bool isHeroic)
-		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-		}
-
-		public override PlayerDamage PerformAAction(Player performingPlayer, int currentTurn, bool isHeroic)
-		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			return null;
-		}
-
-		public override void PerformCAction(Player performingPlayer, int currentTurn)
+		private void PerformCAction(Player performingPlayer, int currentTurn)
 		{
 			InterceptorComponent.PerformCAction(performingPlayer, currentTurn);
 		}
 
 		private void UseBattleBots(Player performingPlayer, int currentTurn)
 		{
-			UseBattleBots(performingPlayer, currentTurn, false);
+			UseBattleBots(performingPlayer, false);
 		}
 
-		public override void UseBattleBots(Player performingPlayer, int currentTurn, bool isHeroic)
+		private void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
 			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots, performingPlayer);
 			if (firstThreat == null)
 				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic, performingPlayer, StationLocation.DistanceFromShip().GetValueOrDefault());
 			else
 				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
-		}
-
-		public override bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
-		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			return false;
-		}
-
-		public override bool PerformMoveOutTowardsOppositeDeck(Player performingPlayer, int currentTurn, bool isHeroic)
-		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			return false;
-		}
-
-		public override bool PerformMoveOutTowardsBlue(Player performingPlayer, int currentTurn)
-		{
-			performingPlayer.Shift(currentTurn);
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-			return false;
 		}
 
 		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
@@ -75,29 +41,30 @@ namespace BLL.ShipComponents
 			OnMoveIn(performingPlayer, currentTurn);
 		}
 
-		public override bool CanMoveOutTowardsRed()
+		public override PlayerDamage[] PerformPlayerAction(Player player, PlayerAction action, int currentTurn)
 		{
-			return false;
+			switch (action)
+			{
+				case PlayerAction.C:
+					PerformCAction(player, currentTurn);
+					break;
+				case PlayerAction.BattleBots:
+					UseBattleBots(player, false);
+					break;
+				case PlayerAction.HeroicBattleBots:
+					UseBattleBots(player, true);
+					break;
+				default:
+					PerformInvalidAction(player, currentTurn);
+					break;
+			}
+			return null;
 		}
 
-		public override bool CanMoveOutTowardsOppositeDeck()
+		private void PerformInvalidAction(Player player, int currentTurn)
 		{
-			return false;
-		}
-
-		public override bool CanMoveOutTowardsBlue()
-		{
-			return false;
-		}
-
-		public override void PerformNoAction(Player performingPlayer, int currentTurn)
-		{
-			InterceptorComponent.PerformNoAction(performingPlayer, currentTurn);
-		}
-
-		public override void DrainEnergyContainer(int amount)
-		{
-			throw new InvalidOperationException();
+			InterceptorComponent.PerformNoAction(player, currentTurn);
+			player.Shift(currentTurn);
 		}
 
 		public void PerformEndOfTurn()

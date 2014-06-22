@@ -27,7 +27,6 @@ namespace BLL
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
-		private readonly MovementController movementController;
 
 		public Game(
 			SittingDuck sittingDuck,
@@ -40,10 +39,6 @@ namespace BLL
 			PadPlayerActions();
 			SetCaptain();
 			nextTurn = 0;
-			movementController = new MovementController
-			{
-				SittingDuck = sittingDuck
-			};
 		}
 
 		private void SetCaptain()
@@ -113,8 +108,9 @@ namespace BLL
 		{
 			var damages = players
 				.Where(player => !player.IsKnockedOut)
-				.Select(player => PerformPlayerAction(currentTurn, player.Actions[currentTurn], player))
-				.Where(damage => damage != null)
+				.Select(player => player.CurrentStation.PerformPlayerAction(player, player.Actions[currentTurn], currentTurn))
+				.Where(damageList => damageList != null)
+				.SelectMany(damageList => damageList)
 				.ToList();
 			ThreatController.PerformEndOfPlayerActions();
 
@@ -130,65 +126,6 @@ namespace BLL
 			if (!targetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
 			ResolveDamage(damages, interceptorDamages);
-		}
-
-		private PlayerDamage PerformPlayerAction(int currentTurn, PlayerAction playerAction, Player player)
-		{
-			switch (playerAction)
-			{
-				case PlayerAction.A:
-					var damage = player.CurrentStation.PerformAAction(player, currentTurn, false);
-					return damage;
-				case PlayerAction.B:
-					player.CurrentStation.PerformBAction(player, currentTurn, false);
-					break;
-				case PlayerAction.C:
-					player.CurrentStation.PerformCAction(player, currentTurn);
-					break;
-				case PlayerAction.MoveBlue:
-					movementController.MoveBlue(player, currentTurn);
-					break;
-				case PlayerAction.MoveRed:
-					movementController.MoveRed(player, currentTurn);
-					break;
-				case PlayerAction.ChangeDeck:
-					movementController.ChangeDeck(player, currentTurn);
-					break;
-				case PlayerAction.BattleBots:
-					player.CurrentStation.UseBattleBots(player, currentTurn, false);
-					break;
-				case PlayerAction.None:
-					player.CurrentStation.PerformNoAction(player, currentTurn);
-					break;
-				case PlayerAction.HeroicA:
-					player.CurrentStation.PerformAAction(player, currentTurn, true);
-					break;
-				case PlayerAction.HeroicB:
-					player.CurrentStation.PerformBAction(player, currentTurn, true);
-					break;
-				case PlayerAction.HeroicBattleBots:
-					player.CurrentStation.UseBattleBots(player, currentTurn, true);
-					break;
-				case PlayerAction.TeleportBlueLower:
-					movementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
-					break;
-				case PlayerAction.TeleportBlueUpper:
-					movementController.MoveHeroically(player, StationLocation.UpperBlue, currentTurn);
-					break;
-				case PlayerAction.TeleportWhiteLower:
-					movementController.MoveHeroically(player, StationLocation.LowerWhite, currentTurn);
-					break;
-				case PlayerAction.TeleportWhiteUpper:
-					movementController.MoveHeroically(player, StationLocation.UpperWhite, currentTurn);
-					break;
-				case PlayerAction.TeleportRedLower:
-					movementController.MoveHeroically(player, StationLocation.LowerRed, currentTurn);
-					break;
-				case PlayerAction.TeleportRedUpper:
-					movementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
-					break;
-			}
-			return null;
 		}
 
 		private void PerformEndOfTurn()
