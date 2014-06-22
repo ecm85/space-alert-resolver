@@ -25,9 +25,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private void CallInExternalThreat(int currentTurn)
 		{
-			threatToCallIn.Initialize(SittingDuck, ThreatController, 1000 + currentTurn, CurrentZone);
-			threatToCallIn.PlaceOnTrack(ThreatController.ExternalTracks[CurrentZone]);
-			ThreatController.AddExternalThreat(threatToCallIn);
+			ThreatController.AddExternalThreat(SittingDuck, threatToCallIn, 1000 + currentTurn, CurrentZone);
 			calledInThreat = true;
 		}
 
