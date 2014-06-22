@@ -8,6 +8,8 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public class RabidBeast : SeriousRedInternalThreat
 	{
+		private InfectedPlayers infectedPlayers;
+
 		public RabidBeast()
 			: base(2, 2, StationLocation.UpperBlue, PlayerAction.BattleBots)
 		{
@@ -15,26 +17,35 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.InfectPlayers(CurrentStation);
+			InfectPlayers();
 			MoveRed();
 			MoveRed();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			if (!IsDefeated)
-
-			SittingDuck.InfectPlayers(CurrentStation);
+			InfectPlayers();
 			ChangeDecks();
 			MoveBlue();
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			if (!IsDefeated)
-				Damage(4);
-			//TODO: Each infected, non-knocked out player deals 2 damage (even if threat is destroyed)
-			throw new NotImplementedException();
+			Damage(4);
+		}
+
+		private void InfectPlayers()
+		{
+			if (infectedPlayers == null)
+			{
+				infectedPlayers = new InfectedPlayers(Type, difficulty);
+				infectedPlayers.Initialize(SittingDuck, ThreatController, TimeAppears);
+				infectedPlayers.PlaceOnTrack(Track, Position.GetValueOrDefault());
+				ThreatController.AddInternalThreat(infectedPlayers);
+			}
+			var playersInCurrentStation = SittingDuck.GetPlayersInStation(CurrentStation);
+			foreach (var player in playersInCurrentStation)
+				infectedPlayers.InfectPlayer(player);
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
@@ -47,6 +58,59 @@ namespace BLL.Threats.Internal.Serious.Red
 		public static string GetDisplayName()
 		{
 			return "Rabid Beast";
+		}
+
+		private class InfectedPlayers : InternalThreat
+		{
+			private readonly HashSet<Player> infectedPlayers;
+
+			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
+				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), PlayerAction.None)
+			{
+				infectedPlayers = new HashSet<Player>();
+			}
+
+			public void InfectPlayer(Player player)
+			{
+				infectedPlayers.Add(player);
+			}
+
+			protected override void PerformXAction(int currentTurn)
+			{
+			}
+
+			protected override void PerformYAction(int currentTurn)
+			{
+			}
+
+			protected override void PerformZAction(int currentTurn)
+			{
+				var stationsToDamage = infectedPlayers
+					.Where(player => !player.IsKnockedOut)
+					.Select(player => player.CurrentStation.StationLocation.ZoneLocation())
+					.ToList();
+				Damage(2, stationsToDamage);
+			}
+
+			public override int Points
+			{
+				get { return 0; }
+			}
+
+			public override bool IsDefeated
+			{
+				get { return false; }
+			}
+
+			public override bool IsSurvived
+			{
+				get { return false; }
+			}
+
+			public override bool IsDamageable
+			{
+				get { return false; }
+			}
 		}
 	}
 }

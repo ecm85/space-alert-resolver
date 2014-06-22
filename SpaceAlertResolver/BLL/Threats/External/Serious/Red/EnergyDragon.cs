@@ -18,7 +18,7 @@ namespace BLL.Threats.External.Serious.Red
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;

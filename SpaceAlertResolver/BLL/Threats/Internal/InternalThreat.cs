@@ -20,10 +20,9 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			ThreatController.EndOfTurn += PerformEndOfTurn;
-			ThreatController.InternalThreatsMove += PerformMove;
 			base.PlaceOnTrack(track, trackPosition);
 		}
 
@@ -37,7 +36,7 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		protected PlayerAction ActionType { get; set; }
+		protected PlayerAction ActionType { get; private set; }
 
 		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction actionType, int? inaccessibility = null) :
 			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
@@ -162,9 +161,7 @@ namespace BLL.Threats.Internal
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			CurrentStations.Clear();
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
-			ThreatController.InternalThreatsMove -= PerformMove;
 		}
 
 		private void AddIrreparableMalfunction()

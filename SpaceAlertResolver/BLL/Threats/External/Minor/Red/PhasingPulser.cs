@@ -16,7 +16,7 @@ namespace BLL.Threats.External.Minor.Red
 		{
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			BeforeMove += PerformBeforeMove;
@@ -50,6 +50,11 @@ namespace BLL.Threats.External.Minor.Red
 		}
 
 		public override bool IsDamageable
+		{
+			get { return base.IsDamageable && !isPhased; }
+		}
+
+		public override bool IsMoveable
 		{
 			get { return base.IsDamageable && !isPhased; }
 		}

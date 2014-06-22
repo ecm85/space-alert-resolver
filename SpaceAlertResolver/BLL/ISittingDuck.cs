@@ -26,11 +26,10 @@ namespace BLL
 		void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
 
 		int GetPlayerCount(StationLocation station);
-		int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations);
+		IEnumerable<Player> GetPlayersInStation(StationLocation station);
 
 		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
-		void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
 
@@ -53,7 +52,6 @@ namespace BLL
 		bool DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation zoneLocation);
 		void KnockOutCaptain();
-		void InfectPlayers(StationLocation stationLocation);
 		void BreachRedAirlock();
 		void BreachBlueAirlock();
 		void RepairAllAirlockBreaches();

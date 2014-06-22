@@ -14,7 +14,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
@@ -46,9 +46,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(type, difficulty, CurrentStation, PlayerAction.A),
-				new Sabotage(type, difficulty, CurrentStation, PlayerAction.B),
-				new Sabotage(type, difficulty, CurrentStation, PlayerAction.C)
+				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.A),
+				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.B),
+				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.C)
 			};
 			foreach (var newThreat in newThreats)
 			{

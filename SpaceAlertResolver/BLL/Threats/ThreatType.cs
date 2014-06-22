@@ -7,10 +7,10 @@ namespace BLL.Threats
 {
 	public enum ThreatType
 	{
-		SeriousInternal,
-		SeriousExternal,
-		MinorInternal,
-		MinorExternal
+		SeriousInternal = 1,
+		MinorInternal = 2,
+		SeriousExternal = 3,
+		MinorExternal = 4
 	}
 
 	public static class ThreatTypeExtensions

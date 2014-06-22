@@ -16,15 +16,17 @@ namespace BLL.Threats
 			PlaceOnTrack(track, track.GetStartingPosition());
 		}
 
-		protected virtual void PlaceOnTrack(Track track, int trackPosition)
+		public virtual void PlaceOnTrack(Track track, int trackPosition)
 		{
 			Track = track;
 			Position = trackPosition;
 			HasBeenPlaced = true;
-			ThreatController.ThreatsMove += PerformMove;
 		}
 
 		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
+		public virtual bool IsMoveable { get { return HasBeenPlaced && Position != null; } }
+		public virtual bool IsOnTrack { get { return HasBeenPlaced && Position != null; } }
+
 
 		protected bool HasBeenPlaced { get; set; }
 		public virtual int Points
@@ -36,12 +38,12 @@ namespace BLL.Threats
 
 		public virtual int GetPointsForDefeating()
 		{
-			return ThreatPoints.GetPointsForDefeating(type, difficulty);
+			return ThreatPoints.GetPointsForDefeating(Type, difficulty);
 		}
 
 		protected virtual int GetPointsForSurviving()
 		{
-			return ThreatPoints.GetPointsForSurviving(type, difficulty);
+			return ThreatPoints.GetPointsForSurviving(Type, difficulty);
 		}
 
 		public virtual bool IsDefeated { get; protected set; }
@@ -54,7 +56,7 @@ namespace BLL.Threats
 		public int? Position { get; protected set; }
 		protected ThreatController ThreatController { get; set; }
 
-		protected readonly ThreatType type;
+		public ThreatType Type { get; private set; }
 		protected readonly ThreatDifficulty difficulty;
 
 		protected ISittingDuck SittingDuck { get; set; }
@@ -84,7 +86,6 @@ namespace BLL.Threats
 		protected virtual void OnThreatTerminated()
 		{
 			Position = null;
-			ThreatController.ThreatsMove -= PerformMove;
 		}
 
 		protected bool IsDamaged
@@ -101,17 +102,17 @@ namespace BLL.Threats
 		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed)
 		{
 			this.difficulty = difficulty;
-			this.type = type;
+			Type = type;
 			TotalHealth = RemainingHealth = health;
 			Speed = speed;
 		}
 
-		protected void PerformMove(int currentTurn)
+		public void Move(int currentTurn)
 		{
-			PerformMove(currentTurn, Speed);
+			Move(currentTurn, Speed);
 		}
 
-		protected void PerformMove(int currentTurn, int amount)
+		public void Move(int currentTurn, int amount)
 		{
 			BeforeMove();
 			var newPosition = Position - amount;

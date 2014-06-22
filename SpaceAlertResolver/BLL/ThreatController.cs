@@ -13,12 +13,9 @@ namespace BLL
 	public class ThreatController
 	{
 		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
-		public Track InternalTrack { get; set; }
+		public Track InternalTrack { get; private set; }
 		private IList<ExternalThreat> ExternalThreats { get; set; }
 		private IList<InternalThreat> InternalThreats { get; set; }
-		public event Action<int> ThreatsMove = turn => { };
-		public event Action<int, int> ExternalThreatsMove = (turn, amount) => { };
-		public event Action<int, int> InternalThreatsMove = (turn, amount) => { };
 		public event Action JumpingToHyperspace = () => { };
 		public event Action EndOfPlayerActions = () => { };
 		public event Action EndOfTurn = () => { };
@@ -33,6 +30,26 @@ namespace BLL
 		public IEnumerable<InternalThreat> DamageableInternalThreats
 		{
 			get { return InternalThreats.Where(threat => threat.IsDamageable); }
+		}
+
+		private IEnumerable<ExternalThreat> MoveableExternalThreats
+		{
+			get { return ExternalThreats.Where(threat => threat.IsMoveable); }
+		}
+
+		private IEnumerable<InternalThreat> InternalThreatsOnTrack
+		{
+			get { return InternalThreats.Where(threat => threat.IsOnTrack); }
+		}
+
+		private IEnumerable<ExternalThreat> ExternalThreatsOnTrack
+		{
+			get { return ExternalThreats.Where(threat => threat.IsOnTrack); }
+		}
+
+		private IEnumerable<InternalThreat> MoveableInternalThreats
+		{
+			get { return InternalThreats.Where(threat => threat.IsMoveable); }
 		}
 
 		public IEnumerable<Threat> DefeatedThreats
@@ -70,21 +87,32 @@ namespace BLL
 
 		public void MoveThreats(int currentTurn)
 		{
-			ThreatsMove(currentTurn);
+			var allMoveableThreats = new Threat[0]
+				.Concat(InternalThreatsOnTrack)
+				.Concat(ExternalThreatsOnTrack)
+				.OrderBy(threat => threat.TimeAppears)
+				.ThenBy(threat => threat.Type)
+				.ToList();
+			foreach (var moveableThreat in allMoveableThreats)
+				moveableThreat.Move(currentTurn);
 		}
 
-		//TODO: For all 'extra movement things' respect is damageable? or unsubscribe from those events in the threats?
-		//TODO: Make sure all phasing threats unsubscribe from events they don't care about
-		//TODO: Ninja and rabid beast need to not move after killed but before z if no poisoned/infected players
-		//TODO: Make sure this doesn't move the source
-		public void MoveExternalThreats(int currentTurn, int amount)
+		public void MoveOtherExternalThreats(int currentTurn, int amount, ExternalThreat source)
 		{
-			ExternalThreatsMove(currentTurn, amount);
+			foreach (var externalThreat in MoveableExternalThreats.Except(new[] {source}).OrderBy(threat => threat.TimeAppears))
+				externalThreat.Move(currentTurn, amount);
 		}
 
 		public void MoveInternalThreats(int currentTurn, int amount)
 		{
-			InternalThreatsMove(currentTurn, amount);
+			foreach (var internalThreat in MoveableInternalThreats.OrderBy(threat => threat.TimeAppears))
+				internalThreat.Move(currentTurn, amount);
+		}
+
+		public void MoveExternalThreatsInZone(int currentTurn, int amount, ZoneLocation zoneLocation)
+		{
+			foreach (var externalThreat in MoveableExternalThreats.Where(threat => threat.CurrentZone == zoneLocation).OrderBy(threat => threat.TimeAppears))
+				externalThreat.Move(currentTurn, amount);
 		}
 
 		public void JumpToHyperspace()
@@ -122,6 +150,7 @@ namespace BLL
 			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 
+		//TODO: Lump in other initialize and placeontrack calls?
 		public void AddInternalThreat(InternalThreat newThreat)
 		{
 			InternalThreats.Add(newThreat);

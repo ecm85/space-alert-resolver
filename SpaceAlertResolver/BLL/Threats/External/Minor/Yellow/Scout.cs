@@ -19,7 +19,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			ThreatController.MoveExternalThreats(currentTurn, 1);
+			ThreatController.MoveOtherExternalThreats(currentTurn, 1, this);
 		}
 
 		protected override void PerformZAction(int currentTurn)

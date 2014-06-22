@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			currentProgeny = new List<Slime>();
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			SittingDuck.SubscribeToMoveIn(CurrentStations, DelayPlayer);

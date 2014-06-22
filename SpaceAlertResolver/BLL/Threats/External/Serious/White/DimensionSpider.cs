@@ -13,7 +13,7 @@ namespace BLL.Threats.External.Serious.White
 		{
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;

@@ -14,9 +14,7 @@ namespace BLL
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
 		public int Index { get; set; }
-		public bool IsPoisoned { get; set; }
 		public bool IsCaptain { get; set; }
-		public bool IsInfected { get; set; }
 
 		public void Shift(int turn)
 		{

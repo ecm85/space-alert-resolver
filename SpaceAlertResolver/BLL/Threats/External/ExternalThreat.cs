@@ -3,20 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
-using BLL.Tracks;
 
 namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public ZoneLocation CurrentZone { get; set; }
+		public ZoneLocation CurrentZone { get; private set; }
 		protected int shields;
-
-		protected override void PlaceOnTrack(Track track, int trackPosition)
-		{
-			ThreatController.ExternalThreatsMove += PerformMove;
-			base.PlaceOnTrack(track, trackPosition);
-		}
 
 		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
 
@@ -94,12 +87,6 @@ namespace BLL.Threats.External
 			if (result.ShipDestroyed)
 				throw new LoseException(this);
 			return result;
-		}
-
-		protected override void OnThreatTerminated()
-		{
-			ThreatController.ExternalThreatsMove -= PerformMove;
-			base.OnThreatTerminated();
 		}
 	}
 }

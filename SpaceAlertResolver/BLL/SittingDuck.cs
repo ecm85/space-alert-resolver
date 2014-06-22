@@ -240,12 +240,9 @@ namespace BLL
 			return StationsByLocation[station].Players.Count;
 		}
 
-		public int GetPoisonedPlayerCount(IEnumerable<StationLocation> locations)
+		public IEnumerable<Player> GetPlayersInStation(StationLocation station)
 		{
-			return locations
-				.Select(location => StationsByLocation[location])
-				.SelectMany(station => station.Players)
-				.Count(player => player.IsPoisoned);
+			return StationsByLocation[station].Players;
 		}
 
 		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
@@ -264,15 +261,6 @@ namespace BLL
 				.SelectMany(zone => zone.Players)
 				.Where(player => player.BattleBots == null);
 			KnockOut(playersWithBattleBots);
-		}
-
-		public void KnockOutPoisonedPlayers(IEnumerable<StationLocation> locations)
-		{
-			var poisonedPlayers = locations
-				.Select(location => StationsByLocation[location])
-				.SelectMany(zone => zone.Players)
-				.Where(player => player.IsPoisoned);
-			KnockOut(poisonedPlayers);
 		}
 
 		public void KnockOutPlayers(IEnumerable<StationLocation> locations)
@@ -398,12 +386,6 @@ namespace BLL
 		{
 			var captain = Zones.SelectMany(zone => zone.Players).Single(player => player.IsCaptain);
 			captain.IsKnockedOut = true;
-		}
-
-		public void InfectPlayers(StationLocation stationLocation)
-		{
-			foreach (var player in StationsByLocation[stationLocation].Players)
-				player.IsInfected = true;
 		}
 
 		public void BreachRedAirlock()

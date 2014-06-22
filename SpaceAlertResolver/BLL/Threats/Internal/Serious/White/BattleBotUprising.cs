@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal.Serious.White
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
-		protected override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;

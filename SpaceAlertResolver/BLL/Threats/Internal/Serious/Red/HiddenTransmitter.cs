@@ -43,8 +43,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			//TODO: Move all threats in current zone
-			throw new NotImplementedException();
+			ThreatController.MoveExternalThreatsInZone(currentTurn, 2, CurrentZone);
 		}
 	}
 }
