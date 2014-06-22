@@ -40,8 +40,8 @@ namespace BLL
 		int GetRocketCount();
 		void RemoveRocket();
 		void RemoveAllRockets();
-		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
-		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
+		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift, bool repeatPreviousAction = false);
+		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift, bool repeatPreviousAction = false);
 
 		void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
 		void SubscribeToMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
@@ -58,5 +58,6 @@ namespace BLL
 		bool RedAirlockIsBreached { get; }
 		bool BlueAirlockIsBreached { get; }
 		int GetDamageToZone(ZoneLocation zoneLocation);
+		void TeleportPlayers(IEnumerable<Player> playersToTeleport, StationLocation newStationLocation);
 	}
 }

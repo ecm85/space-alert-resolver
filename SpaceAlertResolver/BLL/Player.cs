@@ -16,12 +16,13 @@ namespace BLL
 		public int Index { get; set; }
 		public bool IsCaptain { get; set; }
 
-		public void Shift(int turn)
+		public void Shift(int turn, bool repeatPreviousAction = false)
 		{
 			var endTurn = turn;
 			while (endTurn + 1 < Actions.Count && Actions[endTurn] != PlayerAction.None)
 				endTurn++;
-			Actions.Insert(turn, PlayerAction.None);
+			var actionToInsert = repeatPreviousAction ? Actions[turn - 1] : PlayerAction.None;
+			Actions.Insert(turn, actionToInsert);
 			Actions.RemoveAt(endTurn + 1);
 		}
 	}

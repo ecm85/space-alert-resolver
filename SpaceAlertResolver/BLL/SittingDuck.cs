@@ -328,16 +328,16 @@ namespace BLL
 			RocketsComponent.RemoveAllRockets();
 		}
 
-		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
+		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift, bool repeatPreviousAction = false)
 		{
 			foreach (var player in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).SelectMany(zone => zone.Players))
-				player.Shift(turnToShift);
+				player.Shift(turnToShift, repeatPreviousAction);
 		}
 
-		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift)
+		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift, bool repeatPreviousAction = false)
 		{
 			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
-				player.Shift(turnToShift);
+				player.Shift(turnToShift, repeatPreviousAction);
 		}
 
 		public void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
@@ -410,6 +410,12 @@ namespace BLL
 		public virtual int GetDamageToZone(ZoneLocation zoneLocation)
 		{
 			return ZonesByLocation[zoneLocation].TotalDamage;
+		}
+
+		public void TeleportPlayers(IEnumerable<Player> playersToTeleport, StationLocation newStationLocation)
+		{
+			foreach (var player in playersToTeleport)
+				player.CurrentStation = StationsByLocation[newStationLocation];
 		}
 	}
 }

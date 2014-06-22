@@ -72,6 +72,7 @@ namespace BLL
 			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
 			if (isEndOfPhase)
 				PerformEndOfPhase();
+
 			if (currentTurn == NumberOfTurns - 1)
 			{
 				ThreatController.MoveThreats(currentTurn + 1);
