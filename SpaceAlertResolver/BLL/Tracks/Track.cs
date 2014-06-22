@@ -21,13 +21,6 @@ namespace BLL.Tracks
 			return sections.Sum(section => section.Length);
 		}
 
-		public TrackBreakpointType? MoveSingle(int currentPosition)
-		{
-			var newPosition = currentPosition;
-			newPosition--;
-			return breakpoints.ContainsKey(newPosition) ? breakpoints[newPosition] : (TrackBreakpointType?)null;
-		}
-
 		public int DistanceToThreat(int position)
 		{
 			var distance = position;
@@ -38,6 +31,15 @@ namespace BLL.Tracks
 				distance -= section.Length;
 			}
 			throw new InvalidOperationException();
+		}
+
+		public IEnumerable<TrackBreakpointType> GetCrossedBreakpoints(int oldPosition, int newPosition)
+		{
+			var crossedBreakpoints = new List<TrackBreakpointType>();
+			for(var i = oldPosition - 1; i >= newPosition; i--)
+				if(breakpoints.ContainsKey(i))
+					crossedBreakpoints.Add(breakpoints[i]);
+			return crossedBreakpoints;
 		}
 	}
 }

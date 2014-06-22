@@ -38,9 +38,8 @@ namespace BLL.Threats.External.Minor.Red
 		private void Jump(ZoneLocation newZone)
 		{
 			var newTrack = ThreatController.ExternalTracks[newZone];
-			if (newTrack.GetStartingPosition() < Position)
-				return;
-			Track = newTrack;
+			if (newTrack.GetStartingPosition() >= Position)
+				Track = newTrack;
 		}
 	}
 }

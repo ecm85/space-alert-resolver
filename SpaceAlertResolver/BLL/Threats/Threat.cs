@@ -115,15 +115,13 @@ namespace BLL.Threats
 		public void Move(int currentTurn, int amount)
 		{
 			BeforeMove();
-			var newPosition = Position - amount;
-			//TODO: Red threats: Need to fix this to allow jumpers (need to get all the breakpoints before performing any
-			//And perhaps need to not perform certain breakpoints if threat dies after one of them
-			while (Position != null && Position > newPosition)
+			var oldPosition = Position;
+			Position -= amount;
+			var newPosition = Position;
+			var crossedBreakpoints = Track.GetCrossedBreakpoints(oldPosition.GetValueOrDefault(), newPosition.GetValueOrDefault());
+			foreach (var breakpoint in crossedBreakpoints)
 			{
-				var crossedBreakpoint = Track.MoveSingle(Position.Value);
-				Position--;
-				if (crossedBreakpoint != null)
-					switch (crossedBreakpoint.Value)
+				switch (breakpoint)
 					{
 						case TrackBreakpointType.X:
 							PerformXAction(currentTurn);
