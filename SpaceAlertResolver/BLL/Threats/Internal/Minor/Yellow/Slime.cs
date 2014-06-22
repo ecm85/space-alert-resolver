@@ -51,10 +51,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			if (stationLocation != null && !ThreatController.DamageableInternalThreats.Any(threat => threat is Slime && threat.CurrentStation == stationLocation))
 			{
 				var newProgeny = CreateProgeny(stationLocation.Value);
-				newProgeny.Initialize(SittingDuck, ThreatController, TimeAppears);
 				currentProgeny.Add(newProgeny);
-				newProgeny.PlaceOnTrack(Track, Position.GetValueOrDefault());
-				ThreatController.AddInternalThreat(newProgeny);
+				ThreatController.AddInternalThreat(SittingDuck, newProgeny, TimeAppears, Track, Position.GetValueOrDefault());
 			}
 		}
 	}

@@ -51,11 +51,7 @@ namespace BLL.Threats.Internal.Serious.Red
 				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.C)
 			};
 			foreach (var newThreat in newThreats)
-			{
-				newThreat.Initialize(SittingDuck, ThreatController, TimeAppears);
-				newThreat.PlaceOnTrack();
-				ThreatController.AddInternalThreat(newThreat);
-			}
+				ThreatController.AddInternalThreat(SittingDuck, newThreat, TimeAppears, Track);
 		}
 
 		protected override void OnHealthReducedToZero()
@@ -103,7 +99,7 @@ namespace BLL.Threats.Internal.Serious.Red
 				get { return false; }
 			}
 
-			public void PlaceOnTrack()
+			public override void PlaceOnTrack(Track track, int trackPosition)
 			{
 				Position = -1;
 				HasBeenPlaced = true;

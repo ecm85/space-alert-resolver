@@ -150,12 +150,21 @@ namespace BLL
 			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 
-		//TODO: Lump in other initialize and placeontrack calls?
-		public void AddInternalThreat(InternalThreat newThreat)
+		public void AddInternalThreat(ISittingDuck sittingDuck, InternalThreat newThreat, int timeAppears, Track track, int position)
 		{
+			newThreat.Initialize(sittingDuck, this, timeAppears);
+			newThreat.PlaceOnTrack(track, position);
 			InternalThreats.Add(newThreat);
 		}
 
+		public void AddInternalThreat(ISittingDuck sittingDuck, InternalThreat newThreat, int timeAppears, Track track)
+		{
+			newThreat.Initialize(sittingDuck, this, timeAppears);
+			newThreat.PlaceOnTrack(track);
+			InternalThreats.Add(newThreat);
+		}
+
+		//TODO: Lump in other initialize and placeontrack calls?
 		public void AddExternalThreat(ExternalThreat newThreat)
 		{
 			ExternalThreats.Add(newThreat);

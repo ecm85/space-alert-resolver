@@ -37,9 +37,7 @@ namespace BLL.Threats.External.Minor.Red
 
 		private void CallInInternalThreat(int currentTurn)
 		{
-			threatToCallIn.Initialize(SittingDuck, ThreatController, 1000 + currentTurn);
-			threatToCallIn.PlaceOnTrack(ThreatController.InternalTrack);
-			ThreatController.AddInternalThreat(threatToCallIn);
+			ThreatController.AddInternalThreat(SittingDuck, threatToCallIn, 1000 + currentTurn, ThreatController.InternalTrack);
 		}
 
 		public override int GetPointsForDefeating()
