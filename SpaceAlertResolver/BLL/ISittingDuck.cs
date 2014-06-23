@@ -27,6 +27,7 @@ namespace BLL
 
 		int GetPlayerCount(StationLocation station);
 		IEnumerable<Player> GetPlayersInStation(StationLocation station);
+		IEnumerable<Player> GetPlayersOnShip();
 
 		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);

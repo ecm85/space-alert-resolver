@@ -9,7 +9,6 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Feature: Specializations
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
 		//TODO: Feature: Let user select damage tokens

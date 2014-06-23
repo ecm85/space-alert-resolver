@@ -262,6 +262,11 @@ namespace BLL
 			return StationsByLocation[station].Players;
 		}
 
+		public IEnumerable<Player> GetPlayersOnShip()
+		{
+			return EnumFactory.All<StationLocation>().SelectMany(stationLocation => StandardStationsByLocation[stationLocation].Players);
+		}
+
 		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
 		{
 			var playersWithBattleBots = locations

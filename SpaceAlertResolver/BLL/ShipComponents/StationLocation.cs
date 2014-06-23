@@ -156,6 +156,21 @@ namespace BLL.ShipComponents
 			}
 		}
 
+		public static StationLocation? DiagonalStation(this StationLocation stationLocation)
+		{
+			switch (stationLocation)
+			{
+				case StationLocation.LowerBlue:
+					return StationLocation.UpperRed;
+				case StationLocation.UpperBlue:
+					return StationLocation.LowerRed;
+				case StationLocation.LowerRed:
+					return StationLocation.UpperBlue;
+				case StationLocation.UpperRed:
+					return StationLocation.LowerBlue;
+			}
+		}
+
 		public static int? DistanceFromShip(this StationLocation stationLocation)
 		{
 			switch (stationLocation)

@@ -18,6 +18,8 @@ namespace BLL
 		public PlayerSpecialization? BasicSpecialization { get; set; }
 		public PlayerSpecialization? AdvancedSpecialization { get; set; }
 		public int BonusPoints { get; set; }
+		public bool PlayerToTeleport { get; set; }
+		public bool TeleportDestination { get; set; }
 
 		public void Shift(int turn, bool repeatPreviousAction = false)
 		{

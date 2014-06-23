@@ -228,7 +228,11 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.SquadLeader:
 					throw new NotImplementedException();
 				case PlayerSpecialization.Teleporter:
-					throw new NotImplementedException();
+					var playerToTeleport = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.PlayerToTeleport);
+					var teleportDestination = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.TeleportDestination);
+					if(playerToTeleport != null && teleportDestination != null)
+						playerToTeleport.CurrentStation = teleportDestination.CurrentStation;
+					break;
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
 			}
@@ -267,7 +271,10 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.SquadLeader:
 					throw new NotImplementedException();
 				case PlayerSpecialization.Teleporter:
-					throw new NotImplementedException();
+					var newStationLocation = StationLocation.DiagonalStation();
+					if (newStationLocation != null)
+						player.CurrentStation = SittingDuck.StandardStationsByLocation[newStationLocation.Value];
+					break;
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
