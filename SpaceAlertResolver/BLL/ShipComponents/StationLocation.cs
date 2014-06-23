@@ -168,6 +168,8 @@ namespace BLL.ShipComponents
 					return StationLocation.UpperBlue;
 				case StationLocation.UpperRed:
 					return StationLocation.LowerBlue;
+				default:
+					return null;
 			}
 		}
 

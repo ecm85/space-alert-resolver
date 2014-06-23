@@ -8,19 +8,19 @@ namespace BLL
 {
 	public class PlayerDamage
 	{
-		public int[] AffectedDistance { get; set; }
-		public IList<ZoneLocation> ZoneLocations { get; set; }
+		public int[] AffectedDistances { get; set; }
+		public IList<ZoneLocation> AffectedZones { get; set; }
 		public int Amount { get; set; }
 		public PlayerDamageType PlayerDamageType { get; set; }
 		public bool RequiresTargetingAssistance { get; set; }
 		public Player PerformingPlayer { get; set; }
 
-		public PlayerDamage(int amount, PlayerDamageType playerDamageType, int[] affectedDistance, IList<ZoneLocation> zoneLocations, Player performingPlayer, bool requiresTargetingAssistance = false)
+		public PlayerDamage(int amount, PlayerDamageType playerDamageType, int[] affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer, bool requiresTargetingAssistance = false)
 		{
 			Amount = amount;
 			PlayerDamageType = playerDamageType;
-			AffectedDistance = affectedDistance;
-			ZoneLocations = zoneLocations;
+			AffectedDistances = affectedDistances;
+			AffectedZones = affectedZones;
 			RequiresTargetingAssistance = requiresTargetingAssistance;
 			PerformingPlayer = performingPlayer;
 		}
@@ -29,8 +29,8 @@ namespace BLL
 			: this(
 				other.Amount,
 				other.PlayerDamageType,
-				other.AffectedDistance.ToArray(),
-				other.ZoneLocations.ToList(),
+				other.AffectedDistances.ToArray(),
+				other.AffectedZones.ToList(),
 				other.PerformingPlayer,
 				other.RequiresTargetingAssistance)
 		{

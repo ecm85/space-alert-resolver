@@ -55,8 +55,8 @@ namespace BLL.Threats.External
 
 		public virtual bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			var isInRange = damage.AffectedDistance.Contains(DistanceToShip);
-			var gunCanHitCurrentZone = damage.ZoneLocations.Contains(CurrentZone);
+			var isInRange = damage.AffectedDistances.Contains(DistanceToShip);
+			var gunCanHitCurrentZone = damage.AffectedZones.Contains(CurrentZone);
 			return IsDamageable && isInRange && gunCanHitCurrentZone;
 		}
 

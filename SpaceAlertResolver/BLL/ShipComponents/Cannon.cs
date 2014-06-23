@@ -7,9 +7,9 @@ namespace BLL.ShipComponents
 {
 	public abstract class Cannon
 	{
-		protected int damage;
-		protected readonly IList<ZoneLocation> zonesAffected;
-		protected int[] distancesAffected;
+		protected int baseDamage;
+		protected readonly IList<ZoneLocation> affectedZones;
+		protected int[] baseAffectedDistances;
 		protected readonly PlayerDamageType playerDamageType;
 		private readonly EnergyContainer source;
 		public bool DisruptedOptics { get; set; }
@@ -29,8 +29,11 @@ namespace BLL.ShipComponents
 				firedThisTurn = true;
 				source.Energy -= 1;
 				CannonFired();
-				return GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
+				var playerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
+				mechanicBuff = false;
+				return playerDamage;
 			}
+			mechanicBuff = false;
 			return null;
 		}
 
@@ -39,29 +42,44 @@ namespace BLL.ShipComponents
 			return !firedThisTurn && source.Energy > 1;
 		}
 
-		protected virtual PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
+		protected abstract PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
+
+		protected bool isDamaged;
+
+		public void SetDamaged()
 		{
-			var amount = isHeroic ? damage + 1 : damage;
-			return new [] {new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer)};
+			isDamaged = true;
 		}
 
-		protected bool IsDamaged { get; set; }
+		public void Repair()
+		{
+			isDamaged = false;
+		}
 
-		public abstract void SetDamaged();
-		public abstract void Repair();
-
-		protected Cannon(EnergyContainer source, int damage, int[] distancesAffected, PlayerDamageType playerDamageType, ZoneLocation zoneAffected)
-			: this(source, damage, distancesAffected, playerDamageType, new[] { zoneAffected })
+		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, ZoneLocation zoneAffected)
+			: this(source, baseDamage, baseAffectedDistances, playerDamageType, new[] { zoneAffected })
 		{
 		}
 
-		protected Cannon(EnergyContainer source, int damage, int[] distancesAffected, PlayerDamageType playerDamageType, IList<ZoneLocation> zonesAffected)
+		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, IList<ZoneLocation> affectedZones)
 		{
 			this.source = source;
-			this.damage = damage;
-			this.distancesAffected = distancesAffected;
+			this.baseDamage = baseDamage;
+			this.baseAffectedDistances = baseAffectedDistances;
 			this.playerDamageType = playerDamageType;
-			this.zonesAffected = zonesAffected;
+			this.affectedZones = affectedZones;
+		}
+
+		protected bool mechanicBuff;
+
+		public void RemoveMechanicBuff()
+		{
+			mechanicBuff = false;
+		}
+
+		public void AddMechanicBuff()
+		{
+			mechanicBuff = true;
 		}
 	}
 }

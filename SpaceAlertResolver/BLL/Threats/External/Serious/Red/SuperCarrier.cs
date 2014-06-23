@@ -29,7 +29,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return damage.AffectedDistance.Contains(DistanceToShip);
+			return damage.AffectedDistances.Contains(DistanceToShip);
 		}
 
 		public static string GetDisplayName()

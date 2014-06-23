@@ -21,6 +21,7 @@ namespace BLL
 		//TODO: Code Cleanup: Make reusable threat 'components'
 		//TODO: Code Cleanup: Change energy from int to actual blocks?
 		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
+		//TODO: Unit test pulse cannon and laser cannon
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;

@@ -46,9 +46,15 @@ namespace BLL.ShipComponents
 			if (firstAThreat != null)
 			{
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
+				Cannon.RemoveMechanicBuff();
 				return null;
 			}
-			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced) : null;
+			if (HasIrreparableMalfunctionOfType(PlayerAction.A))
+			{
+				Cannon.RemoveMechanicBuff();
+				return null;
+			}
+			return Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
 		}
 
 		public bool CanFireCannon(Player performingPlayer)
@@ -208,7 +214,8 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.Hypernavigator:
 					throw new NotImplementedException();
 				case PlayerSpecialization.Mechanic:
-					throw new NotImplementedException();
+					Cannon.AddMechanicBuff();
+					break;
 				case PlayerSpecialization.Medic:
 					throw new NotImplementedException();
 				case PlayerSpecialization.PulseGunner:
@@ -217,8 +224,10 @@ namespace BLL.ShipComponents
 						return PerformAAction(player, false).Concat(pulseCannonStation.PerformAAction(player, false)).ToArray();
 					if (StationLocation == StationLocation.LowerWhite)
 						return PerformAAction(player, false);
+					pulseCannonStation.Cannon.RemoveMechanicBuff();
 					if(!CanFireCannon(player))
 						return PerformAAction(player, false);
+					Cannon.RemoveMechanicBuff();
 					break;
 				case PlayerSpecialization.Rocketeer:
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
@@ -258,7 +267,12 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.Hypernavigator:
 					throw new NotImplementedException();
 				case PlayerSpecialization.Mechanic:
-					throw new NotImplementedException();
+					var firstThreat = new[] {PlayerAction.A, PlayerAction.B, PlayerAction.C}
+						.Select(actionType => GetFirstThreatOfType(actionType, player))
+						.FirstOrDefault(threat => threat != null);
+					if(firstThreat != null)
+						DamageThreat(2, firstThreat, player, false);
+					break;
 				case PlayerSpecialization.Medic:
 					throw new NotImplementedException();
 				case PlayerSpecialization.PulseGunner:
