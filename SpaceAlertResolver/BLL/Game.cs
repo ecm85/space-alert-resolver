@@ -20,6 +20,7 @@ namespace BLL
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
 		//TODO: Code Cleanup: Make reusable threat 'components'
+		//TODO: Code Cleanup: Change energy from int to actual blocks?
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -134,8 +135,8 @@ namespace BLL
 			foreach (var zone in sittingDuck.Zones)
 			{
 				zone.Gravolift.PerformEndOfTurn();
-				zone.UpperStation.Cannon.PerformEndOfTurn();
-				zone.LowerStation.Cannon.PerformEndOfTurn();
+				zone.UpperStation.PerformEndOfTurn();
+				zone.LowerStation.PerformEndOfTurn();
 			}
 			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			sittingDuck.RocketsComponent.PerformEndOfTurn();

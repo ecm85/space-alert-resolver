@@ -59,6 +59,7 @@
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeekerTest.cs" />
+    <Compile Include="ShieldTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">

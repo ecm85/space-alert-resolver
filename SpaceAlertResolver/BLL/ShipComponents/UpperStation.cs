@@ -17,5 +17,11 @@ namespace BLL.ShipComponents
 		{
 			Shield.Energy -= amount;
 		}
+
+		public override void PerformEndOfTurn()
+		{
+			base.PerformEndOfTurn();
+			Shield.PerformEndOfTurn();
+		}
 	}
 }

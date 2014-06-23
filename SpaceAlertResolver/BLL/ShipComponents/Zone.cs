@@ -31,21 +31,8 @@ namespace BLL.ShipComponents
 			var damageDone = amount;
 			if (damageType != ThreatDamageType.IgnoresShields)
 			{
-				var reversedShields = DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields);
-				var ineffectiveShields = DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields);
-				if (reversedShields)
-				{
-					damageDone += UpperStation.Shield.Energy;
-					UpperStation.Shield.Energy = 0;
-				}
-				else if(!ineffectiveShields)
-				{
-					var oldShields = UpperStation.Shield.Energy;
-					UpperStation.Shield.Energy -= amount;
-					var newShields = UpperStation.Shield.Energy;
-					damageShielded = oldShields - newShields;
-					damageDone -= damageShielded;
-				}
+				damageShielded = UpperStation.Shield.ShieldThroughAttack(amount);
+				damageDone -= damageShielded;
 			}
 			if (damageType == ThreatDamageType.DoubleDamageThroughShields)
 				damageDone *= 2;
@@ -141,6 +128,14 @@ namespace BLL.ShipComponents
 		{
 			DebuffsBySource[source] = debuff;
 			UpdateOptics();
+			UpdateShields();
+		}
+
+		public void RemoveDebuffForSource(InternalThreat source)
+		{
+			DebuffsBySource.Remove(source);
+			UpdateOptics();
+			UpdateShields();
 		}
 
 		private void UpdateOptics()
@@ -150,10 +145,10 @@ namespace BLL.ShipComponents
 			LowerStation.Cannon.DisruptedOptics = opticsDisrupted;
 		}
 
-		public void RemoveDebuffForSource(InternalThreat source)
+		private void UpdateShields()
 		{
-			DebuffsBySource.Remove(source);
-			UpdateOptics();
+			UpperStation.Shield.IneffectiveShields = DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields);
+			UpperStation.Shield.ReversedShields = DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields);
 		}
 
 		public int GetEnergyInReactor()

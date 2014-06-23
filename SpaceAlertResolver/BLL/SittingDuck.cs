@@ -295,15 +295,7 @@ namespace BLL
 		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				TransferEnergyToShield(zone.UpperStation.Shield, zone.LowerStation.Reactor);
-		}
-
-		private static void TransferEnergyToShield(Shield shield, Reactor reactor)
-		{
-			var roomForShields = shield.Capacity - shield.Energy;
-			var energyTransferredToShields = Math.Min(roomForShields, reactor.Energy);
-			shield.Energy += energyTransferredToShields;
-			reactor.Energy -= energyTransferredToShields;
+				zone.UpperStation.Shield.FillToCapacity(false);
 		}
 
 		private static void KnockOut(IEnumerable<Player> players)

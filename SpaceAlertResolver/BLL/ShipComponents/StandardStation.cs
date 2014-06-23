@@ -18,16 +18,24 @@ namespace BLL.ShipComponents
 
 		protected abstract void RefillEnergy(bool isHeroic);
 
+		public virtual void PerformEndOfTurn()
+		{
+			Cannon.PerformEndOfTurn();
+		}
+
 		private bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
 		{
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
 		}
 
-		private void PerformBAction(Player performingPlayer, bool isHeroic)
+		private void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerAction.B, performingPlayer);
 			if (firstBThreat != null)
-				DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
+			{
+				if (!(isRemote && firstBThreat.NextDamageWillDestroyThreat()))
+					DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
+			}
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
 				RefillEnergy(isHeroic);
 		}
@@ -182,39 +190,6 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
-		private PlayerDamage[] PerformAdvancedSpecialization(Player player, int currentTurn)
-		{
-			switch (player.BasicSpecialization)
-			{
-				case PlayerSpecialization.DataAnalyst:
-					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerWhite);
-					player.BonusPoints++;
-					break;
-				case PlayerSpecialization.EnergyTechnician:
-					break;
-				case PlayerSpecialization.Hypernavigator:
-					break;
-				case PlayerSpecialization.Mechanic:
-					break;
-				case PlayerSpecialization.Medic:
-					break;
-				case PlayerSpecialization.PulseGunner:
-					break;
-				case PlayerSpecialization.Rocketeer:
-					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
-					break;
-				case PlayerSpecialization.SpecialOps:
-					break;
-				case PlayerSpecialization.SquadLeader:
-					break;
-				case PlayerSpecialization.Teleporter:
-					break;
-				default:
-					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
-			}
-			return null;
-		}
-
 		private PlayerDamage[] PerformBasicSpecialization(Player player, int currentTurn)
 		{
 			switch (player.BasicSpecialization)
@@ -223,6 +198,7 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.UpperWhite].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.EnergyTechnician:
+					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(player, false, true);
 					break;
 				case PlayerSpecialization.Hypernavigator:
 					break;
@@ -243,6 +219,45 @@ namespace BLL.ShipComponents
 					break;
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
+			}
+			return null;
+		}
+
+		private PlayerDamage[] PerformAdvancedSpecialization(Player player, int currentTurn)
+		{
+			switch (player.BasicSpecialization)
+			{
+				case PlayerSpecialization.DataAnalyst:
+					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerWhite);
+					player.BonusPoints++;
+					break;
+				case PlayerSpecialization.EnergyTechnician:
+					if (player.CurrentStation.StationLocation.IsUpperDeck())
+						foreach (var zone in SittingDuck.Zones)
+						{
+							var isCurrentZone = (player.CurrentStation.StationLocation.ZoneLocation() == zone.ZoneLocation);
+							zone.UpperStation.Shield.BonusShield += isCurrentZone ? 2 : 1;
+						}
+					break;
+				case PlayerSpecialization.Hypernavigator:
+					break;
+				case PlayerSpecialization.Mechanic:
+					break;
+				case PlayerSpecialization.Medic:
+					break;
+				case PlayerSpecialization.PulseGunner:
+					break;
+				case PlayerSpecialization.Rocketeer:
+					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
+					break;
+				case PlayerSpecialization.SpecialOps:
+					break;
+				case PlayerSpecialization.SquadLeader:
+					break;
+				case PlayerSpecialization.Teleporter:
+					break;
+				default:
+					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
 			return null;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BLL.ShipComponents
 {
@@ -40,6 +41,12 @@ namespace BLL.ShipComponents
 		public static bool IsInterceptorStationLocation(this StationLocation stationLocation)
 		{
 			return !stationLocation.IsOnShip();
+		}
+
+		public static bool IsUpperDeck(this StationLocation stationLocation)
+		{
+			var upperDeckStations = new[] {StationLocation.UpperBlue, StationLocation.UpperWhite, StationLocation.UpperRed};
+			return upperDeckStations.Contains(stationLocation);
 		}
 
 		public static ZoneLocation ZoneLocation(this StationLocation stationLocation)
