@@ -54,6 +54,12 @@ namespace BLL.ShipComponents
 				case PlayerAction.HeroicBattleBots:
 					UseBattleBots(player, true);
 					break;
+				case PlayerAction.AdvancedSpecialization:
+					if (player.AdvancedSpecialization == PlayerSpecialization.SquadLeader)
+						UseBattleBots(player, true);
+					else
+						PerformInvalidAction(player, currentTurn);
+					break;
 				default:
 					PerformInvalidAction(player, currentTurn);
 					break;

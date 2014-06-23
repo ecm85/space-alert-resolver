@@ -42,6 +42,11 @@ namespace BLL.ShipComponents
 			}
 		}
 
+		public override bool CanPerformCAction(Player performingPlayer)
+		{
+			return Interceptors.PlayerOperating == null;
+		}
+
 		public void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
 			if (shipwardStation != null && performingPlayer.Interceptors != null)

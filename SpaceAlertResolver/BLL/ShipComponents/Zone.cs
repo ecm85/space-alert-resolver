@@ -58,29 +58,33 @@ namespace BLL.ShipComponents
 			{
 				foreach (var token in newDamageTokens)
 				{
-					switch (token)
-					{
-						case DamageToken.BackCannon:
-							LowerStation.Cannon.SetDamaged();
-							break;
-						case DamageToken.FrontCannon:
-							UpperStation.Cannon.SetDamaged();
-							break;
-						case DamageToken.Gravolift:
-							Gravolift.SetDamaged();
-							break;
-						case DamageToken.Reactor:
-							LowerStation.Reactor.SetDamaged();
-							break;
-						case DamageToken.Shield:
-							UpperStation.Shield.SetDamaged();
-							break;
-						case DamageToken.Structural:
-							break;
-					}
+					var damageableComponent = GetDamageableComponent(token);
+					if (damageableComponent != null)
+						damageableComponent.SetDamaged();
 				}
 			}
 			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
+		}
+
+		private IDamageableComponent GetDamageableComponent(DamageToken token)
+		{
+			switch (token)
+			{
+				case DamageToken.BackCannon:
+					return LowerStation.Cannon;
+				case DamageToken.FrontCannon:
+					return UpperStation.Cannon;
+				case DamageToken.Gravolift:
+					return Gravolift;
+				case DamageToken.Reactor:
+					return LowerStation.Reactor;
+				case DamageToken.Shield:
+					return UpperStation.Shield;
+				case DamageToken.Structural:
+					return null;
+				default:
+					throw new InvalidOperationException("Invalid damage token encountered.");
+			}
 		}
 
 		private IList<DamageToken> GetNewDamageTokens(int count)
@@ -154,6 +158,51 @@ namespace BLL.ShipComponents
 		public int GetEnergyInReactor()
 		{
 			return LowerStation.Reactor.Energy;
+		}
+
+		public void RepairFirstDamage(Player player)
+		{
+			if (!CurrentDamageTokens.Any())
+				return;
+			var damageRepairOrder = player.CurrentStation.StationLocation.IsUpperDeck() ?
+				DamageTokenRepairOrderInUpperDeck :
+				DamageTokenRepairOrderInLowerDeck;
+			var damageToRepair = damageRepairOrder.First(damage => CurrentDamageTokens.Contains(damage));
+			CurrentDamageTokens.Remove(damageToRepair);
+			var component = GetDamageableComponent(damageToRepair);
+			component.Repair();
+		}
+
+		private static DamageToken[] DamageTokenRepairOrderInUpperDeck
+		{
+			get
+			{
+				return new[]
+				{
+					DamageToken.FrontCannon,
+					DamageToken.BackCannon,
+					DamageToken.Gravolift,
+					DamageToken.Shield,
+					DamageToken.Reactor,
+					DamageToken.Structural
+				};
+			}
+		}
+
+		private static DamageToken[] DamageTokenRepairOrderInLowerDeck
+		{
+			get
+			{
+				return new[]
+				{
+					DamageToken.BackCannon,
+					DamageToken.FrontCannon,
+					DamageToken.Gravolift,
+					DamageToken.Reactor,
+					DamageToken.Shield,
+					DamageToken.Structural
+				};
+			}
 		}
 	}
 }

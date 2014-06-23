@@ -12,7 +12,7 @@ namespace BLL
 		public Zone BlueZone { get; private set; }
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
-		private IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
+		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }

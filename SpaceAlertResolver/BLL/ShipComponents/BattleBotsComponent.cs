@@ -28,5 +28,10 @@ namespace BLL.ShipComponents
 				battleBots = null;
 			}
 		}
+
+		public override bool CanPerformCAction(Player performingPlayer)
+		{
+			return performingPlayer.BattleBots != null || battleBots != null;
+		}
 	}
 }

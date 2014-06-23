@@ -16,6 +16,11 @@ namespace BLL.ShipComponents
 			NumberOfConfirmationsThisTurn += isAdvanced ? 3 : 1;
 		}
 
+		public override bool CanPerformCAction(Player performingPlayer)
+		{
+			return true;
+		}
+
 		public void PerformEndOfTurn()
 		{
 			BestConfirmationTurnThisPhase = Math.Max(BestConfirmationTurnThisPhase, NumberOfConfirmationsThisTurn);

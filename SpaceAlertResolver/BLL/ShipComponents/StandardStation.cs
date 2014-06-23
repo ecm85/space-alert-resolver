@@ -57,7 +57,7 @@ namespace BLL.ShipComponents
 			return Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
 		}
 
-		public bool CanFireCannon(Player performingPlayer)
+		private bool CanFireCannon(Player performingPlayer)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
 			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerAction.A) && Cannon.CanFire();
@@ -73,7 +73,12 @@ namespace BLL.ShipComponents
 			}
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
 				CComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
+		}
 
+		private bool CanUseCComponent(Player performingPlayer)
+		{
+			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
+			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerAction.C) && CComponent.CanPerformCAction(performingPlayer);
 		}
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)
@@ -235,7 +240,14 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.SpecialOps:
 					throw new NotImplementedException();
 				case PlayerSpecialization.SquadLeader:
-					throw new NotImplementedException();
+					if (player.BattleBots != null)
+					{
+						if (player.BattleBots.IsDisabled)
+							player.BattleBots.IsDisabled = false;
+						else
+							SittingDuck.ZonesByLocation[StationLocation.ZoneLocation()].RepairFirstDamage(player);
+					}
+					break;
 				case PlayerSpecialization.Teleporter:
 					var playerToTeleport = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.PlayerToTeleport);
 					var teleportDestination = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.TeleportDestination);
@@ -283,6 +295,16 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.SpecialOps:
 					throw new NotImplementedException();
 				case PlayerSpecialization.SquadLeader:
+					var canGoIntoSpace = player.BattleBots != null &&
+						!player.BattleBots.IsDisabled &&
+						player.CurrentStation.StationLocation != StationLocation.LowerBlue;
+					if (canGoIntoSpace)
+					{
+						MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
+						var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
+						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(player))
+							newStation.PerformCAction(player, currentTurn);
+					}
 					throw new NotImplementedException();
 				case PlayerSpecialization.Teleporter:
 					var newStationLocation = StationLocation.DiagonalStation();

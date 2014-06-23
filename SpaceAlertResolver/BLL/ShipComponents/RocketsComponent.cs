@@ -25,22 +25,24 @@ namespace BLL.ShipComponents
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
 		{
-			if (RocketFiredLastTurn == null)
+			if (CanPerformCAction(performingPlayer))
 			{
-				if (Rockets.Any())
+				var canFireDoubleRocket = RocketCount > 1;
+				var firedRocket = Rockets.First();
+				Rockets.Remove(firedRocket);
+				RocketFiredThisTurn = firedRocket;
+				if (advancedUsage && canFireDoubleRocket)
 				{
-					var canFireDoubleRocket = RocketCount > 1;
-					var firedRocket = Rockets.First();
-					Rockets.Remove(firedRocket);
-					RocketFiredThisTurn = firedRocket;
-					if (advancedUsage && canFireDoubleRocket)
-					{
-						Rockets.Remove(Rockets.First());
-						firedRocket.IsDoubleRocket = true;
-					}
-					RocketsModified();
+					Rockets.Remove(Rockets.First());
+					firedRocket.IsDoubleRocket = true;
 				}
+				RocketsModified();
 			}
+		}
+
+		public override bool CanPerformCAction(Player performingPlayer)
+		{
+			return RocketFiredLastTurn == null && Rockets.Any();
 		}
 
 		public void PerformEndOfTurn()

@@ -12,6 +12,11 @@ namespace BLL.ShipComponents
 			MaintenancePerformedThisPhase = true;
 		}
 
+		public override bool CanPerformCAction(Player performingPlayer)
+		{
+			return true;
+		}
+
 		public bool MaintenancePerformedThisPhase { get; private set; }
 
 		public void PerformEndOfPhase()

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class Gravolift
+	public class Gravolift : IDamageableComponent
 	{
 		private bool Occupied { get; set; }
 

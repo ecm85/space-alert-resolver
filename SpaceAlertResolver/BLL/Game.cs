@@ -22,6 +22,7 @@ namespace BLL
 		//TODO: Code Cleanup: Change energy from int to actual blocks?
 		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
 		//TODO: Unit test pulse cannon and laser cannon
+		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;
