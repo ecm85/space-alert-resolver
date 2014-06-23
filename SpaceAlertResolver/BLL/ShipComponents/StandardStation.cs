@@ -206,11 +206,11 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(player, false, true);
 					break;
 				case PlayerSpecialization.Hypernavigator:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Mechanic:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Medic:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.PulseGunner:
 					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
 					if (CanFireCannon(player) && pulseCannonStation.CanFireCannon(player) && StationLocation != StationLocation.LowerWhite)
@@ -224,11 +224,11 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.SquadLeader:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Teleporter:
-					break;
+					throw new NotImplementedException();
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
 			}
@@ -252,22 +252,22 @@ namespace BLL.ShipComponents
 						}
 					break;
 				case PlayerSpecialization.Hypernavigator:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Mechanic:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Medic:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.PulseGunner:
 					return PerformAAction(player, false, StationLocation == StationLocation.LowerWhite);
 				case PlayerSpecialization.Rocketeer:
 					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.SquadLeader:
-					break;
+					throw new NotImplementedException();
 				case PlayerSpecialization.Teleporter:
-					break;
+					throw new NotImplementedException();
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
