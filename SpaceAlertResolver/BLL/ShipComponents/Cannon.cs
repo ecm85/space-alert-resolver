@@ -22,22 +22,27 @@ namespace BLL.ShipComponents
 			firedThisTurn = false;
 		}
 
-		public virtual PlayerDamage PerformAAction(bool isHeroic, Player performingPlayer)
+		public virtual PlayerDamage[] PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced = false)
 		{
-			if (!firedThisTurn && source.Energy > 1)
+			if (CanFire())
 			{
 				firedThisTurn = true;
 				source.Energy -= 1;
-				var amount = isHeroic ? damage + 1 : damage;
 				CannonFired();
-				return GetPlayerDamage(amount, performingPlayer);
+				return GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}
 			return null;
 		}
 
-		protected virtual PlayerDamage GetPlayerDamage(int amount, Player performingPlayer)
+		public bool CanFire()
 		{
-			return new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer);
+			return !firedThisTurn && source.Energy > 1;
+		}
+
+		protected virtual PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
+		{
+			var amount = isHeroic ? damage + 1 : damage;
+			return new [] {new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer)};
 		}
 
 		protected bool IsDamaged { get; set; }

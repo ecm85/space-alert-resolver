@@ -21,6 +21,7 @@ namespace BLL
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
 		//TODO: Code Cleanup: Make reusable threat 'components'
 		//TODO: Code Cleanup: Change energy from int to actual blocks?
+		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
 		private readonly SittingDuck sittingDuck;
 		private readonly IList<Player> players;
 		private int nextTurn;

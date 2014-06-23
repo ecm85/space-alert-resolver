@@ -40,7 +40,7 @@ namespace BLL.ShipComponents
 				RefillEnergy(isHeroic);
 		}
 
-		private PlayerDamage PerformAAction(Player performingPlayer, bool isHeroic)
+		private PlayerDamage[] PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
 			if (firstAThreat != null)
@@ -48,10 +48,16 @@ namespace BLL.ShipComponents
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
 				return null;
 			}
-			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer) : null;
+			return !HasIrreparableMalfunctionOfType(PlayerAction.A) ? Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced) : null;
 		}
 
-		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool advanced = false)
+		public bool CanFireCannon(Player performingPlayer)
+		{
+			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
+			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerAction.A) && Cannon.CanFire();
+		}
+
+		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
 			if (firstCThreat != null)
@@ -60,7 +66,7 @@ namespace BLL.ShipComponents
 					DamageThreat(1, firstCThreat, performingPlayer, false);
 			}
 			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
-				CComponent.PerformCAction(performingPlayer, currentTurn, advanced);
+				CComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
 
 		}
 
@@ -134,7 +140,7 @@ namespace BLL.ShipComponents
 			switch (action)
 			{
 				case PlayerAction.A:
-					return new [] {PerformAAction(player, false)};
+					return PerformAAction(player, false);
 				case PlayerAction.B:
 					PerformBAction(player, false);
 					break;
@@ -156,8 +162,7 @@ namespace BLL.ShipComponents
 				case PlayerAction.None:
 					break;
 				case PlayerAction.HeroicA:
-					PerformAAction(player, true);
-					break;
+					return PerformAAction(player, true);
 				case PlayerAction.HeroicB:
 					PerformBAction(player, true);
 					break;
@@ -207,6 +212,13 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.Medic:
 					break;
 				case PlayerSpecialization.PulseGunner:
+					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
+					if (CanFireCannon(player) && pulseCannonStation.CanFireCannon(player) && StationLocation != StationLocation.LowerWhite)
+						return PerformAAction(player, false).Concat(pulseCannonStation.PerformAAction(player, false)).ToArray();
+					if (StationLocation == StationLocation.LowerWhite)
+						return PerformAAction(player, false);
+					if(!CanFireCannon(player))
+						return PerformAAction(player, false);
 					break;
 				case PlayerSpecialization.Rocketeer:
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
@@ -246,7 +258,7 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.Medic:
 					break;
 				case PlayerSpecialization.PulseGunner:
-					break;
+					return PerformAAction(player, false, StationLocation == StationLocation.LowerWhite);
 				case PlayerSpecialization.Rocketeer:
 					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;

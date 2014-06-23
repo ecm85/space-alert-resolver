@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class PulseCannon : Cannon
 	{
-		public PulseCannon(Reactor source) : base(source, 1, new [] {2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>())
+		public PulseCannon(Reactor source) : base(source, 1, new [] {1, 2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>())
 		{
 		}
 
@@ -21,6 +21,16 @@ namespace BLL.ShipComponents
 		{
 			IsDamaged = false;
 			distancesAffected = new [] {1, 2};
+		}
+
+		protected override PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
+		{
+			var amount = isHeroic || isAdvanced ? damage + 1 : damage;
+
+			var damages = new List<PlayerDamage> {new PlayerDamage(amount, PlayerDamageType.Pulse, distancesAffected, zonesAffected, performingPlayer)};
+			if(isAdvanced)
+				damages.Add(new PlayerDamage(damage, PlayerDamageType.Pulse, new [] {distancesAffected.Max(distance => distance) + 1}, zonesAffected, performingPlayer));
+			return damages.ToArray();
 		}
 	}
 }

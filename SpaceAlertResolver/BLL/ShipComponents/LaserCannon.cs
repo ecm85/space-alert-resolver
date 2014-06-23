@@ -28,9 +28,10 @@ namespace BLL.ShipComponents
 				damage += 1;
 		}
 
-		protected override PlayerDamage GetPlayerDamage(int amount, Player performingPlayer)
+		protected override PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
 		{
-			return new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer, DisruptedOptics);
+			var amount = isHeroic ? damage + 1 : damage;
+			return new [] {new PlayerDamage(amount, playerDamageType, distancesAffected, zonesAffected, performingPlayer, DisruptedOptics)};
 		}
 	}
 }
