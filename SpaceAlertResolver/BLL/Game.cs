@@ -112,7 +112,7 @@ namespace BLL
 		{
 			var damages = players
 				.Where(player => !player.IsKnockedOut)
-				.Select(player => player.CurrentStation.PerformPlayerAction(player, player.Actions[currentTurn], currentTurn))
+				.Select(player => player.CurrentStation.PerformPlayerAction(player, currentTurn))
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList)
 				.ToList();

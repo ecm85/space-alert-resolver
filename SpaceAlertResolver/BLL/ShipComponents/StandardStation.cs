@@ -146,9 +146,9 @@ namespace BLL.ShipComponents
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
 		}
 
-		public override PlayerDamage[] PerformPlayerAction(Player player, PlayerAction action, int currentTurn)
+		public override PlayerDamage[] PerformPlayerAction(Player player, int currentTurn)
 		{
-			switch (action)
+			switch (player.Actions[currentTurn])
 			{
 				case PlayerAction.A:
 					return PerformAAction(player, false);
@@ -243,7 +243,9 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					throw new NotImplementedException();
+					var indexOfNextActionToMakeHeroic = player.Actions.FindIndex(currentTurn + 1, action => action.CanBeMadeHeroic());
+					player.Actions[indexOfNextActionToMakeHeroic] = player.Actions[indexOfNextActionToMakeHeroic].MakeHeroic();
+					break;
 				case PlayerSpecialization.SquadLeader:
 					if (player.BattleBots != null)
 					{

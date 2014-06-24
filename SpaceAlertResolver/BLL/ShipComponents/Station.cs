@@ -46,6 +46,6 @@ namespace BLL.ShipComponents
 			MoveOut(performingPlayer, currentTurn);
 		}
 
-		public abstract PlayerDamage[] PerformPlayerAction(Player player, PlayerAction action, int currentTurn);
+		public abstract PlayerDamage[] PerformPlayerAction(Player player, int currentTurn);
 	}
 }
