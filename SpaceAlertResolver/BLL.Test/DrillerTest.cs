@@ -96,7 +96,7 @@ namespace BLL.Test
 		private void Test_MoveTowardsMostDamagedZone_Helper(Dictionary<ZoneLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var driller = new Driller {CurrentStation = currentStation};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null);
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null, (Game)null);
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;
