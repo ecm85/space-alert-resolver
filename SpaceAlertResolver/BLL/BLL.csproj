@@ -42,7 +42,7 @@
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
-    <Compile Include="ExternalThreatBuff.cs" />
+    <Compile Include="ExternalThreatEffect.cs" />
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="MovementController.cs" />

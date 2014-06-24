@@ -109,7 +109,7 @@ namespace WpfResolver
 			var currentTurn = 0;
 			try
 			{
-				for (currentTurn = 0; currentTurn < Game.NumberOfTurns; currentTurn++)
+				for (currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 					game.PerformTurn();
 			}
 			catch (LoseException loseException)

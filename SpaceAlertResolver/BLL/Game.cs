@@ -23,20 +23,20 @@ namespace BLL
 		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
 		//TODO: Unit test pulse cannon and laser cannon
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
-		private readonly SittingDuck sittingDuck;
+		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
+		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
-		public const int NumberOfTurns = 12;
+		public int NumberOfTurns = 12;
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
 
 		public Game(
-			SittingDuck sittingDuck,
 			IList<Player> players,
 			ThreatController threatController)
 		{
-			this.sittingDuck = sittingDuck;
+			SittingDuck = new SittingDuck(threatController, this);
 			ThreatController = threatController;
 			this.players = players;
 			PadPlayerActions();
@@ -74,10 +74,10 @@ namespace BLL
 			if (currentTurn == NumberOfTurns - 1)
 			{
 				ThreatController.MoveThreats(currentTurn + 1);
-				var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
+				var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
-				foreach(var player in sittingDuck.InterceptorStations.Where(station => station.StationLocation.DistanceFromShip() > 1).SelectMany(station => station.Players))
+				foreach(var player in SittingDuck.InterceptorStations.Where(station => station.StationLocation.DistanceFromShip() > 1).SelectMany(station => station.Players))
 				{
 					player.IsKnockedOut = true;
 					player.BattleBots.IsDisabled = true;
@@ -90,20 +90,20 @@ namespace BLL
 
 		private void CalculateScore()
 		{
-			TotalPoints += sittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
+			TotalPoints += SittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
 			TotalPoints += ThreatController.TotalThreatPoints;
 			TotalPoints += players.Sum(player => player.BonusPoints);
 		}
 
 		private void PerformEndOfPhase()
 		{
-			sittingDuck.VisualConfirmationComponent.PerformEndOfPhase();
-			sittingDuck.Computer.PerformEndOfPhase();
+			SittingDuck.VisualConfirmationComponent.PerformEndOfPhase();
+			SittingDuck.Computer.PerformEndOfPhase();
 		}
 
 		private void CheckForComputer(int currentTurn)
 		{
-			if (!sittingDuck.Computer.MaintenancePerformedThisPhase)
+			if (!SittingDuck.Computer.MaintenancePerformedThisPhase)
 				foreach (var player in players)
 					player.Shift(currentTurn + 1);
 		}
@@ -118,14 +118,14 @@ namespace BLL
 				.ToList();
 			ThreatController.PerformEndOfPlayerActions();
 
-			var rocketFiredLastTurn = sittingDuck.RocketsComponent.RocketFiredLastTurn;
+			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack(null));
-			var interceptorDamages = sittingDuck.InterceptorStations
+			var interceptorDamages = SittingDuck.InterceptorStations
 				.Select(station => station.PlayerInterceptorDamage)
 				.Where(damage => damage != null);
-			var anyPlayersInInterceptors = sittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
-			var visualConfirmationPerformed = sittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+			var anyPlayersInInterceptors = SittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
+			var visualConfirmationPerformed = SittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
 			var targetingAssistanceProvided = anyPlayersInInterceptors || visualConfirmationPerformed;
 			if (!targetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
@@ -134,15 +134,15 @@ namespace BLL
 
 		private void PerformEndOfTurn()
 		{
-			foreach (var zone in sittingDuck.Zones)
+			foreach (var zone in SittingDuck.Zones)
 			{
 				zone.Gravolift.PerformEndOfTurn();
 				zone.UpperStation.PerformEndOfTurn();
 				zone.LowerStation.PerformEndOfTurn();
 			}
-			sittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
-			sittingDuck.RocketsComponent.PerformEndOfTurn();
-			foreach (var interceptorStation in sittingDuck.InterceptorStations)
+			SittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
+			SittingDuck.RocketsComponent.PerformEndOfTurn();
+			foreach (var interceptorStation in SittingDuck.InterceptorStations)
 				interceptorStation.PerformEndOfTurn();
 			ThreatController.PerformEndOfTurn();
 		}

@@ -20,7 +20,7 @@ namespace BLL
 		public event Action EndOfPlayerActions = () => { };
 		public event Action EndOfTurn = () => { };
 		public event Action EndOfDamageResolution = () => { };
-		private IDictionary<ExternalThreat, ExternalThreatBuff> CurrentExternalThreatBuffsBySource { get; set; }
+		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; set; }
 		
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
@@ -73,7 +73,7 @@ namespace BLL
 			ExternalTracks = externalTracks;
 			ExternalThreats = externalThreats;
 			InternalThreats = internalThreats;
-			CurrentExternalThreatBuffsBySource = new Dictionary<ExternalThreat, ExternalThreatBuff>();
+			CurrentExternalThreatBuffsBySource = new Dictionary<object, ExternalThreatEffect>();
 		}
 
 		public void AddNewThreatsToTracks(int currentTurn)
@@ -135,17 +135,17 @@ namespace BLL
 			EndOfDamageResolution();
 		}
 
-		public IEnumerable<ExternalThreatBuff> CurrentExternalThreatBuffs()
+		public IEnumerable<ExternalThreatEffect> CurrentExternalThreatBuffs()
 		{
 			return CurrentExternalThreatBuffsBySource.Values.ToList();
 		}
 
-		public void AddExternalThreatBuff(ExternalThreatBuff buff, ExternalThreat source)
+		public void AddExternalThreatEffect(ExternalThreatEffect effect, object source)
 		{
-			CurrentExternalThreatBuffsBySource[source] = buff;
+			CurrentExternalThreatBuffsBySource[source] = effect;
 		}
 
-		public void RemoveExternalThreatBuffForSource(ExternalThreat source)
+		public void RemoveExternalThreatEffectForSource(object source)
 		{
 			CurrentExternalThreatBuffsBySource.Remove(source);
 		}

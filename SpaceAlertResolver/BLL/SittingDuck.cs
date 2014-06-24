@@ -14,7 +14,7 @@ namespace BLL
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
+		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }
 		public IList<InterceptorStation> InterceptorStations { get; private set; }
 		public ComputerComponent Computer { get; private set; }
@@ -26,9 +26,13 @@ namespace BLL
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private Airlock BlueAirlock { get; set; }
 		private Airlock RedAirlock { get; set; }
+		public ThreatController ThreatController { get; private set; }
+		public Game Game { get; private set; }
 
-		public SittingDuck(ThreatController threatController)
+		public SittingDuck(ThreatController threatController, Game game)
 		{
+			Game = game;
+			ThreatController = threatController;
 			var movementController = new MovementController {SittingDuck = this};
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();

@@ -217,7 +217,12 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(player, false, true);
 					break;
 				case PlayerSpecialization.Hypernavigator:
-					throw new NotImplementedException();
+					if (StationLocation.IsLowerDeck())
+					{
+						SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement, player);
+						SittingDuck.ThreatController.EndOfTurn += RestoreThreatMovement;
+					}
+					break;
 				case PlayerSpecialization.Mechanic:
 					Cannon.AddMechanicBuff();
 					break;
@@ -260,6 +265,12 @@ namespace BLL.ShipComponents
 			return null;
 		}
 
+		private void RestoreThreatMovement()
+		{
+			SittingDuck.ThreatController.EndOfTurn -= RestoreThreatMovement;
+			SittingDuck.ThreatController.RemoveExternalThreatEffectForSource(this);
+		}
+
 		private PlayerDamage[] PerformAdvancedSpecialization(Player player, int currentTurn)
 		{
 			switch (player.BasicSpecialization)
@@ -277,7 +288,9 @@ namespace BLL.ShipComponents
 						}
 					break;
 				case PlayerSpecialization.Hypernavigator:
-					throw new NotImplementedException();
+					if (currentTurn == 9 || currentTurn == 10)
+						SittingDuck.Game.NumberOfTurns = currentTurn + 1;
+					break;
 				case PlayerSpecialization.Mechanic:
 					var firstThreat = new[] {PlayerAction.A, PlayerAction.B, PlayerAction.C}
 						.Select(actionType => GetFirstThreatOfType(actionType, player))
@@ -305,7 +318,7 @@ namespace BLL.ShipComponents
 						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(player))
 							newStation.PerformCAction(player, currentTurn);
 					}
-					throw new NotImplementedException();
+					break;
 				case PlayerSpecialization.Teleporter:
 					var newStationLocation = StationLocation.DiagonalStation();
 					if (newStationLocation != null)

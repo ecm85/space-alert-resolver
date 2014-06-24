@@ -14,7 +14,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			ThreatController.AddExternalThreatBuff(ExternalThreatBuff.BonusAttack, this);
+			ThreatController.AddExternalThreatEffect(ExternalThreatEffect.BonusAttack, this);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -29,7 +29,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void OnHealthReducedToZero()
 		{
-			ThreatController.RemoveExternalThreatBuffForSource(this);
+			ThreatController.RemoveExternalThreatEffectForSource(this);
 			base.OnHealthReducedToZero();
 		}
 

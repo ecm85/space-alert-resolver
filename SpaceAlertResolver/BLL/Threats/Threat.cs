@@ -109,7 +109,10 @@ namespace BLL.Threats
 
 		public void Move(int currentTurn)
 		{
-			Move(currentTurn, Speed);
+			var amount = Speed;
+			if (ThreatController.CurrentExternalThreatBuffs().Contains(ExternalThreatEffect.ReducedMovement))
+				amount -= 1;
+			Move(currentTurn, amount);
 		}
 
 		public void Move(int currentTurn, int amount)

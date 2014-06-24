@@ -37,7 +37,8 @@ namespace ConsoleResolver
 			var nuclearDevice = new NuclearDevice();
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
 			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
-			var sittingDuck = new SittingDuck(threatController);
+			var game = new Game(players, threatController);
+			var sittingDuck = game.SittingDuck;
 			sittingDuck.SetPlayers(players);
 			destroyer.Initialize(sittingDuck, threatController, 4, ZoneLocation.Blue);
 			fighter1.Initialize(sittingDuck, threatController, 5, ZoneLocation.Red);
@@ -45,11 +46,11 @@ namespace ConsoleResolver
 			skirmishers.Initialize(sittingDuck, threatController, 4);
 			fissure.Initialize(sittingDuck, threatController, 2);
 			nuclearDevice.Initialize(sittingDuck, threatController, 6);
-			var game = new Game(sittingDuck, players, threatController);
+			
 			var currentTurn = 0;
 			try
 			{
-				for (currentTurn = 0; currentTurn < Game.NumberOfTurns; currentTurn++)
+				for (currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 					game.PerformTurn();
 			}
 			catch (LoseException loseException)

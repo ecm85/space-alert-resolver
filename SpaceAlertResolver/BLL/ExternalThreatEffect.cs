@@ -5,9 +5,10 @@ using System.Text;
 
 namespace BLL
 {
-	public enum ExternalThreatBuff
+	public enum ExternalThreatEffect
 	{
 		BonusShield,
-		BonusAttack
+		BonusAttack,
+		ReducedMovement
 	}
 }
