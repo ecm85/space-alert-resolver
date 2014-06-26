@@ -8,7 +8,6 @@ namespace BLL
 {
 	public enum PlayerAction
 	{
-		None,
 		A,
 		B,
 		C,
@@ -31,7 +30,7 @@ namespace BLL
 
 	public static class PlayerActionExtensions
 	{
-		public static bool CanBeMadeHeroic(this PlayerAction playerAction)
+		public static bool CanBeMadeHeroic(this PlayerAction? playerAction)
 		{
 			switch (playerAction)
 			{
@@ -44,7 +43,7 @@ namespace BLL
 			}
 		}
 
-		public static PlayerAction MakeHeroic(this PlayerAction playerAction)
+		public static PlayerAction MakeHeroic(this PlayerAction? playerAction)
 		{
 			switch (playerAction)
 			{

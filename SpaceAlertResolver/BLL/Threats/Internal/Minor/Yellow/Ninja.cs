@@ -71,7 +71,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			private readonly HashSet<Player> poisonedPlayers;
 
 			public PoisonedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), PlayerAction.None)
+				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
 			{
 				poisonedPlayers = new HashSet<Player>();
 			}

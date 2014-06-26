@@ -136,11 +136,13 @@ namespace WpfResolver
 		{
 			return new Player
 			{
-				Actions = actionList.Select(CreateActionFromCode).ToList()
+				Actions = actionList
+				.Select(CreateActionFromCode)
+				.ToList()
 			};
 		}
 
-		private PlayerAction CreateActionFromCode(char action)
+		private PlayerAction? CreateActionFromCode(char action)
 		{
 			switch (action)
 			{
@@ -177,9 +179,9 @@ namespace WpfResolver
 				case '6':
 					return PlayerAction.TeleportBlueUpper;
 				case ' ':
-					return PlayerAction.None;
+					return null;
 			}
-			return PlayerAction.None;
+			return null;
 		}
 
 		private void SeriousInternalRadioButton_Checked(object sender, RoutedEventArgs e)

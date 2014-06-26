@@ -76,59 +76,89 @@ namespace ConsoleResolver
 			{
 				new Player
 				{
-					Actions =
-						new List<PlayerAction>
-						{
-							PlayerAction.None,
-							PlayerAction.ChangeDeck,
-							PlayerAction.B,
-							PlayerAction.ChangeDeck,
-							PlayerAction.A,
-							PlayerAction.A,
-							PlayerAction.A,
-							PlayerAction.A,
-							PlayerAction.A,
-							PlayerAction.A
-						},
+					Actions = new List<PlayerAction?>
+					{
+						null,
+						PlayerAction.ChangeDeck,
+						PlayerAction.B,
+						PlayerAction.ChangeDeck,
+						PlayerAction.A,
+						PlayerAction.A,
+						PlayerAction.A,
+						PlayerAction.A,
+						PlayerAction.A,
+						PlayerAction.A
+					},
 					Index = 1
 				},
 				new Player
 				{
-					Actions =
-						new List<PlayerAction>
-						{
-							PlayerAction.MoveRed,
-							PlayerAction.ChangeDeck,
-							PlayerAction.C,
-							PlayerAction.ChangeDeck,
-							PlayerAction.None,
-							PlayerAction.C,
-							PlayerAction.BattleBots,
-							PlayerAction.C,
-							PlayerAction.BattleBots,
-							PlayerAction.A
-						},
+					Actions = new List<PlayerAction?>
+					{
+						PlayerAction.MoveRed,
+						PlayerAction.ChangeDeck,
+						PlayerAction.C,
+						PlayerAction.ChangeDeck,
+						null,
+						PlayerAction.C,
+						PlayerAction.BattleBots,
+						PlayerAction.C,
+						PlayerAction.BattleBots,
+						PlayerAction.A
+					},
 					Index = 2
 				},
 				new Player
 				{
-					Actions =
-						new List<PlayerAction> {PlayerAction.None, PlayerAction.C, PlayerAction.None, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.C},
-						Index = 3
+					Actions = new List<PlayerAction?>
+					{
+						null,
+						PlayerAction.C,
+						null,
+						null,
+						PlayerAction.C,
+						PlayerAction.ChangeDeck,
+						PlayerAction.C
+					},
+					Index = 3
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction>{PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.C},
+					Actions = new List<PlayerAction?>
+					{
+						PlayerAction.ChangeDeck,
+						null,
+						null,
+						null,
+						null,
+						null,
+						PlayerAction.C
+					},
 					Index = 4
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction>{PlayerAction.None, PlayerAction.ChangeDeck, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.None, PlayerAction.C},
+					Actions = new List<PlayerAction?>
+					{
+						null,
+						PlayerAction.ChangeDeck,
+						null,
+						null,
+						null,
+						null,
+						PlayerAction.C
+					},
 					Index = 5
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction>{PlayerAction.TeleportBlueLower, PlayerAction.TeleportRedUpper, PlayerAction.TeleportWhiteLower, PlayerAction.TeleportWhiteUpper},
+					Actions = new List<PlayerAction?>
+					{
+						PlayerAction.TeleportBlueLower,
+						PlayerAction.TeleportRedUpper,
+						PlayerAction.TeleportWhiteLower,
+						PlayerAction.TeleportWhiteUpper
+					},
 					Index = 6
 				}
 			};

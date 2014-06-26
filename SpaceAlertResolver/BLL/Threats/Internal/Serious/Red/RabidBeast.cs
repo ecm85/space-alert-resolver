@@ -63,7 +63,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			private readonly HashSet<Player> infectedPlayers;
 
 			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), PlayerAction.None)
+				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
 			{
 				infectedPlayers = new HashSet<Player>();
 			}

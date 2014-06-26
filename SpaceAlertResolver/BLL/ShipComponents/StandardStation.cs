@@ -170,8 +170,6 @@ namespace BLL.ShipComponents
 				case PlayerAction.BattleBots:
 					UseBattleBots(player, false);
 					break;
-				case PlayerAction.None:
-					break;
 				case PlayerAction.HeroicA:
 					return PerformAAction(player, true);
 				case PlayerAction.HeroicB:

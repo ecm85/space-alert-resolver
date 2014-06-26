@@ -24,6 +24,8 @@ namespace BLL
 		//TODO: Unit test pulse cannon and laser cannon
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
+		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
+		//TODO: Change guns to only fire at the end of turn, and make aciton methods stop returning things, ala interceptors
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -54,7 +56,7 @@ namespace BLL
 		private void PadPlayerActions()
 		{
 			foreach (var player in players)
-				player.Actions.AddRange(Enumerable.Repeat(PlayerAction.None, NumberOfTurns - player.Actions.Count));
+				player.Actions.AddRange(Enumerable.Repeat((PlayerAction?)null, NumberOfTurns - player.Actions.Count));
 		}
 
 		public void PerformTurn()

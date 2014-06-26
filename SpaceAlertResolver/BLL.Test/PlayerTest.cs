@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BLL.Test
 {
+	//TODO:
 	[TestClass]
 	public class PlayerTest
 	{
@@ -12,14 +13,21 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, PlayerAction.C, PlayerAction.ChangeDeck
 				}
 			};
 
 			player.Shift(2);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.BattleBots, PlayerAction.C };
+			var expectedActions = new PlayerAction?[]
+			{
+				PlayerAction.A,
+				PlayerAction.B,
+				null,
+				PlayerAction.BattleBots,
+				PlayerAction.C
+			};
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -28,14 +36,14 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck
+					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, null, PlayerAction.C, PlayerAction.ChangeDeck
 				}
 			};
 
 			player.Shift(2);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.BattleBots, PlayerAction.C, PlayerAction.ChangeDeck };
+			var expectedActions = new PlayerAction?[] { PlayerAction.A, PlayerAction.B, null, PlayerAction.BattleBots, PlayerAction.C, PlayerAction.ChangeDeck };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -44,14 +52,14 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck
+					PlayerAction.A, PlayerAction.B, null, PlayerAction.C, PlayerAction.ChangeDeck
 				}
 			};
 
 			player.Shift(2);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck };
+			var expectedActions = new PlayerAction?[] { PlayerAction.A, PlayerAction.B, null, PlayerAction.C, PlayerAction.ChangeDeck };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -60,14 +68,14 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.None
+					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, null
 				}
 			};
 
 			player.Shift(2);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck };
+			var expectedActions = new PlayerAction?[] { PlayerAction.A, PlayerAction.B, null, PlayerAction.C, PlayerAction.ChangeDeck };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -76,7 +84,7 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
 				}
@@ -84,7 +92,7 @@ namespace BLL.Test
 
 			player.Shift(2);
 			player.Shift(2);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck };
+			var expectedActions = new PlayerAction?[] { PlayerAction.A, PlayerAction.B, null, PlayerAction.C, PlayerAction.ChangeDeck };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -93,7 +101,7 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
 				}
@@ -101,7 +109,7 @@ namespace BLL.Test
 
 			player.Shift(2);
 			player.Shift(3);
-			var expectedActions = new[] { PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.None, PlayerAction.C };
+			var expectedActions = new PlayerAction?[] { PlayerAction.A, PlayerAction.B, null, null, PlayerAction.C };
 			CollectionAssert.AreEqual(expectedActions, player.Actions);
 		}
 
@@ -110,7 +118,7 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, PlayerAction.C, PlayerAction.ChangeDeck
 				}
@@ -126,9 +134,9 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck
+					PlayerAction.A, PlayerAction.B, PlayerAction.BattleBots, null, PlayerAction.C, PlayerAction.ChangeDeck
 				}
 			};
 
@@ -142,9 +150,9 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.None, PlayerAction.C, PlayerAction.ChangeDeck
+					PlayerAction.A, PlayerAction.B, null, PlayerAction.C, PlayerAction.ChangeDeck
 				}
 			};
 
@@ -158,9 +166,9 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
-					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.None
+					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, null
 				}
 			};
 
@@ -174,7 +182,7 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
 				}
@@ -191,7 +199,7 @@ namespace BLL.Test
 		{
 			var player = new Player
 			{
-				Actions = new List<PlayerAction>
+				Actions = new List<PlayerAction?>
 				{
 					PlayerAction.A, PlayerAction.B, PlayerAction.C, PlayerAction.ChangeDeck, PlayerAction.HeroicA
 				}

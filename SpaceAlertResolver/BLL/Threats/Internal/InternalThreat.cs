@@ -36,14 +36,14 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		protected PlayerAction ActionType { get; private set; }
+		protected PlayerAction? ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction actionType, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction? actionType, int? inaccessibility = null) :
 			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
 		{
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerAction actionType, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerAction? actionType, int? inaccessibility = null) :
 			base(type, difficulty, health, speed)
 		{
 			CurrentStations = currentStations;
@@ -166,10 +166,10 @@ namespace BLL.Threats.Internal
 
 		private void AddIrreparableMalfunction()
 		{
-			if (ActionType != PlayerAction.BattleBots)
+			if (ActionType!= null && ActionType != PlayerAction.BattleBots)
 				SittingDuck.AddIrreparableMalfunctionToStations(
 					CurrentStations,
-					new IrreparableMalfunction {ActionType = ActionType});
+					new IrreparableMalfunction {ActionType = ActionType.Value});
 		}
 
 		protected virtual void PerformEndOfTurn()
