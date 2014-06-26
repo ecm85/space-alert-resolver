@@ -27,7 +27,7 @@ namespace BLL.ShipComponents
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
-			var firstThreat = GetFirstThreatOfType(PlayerAction.BattleBots, performingPlayer);
+			var firstThreat = GetFirstThreatOfType(PlayerActionType.BattleBots, performingPlayer);
 			if (firstThreat == null)
 				PlayerInterceptorDamage = new PlayerInterceptorDamage(isHeroic, performingPlayer, StationLocation.DistanceFromShip().GetValueOrDefault());
 			else
@@ -43,18 +43,18 @@ namespace BLL.ShipComponents
 
 		public override PlayerDamage[] PerformPlayerAction(Player player, int currentTurn)
 		{
-			switch (player.Actions[currentTurn])
+			switch (player.Actions[currentTurn].ActionType)
 			{
-				case PlayerAction.C:
+				case PlayerActionType.C:
 					PerformCAction(player, currentTurn);
 					break;
-				case PlayerAction.BattleBots:
+				case PlayerActionType.BattleBots:
 					UseBattleBots(player, false);
 					break;
-				case PlayerAction.HeroicBattleBots:
+				case PlayerActionType.HeroicBattleBots:
 					UseBattleBots(player, true);
 					break;
-				case PlayerAction.AdvancedSpecialization:
+				case PlayerActionType.AdvancedSpecialization:
 					if (player.AdvancedSpecialization == PlayerSpecialization.SquadLeader)
 						UseBattleBots(player, true);
 					else

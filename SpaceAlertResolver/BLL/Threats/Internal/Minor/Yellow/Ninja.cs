@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		private PoisonedPlayers poisonedPlayers;
 
 		public Ninja()
-			: base(3, 2, StationLocation.LowerBlue, PlayerAction.BattleBots)
+			: base(3, 2, StationLocation.LowerBlue, PlayerActionType.BattleBots)
 		{
 		}
 

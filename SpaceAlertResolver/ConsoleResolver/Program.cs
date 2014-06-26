@@ -76,89 +76,89 @@ namespace ConsoleResolver
 			{
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
 						null,
-						PlayerAction.ChangeDeck,
-						PlayerAction.B,
-						PlayerAction.ChangeDeck,
-						PlayerAction.A,
-						PlayerAction.A,
-						PlayerAction.A,
-						PlayerAction.A,
-						PlayerAction.A,
-						PlayerAction.A
-					},
+						PlayerActionType.ChangeDeck,
+						PlayerActionType.B,
+						PlayerActionType.ChangeDeck,
+						PlayerActionType.A,
+						PlayerActionType.A,
+						PlayerActionType.A,
+						PlayerActionType.A,
+						PlayerActionType.A,
+						PlayerActionType.A
+					}),
 					Index = 1
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
-						PlayerAction.MoveRed,
-						PlayerAction.ChangeDeck,
-						PlayerAction.C,
-						PlayerAction.ChangeDeck,
+						PlayerActionType.MoveRed,
+						PlayerActionType.ChangeDeck,
+						PlayerActionType.C,
+						PlayerActionType.ChangeDeck,
 						null,
-						PlayerAction.C,
-						PlayerAction.BattleBots,
-						PlayerAction.C,
-						PlayerAction.BattleBots,
-						PlayerAction.A
-					},
+						PlayerActionType.C,
+						PlayerActionType.BattleBots,
+						PlayerActionType.C,
+						PlayerActionType.BattleBots,
+						PlayerActionType.A
+					}),
 					Index = 2
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
 						null,
-						PlayerAction.C,
+						PlayerActionType.C,
 						null,
 						null,
-						PlayerAction.C,
-						PlayerAction.ChangeDeck,
-						PlayerAction.C
-					},
+						PlayerActionType.C,
+						PlayerActionType.ChangeDeck,
+						PlayerActionType.C
+					}),
 					Index = 3
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
-						PlayerAction.ChangeDeck,
+						PlayerActionType.ChangeDeck,
 						null,
 						null,
 						null,
 						null,
 						null,
-						PlayerAction.C
-					},
+						PlayerActionType.C
+					}),
 					Index = 4
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
 						null,
-						PlayerAction.ChangeDeck,
+						PlayerActionType.ChangeDeck,
 						null,
 						null,
 						null,
 						null,
-						PlayerAction.C
-					},
+						PlayerActionType.C
+					}),
 					Index = 5
 				},
 				new Player
 				{
-					Actions = new List<PlayerAction?>
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
-						PlayerAction.TeleportBlueLower,
-						PlayerAction.TeleportRedUpper,
-						PlayerAction.TeleportWhiteLower,
-						PlayerAction.TeleportWhiteUpper
-					},
+						PlayerActionType.TeleportBlueLower,
+						PlayerActionType.TeleportRedUpper,
+						PlayerActionType.TeleportWhiteLower,
+						PlayerActionType.TeleportWhiteUpper
+					}),
 					Index = 6
 				}
 			};

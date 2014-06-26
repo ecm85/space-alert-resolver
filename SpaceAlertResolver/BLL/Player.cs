@@ -10,7 +10,7 @@ namespace BLL
 	{
 		public bool IsKnockedOut { get; set; }
 		public Interceptors Interceptors { get; set; }
-		public List<PlayerAction?> Actions { get; set; }
+		public List<PlayerAction> Actions { get; set; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
 		public int Index { get; set; }
@@ -24,10 +24,10 @@ namespace BLL
 		public void Shift(int turn, bool repeatPreviousAction = false)
 		{
 			var endTurn = turn;
-			while (endTurn + 1 < Actions.Count && Actions[endTurn].HasValue)
+			while (endTurn + 1 < Actions.Count && Actions[endTurn].ActionType.HasValue)
 				endTurn++;
-			var actionToInsert = repeatPreviousAction ? Actions[turn - 1] : null;
-			Actions.Insert(turn, actionToInsert);
+			var actionToInsert = repeatPreviousAction ? Actions[turn - 1].ActionType : null;
+			Actions.Insert(turn, new PlayerAction{ActionType = actionToInsert});
 			Actions.RemoveAt(endTurn + 1);
 		}
 	}

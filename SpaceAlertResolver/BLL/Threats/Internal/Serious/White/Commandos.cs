@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.White
 	public abstract class Commandos : SeriousWhiteInternalThreat
 	{
 		protected Commandos(StationLocation currentStation)
-			: base(2, 2, currentStation, PlayerAction.BattleBots)
+			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{
 		}
 

@@ -23,10 +23,10 @@ namespace BLL.ShipComponents
 
 		public abstract void PerformMoveIn(Player performingPlayer, int currentTurn);
 
-		protected InternalThreat GetFirstThreatOfType(PlayerAction playerAction, Player performingPlayer)
+		protected InternalThreat GetFirstThreatOfType(PlayerActionType playerActionType, Player performingPlayer)
 		{
 			return ThreatController.DamageableInternalThreats
-				.Where(threat => threat.CanBeTargetedBy(StationLocation, playerAction, performingPlayer))
+				.Where(threat => threat.CanBeTargetedBy(StationLocation, playerActionType, performingPlayer))
 				.OrderBy(threat => threat.TimeAppears)
 				.FirstOrDefault();
 		}

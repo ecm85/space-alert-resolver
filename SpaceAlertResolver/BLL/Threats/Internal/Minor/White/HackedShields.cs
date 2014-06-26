@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.White
 	public abstract class HackedShields : MinorWhiteInternalThreat
 	{
 		protected HackedShields(StationLocation station)
-			: base(3, 2, station, PlayerAction.B)
+			: base(3, 2, station, PlayerActionType.B)
 		{
 		}
 

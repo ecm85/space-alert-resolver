@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public abstract class Troopers : MinorYellowInternalThreat
 	{
 		protected Troopers(StationLocation currentStation)
-			: base(2, 2, currentStation, PlayerAction.BattleBots)
+			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{
 		}
 

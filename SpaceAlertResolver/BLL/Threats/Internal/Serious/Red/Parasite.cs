@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private Player attachedPlayer;
 
 		public Parasite()
-			: base(1, 2, new List<StationLocation>(), PlayerAction.BattleBots)
+			: base(1, 2, new List<StationLocation>(), PlayerActionType.BattleBots)
 		{
 		}
 
@@ -62,9 +62,9 @@ namespace BLL.Threats.Internal.Serious.Red
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 
-		public override bool CanBeTargetedBy(StationLocation stationLocation, PlayerAction playerAction, Player performingPlayer)
+		public override bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)
 		{
-			return ActionType == playerAction && CurrentStations.Contains(performingPlayer.CurrentStation.StationLocation) && performingPlayer != attachedPlayer;
+			return ActionType == playerActionType && CurrentStations.Contains(performingPlayer.CurrentStation.StationLocation) && performingPlayer != attachedPlayer;
 		}
 
 		protected override void OnThreatTerminated()

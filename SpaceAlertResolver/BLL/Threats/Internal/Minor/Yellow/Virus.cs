@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public class Virus : MinorYellowInternalThreat
 	{
 		public Virus()
-			: base(3, 3, StationLocation.UpperWhite, PlayerAction.C)
+			: base(3, 3, StationLocation.UpperWhite, PlayerActionType.C)
 		{
 		}
 

@@ -8,12 +8,12 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public abstract class MinorWhiteInternalThreat : MinorInternalThreat
 	{
-		protected MinorWhiteInternalThreat(int health, int speed, StationLocation currentStation, PlayerAction actionType, int? accessibility = null) :
+		protected MinorWhiteInternalThreat(int health, int speed, StationLocation currentStation, PlayerActionType actionType, int? accessibility = null) :
 			base(ThreatDifficulty.White, health, speed, currentStation, actionType, accessibility)
 		{
 		}
 
-		protected MinorWhiteInternalThreat(int health, int speed, List<StationLocation> currentStations, PlayerAction actionType, int? accessibility = null) :
+		protected MinorWhiteInternalThreat(int health, int speed, List<StationLocation> currentStations, PlayerActionType actionType, int? accessibility = null) :
 			base(ThreatDifficulty.White, health, speed, currentStations, actionType, accessibility)
 		{
 		}

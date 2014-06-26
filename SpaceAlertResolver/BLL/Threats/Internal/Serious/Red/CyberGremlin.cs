@@ -10,7 +10,7 @@ namespace BLL.Threats.Internal.Serious.Red
 	public class CyberGremlin : SeriousRedInternalThreat
 	{
 		public CyberGremlin()
-			: base(1, 2, StationLocation.UpperRed, PlayerAction.BattleBots, 1)
+			: base(1, 2, StationLocation.UpperRed, PlayerActionType.BattleBots, 1)
 		{
 		}
 
@@ -46,9 +46,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.A),
-				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.B),
-				new Sabotage(Type, difficulty, CurrentStation, PlayerAction.C)
+				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.A),
+				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.B),
+				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.C)
 			};
 			foreach (var newThreat in newThreats)
 				ThreatController.AddInternalThreat(SittingDuck, newThreat, TimeAppears);
@@ -67,7 +67,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private class Sabotage : InternalThreat
 		{
-			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerAction actionType)
+			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType)
 				: base(threatType, threatDifficulty, 1, 0, currentStation, actionType)
 			{
 			}

@@ -36,14 +36,14 @@ namespace BLL.Threats.Internal
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		protected PlayerAction? ActionType { get; private set; }
+		protected PlayerActionType? ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerAction? actionType, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility = null) :
 			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
 		{
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerAction? actionType, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerActionType? actionType, int? inaccessibility = null) :
 			base(type, difficulty, health, speed)
 		{
 			CurrentStations = currentStations;
@@ -166,7 +166,7 @@ namespace BLL.Threats.Internal
 
 		private void AddIrreparableMalfunction()
 		{
-			if (ActionType!= null && ActionType != PlayerAction.BattleBots)
+			if (ActionType!= null && ActionType != PlayerActionType.BattleBots)
 				SittingDuck.AddIrreparableMalfunctionToStations(
 					CurrentStations,
 					new IrreparableMalfunction {ActionType = ActionType.Value});
@@ -177,9 +177,9 @@ namespace BLL.Threats.Internal
 			remainingInaccessibility = totalInaccessibility;
 		}
 
-		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerAction playerAction, Player performingPlayer)
+		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)
 		{
-			return IsDamageable && ActionType == playerAction && CurrentStations.Contains(stationLocation);
+			return IsDamageable && ActionType == playerActionType && CurrentStations.Contains(stationLocation);
 		}
 
 		public bool NextDamageWillDestroyThreat()

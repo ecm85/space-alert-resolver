@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.White
 		private bool grownUp;
 
 		public Alien()
-			: base(2, 2, StationLocation.LowerWhite, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.BattleBots)
 		{
 		}
 

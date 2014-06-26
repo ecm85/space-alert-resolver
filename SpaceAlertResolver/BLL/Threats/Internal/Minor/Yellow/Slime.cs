@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		private readonly IList<Slime> currentProgeny;
 
 		protected Slime(StationLocation currentStation)
-			: base(2, 2, currentStation, PlayerAction.BattleBots)
+			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{
 			currentProgeny = new List<Slime>();
 		}

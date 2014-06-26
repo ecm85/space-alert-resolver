@@ -7,6 +7,6 @@ namespace BLL.Threats.Internal
 {
 	public class IrreparableMalfunction
 	{
-		public PlayerAction ActionType { get; set; }
+		public PlayerActionType ActionType { get; set; }
 	}
 }

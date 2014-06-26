@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.White
 	public class Shambler : SeriousWhiteInternalThreat
 	{
 		public Shambler()
-			: base(2, 2, StationLocation.LowerWhite, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.BattleBots)
 		{
 		}
 

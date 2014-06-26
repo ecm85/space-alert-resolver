@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private readonly IList<StationLocation> mineLocations;
 
 		public PhasingMineLayer()
-			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.BattleBots)
 		{
 			mineLocations = new List<StationLocation>();
 		}

@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.Red
 	public class Siren : SeriousRedInternalThreat
 	{
 		public Siren()
-			: base(2, 2, StationLocation.UpperRed, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.UpperRed, PlayerActionType.BattleBots)
 		{
 		}
 

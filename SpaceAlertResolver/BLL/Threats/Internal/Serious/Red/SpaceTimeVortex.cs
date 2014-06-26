@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private readonly InternalThreat threatToCallIn;
 
 		public SpaceTimeVortex(InternalThreat threatToCallIn)
-			: base(3, 2, StationLocation.LowerWhite, PlayerAction.C)
+			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.C)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}

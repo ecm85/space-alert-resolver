@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.White
 	public class Fissure : SeriousWhiteInternalThreat
 	{
 		public Fissure()
-			: base(2, 2, StationLocation.Interceptor1, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.Interceptor1, PlayerActionType.BattleBots)
 		{
 		}
 

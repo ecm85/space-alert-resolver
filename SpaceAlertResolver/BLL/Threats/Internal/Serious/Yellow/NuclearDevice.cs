@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 	public class NuclearDevice : SeriousYellowInternalThreat
 	{
 		public NuclearDevice()
-			: base(1, 4, StationLocation.LowerWhite, PlayerAction.C, 2)
+			: base(1, 4, StationLocation.LowerWhite, PlayerActionType.C, 2)
 		{
 		}
 

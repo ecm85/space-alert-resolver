@@ -13,7 +13,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		private bool wasPhasedAtStartOfTurn;
 
 		protected PhasingTroopers(StationLocation currentStation)
-			: base(2, 2, currentStation, PlayerAction.BattleBots)
+			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{
 		}
 

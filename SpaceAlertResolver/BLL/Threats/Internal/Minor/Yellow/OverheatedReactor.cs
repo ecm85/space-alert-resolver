@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public class OverheatedReactor : MinorYellowInternalThreat
 	{
 		public OverheatedReactor()
-			: base(3, 2, StationLocation.LowerWhite, PlayerAction.B)
+			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.B)
 		{
 		}
 

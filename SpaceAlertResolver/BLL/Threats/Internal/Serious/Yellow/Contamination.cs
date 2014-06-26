@@ -19,7 +19,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 					StationLocation.LowerBlue,
 					StationLocation.LowerRed
 				},
-				PlayerAction.BattleBots)
+				PlayerActionType.BattleBots)
 		{
 		}
 

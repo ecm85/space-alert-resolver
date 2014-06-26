@@ -137,47 +137,47 @@ namespace WpfResolver
 			return new Player
 			{
 				Actions = actionList
-				.Select(CreateActionFromCode)
+				.Select(action => new PlayerAction{ActionType = CreateActionFromCode(action)})
 				.ToList()
 			};
 		}
 
-		private PlayerAction? CreateActionFromCode(char action)
+		private PlayerActionType? CreateActionFromCode(char action)
 		{
 			switch (action)
 			{
 				case 'a':
-					return PlayerAction.A;
+					return PlayerActionType.A;
 				case 'b':
-					return PlayerAction.B;
+					return PlayerActionType.B;
 				case 'c':
-					return PlayerAction.C;
+					return PlayerActionType.C;
 				case '<':
-					return PlayerAction.MoveRed;
+					return PlayerActionType.MoveRed;
 				case '>':
-					return PlayerAction.MoveBlue;
+					return PlayerActionType.MoveBlue;
 				case 'd':
-					return PlayerAction.ChangeDeck;
+					return PlayerActionType.ChangeDeck;
 				case 'o':
-					return PlayerAction.BattleBots;
+					return PlayerActionType.BattleBots;
 				case 'A':
-					return PlayerAction.HeroicA;
+					return PlayerActionType.HeroicA;
 				case 'B':
-					return PlayerAction.HeroicB;
+					return PlayerActionType.HeroicB;
 				case 'O':
-					return PlayerAction.HeroicBattleBots;
+					return PlayerActionType.HeroicBattleBots;
 				case '1':
-					return PlayerAction.TeleportWhiteLower;
+					return PlayerActionType.TeleportWhiteLower;
 				case '2':
-					return PlayerAction.TeleportWhiteLower;
+					return PlayerActionType.TeleportWhiteLower;
 				case '3':
-					return PlayerAction.TeleportBlueLower;
+					return PlayerActionType.TeleportBlueLower;
 				case '4':
-					return PlayerAction.TeleportWhiteUpper;
+					return PlayerActionType.TeleportWhiteUpper;
 				case '5':
-					return PlayerAction.TeleportWhiteUpper;
+					return PlayerActionType.TeleportWhiteUpper;
 				case '6':
-					return PlayerAction.TeleportBlueUpper;
+					return PlayerActionType.TeleportBlueUpper;
 				case ' ':
 					return null;
 			}

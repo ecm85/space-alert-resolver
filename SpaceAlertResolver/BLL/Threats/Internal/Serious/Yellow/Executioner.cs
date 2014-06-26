@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 	public class Executioner : SeriousYellowInternalThreat
 	{
 		public Executioner()
-			: base(2, 2, StationLocation.UpperBlue, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.UpperBlue, PlayerActionType.BattleBots)
 		{
 		}
 

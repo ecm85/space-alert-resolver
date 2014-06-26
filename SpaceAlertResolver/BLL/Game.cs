@@ -56,7 +56,7 @@ namespace BLL
 		private void PadPlayerActions()
 		{
 			foreach (var player in players)
-				player.Actions.AddRange(Enumerable.Repeat((PlayerAction?)null, NumberOfTurns - player.Actions.Count));
+				player.Actions.AddRange(Enumerable.Repeat(new PlayerAction{ActionType = null}, NumberOfTurns - player.Actions.Count));
 		}
 
 		public void PerformTurn()

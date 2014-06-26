@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private int numberOfYsCrossed;
 		
 		public PhasingAnomaly()
-			: base(2, 3, StationLocation.UpperWhite, PlayerAction.C, 1)
+			: base(2, 3, StationLocation.UpperWhite, PlayerActionType.C, 1)
 		{
 		}
 

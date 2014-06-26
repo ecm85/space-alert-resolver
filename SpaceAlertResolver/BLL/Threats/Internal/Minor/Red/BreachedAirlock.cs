@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Red
 	public class BreachedAirlock : MinorRedInternalThreat
 	{
 		public BreachedAirlock()
-			: base(3, 4, StationLocation.UpperRed, PlayerAction.C)
+			: base(3, 4, StationLocation.UpperRed, PlayerActionType.C)
 		{
 		}
 

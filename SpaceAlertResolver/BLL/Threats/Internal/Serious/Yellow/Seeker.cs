@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 	public class Seeker : SeriousYellowInternalThreat
 	{
 		public Seeker()
-			: base(2, 2, StationLocation.UpperWhite, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.BattleBots)
 		{
 		}
 

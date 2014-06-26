@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.White
 	public abstract class Saboteur : MinorWhiteInternalThreat
 	{
 		protected Saboteur()
-			: base(1, 4, StationLocation.LowerWhite, PlayerAction.BattleBots)
+			: base(1, 4, StationLocation.LowerWhite, PlayerActionType.BattleBots)
 		{
 		}
 

@@ -23,33 +23,33 @@ namespace BLL.ShipComponents
 			Cannon.PerformEndOfTurn();
 		}
 
-		private bool HasIrreparableMalfunctionOfType(PlayerAction playerAction)
+		private bool HasIrreparableMalfunctionOfType(PlayerActionType playerActionType)
 		{
-			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerAction);
+			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerActionType);
 		}
 
 		private void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
 		{
-			var firstBThreat = GetFirstThreatOfType(PlayerAction.B, performingPlayer);
+			var firstBThreat = GetFirstThreatOfType(PlayerActionType.B, performingPlayer);
 			if (firstBThreat != null)
 			{
 				if (!(isRemote && firstBThreat.NextDamageWillDestroyThreat()))
 					DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
 			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerAction.B))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.B))
 				RefillEnergy(isHeroic);
 		}
 
 		private PlayerDamage[] PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
 		{
-			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
+			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
 			if (firstAThreat != null)
 			{
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
 				Cannon.RemoveMechanicBuff();
 				return null;
 			}
-			if (HasIrreparableMalfunctionOfType(PlayerAction.A))
+			if (HasIrreparableMalfunctionOfType(PlayerActionType.A))
 			{
 				Cannon.RemoveMechanicBuff();
 				return null;
@@ -59,33 +59,33 @@ namespace BLL.ShipComponents
 
 		private bool CanFireCannon(Player performingPlayer)
 		{
-			var firstAThreat = GetFirstThreatOfType(PlayerAction.A, performingPlayer);
-			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerAction.A) && Cannon.CanFire();
+			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
+			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.A) && Cannon.CanFire();
 		}
 
 		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
 		{
-			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
+			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
 			if (firstCThreat != null)
 			{
 				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
 					DamageThreat(1, firstCThreat, performingPlayer, false);
 			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerAction.C))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.C))
 				CComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
 		}
 
 		private bool CanUseCComponent(Player performingPlayer)
 		{
-			var firstCThreat = GetFirstThreatOfType(PlayerAction.C, performingPlayer);
-			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerAction.C) && CComponent.CanPerformCAction(performingPlayer);
+			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
+			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CComponent.CanPerformCAction(performingPlayer);
 		}
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)
 		{
 			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
 				return;
-			var firstBattleBotThreat = GetFirstThreatOfType(PlayerAction.BattleBots, performingPlayer);
+			var firstBattleBotThreat = GetFirstThreatOfType(PlayerActionType.BattleBots, performingPlayer);
 			if (firstBattleBotThreat != null)
 				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
@@ -148,57 +148,57 @@ namespace BLL.ShipComponents
 
 		public override PlayerDamage[] PerformPlayerAction(Player player, int currentTurn)
 		{
-			switch (player.Actions[currentTurn])
+			switch (player.Actions[currentTurn].ActionType)
 			{
-				case PlayerAction.A:
+				case PlayerActionType.A:
 					return PerformAAction(player, false);
-				case PlayerAction.B:
+				case PlayerActionType.B:
 					PerformBAction(player, false);
 					break;
-				case PlayerAction.C:
+				case PlayerActionType.C:
 					PerformCAction(player, currentTurn);
 					break;
-				case PlayerAction.MoveBlue:
+				case PlayerActionType.MoveBlue:
 					MovementController.MoveBlue(player, currentTurn);
 					break;
-				case PlayerAction.MoveRed:
+				case PlayerActionType.MoveRed:
 					MovementController.MoveRed(player, currentTurn);
 					break;
-				case PlayerAction.ChangeDeck:
+				case PlayerActionType.ChangeDeck:
 					MovementController.ChangeDeck(player, currentTurn);
 					break;
-				case PlayerAction.BattleBots:
+				case PlayerActionType.BattleBots:
 					UseBattleBots(player, false);
 					break;
-				case PlayerAction.HeroicA:
+				case PlayerActionType.HeroicA:
 					return PerformAAction(player, true);
-				case PlayerAction.HeroicB:
+				case PlayerActionType.HeroicB:
 					PerformBAction(player, true);
 					break;
-				case PlayerAction.HeroicBattleBots:
+				case PlayerActionType.HeroicBattleBots:
 					UseBattleBots(player, true);
 					break;
-				case PlayerAction.TeleportBlueLower:
+				case PlayerActionType.TeleportBlueLower:
 					MovementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
 					break;
-				case PlayerAction.TeleportBlueUpper:
+				case PlayerActionType.TeleportBlueUpper:
 					MovementController.MoveHeroically(player, StationLocation.UpperBlue, currentTurn);
 					break;
-				case PlayerAction.TeleportWhiteLower:
+				case PlayerActionType.TeleportWhiteLower:
 					MovementController.MoveHeroically(player, StationLocation.LowerWhite, currentTurn);
 					break;
-				case PlayerAction.TeleportWhiteUpper:
+				case PlayerActionType.TeleportWhiteUpper:
 					MovementController.MoveHeroically(player, StationLocation.UpperWhite, currentTurn);
 					break;
-				case PlayerAction.TeleportRedLower:
+				case PlayerActionType.TeleportRedLower:
 					MovementController.MoveHeroically(player, StationLocation.LowerRed, currentTurn);
 					break;
-				case PlayerAction.TeleportRedUpper:
+				case PlayerActionType.TeleportRedUpper:
 					MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
 					break;
-				case PlayerAction.BasicSpecialization:
+				case PlayerActionType.BasicSpecialization:
 					return PerformBasicSpecialization(player, currentTurn);
-				case PlayerAction.AdvancedSpecialization:
+				case PlayerActionType.AdvancedSpecialization:
 					return PerformAdvancedSpecialization(player, currentTurn);
 			}
 			return null;
@@ -241,8 +241,8 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					var indexOfNextActionToMakeHeroic = player.Actions.FindIndex(currentTurn + 1, action => action.CanBeMadeHeroic());
-					player.Actions[indexOfNextActionToMakeHeroic] = player.Actions[indexOfNextActionToMakeHeroic].MakeHeroic();
+					var indexOfNextActionToMakeHeroic = player.Actions.FindIndex(currentTurn + 1, action => action.ActionType.CanBeMadeHeroic());
+					player.Actions[indexOfNextActionToMakeHeroic].ActionType = player.Actions[indexOfNextActionToMakeHeroic].ActionType.MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
 					if (player.BattleBots != null)
@@ -292,7 +292,7 @@ namespace BLL.ShipComponents
 						SittingDuck.Game.NumberOfTurns = currentTurn + 1;
 					break;
 				case PlayerSpecialization.Mechanic:
-					var firstThreat = new[] {PlayerAction.A, PlayerAction.B, PlayerAction.C}
+					var firstThreat = new[] {PlayerActionType.A, PlayerActionType.B, PlayerActionType.C}
 						.Select(actionType => GetFirstThreatOfType(actionType, player))
 						.FirstOrDefault(threat => threat != null);
 					if(firstThreat != null)

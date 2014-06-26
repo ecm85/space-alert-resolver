@@ -10,7 +10,7 @@ namespace BLL.Threats.Internal.Minor.Red
 	public class LateralLaserJam : MinorRedInternalThreat
 	{
 		public LateralLaserJam()
-			: base(3, 3, new List<StationLocation>(), PlayerAction.A)
+			: base(3, 3, new List<StationLocation>(), PlayerActionType.A)
 		{
 		}
 

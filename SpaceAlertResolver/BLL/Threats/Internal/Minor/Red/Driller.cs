@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Red
 	public class Driller : MinorRedInternalThreat
 	{
 		public Driller()
-			: base(2, 3, StationLocation.LowerBlue, PlayerAction.BattleBots, 1)
+			: base(2, 3, StationLocation.LowerBlue, PlayerActionType.BattleBots, 1)
 		{
 		}
 

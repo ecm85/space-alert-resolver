@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private InfectedPlayers infectedPlayers;
 
 		public RabidBeast()
-			: base(2, 2, StationLocation.UpperBlue, PlayerAction.BattleBots)
+			: base(2, 2, StationLocation.UpperBlue, PlayerActionType.BattleBots)
 		{
 		}
 

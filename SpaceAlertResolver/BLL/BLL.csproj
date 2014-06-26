@@ -46,6 +46,8 @@
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="MovementController.cs" />
+    <Compile Include="PlayerAction.cs" />
+    <Compile Include="PlayerActionFactory.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
     <Compile Include="PlayerSpecialization.cs" />
     <Compile Include="ShipComponents\Airlock.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="PlayerAction.cs" />
+    <Compile Include="PlayerActionType.cs" />
     <Compile Include="ShipComponents\PulseCannon.cs" />
     <Compile Include="ShipComponents\Rocket.cs" />
     <Compile Include="ShipComponents\RocketsComponent.cs" />

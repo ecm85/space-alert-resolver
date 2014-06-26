@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private readonly ExternalThreat threatToCallIn;
 		private bool calledInThreat;
 		protected HiddenTransmitter(StationLocation stationLocation, ExternalThreat threatToCallIn)
-			: base(3, 2, stationLocation, PlayerAction.C, 1)
+			: base(3, 2, stationLocation, PlayerActionType.C, 1)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}

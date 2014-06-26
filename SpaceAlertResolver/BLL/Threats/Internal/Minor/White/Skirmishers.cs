@@ -9,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.White
 	public abstract class Skirmishers : MinorWhiteInternalThreat
 	{
 		protected Skirmishers(StationLocation station)
-			: base(1, 3, station, PlayerAction.BattleBots)
+			: base(1, 3, station, PlayerActionType.BattleBots)
 		{
 		}
 
