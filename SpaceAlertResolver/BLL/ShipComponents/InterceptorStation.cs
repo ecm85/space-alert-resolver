@@ -41,7 +41,7 @@ namespace BLL.ShipComponents
 			OnMoveIn(performingPlayer, currentTurn);
 		}
 
-		public override PlayerDamage[] PerformPlayerAction(Player player, int currentTurn)
+		public override void PerformPlayerAction(Player player, int currentTurn)
 		{
 			switch (player.Actions[currentTurn].ActionType)
 			{
@@ -64,7 +64,6 @@ namespace BLL.ShipComponents
 					PerformInvalidAction(player, currentTurn);
 					break;
 			}
-			return null;
 		}
 
 		private void PerformInvalidAction(Player player, int currentTurn)

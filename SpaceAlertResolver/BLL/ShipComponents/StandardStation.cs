@@ -40,21 +40,14 @@ namespace BLL.ShipComponents
 				RefillEnergy(isHeroic);
 		}
 
-		private PlayerDamage[] PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
+		private void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
 			if (firstAThreat != null)
-			{
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
-				Cannon.RemoveMechanicBuff();
-				return null;
-			}
-			if (HasIrreparableMalfunctionOfType(PlayerActionType.A))
-			{
-				Cannon.RemoveMechanicBuff();
-				return null;
-			}
-			return Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.A))
+				Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
+			Cannon.RemoveMechanicBuff();
 		}
 
 		private bool CanFireCannon(Player performingPlayer)
@@ -146,12 +139,13 @@ namespace BLL.ShipComponents
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
 		}
 
-		public override PlayerDamage[] PerformPlayerAction(Player player, int currentTurn)
+		public override void PerformPlayerAction(Player player, int currentTurn)
 		{
 			switch (player.Actions[currentTurn].ActionType)
 			{
 				case PlayerActionType.A:
-					return PerformAAction(player, false);
+					PerformAAction(player, false);
+					break;
 				case PlayerActionType.B:
 					PerformBAction(player, false);
 					break;
@@ -171,7 +165,8 @@ namespace BLL.ShipComponents
 					UseBattleBots(player, false);
 					break;
 				case PlayerActionType.HeroicA:
-					return PerformAAction(player, true);
+					PerformAAction(player, true);
+					break;
 				case PlayerActionType.HeroicB:
 					PerformBAction(player, true);
 					break;
@@ -197,14 +192,15 @@ namespace BLL.ShipComponents
 					MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
 					break;
 				case PlayerActionType.BasicSpecialization:
-					return PerformBasicSpecialization(player, currentTurn);
+					PerformBasicSpecialization(player, currentTurn);
+					break;
 				case PlayerActionType.AdvancedSpecialization:
-					return PerformAdvancedSpecialization(player, currentTurn);
+					PerformAdvancedSpecialization(player, currentTurn);
+					break;
 			}
-			return null;
 		}
 
-		private PlayerDamage[] PerformBasicSpecialization(Player player, int currentTurn)
+		private void PerformBasicSpecialization(Player player, int currentTurn)
 		{
 			switch (player.BasicSpecialization)
 			{
@@ -229,13 +225,20 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.PulseGunner:
 					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
 					if (CanFireCannon(player) && pulseCannonStation.CanFireCannon(player) && StationLocation != StationLocation.LowerWhite)
-						return PerformAAction(player, false).Concat(pulseCannonStation.PerformAAction(player, false)).ToArray();
-					if (StationLocation == StationLocation.LowerWhite)
-						return PerformAAction(player, false);
-					pulseCannonStation.Cannon.RemoveMechanicBuff();
-					if(!CanFireCannon(player))
-						return PerformAAction(player, false);
-					Cannon.RemoveMechanicBuff();
+					{
+						PerformAAction(player, false);
+						pulseCannonStation.PerformAAction(player, false);
+					}
+					else if (StationLocation == StationLocation.LowerWhite)
+						PerformAAction(player, false);
+					else
+					{
+						pulseCannonStation.Cannon.RemoveMechanicBuff();
+						if (!CanFireCannon(player))
+							PerformAAction(player, false);
+						else
+							Cannon.RemoveMechanicBuff();
+					}
 					break;
 				case PlayerSpecialization.Rocketeer:
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
@@ -262,7 +265,6 @@ namespace BLL.ShipComponents
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
 			}
-			return null;
 		}
 
 		private void RestoreThreatMovement()
@@ -271,7 +273,7 @@ namespace BLL.ShipComponents
 			SittingDuck.ThreatController.RemoveExternalThreatEffectForSource(this);
 		}
 
-		private PlayerDamage[] PerformAdvancedSpecialization(Player player, int currentTurn)
+		private void PerformAdvancedSpecialization(Player player, int currentTurn)
 		{
 			switch (player.BasicSpecialization)
 			{
@@ -301,7 +303,8 @@ namespace BLL.ShipComponents
 				case PlayerSpecialization.Medic:
 					throw new NotImplementedException();
 				case PlayerSpecialization.PulseGunner:
-					return PerformAAction(player, false, StationLocation == StationLocation.LowerWhite);
+					PerformAAction(player, false, StationLocation == StationLocation.LowerWhite);
+					break;
 				case PlayerSpecialization.Rocketeer:
 					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
@@ -327,7 +330,6 @@ namespace BLL.ShipComponents
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
-			return null;
 		}
 	}
 }

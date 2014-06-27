@@ -25,7 +25,6 @@ namespace BLL
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
 		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
-		//TODO: Change guns to only fire at the end of turn, and make aciton methods stop returning things, ala interceptors
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -112,9 +111,12 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var damages = players
-				.Where(player => !player.IsKnockedOut)
-				.Select(player => player.CurrentStation.PerformPlayerAction(player, currentTurn))
+			foreach (var player in players.Where(player => !player.IsKnockedOut))
+				player.CurrentStation.PerformPlayerAction(player, currentTurn);
+
+			var damages = SittingDuck.StandardStationsByLocation.Values
+				.Select(station => station.Cannon)
+				.Select(cannon => cannon.PlayerDamage)
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList)
 				.ToList();

@@ -14,32 +14,27 @@ namespace BLL.ShipComponents
 		private readonly EnergyContainer source;
 		public bool DisruptedOptics { get; set; }
 		public event Action CannonFired = () => { };
-
-		private bool firedThisTurn;
+		public PlayerDamage[] PlayerDamage { get; private set; }
 
 		public void PerformEndOfTurn()
 		{
-			firedThisTurn = false;
+			PlayerDamage = null;
 		}
 
-		public virtual PlayerDamage[] PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced = false)
+		public void PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced = false)
 		{
 			if (CanFire())
 			{
-				firedThisTurn = true;
 				source.Energy -= 1;
 				CannonFired();
-				var playerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
-				mechanicBuff = false;
-				return playerDamage;
+				PlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}
 			mechanicBuff = false;
-			return null;
 		}
 
 		public bool CanFire()
 		{
-			return !firedThisTurn && source.Energy > 1;
+			return PlayerDamage == null && source.Energy > 1;
 		}
 
 		protected abstract PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
