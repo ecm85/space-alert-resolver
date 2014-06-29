@@ -27,6 +27,7 @@ namespace BLL
 		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
 		//TODO: Bug: Make sure all places that set a players station set it in that station too.
 		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
+		//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -114,6 +115,9 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
+			var playerPerformingAdvancedSpecialOps = players.SingleOrDefault(player => player.IsPerformingAdvancedSpecialOps(currentTurn));
+			if (playerPerformingAdvancedSpecialOps != null)
+				playerPerformingAdvancedSpecialOps.HasSpecialOpsProtection = true;
 			var playerOrder = players
 				.Where(player => !player.IsKnockedOut)
 				.OrderBy(player => player.IsPerformingMedic(currentTurn))

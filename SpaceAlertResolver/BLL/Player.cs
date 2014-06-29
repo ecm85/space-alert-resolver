@@ -29,6 +29,7 @@ namespace BLL
 		public bool PlayerToTeleport { get; set; }
 		public bool TeleportDestination { get; set; }
 		public bool PreventsKnockOut { get; set; }
+		public bool HasSpecialOpsProtection { get; set; }
 
 		public void Shift(int turn, bool repeatPreviousAction = false)
 		{
@@ -47,40 +48,42 @@ namespace BLL
 
 		private bool IsPerformingAdvancedMedic(int currentTurn)
 		{
-			if (AdvancedSpecialization == PlayerSpecialization.Medic)
-				if (IsPerformingAdvancedMedicWithMovement(currentTurn) || IsPerformingAdvancedMedicWithoutMovement(currentTurn))
-					return true;
-			return false;
+			return IsPerformingAdvancedMedicWithMovement(currentTurn) || IsPerformingAdvancedMedicWithoutMovement(currentTurn);
 		}
 
 		private bool IsPerformingAdvancedMedicWithoutMovement(int currentTurn)
 		{
-			return Actions[currentTurn].ActionType == PlayerActionType.AdvancedSpecialization;
+			return AdvancedSpecialization == PlayerSpecialization.Medic && Actions[currentTurn].ActionType == PlayerActionType.AdvancedSpecialization;
 		}
 
 		public bool IsPerformingAdvancedMedicWithMovement(int currentTurn)
 		{
 			var currentAction = Actions[currentTurn];
-			return currentAction.HasAdvancedSpecializationAttached && currentAction.ActionType.IsBasicMovement();
+			return AdvancedSpecialization == PlayerSpecialization.Medic && currentAction.HasAdvancedSpecializationAttached && currentAction.ActionType.IsBasicMovement();
 		}
 
 		private bool IsPerformingBasicMedic(int currentTurn)
 		{
-			if (BasicSpecialization == PlayerSpecialization.Medic)
-				if (IsPerformingBasicMedicWithMovement(currentTurn) || IsPerformingBasicMedicWithoutMovement(currentTurn))
-					return true;
-			return false;
+			return IsPerformingBasicMedicWithMovement(currentTurn) || IsPerformingBasicMedicWithoutMovement(currentTurn);
 		}
 
 		private bool IsPerformingBasicMedicWithoutMovement(int currentTurn)
 		{
-			return Actions[currentTurn].ActionType == PlayerActionType.BasicSpecialization;
+			return BasicSpecialization == PlayerSpecialization.Medic && Actions[currentTurn].ActionType == PlayerActionType.BasicSpecialization;
 		}
 
 		public bool IsPerformingBasicMedicWithMovement(int currentTurn)
 		{
 			var currentAction = Actions[currentTurn];
-			return currentAction.HasBasicSpecializationAttached && currentAction.ActionType.IsBasicMovement();
+			return BasicSpecialization == PlayerSpecialization.Medic && currentAction.HasBasicSpecializationAttached && currentAction.ActionType.IsBasicMovement();
+		}
+
+		public bool IsPerformingAdvancedSpecialOps(int currentTurn)
+		{
+			var currentAction = Actions[currentTurn];
+			//TODO: Rules clarification: Can you play advanced spec ops without another card?
+			//if so, need to consider both playing as secondary card with a null first card, or playing as a first card
+			return AdvancedSpecialization == PlayerSpecialization.SpecialOps && currentAction.HasAdvancedSpecializationAttached;
 		}
 	}
 }

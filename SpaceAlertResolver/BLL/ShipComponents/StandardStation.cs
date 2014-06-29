@@ -203,6 +203,8 @@ namespace BLL.ShipComponents
 				PerformBasicSpecialization(performingPlayer, currentTurn);
 			if(performingPlayer.IsPerformingAdvancedMedicWithMovement(currentTurn))
 				PerformAdvancedSpecialization(performingPlayer, currentTurn);
+			if(performingPlayer.IsPerformingAdvancedSpecialOps(currentTurn))
+				PerformAdvancedSpecialization(performingPlayer, currentTurn);
 		}
 
 		private void PerformBasicSpecialization(Player performingPlayer, int currentTurn)
@@ -322,7 +324,9 @@ namespace BLL.ShipComponents
 					PerformCAction(performingPlayer, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					throw new NotImplementedException();
+					//This spec does nothing on its actual turn, and only needs to remove the protection granted
+					performingPlayer.HasSpecialOpsProtection = false;
+					break;
 				case PlayerSpecialization.SquadLeader:
 					var canGoIntoSpace = performingPlayer.BattleBots != null &&
 						!performingPlayer.BattleBots.IsDisabled &&
