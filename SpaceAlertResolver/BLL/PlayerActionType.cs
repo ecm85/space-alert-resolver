@@ -61,5 +61,18 @@ namespace BLL
 					throw new InvalidOperationException(message);
 			}
 		}
+
+		public static bool IsBasicMovement(this PlayerActionType? playerActionType)
+		{
+			switch (playerActionType)
+			{
+				case PlayerActionType.MoveBlue:
+				case PlayerActionType.MoveRed:
+				case PlayerActionType.ChangeDeck:
+					return true;
+				default:
+					return false;
+			}
+		}
 	}
 }

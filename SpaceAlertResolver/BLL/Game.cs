@@ -25,6 +25,8 @@ namespace BLL
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
 		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
+		//TODO: Bug: Make sure all places that set a players station set it in that station too.
+		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -47,7 +49,8 @@ namespace BLL
 
 		private void SetCaptain()
 		{
-			players[0].IsCaptain = true;
+			//TODO: Verify that player indicies are consecutive, non-repeating and start from 0
+			players.Single(player => player.Index == 0).IsCaptain = true;
 			foreach (var player in players.Except(new[] {players[0]}))
 				player.IsCaptain = false;
 		}
@@ -111,7 +114,12 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			foreach (var player in players.Where(player => !player.IsKnockedOut))
+			var playerOrder = players
+				.Where(player => !player.IsKnockedOut)
+				.OrderBy(player => player.IsPerformingMedic(currentTurn))
+				.ThenBy(player => player.Index);
+
+			foreach (var player in playerOrder)
 				player.CurrentStation.PerformPlayerAction(player, currentTurn);
 
 			var damages = SittingDuck.StandardStationsByLocation.Values
@@ -143,6 +151,8 @@ namespace BLL
 				zone.Gravolift.PerformEndOfTurn();
 				zone.UpperStation.PerformEndOfTurn();
 				zone.LowerStation.PerformEndOfTurn();
+				foreach (var player in players)
+					player.PreventsKnockOut = false;
 			}
 			SittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			SittingDuck.RocketsComponent.PerformEndOfTurn();

@@ -89,7 +89,7 @@ namespace ConsoleResolver
 						PlayerActionType.A,
 						PlayerActionType.A
 					}),
-					Index = 1
+					Index = 0
 				},
 				new Player
 				{
@@ -106,7 +106,7 @@ namespace ConsoleResolver
 						PlayerActionType.BattleBots,
 						PlayerActionType.A
 					}),
-					Index = 2
+					Index = 1
 				},
 				new Player
 				{
@@ -120,7 +120,7 @@ namespace ConsoleResolver
 						PlayerActionType.ChangeDeck,
 						PlayerActionType.C
 					}),
-					Index = 3
+					Index = 2
 				},
 				new Player
 				{
@@ -128,6 +128,20 @@ namespace ConsoleResolver
 					{
 						PlayerActionType.ChangeDeck,
 						null,
+						null,
+						null,
+						null,
+						null,
+						PlayerActionType.C
+					}),
+					Index = 3
+				},
+				new Player
+				{
+					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
+					{
+						null,
+						PlayerActionType.ChangeDeck,
 						null,
 						null,
 						null,
@@ -140,26 +154,12 @@ namespace ConsoleResolver
 				{
 					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 					{
-						null,
-						PlayerActionType.ChangeDeck,
-						null,
-						null,
-						null,
-						null,
-						PlayerActionType.C
-					}),
-					Index = 5
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
 						PlayerActionType.TeleportBlueLower,
 						PlayerActionType.TeleportRedUpper,
 						PlayerActionType.TeleportWhiteLower,
 						PlayerActionType.TeleportWhiteUpper
 					}),
-					Index = 6
+					Index = 5
 				}
 			};
 			return players;

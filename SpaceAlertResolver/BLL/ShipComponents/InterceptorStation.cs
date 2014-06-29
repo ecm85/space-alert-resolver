@@ -41,27 +41,27 @@ namespace BLL.ShipComponents
 			OnMoveIn(performingPlayer, currentTurn);
 		}
 
-		public override void PerformPlayerAction(Player player, int currentTurn)
+		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
 		{
-			switch (player.Actions[currentTurn].ActionType)
+			switch (performingPlayer.Actions[currentTurn].ActionType)
 			{
 				case PlayerActionType.C:
-					PerformCAction(player, currentTurn);
+					PerformCAction(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.BattleBots:
-					UseBattleBots(player, false);
+					UseBattleBots(performingPlayer, false);
 					break;
 				case PlayerActionType.HeroicBattleBots:
-					UseBattleBots(player, true);
+					UseBattleBots(performingPlayer, true);
 					break;
 				case PlayerActionType.AdvancedSpecialization:
-					if (player.AdvancedSpecialization == PlayerSpecialization.SquadLeader)
-						UseBattleBots(player, true);
+					if (performingPlayer.AdvancedSpecialization == PlayerSpecialization.SquadLeader)
+						UseBattleBots(performingPlayer, true);
 					else
-						PerformInvalidAction(player, currentTurn);
+						PerformInvalidAction(performingPlayer, currentTurn);
 					break;
 				default:
-					PerformInvalidAction(player, currentTurn);
+					PerformInvalidAction(performingPlayer, currentTurn);
 					break;
 			}
 		}

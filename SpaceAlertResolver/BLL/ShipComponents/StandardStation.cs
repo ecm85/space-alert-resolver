@@ -139,81 +139,86 @@ namespace BLL.ShipComponents
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
 		}
 
-		public override void PerformPlayerAction(Player player, int currentTurn)
+		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
 		{
-			switch (player.Actions[currentTurn].ActionType)
+			switch (performingPlayer.Actions[currentTurn].ActionType)
 			{
 				case PlayerActionType.A:
-					PerformAAction(player, false);
+					PerformAAction(performingPlayer, false);
 					break;
 				case PlayerActionType.B:
-					PerformBAction(player, false);
+					PerformBAction(performingPlayer, false);
 					break;
 				case PlayerActionType.C:
-					PerformCAction(player, currentTurn);
+					PerformCAction(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.MoveBlue:
-					MovementController.MoveBlue(player, currentTurn);
+					MovementController.MoveBlue(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.MoveRed:
-					MovementController.MoveRed(player, currentTurn);
+					MovementController.MoveRed(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.ChangeDeck:
-					MovementController.ChangeDeck(player, currentTurn);
+					MovementController.ChangeDeck(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.BattleBots:
-					UseBattleBots(player, false);
+					UseBattleBots(performingPlayer, false);
 					break;
 				case PlayerActionType.HeroicA:
-					PerformAAction(player, true);
+					PerformAAction(performingPlayer, true);
 					break;
 				case PlayerActionType.HeroicB:
-					PerformBAction(player, true);
+					PerformBAction(performingPlayer, true);
 					break;
 				case PlayerActionType.HeroicBattleBots:
-					UseBattleBots(player, true);
+					UseBattleBots(performingPlayer, true);
 					break;
 				case PlayerActionType.TeleportBlueLower:
-					MovementController.MoveHeroically(player, StationLocation.LowerBlue, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerBlue, currentTurn);
 					break;
 				case PlayerActionType.TeleportBlueUpper:
-					MovementController.MoveHeroically(player, StationLocation.UpperBlue, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperBlue, currentTurn);
 					break;
 				case PlayerActionType.TeleportWhiteLower:
-					MovementController.MoveHeroically(player, StationLocation.LowerWhite, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerWhite, currentTurn);
 					break;
 				case PlayerActionType.TeleportWhiteUpper:
-					MovementController.MoveHeroically(player, StationLocation.UpperWhite, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperWhite, currentTurn);
 					break;
 				case PlayerActionType.TeleportRedLower:
-					MovementController.MoveHeroically(player, StationLocation.LowerRed, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerRed, currentTurn);
 					break;
 				case PlayerActionType.TeleportRedUpper:
-					MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
+					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperRed, currentTurn);
 					break;
 				case PlayerActionType.BasicSpecialization:
-					PerformBasicSpecialization(player, currentTurn);
+					PerformBasicSpecialization(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.AdvancedSpecialization:
-					PerformAdvancedSpecialization(player, currentTurn);
+					PerformAdvancedSpecialization(performingPlayer, currentTurn);
 					break;
 			}
+			
+			if (performingPlayer.IsPerformingBasicMedicWithMovement(currentTurn))
+				PerformBasicSpecialization(performingPlayer, currentTurn);
+			if(performingPlayer.IsPerformingAdvancedMedicWithMovement(currentTurn))
+				PerformAdvancedSpecialization(performingPlayer, currentTurn);
 		}
 
-		private void PerformBasicSpecialization(Player player, int currentTurn)
+		private void PerformBasicSpecialization(Player performingPlayer, int currentTurn)
 		{
-			switch (player.BasicSpecialization)
+			switch (performingPlayer.BasicSpecialization)
 			{
 				case PlayerSpecialization.DataAnalyst:
-					SittingDuck.StandardStationsByLocation[StationLocation.UpperWhite].PerformCAction(player, currentTurn, true);
+					SittingDuck.StandardStationsByLocation[StationLocation.UpperWhite].PerformCAction(performingPlayer, currentTurn, true);
 					break;
 				case PlayerSpecialization.EnergyTechnician:
-					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(player, false, true);
+					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(performingPlayer, false, true);
 					break;
 				case PlayerSpecialization.Hypernavigator:
 					if (StationLocation.IsLowerDeck())
 					{
-						SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement, player);
+						SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement, performingPlayer);
 						SittingDuck.ThreatController.EndOfTurn += RestoreThreatMovement;
 					}
 					break;
@@ -221,39 +226,45 @@ namespace BLL.ShipComponents
 					Cannon.AddMechanicBuff();
 					break;
 				case PlayerSpecialization.Medic:
-					throw new NotImplementedException();
+					var actionsToMakeHeroic = Players
+						.Except(new[] {performingPlayer})
+						.Select(player => player.Actions[currentTurn])
+						.Where(action => action.ActionType.CanBeMadeHeroic());
+					foreach (var action in actionsToMakeHeroic)
+						action.ActionType = action.ActionType.MakeHeroic();
+					break;
 				case PlayerSpecialization.PulseGunner:
 					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
-					if (CanFireCannon(player) && pulseCannonStation.CanFireCannon(player) && StationLocation != StationLocation.LowerWhite)
+					if (CanFireCannon(performingPlayer) && pulseCannonStation.CanFireCannon(performingPlayer) && StationLocation != StationLocation.LowerWhite)
 					{
-						PerformAAction(player, false);
-						pulseCannonStation.PerformAAction(player, false);
+						PerformAAction(performingPlayer, false);
+						pulseCannonStation.PerformAAction(performingPlayer, false);
 					}
 					else if (StationLocation == StationLocation.LowerWhite)
-						PerformAAction(player, false);
+						PerformAAction(performingPlayer, false);
 					else
 					{
 						pulseCannonStation.Cannon.RemoveMechanicBuff();
-						if (!CanFireCannon(player))
-							PerformAAction(player, false);
+						if (!CanFireCannon(performingPlayer))
+							PerformAAction(performingPlayer, false);
 						else
 							Cannon.RemoveMechanicBuff();
 					}
 					break;
 				case PlayerSpecialization.Rocketeer:
-					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(player, currentTurn, true);
+					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(performingPlayer, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					var indexOfNextActionToMakeHeroic = player.Actions.FindIndex(currentTurn + 1, action => action.ActionType.CanBeMadeHeroic());
-					player.Actions[indexOfNextActionToMakeHeroic].ActionType = player.Actions[indexOfNextActionToMakeHeroic].ActionType.MakeHeroic();
+					var indexOfNextActionToMakeHeroic = performingPlayer.Actions.FindIndex(currentTurn + 1, action => action.ActionType.CanBeMadeHeroic());
+					performingPlayer.Actions[indexOfNextActionToMakeHeroic].ActionType = performingPlayer.Actions[indexOfNextActionToMakeHeroic].ActionType.MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
-					if (player.BattleBots != null)
+					if (performingPlayer.BattleBots != null)
 					{
-						if (player.BattleBots.IsDisabled)
-							player.BattleBots.IsDisabled = false;
+						if (performingPlayer.BattleBots.IsDisabled)
+							performingPlayer.BattleBots.IsDisabled = false;
 						else
-							SittingDuck.ZonesByLocation[StationLocation.ZoneLocation()].RepairFirstDamage(player);
+							SittingDuck.ZonesByLocation[StationLocation.ZoneLocation()].RepairFirstDamage(performingPlayer);
 					}
 					break;
 				case PlayerSpecialization.Teleporter:
@@ -270,22 +281,23 @@ namespace BLL.ShipComponents
 		private void RestoreThreatMovement()
 		{
 			SittingDuck.ThreatController.EndOfTurn -= RestoreThreatMovement;
+			//TODO: Bug: This won't remove the threat movement debuff, since 'this' isn't the cause, the player is.
 			SittingDuck.ThreatController.RemoveExternalThreatEffectForSource(this);
 		}
 
-		private void PerformAdvancedSpecialization(Player player, int currentTurn)
+		private void PerformAdvancedSpecialization(Player performingPlayer, int currentTurn)
 		{
-			switch (player.BasicSpecialization)
+			switch (performingPlayer.BasicSpecialization)
 			{
 				case PlayerSpecialization.DataAnalyst:
-					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerWhite);
-					player.BonusPoints++;
+					PerformCAction(performingPlayer, currentTurn, false, StationLocation == StationLocation.LowerWhite);
+					performingPlayer.BonusPoints++;
 					break;
 				case PlayerSpecialization.EnergyTechnician:
-					if (player.CurrentStation.StationLocation.IsUpperDeck())
+					if (StationLocation.IsUpperDeck())
 						foreach (var zone in SittingDuck.Zones)
 						{
-							var isCurrentZone = (player.CurrentStation.StationLocation.ZoneLocation() == zone.ZoneLocation);
+							var isCurrentZone = (StationLocation.ZoneLocation() == zone.ZoneLocation);
 							zone.UpperStation.Shield.BonusShield += isCurrentZone ? 2 : 1;
 						}
 					break;
@@ -295,37 +307,38 @@ namespace BLL.ShipComponents
 					break;
 				case PlayerSpecialization.Mechanic:
 					var firstThreat = new[] {PlayerActionType.A, PlayerActionType.B, PlayerActionType.C}
-						.Select(actionType => GetFirstThreatOfType(actionType, player))
+						.Select(actionType => GetFirstThreatOfType(actionType, performingPlayer))
 						.FirstOrDefault(threat => threat != null);
 					if(firstThreat != null)
-						DamageThreat(2, firstThreat, player, false);
+						DamageThreat(2, firstThreat, performingPlayer, false);
 					break;
 				case PlayerSpecialization.Medic:
-					throw new NotImplementedException();
+					performingPlayer.PreventsKnockOut = true;
+					break;
 				case PlayerSpecialization.PulseGunner:
-					PerformAAction(player, false, StationLocation == StationLocation.LowerWhite);
+					PerformAAction(performingPlayer, false, StationLocation == StationLocation.LowerWhite);
 					break;
 				case PlayerSpecialization.Rocketeer:
-					PerformCAction(player, currentTurn, false, StationLocation == StationLocation.LowerBlue);
+					PerformCAction(performingPlayer, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
 					throw new NotImplementedException();
 				case PlayerSpecialization.SquadLeader:
-					var canGoIntoSpace = player.BattleBots != null &&
-						!player.BattleBots.IsDisabled &&
-						player.CurrentStation.StationLocation != StationLocation.LowerBlue;
+					var canGoIntoSpace = performingPlayer.BattleBots != null &&
+						!performingPlayer.BattleBots.IsDisabled &&
+						StationLocation != StationLocation.LowerBlue;
 					if (canGoIntoSpace)
 					{
-						MovementController.MoveHeroically(player, StationLocation.UpperRed, currentTurn);
-						var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
-						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(player))
-							newStation.PerformCAction(player, currentTurn);
+						MovementController.MoveHeroically(performingPlayer, StationLocation.UpperRed, currentTurn);
+						var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
+						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(performingPlayer))
+							newStation.PerformCAction(performingPlayer, currentTurn);
 					}
 					break;
 				case PlayerSpecialization.Teleporter:
 					var newStationLocation = StationLocation.DiagonalStation();
 					if (newStationLocation != null)
-						player.CurrentStation = SittingDuck.StandardStationsByLocation[newStationLocation.Value];
+						performingPlayer.CurrentStation = SittingDuck.StandardStationsByLocation[newStationLocation.Value];
 					break;
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
