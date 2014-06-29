@@ -219,10 +219,7 @@ namespace BLL.ShipComponents
 					break;
 				case PlayerSpecialization.Hypernavigator:
 					if (StationLocation.IsLowerDeck())
-					{
-						SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement, performingPlayer);
-						SittingDuck.ThreatController.EndOfTurn += RestoreThreatMovement;
-					}
+						SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement, ThreatController.SingleTurnThreatSource);
 					break;
 				case PlayerSpecialization.Mechanic:
 					Cannon.AddMechanicBuff();
@@ -278,13 +275,6 @@ namespace BLL.ShipComponents
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
 			}
-		}
-
-		private void RestoreThreatMovement()
-		{
-			SittingDuck.ThreatController.EndOfTurn -= RestoreThreatMovement;
-			//TODO: Bug: This won't remove the threat movement debuff, since 'this' isn't the cause, the player is.
-			SittingDuck.ThreatController.RemoveExternalThreatEffectForSource(this);
 		}
 
 		private void PerformAdvancedSpecialization(Player performingPlayer, int currentTurn)

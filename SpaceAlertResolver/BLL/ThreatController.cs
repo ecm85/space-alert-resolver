@@ -13,7 +13,7 @@ namespace BLL
 	public class ThreatController
 	{
 		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
-		public Track InternalTrack { get; private set; }
+		private Track InternalTrack { get; set; }
 		private IList<ExternalThreat> ExternalThreats { get; set; }
 		private IList<InternalThreat> InternalThreats { get; set; }
 		public event Action JumpingToHyperspace = () => { };
@@ -21,7 +21,7 @@ namespace BLL
 		public event Action EndOfTurn = () => { };
 		public event Action EndOfDamageResolution = () => { };
 		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; set; }
-		
+
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
 			get { return ExternalThreats.Where(threat => threat.IsDamageable); }
@@ -67,6 +67,8 @@ namespace BLL
 			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Sum(threat => threat.Points); }
 		}
 
+		public object SingleTurnThreatSource { get; private set; }
+
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
 		{
 			InternalTrack = internalTrack;
@@ -74,6 +76,7 @@ namespace BLL
 			ExternalThreats = externalThreats;
 			InternalThreats = internalThreats;
 			CurrentExternalThreatBuffsBySource = new Dictionary<object, ExternalThreatEffect>();
+			SingleTurnThreatSource = new object();
 		}
 
 		public void AddNewThreatsToTracks(int currentTurn)
@@ -127,6 +130,7 @@ namespace BLL
 
 		public void PerformEndOfTurn()
 		{
+			RemoveExternalThreatEffectForSource(SingleTurnThreatSource);
 			EndOfTurn();
 		}
 
