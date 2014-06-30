@@ -9,3 +9,4 @@ Heroic actions using and/or occupying gravolifts - ?? (right now it does neither
 Shield interaction with scout - assuming it modifies 'base shields' and therefore maelstrom-family still has 1 shield when hit by pulse
 Reversed shields Y action with destroyer - assuming the shield's portion of the damage is doubled as well
 Reversed shields with Scout Z action - assuming that ignoring shields means that it doesn't benefit from reversed shields Y action
+Assuming that if you play advanced spec ops without another card, it does nothing.

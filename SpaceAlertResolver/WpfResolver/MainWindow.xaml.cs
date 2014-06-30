@@ -134,12 +134,11 @@ namespace WpfResolver
 
 		private Player CreatePlayer(string actionList)
 		{
-			return new Player
-			{
-				Actions = actionList
-				.Select(action => new PlayerAction{ActionType = CreateActionFromCode(action)})
-				.ToList()
-			};
+			var player = new Player();
+			player.Actions = actionList
+				.Select(action => PlayerActionFactory.CreateSingleAction(player, CreateActionFromCode(action)))
+				.ToList();
+			return player;
 		}
 
 		private PlayerActionType? CreateActionFromCode(char action)

@@ -199,11 +199,11 @@ namespace BLL.ShipComponents
 					break;
 			}
 			
-			if (performingPlayer.IsPerformingBasicMedicWithMovement(currentTurn))
+			if (performingPlayer.IsPerformingBasicMedic(currentTurn))
 				PerformBasicSpecialization(performingPlayer, currentTurn);
-			if(performingPlayer.IsPerformingAdvancedMedicWithMovement(currentTurn))
+			if (performingPlayer.IsPerformingAdvancedMedic(currentTurn))
 				PerformAdvancedSpecialization(performingPlayer, currentTurn);
-			if(performingPlayer.IsPerformingAdvancedSpecialOps(currentTurn))
+			if (performingPlayer.IsPerformingAdvancedSpecialOps(currentTurn))
 				PerformAdvancedSpecialization(performingPlayer, currentTurn);
 		}
 
@@ -228,9 +228,9 @@ namespace BLL.ShipComponents
 					var actionsToMakeHeroic = Players
 						.Except(new[] {performingPlayer})
 						.Select(player => player.Actions[currentTurn])
-						.Where(action => action.ActionType.CanBeMadeHeroic());
+						.Where(action => action.CanBeMadeHeroic());
 					foreach (var action in actionsToMakeHeroic)
-						action.ActionType = action.ActionType.MakeHeroic();
+						action.MakeHeroic();
 					break;
 				case PlayerSpecialization.PulseGunner:
 					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
@@ -254,8 +254,8 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(performingPlayer, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					var indexOfNextActionToMakeHeroic = performingPlayer.Actions.FindIndex(currentTurn + 1, action => action.ActionType.CanBeMadeHeroic());
-					performingPlayer.Actions[indexOfNextActionToMakeHeroic].ActionType = performingPlayer.Actions[indexOfNextActionToMakeHeroic].ActionType.MakeHeroic();
+					var indexOfNextActionToMakeHeroic = performingPlayer.Actions.FindIndex(currentTurn + 1, action => action.CanBeMadeHeroic());
+					performingPlayer.Actions[indexOfNextActionToMakeHeroic].MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
 					if (performingPlayer.BattleBots != null)

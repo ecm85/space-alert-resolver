@@ -22,6 +22,7 @@ namespace BLL
 		//TODO: Code Cleanup: Change energy from int to actual blocks?
 		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
 		//TODO: Unit test pulse cannon and laser cannon
+		//TODO: Unit test playeractionfactory
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
 		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
@@ -31,7 +32,7 @@ namespace BLL
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
-		public int NumberOfTurns = 12;
+		public int NumberOfTurns { get; set; }
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
@@ -40,6 +41,7 @@ namespace BLL
 			IList<Player> players,
 			ThreatController threatController)
 		{
+			NumberOfTurns = 12;
 			SittingDuck = new SittingDuck(threatController, this);
 			ThreatController = threatController;
 			this.players = players;
@@ -59,7 +61,7 @@ namespace BLL
 		private void PadPlayerActions()
 		{
 			foreach (var player in players)
-				player.Actions.AddRange(Enumerable.Repeat(new PlayerAction{ActionType = null}, NumberOfTurns - player.Actions.Count));
+				player.Actions.AddRange(Enumerable.Repeat(PlayerActionFactory.CreateSingleAction(player, null), NumberOfTurns - player.Actions.Count));
 		}
 
 		public void PerformTurn()

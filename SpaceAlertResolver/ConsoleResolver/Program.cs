@@ -70,98 +70,78 @@ namespace ConsoleResolver
 			}
 		}
 
-		private static Player[] GetPlayers()
+		private static IList<Player> GetPlayers()
 		{
-			var players = new[]
+			var players = Enumerable.Range(0, 6).Select(index => new Player()).ToList();
+			players[0].Actions = PlayerActionFactory.CreateSingleActionList(players[0], new PlayerActionType?[]
 			{
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						null,
-						PlayerActionType.ChangeDeck,
-						PlayerActionType.B,
-						PlayerActionType.ChangeDeck,
-						PlayerActionType.A,
-						PlayerActionType.A,
-						PlayerActionType.A,
-						PlayerActionType.A,
-						PlayerActionType.A,
-						PlayerActionType.A
-					}),
-					Index = 0
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						PlayerActionType.MoveRed,
-						PlayerActionType.ChangeDeck,
-						PlayerActionType.C,
-						PlayerActionType.ChangeDeck,
-						null,
-						PlayerActionType.C,
-						PlayerActionType.BattleBots,
-						PlayerActionType.C,
-						PlayerActionType.BattleBots,
-						PlayerActionType.A
-					}),
-					Index = 1
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						null,
-						PlayerActionType.C,
-						null,
-						null,
-						PlayerActionType.C,
-						PlayerActionType.ChangeDeck,
-						PlayerActionType.C
-					}),
-					Index = 2
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						PlayerActionType.ChangeDeck,
-						null,
-						null,
-						null,
-						null,
-						null,
-						PlayerActionType.C
-					}),
-					Index = 3
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						null,
-						PlayerActionType.ChangeDeck,
-						null,
-						null,
-						null,
-						null,
-						PlayerActionType.C
-					}),
-					Index = 4
-				},
-				new Player
-				{
-					Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-					{
-						PlayerActionType.TeleportBlueLower,
-						PlayerActionType.TeleportRedUpper,
-						PlayerActionType.TeleportWhiteLower,
-						PlayerActionType.TeleportWhiteUpper
-					}),
-					Index = 5
-				}
-			};
+				null,
+				PlayerActionType.ChangeDeck,
+				PlayerActionType.B,
+				PlayerActionType.ChangeDeck,
+				PlayerActionType.A,
+				PlayerActionType.A,
+				PlayerActionType.A,
+				PlayerActionType.A,
+				PlayerActionType.A,
+				PlayerActionType.A
+			});
+			players[0].Index = 0;
+			players[1].Actions = PlayerActionFactory.CreateSingleActionList(players[1], new PlayerActionType?[]
+			{
+				PlayerActionType.MoveRed,
+				PlayerActionType.ChangeDeck,
+				PlayerActionType.C,
+				PlayerActionType.ChangeDeck,
+				null,
+				PlayerActionType.C,
+				PlayerActionType.BattleBots,
+				PlayerActionType.C,
+				PlayerActionType.BattleBots,
+				PlayerActionType.A
+			});
+			players[1].Index = 1;
+			players[2].Actions = PlayerActionFactory.CreateSingleActionList(players[2], new PlayerActionType?[]
+			{
+				null,
+				PlayerActionType.C,
+				null,
+				null,
+				PlayerActionType.C,
+				PlayerActionType.ChangeDeck,
+				PlayerActionType.C
+			});
+			players[2].Index = 2;
+			players[3].Actions = PlayerActionFactory.CreateSingleActionList(players[3], new PlayerActionType?[]
+			{
+				PlayerActionType.ChangeDeck,
+				null,
+				null,
+				null,
+				null,
+				null,
+				PlayerActionType.C
+			});
+			players[3].Index = 3;
+			players[4].Actions = PlayerActionFactory.CreateSingleActionList(players[4], new PlayerActionType?[]
+			{
+				null,
+				PlayerActionType.ChangeDeck,
+				null,
+				null,
+				null,
+				null,
+				PlayerActionType.C
+			});
+			players[4].Index = 4;
+			players[5].Actions = PlayerActionFactory.CreateSingleActionList(players[5], new PlayerActionType?[]
+			{
+				PlayerActionType.TeleportBlueLower,
+				PlayerActionType.TeleportRedUpper,
+				PlayerActionType.TeleportWhiteLower,
+				PlayerActionType.TeleportWhiteUpper
+			});
+			players[5].Index = 5;
 			return players;
 		}
 	}

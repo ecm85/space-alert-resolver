@@ -23,16 +23,14 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_NoBlanks()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2);
-			var expectedActions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
+			var expectedActions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
 				PlayerActionType.A,
 				PlayerActionType.B,
@@ -46,16 +44,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_WithBlanks()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -71,16 +68,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_AtBlank()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -95,16 +91,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_LastBlank()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
+			});
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -119,17 +114,16 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_MultipleTimesSameTurn()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+			});
 
 			player.Shift(2);
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -144,17 +138,16 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_MultipleTimesConsecutiveTurns()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+			});
 
 			player.Shift(2);
 			player.Shift(3);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -169,16 +162,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_NoBlanks_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -193,16 +185,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_WithBlanks_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -218,16 +209,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_AtBlank_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+			});
 
 			player.Shift(2, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -242,16 +232,15 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_LastBlank_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
+			});
 
 			player.Shift(2, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -266,17 +255,16 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_MultipleTimesSameTurn_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+			});
 
 			player.Shift(2, true);
 			player.Shift(2, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
@@ -291,17 +279,16 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_Shift_MultipleTimesConsecutiveTurns_RepeatPreviousAction()
 		{
-			var player = new Player
+			var player = new Player();
+			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				Actions = PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
-				{
-					PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-				})
-			};
+				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+			});
 
 			player.Shift(2, true);
 			player.Shift(3, true);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
+				player,
 				new PlayerActionType?[]
 				{
 					PlayerActionType.A,
