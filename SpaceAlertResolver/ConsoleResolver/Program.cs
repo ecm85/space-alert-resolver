@@ -18,7 +18,6 @@ namespace ConsoleResolver
 	{
 		static void Main()
 		{
-
 			var players = GetPlayers();
 			
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
