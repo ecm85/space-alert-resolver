@@ -94,25 +94,27 @@ namespace BLL
 			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
 			if (isEndOfPhase)
 				PerformEndOfPhase();
-
 			if (currentTurn == NumberOfTurns - 1)
-			{
-				ThreatController.MoveThreats(currentTurn + 1);
-				var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
-				if (rocketFiredLastTurn != null)
-					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
-				var playersInFarInterceptors = SittingDuck.InterceptorStations
-					.Where(station => station.StationLocation.DistanceFromShip() > 1)
-					.SelectMany(station => station.Players);
-				foreach(var player in playersInFarInterceptors)
-				{
-					player.IsKnockedOut = true;
-					player.BattleBots.IsDisabled = true;
-				}
-				CalculateScore();
-				ThreatController.JumpToHyperspace();
-			}
+				PerformEndOfGame(currentTurn);
 			nextTurn++;
+		}
+
+		private void PerformEndOfGame()
+		{
+			ThreatController.MoveThreats(currentTurn + 1);
+			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
+			if (rocketFiredLastTurn != null)
+				ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
+			var playersInFarInterceptors = SittingDuck.InterceptorStations
+				.Where(station => station.StationLocation.DistanceFromShip() > 1)
+				.SelectMany(station => station.Players);
+			foreach(var player in playersInFarInterceptors)
+			{
+				player.IsKnockedOut = true;
+				player.BattleBots.IsDisabled = true;
+			}
+			CalculateScore();
+			ThreatController.JumpToHyperspace();
 		}
 
 		private void CalculateScore()
