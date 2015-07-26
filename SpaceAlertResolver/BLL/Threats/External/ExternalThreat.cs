@@ -8,7 +8,7 @@ namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public ZoneLocation CurrentZone { get; private set; }
+		public ZoneLocation CurrentZone { get; set; }
 		protected int shields;
 
 		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
@@ -17,14 +17,6 @@ namespace BLL.Threats.External
 			base(type, difficulty, health, speed)
 		{
 			this.shields = shields;
-		}
-
-		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears, ZoneLocation currentZone)
-		{
-			SittingDuck = sittingDuck;
-			ThreatController = threatController;
-			TimeAppears = timeAppears;
-			CurrentZone = currentZone;
 		}
 
 		public void TakeIrreducibleDamage(int amount)

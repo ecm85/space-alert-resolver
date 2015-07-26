@@ -80,7 +80,7 @@ namespace BLL.Test
 
 		private void Test_MoveToMostPlayers_Helper(Dictionary<StationLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
-			var seeker = new Seeker{CurrentStation = currentStation};
+			var seeker = new Seeker{CurrentStation = currentStation, TimeAppears = 4};
 			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null, (Game)null);
 			foreach (var countByLocation in countsByLocation)
 			{
@@ -92,7 +92,7 @@ namespace BLL.Test
 					.Verifiable();
 			}
 			var sittingDuckObject = mockSittingDuck.Object;
-			seeker.Initialize(sittingDuckObject, null, 4);
+			seeker.Initialize(sittingDuckObject, null);
 			seeker.MoveToMostPlayers();
 			Assert.AreEqual(expectedNewStation, seeker.CurrentStation);
 		}

@@ -51,13 +51,6 @@ namespace BLL.Threats.Internal
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
-		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, int timeAppears)
-		{
-			SittingDuck = sittingDuck;
-			ThreatController = threatController;
-			TimeAppears = timeAppears;
-		}
-
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			var damageRemaining = damage;

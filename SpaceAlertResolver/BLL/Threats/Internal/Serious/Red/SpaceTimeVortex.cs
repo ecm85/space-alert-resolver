@@ -35,7 +35,8 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			threatToCallIn.Initialize(SittingDuck, ThreatController, currentTurn);
+			threatToCallIn.Initialize(SittingDuck, ThreatController);
+			threatToCallIn.TimeAppears = currentTurn;
 			threatToCallIn.PlaceOnTrack(Track);
 			while(threatToCallIn.Position != null)
 				threatToCallIn.Move(currentTurn);

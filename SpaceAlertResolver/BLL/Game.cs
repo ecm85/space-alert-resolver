@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
 using BLL.Threats.External;
+using BLL.Threats.Internal;
+using BLL.Threats;
+using BLL.Tracks;
 
 namespace BLL
 {
@@ -39,11 +42,22 @@ namespace BLL
 
 		public Game(
 			IList<Player> players,
-			ThreatController threatController)
+			IList<InternalThreat> internalThreats,
+			IList<ExternalThreat> externalThreats,
+			IDictionary<ZoneLocation, TrackConfiguration> externalTrackConfigurationsByZone,
+			TrackConfiguration internalTrackConfiguration)
 		{
 			NumberOfTurns = 12;
-			SittingDuck = new SittingDuck(threatController, this);
-			ThreatController = threatController;
+			var externalTracksByZone = externalTrackConfigurationsByZone.ToDictionary(
+				trackConfigurationWithZone => trackConfigurationWithZone.Key,
+				trackConfigurationWithZone => new Track(trackConfigurationWithZone.Value));
+			var internalTrack = new Track(internalTrackConfiguration);
+			ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
+			SittingDuck = new SittingDuck(ThreatController, this);
+			var allThreats = internalThreats.Cast<Threat>().Concat(externalThreats);
+			foreach (var threat in allThreats)
+				threat.Initialize(SittingDuck, ThreatController);
+			SittingDuck.SetPlayers(players);
 			this.players = players;
 			PadPlayerActions();
 			SetCaptain();

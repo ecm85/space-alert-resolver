@@ -21,32 +21,26 @@ namespace ConsoleResolver
 
 			var players = GetPlayers();
 			
-			var externalTracksByZone = new Dictionary<ZoneLocation, Track>
+			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
 			{
-				{ZoneLocation.Blue, new Track(TrackConfiguration.Track1)},
-				{ZoneLocation.Red, new Track(TrackConfiguration.Track2)},
-				{ZoneLocation.White, new Track(TrackConfiguration.Track3)},
+				{ZoneLocation.Blue, TrackConfiguration.Track1},
+				{ZoneLocation.Red, TrackConfiguration.Track2},
+				{ZoneLocation.White, TrackConfiguration.Track3},
 			};
-			var internalTrack = new Track(TrackConfiguration.Track4);
-			var destroyer = new Destroyer();
-			var fighter1 = new Fighter();
-			var fighter2 = new Fighter();
-			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
-			var skirmishers = new SkirmishersA();
-			var fissure = new Fissure();
-			var nuclearDevice = new NuclearDevice();
-			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
-			var threatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
-			var game = new Game(players, threatController);
-			var sittingDuck = game.SittingDuck;
-			sittingDuck.SetPlayers(players);
-			destroyer.Initialize(sittingDuck, threatController, 4, ZoneLocation.Blue);
-			fighter1.Initialize(sittingDuck, threatController, 5, ZoneLocation.Red);
-			fighter2.Initialize(sittingDuck, threatController, 6, ZoneLocation.White);
-			skirmishers.Initialize(sittingDuck, threatController, 4);
-			fissure.Initialize(sittingDuck, threatController, 2);
-			nuclearDevice.Initialize(sittingDuck, threatController, 6);
+			var internalTrack = TrackConfiguration.Track4;
 			
+			var destroyer = new Destroyer { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
+			var fighter1 = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
+			var fighter2 = new Fighter { TimeAppears = 6, CurrentZone = ZoneLocation.White };
+			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
+			
+			var skirmishers = new SkirmishersA { TimeAppears = 4 };
+			var fissure = new Fissure { TimeAppears = 2 };
+			var nuclearDevice = new NuclearDevice { TimeAppears = 6 };
+			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
+
+			var game = new Game(players, internalThreats, externalThreats, externalTracksByZone, internalTrack);
+
 			var currentTurn = 0;
 			try
 			{
@@ -58,12 +52,12 @@ namespace ConsoleResolver
 				Console.WriteLine("Killed on turn {0} by: {1}", currentTurn + 1, loseException.Threat);
 			}
 			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
-				sittingDuck.BlueZone.TotalDamage,
-				sittingDuck.RedZone.TotalDamage,
-				sittingDuck.WhiteZone.TotalDamage);
-			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", threatController.DefeatedThreats.Count(), threatController.SurvivedThreats.Count());
+				game.SittingDuck.BlueZone.TotalDamage,
+				game.SittingDuck.RedZone.TotalDamage,
+				game.SittingDuck.WhiteZone.TotalDamage);
+			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", game.ThreatController.DefeatedThreats.Count(), game.ThreatController.SurvivedThreats.Count());
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
-			foreach (var zone in sittingDuck.Zones)
+			foreach (var zone in game.SittingDuck.Zones)
 			{
 				foreach (var token in zone.AllDamageTokensTaken)
 					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));

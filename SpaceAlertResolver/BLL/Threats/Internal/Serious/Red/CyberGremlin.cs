@@ -51,7 +51,10 @@ namespace BLL.Threats.Internal.Serious.Red
 				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.C)
 			};
 			foreach (var newThreat in newThreats)
+			{
+				newThreat.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(SittingDuck, newThreat, TimeAppears);
+			}
 		}
 
 		protected override void OnHealthReducedToZero()

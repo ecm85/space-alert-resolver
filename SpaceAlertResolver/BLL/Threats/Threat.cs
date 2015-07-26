@@ -23,6 +23,12 @@ namespace BLL.Threats
 			HasBeenPlaced = true;
 		}
 
+		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController)
+		{
+			SittingDuck = sittingDuck;
+			ThreatController = threatController;
+		}
+
 		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
 		public virtual bool IsMoveable { get { return HasBeenPlaced && Position != null; } }
 		public virtual bool IsOnTrack { get { return HasBeenPlaced && Position != null; } }
@@ -49,7 +55,7 @@ namespace BLL.Threats
 		public virtual bool IsDefeated { get; protected set; }
 		public virtual bool IsSurvived { get; private set; }
 
-		public int TimeAppears { get; protected set; }
+		public int TimeAppears { get; set; }
 		protected int TotalHealth { get; private set; }
 		protected int RemainingHealth { get; set; }
 		public int Speed { get; set; }
