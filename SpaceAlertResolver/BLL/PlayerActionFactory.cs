@@ -14,6 +14,11 @@ namespace BLL
 				.ToList();
 		}
 
+		public static PlayerAction CreateEmptyAction()
+		{
+			return new StandardPlayerAction(null);
+		}
+
 		public static PlayerAction CreateSingleAction(Player player, PlayerActionType? actionType, PlayerActionType? extraAction = null)
 		{
 			var firstAction = actionType ?? extraAction;

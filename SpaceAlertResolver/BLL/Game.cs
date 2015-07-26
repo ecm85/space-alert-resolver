@@ -75,7 +75,10 @@ namespace BLL
 		private void PadPlayerActions()
 		{
 			foreach (var player in players)
-				player.Actions.AddRange(Enumerable.Repeat(PlayerActionFactory.CreateSingleAction(player, null), NumberOfTurns - player.Actions.Count));
+			{
+				var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), NumberOfTurns - player.Actions.Count);
+				player.Actions.AddRange(extraNullActions);
+			}
 		}
 
 		public void PerformTurn()
@@ -98,7 +101,10 @@ namespace BLL
 				var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
 				if (rocketFiredLastTurn != null)
 					ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
-				foreach(var player in SittingDuck.InterceptorStations.Where(station => station.StationLocation.DistanceFromShip() > 1).SelectMany(station => station.Players))
+				var playersInFarInterceptors = SittingDuck.InterceptorStations
+					.Where(station => station.StationLocation.DistanceFromShip() > 1)
+					.SelectMany(station => station.Players);
+				foreach(var player in playersInFarInterceptors)
 				{
 					player.IsKnockedOut = true;
 					player.BattleBots.IsDisabled = true;
@@ -131,9 +137,11 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var playerPerformingAdvancedSpecialOps = players.SingleOrDefault(player => player.IsPerformingAdvancedSpecialOps(currentTurn));
-			if (playerPerformingAdvancedSpecialOps != null)
-				playerPerformingAdvancedSpecialOps.HasSpecialOpsProtection = true;
+			var playersPerformingAdvancedSpecialOps = players.Where(player => 
+				player.IsPerformingAdvancedSpecialOps(currentTurn));
+			if (playersPerformingAdvancedSpecialOps.Any())
+				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
+
 			var playerOrder = players
 				.Where(player => !player.IsKnockedOut)
 				.OrderBy(player => player.IsPerformingMedic(currentTurn))
@@ -181,15 +189,23 @@ namespace BLL
 			ThreatController.PerformEndOfTurn();
 		}
 
-		private void ResolveDamage(IEnumerable<PlayerDamage> damages, IEnumerable<PlayerInterceptorDamage> interceptorDamages)
+		private void ResolveDamage(
+			IEnumerable<PlayerDamage> damages,
+			IEnumerable<PlayerInterceptorDamage> interceptorDamages)
 		{
 			if (!ThreatController.DamageableExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();
 			foreach (var damage in damages)
 			{
-				var priorityThreatsInRange = ThreatController.DamageableExternalThreats.Where(threat => threat.IsPriorityTargetFor(damage) && threat.CanBeTargetedBy(damage)).ToList();
-				var threatsInRange = ThreatController.DamageableExternalThreats.Where(threat => threat.CanBeTargetedBy(damage)).ToList();
+				var priorityThreatsInRange = ThreatController.DamageableExternalThreats
+					.Where(threat =>
+						threat.IsPriorityTargetFor(damage) &&
+						threat.CanBeTargetedBy(damage))
+					.ToList();
+				var threatsInRange = ThreatController.DamageableExternalThreats
+					.Where(threat => threat.CanBeTargetedBy(damage))
+					.ToList();
 				switch (damage.PlayerDamageType.DamageTargetType())
 				{
 					case DamageTargetType.All:
@@ -197,12 +213,17 @@ namespace BLL
 							AddToDamagesByThreat(threat, damage, damagesByThreat);
 						break;
 					case DamageTargetType.Single:
-						var priorityThreatHit = priorityThreatsInRange.OrderBy(threat => threat.TimeAppears).FirstOrDefault();
+						var priorityThreatHit = priorityThreatsInRange
+							.OrderBy(threat => threat.TimeAppears)
+							.FirstOrDefault();
 						if (priorityThreatHit != null)
 							AddToDamagesByThreat(priorityThreatHit, damage, damagesByThreat);
 						else
 						{
-							var threatHit = threatsInRange.OrderBy(threat => threat.Position).ThenBy(threat => threat.TimeAppears).FirstOrDefault();
+							var threatHit = threatsInRange
+								.OrderBy(threat => threat.Position)
+								.ThenBy(threat => threat.TimeAppears)
+								.FirstOrDefault();
 							if (threatHit != null)
 								AddToDamagesByThreat(threatHit, damage, damagesByThreat);
 						}
@@ -220,15 +241,21 @@ namespace BLL
 			ThreatController.PerformEndOfDamageResolution();
 		}
 
-		private void AddInterceptorDamages(PlayerInterceptorDamage interceptorDamages, Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
+		private void AddInterceptorDamages(
+			PlayerInterceptorDamage interceptorDamages,
+			Dictionary<ExternalThreat, IList<PlayerDamage>> damagesByThreat)
 		{
-			var interceptorDamagesMultiple = interceptorDamages.MultipleDamage;
-			var threatsHitByInterceptors = ThreatController.DamageableExternalThreats.Where(threat => threat.CanBeTargetedBy(interceptorDamagesMultiple)).ToList();
-			if (threatsHitByInterceptors.Count() > 1)
+			var threatsHitByInterceptors = ThreatController.DamageableExternalThreats
+				.Where(threat => threat.CanBeTargetedBy(interceptorDamages.MultipleDamage))
+				.ToList();
+			if (threatsHitByInterceptors.Any())
+			{
+				var damageType = threatsHitByInterceptors.Count == 1 ?
+					interceptorDamages.SingleDamage :
+					interceptorDamages.MultipleDamage;
 				foreach (var threat in threatsHitByInterceptors)
-					AddToDamagesByThreat(threat, interceptorDamagesMultiple, damagesByThreat);
-			else if (threatsHitByInterceptors.Count() == 1)
-				AddToDamagesByThreat(threatsHitByInterceptors.Single(), interceptorDamages.SingleDamage, damagesByThreat);
+					AddToDamagesByThreat(threat, damageType, damagesByThreat);
+			}
 		}
 
 		private static void AddToDamagesByThreat(
