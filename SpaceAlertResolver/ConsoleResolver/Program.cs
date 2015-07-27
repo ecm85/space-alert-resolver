@@ -16,8 +16,15 @@ namespace ConsoleResolver
 {
 	public class Program
 	{
-		static void Main()
+		static void Main(string[] args)
 		{
+			if (!args.Any())
+			{
+				Console.WriteLine("Usage: ConsoleResolver");
+				Console.WriteLine("-tracks blue:<int> white:<int> red:<int>");
+				Console.WriteLine("-threats [id:<string> time:<int> (optional)location:<red|white|blue> [extra-threat-id:<string>]? ]+");
+				Console.WriteLine("-players <int> [player-index:<int> actions:<string>]+)");
+			}
 			var players = GetPlayers();
 			
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
