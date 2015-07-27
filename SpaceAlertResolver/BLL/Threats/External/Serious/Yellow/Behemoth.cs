@@ -55,5 +55,10 @@ namespace BLL.Threats.External.Serious.Yellow
 			}
 			base.TakeDamage(modifiedDamages);
 		}
+
+		public static string GetId()
+		{
+			return "SE2-01";
+		}
 	}
 }

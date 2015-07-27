@@ -41,5 +41,10 @@ namespace BLL.Threats.External.Serious.White
 			else
 				base.TakeDamage(damages);
 		}
+
+		public static string GetId()
+		{
+			return "SE1-05";
+		}
 	}
 }

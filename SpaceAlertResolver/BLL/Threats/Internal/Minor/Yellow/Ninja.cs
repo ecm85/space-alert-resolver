@@ -50,7 +50,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			var removedRocketCount = SittingDuck.GetRocketCount();
 			SittingDuck.RemoveAllRockets();
-			for (var i = 0; i < removedRocketCount; i++)
+			for (var i = 0;i < removedRocketCount;i++)
 				SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
 		}
 
@@ -64,6 +64,11 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		public static string GetDisplayName()
 		{
 			return "Ninja";
+		}
+
+		public static string GetId()
+		{
+			return "I2-102";
 		}
 
 		private class PoisonedPlayers : InternalThreat
@@ -113,6 +118,11 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			public override bool IsDamageable
 			{
 				get { return false; }
+			}
+
+			public static string GetId()
+			{
+				return "I2-102-S";
 			}
 		}
 	}

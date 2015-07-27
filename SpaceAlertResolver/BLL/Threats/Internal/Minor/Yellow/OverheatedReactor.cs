@@ -38,5 +38,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			base.OnHealthReducedToZero();
 			SittingDuck.KnockOutPlayers(new [] {StationLocation.LowerBlue, StationLocation.LowerRed});
 		}
+
+		public static string GetId()
+		{
+			return "I2-06";
+		}
 	}
 }

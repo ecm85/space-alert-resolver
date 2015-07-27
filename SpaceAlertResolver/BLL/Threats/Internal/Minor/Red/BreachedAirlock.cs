@@ -45,5 +45,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			return "Breached Airlock";
 		}
+
+		public static string GetId()
+		{
+			return "I3-104";
+		}
 	}
 }

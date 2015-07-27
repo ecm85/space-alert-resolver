@@ -44,5 +44,10 @@ namespace BLL.Threats.External.Serious.Yellow
 			base.OnHealthReducedToZero();
 			Attack(3 * breakpointsCrossed);
 		}
+
+		public static string GetId()
+		{
+			return "SE2-06";
+		}
 	}
 }

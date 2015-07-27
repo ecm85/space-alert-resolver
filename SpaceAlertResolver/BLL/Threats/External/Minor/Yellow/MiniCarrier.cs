@@ -31,5 +31,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
+
+		public static string GetId()
+		{
+			return "E2-101";
+		}
 	}
 }

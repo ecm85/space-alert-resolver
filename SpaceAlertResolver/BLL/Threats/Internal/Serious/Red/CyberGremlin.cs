@@ -68,6 +68,11 @@ namespace BLL.Threats.Internal.Serious.Red
 			return "Cyber Gremlin";
 		}
 
+		public static string GetId()
+		{
+			return "SI3-106";
+		}
+
 		private class Sabotage : InternalThreat
 		{
 			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType)
@@ -106,6 +111,11 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 				Position = -1;
 				HasBeenPlaced = true;
+			}
+
+			public static string GetId()
+			{
+				return "SI3-106-S";
 			}
 		}
 	}

@@ -55,5 +55,10 @@ namespace BLL.Threats.External.Serious.White
 			base.OnThreatTerminated();
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
+
+		public static string GetId()
+		{
+			return "SE1-102";
+		}
 	}
 }

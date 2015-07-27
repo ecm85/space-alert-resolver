@@ -25,5 +25,10 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			return "Commandos SI1-02";
 		}
+
+		public static string GetId()
+		{
+			return "SI1-02";
+		}
 	}
 }

@@ -76,5 +76,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return "Phasing Destroyer";
 		}
+
+		public static string GetId()
+		{
+			return "E3-103";
+		}
 	}
 }

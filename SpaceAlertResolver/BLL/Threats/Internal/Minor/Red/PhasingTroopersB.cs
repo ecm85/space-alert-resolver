@@ -21,5 +21,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			return "Phasing Troopers I3-105";
 		}
+
+		public static string GetId()
+		{
+			return "I3-105";
+		}
 	}
 }

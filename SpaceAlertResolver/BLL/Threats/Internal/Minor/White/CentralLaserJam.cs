@@ -44,5 +44,10 @@ namespace BLL.Threats.Internal.Minor.White
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
+
+		public static string GetId()
+		{
+			return "I1-101";
+		}
 	}
 }

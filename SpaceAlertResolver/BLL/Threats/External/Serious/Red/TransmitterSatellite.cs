@@ -59,5 +59,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Transmitter Satellite";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-104";
+		}
 	}
 }

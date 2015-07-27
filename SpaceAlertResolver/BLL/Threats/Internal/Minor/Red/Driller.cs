@@ -61,5 +61,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			return "Driller";
 		}
+
+		public static string GetId()
+		{
+			return "I3-107";
+		}
 	}
 }

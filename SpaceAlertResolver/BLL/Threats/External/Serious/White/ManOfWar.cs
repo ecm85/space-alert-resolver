@@ -33,5 +33,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return "Man-Of-War";
 		}
+
+		public static string GetId()
+		{
+			return "SE1-02";
+		}
 	}
 }

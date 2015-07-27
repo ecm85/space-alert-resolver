@@ -31,5 +31,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return "Spacecraft Carrier";
 		}
+
+		public static string GetId()
+		{
+			return "SE1-101";
+		}
 	}
 }

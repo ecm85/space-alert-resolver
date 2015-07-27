@@ -42,5 +42,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return damage.PlayerDamageType != PlayerDamageType.HeavyLaser && base.CanBeTargetedBy(damage);
 		}
+
+		public static string GetId()
+		{
+			return "E2-02";
+		}
 	}
 }

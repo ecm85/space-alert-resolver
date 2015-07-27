@@ -59,5 +59,10 @@ namespace BLL.Threats.Internal.Minor.Red
 			base.OnThreatTerminated();
 			SittingDuck.CentralLaserCannonFired -= HandleCentralLaerCannonFired;
 		}
+
+		public static string GetId()
+		{
+			return "I3-102";
+		}
 	}
 }

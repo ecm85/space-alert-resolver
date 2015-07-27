@@ -16,5 +16,10 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			return "Saboteur I1-04";
 		}
+
+		public static string GetId()
+		{
+			return "I1-04";
+		}
 	}
 }

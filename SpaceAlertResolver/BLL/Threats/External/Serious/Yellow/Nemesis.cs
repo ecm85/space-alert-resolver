@@ -63,5 +63,10 @@ namespace BLL.Threats.External.Serious.Yellow
 			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
+
+		public static string GetId()
+		{
+			return "SE2-05";
+		}
 	}
 }

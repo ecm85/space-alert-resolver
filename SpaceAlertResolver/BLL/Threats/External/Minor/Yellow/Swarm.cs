@@ -43,5 +43,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Swarm";
 		}
+
+		public static string GetId()
+		{
+			return "E2-04";
+		}
 	}
 }

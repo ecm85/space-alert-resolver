@@ -76,5 +76,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return "Phasing Pulser";
 		}
+
+		public static string GetId()
+		{
+			return "E3-102";
+		}
 	}
 }

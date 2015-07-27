@@ -46,5 +46,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			return "Siren";
 		}
+
+		public static string GetId()
+		{
+			return "SI3-105";
+		}
 	}
 }

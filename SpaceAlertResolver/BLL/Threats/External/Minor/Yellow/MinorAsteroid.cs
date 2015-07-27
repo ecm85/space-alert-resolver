@@ -44,5 +44,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			base.OnHealthReducedToZero();
 			Attack(1 * breakpointsCrossed);
 		}
+
+		public static string GetId()
+		{
+			return "E2-07";
+		}
 	}
 }

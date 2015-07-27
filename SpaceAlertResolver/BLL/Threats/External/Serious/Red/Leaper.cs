@@ -45,5 +45,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Leaper";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-106";
+		}
 	}
 }

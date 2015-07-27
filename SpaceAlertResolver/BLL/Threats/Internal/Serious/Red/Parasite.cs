@@ -77,5 +77,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			return "Cyber Gremlin";
 		}
+
+		public static string GetId()
+		{
+			return "SI3-107";
+		}
 	}
 }

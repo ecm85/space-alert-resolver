@@ -41,5 +41,10 @@ namespace BLL.Threats.External.Minor.White
 				hitByRocket = true;
 			base.TakeDamage(damages);
 		}
+
+		public static string GetId()
+		{
+			return "E1-102";
+		}
 	}
 }

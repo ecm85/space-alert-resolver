@@ -53,5 +53,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			return "Lateral Laser Jam";
 		}
+
+		public static string GetId()
+		{
+			return "I3-101";
+		}
 	}
 }

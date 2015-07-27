@@ -75,5 +75,10 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			return "Phasing Frigate";
 		}
+
+		public static string GetId()
+		{
+			return "SE2-102";
+		}
 	}
 }

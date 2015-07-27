@@ -36,5 +36,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return damage.PlayerDamageType != PlayerDamageType.HeavyLaser && base.CanBeTargetedBy(damage);
 		}
+
+		public static string GetId()
+		{
+			return "E3-101";
+		}
 	}
 }

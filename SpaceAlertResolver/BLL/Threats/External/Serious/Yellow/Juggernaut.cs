@@ -50,5 +50,10 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			return base.CanBeTargetedBy(damage) || damage.PlayerDamageType == PlayerDamageType.Rocket;
 		}
+
+		public static string GetId()
+		{
+			return "SE2-02";
+		}
 	}
 }

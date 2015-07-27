@@ -76,5 +76,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Phasing Fighter";
 		}
+
+		public static string GetId()
+		{
+			return "E2-102";
+		}
 	}
 }

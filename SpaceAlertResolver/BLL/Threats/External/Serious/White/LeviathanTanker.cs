@@ -39,5 +39,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return "Leviathan Tanker";
 		}
+
+		public static string GetId()
+		{
+			return "SE1-03";
+		}
 	}
 }

@@ -23,6 +23,11 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			return "Slime I2-02";
 		}
 
+		public static string GetId()
+		{
+			return "I2-02";
+		}
+
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DisableInactiveBattlebots(new[] { StationLocation.LowerRed });

@@ -58,5 +58,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Overlord";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-105";
+		}
 	}
 }

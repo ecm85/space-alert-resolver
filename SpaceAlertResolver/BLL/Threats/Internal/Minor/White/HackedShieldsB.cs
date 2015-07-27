@@ -17,5 +17,10 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			return "Hacked Shields I1-05";
 		}
+
+		public static string GetId()
+		{
+			return "I1-05";
+		}
 	}
 }

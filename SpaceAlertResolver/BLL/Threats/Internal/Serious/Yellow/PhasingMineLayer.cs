@@ -103,5 +103,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			AfterMove += PerformAfterMove;
 			base.OnThreatTerminated();
 		}
+
+		public static string GetId()
+		{
+			return "SI2-102";
+		}
 	}
 }

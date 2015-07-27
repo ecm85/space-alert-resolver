@@ -79,5 +79,10 @@ namespace BLL.Threats.External.Minor.Red
 			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 		}
+
+		public static string GetId()
+		{
+			return "E3-109";
+		}
 	}
 }

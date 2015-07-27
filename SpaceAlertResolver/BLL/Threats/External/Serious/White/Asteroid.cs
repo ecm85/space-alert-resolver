@@ -44,5 +44,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return "Asteroid";
 		}
+
+		public static string GetId()
+		{
+			return "SE1-08";
+		}
 	}
 }

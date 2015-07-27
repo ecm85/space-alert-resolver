@@ -38,5 +38,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Marauder";
 		}
+
+		public static string GetId()
+		{
+			return "E2-06";
+		}
 	}
 }

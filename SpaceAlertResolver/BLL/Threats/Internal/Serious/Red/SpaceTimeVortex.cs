@@ -68,5 +68,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			return "Space Time Vortex";
 		}
+
+		public static string GetId()
+		{
+			return "SI3-104";
+		}
 	}
 }

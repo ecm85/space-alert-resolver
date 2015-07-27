@@ -49,5 +49,10 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			return "Unstable Warheads";
 		}
+
+		public static string GetId()
+		{
+			return "I1-07";
+		}
 	}
 }

@@ -31,5 +31,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return "Frigate";
 		}
+
+		public static string GetId()
+		{
+			return "SE1-01";
+		}
 	}
 }

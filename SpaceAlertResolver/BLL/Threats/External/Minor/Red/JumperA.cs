@@ -17,5 +17,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			get { return CurrentZone.RedwardZoneLocationWithWrapping(); }
 		}
+
+		public static string GetId()
+		{
+			return "E3-105";
+		}
 	}
 }

@@ -99,7 +99,7 @@ namespace BLL
 			nextTurn++;
 		}
 
-		private void PerformEndOfGame()
+		private void PerformEndOfGame(int currentTurn)
 		{
 			ThreatController.MoveThreats(currentTurn + 1);
 			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;

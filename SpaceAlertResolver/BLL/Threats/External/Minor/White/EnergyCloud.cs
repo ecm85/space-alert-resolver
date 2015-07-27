@@ -46,5 +46,10 @@ namespace BLL.Threats.External.Minor.White
 			else
 				base.TakeDamage(damages);
 		}
+
+		public static string GetId()
+		{
+			return "E1-04";
+		}
 	}
 }

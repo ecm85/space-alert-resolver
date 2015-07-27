@@ -43,5 +43,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Phantom Fighter";
 		}
+
+		public static string GetId()
+		{
+			return "E2-03";
+		}
 	}
 }

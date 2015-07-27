@@ -66,5 +66,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (adjacentStationGroupWithMostPlayers.Count() == 1)
 				adjacentStationGroupWithMostPlayers.Single().Station.MoveCommand();
 		}
+
+		public static string GetId()
+		{
+			return "SI2-02";
+		}
 	}
 }

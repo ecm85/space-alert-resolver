@@ -31,5 +31,10 @@ namespace BLL.Threats.External.Minor.White
 		{
 			return "Gunship";
 		}
+
+		public static string GetId()
+		{
+			return "E1-05";
+		}
 	}
 }

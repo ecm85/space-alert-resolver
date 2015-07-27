@@ -40,5 +40,10 @@ namespace BLL.Threats.Internal.Serious.White
 			var energyDrained = SittingDuck.DrainShield(zoneLocation);
 			Damage(energyDrained);
 		}
+
+		public static string GetId()
+		{
+			return "SI1-05";
+		}
 	}
 }

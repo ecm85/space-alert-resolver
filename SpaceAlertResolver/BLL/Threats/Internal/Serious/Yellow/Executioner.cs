@@ -41,5 +41,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
+
+		public static string GetId()
+		{
+			return "SI2-01";
+		}
 	}
 }

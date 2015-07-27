@@ -54,5 +54,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return "Sealed Capsule";
 		}
+
+		public static string GetId()
+		{
+			return "E3-107";
+		}
 	}
 }

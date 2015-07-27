@@ -77,5 +77,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Phasing Man-Of-War";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-101";
+		}
 	}
 }

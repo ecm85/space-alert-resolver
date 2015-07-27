@@ -38,5 +38,10 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return "Megashield Fighter";
 		}
+
+		public static string GetId()
+		{
+			return "E3-104";
+		}
 	}
 }

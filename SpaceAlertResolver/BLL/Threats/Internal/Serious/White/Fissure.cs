@@ -38,5 +38,10 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			return "Fissure";
 		}
+
+		public static string GetId()
+		{
+			return "SI1-04";
+		}
 	}
 }

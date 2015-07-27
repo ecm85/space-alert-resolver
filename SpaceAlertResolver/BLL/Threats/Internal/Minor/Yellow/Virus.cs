@@ -32,5 +32,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			DamageAllZones(1);
 		}
+
+		public static string GetId()
+		{
+			return "I2-05";
+		}
 	}
 }

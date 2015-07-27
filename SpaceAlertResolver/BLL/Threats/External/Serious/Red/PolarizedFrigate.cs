@@ -40,5 +40,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Polarized Frigate";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-109";
+		}
 	}
 }

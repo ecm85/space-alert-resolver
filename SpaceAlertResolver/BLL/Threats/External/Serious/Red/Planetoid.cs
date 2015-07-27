@@ -62,5 +62,10 @@ namespace BLL.Threats.External.Serious.Red
 			base.OnThreatTerminated();
 			ThreatController.EndOfTurn -= IncreaseSpeed;
 		}
+
+		public static string GetId()
+		{
+			return "SE3-107";
+		}
 	}
 }

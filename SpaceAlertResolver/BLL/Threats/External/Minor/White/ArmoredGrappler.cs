@@ -31,5 +31,10 @@ namespace BLL.Threats.External.Minor.White
 		{
 			return "Armored Grappler";
 		}
+
+		public static string GetId()
+		{
+			return "E1-08";
+		}
 	}
 }

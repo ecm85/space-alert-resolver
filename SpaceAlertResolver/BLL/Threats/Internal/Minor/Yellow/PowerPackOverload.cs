@@ -68,5 +68,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
 			base.OnThreatTerminated();
 		}
+
+		public static string GetId()
+		{
+			return "I2-101";
+		}
 	}
 }

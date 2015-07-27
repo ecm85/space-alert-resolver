@@ -23,5 +23,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			return "Hidden Transmitter SI3-103";
 		}
+
+		public static string GetId()
+		{
+			return "SI3-103";
+		}
 	}
 }

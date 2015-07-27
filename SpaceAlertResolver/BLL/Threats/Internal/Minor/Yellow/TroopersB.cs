@@ -22,5 +22,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			return "Troopers I2-03";
 		}
+
+		public static string GetId()
+		{
+			return "I2-03";
+		}
 	}
 }

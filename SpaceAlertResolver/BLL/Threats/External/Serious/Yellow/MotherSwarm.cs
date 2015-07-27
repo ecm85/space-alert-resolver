@@ -43,5 +43,10 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			return "Mother Swarm";
 		}
+
+		public static string GetId()
+		{
+			return "SE2-103";
+		}
 	}
 }

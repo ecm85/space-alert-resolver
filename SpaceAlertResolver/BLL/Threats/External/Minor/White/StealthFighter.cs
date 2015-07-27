@@ -38,5 +38,10 @@ namespace BLL.Threats.External.Minor.White
 		{
 			return !stealthed && base.CanBeTargetedBy(damage);
 		}
+
+		public static string GetId()
+		{
+			return "E1-03";
+		}
 	}
 }

@@ -36,5 +36,10 @@ namespace BLL.Threats.External.Serious.White
 		{
 			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);
 		}
+
+		public static string GetId()
+		{
+			return "SE1-04";
+		}
 	}
 }

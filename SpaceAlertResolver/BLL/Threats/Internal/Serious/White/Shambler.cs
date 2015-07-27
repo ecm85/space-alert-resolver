@@ -41,5 +41,10 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			return SittingDuck.GetPlayerCount(CurrentStation) != 0;
 		}
+
+		public static string GetId()
+		{
+			return "SI1-101";
+		}
 	}
 }

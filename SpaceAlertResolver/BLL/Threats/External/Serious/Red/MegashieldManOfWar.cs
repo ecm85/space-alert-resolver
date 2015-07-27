@@ -39,5 +39,10 @@ namespace BLL.Threats.External.Serious.Red
 			if (damages.Any() && shields > 0)
 				shields--;
 		}
+
+		public static string GetId()
+		{
+			return "SE3-102";
+		}
 	}
 }

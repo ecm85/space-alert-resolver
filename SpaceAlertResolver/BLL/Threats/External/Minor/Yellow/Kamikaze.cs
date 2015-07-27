@@ -33,5 +33,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Kamikaze";
 		}
+
+		public static string GetId()
+		{
+			return "E2-01";
+		}
 	}
 }

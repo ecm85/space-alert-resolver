@@ -69,5 +69,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			return "Reversed Shields";
 		}
+
+		public static string GetId()
+		{
+			return "I3-103";
+		}
 	}
 }

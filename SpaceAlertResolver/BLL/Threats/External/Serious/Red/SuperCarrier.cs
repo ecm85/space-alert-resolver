@@ -36,5 +36,10 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return "Super-Carrier";
 		}
+
+		public static string GetId()
+		{
+			return "SE3-103";
+		}
 	}
 }

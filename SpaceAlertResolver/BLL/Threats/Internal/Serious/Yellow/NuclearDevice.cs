@@ -32,5 +32,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			return "Nuclear Device";
 		}
+
+		public static string GetId()
+		{
+			return "SI2-05";
+		}
 	}
 }

@@ -38,5 +38,10 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return "Megashield Destroyer";
 		}
+
+		public static string GetId()
+		{
+			return "E2-103";
+		}
 	}
 }

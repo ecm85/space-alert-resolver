@@ -55,5 +55,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (stationLocation != null)
 				CurrentStations.Remove(stationLocation.Value);
 		}
+
+		public static string GetId()
+		{
+			return "SI2-04";
+		}
 	}
 }
