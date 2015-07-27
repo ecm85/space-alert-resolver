@@ -14,14 +14,14 @@ namespace BLL.ShipComponents
 
 		protected override PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
 		{
-			var damage = baseDamage;
+			var damage = BaseDamage;
 			if (isHeroic)
 				damage++;
-			if (isDamaged)
+			if (IsDamaged)
 				damage--;
-			if (mechanicBuff)
+			if (MechanicBuff)
 				damage++;
-			return new [] {new PlayerDamage(damage, playerDamageType, baseAffectedDistances, affectedZones, performingPlayer, DisruptedOptics)};
+			return new [] {new PlayerDamage(damage, PlayerDamageType, BaseAffectedDistances, AffectedZones, performingPlayer, OpticsDisrupted)};
 		}
 	}
 }

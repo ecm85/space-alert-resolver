@@ -34,7 +34,7 @@ namespace BLL.ShipComponents
 				if (advancedUsage && canFireDoubleRocket)
 				{
 					Rockets.Remove(Rockets.First());
-					firedRocket.IsDoubleRocket = true;
+					firedRocket.SetDoubleRocket();
 				}
 				RocketsModified();
 			}

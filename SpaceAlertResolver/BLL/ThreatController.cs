@@ -154,21 +154,21 @@ namespace BLL
 			CurrentExternalThreatBuffsBySource.Remove(source);
 		}
 
-		public void AddInternalThreat(ISittingDuck sittingDuck, InternalThreat newThreat, int timeAppears, int position)
+		public void AddInternalThreat(InternalThreat newThreat, int timeAppears, int position)
 		{
-			newThreat.Initialize(sittingDuck, this);
+			newThreat.TimeAppears = timeAppears;
 			newThreat.PlaceOnTrack(InternalTrack, position);
 			InternalThreats.Add(newThreat);
 		}
 
-		public void AddInternalThreat(ISittingDuck sittingDuck, InternalThreat newThreat, int timeAppears)
+		public void AddInternalThreat(InternalThreat newThreat, int timeAppears)
 		{
 			newThreat.TimeAppears = timeAppears;
 			newThreat.PlaceOnTrack(InternalTrack);
 			InternalThreats.Add(newThreat);
 		}
 
-		public void AddExternalThreat(ISittingDuck sittingDuck, ExternalThreat newThreat, int timeAppears, ZoneLocation zoneLocation)
+		public void AddExternalThreat(ExternalThreat newThreat, int timeAppears, ZoneLocation zoneLocation)
 		{
 			newThreat.CurrentZone = zoneLocation;
 			newThreat.TimeAppears = timeAppears;

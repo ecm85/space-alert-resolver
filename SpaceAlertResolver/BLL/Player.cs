@@ -28,7 +28,13 @@ namespace BLL
 		public int BonusPoints { get; set; }
 		public bool PlayerToTeleport { get; set; }
 		public bool TeleportDestination { get; set; }
-		public bool PreventsKnockOut { get; set; }
+		private bool PreventsKnockOut { get; set; }
+
+		public void SetPreventsKnockOut(bool preventsKnockOut)
+		{
+			PreventsKnockOut = preventsKnockOut;
+		}
+
 		public bool HasSpecialOpsProtection { get; set; }
 
 		public void Shift(int turn, bool repeatPreviousAction = false)

@@ -13,19 +13,19 @@ namespace BLL.ShipComponents
 
 		protected override PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
 		{
-			var damage = baseDamage;
-			var affectedDistances = baseAffectedDistances;
-			if (isDamaged)
+			var damage = BaseDamage;
+			var affectedDistances = BaseAffectedDistances;
+			if (IsDamaged)
 				affectedDistances = affectedDistances.Except(new[] {affectedDistances.Max()}).ToArray();
-			if (mechanicBuff)
+			if (MechanicBuff)
 				affectedDistances = affectedDistances.Concat(new[] {affectedDistances.Max() + 1}).ToArray();
 			if (isHeroic)
 				damage++;
 			if (isAdvanced)
 				damage++;
-			var damages = new List<PlayerDamage> {new PlayerDamage(damage, PlayerDamageType.Pulse, affectedDistances, affectedZones, performingPlayer)};
+			var damages = new List<PlayerDamage> {new PlayerDamage(damage, PlayerDamageType.Pulse, affectedDistances, AffectedZones, performingPlayer)};
 			if(isAdvanced && !affectedDistances.Contains(3)) //If we already hit distance 3 with our regular attack (via mechanic when not damaged) there's no point to adding range 4
-				damages.Add(new PlayerDamage(damage - 1, PlayerDamageType.Pulse, new [] {affectedDistances.Max(distance => distance) + 1}, affectedZones, performingPlayer));
+				damages.Add(new PlayerDamage(damage - 1, PlayerDamageType.Pulse, new [] {affectedDistances.Max(distance => distance) + 1}, AffectedZones, performingPlayer));
 			return damages.ToArray();
 		}
 	}

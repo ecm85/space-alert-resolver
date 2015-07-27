@@ -12,28 +12,29 @@ namespace BLL
 		public Zone BlueZone { get; private set; }
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
-		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; set; }
+		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }
 		public IList<InterceptorStation> InterceptorStations { get; private set; }
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
-		private CentralReactor CentralReactor { get; set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event Action RocketsModified = () => { };
 		public event Action CentralLaserCannonFired = () => { };
+		public ThreatController ThreatController { get; private set; }
+		public Game Game { get; private set; }
+
+		private CentralReactor CentralReactor { get; set; }
+		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private Airlock BlueAirlock { get; set; }
 		private Airlock RedAirlock { get; set; }
-		public ThreatController ThreatController { get; private set; }
-		public Game Game { get; private set; }
 
 		public SittingDuck(ThreatController threatController, Game game)
 		{
 			Game = game;
 			ThreatController = threatController;
-			var movementController = new MovementController {SittingDuck = this};
+			var movementController = new MovementController();
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();
 			var blueGravolift = new Gravolift();

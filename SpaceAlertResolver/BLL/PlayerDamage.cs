@@ -8,12 +8,12 @@ namespace BLL
 {
 	public class PlayerDamage
 	{
-		public int[] AffectedDistances { get; set; }
-		public IList<ZoneLocation> AffectedZones { get; set; }
+		public int[] AffectedDistances { get; private set; }
+		public IList<ZoneLocation> AffectedZones { get; private set; }
 		public int Amount { get; set; }
-		public PlayerDamageType PlayerDamageType { get; set; }
-		public bool RequiresTargetingAssistance { get; set; }
-		public Player PerformingPlayer { get; set; }
+		public PlayerDamageType PlayerDamageType { get; private set; }
+		public bool RequiresTargetingAssistance { get; private set; }
+		public Player PerformingPlayer { get; private set; }
 
 		public PlayerDamage(int amount, PlayerDamageType playerDamageType, int[] affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer, bool requiresTargetingAssistance = false)
 		{

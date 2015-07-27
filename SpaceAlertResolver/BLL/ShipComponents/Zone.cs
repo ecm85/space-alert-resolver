@@ -145,8 +145,8 @@ namespace BLL.ShipComponents
 		private void UpdateOptics()
 		{
 			var opticsDisrupted = DebuffsBySource.Values.Contains(ZoneDebuff.DisruptedOptics);
-			UpperStation.Cannon.DisruptedOptics = opticsDisrupted;
-			LowerStation.Cannon.DisruptedOptics = opticsDisrupted;
+			UpperStation.Cannon.SetOpticsDisrupted(opticsDisrupted);
+			LowerStation.Cannon.SetOpticsDisrupted(opticsDisrupted);
 		}
 
 		private void UpdateShields()

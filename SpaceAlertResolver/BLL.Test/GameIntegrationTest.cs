@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Threats;
 
 namespace BLL.Test
 {
@@ -34,9 +35,10 @@ namespace BLL.Test
 			var fighter = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
 			var externalThreats = new ExternalThreat[] { fighter };
 
-			var internalThreats = new InternalThreat[] { };
+			var internalThreats = new InternalThreat[0];
+			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, externalTracksByZone, internalTrack);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
 
 			var currentTurn = 0;
 			for (currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)

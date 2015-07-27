@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			if (poisonedPlayers == null)
 			{
 				poisonedPlayers = new PoisonedPlayers(Type, difficulty);
-				ThreatController.AddInternalThreat(SittingDuck, poisonedPlayers, TimeAppears, Position.GetValueOrDefault());
+				ThreatController.AddInternalThreat(poisonedPlayers, TimeAppears, Position.GetValueOrDefault());
 			}
 			poisonedPlayers.PoisonPlayer(performingPlayer);
 		}

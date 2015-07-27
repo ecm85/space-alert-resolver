@@ -9,7 +9,7 @@ namespace BLL.ShipComponents
 	{
 		private readonly InterceptorStation spacewardStation;
 		private readonly Station shipwardStation;
-		public Interceptors Interceptors { get; set; }
+		private Interceptors Interceptors { get; set; }
 		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation, Interceptors interceptors)
 		{
 			this.spacewardStation = spacewardStation;

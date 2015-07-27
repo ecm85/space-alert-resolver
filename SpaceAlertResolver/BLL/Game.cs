@@ -44,6 +44,7 @@ namespace BLL
 			IList<Player> players,
 			IList<InternalThreat> internalThreats,
 			IList<ExternalThreat> externalThreats,
+			IList<Threat> bonusThreats,
 			IDictionary<ZoneLocation, TrackConfiguration> externalTrackConfigurationsByZone,
 			TrackConfiguration internalTrackConfiguration)
 		{
@@ -54,7 +55,7 @@ namespace BLL
 			var internalTrack = new Track(internalTrackConfiguration);
 			ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
 			SittingDuck = new SittingDuck(ThreatController, this);
-			var allThreats = internalThreats.Cast<Threat>().Concat(externalThreats);
+			var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);
 			foreach (var threat in allThreats)
 				threat.Initialize(SittingDuck, ThreatController);
 			SittingDuck.SetPlayers(players);
@@ -139,8 +140,9 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var playersPerformingAdvancedSpecialOps = players.Where(player => 
-				player.IsPerformingAdvancedSpecialOps(currentTurn));
+			var playersPerformingAdvancedSpecialOps = players
+				.Where(player => player.IsPerformingAdvancedSpecialOps(currentTurn))
+				.ToList();
 			if (playersPerformingAdvancedSpecialOps.Any())
 				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
 
@@ -182,7 +184,7 @@ namespace BLL
 				zone.UpperStation.PerformEndOfTurn();
 				zone.LowerStation.PerformEndOfTurn();
 				foreach (var player in players)
-					player.PreventsKnockOut = false;
+					player.SetPreventsKnockOut(false);
 			}
 			SittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
 			SittingDuck.RocketsComponent.PerformEndOfTurn();

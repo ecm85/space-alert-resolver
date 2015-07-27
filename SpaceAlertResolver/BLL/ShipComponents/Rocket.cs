@@ -7,7 +7,12 @@ namespace BLL.ShipComponents
 {
 	public class Rocket
 	{
-		public bool IsDoubleRocket { get; set; }
+		private bool IsDoubleRocket { get; set; }
+
+		public void SetDoubleRocket()
+		{
+			IsDoubleRocket = true;
+		}
 
 		public PlayerDamage PerformAttack(Player performingPlayer)
 		{

@@ -52,7 +52,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			{
 				var newProgeny = CreateProgeny(stationLocation.Value);
 				currentProgeny.Add(newProgeny);
-				ThreatController.AddInternalThreat(SittingDuck, newProgeny, TimeAppears, Position.GetValueOrDefault());
+				ThreatController.AddInternalThreat(newProgeny, TimeAppears, Position.GetValueOrDefault());
 			}
 		}
 	}

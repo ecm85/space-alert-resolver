@@ -53,7 +53,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			foreach (var newThreat in newThreats)
 			{
 				newThreat.Initialize(SittingDuck, ThreatController);
-				ThreatController.AddInternalThreat(SittingDuck, newThreat, TimeAppears);
+				ThreatController.AddInternalThreat(newThreat, TimeAppears);
 			}
 		}
 

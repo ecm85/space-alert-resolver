@@ -8,12 +8,13 @@ namespace BLL
 {
 	public class MovementController
 	{
-		public SittingDuck SittingDuck { get; set; }
-
-		public void ChangeDeck(Player player, int currentTurn)
+		public static void ChangeDeck(
+			IDictionary<StationLocation, StandardStation> standardStationsByLocation,
+			Player player,
+			int currentTurn)
 		{
-			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
-			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
+			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsOppositeDeck(player, currentTurn, false);
@@ -22,10 +23,13 @@ namespace BLL
 			}
 		}
 
-		public void MoveBlue(Player player, int currentTurn)
+		public static void MoveBlue(
+			IDictionary<StationLocation, StandardStation> standardStationsByLocation,
+			Player player,
+			int currentTurn)
 		{
-			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
-			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.BluewardStationLocation().GetValueOrDefault()];
+			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.BluewardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsBlue(player, currentTurn);
@@ -34,10 +38,13 @@ namespace BLL
 			}
 		}
 
-		public void MoveRed(Player player, int currentTurn)
+		public static void MoveRed(
+			IDictionary<StationLocation, StandardStation> standardStationsByLocation,
+			Player player,
+			int currentTurn)
 		{
-			var oldStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation];
-			var newStation = SittingDuck.StandardStationsByLocation[player.CurrentStation.StationLocation.RedwardStationLocation().GetValueOrDefault()];
+			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
+			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.RedwardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsRed(player, currentTurn);
@@ -46,12 +53,16 @@ namespace BLL
 			}
 		}
 
-		public void MoveHeroically(Player performingPlayer, StationLocation newStationLocation, int currentTurn)
+		public static void MoveHeroically(
+			IDictionary<StationLocation, StandardStation> standardStationsByLocation,
+			Player performingPlayer,
+			StationLocation newStationLocation,
+			int currentTurn)
 		{
 			var currentStationLocation = performingPlayer.CurrentStation.StationLocation;
-			var currentStation = SittingDuck.StandardStationsByLocation[currentStationLocation];
+			var currentStation = standardStationsByLocation[currentStationLocation];
 			var path = Path(currentStationLocation, newStationLocation)
-				.Select(stationLocation => SittingDuck.StandardStationsByLocation[stationLocation])
+				.Select(stationLocation => standardStationsByLocation[stationLocation])
 				.Select((station, index) => new {Station = station, Index = index})
 				.ToList();
 			var firstDestination = path.First();

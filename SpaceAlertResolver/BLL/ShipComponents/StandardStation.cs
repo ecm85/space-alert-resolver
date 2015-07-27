@@ -153,13 +153,13 @@ namespace BLL.ShipComponents
 					PerformCAction(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.MoveBlue:
-					MovementController.MoveBlue(performingPlayer, currentTurn);
+					MovementController.MoveBlue(SittingDuck.StandardStationsByLocation, performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.MoveRed:
-					MovementController.MoveRed(performingPlayer, currentTurn);
+					MovementController.MoveRed(SittingDuck.StandardStationsByLocation, performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.ChangeDeck:
-					MovementController.ChangeDeck(performingPlayer, currentTurn);
+					MovementController.ChangeDeck(SittingDuck.StandardStationsByLocation, performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.BattleBots:
 					UseBattleBots(performingPlayer, false);
@@ -174,22 +174,22 @@ namespace BLL.ShipComponents
 					UseBattleBots(performingPlayer, true);
 					break;
 				case PlayerActionType.TeleportBlueLower:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerBlue, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.LowerBlue, currentTurn);
 					break;
 				case PlayerActionType.TeleportBlueUpper:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperBlue, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperBlue, currentTurn);
 					break;
 				case PlayerActionType.TeleportWhiteLower:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerWhite, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.LowerWhite, currentTurn);
 					break;
 				case PlayerActionType.TeleportWhiteUpper:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperWhite, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperWhite, currentTurn);
 					break;
 				case PlayerActionType.TeleportRedLower:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.LowerRed, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.LowerRed, currentTurn);
 					break;
 				case PlayerActionType.TeleportRedUpper:
-					MovementController.MoveHeroically(performingPlayer, StationLocation.UpperRed, currentTurn);
+					MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
 					break;
 				case PlayerActionType.BasicSpecialization:
 					PerformBasicSpecialization(performingPlayer, currentTurn);
@@ -198,7 +198,7 @@ namespace BLL.ShipComponents
 					PerformAdvancedSpecialization(performingPlayer, currentTurn);
 					break;
 			}
-			
+
 			if (performingPlayer.IsPerformingBasicMedic(currentTurn))
 				PerformBasicSpecialization(performingPlayer, currentTurn);
 			if (performingPlayer.IsPerformingAdvancedMedic(currentTurn))
@@ -305,7 +305,7 @@ namespace BLL.ShipComponents
 						DamageThreat(2, firstThreat, performingPlayer, false);
 					break;
 				case PlayerSpecialization.Medic:
-					performingPlayer.PreventsKnockOut = true;
+					performingPlayer.SetPreventsKnockOut(true);
 					break;
 				case PlayerSpecialization.PulseGunner:
 					PerformAAction(performingPlayer, false, StationLocation == StationLocation.LowerWhite);
@@ -323,7 +323,7 @@ namespace BLL.ShipComponents
 						StationLocation != StationLocation.LowerBlue;
 					if (canGoIntoSpace)
 					{
-						MovementController.MoveHeroically(performingPlayer, StationLocation.UpperRed, currentTurn);
+						MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
 						var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
 						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(performingPlayer))
 							newStation.PerformCAction(performingPlayer, currentTurn);

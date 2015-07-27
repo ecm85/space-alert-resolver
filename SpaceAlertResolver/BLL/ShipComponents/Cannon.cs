@@ -7,12 +7,18 @@ namespace BLL.ShipComponents
 {
 	public abstract class Cannon : IDamageableComponent
 	{
-		protected int baseDamage;
-		protected readonly IList<ZoneLocation> affectedZones;
-		protected int[] baseAffectedDistances;
-		protected readonly PlayerDamageType playerDamageType;
+		protected readonly int BaseDamage;
+		protected readonly IList<ZoneLocation> AffectedZones;
+		protected readonly int[] BaseAffectedDistances;
+		protected readonly PlayerDamageType PlayerDamageType;
 		private readonly EnergyContainer source;
-		public bool DisruptedOptics { get; set; }
+		protected bool OpticsDisrupted { get; private set; }
+
+		public void SetOpticsDisrupted(bool opticsDisrupted)
+		{
+			OpticsDisrupted = opticsDisrupted;
+		}
+
 		public event Action CannonFired = () => { };
 		public PlayerDamage[] PlayerDamage { get; private set; }
 
@@ -29,7 +35,7 @@ namespace BLL.ShipComponents
 				CannonFired();
 				PlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}
-			mechanicBuff = false;
+			MechanicBuff = false;
 		}
 
 		public bool CanFire()
@@ -39,16 +45,16 @@ namespace BLL.ShipComponents
 
 		protected abstract PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
 
-		protected bool isDamaged;
+		protected bool IsDamaged;
 
 		public void SetDamaged()
 		{
-			isDamaged = true;
+			IsDamaged = true;
 		}
 
 		public void Repair()
 		{
-			isDamaged = false;
+			IsDamaged = false;
 		}
 
 		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, ZoneLocation zoneAffected)
@@ -59,22 +65,22 @@ namespace BLL.ShipComponents
 		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, IList<ZoneLocation> affectedZones)
 		{
 			this.source = source;
-			this.baseDamage = baseDamage;
-			this.baseAffectedDistances = baseAffectedDistances;
-			this.playerDamageType = playerDamageType;
-			this.affectedZones = affectedZones;
+			BaseDamage = baseDamage;
+			BaseAffectedDistances = baseAffectedDistances;
+			PlayerDamageType = playerDamageType;
+			AffectedZones = affectedZones;
 		}
 
-		protected bool mechanicBuff;
+		protected bool MechanicBuff;
 
 		public void RemoveMechanicBuff()
 		{
-			mechanicBuff = false;
+			MechanicBuff = false;
 		}
 
 		public void AddMechanicBuff()
 		{
-			mechanicBuff = true;
+			MechanicBuff = true;
 		}
 	}
 }

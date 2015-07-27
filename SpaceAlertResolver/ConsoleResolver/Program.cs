@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BLL;
 using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.External.Minor.White;
 using BLL.Threats.Internal;
@@ -26,7 +27,7 @@ namespace ConsoleResolver
 				Console.WriteLine("-players <int> [player-index:<int> actions:<string>]+)");
 			}
 			var players = GetPlayers();
-			
+
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
 			{
 				{ZoneLocation.Blue, TrackConfiguration.Track1},
@@ -34,18 +35,20 @@ namespace ConsoleResolver
 				{ZoneLocation.White, TrackConfiguration.Track3},
 			};
 			var internalTrack = TrackConfiguration.Track4;
-			
+
 			var destroyer = new Destroyer { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
 			var fighter1 = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
 			var fighter2 = new Fighter { TimeAppears = 6, CurrentZone = ZoneLocation.White };
 			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
-			
+
 			var skirmishers = new SkirmishersA { TimeAppears = 4 };
 			var fissure = new Fissure { TimeAppears = 2 };
 			var nuclearDevice = new NuclearDevice { TimeAppears = 6 };
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
 
-			var game = new Game(players, internalThreats, externalThreats, externalTracksByZone, internalTrack);
+			var bonusThreats = new Threat[0];
+
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
 
 			var currentTurn = 0;
 			try
