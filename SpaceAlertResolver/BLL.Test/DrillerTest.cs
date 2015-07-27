@@ -105,6 +105,12 @@ namespace BLL.Test
 					.Setup(f => f.GetDamageToZone(location))
 					.Returns(count)
 					.Verifiable();
+				mockSittingDuck
+					.Setup(f => f.RedAirlockIsBreached)
+					.Returns(false);
+				mockSittingDuck
+					.Setup(f => f.BlueAirlockIsBreached)
+					.Returns(false);
 			}
 			driller.Initialize(mockSittingDuck.Object, null);
 			driller.MoveTowardsMostDamagedZone();

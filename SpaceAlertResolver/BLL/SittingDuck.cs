@@ -422,8 +422,8 @@ namespace BLL
 			RedAirlock.Breached = false;
 		}
 
-		public bool RedAirlockIsBreached { get { return RedAirlock.Breached; } }
-		public bool BlueAirlockIsBreached { get { return BlueAirlock.Breached; }}
+		public virtual bool RedAirlockIsBreached { get { return RedAirlock.Breached; } }
+		public virtual bool BlueAirlockIsBreached { get { return BlueAirlock.Breached; }}
 
 		public virtual int GetDamageToZone(ZoneLocation zoneLocation)
 		{
