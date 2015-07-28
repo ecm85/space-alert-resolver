@@ -7,7 +7,22 @@ namespace BLL.ShipComponents
 {
 	public class UpperStation : StandardStation
 	{
-		public Shield Shield { get; set; }
+		public Shield Shield { get; private set; }
+
+		public UpperStation(
+			StationLocation stationLocation,
+			ThreatController threatController,
+			CComponent cComponent,
+			Gravolift gravolift,
+			Airlock bluewardAirlock,
+			Airlock redwardAirlock,
+			Cannon cannon,
+			SittingDuck sittingDuck,
+			Shield shield) : base(stationLocation, threatController, cComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+		{
+			Shield = shield;
+		}
+
 		protected override void RefillEnergy(bool isHeroic)
 		{
 			Shield.PerformBAction(isHeroic);

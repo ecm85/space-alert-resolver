@@ -8,13 +8,30 @@ namespace BLL.ShipComponents
 	public abstract class StandardStation : Station
 	{
 		public abstract void DrainEnergyContainer(int amount);
+		private Gravolift Gravolift { get; set; }
+		private Airlock BluewardAirlock { get; set; }
+		private Airlock RedwardAirlock { get; set; }
+		public Cannon Cannon { get; private set; }
+		private SittingDuck SittingDuck { get; set; }
+		private CComponent CComponent { get; set; }
 
-		public Gravolift Gravolift { get; set; }
-		public Airlock BluewardAirlock { get; set; }
-		public Airlock RedwardAirlock { get; set; }
-		public Cannon Cannon { get; set; }
-		public MovementController MovementController { get; set; }
-		public SittingDuck SittingDuck { get; set; }
+		protected StandardStation(
+			StationLocation stationLocation,
+			ThreatController threatController,
+			CComponent cComponent,
+			Gravolift gravolift,
+			Airlock bluewardAirlock,
+			Airlock redwardAirlock,
+			Cannon cannon,
+			SittingDuck sittingDuck) : base(stationLocation, threatController)
+		{
+			CComponent = cComponent;
+			Gravolift = gravolift;
+			BluewardAirlock = bluewardAirlock;
+			RedwardAirlock = redwardAirlock;
+			Cannon = cannon;
+			SittingDuck = sittingDuck;
+		}
 
 		protected abstract void RefillEnergy(bool isHeroic);
 

@@ -12,6 +12,8 @@ namespace BLL
 {
 	public class Game
 	{
+		//TODO: Turn on code analysis
+		//TODO: Add more functional tests (start with same one from program.cs)
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
 		//TODO: Feature: Let user select damage tokens

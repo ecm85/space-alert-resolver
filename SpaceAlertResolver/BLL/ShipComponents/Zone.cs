@@ -151,8 +151,8 @@ namespace BLL.ShipComponents
 
 		private void UpdateShields()
 		{
-			UpperStation.Shield.IneffectiveShields = DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields);
-			UpperStation.Shield.ReversedShields = DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields);
+			UpperStation.Shield.SetIneffectiveShields(DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields));
+			UpperStation.Shield.SetReversedShields(DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields));
 		}
 
 		public int GetEnergyInReactor()

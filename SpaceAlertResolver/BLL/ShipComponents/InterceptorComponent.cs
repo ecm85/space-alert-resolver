@@ -7,14 +7,18 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
-		private readonly InterceptorStation spacewardStation;
-		private readonly Station shipwardStation;
+		private InterceptorStation spacewardStation;
+		private Station shipwardStation;
 		private Interceptors Interceptors { get; set; }
-		public InterceptorComponent(InterceptorStation spacewardStation, Station shipwardStation, Interceptors interceptors)
+		public InterceptorComponent(Interceptors interceptors)
+		{
+			Interceptors = interceptors;
+		}
+
+		public void SetAdjacentStations(InterceptorStation spacewardStation, Station shipwardStation)
 		{
 			this.spacewardStation = spacewardStation;
 			this.shipwardStation = shipwardStation;
-			Interceptors = interceptors;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)

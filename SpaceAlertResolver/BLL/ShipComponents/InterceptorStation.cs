@@ -7,12 +7,16 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorStation : Station
 	{
-		public InterceptorComponent InterceptorComponent { private get; set; }
+		private InterceptorComponent InterceptorComponent { get; set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
-		public InterceptorStation()
+		public InterceptorStation(
+			StationLocation stationLocation,
+			ThreatController threatController,
+			InterceptorComponent interceptorComponent) : base(stationLocation, threatController)
 		{
 			MoveIn += UseBattleBots;
+			InterceptorComponent = interceptorComponent;
 		}
 
 		private void PerformCAction(Player performingPlayer, int currentTurn)

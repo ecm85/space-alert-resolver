@@ -7,18 +7,19 @@ namespace BLL.ShipComponents
 {
 	public abstract class Station
 	{
-		public CComponent CComponent { get; set; }
-		public StationLocation StationLocation { get; set; }
+		public StationLocation StationLocation { get; private set; }
 		public IList<Player> Players { get; private set; }
 		public event Action<Player, int> MoveIn = (performingPlayer, currentTurn) => { };
 		public event Action<Player, int> MoveOut = (performingPlayer, currentTurn) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
-		public ThreatController ThreatController { get; set; }
+		protected ThreatController ThreatController { get; private set; }
 
-		protected Station()
+		protected Station(StationLocation stationLocation, ThreatController threatController)
 		{
 			Players = new List<Player>();
 			IrreparableMalfunctions = new List<IrreparableMalfunction>();
+			StationLocation = stationLocation;
+			ThreatController = threatController;
 		}
 
 		public abstract void PerformMoveIn(Player performingPlayer, int currentTurn);

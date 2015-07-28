@@ -32,125 +32,131 @@ namespace BLL
 
 		public SittingDuck(ThreatController threatController, Game game)
 		{
-			Game = game;
 			ThreatController = threatController;
-			var movementController = new MovementController();
+			Game = game;
+
 			var redGravolift = new Gravolift();
 			var whiteGravolift = new Gravolift();
 			var blueGravolift = new Gravolift();
+
 			var redAirlock = new Airlock();
 			var blueAirlock = new Airlock();
+
 			var whiteReactor = new CentralReactor();
-			CentralReactor = whiteReactor;
 			var redReactor = new SideReactor(whiteReactor);
 			var blueReactor = new SideReactor(whiteReactor);
+
 			var redBatteryPack = new BatteryPack();
 			var blueBatteryPack = new BatteryPack();
+
 			var computerComponent = new ComputerComponent();
 			var visualConfirmationComponent = new VisualConfirmationComponent();
 			var rocketsComponent = new RocketsComponent();
+			rocketsComponent.RocketsModified += () => RocketsModified();
+
+			var interceptors = new Interceptors();
+			var interceptorComponent1 = new InterceptorComponent(interceptors);
+			var interceptorComponent2 = new InterceptorComponent(interceptors);
+			var interceptorComponent3 = new InterceptorComponent(interceptors);
+			var interceptorComponent0 = new InterceptorComponent(interceptors);
+
+			var upperBlueBattleBots = new BattleBotsComponent();
+			var lowerRedBattleBots = new BattleBotsComponent();
+
+			var blueSideHeavyLaserCannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue);
+			var redSideLightLaserCannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red);
+			var pulseCannon = new PulseCannon(whiteReactor);
+			var blueSideLightLaserCannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue);
+			var redSideHeavyLaserCannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
+			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
+			centralHeavyLaserCannon.CannonFired += () => CentralLaserCannonFired();
+
+			var blueSideShield = new SideShield(blueReactor);
+			var redSideShield = new SideShield(redReactor);
+
+			var interceptorStation1 = new InterceptorStation(
+				StationLocation.Interceptor1,
+				threatController,
+				interceptorComponent1);
+			var interceptorStation2 = new InterceptorStation(
+				StationLocation.Interceptor2,
+				threatController,
+				interceptorComponent2);
+			var interceptorStation3 = new InterceptorStation(
+				StationLocation.Interceptor3,
+				threatController,
+				interceptorComponent3);
+			var upperRedStation = new UpperStation(
+				StationLocation.UpperRed,
+				threatController,
+				interceptorComponent0,
+				redGravolift,
+				redAirlock,
+				null,
+				redSideHeavyLaserCannon,
+				this,
+				redSideShield);
+			var upperWhiteStation = new UpperStation(
+				StationLocation.UpperWhite,
+				threatController,
+				computerComponent,
+				whiteGravolift,
+				blueAirlock,
+				redAirlock,
+				centralHeavyLaserCannon,
+				this,
+				new CentralShield(whiteReactor));
+			var upperBlueStation = new UpperStation(
+				StationLocation.UpperBlue,
+				threatController,
+				upperBlueBattleBots,
+				blueGravolift,
+				null,
+				BlueAirlock,
+				blueSideHeavyLaserCannon,
+				this,
+				blueSideShield);
+			var lowerRedStation = new LowerStation(
+				StationLocation.LowerRed,
+				threatController,
+				lowerRedBattleBots,
+				redGravolift,
+				RedAirlock,
+				null,
+				redSideLightLaserCannon,
+				this,
+				redReactor);
+			var lowerWhiteStation = new LowerStation(
+				StationLocation.LowerWhite,
+				threatController,
+				visualConfirmationComponent,
+				whiteGravolift,
+				blueAirlock,
+				redAirlock,
+				pulseCannon,
+				this,
+				whiteReactor);
+			var lowerBlueStation = new LowerStation(
+				StationLocation.LowerBlue,
+				threatController,
+				rocketsComponent,
+				blueGravolift,
+				null,
+				blueAirlock,
+				blueSideLightLaserCannon,
+				this,
+				blueReactor);
+
+			interceptorComponent1.SetAdjacentStations(interceptorStation2, upperRedStation);
+			interceptorComponent2.SetAdjacentStations(interceptorStation3, interceptorStation1);
+			interceptorComponent3.SetAdjacentStations(null, interceptorStation2);
+			interceptorComponent0.SetAdjacentStations(interceptorStation1, null);
+
+
+			CentralReactor = whiteReactor;
 			Computer = computerComponent;
 			VisualConfirmationComponent = visualConfirmationComponent;
 			RocketsComponent = rocketsComponent;
-			rocketsComponent.RocketsModified += () => RocketsModified();
-			var interceptorStation1 = new InterceptorStation
-			{
-				StationLocation = StationLocation.Interceptor1,
-				ThreatController = threatController
-			};
-			var interceptorStation2 = new InterceptorStation
-			{
-				StationLocation = StationLocation.Interceptor2,
-				ThreatController = threatController
-			};
-			var interceptorStation3 = new InterceptorStation
-			{
-				StationLocation = StationLocation.Interceptor3,
-				ThreatController = threatController
-			};
-			var upperRedStation = new UpperStation
-			{
-				Cannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red),
-				Shield = new SideShield(redReactor),
-				StationLocation = StationLocation.UpperRed,
-				BluewardAirlock = redAirlock,
-				Gravolift = redGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
-			var interceptors = new Interceptors();
-			interceptorStation1.InterceptorComponent = new InterceptorComponent(interceptorStation2, upperRedStation, interceptors);
-			interceptorStation2.InterceptorComponent = new InterceptorComponent(interceptorStation3, interceptorStation1, interceptors);
-			interceptorStation3.InterceptorComponent = new InterceptorComponent(null, interceptorStation2, interceptors);
-			upperRedStation.CComponent = new InterceptorComponent(interceptorStation1, null, interceptors);
-			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
-			centralHeavyLaserCannon.CannonFired += () => CentralLaserCannonFired();
-			var upperWhiteStation = new UpperStation
-			{
-				Cannon = centralHeavyLaserCannon,
-				Shield = new CentralShield(whiteReactor),
-				StationLocation = StationLocation.UpperWhite,
-				CComponent = computerComponent,
-				BluewardAirlock = blueAirlock,
-				RedwardAirlock = redAirlock,
-				Gravolift = whiteGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
-			var upperBlueBattleBots = new BattleBotsComponent();
-			var upperBlueStation = new UpperStation
-			{
-				Cannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue),
-				Shield = new SideShield(blueReactor),
-				StationLocation = StationLocation.UpperBlue,
-				CComponent = upperBlueBattleBots,
-				RedwardAirlock = blueAirlock,
-				Gravolift = blueGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
-			var lowerRedBattleBots = new BattleBotsComponent();
-			var lowerRedStation = new LowerStation
-			{
-				Cannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red),
-				Reactor = redReactor,
-				StationLocation = StationLocation.LowerRed,
-				CComponent = lowerRedBattleBots,
-				BluewardAirlock = redAirlock,
-				Gravolift = redGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
-
-			var lowerWhiteStation = new LowerStation
-			{
-				Cannon = new PulseCannon(whiteReactor),
-				Reactor = whiteReactor,
-				StationLocation = StationLocation.LowerWhite,
-				CComponent = visualConfirmationComponent,
-				BluewardAirlock = blueAirlock,
-				RedwardAirlock = redAirlock,
-				Gravolift = whiteGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
-			var lowerBlueStation = new LowerStation
-			{
-				Cannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue),
-				Reactor = blueReactor,
-				StationLocation = StationLocation.LowerBlue,
-				CComponent = rocketsComponent,
-				RedwardAirlock = blueAirlock,
-				Gravolift = blueGravolift,
-				ThreatController = threatController,
-				MovementController = movementController,
-				SittingDuck = this
-			};
 			BlueAirlock = blueAirlock;
 			RedAirlock = redAirlock;
 			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = redGravolift};

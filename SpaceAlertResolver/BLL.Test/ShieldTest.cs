@@ -228,7 +228,7 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_ShieldThroughAttack_IneffectiveShields_DamageGreaterThanBonusShield()
 		{
-			shield.IneffectiveShields = true;
+			shield.SetIneffectiveShields(true);
 			shield.Energy = 5;
 			shield.BonusShield = 2;
 			var result = shield.ShieldThroughAttack(3);
@@ -240,7 +240,7 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_ShieldThroughAttack_IneffectiveShields_DamageLessThanBonusShield()
 		{
-			shield.IneffectiveShields = true;
+			shield.SetIneffectiveShields(true);
 			shield.Energy = 5;
 			shield.BonusShield = 2;
 			var result = shield.ShieldThroughAttack(1);
@@ -252,7 +252,7 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_ShieldThroughAttack_ReversedShields_HasBonusShields()
 		{
-			shield.ReversedShields = true;
+			shield.SetReversedShields(true);
 			shield.Energy = 3;
 			shield.BonusShield = 2;
 			var result = shield.ShieldThroughAttack(6);
@@ -265,7 +265,7 @@ namespace BLL.Test
 		[TestMethod]
 		public void Test_ShieldThroughAttack_ReversedShields_NoBonusShields()
 		{
-			shield.ReversedShields = true;
+			shield.SetReversedShields(true);
 			shield.Energy = 3;
 			shield.BonusShield = 0;
 			var result = shield.ShieldThroughAttack(6);

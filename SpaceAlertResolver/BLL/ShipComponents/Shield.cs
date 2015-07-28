@@ -68,8 +68,19 @@ namespace BLL.ShipComponents
 			set { bonusShield = value > 0 ? value : 0; }
 		}
 
-		public bool IneffectiveShields { get; set; }
-		public bool ReversedShields { get; set; }
+		private bool IneffectiveShields { get; set; }
+
+		public void SetIneffectiveShields(bool ineffectiveShields)
+		{
+			IneffectiveShields = ineffectiveShields;
+		}
+
+		private bool ReversedShields { get; set; }
+
+		public void SetReversedShields(bool reversedShields)
+		{
+			ReversedShields = reversedShields;
+		}
 
 		public int ShieldThroughAttack(int amount)
 		{

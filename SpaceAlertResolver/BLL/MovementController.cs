@@ -6,7 +6,7 @@ using BLL.ShipComponents;
 
 namespace BLL
 {
-	public class MovementController
+	public static class MovementController
 	{
 		public static void ChangeDeck(
 			IDictionary<StationLocation, StandardStation> standardStationsByLocation,
