@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal
 	{
 		protected List<StationLocation> CurrentStations { get; private set; }
 
-		protected int? totalInaccessibility;
+		protected int? TotalInaccessibility;
 		private int? remainingInaccessibility;
 
 		internal StationLocation CurrentStation
@@ -20,10 +20,10 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			ThreatController.EndOfTurn += PerformEndOfTurn;
-			base.PlaceOnTrack(track, trackPosition);
+			base.PlaceOnBoard(track, trackPosition);
 		}
 
 		protected ZoneLocation CurrentZone
@@ -48,7 +48,7 @@ namespace BLL.Threats.Internal
 		{
 			CurrentStations = currentStations;
 			ActionType = actionType;
-			totalInaccessibility = remainingInaccessibility = inaccessibility;
+			TotalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
@@ -167,7 +167,7 @@ namespace BLL.Threats.Internal
 
 		protected virtual void PerformEndOfTurn()
 		{
-			remainingInaccessibility = totalInaccessibility;
+			remainingInaccessibility = TotalInaccessibility;
 		}
 
 		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)

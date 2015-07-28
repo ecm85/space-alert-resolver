@@ -8,7 +8,7 @@ namespace BLL
 {
 	public class ThreatDamage
 	{
-		public int Amount { get; set; }
+		public int Amount { get; private set; }
 		public ThreatDamageType ThreatDamageType { get; private set; }
 		public IList<ZoneLocation> ZoneLocations { get; private set; }
 		public int? DistanceToSource { get; private set; }

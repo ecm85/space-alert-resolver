@@ -14,9 +14,9 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 		}
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
-			base.PlaceOnTrack(track, trackPosition);
+			base.PlaceOnBoard(track, trackPosition);
 			SetHealthToRemainingRockets();
 			SittingDuck.RocketsModified += SetHealthToRemainingRockets;
 		}

@@ -14,9 +14,9 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 		}
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
-			base.PlaceOnTrack(track, trackPosition);
+			base.PlaceOnBoard(track, trackPosition);
 			CurrentStation = TimeAppears % 2 == 0 ? StationLocation.UpperBlue : StationLocation.UpperRed;
 		}
 

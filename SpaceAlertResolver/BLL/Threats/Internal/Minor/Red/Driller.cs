@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			totalInaccessibility = 0;
+			TotalInaccessibility = 0;
 			MoveTowardsMostDamagedZone();
 		}
 
@@ -44,7 +44,7 @@ namespace BLL.Threats.Internal.Minor.Red
 				}
 				.Where(zone => zone.NewZone != null)
 				.ToList();
-			
+
 			var mostDamagedZoneGroup = zones
 				.Select(zone => new { Zone = zone, DamageTaken = SittingDuck.GetDamageToZone(zone.NewZone.Value) })
 				.GroupBy(zone => zone.DamageTaken)

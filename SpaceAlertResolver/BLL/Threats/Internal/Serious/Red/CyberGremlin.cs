@@ -14,9 +14,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 		}
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
-			base.PlaceOnTrack(track, trackPosition);
+			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
 		}
 
@@ -46,9 +46,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.A),
-				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.B),
-				new Sabotage(Type, difficulty, CurrentStation, PlayerActionType.C)
+				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.A),
+				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.B),
+				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.C)
 			};
 			foreach (var newThreat in newThreats)
 			{
@@ -59,7 +59,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void OnHealthReducedToZero()
 		{
-			base.OnThreatTerminated();
+			OnThreatTerminated();
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 
@@ -107,10 +107,9 @@ namespace BLL.Threats.Internal.Serious.Red
 				get { return false; }
 			}
 
-			public override void PlaceOnTrack(Track track, int trackPosition)
+			public override void PlaceOnBoard(Track track, int? trackPosition)
 			{
-				Position = -1;
-				HasBeenPlaced = true;
+				base.PlaceOnBoard(null, null);
 			}
 
 			public static string GetId()

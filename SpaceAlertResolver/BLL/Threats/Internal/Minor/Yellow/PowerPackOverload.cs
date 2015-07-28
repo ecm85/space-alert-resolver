@@ -21,9 +21,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
+		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
-			base.PlaceOnTrack(track, trackPosition);
+			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
 		}
 

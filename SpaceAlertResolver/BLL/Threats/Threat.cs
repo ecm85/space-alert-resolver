@@ -11,12 +11,12 @@ namespace BLL.Threats
 		public event Action BeforeMove = () => { };
 		public event Action AfterMove = () => { };
 
-		public void PlaceOnTrack(Track track)
+		public void PlaceOnBoard(Track track)
 		{
-			PlaceOnTrack(track, track.GetStartingPosition());
+			PlaceOnBoard(track, track.GetStartingPosition());
 		}
 
-		public virtual void PlaceOnTrack(Track track, int trackPosition)
+		public virtual void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			Track = track;
 			Position = trackPosition;
@@ -31,10 +31,10 @@ namespace BLL.Threats
 
 		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
 		public virtual bool IsMoveable { get { return HasBeenPlaced && Position != null; } }
-		public virtual bool IsOnTrack { get { return HasBeenPlaced && Position != null; } }
+		public bool IsOnTrack { get { return HasBeenPlaced && Position != null; } }
 
+		private bool HasBeenPlaced { get; set; }
 
-		protected bool HasBeenPlaced { get; set; }
 		public virtual int Points
 		{
 			get { return !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
@@ -44,12 +44,12 @@ namespace BLL.Threats
 
 		public virtual int GetPointsForDefeating()
 		{
-			return ThreatPoints.GetPointsForDefeating(Type, difficulty);
+			return ThreatPoints.GetPointsForDefeating(Type, Difficulty);
 		}
 
 		protected virtual int GetPointsForSurviving()
 		{
-			return ThreatPoints.GetPointsForSurviving(Type, difficulty);
+			return ThreatPoints.GetPointsForSurviving(Type, Difficulty);
 		}
 
 		public virtual bool IsDefeated { get; protected set; }
@@ -59,13 +59,13 @@ namespace BLL.Threats
 		protected int TotalHealth { get; private set; }
 		protected int RemainingHealth { get; set; }
 		public int Speed { get; set; }
-		public int? Position { get; protected set; }
-		protected ThreatController ThreatController { get; set; }
+		public int? Position { get; private set; }
+		protected ThreatController ThreatController { get; private set; }
 
 		public ThreatType Type { get; private set; }
-		protected readonly ThreatDifficulty difficulty;
+		protected readonly ThreatDifficulty Difficulty;
 
-		protected ISittingDuck SittingDuck { get; set; }
+		protected ISittingDuck SittingDuck { get; private set; }
 
 		protected abstract void PerformXAction(int currentTurn);
 		protected abstract void PerformYAction(int currentTurn);
@@ -107,7 +107,7 @@ namespace BLL.Threats
 
 		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed)
 		{
-			this.difficulty = difficulty;
+			Difficulty = difficulty;
 			Type = type;
 			TotalHealth = RemainingHealth = health;
 			Speed = speed;

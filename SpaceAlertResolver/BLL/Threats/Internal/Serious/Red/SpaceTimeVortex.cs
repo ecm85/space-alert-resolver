@@ -37,7 +37,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			threatToCallIn.Initialize(SittingDuck, ThreatController);
 			threatToCallIn.TimeAppears = currentTurn;
-			threatToCallIn.PlaceOnTrack(Track);
+			threatToCallIn.PlaceOnBoard(Track);
 			while(threatToCallIn.Position != null)
 				threatToCallIn.Move(currentTurn);
 		}
