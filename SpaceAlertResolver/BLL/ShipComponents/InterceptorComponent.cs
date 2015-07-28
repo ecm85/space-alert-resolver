@@ -7,18 +7,28 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorComponent : CComponent
 	{
-		private InterceptorStation spacewardStation;
-		private Station shipwardStation;
+		private readonly SittingDuck sittingDuck;
+		private readonly StationLocation stationLocation;
 		private Interceptors Interceptors { get; set; }
-		public InterceptorComponent(Interceptors interceptors)
+
+		private Station SpacewardStation
 		{
-			Interceptors = interceptors;
+			get { return sittingDuck.StationsByLocation[stationLocation.SpacewardLocation().GetValueOrDefault()]; }
 		}
 
-		public void SetAdjacentStations(InterceptorStation spacewardStation, Station shipwardStation)
+		private Station ShipwardLocation
 		{
-			this.spacewardStation = spacewardStation;
-			this.shipwardStation = shipwardStation;
+			get { return sittingDuck.StationsByLocation[stationLocation.ShipwardLocation().GetValueOrDefault()]; }
+		}
+
+		public InterceptorComponent(
+			SittingDuck sittingDuck,
+			Interceptors interceptors,
+			StationLocation stationLocation)
+		{
+			Interceptors = interceptors;
+			this.stationLocation = stationLocation;
+			this.sittingDuck = sittingDuck;
 		}
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
@@ -35,7 +45,7 @@ namespace BLL.ShipComponents
 				if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
 				{
 					performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-					spacewardStation.PerformMoveIn(performingPlayer, currentTurn);
+					SpacewardStation.PerformMoveIn(performingPlayer, currentTurn);
 				}
 				else
 				{
@@ -53,10 +63,10 @@ namespace BLL.ShipComponents
 
 		public void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
-			if (shipwardStation != null && performingPlayer.Interceptors != null)
+			if (ShipwardLocation != null && performingPlayer.Interceptors != null)
 			{
 				performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-				shipwardStation.PerformMoveIn(performingPlayer, currentTurn);
+				ShipwardLocation.PerformMoveIn(performingPlayer, currentTurn);
 			}
 		}
 	}

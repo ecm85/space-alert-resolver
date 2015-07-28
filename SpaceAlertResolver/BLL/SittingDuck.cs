@@ -13,6 +13,7 @@ namespace BLL
 		public Zone WhiteZone { get; private set; }
 		public Zone RedZone { get; private set; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
+		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
 		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }
 		public IList<InterceptorStation> InterceptorStations { get; private set; }
@@ -25,7 +26,6 @@ namespace BLL
 		public Game Game { get; private set; }
 
 		private CentralReactor CentralReactor { get; set; }
-		private IDictionary<StationLocation, Station> StationsByLocation { get; set; }
 		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
 		private Airlock BlueAirlock { get; set; }
 		private Airlock RedAirlock { get; set; }
@@ -55,10 +55,10 @@ namespace BLL
 			rocketsComponent.RocketsModified += () => RocketsModified();
 
 			var interceptors = new Interceptors();
-			var interceptorComponent1 = new InterceptorComponent(interceptors);
-			var interceptorComponent2 = new InterceptorComponent(interceptors);
-			var interceptorComponent3 = new InterceptorComponent(interceptors);
-			var interceptorComponent0 = new InterceptorComponent(interceptors);
+			var interceptorComponent0 = new InterceptorComponent(this, interceptors, StationLocation.UpperRed);
+			var interceptorComponent1 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor1);
+			var interceptorComponent2 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
+			var interceptorComponent3 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
 
 			var upperBlueBattleBots = new BattleBotsComponent();
 			var lowerRedBattleBots = new BattleBotsComponent();
@@ -146,12 +146,6 @@ namespace BLL
 				blueSideLightLaserCannon,
 				this,
 				blueReactor);
-
-			interceptorComponent1.SetAdjacentStations(interceptorStation2, upperRedStation);
-			interceptorComponent2.SetAdjacentStations(interceptorStation3, interceptorStation1);
-			interceptorComponent3.SetAdjacentStations(null, interceptorStation2);
-			interceptorComponent0.SetAdjacentStations(interceptorStation1, null);
-
 
 			CentralReactor = whiteReactor;
 			Computer = computerComponent;
