@@ -25,11 +25,11 @@ namespace BLL.ShipComponents
 			set
 			{
 				if (Energy <= value)
-					energy = value - BonusShield;
+					base.Energy = value - BonusShield;
 				else if (value <= 0)
 				{
 					BonusShield = 0;
-					energy = 0;
+					base.Energy = 0;
 				}
 				else
 				{
@@ -39,21 +39,21 @@ namespace BLL.ShipComponents
 					var newBonusShield = BonusShield;
 					var bonusEnergyDrained = oldBonusShield - newBonusShield;
 					energyToDrain -= bonusEnergyDrained;
-					energy -= energyToDrain;
+					base.Energy -= energyToDrain;
 				}
 			}
 		}
 
 		public void FillToCapacity(bool isHeroic)
 		{
-			var energyToPull = Capacity - energy;
+			var energyToPull = Capacity - Energy;
 			var oldSourceEnergy = Source.Energy;
 			Source.Energy -= energyToPull;
 			var newSourceEnergy = Source.Energy;
 			var energyPulled = oldSourceEnergy - newSourceEnergy;
-			energy += energyPulled;
+			Energy += energyPulled;
 			if (energyPulled > 0 && isHeroic)
-				energy++;
+				Energy++;
 		}
 
 		public void PerformEndOfTurn()
@@ -92,18 +92,16 @@ namespace BLL.ShipComponents
 			amountUnshielded -= amountShielded;
 			if (ReversedShields)
 			{
-				var energyAddedToAttack = energy;
-				energy = 0;
+				var energyAddedToAttack = Energy;
+				Energy = 0;
 				return amountShielded - energyAddedToAttack;
 			}
-			if (!IneffectiveShields)
-			{
-				var oldShields = Energy;
-				Energy -= amountUnshielded;
-				var newShields = Energy;
-				return (oldShields - newShields) + amountShielded;
-			}
-			return amountShielded;
+			if (IneffectiveShields)
+				return amountShielded;
+			var oldShields = Energy;
+			Energy -= amountUnshielded;
+			var newShields = Energy;
+			return (oldShields - newShields) + amountShielded;
 		}
 	}
 }

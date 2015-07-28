@@ -8,8 +8,8 @@ namespace BLL.ShipComponents
 	public abstract class EnergyContainer : IDamageableComponent
 	{
 		protected int Capacity { get; private set; }
-		
-		protected int energy;
+
+		private int energy;
 		public virtual int Energy
 		{
 			get { return energy; }
@@ -31,8 +31,8 @@ namespace BLL.ShipComponents
 			if (!wasAlreadyDamaged)
 			{
 				Capacity--;
-				if (energy > Capacity)
-					energy = Capacity;
+				if (Energy > Capacity)
+					Energy = Capacity;
 			}
 		}
 
