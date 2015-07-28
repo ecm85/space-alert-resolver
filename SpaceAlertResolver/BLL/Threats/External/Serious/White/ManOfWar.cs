@@ -21,7 +21,7 @@ namespace BLL.Threats.External.Serious.White
 		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(3);
-			shields++;
+			Shields++;
 		}
 
 		protected override void PerformZAction(int currentTurn)

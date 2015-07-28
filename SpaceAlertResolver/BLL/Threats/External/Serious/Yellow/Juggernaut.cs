@@ -38,7 +38,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			base.TakeDamage(damages);
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
-				shields++;
+				Shields++;
 		}
 
 		public override bool IsPriorityTargetFor(PlayerDamage damage)

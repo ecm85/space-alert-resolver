@@ -9,14 +9,14 @@ namespace BLL.Threats.External
 	public abstract class ExternalThreat : Threat
 	{
 		public ZoneLocation CurrentZone { get; set; }
-		protected int shields;
+		protected int Shields;
 
 		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
 
 		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed) :
 			base(type, difficulty, health, speed)
 		{
-			this.shields = shields;
+			Shields = shields;
 		}
 
 		public void TakeIrreducibleDamage(int amount)
@@ -39,7 +39,7 @@ namespace BLL.Threats.External
 		protected virtual void TakeDamage(int damageSum, int? maxDamageTaken)
 		{
 			var bonusShields = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatEffect.BonusShield);
-			var damageDealt = damageSum - (shields + bonusShields);
+			var damageDealt = damageSum - (Shields + bonusShields);
 			if (damageDealt > 0)
 				RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
 			CheckDefeated();

@@ -15,13 +15,13 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			shields = 4;
+			Shields = 4;
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
 			Speed += 2;
-			shields = 2;
+			Shields = 2;
 		}
 
 		protected override void PerformZAction(int currentTurn)

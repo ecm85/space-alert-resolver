@@ -33,7 +33,7 @@ namespace BLL.Threats.External.Serious.Red
 		protected override void PerformYAction(int currentTurn)
 		{
 			Attack(wasPhasedAtStartOfTurn ? 2 : 3);
-			shields++;
+			Shields++;
 		}
 
 		protected override void PerformZAction(int currentTurn)

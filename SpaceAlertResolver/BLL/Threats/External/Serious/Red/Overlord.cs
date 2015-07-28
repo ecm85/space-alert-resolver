@@ -18,7 +18,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			shields = 4;
+			Shields = 4;
 			CallInExternalThreat(currentTurn);
 		}
 
