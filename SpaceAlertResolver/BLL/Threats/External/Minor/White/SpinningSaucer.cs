@@ -29,22 +29,11 @@ namespace BLL.Threats.External.Minor.White
 			if (!hitByRocket)
 				Attack(5);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Spinning Saucer";
-		}
-
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
 				hitByRocket = true;
 			base.TakeDamage(damages);
-		}
-
-		public static string GetId()
-		{
-			return "E1-102";
 		}
 	}
 }

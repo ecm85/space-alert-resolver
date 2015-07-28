@@ -70,15 +70,5 @@ namespace BLL.Threats.External.Serious.Yellow
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Frigate";
-		}
-
-		public static string GetId()
-		{
-			return "SE2-102";
-		}
 	}
 }

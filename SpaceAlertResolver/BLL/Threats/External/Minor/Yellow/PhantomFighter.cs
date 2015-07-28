@@ -38,15 +38,5 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return !phantomMode && base.CanBeTargetedBy(damage);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phantom Fighter";
-		}
-
-		public static string GetId()
-		{
-			return "E2-03";
-		}
 	}
 }

@@ -11,15 +11,5 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			MoveRed();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Saboteur I1-04";
-		}
-
-		public static string GetId()
-		{
-			return "I1-04";
-		}
 	}
 }

@@ -12,12 +12,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			: base(2, 2, StationLocation.UpperBlue, PlayerActionType.BattleBots)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Executioner";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			MoveRed();
@@ -40,11 +34,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
-		}
-
-		public static string GetId()
-		{
-			return "SI2-01";
 		}
 	}
 }

@@ -26,12 +26,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Power System Overload";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainReactor(ZoneLocation.White, 2);
@@ -65,11 +59,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
 			base.OnThreatTerminated();
-		}
-
-		public static string GetId()
-		{
-			return "SI2-03";
 		}
 	}
 }

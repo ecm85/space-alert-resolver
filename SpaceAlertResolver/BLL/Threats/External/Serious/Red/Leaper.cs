@@ -40,15 +40,5 @@ namespace BLL.Threats.External.Serious.Red
 			Jump(CurrentZone.BluewardZoneLocationWithWrapping());
 			Attack(1);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Leaper";
-		}
-
-		public static string GetId()
-		{
-			return "SE3-106";
-		}
 	}
 }

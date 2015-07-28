@@ -26,20 +26,9 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(5);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Amoeba";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "E1-09";
 		}
 	}
 }

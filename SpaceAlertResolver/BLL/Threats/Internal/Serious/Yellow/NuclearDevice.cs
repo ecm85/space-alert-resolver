@@ -27,15 +27,5 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			throw new LoseException(this);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Nuclear Device";
-		}
-
-		public static string GetId()
-		{
-			return "SI2-05";
-		}
 	}
 }

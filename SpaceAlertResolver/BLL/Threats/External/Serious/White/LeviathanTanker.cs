@@ -34,15 +34,5 @@ namespace BLL.Threats.External.Serious.White
 			foreach (var threat in ThreatController.DamageableExternalThreats)
 				threat.TakeIrreducibleDamage(1);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Leviathan Tanker";
-		}
-
-		public static string GetId()
-		{
-			return "SE1-03";
-		}
 	}
 }

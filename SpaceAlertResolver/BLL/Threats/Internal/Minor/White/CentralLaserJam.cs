@@ -28,12 +28,6 @@ namespace BLL.Threats.Internal.Minor.White
 			Damage(3);
 			DamageOtherTwoZones(1);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Central Laser Jam";
-		}
-
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
@@ -43,11 +37,6 @@ namespace BLL.Threats.Internal.Minor.White
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-		}
-
-		public static string GetId()
-		{
-			return "I1-101";
 		}
 	}
 }

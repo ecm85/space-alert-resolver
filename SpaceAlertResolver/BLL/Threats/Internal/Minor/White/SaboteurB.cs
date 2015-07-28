@@ -11,15 +11,5 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			MoveBlue();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Saboteur I1-03";
-		}
-
-		public static string GetId()
-		{
-			return "I1-03";
-		}
 	}
 }

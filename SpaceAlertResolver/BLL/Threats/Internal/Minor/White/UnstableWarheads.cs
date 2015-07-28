@@ -44,15 +44,5 @@ namespace BLL.Threats.Internal.Minor.White
 			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Unstable Warheads";
-		}
-
-		public static string GetId()
-		{
-			return "I1-07";
-		}
 	}
 }

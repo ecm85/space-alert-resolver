@@ -17,15 +17,5 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			MoveBlue();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Troopers I2-03";
-		}
-
-		public static string GetId()
-		{
-			return "I2-03";
-		}
 	}
 }

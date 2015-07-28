@@ -30,22 +30,11 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			throw new LoseException(this);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Alien";
-		}
-
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (grownUp && !isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
-		}
-
-		public static string GetId()
-		{
-			return "SI1-03";
 		}
 	}
 }

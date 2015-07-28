@@ -26,20 +26,9 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			Attack(4, ThreatDamageType.Plasmatic);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Plasmatic Needleship";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.HeavyLaser && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "E3-101";
 		}
 	}
 }

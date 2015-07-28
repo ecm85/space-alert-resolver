@@ -22,12 +22,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 				PlayerActionType.BattleBots)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Contamination";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.ShiftPlayers(CurrentStations, currentTurn + 1);
@@ -54,11 +48,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (stationLocation != null)
 				CurrentStations.Remove(stationLocation.Value);
-		}
-
-		public static string GetId()
-		{
-			return "SI2-04";
 		}
 	}
 }

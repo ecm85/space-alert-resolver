@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Minor.White
 		{
 			AttackAllZones(2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Pulse Ball";
-		}
-
-		public static string GetId()
-		{
-			return "E1-01";
-		}
 	}
 }

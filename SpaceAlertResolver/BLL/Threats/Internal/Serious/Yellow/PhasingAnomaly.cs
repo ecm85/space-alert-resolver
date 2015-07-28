@@ -25,12 +25,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Anomaly";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.AddZoneDebuff(new [] {ZoneLocation.White}, ZoneDebuff.DisruptedOptics, this);
@@ -96,11 +90,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
 			base.OnThreatTerminated();
-		}
-
-		public static string GetId()
-		{
-			return "SI2-101";
 		}
 	}
 }

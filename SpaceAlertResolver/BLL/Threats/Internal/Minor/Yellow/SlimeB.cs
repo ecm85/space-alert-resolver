@@ -13,20 +13,11 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		protected SlimeB(StationLocation stationLocation)
+		private SlimeB(StationLocation stationLocation)
 			: base(stationLocation)
 		{
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Slime I2-02";
-		}
-
-		public static string GetId()
-		{
-			return "I2-02";
-		}
 
 		protected override void PerformXAction(int currentTurn)
 		{

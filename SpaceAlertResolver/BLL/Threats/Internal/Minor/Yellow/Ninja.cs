@@ -61,16 +61,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			SittingDuck.UnsubscribeFromMoveOut(droneLocations, PoisonPlayer);
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Ninja";
-		}
-
-		public static string GetId()
-		{
-			return "I2-102";
-		}
-
 		private class PoisonedPlayers : InternalThreat
 		{
 			private readonly HashSet<Player> poisonedPlayers;
@@ -118,11 +108,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			public override bool IsDamageable
 			{
 				get { return false; }
-			}
-
-			public static string GetId()
-			{
-				return "I2-102-S";
 			}
 		}
 	}

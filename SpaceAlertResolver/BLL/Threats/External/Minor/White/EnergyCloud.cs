@@ -27,12 +27,6 @@ namespace BLL.Threats.External.Minor.White
 		{
 			AttackOtherTwoZones(2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Energy Cloud";
-		}
-
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);
@@ -45,11 +39,6 @@ namespace BLL.Threats.External.Minor.White
 			}
 			else
 				base.TakeDamage(damages);
-		}
-
-		public static string GetId()
-		{
-			return "E1-04";
 		}
 	}
 }

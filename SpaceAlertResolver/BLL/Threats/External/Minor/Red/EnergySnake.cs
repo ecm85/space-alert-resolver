@@ -40,12 +40,6 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			Attack(1 + SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Energy Snake";
-		}
-
 		private void PerformEndOfDamageResolution()
 		{
 			if (TookDamageThisTurn)
@@ -78,11 +72,6 @@ namespace BLL.Threats.External.Minor.Red
 			base.OnThreatTerminated();
 			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
-		}
-
-		public static string GetId()
-		{
-			return "E3-109";
 		}
 	}
 }

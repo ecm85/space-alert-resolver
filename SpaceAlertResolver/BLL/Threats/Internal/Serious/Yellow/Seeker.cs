@@ -40,12 +40,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			if (IsDefeated)
 				performingPlayer.IsKnockedOut = true;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Seeker";
-		}
-
 		internal void MoveToMostPlayers()
 		{
 			var adjacentStations =
@@ -65,11 +59,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 			if (adjacentStationGroupWithMostPlayers.Count() == 1)
 				adjacentStationGroupWithMostPlayers.Single().Station.MoveCommand();
-		}
-
-		public static string GetId()
-		{
-			return "SI2-02";
 		}
 	}
 }

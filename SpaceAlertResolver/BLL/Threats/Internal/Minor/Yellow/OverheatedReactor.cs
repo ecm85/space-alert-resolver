@@ -12,12 +12,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.B)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Overheated Reactor";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			Damage(SittingDuck.GetEnergyInReactor(CurrentZone));
@@ -37,11 +31,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			base.OnHealthReducedToZero();
 			SittingDuck.KnockOutPlayers(new [] {StationLocation.LowerBlue, StationLocation.LowerRed});
-		}
-
-		public static string GetId()
-		{
-			return "I2-06";
 		}
 	}
 }

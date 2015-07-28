@@ -28,23 +28,12 @@ namespace BLL.Threats.External.Serious.White
 		{
 			Attack(4);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Cryoshield Frigate";
-		}
-
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())
 				cryoshieldUp = false;
 			else
 				base.TakeDamage(damages);
-		}
-
-		public static string GetId()
-		{
-			return "SE1-05";
 		}
 	}
 }

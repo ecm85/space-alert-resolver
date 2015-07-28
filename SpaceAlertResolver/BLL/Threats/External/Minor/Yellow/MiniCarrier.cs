@@ -12,11 +12,6 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Mini-Carrier";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
@@ -30,11 +25,6 @@ namespace BLL.Threats.External.Minor.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
-		}
-
-		public static string GetId()
-		{
-			return "E2-101";
 		}
 	}
 }

@@ -72,15 +72,5 @@ namespace BLL.Threats.External.Serious.Red
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Man-Of-War";
-		}
-
-		public static string GetId()
-		{
-			return "SE3-101";
-		}
 	}
 }

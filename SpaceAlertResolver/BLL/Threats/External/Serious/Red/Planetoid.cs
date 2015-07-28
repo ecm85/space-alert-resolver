@@ -40,12 +40,6 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			breakpointsCrossed++;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Planetoid";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
@@ -61,11 +55,6 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			base.OnThreatTerminated();
 			ThreatController.EndOfTurn -= IncreaseSpeed;
-		}
-
-		public static string GetId()
-		{
-			return "SE3-107";
 		}
 	}
 }

@@ -28,15 +28,5 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			Attack(6);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Kamikaze";
-		}
-
-		public static string GetId()
-		{
-			return "E2-01";
-		}
 	}
 }

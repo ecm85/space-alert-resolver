@@ -26,20 +26,9 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackAllZones(3);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Pulse Satellite";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "SE1-04";
 		}
 	}
 }

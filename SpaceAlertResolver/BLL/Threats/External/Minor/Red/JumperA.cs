@@ -8,19 +8,9 @@ namespace BLL.Threats.External.Minor.Red
 {
 	public class JumperA : Jumper
 	{
-		public static string GetDisplayName()
-		{
-			return "Jumper E3-105";
-		}
-
 		protected override ZoneLocation JumpDestination
 		{
 			get { return CurrentZone.RedwardZoneLocationWithWrapping(); }
-		}
-
-		public static string GetId()
-		{
-			return "E3-105";
 		}
 	}
 }

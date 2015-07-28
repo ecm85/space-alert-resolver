@@ -35,15 +35,5 @@ namespace BLL.Threats.External.Minor.Red
 			var otherDamageSum = otherDamages.Sum(damage => damage.Amount);
 			TakeDamage(laserDamageSum + otherDamageSum, null);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Polarized Fighter";
-		}
-
-		public static string GetId()
-		{
-			return "E3-108";
-		}
 	}
 }

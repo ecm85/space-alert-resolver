@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Serious.White
 		{
 			Attack(4);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Frigate";
-		}
-
-		public static string GetId()
-		{
-			return "SE1-01";
-		}
 	}
 }

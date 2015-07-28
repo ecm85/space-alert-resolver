@@ -53,15 +53,5 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return damage.AffectedDistances.Contains(DistanceToShip);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Overlord";
-		}
-
-		public static string GetId()
-		{
-			return "SE3-105";
-		}
 	}
 }

@@ -38,15 +38,5 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Jellyfish";
-		}
-
-		public static string GetId()
-		{
-			return "E2-05";
-		}
 	}
 }

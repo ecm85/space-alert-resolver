@@ -20,15 +20,5 @@ namespace BLL.Threats.Internal.Serious.White
 			else
 				Damage(2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Commandos SI1-01";
-		}
-
-		public static string GetId()
-		{
-			return "SI1-01";
-		}
 	}
 }

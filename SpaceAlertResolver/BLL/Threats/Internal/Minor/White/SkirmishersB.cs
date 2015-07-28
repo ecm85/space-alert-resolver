@@ -17,15 +17,5 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			MoveRed();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Skirmishers I1-02";
-		}
-
-		public static string GetId()
-		{
-			return "I1-02";
-		}
 	}
 }

@@ -37,12 +37,6 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()).Except(new[] { StationLocation.UpperWhite }));
 		}
-
-		public static string GetDisplayName()
-		{
-			return "BattleBot Uprising";
-		}
-
 		private void PerformEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
@@ -61,11 +55,6 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			base.OnThreatTerminated();
 			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
-		}
-
-		public static string GetId()
-		{
-			return "SI1-06";
 		}
 	}
 }

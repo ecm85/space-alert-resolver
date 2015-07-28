@@ -13,12 +13,6 @@ namespace BLL.Threats.External.Serious.Yellow
 			: base(0, 11, 2)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Major Asteroid";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			breakpointsCrossed++;
@@ -43,11 +37,6 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			base.OnHealthReducedToZero();
 			Attack(3 * breakpointsCrossed);
-		}
-
-		public static string GetId()
-		{
-			return "SE2-06";
 		}
 	}
 }

@@ -63,16 +63,6 @@ namespace BLL.Threats.Internal.Serious.Red
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Cyber Gremlin";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-106";
-		}
-
 		private class Sabotage : InternalThreat
 		{
 			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType)
@@ -110,11 +100,6 @@ namespace BLL.Threats.Internal.Serious.Red
 			public override void PlaceOnBoard(Track track, int? trackPosition)
 			{
 				base.PlaceOnBoard(null, null);
-			}
-
-			public static string GetId()
-			{
-				return "SI3-106-S";
 			}
 		}
 	}

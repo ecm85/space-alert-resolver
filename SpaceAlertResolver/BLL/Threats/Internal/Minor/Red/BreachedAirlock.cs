@@ -40,15 +40,5 @@ namespace BLL.Threats.Internal.Minor.Red
 			var bonusDamage = performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled ? 1 : 0;
 			base.TakeDamage(damage + bonusDamage, performingPlayer, isHeroic, stationLocation);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Breached Airlock";
-		}
-
-		public static string GetId()
-		{
-			return "I3-104";
-		}
 	}
 }

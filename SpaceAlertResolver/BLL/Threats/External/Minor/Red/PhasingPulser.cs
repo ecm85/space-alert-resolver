@@ -71,15 +71,5 @@ namespace BLL.Threats.External.Minor.Red
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Pulser";
-		}
-
-		public static string GetId()
-		{
-			return "E3-102";
-		}
 	}
 }

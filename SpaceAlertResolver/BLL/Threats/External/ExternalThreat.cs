@@ -36,7 +36,7 @@ namespace BLL.Threats.External
 			TakeDamage(damageSum, maxDamageTaken);
 		}
 
-		protected virtual void TakeDamage(int damageSum, int? maxDamageTaken)
+		protected void TakeDamage(int damageSum, int? maxDamageTaken)
 		{
 			var bonusShields = ThreatController.CurrentExternalThreatBuffs().Count(buff => buff == ExternalThreatEffect.BonusShield);
 			var damageDealt = damageSum - (Shields + bonusShields);

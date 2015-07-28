@@ -232,6 +232,7 @@
     <Compile Include="Threats\External\Minor\White\ArmoredGrappler.cs" />
     <Compile Include="Threats\External\Minor\White\Fighter.cs" />
     <Compile Include="Threats\ThreatDifficulty.cs" />
+    <Compile Include="Threats\ThreatFactory.cs" />
     <Compile Include="Threats\ThreatPoints.cs" />
     <Compile Include="Threats\ThreatType.cs" />
     <Compile Include="Tracks\Track.cs" />

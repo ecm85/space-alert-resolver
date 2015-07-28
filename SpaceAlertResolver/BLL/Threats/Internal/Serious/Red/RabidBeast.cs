@@ -53,16 +53,6 @@ namespace BLL.Threats.Internal.Serious.Red
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Rabid Beast";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-101";
-		}
-
 		private class InfectedPlayers : InternalThreat
 		{
 			private readonly HashSet<Player> infectedPlayers;
@@ -113,11 +103,6 @@ namespace BLL.Threats.Internal.Serious.Red
 			public override bool IsDamageable
 			{
 				get { return false; }
-			}
-
-			public static string GetId()
-			{
-				return "SI3-101-S";
 			}
 		}
 	}

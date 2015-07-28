@@ -56,15 +56,5 @@ namespace BLL.Threats.Internal.Minor.Red
 			else
 				zones.Single(zone => zone.NewZone.Value == ZoneLocation.White).MoveCommand();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Driller";
-		}
-
-		public static string GetId()
-		{
-			return "I3-107";
-		}
 	}
 }

@@ -24,20 +24,9 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(RemainingHealth);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Meteoroid";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "E1-10";
 		}
 	}
 }

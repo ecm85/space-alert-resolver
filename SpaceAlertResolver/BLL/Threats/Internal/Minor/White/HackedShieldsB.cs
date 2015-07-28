@@ -12,15 +12,5 @@ namespace BLL.Threats.Internal.Minor.White
 			: base(StationLocation.UpperBlue)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Hacked Shields I1-05";
-		}
-
-		public static string GetId()
-		{
-			return "I1-05";
-		}
 	}
 }

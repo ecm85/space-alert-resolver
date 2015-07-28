@@ -11,12 +11,6 @@ namespace BLL.Threats.External.Serious.Yellow
 			: base(4, 7, 2)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Behemoth";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
@@ -53,11 +47,6 @@ namespace BLL.Threats.External.Serious.Yellow
 				modifiedDamages.Add(strongerInterceptorDamages);
 			}
 			base.TakeDamage(modifiedDamages);
-		}
-
-		public static string GetId()
-		{
-			return "SE2-01";
 		}
 	}
 }

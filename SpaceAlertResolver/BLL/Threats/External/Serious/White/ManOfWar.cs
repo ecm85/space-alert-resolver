@@ -28,15 +28,5 @@ namespace BLL.Threats.External.Serious.White
 		{
 			Attack(3);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Man-Of-War";
-		}
-
-		public static string GetId()
-		{
-			return "SE1-02";
-		}
 	}
 }

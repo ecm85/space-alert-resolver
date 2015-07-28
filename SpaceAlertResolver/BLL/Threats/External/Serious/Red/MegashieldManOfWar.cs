@@ -12,11 +12,6 @@ namespace BLL.Threats.External.Serious.Red
 		{
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Megashield Man-Of-War";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			Attack(2);
@@ -38,11 +33,6 @@ namespace BLL.Threats.External.Serious.Red
 			base.TakeDamage(damages);
 			if (damages.Any() && Shields > 0)
 				Shields--;
-		}
-
-		public static string GetId()
-		{
-			return "SE3-102";
 		}
 	}
 }

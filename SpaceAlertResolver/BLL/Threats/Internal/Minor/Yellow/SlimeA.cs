@@ -13,20 +13,11 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		protected SlimeA(StationLocation stationLocation)
+		private SlimeA(StationLocation stationLocation)
 			: base(stationLocation)
 		{
 		}
 
-		public static string GetDisplayName()
-		{
-			return "Slime I2-01";
-		}
-
-		public static string GetId()
-		{
-			return "I2-01";
-		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
@@ -56,7 +47,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				get { return false; }
 			}
 
-			public override bool IsSurvived 
+			public override bool IsSurvived
 			{
 				get { return false; }
 			}

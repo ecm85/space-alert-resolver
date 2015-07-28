@@ -49,15 +49,5 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			return 0;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Sealed Capsule";
-		}
-
-		public static string GetId()
-		{
-			return "E3-107";
-		}
 	}
 }

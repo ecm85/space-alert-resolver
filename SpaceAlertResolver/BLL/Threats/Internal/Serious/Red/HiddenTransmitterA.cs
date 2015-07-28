@@ -18,15 +18,5 @@ namespace BLL.Threats.Internal.Serious.Red
 			SittingDuck.DrainReactor(CurrentZone);
 			Damage(4);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Hidden Transmitter SI3-103";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-103";
-		}
 	}
 }

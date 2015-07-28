@@ -28,20 +28,9 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			AttackSpecificZones(5, new[] {ZoneLocation.Red, ZoneLocation.Blue});
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Nebula Crab";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "SE2-04";
 		}
 	}
 }

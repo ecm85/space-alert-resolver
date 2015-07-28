@@ -28,20 +28,9 @@ namespace BLL.Threats.External.Serious.White
 		{
 			Attack(RemainingHealth * 2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Interstellar Octopus";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "SE1-06";
 		}
 	}
 }

@@ -72,15 +72,5 @@ namespace BLL.Threats.Internal.Serious.Red
 			base.OnThreatTerminated();
 			SittingDuck.UnsubscribeFromMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Cyber Gremlin";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-107";
-		}
 	}
 }

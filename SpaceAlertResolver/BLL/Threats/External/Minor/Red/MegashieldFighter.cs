@@ -33,15 +33,5 @@ namespace BLL.Threats.External.Minor.Red
 			if (damages.Any() && Shields > 0)
 				Shields--;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Megashield Fighter";
-		}
-
-		public static string GetId()
-		{
-			return "E3-104";
-		}
 	}
 }

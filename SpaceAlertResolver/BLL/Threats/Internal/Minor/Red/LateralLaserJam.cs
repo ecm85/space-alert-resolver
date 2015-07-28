@@ -48,15 +48,5 @@ namespace BLL.Threats.Internal.Minor.Red
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Lateral Laser Jam";
-		}
-
-		public static string GetId()
-		{
-			return "I3-101";
-		}
 	}
 }

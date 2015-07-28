@@ -39,15 +39,5 @@ namespace BLL.Threats.External.Serious.White
 			base.OnHealthReducedToZero();
 			Attack(2 * breakpointsCrossed);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Asteroid";
-		}
-
-		public static string GetId()
-		{
-			return "SE1-08";
-		}
 	}
 }

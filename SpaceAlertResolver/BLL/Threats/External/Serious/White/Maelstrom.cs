@@ -27,12 +27,6 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackOtherTwoZones(3);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Maelstrom";
-		}
-
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);
@@ -45,11 +39,6 @@ namespace BLL.Threats.External.Serious.White
 			}
 			else
 				base.TakeDamage(damages);
-		}
-
-		public static string GetId()
-		{
-			return "SE1-07";
 		}
 	}
 }

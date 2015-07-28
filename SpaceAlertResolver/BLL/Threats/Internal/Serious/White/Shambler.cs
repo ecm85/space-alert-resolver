@@ -31,20 +31,9 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			Damage(4);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Shambler";
-		}
-
 		private bool IsAnyPlayerPresent()
 		{
 			return SittingDuck.GetPlayerCount(CurrentStation) != 0;
-		}
-
-		public static string GetId()
-		{
-			return "SI1-101";
 		}
 	}
 }

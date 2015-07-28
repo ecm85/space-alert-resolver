@@ -63,15 +63,5 @@ namespace BLL.Threats.Internal.Serious.Red
 					playerList.Players,
 					playerList.StationLocation.OppositeStationLocation().GetValueOrDefault());
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Space Time Vortex";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-104";
-		}
 	}
 }

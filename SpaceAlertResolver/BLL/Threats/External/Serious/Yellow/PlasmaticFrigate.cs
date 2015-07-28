@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			Attack(4, ThreatDamageType.Plasmatic);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Plasmatic Frigate";
-		}
-
-		public static string GetId()
-		{
-			return "SE2-101";
-		}
 	}
 }

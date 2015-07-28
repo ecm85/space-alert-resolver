@@ -13,12 +13,6 @@ namespace BLL.Threats.External.Minor.Yellow
 			: base(0, 7, 4)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Minor Asteroid";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			breakpointsCrossed++;
@@ -43,11 +37,6 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 			base.OnHealthReducedToZero();
 			Attack(1 * breakpointsCrossed);
-		}
-
-		public static string GetId()
-		{
-			return "E2-07";
 		}
 	}
 }

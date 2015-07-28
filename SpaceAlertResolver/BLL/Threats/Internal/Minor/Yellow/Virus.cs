@@ -12,12 +12,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			: base(3, 3, StationLocation.UpperWhite, PlayerActionType.C)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Virus";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DrainAllReactors(1);
@@ -31,11 +25,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			DamageAllZones(1);
-		}
-
-		public static string GetId()
-		{
-			return "I2-05";
 		}
 	}
 }

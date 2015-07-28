@@ -35,15 +35,5 @@ namespace BLL.Threats.External.Serious.Red
 			var otherDamageSum = otherDamages.Sum(damage => damage.Amount);
 			TakeDamage(laserDamageSum + otherDamageSum, null);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Polarized Frigate";
-		}
-
-		public static string GetId()
-		{
-			return "SE3-109";
-		}
 	}
 }

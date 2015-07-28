@@ -71,15 +71,5 @@ namespace BLL.Threats.External.Minor.Yellow
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Fighter";
-		}
-
-		public static string GetId()
-		{
-			return "E2-102";
-		}
 	}
 }

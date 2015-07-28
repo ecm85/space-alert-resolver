@@ -19,12 +19,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			mineLocations = new List<StationLocation>();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Phasing Mine Layer";
-		}
-
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
@@ -102,11 +96,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			BeforeMove += PerformBeforeMove;
 			AfterMove += PerformAfterMove;
 			base.OnThreatTerminated();
-		}
-
-		public static string GetId()
-		{
-			return "SI2-102";
 		}
 	}
 }

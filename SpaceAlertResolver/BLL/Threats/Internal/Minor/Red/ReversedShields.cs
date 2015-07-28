@@ -64,15 +64,5 @@ namespace BLL.Threats.Internal.Minor.Red
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			attackingPlayersThisTurn.Add(performingPlayer);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Reversed Shields";
-		}
-
-		public static string GetId()
-		{
-			return "I3-103";
-		}
 	}
 }

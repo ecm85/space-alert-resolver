@@ -38,15 +38,5 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Mother Swarm";
-		}
-
-		public static string GetId()
-		{
-			return "SE2-103";
-		}
 	}
 }

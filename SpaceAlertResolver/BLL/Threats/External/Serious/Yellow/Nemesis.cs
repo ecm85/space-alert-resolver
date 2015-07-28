@@ -46,12 +46,6 @@ namespace BLL.Threats.External.Serious.Yellow
 			if (TookDamageThisTurn)
 				AttackAllZones(1);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Nemesis";
-		}
-
 		private void PerformEndOfTurn()
 		{
 			healthAtStartOfTurn = RemainingHealth;
@@ -62,11 +56,6 @@ namespace BLL.Threats.External.Serious.Yellow
 			base.OnThreatTerminated();
 			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
-		}
-
-		public static string GetId()
-		{
-			return "SE2-05";
 		}
 	}
 }

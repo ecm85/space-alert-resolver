@@ -33,15 +33,5 @@ namespace BLL.Threats.External.Minor.Yellow
 			ThreatController.RemoveExternalThreatEffectForSource(this);
 			base.OnHealthReducedToZero();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Marauder";
-		}
-
-		public static string GetId()
-		{
-			return "E2-06";
-		}
 	}
 }

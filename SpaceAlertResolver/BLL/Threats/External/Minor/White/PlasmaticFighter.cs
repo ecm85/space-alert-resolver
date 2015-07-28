@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(2, ThreatDamageType.Plasmatic);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Plasmatic Fighter";
-		}
-
-		public static string GetId()
-		{
-			return "E1-101";
-		}
 	}
 }

@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(2, ThreatDamageType.DoubleDamageThroughShields);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Destroyer";
-		}
-
-		public static string GetId()
-		{
-			return "E1-02";
-		}
 	}
 }

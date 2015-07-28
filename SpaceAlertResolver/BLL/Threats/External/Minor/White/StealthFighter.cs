@@ -28,20 +28,9 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Stealth Fighter";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return !stealthed && base.CanBeTargetedBy(damage);
-		}
-
-		public static string GetId()
-		{
-			return "E1-03";
 		}
 	}
 }

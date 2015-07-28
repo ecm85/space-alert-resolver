@@ -26,12 +26,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Power Pack Overload";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.DisableInactiveBattlebots(new[] {StationLocation.LowerRed});
@@ -67,11 +61,6 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
 			base.OnThreatTerminated();
-		}
-
-		public static string GetId()
-		{
-			return "I2-101";
 		}
 	}
 }

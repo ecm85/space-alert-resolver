@@ -54,15 +54,5 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Transmitter Satellite";
-		}
-
-		public static string GetId()
-		{
-			return "SE3-104";
-		}
 	}
 }

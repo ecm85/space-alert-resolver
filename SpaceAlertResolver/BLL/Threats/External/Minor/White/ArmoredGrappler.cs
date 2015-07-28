@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(4);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Armored Grappler";
-		}
-
-		public static string GetId()
-		{
-			return "E1-08";
-		}
 	}
 }

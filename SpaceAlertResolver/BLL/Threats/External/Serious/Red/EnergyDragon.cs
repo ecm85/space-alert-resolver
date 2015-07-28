@@ -42,12 +42,6 @@ namespace BLL.Threats.External.Serious.Red
 			foreach(var zone in EnumFactory.All<ZoneLocation>())
 				Attack(1 + SittingDuck.GetEnergyInReactor(zone));
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Energy Dragon";
-		}
-
 		private void PerformEndOfDamageResolution()
 		{
 			if (TookDamageThisTurn)
@@ -80,11 +74,6 @@ namespace BLL.Threats.External.Serious.Red
 			base.OnThreatTerminated();
 			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
 			ThreatController.EndOfTurn -= PerformEndOfTurn;
-		}
-
-		public static string GetId()
-		{
-			return "SE3-108";
 		}
 	}
 }

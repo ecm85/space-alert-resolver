@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Spacecraft Carrier";
-		}
-
-		public static string GetId()
-		{
-			return "SE1-101";
-		}
 	}
 }

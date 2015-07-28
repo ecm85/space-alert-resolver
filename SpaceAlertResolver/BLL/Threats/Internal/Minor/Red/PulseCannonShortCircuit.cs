@@ -24,12 +24,6 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			AttackAllZones(1);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Pulse Cannon Short Circuit";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			var energyDrained = SittingDuck.DrainReactor(CurrentZone, 1);
@@ -58,11 +52,6 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			base.OnThreatTerminated();
 			SittingDuck.CentralLaserCannonFired -= HandleCentralLaerCannonFired;
-		}
-
-		public static string GetId()
-		{
-			return "I3-102";
 		}
 	}
 }

@@ -26,15 +26,5 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(3);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Gunship";
-		}
-
-		public static string GetId()
-		{
-			return "E1-05";
-		}
 	}
 }

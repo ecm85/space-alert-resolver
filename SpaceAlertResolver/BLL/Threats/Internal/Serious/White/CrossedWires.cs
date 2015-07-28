@@ -29,21 +29,10 @@ namespace BLL.Threats.Internal.Serious.White
 			foreach (var zoneLocation in EnumFactory.All<ZoneLocation>())
 				EnergyLeaksOut(zoneLocation);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Crossed Wires";
-		}
-
 		private void EnergyLeaksOut(ZoneLocation zoneLocation)
 		{
 			var energyDrained = SittingDuck.DrainShield(zoneLocation);
 			Damage(energyDrained);
-		}
-
-		public static string GetId()
-		{
-			return "SI1-05";
 		}
 	}
 }

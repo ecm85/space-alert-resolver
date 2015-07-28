@@ -28,23 +28,12 @@ namespace BLL.Threats.External.Minor.White
 		{
 			Attack(2);
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Cryoshield Fighter";
-		}
-
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())
 				cryoshieldUp = false;
 			else
 				base.TakeDamage(damages);
-		}
-
-		public static string GetId()
-		{
-			return "E1-06";
 		}
 	}
 }

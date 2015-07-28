@@ -33,15 +33,5 @@ namespace BLL.Threats.Internal.Serious.White
 			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 			base.OnThreatTerminated();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Fissure";
-		}
-
-		public static string GetId()
-		{
-			return "SI1-04";
-		}
 	}
 }

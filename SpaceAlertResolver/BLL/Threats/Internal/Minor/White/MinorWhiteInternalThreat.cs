@@ -12,10 +12,5 @@ namespace BLL.Threats.Internal.Minor.White
 			base(ThreatDifficulty.White, health, speed, currentStation, actionType, accessibility)
 		{
 		}
-
-		protected MinorWhiteInternalThreat(int health, int speed, List<StationLocation> currentStations, PlayerActionType actionType, int? accessibility = null) :
-			base(ThreatDifficulty.White, health, speed, currentStations, actionType, accessibility)
-		{
-		}
 	}
 }

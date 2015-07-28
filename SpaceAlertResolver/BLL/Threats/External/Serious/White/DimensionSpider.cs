@@ -39,12 +39,6 @@ namespace BLL.Threats.External.Serious.White
 			PerformZAction(-1);
 			OnReachingEndOfTrack();
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Dimension Spider";
-		}
-
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
@@ -54,11 +48,6 @@ namespace BLL.Threats.External.Serious.White
 		{
 			base.OnThreatTerminated();
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
-		}
-
-		public static string GetId()
-		{
-			return "SE1-102";
 		}
 	}
 }

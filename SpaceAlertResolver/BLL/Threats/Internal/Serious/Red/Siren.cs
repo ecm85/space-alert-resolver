@@ -41,15 +41,5 @@ namespace BLL.Threats.Internal.Serious.Red
 				performingPlayer.BattleBots.IsDisabled = true;
 			CurrentStation = StationLocation.LowerBlue;
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Siren";
-		}
-
-		public static string GetId()
-		{
-			return "SI3-105";
-		}
 	}
 }

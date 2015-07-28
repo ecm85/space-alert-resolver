@@ -11,12 +11,6 @@ namespace BLL.Threats.External.Serious.Yellow
 			: base(3, 10, 1)
 		{
 		}
-
-		public static string GetDisplayName()
-		{
-			return "Juggernaut";
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
 			Speed += 2;
@@ -49,11 +43,6 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return base.CanBeTargetedBy(damage) || damage.PlayerDamageType == PlayerDamageType.Rocket;
-		}
-
-		public static string GetId()
-		{
-			return "SE2-02";
 		}
 	}
 }
