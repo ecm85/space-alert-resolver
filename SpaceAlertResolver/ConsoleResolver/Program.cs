@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -15,9 +14,9 @@ namespace ConsoleResolver
 			if (!args.Any())
 				return HandleInvalidArgument();
 			var validArguments = args.Where(arg => !string.IsNullOrWhiteSpace(arg)).ToList();
-			var chunkIdentifiers = new[] {"-tracks", "-players", "-threats"};
+			var chunkIdentifiers = new[] {"-external-tracks", "-internal-track", "-players", "-external-threats", "-internal-threats"};
 			var chunks = ChunkArguments(validArguments, chunkIdentifiers).ToList();
-			if (chunks.Count() != 3 || chunkIdentifiers.Except(chunks.Select(chunk => chunk[0])).Any())
+			if (chunks.Count() != 5 || chunkIdentifiers.Except(chunks.Select(chunk => chunk[0])).Any())
 				return HandleInvalidArgument("Invalid arguments.");
 
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>();
@@ -28,23 +27,26 @@ namespace ConsoleResolver
 				var chunkType = chunk[0];
 				switch (chunkType)
 				{
-					case "-tracks":
-						if (chunk.Count != 5)
-							return HandleInvalidArgument("Invalid tracks.");
+					case "-external-tracks":
+						if (chunk.Count != 4)
+							return HandleInvalidArgument("Invalid external tracks.");
 						var trackStrings = chunk.Skip(1).OrderBy(token => token).ToList();
-						if (!Regex.IsMatch(trackStrings[0], @"^blue:\d$") ||
-							!Regex.IsMatch(trackStrings[1], @"^internal:\d$") ||
-							!Regex.IsMatch(trackStrings[2], @"^red:\d$") ||
-							!Regex.IsMatch(trackStrings[3], @"^white:\d$"))
-							return HandleInvalidArgument("Invalid tracks.");
-						externalTracksByZone[ZoneLocation.Blue] = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), trackStrings[0].Substring(5));
-						internalTrackConfiguration = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), trackStrings[1].Substring(9));
-						externalTracksByZone[ZoneLocation.Red] = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), trackStrings[2].Substring(4));
-						externalTracksByZone[ZoneLocation.White] = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), trackStrings[3].Substring(6));
+						var zoneLocations = trackStrings.Select(ParseZoneLocation).ToList();
+						if (zoneLocations.Any(zoneLocation => zoneLocation == null))
+							return HandleInvalidArgument("Invalid external tracks.");
+						foreach (var zoneLocation in zoneLocations)
+							externalTracksByZone[zoneLocation.Item1] = zoneLocation.Item2;
+						break;
+					case "-internal-track":
+						if (chunk.Count != 2)
+							return HandleInvalidArgument("Invalid internal tracks.");
+						internalTrackConfiguration = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), chunk[1]);
 						break;
 					case "-players":
 						break;
-					case "-threats":
+					case "-external-threats":
+						break;
+					case "-internal-threats":
 						break;
 				}
 			}
@@ -80,11 +82,28 @@ namespace ConsoleResolver
 			if (!string.IsNullOrWhiteSpace(error))
 				Console.WriteLine(error);
 			Console.WriteLine("Usage: ConsoleResolver");
-			Console.WriteLine("-tracks blue:<int> white:<int> red:<int> internal:<int>");
+			Console.WriteLine("-external-tracks blue:<int> white:<int> red:<int>");
+			Console.WriteLine("-internal-track <int>");
 			Console.WriteLine(
-				"-threats [id:<string> time:<int> (optional)location:<red|white|blue> [extra-threat-id:<string>]? ]+");
+				"-external-threats [id:<string> time:<int> location:<red|white|blue> [extra-threat-id:<string>]? ]+");
+			Console.WriteLine(
+				"-internal-threats [id:<string> time:<int> [extra-threat-id:<string>]? ]+");
 			Console.WriteLine("-players <int> [player-index:<int> actions:<string>]+)");
 			return -1;
+		}
+
+		private static Tuple<ZoneLocation, TrackConfiguration> ParseZoneLocation(string token)
+		{
+			if (string.IsNullOrWhiteSpace(token))
+				return null;
+			var pieces = token.Split(new [] {":"}, StringSplitOptions.RemoveEmptyEntries);
+			if (pieces.Count() != 2)
+				return null;
+			ZoneLocation zoneLocation;
+			TrackConfiguration trackConfiguration;
+			if (!Enum.TryParse(pieces[0], true, out zoneLocation) || !(Enum.TryParse(pieces[1], true, out trackConfiguration)))
+				return null;
+			return Tuple.Create(zoneLocation, trackConfiguration);
 		}
 	}
 }
