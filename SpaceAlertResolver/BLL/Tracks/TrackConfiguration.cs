@@ -7,7 +7,7 @@ namespace BLL.Tracks
 {
 	public enum TrackConfiguration
 	{
-		Track1,
+		Track1 = 1,
 		Track2,
 		Track3,
 		Track4,
