@@ -31,16 +31,19 @@ namespace ConsoleResolver
 						if (chunk.Count != 4)
 							return HandleInvalidArgument("Invalid external tracks.");
 						var trackStrings = chunk.Skip(1).OrderBy(token => token).ToList();
-						var zoneLocations = trackStrings.Select(ParseZoneLocation).ToList();
-						if (zoneLocations.Any(zoneLocation => zoneLocation == null))
-							return HandleInvalidArgument("Invalid external tracks.");
-						foreach (var zoneLocation in zoneLocations)
+						foreach (var trackString in trackStrings)
+						{
+							var zoneLocation = ParseZoneLocation(trackString);
+							if(zoneLocation == null)
+								return HandleInvalidArgument("Invalid external track: " + trackString);
 							externalTracksByZone[zoneLocation.Item1] = zoneLocation.Item2;
+						}
 						break;
 					case "-internal-track":
 						if (chunk.Count != 2)
 							return HandleInvalidArgument("Invalid internal tracks.");
-						internalTrackConfiguration = (TrackConfiguration)Enum.Parse(typeof(TrackConfiguration), chunk[1]);
+						if (!(Enum.TryParse(chunk[1], true, out internalTrackConfiguration)))
+							return HandleInvalidArgument("Invalid internal track: " + chunk[1]);
 						break;
 					case "-players":
 						break;
@@ -88,7 +91,7 @@ namespace ConsoleResolver
 				"-external-threats [id:<string> time:<int> location:<red|white|blue> [extra-threat-id:<string>]? ]+");
 			Console.WriteLine(
 				"-internal-threats [id:<string> time:<int> [extra-threat-id:<string>]? ]+");
-			Console.WriteLine("-players <int> [player-index:<int> actions:<string>]+)");
+			Console.WriteLine("-players count:<int> [player-index:<int> actions:<string>]+)");
 			return -1;
 		}
 
