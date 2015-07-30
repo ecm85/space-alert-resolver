@@ -7,15 +7,21 @@ using BLL.Threats.External;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
-	public abstract class HiddenTransmitter : SeriousRedInternalThreat
+	public abstract class HiddenTransmitter : SeriousRedInternalThreat, IThreatWithBonusExternalThreat
 	{
-		private readonly ExternalThreat threatToCallIn;
+		private ExternalThreat threatToCallIn;
 		private bool calledInThreat;
-		protected HiddenTransmitter(StationLocation stationLocation, ExternalThreat threatToCallIn)
+		protected HiddenTransmitter(StationLocation stationLocation)
 			: base(3, 2, stationLocation, PlayerActionType.C, 1)
+		{
+		}
+
+		public void SetBonusThreat(ExternalThreat threatToCallIn)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}
+
+		public override bool NeedsBonusExternalThreat { get { return true; } }
 
 		protected override void PerformXAction(int currentTurn)
 		{

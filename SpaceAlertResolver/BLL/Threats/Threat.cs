@@ -40,6 +40,9 @@ namespace BLL.Threats
 			get { return !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
 		}
 
+		public virtual bool NeedsBonusExternalThreat { get { return false; } }
+		public virtual bool NeedsBonusInternalThreat { get { return false; } }
+
 		protected Track Track { get; set; }
 
 		public virtual int GetPointsForDefeating()

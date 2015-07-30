@@ -7,16 +7,22 @@ using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Serious.Red
 {
-	public class TransmitterSatellite : SeriousRedExternalThreat
+	public class TransmitterSatellite : SeriousRedExternalThreat, IThreatWithBonusInternalThreat
 	{
-		private readonly InternalThreat threatToCallIn;
+		private InternalThreat threatToCallIn;
 		private bool calledInThreat;
 
-		public TransmitterSatellite(InternalThreat threatToCallIn)
+		public TransmitterSatellite()
 			: base(2, 5, 3)
+		{
+		}
+
+		public void SetBonusThreat(InternalThreat threatToCallIn)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}
+
+		public override bool NeedsBonusInternalThreat { get { return true; } }
 
 		protected override void PerformXAction(int currentTurn)
 		{

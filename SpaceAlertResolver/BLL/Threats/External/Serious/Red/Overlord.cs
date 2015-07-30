@@ -5,16 +5,22 @@ using System.Text;
 
 namespace BLL.Threats.External.Serious.Red
 {
-	public class Overlord : SeriousRedExternalThreat
+	public class Overlord : SeriousRedExternalThreat, IThreatWithBonusExternalThreat
 	{
-		private readonly ExternalThreat threatToCallIn;
+		private ExternalThreat threatToCallIn;
 		private bool calledInThreat;
 
-		public Overlord(ExternalThreat threatToCallIn)
+		public Overlord()
 			: base(5, 14, 2)
+		{
+		}
+
+		public void SetBonusThreat(ExternalThreat threatToCallIn)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}
+
+		public override bool NeedsBonusExternalThreat { get { return true; } }
 
 		protected override void PerformXAction(int currentTurn)
 		{

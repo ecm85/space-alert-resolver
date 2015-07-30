@@ -6,15 +6,21 @@ using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Minor.Red
 {
-	public class SealedCapsule : MinorRedExternalThreat
+	public class SealedCapsule : MinorRedExternalThreat, IThreatWithBonusInternalThreat
 	{
-		private readonly InternalThreat threatToCallIn;
+		private InternalThreat threatToCallIn;
 
-		public SealedCapsule(InternalThreat threatToCallIn)
+		public SealedCapsule()
 			: base(4, 4, 4)
+		{
+		}
+
+		public void SetBonusThreat(InternalThreat threatToCallIn)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}
+
+		public override bool NeedsBonusInternalThreat { get { return true; } }
 
 		protected override void PerformXAction(int currentTurn)
 		{

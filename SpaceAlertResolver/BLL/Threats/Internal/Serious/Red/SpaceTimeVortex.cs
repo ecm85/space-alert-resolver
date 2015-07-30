@@ -6,15 +6,21 @@ using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
-	public class SpaceTimeVortex : SeriousRedInternalThreat
+	public class SpaceTimeVortex : SeriousRedInternalThreat, IThreatWithBonusInternalThreat
 	{
-		private readonly InternalThreat threatToCallIn;
+		private InternalThreat threatToCallIn;
 
-		public SpaceTimeVortex(InternalThreat threatToCallIn)
+		public SpaceTimeVortex()
 			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.C)
+		{
+		}
+
+		public void SetBonusThreat(InternalThreat threatToCallIn)
 		{
 			this.threatToCallIn = threatToCallIn;
 		}
+
+		public override bool NeedsBonusInternalThreat { get { return true; } }
 
 		protected override void PerformXAction(int currentTurn)
 		{
@@ -35,9 +41,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			threatToCallIn.Initialize(SittingDuck, ThreatController);
-			threatToCallIn.TimeAppears = currentTurn;
-			threatToCallIn.PlaceOnBoard(Track);
+			ThreatController.AddInternalThreat(threatToCallIn, currentTurn);
 			while(threatToCallIn.Position != null)
 				threatToCallIn.Move(currentTurn);
 		}

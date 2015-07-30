@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BLL.ShipComponents;
-using BLL.Threats.External;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
 	public class HiddenTransmitterB : HiddenTransmitter
 	{
-		public HiddenTransmitterB(ExternalThreat threatToCallIn) : base(StationLocation.UpperBlue, threatToCallIn)
+		public HiddenTransmitterB() : base(StationLocation.UpperBlue)
 		{
 		}
 
