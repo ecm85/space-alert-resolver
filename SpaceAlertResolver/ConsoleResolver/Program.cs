@@ -12,72 +12,13 @@ namespace ConsoleResolver
 {
 	public static class Program
 	{
-		private abstract class ThreatInfo<T>
+		private class ThreatInfo<T> where T: Threat
 		{
 			public T Threat { get; set; }
-			public BonusInternalThreatInfo BonusInternalThreatInfo { get; set; }
-			public BonusExternalThreatInfo BonusExternalThreatInfo { get; set; }
-			public abstract bool IsValid();
-		}
+			public ThreatInfo<InternalThreat> BonusInternalThreatInfo { get; set; }
+			public ThreatInfo<ExternalThreat> BonusExternalThreatInfo { get; set; }
 
-		private class ExternalThreatInfo : ThreatInfo<ExternalThreat>
-		{
-			public int? TimeAppears { get; set; }
-			public ZoneLocation? ZoneLocation { get; set; }
-
-			public override bool IsValid()
-			{
-				if (Threat == null || TimeAppears == null || ZoneLocation == null)
-					return false;
-				if (Threat.NeedsBonusInternalThreat)
-					if(BonusInternalThreatInfo == null || !BonusInternalThreatInfo.IsValid())
-						return false;
-				if (Threat.NeedsBonusExternalThreat)
-					if(BonusExternalThreatInfo == null || !BonusExternalThreatInfo.IsValid())
-						return false;
-				return true;
-			}
-		}
-
-		private class InternalThreatInfo : ThreatInfo<InternalThreat>
-		{
-			public int? TimeAppears { get; set; }
-
-			public override bool IsValid()
-			{
-				if (Threat == null || TimeAppears == null)
-					return false;
-				if (Threat.NeedsBonusInternalThreat)
-					if(BonusInternalThreatInfo == null || !BonusInternalThreatInfo.IsValid())
-						return false;
-				if (Threat.NeedsBonusExternalThreat)
-					if(BonusExternalThreatInfo == null || !BonusExternalThreatInfo.IsValid())
-						return false;
-				return true;
-			}
-		}
-
-		private class BonusExternalThreatInfo : ThreatInfo<ExternalThreat>
-		{
-			public ZoneLocation? ZoneLocation { get; set; }
-
-			public override bool IsValid()
-			{
-				if (Threat == null || ZoneLocation == null)
-					return false;
-				if (Threat.NeedsBonusInternalThreat)
-					if(BonusInternalThreatInfo == null || !BonusInternalThreatInfo.IsValid())
-						return false;
-				if (Threat.NeedsBonusExternalThreat)
-					if(BonusExternalThreatInfo == null || !BonusExternalThreatInfo.IsValid())
-						return false;
-				return true;
-			}
-		}
-
-		private class BonusInternalThreatInfo : ThreatInfo<InternalThreat>
-		{
-			public override bool IsValid()
+			public virtual bool IsValid()
 			{
 				if (Threat == null)
 					return false;
@@ -88,6 +29,32 @@ namespace ConsoleResolver
 					if(BonusExternalThreatInfo == null || !BonusExternalThreatInfo.IsValid())
 						return false;
 				return true;
+			}
+		}
+
+		private class ExternalThreatInfo : ThreatInfo<ExternalThreat>
+		{
+			public int? TimeAppears { get; set; }
+			public ZoneLocation? ZoneLocation { get; set; }
+
+			public override bool IsValid()
+			{
+
+				if (TimeAppears == null || ZoneLocation == null)
+					return false;
+				return base.IsValid();
+			}
+		}
+
+		private class InternalThreatInfo : ThreatInfo<InternalThreat>
+		{
+			public int? TimeAppears { get; set; }
+
+			public override bool IsValid()
+			{
+				if (TimeAppears == null)
+					return false;
+				return base.IsValid();
 			}
 		}
 
@@ -150,7 +117,7 @@ namespace ConsoleResolver
 		{
 			var externalThreats = new List<ExternalThreat>();
 			var threatTokens = new Queue<string>(chunk.Skip(1));
-			var nextThreatInfo = new ExternalThreatInfo();
+			ExternalThreatInfo nextThreatInfo = null;
 			while (threatTokens.Any())
 			{
 				var nextToken = ParseToken(threatTokens.Dequeue());
@@ -159,21 +126,21 @@ namespace ConsoleResolver
 				switch (nextToken.Item1)
 				{
 					case "id":
-						if (nextThreatInfo.Threat != null)
+						if (nextThreatInfo != null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
-						nextThreatInfo.Threat = ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2);
+						nextThreatInfo = new ExternalThreatInfo {Threat = ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2)};
 						if (nextThreatInfo.Threat == null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						break;
 					case "time":
-						if (nextThreatInfo.TimeAppears.HasValue)
+						if (nextThreatInfo == null || nextThreatInfo.TimeAppears.HasValue)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						nextThreatInfo.TimeAppears = TryParseInt(nextToken.Item2);
 						if (!nextThreatInfo.TimeAppears.HasValue)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						break;
 					case "location":
-						if (nextThreatInfo.ZoneLocation.HasValue)
+						if (nextThreatInfo == null || nextThreatInfo.ZoneLocation.HasValue)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						nextThreatInfo.ZoneLocation = TryParseEnum<ZoneLocation>(nextToken.Item2);
 						if (!nextThreatInfo.ZoneLocation.HasValue)
@@ -181,21 +148,15 @@ namespace ConsoleResolver
 						break;
 					case "extra-internal-threat-id":
 						var bonusInternalThreat = ThreatFactory.CreateThreat<InternalThreat>(nextToken.Item2);
-						if (bonusInternalThreat == null)
+						if (nextThreatInfo == null || bonusInternalThreat == null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						AddBonusThreatInfo(nextThreatInfo, bonusInternalThreat);
 						break;
 					case "extra-external-threat-id":
-						var bonusExternalThreat = ThreatFactory.CreateThreat<InternalThreat>(nextToken.Item2);
-						if (bonusExternalThreat == null)
+						var bonusExternalThreat = ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2);
+						if (nextThreatInfo == null || bonusExternalThreat == null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						AddBonusThreatInfo(nextThreatInfo, bonusExternalThreat);
-						break;
-					case "extra-external-threat-location":
-						var bonusExternalThreatLocation = TryParseEnum<ZoneLocation>(nextToken.Item2);
-						if (bonusExternalThreatLocation == null)
-							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
-						SetBonusExternalThreatLocation(nextThreatInfo, bonusExternalThreatLocation.Value);
 						break;
 					default:
 						throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
@@ -205,14 +166,13 @@ namespace ConsoleResolver
 					var threat = nextThreatInfo.Threat;
 					threat.CurrentZone = nextThreatInfo.ZoneLocation.GetValueOrDefault();
 					threat.TimeAppears = nextThreatInfo.TimeAppears.GetValueOrDefault();
-					if (threat.NeedsBonusInternalThreat)
-						InitializeBonusThreat(threat, nextThreatInfo.BonusInternalThreatInfo);
-					if (threat.NeedsBonusExternalThreat)
-						InitializeBonusThreat(threat, nextThreatInfo.BonusExternalThreatInfo);
+					InitializeBonusThreats(nextThreatInfo);
 					externalThreats.Add(threat);
-					nextThreatInfo = new ExternalThreatInfo();
+					nextThreatInfo = null;
 				}
 			}
+			if (nextThreatInfo != null)
+				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 			return externalThreats;
 		}
 
@@ -242,25 +202,40 @@ namespace ConsoleResolver
 			return externalTracksByZone;
 		}
 
-		private static void InitializeBonusThreat(Threat threatToAddTo, BonusInternalThreatInfo bonusInternalThreatInfo)
+		private static void InitializeBonusThreats<T>(ThreatInfo<T> threatInfo) where T: Threat
 		{
-			//TODO: Initialize bonus threat. Check if it needs a threat, and recurse if so.
+			if(threatInfo == null)
+				throw new InvalidOperationException("Missing extra threat.");
+			if (threatInfo.Threat.NeedsBonusInternalThreat)
+			{
+				InitializeBonusThreats(threatInfo.BonusInternalThreatInfo);
+				((IThreatWithBonusInternalThreat)threatInfo.Threat).SetBonusThreat(threatInfo.BonusInternalThreatInfo.Threat);
+			}
+			if (threatInfo.Threat.NeedsBonusExternalThreat)
+			{
+				InitializeBonusThreats(threatInfo.BonusExternalThreatInfo);
+				((IThreatWithBonusExternalThreat)threatInfo.Threat).SetBonusThreat(threatInfo.BonusExternalThreatInfo.Threat);
+			}
 		}
 
-		private static void InitializeBonusThreat(Threat threatToAddTo, BonusExternalThreatInfo bonusExternalThreatInfo)
+		private static void AddBonusThreatInfo<T>(ThreatInfo<T> threatInfo, ExternalThreat newThreat) where T: Threat
 		{
-			//TODO: Initialize bonus threat. Check if it needs a threat, and recurse if so.
+			if(threatInfo.BonusExternalThreatInfo != null)
+				AddBonusThreatInfo(threatInfo.BonusExternalThreatInfo, newThreat);
+			else if (threatInfo.BonusInternalThreatInfo != null)
+				AddBonusThreatInfo(threatInfo.BonusInternalThreatInfo, newThreat);
+			else
+				threatInfo.BonusExternalThreatInfo = new ThreatInfo<ExternalThreat> {Threat = newThreat};
 		}
 
-		private static void AddBonusThreatInfo<T1, T2>(ThreatInfo<T1> threatInfo, T2 newThreat ) where T1: Threat where T2 : Threat
+		private static void AddBonusThreatInfo<T>(ThreatInfo<T> threatInfo, InternalThreat newThreat) where T: Threat
 		{
-			//TODO: Create bonus threat info. If there's a spot on current threat info, add it; otherwise recurse.
-		}
-
-		private static void SetBonusExternalThreatLocation<T>(ThreatInfo<T> threatInfo, ZoneLocation location)  where T: Threat
-		{
-			//TODO: if threat has a bonus info set, recurse
-			//TODO: otherwise, if the location is null, set it; otherwise throw
+			if(threatInfo.BonusExternalThreatInfo != null)
+				AddBonusThreatInfo(threatInfo.BonusExternalThreatInfo, newThreat);
+			else if (threatInfo.BonusInternalThreatInfo != null)
+				AddBonusThreatInfo(threatInfo.BonusInternalThreatInfo, newThreat);
+			else
+				threatInfo.BonusInternalThreatInfo = new ThreatInfo<InternalThreat>{Threat = newThreat};
 		}
 
 		private static IEnumerable<IList<string>> ChunkArguments(IList<string> arguments, params string[] splitters)
@@ -288,7 +263,7 @@ namespace ConsoleResolver
 			Console.WriteLine("-external-tracks blue:<int> white:<int> red:<int>");
 			Console.WriteLine("-internal-track <int>");
 			Console.WriteLine(
-				"-external-threats [id:<string> time:<int> location:<red|white|blue> [extra-external-threat-id:<string> extra-external-threat-location: <red|white|blue>]? [extra-internal-threat-id:<string>]? ]+");
+				"-external-threats [id:<string> time:<int> location:<red|white|blue> [extra-external-threat-id:<string>]? [extra-internal-threat-id:<string>]? ]+");
 			Console.WriteLine(
 				"-internal-threats [id:<string> time:<int> [extra-threat-id:<string>]? ]+");
 			Console.WriteLine("-players count:<int> [player-index:<int> actions:<string>]+)");
