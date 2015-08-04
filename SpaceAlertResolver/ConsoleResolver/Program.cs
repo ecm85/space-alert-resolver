@@ -32,21 +32,7 @@ namespace ConsoleResolver
 			}
 		}
 
-		private class ExternalThreatInfo : ThreatInfo<ExternalThreat>
-		{
-			public int? TimeAppears { get; set; }
-			public ZoneLocation? ZoneLocation { get; set; }
-
-			public override bool IsValid()
-			{
-
-				if (TimeAppears == null || ZoneLocation == null)
-					return false;
-				return base.IsValid();
-			}
-		}
-
-		private class InternalThreatInfo : ThreatInfo<InternalThreat>
+		private class StandardThreatInfo<T>: ThreatInfo<T> where T : Threat
 		{
 			public int? TimeAppears { get; set; }
 
@@ -56,6 +42,23 @@ namespace ConsoleResolver
 					return false;
 				return base.IsValid();
 			}
+		}
+
+		private class ExternalThreatInfo : StandardThreatInfo<ExternalThreat>
+		{
+			public ZoneLocation? ZoneLocation { get; set; }
+
+			public override bool IsValid()
+			{
+
+				if ( ZoneLocation == null)
+					return false;
+				return base.IsValid();
+			}
+		}
+
+		private class InternalThreatInfo : StandardThreatInfo<InternalThreat>
+		{
 		}
 
 		private static int Main(string[] args)
@@ -71,6 +74,7 @@ namespace ConsoleResolver
 			IDictionary<ZoneLocation, TrackConfiguration> externalTracksByZone = null;
 			TrackConfiguration? internalTrackConfiguration = null;
 			IList<ExternalThreat> externalThreats = null;
+			IList<InternalThreat> internalThreats = null;
 
 			try
 			{
@@ -91,6 +95,7 @@ namespace ConsoleResolver
 							externalThreats = ParseExternalThreats(chunk);
 							break;
 						case "-internal-threats":
+							internalThreats = ParseInternalThreats(chunk);
 							break;
 					}
 				}
@@ -108,6 +113,11 @@ namespace ConsoleResolver
 				foreach (var externalThreat in externalThreats)
 				{
 					Console.WriteLine("{0}, {1}, {2}", externalThreat.GetType(), externalThreat.TimeAppears, externalThreat.CurrentZone);
+				}
+			if (internalThreats != null)
+				foreach (var internalThreat in internalThreats)
+				{
+					Console.WriteLine("{0}, {1}", internalThreat.GetType(), internalThreat.TimeAppears);
 				}
 
 			return 0;
@@ -133,16 +143,16 @@ namespace ConsoleResolver
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						break;
 					case "time":
-						SetTimeAppears(nextThreatInfo, externalThreats, nextToken.Item2);
+						SetTimeAppears(nextThreatInfo, nextToken.Item2, externalThreats.Count + 1);
 						break;
 					case "location":
-						SetLocation(nextThreatInfo, externalThreats, nextToken.Item2);
+						SetLocation(nextThreatInfo, nextToken.Item2, externalThreats.Count + 1);
 						break;
 					case "extra-internal-threat-id":
-						SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, externalThreats);
+						SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1);
 						break;
 					case "extra-external-threat-id":
-						SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, externalThreats);
+						SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1);
 						break;
 					default:
 						throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
@@ -162,39 +172,89 @@ namespace ConsoleResolver
 			return externalThreats;
 		}
 
-		private static void SetExtraExternalThreat(string item2, ExternalThreatInfo nextThreatInfo, List<ExternalThreat> externalThreats)
+		private static IList<InternalThreat> ParseInternalThreats(IEnumerable<string> chunk)
 		{
-			var bonusExternalThreat = ThreatFactory.CreateThreat<ExternalThreat>(item2);
+			var internalThreats = new List<InternalThreat>();
+			var threatTokens = new Queue<string>(chunk.Skip(1));
+			InternalThreatInfo nextThreatInfo = null;
+			while (threatTokens.Any())
+			{
+				var nextToken = ParseToken(threatTokens.Dequeue());
+				if (nextToken == null)
+					throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
+				switch (nextToken.Item1)
+				{
+					case "id":
+						if (nextThreatInfo != null)
+							throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
+						nextThreatInfo = new InternalThreatInfo{Threat = ThreatFactory.CreateThreat<InternalThreat>(nextToken.Item2)};
+						if (nextThreatInfo.Threat == null)
+							throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
+						break;
+					case "time":
+						SetTimeAppears(nextThreatInfo, nextToken.Item2, internalThreats.Count + 1);
+						break;
+					case "extra-internal-threat-id":
+						SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1);
+						break;
+					case "extra-external-threat-id":
+						SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1);
+						break;
+					default:
+						throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
+				}
+				if (nextThreatInfo != null && nextThreatInfo.IsValid())
+				{
+					var threat = nextThreatInfo.Threat;
+					threat.TimeAppears = nextThreatInfo.TimeAppears.GetValueOrDefault();
+					InitializeBonusThreats(nextThreatInfo);
+					internalThreats.Add(threat);
+					nextThreatInfo = null;
+				}
+			}
+			if (nextThreatInfo != null)
+				throw new InvalidOperationException("Error on external threat #" + (internalThreats.Count + 1));
+			return internalThreats;
+		}
+
+		private static void SetExtraExternalThreat<T>(
+			string extraExternalThreatId,
+			StandardThreatInfo<T> nextThreatInfo,
+			int currentThreatIndex) where T: Threat
+		{
+			var bonusExternalThreat = ThreatFactory.CreateThreat<ExternalThreat>(extraExternalThreatId);
 			if (nextThreatInfo == null || bonusExternalThreat == null)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusExternalThreat);
 		}
 
-		private static void SetExtraInternalThreat(string extraInternalThreatId, ExternalThreatInfo nextThreatInfo,
-			List<ExternalThreat> externalThreats)
+		private static void SetExtraInternalThreat<T>(
+			string extraInternalThreatId,
+			StandardThreatInfo<T> nextThreatInfo,
+			int currentThreatIndex) where T: Threat
 		{
 			var bonusInternalThreat = ThreatFactory.CreateThreat<InternalThreat>(extraInternalThreatId);
 			if (nextThreatInfo == null || bonusInternalThreat == null)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusInternalThreat);
 		}
 
-		private static void SetLocation(ExternalThreatInfo nextThreatInfo, List<ExternalThreat> externalThreats, string location)
+		private static void SetLocation(ExternalThreatInfo nextThreatInfo, string location, int currentThreatIndex)
 		{
 			if (nextThreatInfo == null || nextThreatInfo.ZoneLocation.HasValue)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			nextThreatInfo.ZoneLocation = TryParseEnum<ZoneLocation>(location);
 			if (!nextThreatInfo.ZoneLocation.HasValue)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 		}
 
-		private static void SetTimeAppears(ExternalThreatInfo nextThreatInfo, List<ExternalThreat> externalThreats, string timeAppears)
+		private static void SetTimeAppears<T>(StandardThreatInfo<T> nextThreatInfo, string timeAppears, int currentThreatIndex) where T: Threat
 		{
 			if (nextThreatInfo == null || nextThreatInfo.TimeAppears.HasValue)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			nextThreatInfo.TimeAppears = TryParseInt(timeAppears);
 			if (!nextThreatInfo.TimeAppears.HasValue)
-				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
+				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 		}
 
 		private static TrackConfiguration ParseInternalTrack(IList<string> chunk)
