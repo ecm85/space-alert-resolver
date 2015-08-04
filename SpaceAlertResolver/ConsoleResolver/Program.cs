@@ -62,6 +62,12 @@ namespace ConsoleResolver
 		{
 		}
 
+		private class ParseThreatsResult<T> where T: Threat
+		{
+			public IList<T> Threats { get; set; }
+			public IList<Threat> BonusThreats { get; set; }
+		}
+
 		private static int Main(string[] args)
 		{
 			if (!args.Any())
@@ -77,6 +83,7 @@ namespace ConsoleResolver
 			IList<ExternalThreat> externalThreats = null;
 			IList<InternalThreat> internalThreats = null;
 			IList<Player> players = null;
+			IList<Threat> bonusThreats = new List<Threat>();
 
 			try
 			{
@@ -95,10 +102,14 @@ namespace ConsoleResolver
 							players = ParsePlayers(chunk);
 							break;
 						case "-external-threats":
-							externalThreats = ParseExternalThreats(chunk);
+							var externalThreatResult = ParseExternalThreats(chunk);
+							externalThreats = externalThreatResult.Threats;
+							bonusThreats = bonusThreats.Concat(externalThreatResult.BonusThreats).ToList();
 							break;
 						case "-internal-threats":
-							internalThreats = ParseInternalThreats(chunk);
+							var internalThreatResult = ParseInternalThreats(chunk);
+							internalThreats = internalThreatResult.Threats;
+							bonusThreats = bonusThreats.Concat(internalThreatResult.BonusThreats).ToList();
 							break;
 					}
 				}
@@ -111,28 +122,7 @@ namespace ConsoleResolver
 			if (internalThreats == null || externalThreats == null || externalTracksByZone == null || players == null)
 				throw new ArgumentNullException();
 
-			var allThreats = externalThreats
-				.Cast<Threat>()
-				.Concat(internalThreats)
-				.ToList();
-
-			var bonusExternalThreats = allThreats
-				.Where(threat => threat.NeedsBonusExternalThreat)
-				.Cast<IThreatWithBonusThreat<ExternalThreat>>()
-				.Select(threat => threat.BonusThreat)
-				.ToList();
-			var bonusInternalThreats = allThreats
-				.Where(threat => threat.NeedsBonusInternalThreat)
-				.Cast<IThreatWithBonusThreat<InternalThreat>>()
-				.Select(threat => threat.BonusThreat)
-				.ToList();
-			//TODO: Get bonus threats when initializing, instead of this; we don't get bonus threats of bonus threats this way
-			//TODO: This also means the getter on IThreatWithBonusThreat won't be used
-
-			var allBonusThreats = bonusInternalThreats
-				.Cast<Threat>()
-				.Concat(bonusExternalThreats)
-				.ToList();
+			//TODO: The getter on IThreatWithBonusThreat won't be used
 
 			Console.WriteLine("Internal: {0}", internalTrackConfiguration);
 			foreach (var trackConfiguration in externalTracksByZone)
@@ -147,7 +137,7 @@ namespace ConsoleResolver
 				Console.WriteLine("{0}, {1}", internalThreat.GetType(), internalThreat.TimeAppears);
 			}
 
-			foreach (var bonusThreat in allBonusThreats)
+			foreach (var bonusThreat in bonusThreats)
 			{
 				Console.WriteLine("Bonus threat: {0}", bonusThreat.GetType());
 			}
@@ -199,9 +189,10 @@ namespace ConsoleResolver
 			return new List<PlayerAction>();
 		}
 
-		private static IList<ExternalThreat> ParseExternalThreats(IEnumerable<string> chunk)
+		private static ParseThreatsResult<ExternalThreat> ParseExternalThreats(IEnumerable<string> chunk)
 		{
 			var externalThreats = new List<ExternalThreat>();
+			var bonusThreats = new List<Threat>();
 			var threatTokens = new Queue<string>(chunk.Skip(1));
 			ExternalThreatInfo nextThreatInfo = null;
 			while (threatTokens.Any())
@@ -225,10 +216,10 @@ namespace ConsoleResolver
 						SetLocation(nextThreatInfo, nextToken.Item2, externalThreats.Count + 1);
 						break;
 					case "extra-internal-threat-id":
-						SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1);
+						bonusThreats.Add(SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1));
 						break;
 					case "extra-external-threat-id":
-						SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1);
+						bonusThreats.Add(SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, externalThreats.Count + 1));
 						break;
 					default:
 						throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
@@ -245,12 +236,17 @@ namespace ConsoleResolver
 			}
 			if (nextThreatInfo != null)
 				throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
-			return externalThreats;
+			return new ParseThreatsResult<ExternalThreat>
+			{
+				Threats = externalThreats,
+				BonusThreats = bonusThreats
+			};
 		}
 
-		private static IList<InternalThreat> ParseInternalThreats(IEnumerable<string> chunk)
+		private static ParseThreatsResult<InternalThreat> ParseInternalThreats(IEnumerable<string> chunk)
 		{
 			var internalThreats = new List<InternalThreat>();
+			var bonusThreats = new List<Threat>();
 			var threatTokens = new Queue<string>(chunk.Skip(1));
 			InternalThreatInfo nextThreatInfo = null;
 			while (threatTokens.Any())
@@ -271,10 +267,10 @@ namespace ConsoleResolver
 						SetTimeAppears(nextThreatInfo, nextToken.Item2, internalThreats.Count + 1);
 						break;
 					case "extra-internal-threat-id":
-						SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1);
+						bonusThreats.Add(SetExtraInternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1));
 						break;
 					case "extra-external-threat-id":
-						SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1);
+						bonusThreats.Add(SetExtraExternalThreat(nextToken.Item2, nextThreatInfo, internalThreats.Count + 1));
 						break;
 					default:
 						throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
@@ -290,10 +286,14 @@ namespace ConsoleResolver
 			}
 			if (nextThreatInfo != null)
 				throw new InvalidOperationException("Error on external threat #" + (internalThreats.Count + 1));
-			return internalThreats;
+			return new ParseThreatsResult<InternalThreat>
+			{
+				Threats = internalThreats,
+				BonusThreats = bonusThreats
+			};
 		}
 
-		private static void SetExtraExternalThreat<T>(
+		private static ExternalThreat SetExtraExternalThreat<T>(
 			string extraExternalThreatId,
 			StandardThreatInfo<T> nextThreatInfo,
 			int currentThreatIndex) where T: Threat
@@ -302,9 +302,10 @@ namespace ConsoleResolver
 			if (nextThreatInfo == null || bonusExternalThreat == null)
 				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusExternalThreat);
+			return bonusExternalThreat;
 		}
 
-		private static void SetExtraInternalThreat<T>(
+		private static InternalThreat SetExtraInternalThreat<T>(
 			string extraInternalThreatId,
 			StandardThreatInfo<T> nextThreatInfo,
 			int currentThreatIndex) where T: Threat
@@ -313,6 +314,7 @@ namespace ConsoleResolver
 			if (nextThreatInfo == null || bonusInternalThreat == null)
 				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusInternalThreat);
+			return bonusInternalThreat;
 		}
 
 		private static void SetLocation(ExternalThreatInfo nextThreatInfo, string location, int currentThreatIndex)
