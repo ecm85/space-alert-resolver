@@ -5,8 +5,8 @@ using System.Text;
 
 namespace BLL.Threats
 {
-	public interface IThreatWithBonusThreat<T> where T: Threat
+	public interface IThreatWithBonusThreat<in T> where T: Threat
 	{
-		T BonusThreat { get; set; }
+		void SetBonusThreat(T threat);
 	}
 }

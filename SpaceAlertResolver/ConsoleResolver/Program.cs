@@ -122,8 +122,6 @@ namespace ConsoleResolver
 			if (internalThreats == null || externalThreats == null || externalTracksByZone == null || players == null)
 				throw new ArgumentNullException();
 
-			//TODO: The getter on IThreatWithBonusThreat won't be used
-
 			Console.WriteLine("Internal: {0}", internalTrackConfiguration);
 			foreach (var trackConfiguration in externalTracksByZone)
 				Console.WriteLine("{0}: {1}", trackConfiguration.Key, trackConfiguration.Value);
@@ -368,12 +366,12 @@ namespace ConsoleResolver
 			if (threatInfo.Threat.NeedsBonusInternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusInternalThreatInfo);
-				((IThreatWithBonusThreat<InternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusInternalThreatInfo.Threat;
+				((IThreatWithBonusThreat<InternalThreat>)threatInfo.Threat).SetBonusThreat(threatInfo.BonusInternalThreatInfo.Threat);
 			}
 			if (threatInfo.Threat.NeedsBonusExternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusExternalThreatInfo);
-				((IThreatWithBonusThreat<ExternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusExternalThreatInfo.Threat;
+				((IThreatWithBonusThreat<ExternalThreat>)threatInfo.Threat).SetBonusThreat(threatInfo.BonusExternalThreatInfo.Threat);
 			}
 		}
 

@@ -7,12 +7,17 @@ namespace BLL.Threats.External.Serious.Red
 {
 	public class Overlord : SeriousRedExternalThreat, IThreatWithBonusThreat<ExternalThreat>
 	{
-		public ExternalThreat BonusThreat { get; set; }
+		private ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
 		public Overlord()
 			: base(5, 14, 2)
 		{
+		}
+
+		public void SetBonusThreat(ExternalThreat bonusThreat)
+		{
+			BonusThreat = bonusThreat;
 		}
 
 		public override bool NeedsBonusExternalThreat { get { return true; } }

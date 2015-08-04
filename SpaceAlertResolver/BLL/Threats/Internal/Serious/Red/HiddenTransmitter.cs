@@ -9,11 +9,16 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public abstract class HiddenTransmitter : SeriousRedInternalThreat, IThreatWithBonusThreat<ExternalThreat>
 	{
-		public ExternalThreat BonusThreat { get; set; }
+		private ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 		protected HiddenTransmitter(StationLocation stationLocation)
 			: base(3, 2, stationLocation, PlayerActionType.C, 1)
 		{
+		}
+
+		public void SetBonusThreat(ExternalThreat bonusThreat)
+		{
+			BonusThreat = bonusThreat;
 		}
 
 		public override bool NeedsBonusExternalThreat { get { return true; } }

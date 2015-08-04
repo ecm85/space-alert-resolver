@@ -8,11 +8,16 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public class SpaceTimeVortex : SeriousRedInternalThreat, IThreatWithBonusThreat<InternalThreat>
 	{
-		public InternalThreat BonusThreat { get; set; }
+		private InternalThreat BonusThreat { get; set; }
 
 		public SpaceTimeVortex()
 			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.C)
 		{
+		}
+
+		public void SetBonusThreat(InternalThreat bonusThreat)
+		{
+			BonusThreat = bonusThreat;
 		}
 
 		public override bool NeedsBonusInternalThreat { get { return true; } }

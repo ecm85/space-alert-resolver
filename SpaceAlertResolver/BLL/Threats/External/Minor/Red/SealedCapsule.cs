@@ -8,11 +8,16 @@ namespace BLL.Threats.External.Minor.Red
 {
 	public class SealedCapsule : MinorRedExternalThreat, IThreatWithBonusThreat<InternalThreat>
 	{
-		public InternalThreat BonusThreat { get; set; }
+		private InternalThreat BonusThreat { get; set; }
 
 		public SealedCapsule()
 			: base(4, 4, 4)
 		{
+		}
+
+		public void SetBonusThreat(InternalThreat bonusThreat)
+		{
+			BonusThreat = bonusThreat;
 		}
 
 		public override bool NeedsBonusInternalThreat { get { return true; } }
