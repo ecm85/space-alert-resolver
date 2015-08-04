@@ -238,7 +238,7 @@ namespace BLL.Threats
 		{
 			if (!ThreatTypesById.ContainsKey(id))
 				return null;
-			return (T)Activator.CreateInstance(ThreatTypesById[id]);
+			return Activator.CreateInstance(ThreatTypesById[id]) as T;
 		}
 	}
 }
