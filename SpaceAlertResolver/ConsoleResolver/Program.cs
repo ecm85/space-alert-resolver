@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL;
 using BLL.ShipComponents;
 using BLL.Threats;
 using BLL.Threats.External;
@@ -75,6 +76,7 @@ namespace ConsoleResolver
 			TrackConfiguration? internalTrackConfiguration = null;
 			IList<ExternalThreat> externalThreats = null;
 			IList<InternalThreat> internalThreats = null;
+			IList<Player> players = null;
 
 			try
 			{
@@ -90,6 +92,7 @@ namespace ConsoleResolver
 							internalTrackConfiguration = ParseInternalTrack(chunk);
 							break;
 						case "-players":
+							players = ParsePlayers(chunk);
 							break;
 						case "-external-threats":
 							externalThreats = ParseExternalThreats(chunk);
@@ -105,22 +108,95 @@ namespace ConsoleResolver
 				return HandleInvalidArgument(exception.Message);
 			}
 
+			if (internalThreats == null || externalThreats == null || externalTracksByZone == null || players == null)
+				throw new ArgumentNullException();
+
+			var allThreats = externalThreats
+				.Cast<Threat>()
+				.Concat(internalThreats)
+				.ToList();
+
+			var bonusExternalThreats = allThreats
+				.Where(threat => threat.NeedsBonusExternalThreat)
+				.Cast<IThreatWithBonusThreat<ExternalThreat>>()
+				.Select(threat => threat.BonusThreat)
+				.ToList();
+			var bonusInternalThreats = allThreats
+				.Where(threat => threat.NeedsBonusInternalThreat)
+				.Cast<IThreatWithBonusThreat<InternalThreat>>()
+				.Select(threat => threat.BonusThreat)
+				.ToList();
+			//TODO: Get bonus threats when initializing, instead of this; we don't get bonus threats of bonus threats this way
+			//TODO: This also means the getter on IThreatWithBonusThreat won't be used
+
+			var allBonusThreats = bonusInternalThreats
+				.Cast<Threat>()
+				.Concat(bonusExternalThreats)
+				.ToList();
+
 			Console.WriteLine("Internal: {0}", internalTrackConfiguration);
-			if (externalTracksByZone != null)
-				foreach (var trackConfiguration in externalTracksByZone)
-					Console.WriteLine("{0}: {1}", trackConfiguration.Key, trackConfiguration.Value);
-			if (externalThreats != null)
-				foreach (var externalThreat in externalThreats)
+			foreach (var trackConfiguration in externalTracksByZone)
+				Console.WriteLine("{0}: {1}", trackConfiguration.Key, trackConfiguration.Value);
+			foreach (var externalThreat in externalThreats)
+			{
+				Console.WriteLine("{0}, {1}, {2}", externalThreat.GetType(), externalThreat.TimeAppears, externalThreat.CurrentZone);
+			}
+
+			foreach (var internalThreat in internalThreats)
+			{
+				Console.WriteLine("{0}, {1}", internalThreat.GetType(), internalThreat.TimeAppears);
+			}
+
+			foreach (var bonusThreat in allBonusThreats)
+			{
+				Console.WriteLine("Bonus threat: {0}", bonusThreat.GetType());
+			}
+
+			foreach (var player in players)
+			{
+				Console.WriteLine("Player {0} Actions:", player.Index);
+				foreach (var playerAction in player.Actions)
 				{
-					Console.WriteLine("{0}, {1}, {2}", externalThreat.GetType(), externalThreat.TimeAppears, externalThreat.CurrentZone);
+					Console.WriteLine(playerAction);
 				}
-			if (internalThreats != null)
-				foreach (var internalThreat in internalThreats)
-				{
-					Console.WriteLine("{0}, {1}", internalThreat.GetType(), internalThreat.TimeAppears);
-				}
+			}
 
 			return 0;
+		}
+
+		private static IList<Player> ParsePlayers(IList<string> chunk)
+		{
+			if (chunk.Count == 1)
+				throw new InvalidOperationException("Need at least one player");
+			var players = new List<Player>();
+			var playerTokens = new Queue<string>(chunk.Skip(1));
+			if (playerTokens.Count % 2 != 0)
+				throw new InvalidOperationException("Invalid players.");
+			while (playerTokens.Any())
+			{
+				var idToken = ParseToken(playerTokens.Dequeue());
+				if (idToken == null || idToken.Item1 != "player-index")
+					throw new InvalidOperationException("Error on player #" + players.Count + 1);
+				var index = TryParseInt(idToken.Item2);
+				if (index == null)
+					throw new InvalidOperationException("Error on player #" + players.Count + 1);
+				var actionsToken = ParseToken(playerTokens.Dequeue());
+				if (actionsToken == null || actionsToken.Item1 != "actions")
+					throw new InvalidOperationException("Error on player #" + players.Count + 1);
+				var actions = ParsePlayerActions(actionsToken.Item2);
+				if (actions == null)
+					throw new InvalidOperationException("Error on player #" + players.Count + 1);
+				var player = new Player{Actions = actions, Index = index.Value};
+				players.Add(player);
+				//TODO: Add specializations and teleport player/destination
+			}
+			return players;
+		}
+
+		private static List<PlayerAction> ParsePlayerActions(string actionString)
+		{
+			//TODO: Turn action string into list of actions
+			return new List<PlayerAction>();
 		}
 
 		private static IList<ExternalThreat> ParseExternalThreats(IEnumerable<string> chunk)
@@ -290,12 +366,12 @@ namespace ConsoleResolver
 			if (threatInfo.Threat.NeedsBonusInternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusInternalThreatInfo);
-				((IThreatWithBonusInternalThreat)threatInfo.Threat).SetBonusThreat(threatInfo.BonusInternalThreatInfo.Threat);
+				((IThreatWithBonusThreat<InternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusInternalThreatInfo.Threat;
 			}
 			if (threatInfo.Threat.NeedsBonusExternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusExternalThreatInfo);
-				((IThreatWithBonusExternalThreat)threatInfo.Threat).SetBonusThreat(threatInfo.BonusExternalThreatInfo.Threat);
+				((IThreatWithBonusThreat<ExternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusExternalThreatInfo.Threat;
 			}
 		}
 
@@ -347,7 +423,7 @@ namespace ConsoleResolver
 				"-external-threats [id:<string> time:<int> location:<red|white|blue> [extra-external-threat-id:<string>]? [extra-internal-threat-id:<string>]? ]+");
 			Console.WriteLine(
 				"-internal-threats [id:<string> time:<int> [extra-threat-id:<string>]? ]+");
-			Console.WriteLine("-players count:<int> [player-index:<int> actions:<string>]+)");
+			Console.WriteLine("-players [player-index:<int> actions:<string>]+)");
 			return -1;
 		}
 

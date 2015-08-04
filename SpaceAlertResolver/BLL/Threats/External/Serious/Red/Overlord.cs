@@ -5,19 +5,14 @@ using System.Text;
 
 namespace BLL.Threats.External.Serious.Red
 {
-	public class Overlord : SeriousRedExternalThreat, IThreatWithBonusExternalThreat
+	public class Overlord : SeriousRedExternalThreat, IThreatWithBonusThreat<ExternalThreat>
 	{
-		private ExternalThreat threatToCallIn;
+		public ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
 		public Overlord()
 			: base(5, 14, 2)
 		{
-		}
-
-		public void SetBonusThreat(ExternalThreat threatToCallIn)
-		{
-			this.threatToCallIn = threatToCallIn;
 		}
 
 		public override bool NeedsBonusExternalThreat { get { return true; } }
@@ -30,7 +25,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		public override int GetPointsForDefeating()
 		{
-			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
+			return 8 + (calledInThreat ? 0 : BonusThreat.GetPointsForDefeating());
 		}
 
 		protected override int GetPointsForSurviving()
@@ -40,7 +35,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		private void CallInExternalThreat(int currentTurn)
 		{
-			ThreatController.AddExternalThreat(threatToCallIn, 1000 + currentTurn, CurrentZone);
+			ThreatController.AddExternalThreat(BonusThreat, 1000 + currentTurn, CurrentZone);
 			calledInThreat = true;
 		}
 

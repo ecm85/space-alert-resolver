@@ -227,8 +227,7 @@
     <Compile Include="Threats\Internal\Minor\White\SkirmishersA.cs" />
     <Compile Include="Threats\Internal\Minor\White\SkirmishersB.cs" />
     <Compile Include="Threats\Internal\Minor\White\UnstableWarheads.cs" />
-    <Compile Include="Threats\IThreatWithBonusInternalThreat.cs" />
-    <Compile Include="Threats\IThreatWithBonusExternalThreat.cs" />
+    <Compile Include="Threats\IThreatWithBonusThreat.cs" />
     <Compile Include="Threats\Threat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threats\External\Minor\White\ArmoredGrappler.cs" />

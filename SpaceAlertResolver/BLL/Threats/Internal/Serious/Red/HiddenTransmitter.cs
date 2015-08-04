@@ -7,18 +7,13 @@ using BLL.Threats.External;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
-	public abstract class HiddenTransmitter : SeriousRedInternalThreat, IThreatWithBonusExternalThreat
+	public abstract class HiddenTransmitter : SeriousRedInternalThreat, IThreatWithBonusThreat<ExternalThreat>
 	{
-		private ExternalThreat threatToCallIn;
+		public ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 		protected HiddenTransmitter(StationLocation stationLocation)
 			: base(3, 2, stationLocation, PlayerActionType.C, 1)
 		{
-		}
-
-		public void SetBonusThreat(ExternalThreat threatToCallIn)
-		{
-			this.threatToCallIn = threatToCallIn;
 		}
 
 		public override bool NeedsBonusExternalThreat { get { return true; } }
@@ -31,13 +26,13 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private void CallInExternalThreat(int currentTurn)
 		{
-			ThreatController.AddExternalThreat(threatToCallIn, 1000 + currentTurn, CurrentZone);
+			ThreatController.AddExternalThreat(BonusThreat, 1000 + currentTurn, CurrentZone);
 			calledInThreat = true;
 		}
 
 		public override int GetPointsForDefeating()
 		{
-			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
+			return 8 + (calledInThreat ? 0 : BonusThreat.GetPointsForDefeating());
 		}
 
 		protected override int GetPointsForSurviving()

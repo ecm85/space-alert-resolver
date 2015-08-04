@@ -6,18 +6,13 @@ using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Minor.Red
 {
-	public class SealedCapsule : MinorRedExternalThreat, IThreatWithBonusInternalThreat
+	public class SealedCapsule : MinorRedExternalThreat, IThreatWithBonusThreat<InternalThreat>
 	{
-		private InternalThreat threatToCallIn;
+		public InternalThreat BonusThreat { get; set; }
 
 		public SealedCapsule()
 			: base(4, 4, 4)
 		{
-		}
-
-		public void SetBonusThreat(InternalThreat threatToCallIn)
-		{
-			this.threatToCallIn = threatToCallIn;
 		}
 
 		public override bool NeedsBonusInternalThreat { get { return true; } }
@@ -38,17 +33,17 @@ namespace BLL.Threats.External.Minor.Red
 			CallInInternalThreat(currentTurn);
 			var newthreatGetsExtraSpeed = TotalHealth - RemainingHealth < 2;
 			if (newthreatGetsExtraSpeed)
-				threatToCallIn.Speed++;
+				BonusThreat.Speed++;
 		}
 
 		private void CallInInternalThreat(int currentTurn)
 		{
-			ThreatController.AddInternalThreat(threatToCallIn, 1000 + currentTurn);
+			ThreatController.AddInternalThreat(BonusThreat, 1000 + currentTurn);
 		}
 
 		public override int GetPointsForDefeating()
 		{
-			return threatToCallIn.GetPointsForDefeating();
+			return BonusThreat.GetPointsForDefeating();
 		}
 
 		protected override int GetPointsForSurviving()

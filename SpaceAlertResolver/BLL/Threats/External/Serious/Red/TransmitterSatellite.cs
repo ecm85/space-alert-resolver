@@ -7,19 +7,14 @@ using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Serious.Red
 {
-	public class TransmitterSatellite : SeriousRedExternalThreat, IThreatWithBonusInternalThreat
+	public class TransmitterSatellite : SeriousRedExternalThreat, IThreatWithBonusThreat<InternalThreat>
 	{
-		private InternalThreat threatToCallIn;
+		public InternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
 		public TransmitterSatellite()
 			: base(2, 5, 3)
 		{
-		}
-
-		public void SetBonusThreat(InternalThreat threatToCallIn)
-		{
-			this.threatToCallIn = threatToCallIn;
 		}
 
 		public override bool NeedsBonusInternalThreat { get { return true; } }
@@ -42,7 +37,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		public override int GetPointsForDefeating()
 		{
-			return 8 + (calledInThreat ? 0 : threatToCallIn.GetPointsForDefeating());
+			return 8 + (calledInThreat ? 0 : BonusThreat.GetPointsForDefeating());
 		}
 
 		protected override int GetPointsForSurviving()
@@ -52,7 +47,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		private void CallInInternalThreat(int currentTurn)
 		{
-			ThreatController.AddInternalThreat(threatToCallIn, 1000 + currentTurn);
+			ThreatController.AddInternalThreat(BonusThreat, 1000 + currentTurn);
 			calledInThreat = true;
 		}
 
