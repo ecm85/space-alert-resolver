@@ -145,7 +145,7 @@ namespace ConsoleResolver
 				Console.WriteLine("Player {0} Actions:", player.Index);
 				foreach (var playerAction in player.Actions)
 				{
-					Console.WriteLine(playerAction);
+					Console.WriteLine(playerAction.ActionType);
 				}
 			}
 
@@ -174,17 +174,43 @@ namespace ConsoleResolver
 				var actions = ParsePlayerActions(actionsToken.Item2);
 				if (actions == null)
 					throw new InvalidOperationException("Error on player #" + players.Count + 1);
-				var player = new Player{Actions = actions, Index = index.Value};
+				var player = new Player {Index = index.Value};
+				player.Actions = PlayerActionFactory.CreateSingleActionList(player, actions);
 				players.Add(player);
 				//TODO: Add specializations and teleport player/destination
 			}
 			return players;
 		}
 
-		private static List<PlayerAction> ParsePlayerActions(string actionString)
+		private static readonly IDictionary<char, PlayerActionType?> ActionTypesByCode = new Dictionary<char, PlayerActionType?>
 		{
-			//TODO: Turn action string into list of actions
-			return new List<PlayerAction>();
+			{'a', PlayerActionType.A},
+			{'b', PlayerActionType.B},
+			{'c', PlayerActionType.C},
+			{'x', PlayerActionType.BattleBots},
+			{'<', PlayerActionType.MoveRed},
+			{'>', PlayerActionType.MoveBlue},
+			{'^', PlayerActionType.ChangeDeck},
+			{'A', PlayerActionType.HeroicA},
+			{'B', PlayerActionType.HeroicB},
+			{'X', PlayerActionType.HeroicBattleBots},
+			{'6', PlayerActionType.TeleportBlueUpper},
+			{'3', PlayerActionType.TeleportBlueLower},
+			{'5', PlayerActionType.TeleportWhiteUpper},
+			{'2', PlayerActionType.TeleportWhiteLower},
+			{'4', PlayerActionType.TeleportRedUpper},
+			{'1', PlayerActionType.TeleportRedLower},
+			{'s', PlayerActionType.BasicSpecialization},
+			{'S', PlayerActionType.AdvancedSpecialization},
+			{'-', null}
+		};
+
+		private static IList<PlayerActionType?> ParsePlayerActions(string actionString)
+		{
+			if(actionString.Any(actionCode => !ActionTypesByCode.ContainsKey(actionCode)))
+				throw new InvalidOperationException("Invalid player actions.");
+			//TODO: Parse advanced spec ops
+			return actionString.Select(action => ActionTypesByCode[action]).ToList();
 		}
 
 		private static ParseThreatsResult<ExternalThreat> ParseExternalThreats(IEnumerable<string> chunk)
