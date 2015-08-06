@@ -39,9 +39,7 @@ namespace ConsoleResolver
 
 			public override bool IsValid()
 			{
-				if (TimeAppears == null)
-					return false;
-				return base.IsValid();
+				return TimeAppears != null && base.IsValid();
 			}
 		}
 
@@ -51,10 +49,7 @@ namespace ConsoleResolver
 
 			public override bool IsValid()
 			{
-
-				if ( ZoneLocation == null)
-					return false;
-				return base.IsValid();
+				return ZoneLocation != null && base.IsValid();
 			}
 		}
 
@@ -68,15 +63,28 @@ namespace ConsoleResolver
 			public IList<Threat> BonusThreats { get; set; }
 		}
 
-		private static int Main(string[] args)
+		public static int Main(string[] args)
+		{
+			try
+			{
+				ParseArgsAndRunGame(args);
+			}
+			catch (InvalidOperationException exception)
+			{
+				return HandleInvalidArgument(exception.Message);
+			}
+			return 0;
+		}
+
+		public static Game ParseArgsAndRunGame(string[] args)
 		{
 			if (!args.Any())
-				return HandleInvalidArgument();
+				throw new InvalidOperationException();
 			var validArguments = args.Where(arg => !string.IsNullOrWhiteSpace(arg)).ToList();
 			var chunkIdentifiers = new[] {"-external-tracks", "-internal-track", "-players", "-external-threats", "-internal-threats"};
 			var chunks = ChunkArguments(validArguments, chunkIdentifiers).ToList();
 			if (chunks.Count() != 5 || chunkIdentifiers.Except(chunks.Select(chunk => chunk[0])).Any())
-				return HandleInvalidArgument("Invalid arguments.");
+				throw new InvalidOperationException("Invalid arguments.");
 
 			IDictionary<ZoneLocation, TrackConfiguration> externalTracksByZone = null;
 			TrackConfiguration? internalTrackConfiguration = null;
@@ -85,71 +93,61 @@ namespace ConsoleResolver
 			IList<Player> players = null;
 			IList<Threat> bonusThreats = new List<Threat>();
 
-			try
+			foreach (var chunk in chunks)
 			{
-				foreach (var chunk in chunks)
+				var chunkType = chunk[0];
+				switch (chunkType)
 				{
-					var chunkType = chunk[0];
-					switch (chunkType)
-					{
-						case "-external-tracks":
-							externalTracksByZone = ParseExternalTracks(chunk);
-							break;
-						case "-internal-track":
-							internalTrackConfiguration = ParseInternalTrack(chunk);
-							break;
-						case "-players":
-							players = ParsePlayers(chunk);
-							break;
-						case "-external-threats":
-							var externalThreatResult = ParseExternalThreats(chunk);
-							externalThreats = externalThreatResult.Threats;
-							bonusThreats = bonusThreats.Concat(externalThreatResult.BonusThreats).ToList();
-							break;
-						case "-internal-threats":
-							var internalThreatResult = ParseInternalThreats(chunk);
-							internalThreats = internalThreatResult.Threats;
-							bonusThreats = bonusThreats.Concat(internalThreatResult.BonusThreats).ToList();
-							break;
-					}
+					case "-external-tracks":
+						externalTracksByZone = ParseExternalTracks(chunk);
+						break;
+					case "-internal-track":
+						internalTrackConfiguration = ParseInternalTrack(chunk);
+						break;
+					case "-players":
+						players = ParsePlayers(chunk);
+						break;
+					case "-external-threats":
+						var externalThreatResult = ParseExternalThreats(chunk);
+						externalThreats = externalThreatResult.Threats;
+						bonusThreats = bonusThreats.Concat(externalThreatResult.BonusThreats).ToList();
+						break;
+					case "-internal-threats":
+						var internalThreatResult = ParseInternalThreats(chunk);
+						internalThreats = internalThreatResult.Threats;
+						bonusThreats = bonusThreats.Concat(internalThreatResult.BonusThreats).ToList();
+						break;
 				}
-			}
-			catch (InvalidOperationException exception)
-			{
-				return HandleInvalidArgument(exception.Message);
 			}
 
 			if (internalThreats == null || externalThreats == null || externalTracksByZone == null || players == null)
 				throw new ArgumentNullException();
 
-			Console.WriteLine("Internal: {0}", internalTrackConfiguration);
-			foreach (var trackConfiguration in externalTracksByZone)
-				Console.WriteLine("{0}: {1}", trackConfiguration.Key, trackConfiguration.Value);
-			foreach (var externalThreat in externalThreats)
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrackConfiguration.GetValueOrDefault());
+
+			var currentTurn = 0;
+			try
 			{
-				Console.WriteLine("{0}, {1}, {2}", externalThreat.GetType(), externalThreat.TimeAppears, externalThreat.CurrentZone);
+				for (currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+					game.PerformTurn();
+			}
+			catch (LoseException loseException)
+			{
+				Console.WriteLine("Killed on turn {0} by: {1}", currentTurn + 1, loseException.Threat);
+			}
+			Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
+				game.SittingDuck.BlueZone.TotalDamage,
+				game.SittingDuck.RedZone.TotalDamage,
+				game.SittingDuck.WhiteZone.TotalDamage);
+			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", game.ThreatController.DefeatedThreats.Count(), game.ThreatController.SurvivedThreats.Count());
+			Console.WriteLine("Total points: {0}", game.TotalPoints);
+			foreach (var zone in game.SittingDuck.Zones)
+			{
+				foreach (var token in zone.AllDamageTokensTaken)
+					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
 			}
 
-			foreach (var internalThreat in internalThreats)
-			{
-				Console.WriteLine("{0}, {1}", internalThreat.GetType(), internalThreat.TimeAppears);
-			}
-
-			foreach (var bonusThreat in bonusThreats)
-			{
-				Console.WriteLine("Bonus threat: {0}", bonusThreat.GetType());
-			}
-
-			foreach (var player in players)
-			{
-				Console.WriteLine("Player {0} Actions:", player.Index);
-				foreach (var playerAction in player.Actions)
-				{
-					Console.WriteLine(playerAction.ActionType);
-				}
-			}
-
-			return 0;
+			return game;
 		}
 
 		private static IList<Player> ParsePlayers(IList<string> chunk)
