@@ -78,6 +78,7 @@ namespace ConsoleResolverTest
 
 			var game = Program.ParseArgsAndRunGame(args);
 
+			Assert.IsFalse(game.HasLost);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(5, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
@@ -98,33 +99,49 @@ namespace ConsoleResolverTest
 		[TestMethod]
 		public void SixBasicThreats()
 		{
-			var players = GetPlayers();
-
-			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
+			var args = new[]
 			{
-				{ZoneLocation.Blue, TrackConfiguration.Track1},
-				{ZoneLocation.Red, TrackConfiguration.Track2},
-				{ZoneLocation.White, TrackConfiguration.Track3},
+				"-players",
+				"player-index:0",
+				"actions:-^b^aaaaaa",
+				"player-index:1",
+				"actions:<^c^-cxcxa",
+				"player-index:2",
+				"actions:-c--c^c",
+				"player-index:3",
+				"actions:^-----c",
+				"player-index:4",
+				"actions:-^----c",
+				"player-index:5",
+				"actions:3425",
+				"-external-tracks",
+				"blue:1",
+				"red:2",
+				"white:3",
+				"-internal-track",
+				"4",
+				"-external-threats",
+				"id:E1-02",
+				"time:4",
+				"location:blue",
+				"id:E1-07",
+				"time:5",
+				"location:red",
+				"id:E1-07",
+				"time:6",
+				"location:white",
+				"-internal-threats",
+				"id:I1-01",
+				"time:4",
+				"id:SI1-04",
+				"time:2",
+				"id:SI2-05",
+				"time:6"
 			};
-			var internalTrack = TrackConfiguration.Track4;
 
-			var destroyer = new Destroyer { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
-			var fighter1 = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
-			var fighter2 = new Fighter { TimeAppears = 6, CurrentZone = ZoneLocation.White };
-			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
+			var game = Program.ParseArgsAndRunGame(args);
 
-			var skirmishers = new SkirmishersA { TimeAppears = 4 };
-			var fissure = new Fissure { TimeAppears = 2 };
-			var nuclearDevice = new NuclearDevice { TimeAppears = 6 };
-			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
-
-			var bonusThreats = new Threat[0];
-
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
-			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
-				game.PerformTurn();
-
+			Assert.IsFalse(game.HasLost);
 			Assert.AreEqual(4, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(3, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(3, game.SittingDuck.WhiteZone.TotalDamage);
@@ -134,81 +151,6 @@ namespace ConsoleResolverTest
 			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count());
 			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count());
 			Assert.AreEqual(4, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count());
-		}
-
-		private static IList<Player> GetPlayers()
-		{
-			var players = Enumerable.Range(0, 6).Select(index => new Player()).ToList();
-			players[0].Actions = PlayerActionFactory.CreateSingleActionList(players[0], new PlayerActionType?[]
-			{
-				null,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.B,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A
-			});
-			players[0].Index = 0;
-			players[1].Actions = PlayerActionFactory.CreateSingleActionList(players[1], new PlayerActionType?[]
-			{
-				PlayerActionType.MoveRed,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.C,
-				PlayerActionType.ChangeDeck,
-				null,
-				PlayerActionType.C,
-				PlayerActionType.BattleBots,
-				PlayerActionType.C,
-				PlayerActionType.BattleBots,
-				PlayerActionType.A
-			});
-			players[1].Index = 1;
-			players[2].Actions = PlayerActionFactory.CreateSingleActionList(players[2], new PlayerActionType?[]
-			{
-				null,
-				PlayerActionType.C,
-				null,
-				null,
-				PlayerActionType.C,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.C
-			});
-			players[2].Index = 2;
-			players[3].Actions = PlayerActionFactory.CreateSingleActionList(players[3], new PlayerActionType?[]
-			{
-				PlayerActionType.ChangeDeck,
-				null,
-				null,
-				null,
-				null,
-				null,
-				PlayerActionType.C
-			});
-			players[3].Index = 3;
-			players[4].Actions = PlayerActionFactory.CreateSingleActionList(players[4], new PlayerActionType?[]
-			{
-				null,
-				PlayerActionType.ChangeDeck,
-				null,
-				null,
-				null,
-				null,
-				PlayerActionType.C
-			});
-			players[4].Index = 4;
-			players[5].Actions = PlayerActionFactory.CreateSingleActionList(players[5], new PlayerActionType?[]
-			{
-				PlayerActionType.TeleportBlueLower,
-				PlayerActionType.TeleportRedUpper,
-				PlayerActionType.TeleportWhiteLower,
-				PlayerActionType.TeleportWhiteUpper
-			});
-			players[5].Index = 5;
-			return players;
 		}
 	}
 }

@@ -41,6 +41,7 @@ namespace BLL
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
+		public Boolean HasLost { get; private set; }
 
 		public Game(
 			IList<Player> players,
@@ -50,6 +51,7 @@ namespace BLL
 			IDictionary<ZoneLocation, TrackConfiguration> externalTrackConfigurationsByZone,
 			TrackConfiguration internalTrackConfiguration)
 		{
+			HasLost = false;
 			NumberOfTurns = 12;
 			var externalTracksByZone = externalTrackConfigurationsByZone.ToDictionary(
 				trackConfigurationWithZone => trackConfigurationWithZone.Key,
@@ -86,20 +88,29 @@ namespace BLL
 
 		public void PerformTurn()
 		{
-			var currentTurn = nextTurn;
-			ThreatController.AddNewThreatsToTracks(currentTurn);
-			PerformPlayerActionsAndResolveDamage(currentTurn);
-			ThreatController.MoveThreats(currentTurn);
-			PerformEndOfTurn();
-			var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
-			if (isSecondTurnOfPhase)
-				CheckForComputer(currentTurn);
-			var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
-			if (isEndOfPhase)
-				PerformEndOfPhase();
-			if (currentTurn == NumberOfTurns - 1)
-				PerformEndOfGame(currentTurn);
-			nextTurn++;
+			try
+			{
+				var currentTurn = nextTurn;
+				ThreatController.AddNewThreatsToTracks(currentTurn);
+				PerformPlayerActionsAndResolveDamage(currentTurn);
+				ThreatController.MoveThreats(currentTurn);
+				PerformEndOfTurn();
+				var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
+				if (isSecondTurnOfPhase)
+					CheckForComputer(currentTurn);
+				var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
+				if (isEndOfPhase)
+					PerformEndOfPhase();
+				if (currentTurn == NumberOfTurns - 1)
+					PerformEndOfGame(currentTurn);
+				nextTurn++;
+
+			}
+			catch (LoseException)
+			{
+				this.HasLost = true;
+				throw;
+			}
 		}
 
 		private void PerformEndOfGame(int currentTurn)
