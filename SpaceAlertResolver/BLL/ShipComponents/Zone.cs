@@ -31,7 +31,7 @@ namespace BLL.ShipComponents
 			var damageDone = amount;
 			if (damageType != ThreatDamageType.IgnoresShields)
 			{
-				damageShielded = UpperStation.Shield.ShieldThroughAttack(amount);
+				damageShielded = UpperStation.BravoComponent.ShieldThroughAttack(amount);
 				damageDone -= damageShielded;
 			}
 			if (damageType == ThreatDamageType.DoubleDamageThroughShields)
@@ -77,9 +77,9 @@ namespace BLL.ShipComponents
 				case DamageToken.Gravolift:
 					return Gravolift;
 				case DamageToken.Reactor:
-					return LowerStation.Reactor;
+					return LowerStation.BravoComponent;
 				case DamageToken.Shield:
-					return UpperStation.Shield;
+					return UpperStation.BravoComponent;
 				case DamageToken.Structural:
 					return null;
 				default:
@@ -102,29 +102,29 @@ namespace BLL.ShipComponents
 
 		public int DrainShield()
 		{
-			var oldEnergy = UpperStation.Shield.Energy;
-			UpperStation.Shield.Energy = 0;
+			var oldEnergy = UpperStation.BravoComponent.Energy;
+			UpperStation.BravoComponent.Energy = 0;
 			return oldEnergy;
 		}
 
 		public void DrainShield(int amount)
 		{
-			UpperStation.Shield.Energy -= amount;
+			UpperStation.BravoComponent.Energy -= amount;
 		}
 
 		public int DrainReactor()
 		{
-			var oldEnergy = LowerStation.Reactor.Energy;
-			LowerStation.Reactor.Energy = 0;
-			var currentEnergy = LowerStation.Reactor.Energy;
+			var oldEnergy = LowerStation.BravoComponent.Energy;
+			LowerStation.BravoComponent.Energy = 0;
+			var currentEnergy = LowerStation.BravoComponent.Energy;
 			return oldEnergy - currentEnergy;
 		}
 
 		public int DrainReactor(int amount)
 		{
-			var oldEnergy = LowerStation.Reactor.Energy;
-			LowerStation.Reactor.Energy -= amount;
-			var currentEnergy = LowerStation.Reactor.Energy;
+			var oldEnergy = LowerStation.BravoComponent.Energy;
+			LowerStation.BravoComponent.Energy -= amount;
+			var currentEnergy = LowerStation.BravoComponent.Energy;
 			return oldEnergy - currentEnergy;
 		}
 
@@ -151,13 +151,13 @@ namespace BLL.ShipComponents
 
 		private void UpdateShields()
 		{
-			UpperStation.Shield.SetIneffectiveShields(DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields));
-			UpperStation.Shield.SetReversedShields(DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields));
+			UpperStation.BravoComponent.SetIneffectiveShields(DebuffsBySource.Values.Contains(ZoneDebuff.IneffectiveShields));
+			UpperStation.BravoComponent.SetReversedShields(DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields));
 		}
 
 		public int GetEnergyInReactor()
 		{
-			return LowerStation.Reactor.Energy;
+			return LowerStation.BravoComponent.Energy;
 		}
 
 		public void RepairFirstDamage(Player player)

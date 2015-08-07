@@ -12,8 +12,8 @@ namespace BLL.ShipComponents
 		private Airlock BluewardAirlock { get; set; }
 		private Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; private set; }
-		private SittingDuck SittingDuck { get; set; }
-		private ICharlieComponent CharlieComponent { get; set; }
+		protected SittingDuck SittingDuck { get; private set; }
+		protected ICharlieComponent CharlieComponent { get; private set; }
 
 		protected StandardStation(
 			StationLocation stationLocation,
@@ -33,71 +33,30 @@ namespace BLL.ShipComponents
 			SittingDuck = sittingDuck;
 		}
 
-		protected abstract void RefillEnergy(bool isHeroic);
+		public abstract void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false);
+		public abstract void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false);
+		public abstract void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false);
 
 		public virtual void PerformEndOfTurn()
 		{
 			Cannon.PerformEndOfTurn();
 		}
 
-		private bool HasIrreparableMalfunctionOfType(PlayerActionType playerActionType)
+		protected bool HasIrreparableMalfunctionOfType(PlayerActionType playerActionType)
 		{
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerActionType);
 		}
 
-		private void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
-		{
-			var firstBThreat = GetFirstThreatOfType(PlayerActionType.B, performingPlayer);
-			if (firstBThreat != null)
-			{
-				if (!(isRemote && firstBThreat.NextDamageWillDestroyThreat()))
-					DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
-			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.B))
-				RefillEnergy(isHeroic);
-		}
-
-		private void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
-		{
-			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
-			if (firstAThreat != null)
-				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.A))
-				Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
-			Cannon.RemoveMechanicBuff();
-		}
-
-		private bool CanFireCannon(Player performingPlayer)
+		public bool CanFireCannon(Player performingPlayer)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
 			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.A) && Cannon.CanFire();
 		}
 
-		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
-		{
-			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
-			if (firstCThreat != null)
-			{
-				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
-					DamageThreat(1, firstCThreat, performingPlayer, false);
-			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.C))
-				CharlieComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
-		}
-
-		private bool CanUseCComponent(Player performingPlayer)
+		public bool CanUseCharlieComponent(Player performingPlayer)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
 			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CharlieComponent.CanPerformCAction(performingPlayer);
-		}
-
-		private void UseBattleBots(Player performingPlayer, bool isHeroic)
-		{
-			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
-				return;
-			var firstBattleBotThreat = GetFirstThreatOfType(PlayerActionType.BattleBots, performingPlayer);
-			if (firstBattleBotThreat != null)
-				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 
 		public bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
@@ -154,6 +113,68 @@ namespace BLL.ShipComponents
 		public bool CanMoveOutTowardsBlue()
 		{
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
+		}
+	}
+
+	public abstract class StandardStation<T> : StandardStation where T : IBravoComponent
+	{
+		public T BravoComponent { get; private set; }
+
+		protected StandardStation(
+			StationLocation stationLocation,
+			ThreatController threatController,
+			T bravoComponent,
+			ICharlieComponent charlieComponent,
+			Gravolift gravolift,
+			Airlock bluewardAirlock,
+			Airlock redwardAirlock,
+			Cannon cannon,
+			SittingDuck sittingDuck) : base(stationLocation, threatController, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+		{
+			BravoComponent = bravoComponent;
+		}
+
+		public override void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
+		{
+			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
+			if (firstAThreat != null)
+				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.A))
+				Cannon.PerformAAction(isHeroic, performingPlayer, isAdvanced);
+			Cannon.RemoveMechanicBuff();
+		}
+
+		public override void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
+		{
+			var firstBThreat = GetFirstThreatOfType(PlayerActionType.B, performingPlayer);
+			if (firstBThreat != null)
+			{
+				if (!(isRemote && firstBThreat.NextDamageWillDestroyThreat()))
+					DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
+			}
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.B))
+				BravoComponent.PerformBAction(isHeroic);
+		}
+
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
+		{
+			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
+			if (firstCThreat != null)
+			{
+				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
+					DamageThreat(1, firstCThreat, performingPlayer, false);
+			}
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.C))
+				CharlieComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
+		}
+
+		private void UseBattleBots(Player performingPlayer, bool isHeroic)
+		{
+			if (performingPlayer.BattleBots == null || performingPlayer.BattleBots.IsDisabled)
+				return;
+			var firstBattleBotThreat = GetFirstThreatOfType(PlayerActionType.BattleBots, performingPlayer);
+			if (firstBattleBotThreat != null)
+				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 
 		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
@@ -307,7 +328,7 @@ namespace BLL.ShipComponents
 						foreach (var zone in SittingDuck.Zones)
 						{
 							var isCurrentZone = (StationLocation.ZoneLocation() == zone.ZoneLocation);
-							zone.UpperStation.Shield.BonusShield += isCurrentZone ? 2 : 1;
+							zone.UpperStation.BravoComponent.BonusShield += isCurrentZone ? 2 : 1;
 						}
 					break;
 				case PlayerSpecialization.Hypernavigator:
@@ -342,7 +363,7 @@ namespace BLL.ShipComponents
 					{
 						MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
 						var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
-						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCComponent(performingPlayer))
+						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCharlieComponent(performingPlayer))
 							newStation.PerformCAction(performingPlayer, currentTurn);
 					}
 					break;

@@ -5,10 +5,8 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class UpperStation : StandardStation
+	public class UpperStation : StandardStation<Shield>
 	{
-		public Shield Shield { get; private set; }
-
 		public UpperStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
@@ -18,25 +16,19 @@ namespace BLL.ShipComponents
 			Airlock redwardAirlock,
 			Cannon cannon,
 			SittingDuck sittingDuck,
-			Shield shield) : base(stationLocation, threatController, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+			Shield shield) : base(stationLocation, threatController, shield, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
 		{
-			Shield = shield;
-		}
-
-		protected override void RefillEnergy(bool isHeroic)
-		{
-			Shield.PerformBAction(isHeroic);
 		}
 
 		public override void DrainEnergyContainer(int amount)
 		{
-			Shield.Energy -= amount;
+			BravoComponent.Energy -= amount;
 		}
 
 		public override void PerformEndOfTurn()
 		{
 			base.PerformEndOfTurn();
-			Shield.PerformEndOfTurn();
+			BravoComponent.PerformEndOfTurn();
 		}
 	}
 }

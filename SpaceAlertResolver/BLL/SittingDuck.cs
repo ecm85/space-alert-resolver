@@ -305,7 +305,7 @@ namespace BLL
 		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.UpperStation.Shield.FillToCapacity(false);
+				zone.UpperStation.BravoComponent.FillToCapacity(false);
 		}
 
 		private static void KnockOut(IEnumerable<Player> players)

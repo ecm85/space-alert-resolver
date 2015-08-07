@@ -5,10 +5,8 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class LowerStation : StandardStation
+	public class LowerStation : StandardStation<Reactor>
 	{
-		public Reactor Reactor { get; private set; }
-
 		public LowerStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
@@ -18,19 +16,13 @@ namespace BLL.ShipComponents
 			Airlock redwardAirlock,
 			Cannon cannon,
 			SittingDuck sittingDuck,
-			Reactor reactor) : base(stationLocation, threatController, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+			Reactor reactor) : base(stationLocation, threatController, reactor, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
 		{
-			Reactor = reactor;
-		}
-
-		protected override void RefillEnergy(bool isHeroic)
-		{
-			Reactor.PerformBAction(isHeroic);
 		}
 
 		public override void DrainEnergyContainer(int amount)
 		{
-			Reactor.Energy -= amount;
+			BravoComponent.Energy -= amount;
 		}
 	}
 }

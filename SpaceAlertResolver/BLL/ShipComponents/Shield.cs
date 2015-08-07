@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class Shield : EnergyContainer
+	public class Shield : EnergyContainer, IBravoComponent
 	{
 		private EnergyContainer Source { get; set; }
 
