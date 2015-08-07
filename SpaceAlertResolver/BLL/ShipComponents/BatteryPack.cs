@@ -17,10 +17,5 @@ namespace BLL.ShipComponents
 			// ReSharper disable once ValueParameterNotUsed
 			// Value is ignored to simulate infinite energy (since only doubles have an infinity constant and energy is integral).
 		}
-
-		public override void PerformBAction(bool isHeroic)
-		{
-			throw new InvalidOperationException("Cannot refill battery pack.");
-		}
 	}
 }

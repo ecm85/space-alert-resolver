@@ -13,19 +13,19 @@ namespace BLL.ShipComponents
 		private Airlock RedwardAirlock { get; set; }
 		public Cannon Cannon { get; private set; }
 		private SittingDuck SittingDuck { get; set; }
-		private CComponent CComponent { get; set; }
+		private ICharlieComponent CharlieComponent { get; set; }
 
 		protected StandardStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
-			CComponent cComponent,
+			ICharlieComponent charlieComponent,
 			Gravolift gravolift,
 			Airlock bluewardAirlock,
 			Airlock redwardAirlock,
 			Cannon cannon,
 			SittingDuck sittingDuck) : base(stationLocation, threatController)
 		{
-			CComponent = cComponent;
+			CharlieComponent = charlieComponent;
 			Gravolift = gravolift;
 			BluewardAirlock = bluewardAirlock;
 			RedwardAirlock = redwardAirlock;
@@ -82,13 +82,13 @@ namespace BLL.ShipComponents
 					DamageThreat(1, firstCThreat, performingPlayer, false);
 			}
 			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.C))
-				CComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
+				CharlieComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
 		}
 
 		private bool CanUseCComponent(Player performingPlayer)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
-			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CComponent.CanPerformCAction(performingPlayer);
+			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CharlieComponent.CanPerformCAction(performingPlayer);
 		}
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)

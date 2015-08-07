@@ -5,14 +5,14 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class ComputerComponent : CComponent
+	public class ComputerComponent : ICharlieComponent
 	{
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
+		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			MaintenancePerformedThisPhase = true;
 		}
 
-		public override bool CanPerformCAction(Player performingPlayer)
+		public bool CanPerformCAction(Player performingPlayer)
 		{
 			return true;
 		}

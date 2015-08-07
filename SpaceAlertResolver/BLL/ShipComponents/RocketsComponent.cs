@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class RocketsComponent : CComponent
+	public class RocketsComponent : ICharlieComponent
 	{
 		private List<Rocket> Rockets { get; set; } 
 		private Rocket RocketFiredThisTurn { get; set; }
@@ -23,7 +23,7 @@ namespace BLL.ShipComponents
 			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
+		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			if (CanPerformCAction(performingPlayer))
 			{
@@ -40,7 +40,7 @@ namespace BLL.ShipComponents
 			}
 		}
 
-		public override bool CanPerformCAction(Player performingPlayer)
+		public bool CanPerformCAction(Player performingPlayer)
 		{
 			return RocketFiredLastTurn == null && Rockets.Any();
 		}

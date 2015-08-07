@@ -5,18 +5,18 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public class VisualConfirmationComponent : CComponent
+	public class VisualConfirmationComponent : ICharlieComponent
 	{
 		public int NumberOfConfirmationsThisTurn { get; private set; }
 		private int BestConfirmationTurnThisPhase { get; set; }
 		public int TotalVisualConfirmationPoints { get; private set; }
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
+		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			NumberOfConfirmationsThisTurn += isAdvancedUsage ? 3 : 1;
 		}
 
-		public override bool CanPerformCAction(Player performingPlayer)
+		public bool CanPerformCAction(Player performingPlayer)
 		{
 			return true;
 		}

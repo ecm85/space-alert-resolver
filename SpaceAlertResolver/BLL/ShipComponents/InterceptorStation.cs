@@ -22,7 +22,7 @@ namespace BLL.ShipComponents
 
 		private void PerformCAction(Player performingPlayer, int currentTurn)
 		{
-			InterceptorComponent.PerformCAction(performingPlayer, currentTurn);
+			InterceptorComponent.PerformCAction(performingPlayer, currentTurn, false);
 		}
 
 		private void UseBattleBots(Player performingPlayer, int currentTurn)

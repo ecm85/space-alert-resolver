@@ -14,7 +14,7 @@ namespace BLL.ShipComponents
 			Source = source;
 		}
 
-		public override void PerformBAction(bool isHeroic)
+		public void PerformBAction(bool isHeroic)
 		{
 			FillToCapacity(isHeroic);
 		}

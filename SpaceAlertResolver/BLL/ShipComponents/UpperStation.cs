@@ -12,13 +12,13 @@ namespace BLL.ShipComponents
 		public UpperStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
-			CComponent cComponent,
+			ICharlieComponent charlieComponent,
 			Gravolift gravolift,
 			Airlock bluewardAirlock,
 			Airlock redwardAirlock,
 			Cannon cannon,
 			SittingDuck sittingDuck,
-			Shield shield) : base(stationLocation, threatController, cComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+			Shield shield) : base(stationLocation, threatController, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
 		{
 			Shield = shield;
 		}

@@ -6,7 +6,7 @@ using BLL.Common;
 
 namespace BLL.ShipComponents
 {
-	public class BattleBotsComponent : CComponent
+	public class BattleBotsComponent : ICharlieComponent
 	{
 		private BattleBots battleBots = new BattleBots();
 
@@ -16,7 +16,7 @@ namespace BLL.ShipComponents
 				battleBots.IsDisabled = true;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
+		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (performingPlayer.BattleBots != null)
@@ -31,7 +31,7 @@ namespace BLL.ShipComponents
 			}
 		}
 
-		public override bool CanPerformCAction(Player performingPlayer)
+		public bool CanPerformCAction(Player performingPlayer)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			return performingPlayer.BattleBots != null || battleBots != null;
