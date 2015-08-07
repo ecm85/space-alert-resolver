@@ -9,9 +9,19 @@
 			<Word>Cryoshield</Word>
 			<Word>Gravolift</Word>
 			<Word>Debuff</Word>
+			<Word>Redward</Word>
+			<Word>Blueward</Word>
+			<Word>Megashield</Word>
+			<Word>Pulser</Word>
+			<Word>Needleship</Word>
+			<Word>Teleporter</Word>
+			<Word>Hypernavigator</Word>
+			<Word>Shambler</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>
+			<Term CompoundAlternate="SideLight">sidelight</Term>
+			<Term CompountAlternate="MineLayer">minelayer</Term>
 		</Compound>
 	</Words>
 </Dictionary>

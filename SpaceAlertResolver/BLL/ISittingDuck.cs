@@ -33,7 +33,7 @@ namespace BLL
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
 
-		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
+		void DisableInactiveBattleBots(IEnumerable<StationLocation> stationLocations);
 
 		event EventHandler RocketsModified;
 		event EventHandler CentralLaserCannonFired;

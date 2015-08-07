@@ -9,6 +9,7 @@ namespace BLL.ShipComponents
 	{
 		public StationLocation StationLocation { get; private set; }
 		public IList<Player> Players { get; private set; }
+		//TODO: change moveIn and moveOut to be EventHandler<MoveEventArgs>
 		public event Action<Player, int> MoveIn = (performingPlayer, currentTurn) => { };
 		public event Action<Player, int> MoveOut = (performingPlayer, currentTurn) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }

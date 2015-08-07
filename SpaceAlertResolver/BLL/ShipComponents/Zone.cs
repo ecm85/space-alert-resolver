@@ -149,7 +149,7 @@ namespace BLL.ShipComponents
 
 		public int GetEnergyInReactor()
 		{
-			return LowerStation.GetEnergyInReactor();
+			return LowerStation.EnergyInReactor;
 		}
 
 		public void RepairFirstDamage(Player player)

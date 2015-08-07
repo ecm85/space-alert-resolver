@@ -66,7 +66,10 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		public override bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)
 		{
-			return ActionType == playerActionType && CurrentStations.Contains(performingPlayer.CurrentStation.StationLocation) && performingPlayer != attachedPlayer;
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
+			return ActionType == playerActionType &&
+				CurrentStations.Contains(performingPlayer.CurrentStation.StationLocation)
+				&& performingPlayer != attachedPlayer;
 		}
 
 		protected override void OnThreatTerminated()

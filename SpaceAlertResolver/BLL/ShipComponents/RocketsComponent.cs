@@ -16,7 +16,7 @@ namespace BLL.ShipComponents
 			get { return Rockets.Count; }
 		}
 
-		public event Action RocketsModified = () => { };
+		public event EventHandler RocketsModified = (sender, eventArgs) => { };
 
 		public RocketsComponent()
 		{
@@ -36,7 +36,7 @@ namespace BLL.ShipComponents
 					Rockets.Remove(Rockets.First());
 					firedRocket.SetDoubleRocket();
 				}
-				RocketsModified();
+				RocketsModified(this, EventArgs.Empty);
 			}
 		}
 
@@ -54,13 +54,13 @@ namespace BLL.ShipComponents
 		public void RemoveRocket()
 		{
 			Rockets.Remove(Rockets.First());
-			RocketsModified();
+			RocketsModified(this, EventArgs.Empty);
 		}
 
 		public void RemoveAllRockets()
 		{
 			Rockets.Clear();
-			RocketsModified();
+			RocketsModified(this, EventArgs.Empty);
 		}
 	}
 }

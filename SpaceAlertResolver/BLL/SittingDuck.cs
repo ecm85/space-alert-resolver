@@ -52,7 +52,7 @@ namespace BLL
 			var computerComponent = new ComputerComponent();
 			var visualConfirmationComponent = new VisualConfirmationComponent();
 			var rocketsComponent = new RocketsComponent();
-			rocketsComponent.RocketsModified += () => RocketsModified(this, EventArgs.Empty);
+			rocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
 
 			var interceptors = new Interceptors();
 			var interceptorComponent0 = new InterceptorComponent(this, interceptors, StationLocation.UpperRed);
@@ -326,7 +326,7 @@ namespace BLL
 				zone.RemoveDebuffForSource(source);
 		}
 
-		public void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations)
+		public void DisableInactiveBattleBots(IEnumerable<StationLocation> stationLocations)
 		{
 			foreach (var stationLocation in stationLocations.Where(stationLocation => BattleBotsComponentsByLocation.ContainsKey(stationLocation)))
 				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();

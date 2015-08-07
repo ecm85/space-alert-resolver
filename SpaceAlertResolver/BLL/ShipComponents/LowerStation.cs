@@ -44,9 +44,9 @@ namespace BLL.ShipComponents
 			return oldEnergy - currentEnergy;
 		}
 
-		public int GetEnergyInReactor()
+		public int EnergyInReactor
 		{
-			return Reactor.Energy;
+			get { return Reactor.Energy; }
 		}
 	}
 }
