@@ -14,17 +14,17 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(2);
+			AttackCurrentZone(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(4);
+			AttackCurrentZone(4);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

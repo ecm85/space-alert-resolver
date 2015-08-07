@@ -15,21 +15,21 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 2)
-				Attack(2);
+				AttackCurrentZone(2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 3)
-				Attack(3);
+				AttackCurrentZone(3);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			var damageTaken = TotalHealth - RemainingHealth;
 			if (damageTaken < 6)
-				Attack(6);
+				AttackCurrentZone(6);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

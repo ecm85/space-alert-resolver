@@ -207,7 +207,7 @@ namespace ConsoleResolver
 		{
 			if(actionString.Any(actionCode => !ActionTypesByCode.ContainsKey(actionCode)))
 				throw new InvalidOperationException("Invalid player actions.");
-			//TODO: Parse advanced spec ops
+			//TODO: Parse advanced spec ops/Medic both
 			return actionString.Select(action => ActionTypesByCode[action]).ToList();
 		}
 

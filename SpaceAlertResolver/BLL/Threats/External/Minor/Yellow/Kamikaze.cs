@@ -26,7 +26,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(6);
+			AttackCurrentZone(6);
 		}
 	}
 }

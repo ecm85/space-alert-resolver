@@ -21,12 +21,12 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(2);
+			AttackCurrentZone(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(2);
+			AttackCurrentZone(2);
 		}
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{

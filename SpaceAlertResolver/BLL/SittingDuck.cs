@@ -69,7 +69,7 @@ namespace BLL
 			var blueSideLightLaserCannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue);
 			var redSideHeavyLaserCannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
 			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
-			centralHeavyLaserCannon.CannonFired += () => CentralLaserCannonFired();
+			centralHeavyLaserCannon.CannonFired += (sender, args) => CentralLaserCannonFired();
 
 			var blueSideShield = new SideShield(blueReactor);
 			var redSideShield = new SideShield(redReactor);

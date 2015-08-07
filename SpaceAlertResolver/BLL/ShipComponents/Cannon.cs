@@ -7,45 +7,49 @@ namespace BLL.ShipComponents
 {
 	public abstract class Cannon : IDamageableComponent
 	{
-		protected readonly int BaseDamage;
-		protected readonly IList<ZoneLocation> AffectedZones;
-		protected readonly int[] BaseAffectedDistances;
-		protected readonly PlayerDamageType PlayerDamageType;
+		private readonly int baseDamage;
+		private readonly IList<ZoneLocation> affectedZones;
+		private readonly IEnumerable<int> baseAffectedDistances;
+		private readonly PlayerDamageType playerDamageType;
 		private readonly EnergyContainer source;
 		protected bool OpticsDisrupted { get; private set; }
+		protected int BaseDamage { get { return baseDamage;} }
+		protected IList<ZoneLocation> AffectedZones { get { return affectedZones;} }
+		protected IEnumerable<int> BaseAffectedDistances { get { return baseAffectedDistances;} }
+		protected PlayerDamageType PlayerDamageType { get { return playerDamageType;} }
 
 		public void SetOpticsDisrupted(bool opticsDisrupted)
 		{
 			OpticsDisrupted = opticsDisrupted;
 		}
 
-		public event Action CannonFired = () => { };
-		public PlayerDamage[] PlayerDamage { get; private set; }
+		public event EventHandler CannonFired = (sender, args) => { };
+		public IEnumerable<PlayerDamage> CurrentPlayerDamage { get; private set; }
 
 		public void PerformEndOfTurn()
 		{
-			PlayerDamage = null;
+			CurrentPlayerDamage = null;
 		}
 
-		public void PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced = false)
+		public void PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced)
 		{
 			if (CanFire())
 			{
 				source.Energy -= 1;
-				CannonFired();
-				PlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
+				CannonFired(this, EventArgs.Empty);
+				CurrentPlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}
-			MechanicBuff = false;
+			HasMechanicBuff = false;
 		}
 
 		public bool CanFire()
 		{
-			return PlayerDamage == null && source.Energy > 1;
+			return CurrentPlayerDamage == null && source.Energy > 1;
 		}
 
-		protected abstract PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
+		protected abstract IEnumerable<PlayerDamage> GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
 
-		protected bool IsDamaged;
+		protected bool IsDamaged { get; private set; }
 
 		public void SetDamaged()
 		{
@@ -57,30 +61,25 @@ namespace BLL.ShipComponents
 			IsDamaged = false;
 		}
 
-		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, ZoneLocation zoneAffected)
-			: this(source, baseDamage, baseAffectedDistances, playerDamageType, new[] { zoneAffected })
-		{
-		}
-
-		protected Cannon(EnergyContainer source, int baseDamage, int[] baseAffectedDistances, PlayerDamageType playerDamageType, IList<ZoneLocation> affectedZones)
+		protected Cannon(EnergyContainer source, int baseDamage, IEnumerable<int> baseAffectedDistances, PlayerDamageType playerDamageType, params ZoneLocation[] affectedZones)
 		{
 			this.source = source;
-			BaseDamage = baseDamage;
-			BaseAffectedDistances = baseAffectedDistances;
-			PlayerDamageType = playerDamageType;
-			AffectedZones = affectedZones;
+			this.baseDamage = baseDamage;
+			this.baseAffectedDistances = baseAffectedDistances;
+			this.playerDamageType = playerDamageType;
+			this.affectedZones = affectedZones;
 		}
 
-		protected bool MechanicBuff;
+		protected bool HasMechanicBuff { get; private set; }
 
 		public void RemoveMechanicBuff()
 		{
-			MechanicBuff = false;
+			HasMechanicBuff = false;
 		}
 
 		public void AddMechanicBuff()
 		{
-			MechanicBuff = true;
+			HasMechanicBuff = true;
 		}
 	}
 }

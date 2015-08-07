@@ -14,17 +14,17 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(3, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(3, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

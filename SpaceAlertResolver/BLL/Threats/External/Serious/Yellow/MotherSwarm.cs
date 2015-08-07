@@ -14,18 +14,18 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(2);
+			AttackCurrentZone(2);
 			AttackOtherTwoZones(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(4);
+			AttackCurrentZone(4);
 			AttackOtherTwoZones(3);
 		}
 

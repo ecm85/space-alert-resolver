@@ -14,7 +14,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
+			AttackCurrentZone(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
 		protected override void PerformYAction(int currentTurn)

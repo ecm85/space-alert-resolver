@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.Threats.External.Serious.White
 {
@@ -26,18 +27,19 @@ namespace BLL.Threats.External.Serious.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(RemainingHealth);
+			AttackCurrentZone(RemainingHealth);
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
+			Check.ArgumentIsNotNull(damage, "damage");
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			Attack(2 * breakpointsCrossed);
+			AttackCurrentZone(2 * breakpointsCrossed);
 		}
 	}
 }

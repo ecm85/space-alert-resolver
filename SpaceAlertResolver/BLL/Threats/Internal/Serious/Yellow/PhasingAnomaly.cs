@@ -13,7 +13,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		private bool wasPhasedAtStartOfTurn;
 
 		private int numberOfYsCrossed;
-		
+
 		public PhasingAnomaly()
 			: base(2, 3, StationLocation.UpperWhite, PlayerActionType.C, 1)
 		{

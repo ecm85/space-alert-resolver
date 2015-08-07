@@ -25,7 +25,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			TotalInaccessibility = 0;
+			SetTotalInaccessibility(0);
 			CallInExternalThreat(currentTurn);
 		}
 

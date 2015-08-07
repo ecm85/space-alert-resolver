@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 {
 	public class ComputerComponent : CComponent
 	{
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			MaintenancePerformedThisPhase = true;
 		}

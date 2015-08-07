@@ -20,8 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\..\..\..\TFS\DSI\User\Applications\ReviewUpload\Custom.MicrosoftAllRulesAsErrors.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\Custom.AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Check.cs" />
+    <Compile Include="Common\Factory.cs" />
+    <Compile Include="Common\ValidatedNotNullAttribute.cs" />
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumFactory.cs" />
@@ -243,6 +246,9 @@
     <Compile Include="ZoneDebuff.cs" />
   </ItemGroup>
   <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
+      <Link>CustomDictionary.xml</Link>
+    </CodeAnalysisDictionary>
     <Content Include="Rule Clarifications.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

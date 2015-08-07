@@ -1,2 +1,4 @@
 *.exe
 /SpaceAlertResolver/packages
+/SpaceAlertResolver/ConsoleResolverTest/bin/Debug
+/SpaceAlertResolver/ConsoleResolverTest/obj/Debug

@@ -48,7 +48,7 @@ namespace BLL.Threats.External.Serious.Red
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			Attack(4 * breakpointsCrossed);
+			AttackCurrentZone(4 * breakpointsCrossed);
 		}
 
 		protected override void OnThreatTerminated()

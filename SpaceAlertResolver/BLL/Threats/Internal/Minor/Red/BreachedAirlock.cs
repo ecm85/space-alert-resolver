@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Red
@@ -37,6 +38,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			var bonusDamage = performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled ? 1 : 0;
 			base.TakeDamage(damage + bonusDamage, performingPlayer, isHeroic, stationLocation);
 		}

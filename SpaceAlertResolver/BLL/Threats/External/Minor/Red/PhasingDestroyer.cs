@@ -26,17 +26,17 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 1 : 2, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(wasPhasedAtStartOfTurn ? 1 : 2, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 2 : 3, ThreatDamageType.DoubleDamageThroughShields);
+			AttackCurrentZone(wasPhasedAtStartOfTurn ? 2 : 3, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		private void PerformBeforeMove()

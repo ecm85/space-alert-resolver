@@ -1,16 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BLL;
-using BLL.ShipComponents;
-using BLL.Threats;
-using BLL.Threats.External;
-using BLL.Threats.External.Minor.White;
-using BLL.Threats.Internal;
-using BLL.Threats.Internal.Minor.White;
-using BLL.Threats.Internal.Serious.White;
-using BLL.Threats.Internal.Serious.Yellow;
-using BLL.Tracks;
 using ConsoleResolver;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

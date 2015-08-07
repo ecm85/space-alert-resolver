@@ -16,18 +16,18 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			if (!hitByRocket)
-				Attack(5);
+				AttackCurrentZone(5);
 		}
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{

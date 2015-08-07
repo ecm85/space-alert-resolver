@@ -26,7 +26,7 @@ namespace BLL.Threats.External.Serious.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(RemainingHealth * 2);
+			AttackCurrentZone(RemainingHealth * 2);
 		}
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{

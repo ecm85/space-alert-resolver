@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			TotalInaccessibility = 0;
+			SetTotalInaccessibility(0);
 			MoveTowardsMostDamagedZone();
 		}
 

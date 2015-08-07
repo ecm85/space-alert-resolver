@@ -7,18 +7,18 @@ namespace BLL.ShipComponents
 {
 	public class PulseCannon : Cannon
 	{
-		public PulseCannon(Reactor source) : base(source, 1, new [] {1, 2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>())
+		public PulseCannon(Reactor source) : base(source, 1, new [] {1, 2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>().ToArray())
 		{
 		}
 
-		protected override PlayerDamage[] GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
+		protected override IEnumerable<PlayerDamage> GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced)
 		{
 			var damage = BaseDamage;
-			var affectedDistances = BaseAffectedDistances;
+			var affectedDistances = BaseAffectedDistances.ToList();
 			if (IsDamaged)
-				affectedDistances = affectedDistances.Except(new[] {affectedDistances.Max()}).ToArray();
-			if (MechanicBuff)
-				affectedDistances = affectedDistances.Concat(new[] {affectedDistances.Max() + 1}).ToArray();
+				affectedDistances = affectedDistances.Except(new[] {affectedDistances.Max()}).ToList();
+			if (HasMechanicBuff)
+				affectedDistances = affectedDistances.Concat(new[] {affectedDistances.Max() + 1}).ToList();
 			if (isHeroic)
 				damage++;
 			if (isAdvanced)

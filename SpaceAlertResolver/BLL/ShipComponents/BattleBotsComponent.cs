@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.ShipComponents
 {
@@ -15,8 +16,9 @@ namespace BLL.ShipComponents
 				battleBots.IsDisabled = true;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvanced = false)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (performingPlayer.BattleBots != null)
 			{
 				if (performingPlayer.BattleBots.IsDisabled)
@@ -31,6 +33,7 @@ namespace BLL.ShipComponents
 
 		public override bool CanPerformCAction(Player performingPlayer)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			return performingPlayer.BattleBots != null || battleBots != null;
 		}
 	}

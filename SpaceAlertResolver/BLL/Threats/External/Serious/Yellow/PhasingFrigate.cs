@@ -26,17 +26,17 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 1 : 2);
+			AttackCurrentZone(wasPhasedAtStartOfTurn ? 1 : 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 2 : 3);
+			AttackCurrentZone(wasPhasedAtStartOfTurn ? 2 : 3);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(wasPhasedAtStartOfTurn ? 3 : 4);
+			AttackCurrentZone(wasPhasedAtStartOfTurn ? 3 : 4);
 		}
 		private void PerformBeforeMove()
 		{

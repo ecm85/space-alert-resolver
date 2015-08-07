@@ -27,20 +27,20 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			var result = Attack(2);
+			var result = AttackCurrentZone(2);
 			Repair(result.DamageShielded);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var result = Attack(3);
+			var result = AttackCurrentZone(3);
 			Repair(result.DamageShielded);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			foreach(var zone in EnumFactory.All<ZoneLocation>())
-				Attack(1 + SittingDuck.GetEnergyInReactor(zone));
+				AttackCurrentZone(1 + SittingDuck.GetEnergyInReactor(zone));
 		}
 		private void PerformEndOfDamageResolution()
 		{

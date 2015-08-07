@@ -26,13 +26,13 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 			TakeIrreducibleDamage(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(2);
+			AttackCurrentZone(2);
 			TakeIrreducibleDamage(2);
 		}
 

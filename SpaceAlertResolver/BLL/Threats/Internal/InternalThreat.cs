@@ -9,10 +9,15 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		protected List<StationLocation> CurrentStations { get; private set; }
+		protected IList<StationLocation> CurrentStations { get; private set; }
 
-		protected int? TotalInaccessibility;
+		private int? totalInaccessibility;
 		private int? remainingInaccessibility;
+
+		protected void SetTotalInaccessibility(int totalInaccessibility)
+		{
+			this.totalInaccessibility = totalInaccessibility;
+		}
 
 		internal StationLocation CurrentStation
 		{
@@ -38,17 +43,28 @@ namespace BLL.Threats.Internal
 
 		protected PlayerActionType? ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility = null) :
-			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType, inaccessibility)
-		{
-		}
-
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, List<StationLocation> currentStations, PlayerActionType? actionType, int? inaccessibility = null) :
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations) :
 			base(type, difficulty, health, speed)
 		{
 			CurrentStations = currentStations;
+
+		}
+
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
+			this(type, difficulty, health, speed, currentStations)
+		{
 			ActionType = actionType;
-			TotalInaccessibility = remainingInaccessibility = inaccessibility;
+		}
+
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType) :
+			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
+		{
+		}
+
+		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility) :
+			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
+		{
+			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
 
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
@@ -167,7 +183,7 @@ namespace BLL.Threats.Internal
 
 		protected virtual void PerformEndOfTurn()
 		{
-			remainingInaccessibility = TotalInaccessibility;
+			remainingInaccessibility = totalInaccessibility;
 		}
 
 		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)

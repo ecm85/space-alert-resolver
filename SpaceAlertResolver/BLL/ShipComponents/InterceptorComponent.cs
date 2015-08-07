@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.ShipComponents
 {
@@ -31,7 +32,7 @@ namespace BLL.ShipComponents
 			this.sittingDuck = sittingDuck;
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && Interceptors.PlayerOperating == null)
 			{
@@ -63,6 +64,7 @@ namespace BLL.ShipComponents
 
 		public void PerformNoAction(Player performingPlayer, int currentTurn)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (ShipwardLocation != null && performingPlayer.Interceptors != null)
 			{
 				performingPlayer.CurrentStation.Players.Remove(performingPlayer);

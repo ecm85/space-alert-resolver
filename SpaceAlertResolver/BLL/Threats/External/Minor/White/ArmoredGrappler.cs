@@ -14,7 +14,7 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -24,7 +24,7 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(4);
+			AttackCurrentZone(4);
 		}
 	}
 }

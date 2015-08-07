@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.ShipComponents
 {
@@ -40,6 +41,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
 			OnMoveIn(performingPlayer, currentTurn);
@@ -47,6 +49,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			switch (performingPlayer.Actions[currentTurn].ActionType)
 			{
 				case PlayerActionType.C:

@@ -13,7 +13,7 @@ namespace BLL
 	public class Game
 	{
 		//TODO: Turn on code analysis
-		//TODO: Add more functional tests (start with same one from program.cs)
+		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
 		//TODO: Feature: Let user select damage tokens
@@ -108,7 +108,7 @@ namespace BLL
 			}
 			catch (LoseException)
 			{
-				this.HasLost = true;
+				HasLost = true;
 				throw;
 			}
 		}
@@ -153,25 +153,15 @@ namespace BLL
 
 		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
 		{
-			var playersPerformingAdvancedSpecialOps = players
-				.Where(player => player.IsPerformingAdvancedSpecialOps(currentTurn))
-				.ToList();
-			if (playersPerformingAdvancedSpecialOps.Any())
-				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
+			CheckForAdvancedSpecialOpsProtection(currentTurn);
 
-			var playerOrder = players
-				.Where(player => !player.IsKnockedOut)
-				.OrderBy(player => player.IsPerformingMedic(currentTurn))
-				.ThenBy(player => player.Index);
-
-			foreach (var player in playerOrder)
-				player.CurrentStation.PerformPlayerAction(player, currentTurn);
+			PerformPlayerActions(currentTurn);
 
 			var damages = SittingDuck.StandardStationsByLocation.Values
 				.Select(station => station.Cannon)
-				.Select(cannon => cannon.PlayerDamage)
+				.Select(cannon => cannon.CurrentPlayerDamage)
 				.Where(damageList => damageList != null)
-				.SelectMany(damageList => damageList)
+				.SelectMany(damageList => damageList.ToList())
 				.ToList();
 			ThreatController.PerformEndOfPlayerActions();
 
@@ -181,12 +171,40 @@ namespace BLL
 			var interceptorDamages = SittingDuck.InterceptorStations
 				.Select(station => station.PlayerInterceptorDamage)
 				.Where(damage => damage != null);
-			var anyPlayersInInterceptors = SittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
-			var visualConfirmationPerformed = SittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
-			var targetingAssistanceProvided = anyPlayersInInterceptors || visualConfirmationPerformed;
-			if (!targetingAssistanceProvided)
+			if (!TargetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
 			ResolveDamage(damages, interceptorDamages);
+		}
+
+		private bool TargetingAssistanceProvided
+		{
+			get
+			{
+				var anyPlayersInInterceptors = SittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
+				var visualConfirmationPerformed = SittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+				var targetingAssistanceProvided = anyPlayersInInterceptors || visualConfirmationPerformed;
+				return targetingAssistanceProvided;
+			}
+		}
+
+		private void PerformPlayerActions(int currentTurn)
+		{
+			var playerOrder = players
+				.Where(player => !player.IsKnockedOut)
+				.OrderBy(player => player.IsPerformingMedic(currentTurn))
+				.ThenBy(player => player.Index);
+
+			foreach (var player in playerOrder)
+				player.CurrentStation.PerformPlayerAction(player, currentTurn);
+		}
+
+		private void CheckForAdvancedSpecialOpsProtection(int currentTurn)
+		{
+			var playersPerformingAdvancedSpecialOps = players
+				.Where(player => player.IsPerformingAdvancedSpecialOps(currentTurn))
+				.ToList();
+			if (playersPerformingAdvancedSpecialOps.Any())
+				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
 		}
 
 		private void PerformEndOfTurn()

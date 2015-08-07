@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.ShipComponents
 {
@@ -11,6 +12,7 @@ namespace BLL.ShipComponents
 
 		public void Use(Player performingPlayer, int currentTurn, bool isHeroic)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (ShiftsPlayers && !isHeroic)
 				performingPlayer.Shift(currentTurn + 1);
 			SetOccupied();

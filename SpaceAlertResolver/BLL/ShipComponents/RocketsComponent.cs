@@ -23,7 +23,7 @@ namespace BLL.ShipComponents
 			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool advancedUsage = false)
+		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
 			if (CanPerformCAction(performingPlayer))
 			{
@@ -31,7 +31,7 @@ namespace BLL.ShipComponents
 				var firedRocket = Rockets.First();
 				Rockets.Remove(firedRocket);
 				RocketFiredThisTurn = firedRocket;
-				if (advancedUsage && canFireDoubleRocket)
+				if (isAdvancedUsage && canFireDoubleRocket)
 				{
 					Rockets.Remove(Rockets.First());
 					firedRocket.SetDoubleRocket();

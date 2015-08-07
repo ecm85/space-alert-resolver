@@ -25,7 +25,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(RemainingHealth);
+			AttackCurrentZone(RemainingHealth);
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
@@ -36,7 +36,7 @@ namespace BLL.Threats.External.Minor.Yellow
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			Attack(1 * breakpointsCrossed);
+			AttackCurrentZone(1 * breakpointsCrossed);
 		}
 	}
 }

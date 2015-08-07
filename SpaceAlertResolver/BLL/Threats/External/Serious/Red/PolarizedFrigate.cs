@@ -14,17 +14,17 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			Attack(1);
+			AttackCurrentZone(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Attack(3);
+			AttackCurrentZone(3);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(5);
+			AttackCurrentZone(5);
 		}
 
 		public override void TakeDamage(IList<PlayerDamage> damages)

@@ -25,7 +25,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Attack(4);
+			AttackCurrentZone(4);
 		}
 
 		protected override void OnHealthReducedToZero()
