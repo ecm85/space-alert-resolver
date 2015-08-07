@@ -7,17 +7,18 @@ namespace BLL.ShipComponents
 {
 	public abstract class StandardStation : Station
 	{
-		public abstract void DrainEnergyContainer(int amount);
+		private Cannon Cannon { get; set; }
 		private Gravolift Gravolift { get; set; }
 		private Airlock BluewardAirlock { get; set; }
 		private Airlock RedwardAirlock { get; set; }
-		public Cannon Cannon { get; private set; }
-		protected SittingDuck SittingDuck { get; private set; }
-		protected ICharlieComponent CharlieComponent { get; private set; }
+		private SittingDuck SittingDuck { get; set; }
+		private IBravoComponent BravoComponent { get; set; }
+		private ICharlieComponent CharlieComponent { get; set; }
 
 		protected StandardStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
+			IBravoComponent bravoComponent,
 			ICharlieComponent charlieComponent,
 			Gravolift gravolift,
 			Airlock bluewardAirlock,
@@ -25,6 +26,7 @@ namespace BLL.ShipComponents
 			Cannon cannon,
 			SittingDuck sittingDuck) : base(stationLocation, threatController)
 		{
+			BravoComponent = bravoComponent;
 			CharlieComponent = charlieComponent;
 			Gravolift = gravolift;
 			BluewardAirlock = bluewardAirlock;
@@ -33,27 +35,40 @@ namespace BLL.ShipComponents
 			SittingDuck = sittingDuck;
 		}
 
-		public abstract void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false);
-		public abstract void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false);
-		public abstract void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false);
+		public void SetOpticsDisrupted(bool opticsDisrupted)
+		{
+			Cannon.SetOpticsDisrupted(opticsDisrupted);
+		}
+
+		public abstract void DrainEnergy(int amount);
+
+		public IDamageableComponent GetDamageableBravoComponent()
+		{
+			return BravoComponent;
+		}
+
+		public IDamageableComponent GetDamageableAlphaComponent()
+		{
+			return Cannon;
+		}
 
 		public virtual void PerformEndOfTurn()
 		{
 			Cannon.PerformEndOfTurn();
 		}
 
-		protected bool HasIrreparableMalfunctionOfType(PlayerActionType playerActionType)
+		private bool HasIrreparableMalfunctionOfType(PlayerActionType playerActionType)
 		{
 			return IrreparableMalfunctions.Any(malfunction => malfunction.ActionType == playerActionType);
 		}
 
-		public bool CanFireCannon(Player performingPlayer)
+		private bool CanFireCannon(Player performingPlayer)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
 			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.A) && Cannon.CanFire();
 		}
 
-		public bool CanUseCharlieComponent(Player performingPlayer)
+		private bool CanUseCharlieComponent(Player performingPlayer)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
 			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CharlieComponent.CanPerformCAction(performingPlayer);
@@ -114,27 +129,8 @@ namespace BLL.ShipComponents
 		{
 			return BluewardAirlock != null && BluewardAirlock.CanUse;
 		}
-	}
 
-	public abstract class StandardStation<T> : StandardStation where T : IBravoComponent
-	{
-		public T BravoComponent { get; private set; }
-
-		protected StandardStation(
-			StationLocation stationLocation,
-			ThreatController threatController,
-			T bravoComponent,
-			ICharlieComponent charlieComponent,
-			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			Cannon cannon,
-			SittingDuck sittingDuck) : base(stationLocation, threatController, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
-		{
-			BravoComponent = bravoComponent;
-		}
-
-		public override void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
+		private void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
 		{
 			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
 			if (firstAThreat != null)
@@ -144,7 +140,7 @@ namespace BLL.ShipComponents
 			Cannon.RemoveMechanicBuff();
 		}
 
-		public override void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
+		private void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
 		{
 			var firstBThreat = GetFirstThreatOfType(PlayerActionType.B, performingPlayer);
 			if (firstBThreat != null)
@@ -156,7 +152,7 @@ namespace BLL.ShipComponents
 				BravoComponent.PerformBAction(isHeroic);
 		}
 
-		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
+		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
 		{
 			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
 			if (firstCThreat != null)
@@ -328,7 +324,7 @@ namespace BLL.ShipComponents
 						foreach (var zone in SittingDuck.Zones)
 						{
 							var isCurrentZone = (StationLocation.ZoneLocation() == zone.ZoneLocation);
-							zone.UpperStation.BravoComponent.BonusShield += isCurrentZone ? 2 : 1;
+							zone.UpperStation.AddBonusShield(isCurrentZone ? 2 : 1);
 						}
 					break;
 				case PlayerSpecialization.Hypernavigator:
@@ -375,6 +371,11 @@ namespace BLL.ShipComponents
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
+		}
+
+		public IEnumerable<PlayerDamage> CurrentPlayerDamage()
+		{
+			return Cannon.CurrentPlayerDamage;
 		}
 	}
 }

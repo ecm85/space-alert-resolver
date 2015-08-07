@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public abstract class Cannon : IDamageableComponent
+	public abstract class Cannon : IAlphaComponent
 	{
 		private readonly int baseDamage;
 		private readonly IList<ZoneLocation> affectedZones;

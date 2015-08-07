@@ -32,7 +32,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void PerformXAction(int currentTurn)
 		{
 			if (attachedPlayer != null && !attachedPlayer.IsKnockedOut && attachedPlayer.Interceptors != null)
-				SittingDuck.DrainEnergyContainer(attachedPlayer.CurrentStation.StationLocation, 1);
+				SittingDuck.DrainEnergy(attachedPlayer.CurrentStation.StationLocation, 1);
 		}
 
 		protected override void PerformYAction(int currentTurn)

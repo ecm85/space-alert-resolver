@@ -220,9 +220,9 @@ namespace BLL
 			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
 		}
 
-		public void DrainEnergyContainer(StationLocation stationLocation, int amount)
+		public void DrainEnergy(StationLocation stationLocation, int amount)
 		{
-			StandardStationsByLocation[stationLocation].DrainEnergyContainer(amount);
+			StandardStationsByLocation[stationLocation].DrainEnergy(amount);
 		}
 
 		public ThreatDamageResult TakeAttack(ThreatDamage damage)
@@ -305,7 +305,7 @@ namespace BLL
 		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
 			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.UpperStation.BravoComponent.FillToCapacity(false);
+				zone.UpperStation.FillToCapacity();
 		}
 
 		private static void KnockOut(IEnumerable<Player> players)

@@ -158,8 +158,7 @@ namespace BLL
 			PerformPlayerActions(currentTurn);
 
 			var damages = SittingDuck.StandardStationsByLocation.Values
-				.Select(station => station.Cannon)
-				.Select(cannon => cannon.CurrentPlayerDamage)
+				.Select(station => station.CurrentPlayerDamage())
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList.ToList())
 				.ToList();

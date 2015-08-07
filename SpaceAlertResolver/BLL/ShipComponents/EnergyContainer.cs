@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public abstract class EnergyContainer : IDamageableComponent
+	public abstract class EnergyContainer
 	{
 		protected int Capacity { get; private set; }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.ShipComponents
 {
-	public interface IBravoComponent
+	public interface IBravoComponent : IDamageableComponent
 	{
 		void PerformBAction(bool isHeroic);
 	}
