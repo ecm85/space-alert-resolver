@@ -7,7 +7,7 @@ namespace BLL
 {
 	public static class PlayerActionFactory
 	{
-		public static List<PlayerAction> CreateSingleActionList(Player player, IEnumerable<PlayerActionType?> actionTypes)
+		public static IList<PlayerAction> CreateSingleActionList(Player player, IEnumerable<PlayerActionType?> actionTypes)
 		{
 			return actionTypes
 				.Select(actionType => CreateSingleAction(player, actionType))

@@ -8,6 +8,10 @@
 		<Recognized>
 			<Word>Cryoshield</Word>
 			<Word>Gravolift</Word>
+			<Word>Debuff</Word>
 		</Recognized>
+		<Compound>
+			<Term CompoundAlternate="KnockOut">knockout</Term>
+		</Compound>
 	</Words>
 </Dictionary>

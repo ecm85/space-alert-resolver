@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.Threats.External.Serious.White
 {
@@ -30,6 +31,7 @@ namespace BLL.Threats.External.Serious.White
 		}
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
+			Check.ArgumentIsNotNull(damage, "damage");
 			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
 		}
 	}

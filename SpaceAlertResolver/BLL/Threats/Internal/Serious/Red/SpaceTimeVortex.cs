@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>(), currentTurn + 1, true);
+			SittingDuck.ShiftPlayersAndRepeatPreviousAction(EnumFactory.All<StationLocation>(), currentTurn + 1);
 		}
 
 		protected override void PerformYAction(int currentTurn)

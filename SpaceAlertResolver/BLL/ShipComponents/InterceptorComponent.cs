@@ -34,6 +34,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && Interceptors.PlayerOperating == null)
 			{
 				Interceptors.PlayerOperating = performingPlayer;

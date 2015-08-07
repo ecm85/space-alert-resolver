@@ -18,7 +18,7 @@ namespace BLL
 			}
 		}
 		public Interceptors Interceptors { get; set; }
-		public List<PlayerAction> Actions { get; set; }
+		public IList<PlayerAction> Actions { get; set; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
 		public int Index { get; set; }
@@ -37,12 +37,21 @@ namespace BLL
 
 		public bool HasSpecialOpsProtection { get; set; }
 
-		public void Shift(int turn, bool repeatPreviousAction = false)
+		public void Shift(int turn)
+		{
+			Shift(turn, null);
+		}
+
+		public void ShiftAndRepeatPreviousAction(int turn)
+		{
+			Shift(turn, Actions[turn - 1].ActionType);
+		}
+
+		private void Shift(int turn, PlayerActionType? actionToInsert)
 		{
 			var endTurn = turn;
 			while (endTurn + 1 < Actions.Count && Actions[endTurn].ActionType.HasValue)
 				endTurn++;
-			var actionToInsert = repeatPreviousAction ? Actions[turn - 1].ActionType : null;
 			Actions.Insert(turn, PlayerActionFactory.CreateSingleAction(this, actionToInsert));
 			Actions.RemoveAt(endTurn + 1);
 		}

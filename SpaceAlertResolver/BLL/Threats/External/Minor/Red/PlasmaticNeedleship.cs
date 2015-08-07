@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.Threats.External.Minor.Red
 {
@@ -28,6 +29,7 @@ namespace BLL.Threats.External.Minor.Red
 		}
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
+			Check.ArgumentIsNotNull(damage, "damage");
 			return damage.PlayerDamageType != PlayerDamageType.HeavyLaser && base.CanBeTargetedBy(damage);
 		}
 	}

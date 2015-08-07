@@ -17,10 +17,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			SittingDuck.CentralLaserCannonFired += HandleCentralLaerCannonFired;
+			SittingDuck.CentralLaserCannonFired += HandleCentralLaserCannonFired;
 		}
 
-		private void HandleCentralLaerCannonFired()
+		private void HandleCentralLaserCannonFired(object sender, EventArgs args)
 		{
 			AttackAllZones(1);
 		}
@@ -51,7 +51,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.CentralLaserCannonFired -= HandleCentralLaerCannonFired;
+			SittingDuck.CentralLaserCannonFired -= HandleCentralLaserCannonFired;
 		}
 	}
 }

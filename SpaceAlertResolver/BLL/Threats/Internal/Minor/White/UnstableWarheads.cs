@@ -17,13 +17,13 @@ namespace BLL.Threats.Internal.Minor.White
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			SetHealthToRemainingRockets();
+			SetHealthToRemainingRockets(this, EventArgs.Empty);
 			SittingDuck.RocketsModified += SetHealthToRemainingRockets;
 		}
 
-		private void SetHealthToRemainingRockets()
+		private void SetHealthToRemainingRockets(object sender, EventArgs args)
 		{
-			RemainingHealth = SittingDuck.GetRocketCount();
+			RemainingHealth = SittingDuck.RocketCount;
 		}
 
 		protected override void PerformXAction(int currentTurn)

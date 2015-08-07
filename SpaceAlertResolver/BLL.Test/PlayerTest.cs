@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BLL.Test
@@ -38,7 +39,7 @@ namespace BLL.Test
 				PlayerActionType.BattleBots,
 				PlayerActionType.C
 			});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -62,7 +63,7 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -85,7 +86,7 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -108,7 +109,7 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -132,7 +133,7 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -156,7 +157,7 @@ namespace BLL.Test
 					null,
 					PlayerActionType.C
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
@@ -168,7 +169,7 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
 			});
 
-			player.Shift(2, true);
+			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -179,11 +180,11 @@ namespace BLL.Test
 					PlayerActionType.BattleBots,
 					PlayerActionType.C
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
-		public void Test_Shift_WithBlanks_RepeatPreviousAction()
+		public void Test_ShiftAndRepeatPreviousAction_WithBlanks()
 		{
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
@@ -191,7 +192,7 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
 			});
 
-			player.Shift(2, true);
+			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -203,11 +204,11 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
-		public void Test_Shift_AtBlank_RepeatPreviousAction()
+		public void Test_ShiftAndRepeatPreviousAction_AtBlank()
 		{
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
@@ -215,7 +216,7 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
 			});
 
-			player.Shift(2, true);
+			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -226,11 +227,11 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
-		public void Test_Shift_LastBlank_RepeatPreviousAction()
+		public void Test_ShiftAndRepeatPreviousAction_LastBlank()
 		{
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
@@ -238,7 +239,7 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
 			});
 
-			player.Shift(2, true);
+			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -249,11 +250,11 @@ namespace BLL.Test
 					PlayerActionType.C,
 					PlayerActionType.ChangeDeck
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
-		public void Test_Shift_MultipleTimesSameTurn_RepeatPreviousAction()
+		public void Test_ShiftAndRepeatPreviousAction_MultipleTimesSameTurn()
 		{
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
@@ -261,8 +262,8 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
-			player.Shift(2, true);
-			player.Shift(2, true);
+			player.ShiftAndRepeatPreviousAction(2);
+			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -273,11 +274,11 @@ namespace BLL.Test
 					PlayerActionType.B,
 					PlayerActionType.C
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
 		[TestMethod]
-		public void Test_Shift_MultipleTimesConsecutiveTurns_RepeatPreviousAction()
+		public void Test_ShiftAndRepeatPreviousAction_MultipleTimesConsecutiveTurns()
 		{
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
@@ -285,8 +286,8 @@ namespace BLL.Test
 				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
-			player.Shift(2, true);
-			player.Shift(3, true);
+			player.ShiftAndRepeatPreviousAction(2);
+			player.ShiftAndRepeatPreviousAction(3);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
 				player,
 				new PlayerActionType?[]
@@ -297,7 +298,7 @@ namespace BLL.Test
 					PlayerActionType.B,
 					PlayerActionType.C
 				});
-			CollectionAssert.AreEqual(expectedActions, player.Actions, new ActionComparer());
+			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 	}
 }

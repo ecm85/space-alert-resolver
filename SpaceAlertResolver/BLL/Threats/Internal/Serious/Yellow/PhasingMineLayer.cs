@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -86,6 +87,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;

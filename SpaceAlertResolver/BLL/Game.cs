@@ -82,7 +82,7 @@ namespace BLL
 			foreach (var player in players)
 			{
 				var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), NumberOfTurns - player.Actions.Count);
-				player.Actions.AddRange(extraNullActions);
+				player.Actions = player.Actions.Concat(extraNullActions).ToList();
 			}
 		}
 

@@ -48,7 +48,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			var removedRocketCount = SittingDuck.GetRocketCount();
+			var removedRocketCount = SittingDuck.RocketCount;
 			SittingDuck.RemoveAllRockets();
 			for (var i = 0;i < removedRocketCount;i++)
 				SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));

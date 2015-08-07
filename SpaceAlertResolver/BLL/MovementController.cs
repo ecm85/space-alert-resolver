@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 using BLL.ShipComponents;
 
 namespace BLL
@@ -13,6 +14,8 @@ namespace BLL
 			Player player,
 			int currentTurn)
 		{
+			Check.ArgumentIsNotNull(standardStationsByLocation, "standardStationsByLocation");
+			Check.ArgumentIsNotNull(player, "player");
 			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
 			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.OppositeStationLocation().GetValueOrDefault()];
 			if (newStation != null)
@@ -28,6 +31,8 @@ namespace BLL
 			Player player,
 			int currentTurn)
 		{
+			Check.ArgumentIsNotNull(standardStationsByLocation, "standardStationsByLocation");
+			Check.ArgumentIsNotNull(player, "player");
 			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
 			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.BluewardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
@@ -43,6 +48,8 @@ namespace BLL
 			Player player,
 			int currentTurn)
 		{
+			Check.ArgumentIsNotNull(standardStationsByLocation, "standardStationsByLocation");
+			Check.ArgumentIsNotNull(player, "player");
 			var oldStation = standardStationsByLocation[player.CurrentStation.StationLocation];
 			var newStation = standardStationsByLocation[player.CurrentStation.StationLocation.RedwardStationLocation().GetValueOrDefault()];
 			if (newStation != null)
@@ -59,6 +66,8 @@ namespace BLL
 			StationLocation newStationLocation,
 			int currentTurn)
 		{
+			Check.ArgumentIsNotNull(standardStationsByLocation, "standardStationsByLocation");
+			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			var currentStationLocation = performingPlayer.CurrentStation.StationLocation;
 			var currentStation = standardStationsByLocation[currentStationLocation];
 			var path = Path(currentStationLocation, newStationLocation)

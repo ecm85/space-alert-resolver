@@ -20,8 +20,8 @@ namespace BLL
 		public ComputerComponent Computer { get; private set; }
 		public RocketsComponent RocketsComponent { get; private set; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
-		public event Action RocketsModified = () => { };
-		public event Action CentralLaserCannonFired = () => { };
+		public event EventHandler RocketsModified = (sender, args) => { };
+		public event EventHandler CentralLaserCannonFired = (sender, args) => { };
 		public ThreatController ThreatController { get; private set; }
 		public Game Game { get; private set; }
 
@@ -52,7 +52,7 @@ namespace BLL
 			var computerComponent = new ComputerComponent();
 			var visualConfirmationComponent = new VisualConfirmationComponent();
 			var rocketsComponent = new RocketsComponent();
-			rocketsComponent.RocketsModified += () => RocketsModified();
+			rocketsComponent.RocketsModified += () => RocketsModified(this, EventArgs.Empty);
 
 			var interceptors = new Interceptors();
 			var interceptorComponent0 = new InterceptorComponent(this, interceptors, StationLocation.UpperRed);
@@ -69,7 +69,7 @@ namespace BLL
 			var blueSideLightLaserCannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue);
 			var redSideHeavyLaserCannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
 			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
-			centralHeavyLaserCannon.CannonFired += (sender, args) => CentralLaserCannonFired();
+			centralHeavyLaserCannon.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
 
 			var blueSideShield = new SideShield(blueReactor);
 			var redSideShield = new SideShield(redReactor);
@@ -332,9 +332,9 @@ namespace BLL
 				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
 		}
 
-		public int GetRocketCount()
+		public int RocketCount
 		{
-			return RocketsComponent.RocketCount;
+			get { return RocketsComponent.RocketCount; }
 		}
 
 		public void RemoveRocket()
@@ -347,16 +347,22 @@ namespace BLL
 			RocketsComponent.RemoveAllRockets();
 		}
 
-		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift, bool repeatPreviousAction = false)
+		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
 		{
 			foreach (var player in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).SelectMany(zone => zone.Players))
-				player.Shift(turnToShift, repeatPreviousAction);
+				player.Shift(turnToShift);
 		}
 
-		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift, bool repeatPreviousAction = false)
+		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift)
 		{
 			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
-				player.Shift(turnToShift, repeatPreviousAction);
+				player.Shift(turnToShift);
+		}
+
+		public void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift)
+		{
+			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
+				player.ShiftAndRepeatPreviousAction(turnToShift);
 		}
 
 		public void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BLL.Common;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
@@ -37,11 +38,13 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		public override bool IsPriorityTargetFor(PlayerDamage damage)
 		{
+			Check.ArgumentIsNotNull(damage, "damage");
 			return damage.PlayerDamageType == PlayerDamageType.Rocket;
 		}
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
+			Check.ArgumentIsNotNull(damage, "damage");
 			return base.CanBeTargetedBy(damage) || damage.PlayerDamageType == PlayerDamageType.Rocket;
 		}
 	}

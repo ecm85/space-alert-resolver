@@ -35,13 +35,14 @@ namespace BLL
 
 		void DisableInactiveBattlebots(IEnumerable<StationLocation> stationLocations);
 
-		event Action RocketsModified;
-		event Action CentralLaserCannonFired;
-		int GetRocketCount();
+		event EventHandler RocketsModified;
+		event EventHandler CentralLaserCannonFired;
+		int RocketCount { get; }
 		void RemoveRocket();
 		void RemoveAllRockets();
-		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift, bool repeatPreviousAction = false);
-		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift, bool repeatPreviousAction = false);
+		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
+		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
+		void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift);
 
 		void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
 		void SubscribeToMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler);
