@@ -11,10 +11,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 		}
 
-		public override int GetPointsForDefeating()
-		{
-			return ThreatPoints.GetPointsForDefeatingSeeker();
-		}
+		public override int PointsForDefeating => ThreatPoints.GetPointsForDefeatingSeeker;
 
 		protected override void PerformXAction(int currentTurn)
 		{

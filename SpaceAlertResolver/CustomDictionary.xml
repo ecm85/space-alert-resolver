@@ -17,6 +17,7 @@
 			<Word>Teleporter</Word>
 			<Word>Hypernavigator</Word>
 			<Word>Shambler</Word>
+			<Word>Shipward</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>

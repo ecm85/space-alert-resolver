@@ -41,15 +41,9 @@ namespace BLL.ShipComponents
 
 		public abstract void DrainEnergy(int amount);
 
-		public IDamageableComponent GetDamageableBravoComponent()
-		{
-			return BravoComponent;
-		}
+		public IDamageableComponent DamageableBravoComponent => BravoComponent;
 
-		public IDamageableComponent GetDamageableAlphaComponent()
-		{
-			return Cannon;
-		}
+		public IDamageableComponent DamageableAlphaComponent => Cannon;
 
 		public virtual void PerformEndOfTurn()
 		{
@@ -266,22 +260,7 @@ namespace BLL.ShipComponents
 						action.MakeHeroic();
 					break;
 				case PlayerSpecialization.PulseGunner:
-					var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
-					if (CanFireCannon(performingPlayer) && pulseCannonStation.CanFireCannon(performingPlayer) && StationLocation != StationLocation.LowerWhite)
-					{
-						PerformAAction(performingPlayer, false);
-						pulseCannonStation.PerformAAction(performingPlayer, false);
-					}
-					else if (StationLocation == StationLocation.LowerWhite)
-						PerformAAction(performingPlayer, false);
-					else
-					{
-						pulseCannonStation.Cannon.RemoveMechanicBuff();
-						if (!CanFireCannon(performingPlayer))
-							PerformAAction(performingPlayer, false);
-						else
-							Cannon.RemoveMechanicBuff();
-					}
+					PerformBasicPulseGunner(performingPlayer);
 					break;
 				case PlayerSpecialization.Rocketeer:
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(performingPlayer, currentTurn, true);
@@ -291,22 +270,46 @@ namespace BLL.ShipComponents
 					performingPlayer.Actions[indexOfNextActionToMakeHeroic].MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
-					if (performingPlayer.BattleBots != null)
-					{
-						if (performingPlayer.BattleBots.IsDisabled)
-							performingPlayer.BattleBots.IsDisabled = false;
-						else
-							SittingDuck.ZonesByLocation[StationLocation.ZoneLocation()].RepairFirstDamage(performingPlayer);
-					}
+					PerformBasicSquadLeader(performingPlayer);
 					break;
 				case PlayerSpecialization.Teleporter:
-					var playerToTeleport = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.PlayerToTeleport);
-					var teleportDestination = SittingDuck.GetPlayersOnShip().SingleOrDefault(playerOnShip => playerOnShip.TeleportDestination);
+					var playerToTeleport = SittingDuck.PlayersOnShip.SingleOrDefault(playerOnShip => playerOnShip.PlayerToTeleport);
+					var teleportDestination = SittingDuck.PlayersOnShip.SingleOrDefault(playerOnShip => playerOnShip.TeleportDestination);
 					if(playerToTeleport != null && teleportDestination != null)
 						playerToTeleport.CurrentStation = teleportDestination.CurrentStation;
 					break;
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting basic specialization.");
+			}
+		}
+
+		private void PerformBasicSquadLeader(Player performingPlayer)
+		{
+			if (performingPlayer.BattleBots == null) return;
+			if (performingPlayer.BattleBots.IsDisabled)
+				performingPlayer.BattleBots.IsDisabled = false;
+			else
+				SittingDuck.ZonesByLocation[StationLocation.ZoneLocation()].RepairFirstDamage(performingPlayer);
+		}
+
+		private void PerformBasicPulseGunner(Player performingPlayer)
+		{
+			var pulseCannonStation = SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite];
+			if (CanFireCannon(performingPlayer) && pulseCannonStation.CanFireCannon(performingPlayer) &&
+			    StationLocation != StationLocation.LowerWhite)
+			{
+				PerformAAction(performingPlayer, false);
+				pulseCannonStation.PerformAAction(performingPlayer, false);
+			}
+			else if (StationLocation == StationLocation.LowerWhite)
+				PerformAAction(performingPlayer, false);
+			else
+			{
+				pulseCannonStation.Cannon.RemoveMechanicBuff();
+				if (!CanFireCannon(performingPlayer))
+					PerformAAction(performingPlayer, false);
+				else
+					Cannon.RemoveMechanicBuff();
 			}
 		}
 
@@ -319,23 +322,14 @@ namespace BLL.ShipComponents
 					performingPlayer.BonusPoints++;
 					break;
 				case PlayerSpecialization.EnergyTechnician:
-					if (StationLocation.IsUpperDeck())
-						foreach (var zone in SittingDuck.Zones)
-						{
-							var isCurrentZone = (StationLocation.ZoneLocation() == zone.ZoneLocation);
-							zone.UpperStation.AddBonusShield(isCurrentZone ? 2 : 1);
-						}
+					PerformAdvancedEnergyTechnician();
 					break;
 				case PlayerSpecialization.Hypernavigator:
 					if (currentTurn == 9 || currentTurn == 10)
 						SittingDuck.Game.NumberOfTurns = currentTurn + 1;
 					break;
 				case PlayerSpecialization.Mechanic:
-					var firstThreat = new[] {PlayerActionType.A, PlayerActionType.B, PlayerActionType.C}
-						.Select(actionType => GetFirstThreatOfType(actionType, performingPlayer))
-						.FirstOrDefault(threat => threat != null);
-					if(firstThreat != null)
-						DamageThreat(2, firstThreat, performingPlayer, false);
+					PerformAdvancedMechanic(performingPlayer);
 					break;
 				case PlayerSpecialization.Medic:
 					performingPlayer.SetPreventsKnockOut(true);
@@ -351,16 +345,7 @@ namespace BLL.ShipComponents
 					performingPlayer.HasSpecialOpsProtection = false;
 					break;
 				case PlayerSpecialization.SquadLeader:
-					var canGoIntoSpace = performingPlayer.BattleBots != null &&
-						!performingPlayer.BattleBots.IsDisabled &&
-						StationLocation != StationLocation.LowerBlue;
-					if (canGoIntoSpace)
-					{
-						MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
-						var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
-						if(newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCharlieComponent(performingPlayer))
-							newStation.PerformCAction(performingPlayer, currentTurn);
-					}
+					PerformAdvancedSquadLeader(performingPlayer, currentTurn);
 					break;
 				case PlayerSpecialization.Teleporter:
 					var newStationLocation = StationLocation.DiagonalStation();
@@ -370,6 +355,35 @@ namespace BLL.ShipComponents
 				default:
 					throw new InvalidOperationException("Missing specialization when attempting advanced specialization.");
 			}
+		}
+
+		private void PerformAdvancedEnergyTechnician()
+		{
+			if (!StationLocation.IsUpperDeck()) return;
+			foreach (var zone in SittingDuck.Zones)
+			{
+				var isCurrentZone = (StationLocation.ZoneLocation() == zone.ZoneLocation);
+				zone.UpperStation.AddBonusShield(isCurrentZone ? 2 : 1);
+			}
+		}
+
+		private void PerformAdvancedMechanic(Player performingPlayer)
+		{
+			var firstThreat = new[] {PlayerActionType.A, PlayerActionType.B, PlayerActionType.C}
+				.Select(actionType => GetFirstThreatOfType(actionType, performingPlayer))
+				.FirstOrDefault(threat => threat != null);
+			if (firstThreat != null)
+				DamageThreat(2, firstThreat, performingPlayer, false);
+		}
+
+		private void PerformAdvancedSquadLeader(Player performingPlayer, int currentTurn)
+		{
+			var canGoIntoSpace = performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && StationLocation != StationLocation.LowerBlue;
+			if (!canGoIntoSpace) return;
+			MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
+			var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
+			if (newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCharlieComponent(performingPlayer))
+				newStation.PerformCAction(performingPlayer, currentTurn);
 		}
 
 		public IEnumerable<PlayerDamage> CurrentPlayerDamage()

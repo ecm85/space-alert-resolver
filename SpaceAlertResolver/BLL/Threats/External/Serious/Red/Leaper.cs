@@ -12,7 +12,7 @@ namespace BLL.Threats.External.Serious.Red
 		private void Jump(ZoneLocation newZone)
 		{
 			var newTrack = ThreatController.ExternalTracks[newZone];
-			if (newTrack.GetStartingPosition() >= Position)
+			if (newTrack.StartingPosition>= Position)
 				Track = newTrack;
 		}
 

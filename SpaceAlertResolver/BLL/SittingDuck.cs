@@ -266,10 +266,7 @@ namespace BLL
 			return StationsByLocation[station].Players;
 		}
 
-		public IEnumerable<Player> GetPlayersOnShip()
-		{
-			return EnumFactory.All<StationLocation>().SelectMany(stationLocation => StandardStationsByLocation[stationLocation].Players);
-		}
+		public IEnumerable<Player> PlayersOnShip => EnumFactory.All<StationLocation>().SelectMany(stationLocation => StandardStationsByLocation[stationLocation].Players);
 
 		public void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations)
 		{
@@ -400,7 +397,7 @@ namespace BLL
 
 		public int GetEnergyInReactor(ZoneLocation zoneLocation)
 		{
-			return ZonesByLocation[zoneLocation].GetEnergyInReactor();
+			return ZonesByLocation[zoneLocation].EnergyInReactor;
 		}
 
 		public void KnockOutCaptain()
@@ -425,8 +422,8 @@ namespace BLL
 			RedAirlock.Breached = false;
 		}
 
-		public virtual bool RedAirlockIsBreached { get { return RedAirlock.Breached; } }
-		public virtual bool BlueAirlockIsBreached { get { return BlueAirlock.Breached; }}
+		public virtual bool RedAirlockIsBreached => RedAirlock.Breached;
+		public virtual bool BlueAirlockIsBreached => BlueAirlock.Breached;
 
 		public virtual int GetDamageToZone(ZoneLocation zoneLocation)
 		{

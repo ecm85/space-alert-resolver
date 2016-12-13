@@ -31,14 +31,20 @@ namespace BLL.Threats.Internal.Serious.Red
 			calledInThreat = true;
 		}
 
-		public override int GetPointsForDefeating()
+		public override int PointsForDefeating
 		{
-			return 8 + (calledInThreat ? 0 : BonusThreat.GetPointsForDefeating());
+			get
+			{
+				return 8 + (calledInThreat ? 0 : BonusThreat.PointsForDefeating);
+			}
 		}
 
-		protected override int GetPointsForSurviving()
+		protected override int PointsForSurviving
 		{
-			return 4;
+			get
+			{
+				return 4;
+			}
 		}
 
 		protected override void PerformYAction(int currentTurn)

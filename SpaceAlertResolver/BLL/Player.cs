@@ -42,7 +42,8 @@ namespace BLL
 
 		public void ShiftAndRepeatPreviousAction(int turn)
 		{
-			Shift(turn, Actions[turn - 1].ActionType);
+			var actionToRepeat = turn <= 0 ? null : Actions[turn - 1].ActionType;
+			Shift(turn, actionToRepeat);
 		}
 
 		private void Shift(int turn, PlayerActionType? actionToInsert)

@@ -15,7 +15,7 @@ using BLL.Threats.Internal.Serious.Yellow;
 
 namespace BLL.Threats
 {
-	public class ThreatFactory
+	public static class ThreatFactory
 	{
 		private static readonly Dictionary<Type, string> ThreatTypesByDisplayName = new Dictionary<Type, string>
 		{

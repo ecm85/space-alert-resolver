@@ -42,14 +42,20 @@ namespace BLL.Threats.External.Minor.Red
 			ThreatController.AddInternalThreat(BonusThreat, 1000 + currentTurn);
 		}
 
-		public override int GetPointsForDefeating()
+		public override int PointsForDefeating
 		{
-			return BonusThreat.GetPointsForDefeating();
+			get
+			{
+				return BonusThreat.PointsForDefeating;
+			}
 		}
 
-		protected override int GetPointsForSurviving()
+		protected override int PointsForSurviving
 		{
-			return 0;
+			get
+			{
+				return 0;
+			}
 		}
 	}
 }

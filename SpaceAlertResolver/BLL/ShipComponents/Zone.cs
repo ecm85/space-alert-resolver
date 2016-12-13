@@ -12,10 +12,10 @@ namespace BLL.ShipComponents
 		public int TotalDamage { get; private set; }
 		public ZoneLocation ZoneLocation { get; set; }
 		public Gravolift Gravolift { get; set; }
-		public IEnumerable<Player> Players { get { return UpperStation.Players.Concat(LowerStation.Players).ToList(); } }
-		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; set; }
-		public List<DamageToken> CurrentDamageTokens  { get; private set; }
-		public List<DamageToken> AllDamageTokensTaken { get; private set; }
+		public IEnumerable<Player> Players => UpperStation.Players.Concat(LowerStation.Players).ToList();
+		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
+		public List<DamageToken> CurrentDamageTokens  { get; }
+		public List<DamageToken> AllDamageTokensTaken { get; }
 		private readonly Random random = new Random();
 
 		public Zone()
@@ -59,8 +59,7 @@ namespace BLL.ShipComponents
 				foreach (var token in newDamageTokens)
 				{
 					var damageableComponent = GetDamageableComponent(token);
-					if (damageableComponent != null)
-						damageableComponent.SetDamaged();
+					damageableComponent?.SetDamaged();
 				}
 			}
 			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
@@ -71,15 +70,15 @@ namespace BLL.ShipComponents
 			switch (token)
 			{
 				case DamageToken.BackCannon:
-					return LowerStation.GetDamageableAlphaComponent();
+					return LowerStation.DamageableAlphaComponent;
 				case DamageToken.FrontCannon:
-					return UpperStation.GetDamageableAlphaComponent();
+					return UpperStation.DamageableAlphaComponent;
 				case DamageToken.Gravolift:
 					return Gravolift;
 				case DamageToken.Reactor:
-					return LowerStation.GetDamageableBravoComponent();
+					return LowerStation.DamageableBravoComponent;
 				case DamageToken.Shield:
-					return UpperStation.GetDamageableBravoComponent();
+					return UpperStation.DamageableBravoComponent;
 				case DamageToken.Structural:
 					return null;
 				default:
@@ -147,10 +146,7 @@ namespace BLL.ShipComponents
 			UpperStation.SetReversedShields(DebuffsBySource.Values.Contains(ZoneDebuff.ReversedShields));
 		}
 
-		public int GetEnergyInReactor()
-		{
-			return LowerStation.EnergyInReactor;
-		}
+		public int EnergyInReactor => LowerStation.EnergyInReactor;
 
 		public void RepairFirstDamage(Player player)
 		{
@@ -165,36 +161,24 @@ namespace BLL.ShipComponents
 			component.Repair();
 		}
 
-		private static DamageToken[] DamageTokenRepairOrderInUpperDeck
+		private static DamageToken[] DamageTokenRepairOrderInUpperDeck => new[]
 		{
-			get
-			{
-				return new[]
-				{
-					DamageToken.FrontCannon,
-					DamageToken.BackCannon,
-					DamageToken.Gravolift,
-					DamageToken.Shield,
-					DamageToken.Reactor,
-					DamageToken.Structural
-				};
-			}
-		}
+			DamageToken.FrontCannon,
+			DamageToken.BackCannon,
+			DamageToken.Gravolift,
+			DamageToken.Shield,
+			DamageToken.Reactor,
+			DamageToken.Structural
+		};
 
-		private static DamageToken[] DamageTokenRepairOrderInLowerDeck
+		private static DamageToken[] DamageTokenRepairOrderInLowerDeck => new[]
 		{
-			get
-			{
-				return new[]
-				{
-					DamageToken.BackCannon,
-					DamageToken.FrontCannon,
-					DamageToken.Gravolift,
-					DamageToken.Reactor,
-					DamageToken.Shield,
-					DamageToken.Structural
-				};
-			}
-		}
+			DamageToken.BackCannon,
+			DamageToken.FrontCannon,
+			DamageToken.Gravolift,
+			DamageToken.Reactor,
+			DamageToken.Shield,
+			DamageToken.Structural
+		};
 	}
 }

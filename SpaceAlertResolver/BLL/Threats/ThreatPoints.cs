@@ -34,9 +34,6 @@ namespace BLL.Threats
 			return GetPointsForSurviving(type, difficulty) * 2;
 		}
 
-		public static int GetPointsForDefeatingSeeker()
-		{
-			return 15;
-		}
+		public static int GetPointsForDefeatingSeeker => 15;
 	}
 }

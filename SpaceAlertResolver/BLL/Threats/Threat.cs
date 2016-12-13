@@ -12,7 +12,7 @@ namespace BLL.Threats
 
 		public void PlaceOnBoard(Track track)
 		{
-			PlaceOnBoard(track, track.GetStartingPosition());
+			PlaceOnBoard(track, track.StartingPosition);
 		}
 
 		public virtual void PlaceOnBoard(Track track, int? trackPosition)
@@ -40,22 +40,16 @@ namespace BLL.Threats
 
 		private bool HasBeenPlaced { get; set; }
 
-		public virtual int Points => !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0;
+		public virtual int Points => !HasBeenPlaced ? 0 : IsDefeated ? PointsForDefeating: IsSurvived ? PointsForSurviving: 0;
 
 		public virtual bool NeedsBonusExternalThreat => false;
 		public virtual bool NeedsBonusInternalThreat => false;
 
 		protected Track Track { get; set; }
 
-		public virtual int GetPointsForDefeating()
-		{
-			return ThreatPoints.GetPointsForDefeating(ThreatType, Difficulty);
-		}
+		public virtual int PointsForDefeating => ThreatPoints.GetPointsForDefeating(ThreatType, Difficulty);
 
-		protected virtual int GetPointsForSurviving()
-		{
-			return ThreatPoints.GetPointsForSurviving(ThreatType, Difficulty);
-		}
+		protected virtual int PointsForSurviving => ThreatPoints.GetPointsForSurviving(ThreatType, Difficulty);
 
 		public virtual bool IsDefeated { get; protected set; }
 		public virtual bool IsSurvived { get; private set; }
@@ -68,7 +62,7 @@ namespace BLL.Threats
 		protected ThreatController ThreatController { get; private set; }
 
 		public ThreatType ThreatType { get; }
-		protected readonly ThreatDifficulty Difficulty;
+		protected ThreatDifficulty Difficulty { get; }
 
 		protected ISittingDuck SittingDuck { get; private set; }
 

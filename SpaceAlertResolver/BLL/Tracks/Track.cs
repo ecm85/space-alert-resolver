@@ -15,10 +15,7 @@ namespace BLL.Tracks
 			sections = trackConfiguration.TrackSections();
 		}
 
-		public int GetStartingPosition()
-		{
-			return sections.Sum(section => section.Length);
-		}
+		public int StartingPosition => sections.Sum(section => section.Length);
 
 		public int DistanceToThreat(int position)
 		{

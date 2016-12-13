@@ -34,7 +34,7 @@ namespace BLL.ShipComponents
 				case StationLocation.Interceptor3:
 					return false;
 				default:
-					throw new InvalidOperationException("Invalid StationLocation encountered.");
+					throw new InvalidOperationException("Invalid Station Location encountered.");
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace BLL.ShipComponents
 				case StationLocation.Interceptor3:
 					throw new InvalidOperationException("Cannot get zone location for interceptor station.");
 				default:
-					throw new InvalidOperationException("Invalid StationLocation encountered.");
+					throw new InvalidOperationException("Invalid Station Location encountered.");
 			}
 		}
 
