@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Tracks;
 
@@ -18,7 +19,7 @@ namespace BLL.Threats.External.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfDamageResolutionEventHandler += HandleEndOfDamageResolution;
+			ThreatController.DamageResolutionEnding += OnDamageResolutionEnding;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -37,15 +38,15 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			AttackCurrentZone(1 + SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
-		private void HandleEndOfDamageResolution()
+		private void OnDamageResolutionEnding(object sender, EventArgs args)
 		{
 			if (TookDamageThisTurn)
 				Speed -= 2;
 		}
 
-		protected override void HandleEndOfTurn()
+		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
-			base.HandleEndOfTurn();
+			base.OnTurnEnded(sender, args);
 			if (TookDamageThisTurn)
 				Speed += 2;
 			healthAtStartOfTurn = RemainingHealth;
@@ -68,7 +69,7 @@ namespace BLL.Threats.External.Minor.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfDamageResolutionEventHandler -= HandleEndOfDamageResolution;
+			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
 	}
 }

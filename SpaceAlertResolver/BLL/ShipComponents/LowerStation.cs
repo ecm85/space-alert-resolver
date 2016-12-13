@@ -2,7 +2,7 @@
 {
 	public class LowerStation : StandardStation
 	{
-		private Reactor Reactor { get; set; }
+		private Reactor Reactor { get; }
 
 		public LowerStation(
 			StationLocation stationLocation,
@@ -39,9 +39,6 @@
 			return oldEnergy - currentEnergy;
 		}
 
-		public int EnergyInReactor
-		{
-			get { return Reactor.Energy; }
-		}
+		public int EnergyInReactor => Reactor.Energy;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using BLL.Common;
+﻿using System;
+using BLL.Common;
 
 namespace BLL.Threats.External.Serious.Red
 {
@@ -11,9 +12,9 @@ namespace BLL.Threats.External.Serious.Red
 		{
 		}
 
-		protected override void HandleEndOfTurn()
+		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
-			base.HandleEndOfTurn();
+			base.OnTurnEnded(sender, args);
 			Speed++;
 		}
 

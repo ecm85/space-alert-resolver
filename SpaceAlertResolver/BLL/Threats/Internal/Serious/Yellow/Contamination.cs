@@ -32,12 +32,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
-			SittingDuck.SubscribeToMoveIn(CurrentStations, KnockOutPlayer);
+			SittingDuck.SubscribeToMovingIn(CurrentStations, KnockOutPlayer);
 		}
 
-		private void KnockOutPlayer(Player performingPlayer, int currentTurn)
+		private static void KnockOutPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			performingPlayer.IsKnockedOut = true;
+			args.MovingPlayer.IsKnockedOut = true;
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)

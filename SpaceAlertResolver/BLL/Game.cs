@@ -20,7 +20,7 @@ namespace BLL
 		//TODO: Feature: Let user select damage tokens
 		//TODO: Feature: include penalties in score, and break score up more?
 		//TODO: Code Cleanup: Threat factory, threat enum
-		//TODO: Code Cleanup: Pick perform or on for event names. Stop using both! Maybe Do?
+		//TODO: Code Cleanup: Event names and methods - Perform vs On vs Do vs just the verb, change all to use -ing for before and use -ed for after
 		//TODO: Feature: Change all threat display names to include threat #
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
@@ -37,6 +37,7 @@ namespace BLL
 		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
 		//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
 		//TODO: Bug: Currently threats that move other threats (i.e. transmitter sattelite) don't interact with phasing threats correclty - they cause them to phase an extra time
+		//TODO: Code cleanup: Remove threat controller from all implementations of threats - make methods on Threat that subscribe to everything they care about
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;
@@ -131,7 +132,7 @@ namespace BLL
 				player.BattleBots.IsDisabled = true;
 			}
 			CalculateScore();
-			ThreatController.JumpToHyperspace();
+			ThreatController.OnJumpingToHyperspace();
 		}
 
 		private void CalculateScore()
@@ -165,7 +166,7 @@ namespace BLL
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList.ToList())
 				.ToList();
-			ThreatController.PerformEndOfPlayerActions();
+			ThreatController.OnPlayerActionsEnded();
 
 			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)

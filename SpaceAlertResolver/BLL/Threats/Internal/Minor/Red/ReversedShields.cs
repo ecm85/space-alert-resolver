@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -19,7 +20,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfPlayerActionsEventHandler += HandleEndOfPlayerActions;
+			ThreatController.PlayerActionsEnding += OnPlayerActionsEnding;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -47,19 +48,20 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfPlayerActionsEventHandler -= HandleEndOfPlayerActions;
+			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 		}
 
-		private void HandleEndOfPlayerActions()
+		private void OnPlayerActionsEnding(object sender, EventArgs args)
 		{
 			if (attackingPlayersThisTurn.Count == 1)
-				base.TakeDamage(1, null, false, null);
+				TakeDamage(1, null, false, null);
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-			attackingPlayersThisTurn.Add(performingPlayer);
+			if (performingPlayer != null)
+				attackingPlayersThisTurn.Add(performingPlayer);
 		}
 	}
 }

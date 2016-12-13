@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Tracks;
@@ -18,7 +19,7 @@ namespace BLL.Threats.Internal.Serious.White
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfPlayerActionsEventHandler += HandleEndOfPlayerActions;
+			ThreatController.PlayerActionsEnding += OnPlayerActionsEnding;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -35,7 +36,7 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()).Except(new[] { StationLocation.UpperWhite }));
 		}
-		private void HandleEndOfPlayerActions()
+		private void OnPlayerActionsEnding(object sender, EventArgs args)
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
 				base.TakeDamage(1, null, false, CurrentStation);
@@ -52,7 +53,7 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfPlayerActionsEventHandler -= HandleEndOfPlayerActions;
+			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 		}
 	}
 }

@@ -1,11 +1,13 @@
-﻿using BLL.Tracks;
+﻿using System;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class Nemesis : SeriousYellowExternalThreat
 	{
+		//TODO: Change this to actually track damage taken
 		private int healthAtStartOfTurn;
-		private bool TookDamageThisTurn { get { return healthAtStartOfTurn > RemainingHealth; } }
+		private bool TookDamageThisTurn => healthAtStartOfTurn > RemainingHealth;
 
 		public Nemesis()
 			: base(1, 9, 3)
@@ -16,7 +18,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfDamageResolutionEventHandler += HandleEndOfDamageResolution;
+			ThreatController.DamageResolutionEnding += OnDamageResolutionEnding;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -36,21 +38,21 @@ namespace BLL.Threats.External.Serious.Yellow
 			throw new LoseException(this);
 		}
 
-		private void HandleEndOfDamageResolution()
+		private void OnDamageResolutionEnding(object sender, EventArgs args)
 		{
 			if (TookDamageThisTurn)
 				AttackAllZones(1);
 		}
-		protected override void HandleEndOfTurn()
+		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
-			base.HandleEndOfTurn();
+			base.OnTurnEnded(sender, args);
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfDamageResolutionEventHandler -= HandleEndOfDamageResolution;
+			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
 	}
 }

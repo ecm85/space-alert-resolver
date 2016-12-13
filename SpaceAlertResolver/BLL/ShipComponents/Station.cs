@@ -7,13 +7,12 @@ namespace BLL.ShipComponents
 {
 	public abstract class Station
 	{
-		public StationLocation StationLocation { get; private set; }
+		public StationLocation StationLocation { get; }
 		public IList<Player> Players { get; private set; }
-		//TODO: change moveIn and moveOut to be EventHandler<MoveEventArgs>
-		public event Action<Player, int> MoveIn = (performingPlayer, currentTurn) => { };
-		public event Action<Player, int> MoveOut = (performingPlayer, currentTurn) => { };
+		public event EventHandler<PlayerMoveEventArgs> MovingIn = (sender, args) => { };
+		public event EventHandler<PlayerMoveEventArgs> MovingOut = (sender, args) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
-		protected ThreatController ThreatController { get; private set; }
+		protected ThreatController ThreatController { get; }
 
 		protected Station(StationLocation stationLocation, ThreatController threatController)
 		{
@@ -23,7 +22,7 @@ namespace BLL.ShipComponents
 			ThreatController = threatController;
 		}
 
-		public abstract void PerformMoveIn(Player performingPlayer, int currentTurn);
+		public abstract void MovePlayerIn(Player performingPlayer, int currentTurn);
 
 		protected InternalThreat GetFirstThreatOfType(PlayerActionType playerActionType, Player performingPlayer)
 		{
@@ -38,14 +37,14 @@ namespace BLL.ShipComponents
 			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
 		}
 
-		protected void OnMoveIn(Player performingPlayer, int currentTurn)
+		protected void OnPlayerMovingIn(Player performingPlayer, int currentTurn)
 		{
-			MoveIn(performingPlayer, currentTurn);
+			MovingIn(this, new PlayerMoveEventArgs {CurrentTurn = currentTurn, MovingPlayer = performingPlayer});
 		}
 
-		protected void OnMoveOut(Player performingPlayer, int currentTurn)
+		protected void OnPlayerMovingOut(Player performingPlayer, int currentTurn)
 		{
-			MoveOut(performingPlayer, currentTurn);
+			MovingOut(this, new PlayerMoveEventArgs {CurrentTurn = currentTurn, MovingPlayer = performingPlayer});
 		}
 
 		public abstract void PerformPlayerAction(Player performingPlayer, int currentTurn);

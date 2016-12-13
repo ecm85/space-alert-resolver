@@ -1,4 +1,5 @@
-﻿using BLL.ShipComponents;
+﻿using System;
+using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Serious.Red
@@ -13,10 +14,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.JumpingToHyperspaceEventHandler += HandleJumpingToHyperspace;
+			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
 		}
 
-		private void HandleJumpingToHyperspace()
+		private void OnJumpingToHyperspace(object sender, EventArgs args)
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
 		}
@@ -56,7 +57,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void OnHealthReducedToZero()
 		{
 			OnThreatTerminated();
-			ThreatController.JumpingToHyperspaceEventHandler -= HandleJumpingToHyperspace;
+			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 
 		private class Sabotage : InternalThreat

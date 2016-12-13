@@ -77,6 +77,7 @@
     <Compile Include="ShipComponents\Gravolift.cs" />
     <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\LowerStation.cs" />
+    <Compile Include="ShipComponents\PlayerMoveEventArgs.cs" />
     <Compile Include="ShipComponents\Reactor.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />

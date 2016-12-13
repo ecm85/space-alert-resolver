@@ -21,7 +21,7 @@ namespace BLL
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsOppositeDeck(player, currentTurn, false);
 				if (movedOut)
-					newStation.PerformMoveIn(player, currentTurn);
+					newStation.MovePlayerIn(player, currentTurn);
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace BLL
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsBlue(player, currentTurn);
 				if (movedOut)
-					newStation.PerformMoveIn(player, currentTurn);
+					newStation.MovePlayerIn(player, currentTurn);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace BLL
 			{
 				var movedOut = oldStation.PerformMoveOutTowardsRed(player, currentTurn);
 				if (movedOut)
-					newStation.PerformMoveIn(player, currentTurn);
+					newStation.MovePlayerIn(player, currentTurn);
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace BLL
 			var finalDestination = path.First(
 				pathLocation => pathLocation.Index >= path.Count - 1 ||
 				!CanMoveOut(pathLocation.Station, path[pathLocation.Index + 1].Station.StationLocation));
-			finalDestination.Station.PerformMoveIn(performingPlayer, currentTurn);
+			finalDestination.Station.MovePlayerIn(performingPlayer, currentTurn);
 		}
 
 		private static bool MoveOut(

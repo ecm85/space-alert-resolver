@@ -43,7 +43,7 @@ namespace BLL.ShipComponents
 				if (currentDistanceFromShip == null || currentDistanceFromShip < 3)
 				{
 					performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-					SpacewardStation.PerformMoveIn(performingPlayer, currentTurn);
+					SpacewardStation.MovePlayerIn(performingPlayer, currentTurn);
 				}
 				else
 				{
@@ -65,7 +65,7 @@ namespace BLL.ShipComponents
 			if (ShipwardLocation != null && performingPlayer.Interceptors != null)
 			{
 				performingPlayer.CurrentStation.Players.Remove(performingPlayer);
-				ShipwardLocation.PerformMoveIn(performingPlayer, currentTurn);
+				ShipwardLocation.MovePlayerIn(performingPlayer, currentTurn);
 			}
 		}
 	}

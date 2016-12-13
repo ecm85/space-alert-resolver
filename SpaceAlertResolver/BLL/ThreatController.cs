@@ -11,15 +11,15 @@ namespace BLL
 {
 	public class ThreatController
 	{
-		public IDictionary<ZoneLocation, Track> ExternalTracks { get; private set; }
-		private Track InternalTrack { get; set; }
-		private IList<ExternalThreat> ExternalThreats { get; set; }
-		private IList<InternalThreat> InternalThreats { get; set; }
-		public event Action JumpingToHyperspaceEventHandler = () => { };
-		public event Action EndOfPlayerActionsEventHandler = () => { };
-		public event Action EndOfTurnEventHandler = () => { };
-		public event Action EndOfDamageResolutionEventHandler = () => { };
-		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; set; }
+		public IDictionary<ZoneLocation, Track> ExternalTracks { get; }
+		private Track InternalTrack { get; }
+		private IList<ExternalThreat> ExternalThreats { get; }
+		private IList<InternalThreat> InternalThreats { get; }
+		public event EventHandler JumpingToHyperspace = (sender, args) => { };
+		public event EventHandler PlayerActionsEnding = (sender, args) => { };
+		public event EventHandler TurnEnding = (sender, args) => { };
+		public event EventHandler DamageResolutionEnding = (sender, args) => { };
+		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; }
 
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
@@ -66,7 +66,7 @@ namespace BLL
 			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Sum(threat => threat.Points); }
 		}
 
-		public object SingleTurnThreatSource { get; private set; }
+		public object SingleTurnThreatSource { get; }
 
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
 		{
@@ -117,25 +117,25 @@ namespace BLL
 				externalThreat.Move(currentTurn, amount);
 		}
 
-		public void JumpToHyperspace()
+		public void OnJumpingToHyperspace()
 		{
-			JumpingToHyperspaceEventHandler();
+			JumpingToHyperspace(null, null);
 		}
 
-		public void PerformEndOfPlayerActions()
+		public void OnPlayerActionsEnded()
 		{
-			EndOfPlayerActionsEventHandler();
+			PlayerActionsEnding(null, null);
 		}
 
 		public void PerformEndOfTurn()
 		{
 			RemoveExternalThreatEffectForSource(SingleTurnThreatSource);
-			EndOfTurnEventHandler();
+			TurnEnding(null, null);
 		}
 
 		public void PerformEndOfDamageResolution()
 		{
-			EndOfDamageResolutionEventHandler();
+			DamageResolutionEnding(null, null);
 		}
 
 		public IEnumerable<ExternalThreatEffect> CurrentExternalThreatBuffs()

@@ -18,12 +18,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			SittingDuck.SubscribeToMoveIn(CurrentStations, DelayPlayer);
+			SittingDuck.SubscribeToMovingIn(CurrentStations, DelayPlayer);
 		}
 
-		private static void DelayPlayer(Player performingPlayer, int currentTurn)
+		private static void DelayPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			performingPlayer.Shift(currentTurn + 1);
+			args.MovingPlayer.Shift(args.CurrentTurn + 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void OnHealthReducedToZero()
 		{
-			SittingDuck.UnsubscribeFromMoveIn(CurrentStations, DelayPlayer);
+			SittingDuck.UnsubscribeFromMovingIn(CurrentStations, DelayPlayer);
 			base.OnHealthReducedToZero();
 		}
 

@@ -18,13 +18,13 @@ namespace BLL.Threats.Internal.Serious.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			SittingDuck.SubscribeToMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
+			SittingDuck.SubscribeToMovingIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
 
-		private void AttachToPlayer(Player performingPlayer, int currentTurn)
+		private void AttachToPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			attachedPlayer = performingPlayer;
-			SittingDuck.UnsubscribeFromMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
+			attachedPlayer = args.MovingPlayer;
+			SittingDuck.UnsubscribeFromMovingIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -73,7 +73,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.UnsubscribeFromMoveIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
+			SittingDuck.UnsubscribeFromMovingIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
 	}
 }

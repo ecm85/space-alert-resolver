@@ -12,7 +12,7 @@ namespace BLL.ShipComponents
 			ThreatController threatController,
 			InterceptorComponent interceptorComponent) : base(stationLocation, threatController)
 		{
-			MoveIn += UseBattleBots;
+			MovingIn += UseBattleBots;
 			InterceptorComponent = interceptorComponent;
 		}
 
@@ -21,9 +21,9 @@ namespace BLL.ShipComponents
 			InterceptorComponent.PerformCAction(performingPlayer, currentTurn, false);
 		}
 
-		private void UseBattleBots(Player performingPlayer, int currentTurn)
+		private void UseBattleBots(object sender, PlayerMoveEventArgs eventArgs)
 		{
-			UseBattleBots(performingPlayer, false);
+			UseBattleBots(eventArgs.MovingPlayer, false);
 		}
 
 		private void UseBattleBots(Player performingPlayer, bool isHeroic)
@@ -35,12 +35,12 @@ namespace BLL.ShipComponents
 				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
 		}
 
-		public override void PerformMoveIn(Player performingPlayer, int currentTurn)
+		public override void MovePlayerIn(Player performingPlayer, int currentTurn)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
-			OnMoveIn(performingPlayer, currentTurn);
+			OnPlayerMovingIn(performingPlayer, currentTurn);
 		}
 
 		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)

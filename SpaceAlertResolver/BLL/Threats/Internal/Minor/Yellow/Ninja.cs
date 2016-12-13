@@ -17,18 +17,18 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void PerformXAction(int currentTurn)
 		{
 			droneLocations = AdjacentLocations();
-			SittingDuck.SubscribeToMoveIn(droneLocations, PoisonPlayer);
-			SittingDuck.SubscribeToMoveOut(droneLocations, PoisonPlayer);
+			SittingDuck.SubscribeToMovingIn(droneLocations, PoisonPlayer);
+			SittingDuck.SubscribeToMovingOut(droneLocations, PoisonPlayer);
 		}
 
-		private void PoisonPlayer(Player performingPlayer, int currentTurn)
+		private void PoisonPlayer(object sender, PlayerMoveEventArgs args)
 		{
 			if (poisonedPlayers == null)
 			{
 				poisonedPlayers = new PoisonedPlayers(ThreatType, Difficulty);
 				ThreatController.AddInternalThreat(poisonedPlayers, TimeAppears, Position.GetValueOrDefault());
 			}
-			poisonedPlayers.PoisonPlayer(performingPlayer);
+			poisonedPlayers.PoisonPlayer(args.MovingPlayer);
 		}
 
 		private IList<StationLocation> AdjacentLocations()
@@ -55,8 +55,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.UnsubscribeFromMoveIn(droneLocations, PoisonPlayer);
-			SittingDuck.UnsubscribeFromMoveOut(droneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMovingIn(droneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMovingOut(droneLocations, PoisonPlayer);
 		}
 
 		private class PoisonedPlayers : InternalThreat
@@ -88,25 +88,13 @@ namespace BLL.Threats.Internal.Minor.Yellow
 					player.IsKnockedOut = true;
 			}
 
-			public override int Points
-			{
-				get { return 0; }
-			}
+			public override int Points => 0;
 
-			public override bool IsDefeated
-			{
-				get { return false; }
-			}
+			public override bool IsDefeated => false;
 
-			public override bool IsSurvived
-			{
-				get { return false; }
-			}
+			public override bool IsSurvived => false;
 
-			public override bool IsDamageable
-			{
-				get { return false; }
-			}
+			public override bool IsDamageable => false;
 		}
 	}
 }

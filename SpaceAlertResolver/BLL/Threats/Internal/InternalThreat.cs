@@ -23,17 +23,14 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		protected ZoneLocation CurrentZone
-		{
-			get { return CurrentStation.ZoneLocation(); }
-		}
+		protected ZoneLocation CurrentZone => CurrentStation.ZoneLocation();
 
 		protected IList<ZoneLocation> CurrentZones
 		{
 			get { return CurrentStations.Select(station => station.ZoneLocation()).ToList(); }
 		}
 
-		protected PlayerActionType? ActionType { get; private set; }
+		protected PlayerActionType? ActionType { get; }
 
 		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations) :
 			base(threatType, difficulty, health, speed)
@@ -167,9 +164,9 @@ namespace BLL.Threats.Internal
 					new IrreparableMalfunction {ActionType = ActionType.Value});
 		}
 
-		protected override void HandleEndOfTurn()
+		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
-			base.HandleEndOfTurn();
+			base.OnTurnEnded(sender, args);
 			remainingInaccessibility = totalInaccessibility;
 		}
 

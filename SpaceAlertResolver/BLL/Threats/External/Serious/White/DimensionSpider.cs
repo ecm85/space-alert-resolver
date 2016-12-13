@@ -1,4 +1,5 @@
-﻿using BLL.Common;
+﻿using System;
+using BLL.Common;
 using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.White
@@ -13,7 +14,7 @@ namespace BLL.Threats.External.Serious.White
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.JumpingToHyperspaceEventHandler += HandleJumpingToHyperspace;
+			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -31,7 +32,7 @@ namespace BLL.Threats.External.Serious.White
 			AttackAllZones(4);
 		}
 
-		private void HandleJumpingToHyperspace()
+		private void OnJumpingToHyperspace(object sender, EventArgs args)
 		{
 			PerformZAction(-1);
 			OnReachingEndOfTrack();
@@ -45,7 +46,7 @@ namespace BLL.Threats.External.Serious.White
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.JumpingToHyperspaceEventHandler -= HandleJumpingToHyperspace;
+			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 	}
 }

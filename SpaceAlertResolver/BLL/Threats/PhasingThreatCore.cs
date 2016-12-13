@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace BLL.Threats
 {
 	public class PhasingThreatCore
@@ -9,12 +11,12 @@ namespace BLL.Threats
 		public PhasingThreatCore(Threat threat)
 		{
 			this.threat = threat;
-			threat.MovingEventHandler += PhaseIn;
-			threat.MovedEventHandler += TogglePhasing;
-			threat.EndOfTurnEventHandler += RecordPhasingStatus;
+			threat.Moving += PhaseIn;
+			threat.Moved += TogglePhasing;
+			threat.TurnEnded += RecordPhasingStatus;
 		}
 
-		private void RecordPhasingStatus()
+		private void RecordPhasingStatus(object sender, EventArgs args)
 		{
 			WasPhasedOutAtStartOfTurn = isPhasedOut;
 		}
@@ -23,22 +25,22 @@ namespace BLL.Threats
 
 		public bool WasPhasedOutAtStartOfTurn { get; private set; }
 
-		private void PhaseIn()
+		private void PhaseIn(object sender, EventArgs args)
 		{
 			isPhasedOut = false;
 			WasPhasedOutAtStartOfTurn = false;
 		}
 
-		private void TogglePhasing()
+		private void TogglePhasing(object sender, EventArgs args)
 		{
 			isPhasedOut = !WasPhasedOutAtStartOfTurn;
 		}
 
 		public void ThreatTerminated()
 		{
-			threat.MovingEventHandler -= PhaseIn;
-			threat.MovedEventHandler -= TogglePhasing;
-			threat.EndOfTurnEventHandler -= RecordPhasingStatus;
+			threat.Moving -= PhaseIn;
+			threat.Moved -= TogglePhasing;
+			threat.TurnEnded -= RecordPhasingStatus;
 		}
 	}
 }

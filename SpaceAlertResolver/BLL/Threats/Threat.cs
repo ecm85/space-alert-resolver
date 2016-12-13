@@ -6,9 +6,9 @@ namespace BLL.Threats
 {
 	public abstract class Threat
 	{
-		public event Action MovingEventHandler = () => { };
-		public event Action MovedEventHandler = () => { };
-		public event Action EndOfTurnEventHandler = () => { };
+		public event EventHandler Moving = (sender, args) => { };
+		public event EventHandler Moved = (sender, args) => { };
+		public event EventHandler TurnEnded = (sender, args) => { };
 
 		public void PlaceOnBoard(Track track)
 		{
@@ -20,11 +20,11 @@ namespace BLL.Threats
 			Track = track;
 			Position = trackPosition;
 			HasBeenPlaced = true;
-			EndOfTurnEventHandler += HandleEndOfTurn;
-			ThreatController.EndOfTurnEventHandler += () => EndOfTurnEventHandler();
+			TurnEnded += OnTurnEnded;
+			ThreatController.TurnEnding += (sender, args) => TurnEnded(sender, args);
 		}
 
-		protected virtual void HandleEndOfTurn()
+		protected virtual void OnTurnEnded(object sender, EventArgs args)
 		{
 		}
 
@@ -97,7 +97,7 @@ namespace BLL.Threats
 		protected virtual void OnThreatTerminated()
 		{
 			Position = null;
-			ThreatController.EndOfTurnEventHandler -= HandleEndOfTurn;
+			ThreatController.TurnEnding -= OnTurnEnded;
 		}
 
 		protected bool IsDamaged => RemainingHealth < TotalHealth;
@@ -126,7 +126,7 @@ namespace BLL.Threats
 
 		public void Move(int currentTurn, int amount)
 		{
-			MovingEventHandler();
+			Moving(null, null);
 			var oldPosition = Position;
 			Position -= amount;
 			var newPosition = Position;
@@ -147,7 +147,7 @@ namespace BLL.Threats
 							break;
 					}
 			}
-			MovedEventHandler();
+			Moved(null, null);
 		}
 	}
 }

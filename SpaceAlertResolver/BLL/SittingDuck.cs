@@ -8,26 +8,26 @@ namespace BLL
 {
 	public class SittingDuck : ISittingDuck
 	{
-		public Zone BlueZone { get; private set; }
-		public Zone WhiteZone { get; private set; }
-		public Zone RedZone { get; private set; }
-		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; private set; }
-		public IDictionary<StationLocation, Station> StationsByLocation { get; private set; }
-		public IEnumerable<Zone> Zones { get { return ZonesByLocation.Values; } }
-		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; private set; }
-		public IList<InterceptorStation> InterceptorStations { get; private set; }
+		public Zone BlueZone { get; }
+		public Zone WhiteZone { get; }
+		public Zone RedZone { get; }
+		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; }
+		public IDictionary<StationLocation, Station> StationsByLocation { get; }
+		public IEnumerable<Zone> Zones => ZonesByLocation.Values;
+		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; }
+		public IList<InterceptorStation> InterceptorStations { get; }
 		public ComputerComponent Computer { get; private set; }
-		public RocketsComponent RocketsComponent { get; private set; }
+		public RocketsComponent RocketsComponent { get; }
 		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event EventHandler RocketsModified = (sender, args) => { };
 		public event EventHandler CentralLaserCannonFired = (sender, args) => { };
 		public ThreatController ThreatController { get; private set; }
 		public Game Game { get; private set; }
 
-		private CentralReactor CentralReactor { get; set; }
-		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; set; }
-		private Airlock BlueAirlock { get; set; }
-		private Airlock RedAirlock { get; set; }
+		private CentralReactor CentralReactor { get; }
+		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; }
+		private Airlock BlueAirlock { get; }
+		private Airlock RedAirlock { get; }
 
 		public SittingDuck(ThreatController threatController, Game game)
 		{
@@ -331,10 +331,7 @@ namespace BLL
 				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
 		}
 
-		public int RocketCount
-		{
-			get { return RocketsComponent.RocketCount; }
-		}
+		public int RocketCount => RocketsComponent.RocketCount;
 
 		public void RemoveRocket()
 		{
@@ -364,28 +361,28 @@ namespace BLL
 				player.ShiftAndRepeatPreviousAction(turnToShift);
 		}
 
-		public void SubscribeToMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		public void SubscribeToMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler)
 		{
 			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.MoveIn += handler;
+				station.MovingIn += handler;
 		}
 
-		public void SubscribeToMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		public void SubscribeToMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler)
 		{
 			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.MoveOut += handler;
+				station.MovingOut += handler;
 		}
 
-		public void UnsubscribeFromMoveIn(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		public void UnsubscribeFromMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler)
 		{
 			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.MoveIn -= handler;
+				station.MovingIn -= handler;
 		}
 
-		public void UnsubscribeFromMoveOut(IEnumerable<StationLocation> stationLocations, Action<Player, int> handler)
+		public void UnsubscribeFromMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler)
 		{
 			foreach (var station in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]))
-				station.MoveOut -= handler;
+				station.MovingOut -= handler;
 		}
 
 		public void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction)
