@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BLL.Threats.External.Minor.White
+﻿namespace BLL.Threats.External.Minor.White
 {
 	public class Destroyer : MinorWhiteExternalThreat
 	{

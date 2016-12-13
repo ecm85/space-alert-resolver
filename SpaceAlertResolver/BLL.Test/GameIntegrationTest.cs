@@ -7,7 +7,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BLL.Threats;
 using BLL.Threats.Internal.Minor.White;
 using BLL.Threats.Internal.Serious.White;

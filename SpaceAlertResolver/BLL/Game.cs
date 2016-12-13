@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BLL.ShipComponents;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
@@ -12,7 +11,9 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Turn on code analysis
+		//TODO: Turn on code analysis in BLL Tests
+		//TODO: Turn on code analysis in Console Resolver
+		//TODO: Turn on code analysis in Console Resolver Tests
 		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover

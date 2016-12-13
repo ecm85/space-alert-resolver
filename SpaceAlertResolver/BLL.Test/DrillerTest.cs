@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using BLL.ShipComponents;
 using BLL.Threats.Internal.Minor.Red;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

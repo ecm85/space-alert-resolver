@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BLL.Tracks;
+﻿using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Red
 {

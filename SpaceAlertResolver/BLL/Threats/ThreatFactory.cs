@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using BLL.Threats.External.Minor.Red;
 using BLL.Threats.External.Minor.White;
 using BLL.Threats.External.Minor.Yellow;

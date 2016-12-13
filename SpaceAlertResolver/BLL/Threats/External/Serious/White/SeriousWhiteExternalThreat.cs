@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BLL.Threats.External.Serious.White
+﻿namespace BLL.Threats.External.Serious.White
 {
 	public abstract class SeriousWhiteExternalThreat : SeriousExternalThreat
 	{
