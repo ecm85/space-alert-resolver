@@ -6,8 +6,7 @@ namespace BLL.Threats.Internal.Minor.Red
 {
 	public abstract class PhasingTroopers : MinorRedInternalThreat
 	{
-		private bool isPhased;
-		private bool wasPhasedAtStartOfTurn;
+		private PhasingThreatCore phasingThreatCore;
 
 		protected PhasingTroopers(StationLocation currentStation)
 			: base(2, 2, currentStation, PlayerActionType.BattleBots)
@@ -17,47 +16,23 @@ namespace BLL.Threats.Internal.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore = new PhasingThreatCore(this);
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			if (!wasPhasedAtStartOfTurn)
+			if (!phasingThreatCore.WasPhasedOutAtStartOfTurn)
 				ChangeDecks();
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(wasPhasedAtStartOfTurn ? 3 : 4);
+			Damage(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 3 : 4);
 		}
 
-		private void PerformBeforeMove()
-		{
-			isPhased = false;
-		}
+		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
-		private void PerformAfterMove()
-		{
-			isPhased = !wasPhasedAtStartOfTurn;
-		}
-
-		protected override void PerformEndOfTurn()
-		{
-			if (isPhased)
-				wasPhasedAtStartOfTurn = isPhased;
-			base.PerformEndOfTurn();
-		}
-
-		public override bool IsDamageable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		public override bool IsMoveable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
+		public override bool IsMoveable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
@@ -69,8 +44,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void OnThreatTerminated()
 		{
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
 	}

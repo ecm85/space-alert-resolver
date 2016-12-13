@@ -19,7 +19,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
+			ThreatController.EndOfPlayerActionsEventHandler += HandleEndOfPlayerActions;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -47,10 +47,10 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
+			ThreatController.EndOfPlayerActionsEventHandler -= HandleEndOfPlayerActions;
 		}
 
-		private void PerformEndOfPlayerActions()
+		private void HandleEndOfPlayerActions()
 		{
 			if (attackingPlayersThisTurn.Count == 1)
 				base.TakeDamage(1, null, false, null);

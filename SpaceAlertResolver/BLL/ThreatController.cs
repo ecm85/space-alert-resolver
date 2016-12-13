@@ -15,10 +15,10 @@ namespace BLL
 		private Track InternalTrack { get; set; }
 		private IList<ExternalThreat> ExternalThreats { get; set; }
 		private IList<InternalThreat> InternalThreats { get; set; }
-		public event Action JumpingToHyperspace = () => { };
-		public event Action EndOfPlayerActions = () => { };
-		public event Action EndOfTurn = () => { };
-		public event Action EndOfDamageResolution = () => { };
+		public event Action JumpingToHyperspaceEventHandler = () => { };
+		public event Action EndOfPlayerActionsEventHandler = () => { };
+		public event Action EndOfTurnEventHandler = () => { };
+		public event Action EndOfDamageResolutionEventHandler = () => { };
 		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; set; }
 
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
@@ -93,7 +93,7 @@ namespace BLL
 				.Concat(InternalThreatsOnTrack)
 				.Concat(ExternalThreatsOnTrack)
 				.OrderBy(threat => threat.TimeAppears)
-				.ThenBy(threat => threat.Type)
+				.ThenBy(threat => threat.ThreatType)
 				.ToList();
 			foreach (var moveableThreat in allMoveableThreats)
 				moveableThreat.Move(currentTurn);
@@ -119,23 +119,23 @@ namespace BLL
 
 		public void JumpToHyperspace()
 		{
-			JumpingToHyperspace();
+			JumpingToHyperspaceEventHandler();
 		}
 
 		public void PerformEndOfPlayerActions()
 		{
-			EndOfPlayerActions();
+			EndOfPlayerActionsEventHandler();
 		}
 
 		public void PerformEndOfTurn()
 		{
 			RemoveExternalThreatEffectForSource(SingleTurnThreatSource);
-			EndOfTurn();
+			EndOfTurnEventHandler();
 		}
 
 		public void PerformEndOfDamageResolution()
 		{
-			EndOfDamageResolution();
+			EndOfDamageResolutionEventHandler();
 		}
 
 		public IEnumerable<ExternalThreatEffect> CurrentExternalThreatBuffs()

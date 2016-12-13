@@ -7,7 +7,7 @@ namespace BLL.Threats.External.Minor.Red
 	public class EnergySnake : MinorRedExternalThreat
 	{
 		private int healthAtStartOfTurn;
-		private bool TookDamageThisTurn { get { return healthAtStartOfTurn > RemainingHealth; } }
+		private bool TookDamageThisTurn => healthAtStartOfTurn > RemainingHealth;
 
 		public EnergySnake()
 			: base(3, 6, 4)
@@ -18,8 +18,7 @@ namespace BLL.Threats.External.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler += HandleEndOfDamageResolution;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -38,14 +37,15 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			AttackCurrentZone(1 + SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
-		private void PerformEndOfDamageResolution()
+		private void HandleEndOfDamageResolution()
 		{
 			if (TookDamageThisTurn)
 				Speed -= 2;
 		}
 
-		private void PerformEndOfTurn()
+		protected override void HandleEndOfTurn()
 		{
+			base.HandleEndOfTurn();
 			if (TookDamageThisTurn)
 				Speed += 2;
 			healthAtStartOfTurn = RemainingHealth;
@@ -68,8 +68,7 @@ namespace BLL.Threats.External.Minor.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler -= HandleEndOfDamageResolution;
 		}
 	}
 }

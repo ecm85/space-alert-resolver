@@ -4,8 +4,7 @@ namespace BLL.Threats.External.Minor.Red
 {
 	public class PhasingPulser : MinorRedExternalThreat
 	{
-		private bool isPhased;
-		private bool wasPhasedAtStartOfTurn;
+		private PhasingThreatCore phasingThreatCore;
 
 		public PhasingPulser()
 			: base(1, 6, 2)
@@ -15,14 +14,12 @@ namespace BLL.Threats.External.Minor.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			phasingThreatCore = new PhasingThreatCore(this);
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackAllZones(wasPhasedAtStartOfTurn ? 0 : 1);
+			AttackAllZones(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 0 : 1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -32,39 +29,16 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackAllZones(wasPhasedAtStartOfTurn ? 2 : 3);
+			AttackAllZones(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
 		}
 
-		private void PerformBeforeMove()
-		{
-			isPhased = false;
-		}
+		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
-		private void PerformAfterMove()
-		{
-			isPhased = !wasPhasedAtStartOfTurn;
-		}
-
-		public override bool IsDamageable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		public override bool IsMoveable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		private void PerformEndOfTurn()
-		{
-			wasPhasedAtStartOfTurn = isPhased;
-		}
+		public override bool IsMoveable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
 		protected override void OnThreatTerminated()
 		{
-			BeforeMove -= PerformBeforeMove;
-			AfterMove -= PerformAfterMove;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
 	}

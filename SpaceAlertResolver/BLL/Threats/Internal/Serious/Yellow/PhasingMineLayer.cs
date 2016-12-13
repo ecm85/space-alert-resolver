@@ -8,8 +8,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class PhasingMineLayer : SeriousYellowInternalThreat
 	{
-		private bool isPhased;
-		private bool wasPhasedAtStartOfTurn;
+		private PhasingThreatCore phasingThreatCore;
 
 		private readonly IList<StationLocation> mineLocations;
 
@@ -21,14 +20,13 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore = new PhasingThreatCore(this);
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
 			LayMine();
-			if (wasPhasedAtStartOfTurn)
+			if (phasingThreatCore.WasPhasedOutAtStartOfTurn)
 				MoveBlue();
 			else
 				MoveRed();
@@ -46,32 +44,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			DetonateMines();
 		}
 
-		private void PerformBeforeMove()
-		{
-			isPhased = false;
-		}
+		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
-		private void PerformAfterMove()
-		{
-			isPhased = !wasPhasedAtStartOfTurn;
-		}
-
-		public override bool IsDamageable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		public override bool IsMoveable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		protected override void PerformEndOfTurn()
-		{
-			if (isPhased)
-				wasPhasedAtStartOfTurn = isPhased;
-			base.PerformEndOfTurn();
-		}
+		public override bool IsMoveable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
 		private void LayMine()
 		{
@@ -93,8 +68,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void OnThreatTerminated()
 		{
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
 	}

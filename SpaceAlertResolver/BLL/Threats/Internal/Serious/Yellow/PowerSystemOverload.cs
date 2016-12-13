@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfPlayerActions += PerformEndOfPlayerActions;
+			ThreatController.EndOfPlayerActionsEventHandler += HandleEndOfPlayerActions;
 		}
 		protected override void PerformXAction(int currentTurn)
 		{
@@ -39,7 +39,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			DamageAllZones(3);
 		}
 
-		private void PerformEndOfPlayerActions()
+		private void HandleEndOfPlayerActions()
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
 				base.TakeDamage(2, null, false, CurrentStation);
@@ -55,7 +55,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void OnThreatTerminated()
 		{
-			ThreatController.EndOfPlayerActions -= PerformEndOfPlayerActions;
+			ThreatController.EndOfPlayerActionsEventHandler -= HandleEndOfPlayerActions;
 			base.OnThreatTerminated();
 		}
 	}

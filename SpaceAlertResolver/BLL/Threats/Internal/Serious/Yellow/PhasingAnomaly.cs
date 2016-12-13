@@ -6,8 +6,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class PhasingAnomaly : SeriousYellowInternalThreat
 	{
-		private bool isPhased;
-		private bool wasPhasedAtStartOfTurn;
+		private PhasingThreatCore phasingThreatCore;
 
 		private int numberOfYsCrossed;
 
@@ -19,9 +18,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore = new PhasingThreatCore(this);
 		}
+
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.AddZoneDebuff(new [] {ZoneLocation.White}, ZoneDebuff.DisruptedOptics, this);
@@ -49,32 +48,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			Damage(3);
 		}
 
-		private void PerformBeforeMove()
-		{
-			isPhased = false;
-		}
+		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
-		private void PerformAfterMove()
-		{
-			isPhased = !wasPhasedAtStartOfTurn;
-		}
-
-		protected override void PerformEndOfTurn()
-		{
-			if (isPhased)
-				wasPhasedAtStartOfTurn = isPhased;
-			base.PerformEndOfTurn();
-		}
-
-		public override bool IsDamageable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		public override bool IsMoveable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
+		public override bool IsMoveable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
 		protected override void OnHealthReducedToZero()
 		{
@@ -84,8 +60,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void OnThreatTerminated()
 		{
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
+			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
 	}

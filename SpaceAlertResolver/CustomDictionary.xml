@@ -22,6 +22,7 @@
 			<Term CompoundAlternate="KnockOut">knockout</Term>
 			<Term CompoundAlternate="SideLight">sidelight</Term>
 			<Term CompountAlternate="MineLayer">minelayer</Term>
+			<Term CompountAlternate="OnBoard">onboard</Term>
 		</Compound>
 	</Words>
 </Dictionary>

@@ -4,8 +4,7 @@ namespace BLL.Threats.External.Serious.Yellow
 {
 	public class PhasingFrigate : SeriousYellowExternalThreat
 	{
-		private bool isPhased;
-		private bool wasPhasedAtStartOfTurn;
+		private PhasingThreatCore phasingThreatCore;
 
 		public PhasingFrigate()
 			: base(2, 7, 2)
@@ -15,55 +14,31 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			BeforeMove += PerformBeforeMove;
-			AfterMove += PerformAfterMove;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			phasingThreatCore = new PhasingThreatCore(this);
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(wasPhasedAtStartOfTurn ? 1 : 2);
+			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 1 : 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(wasPhasedAtStartOfTurn ? 2 : 3);
+			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(wasPhasedAtStartOfTurn ? 3 : 4);
-		}
-		private void PerformBeforeMove()
-		{
-			isPhased = false;
+			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 3 : 4);
 		}
 
-		private void PerformAfterMove()
-		{
-			isPhased = !wasPhasedAtStartOfTurn;
-		}
+		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
-		public override bool IsDamageable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		public override bool IsMoveable
-		{
-			get { return base.IsDamageable && !isPhased; }
-		}
-
-		private void PerformEndOfTurn()
-		{
-			wasPhasedAtStartOfTurn = isPhased;
-		}
+		public override bool IsMoveable => base.IsDamageable && phasingThreatCore.IsDamageable;
 
 		protected override void OnThreatTerminated()
 		{
-			BeforeMove -= PerformBeforeMove;
-			AfterMove -= PerformAfterMove;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
 	}

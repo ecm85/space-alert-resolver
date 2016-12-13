@@ -16,8 +16,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler += HandleEndOfDamageResolution;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -37,21 +36,21 @@ namespace BLL.Threats.External.Serious.Yellow
 			throw new LoseException(this);
 		}
 
-		private void PerformEndOfDamageResolution()
+		private void HandleEndOfDamageResolution()
 		{
 			if (TookDamageThisTurn)
 				AttackAllZones(1);
 		}
-		private void PerformEndOfTurn()
+		protected override void HandleEndOfTurn()
 		{
+			base.HandleEndOfTurn();
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler -= HandleEndOfDamageResolution;
 		}
 	}
 }

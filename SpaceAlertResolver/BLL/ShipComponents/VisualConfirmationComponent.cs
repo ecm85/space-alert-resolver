@@ -30,7 +30,7 @@ namespace BLL.ShipComponents
 			BestConfirmationTurnThisPhase = 0;
 		}
 
-		private int GetVisualConfirmationPoints(int numberOfPlayers)
+		private static int GetVisualConfirmationPoints(int numberOfPlayers)
 		{
 			if (numberOfPlayers <= 3)
 				return numberOfPlayers;

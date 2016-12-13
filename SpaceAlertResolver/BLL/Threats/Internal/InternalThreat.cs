@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
-using BLL.Tracks;
 
 namespace BLL.Threats.Internal
 {
@@ -24,12 +23,6 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
-		{
-			ThreatController.EndOfTurn += PerformEndOfTurn;
-			base.PlaceOnBoard(track, trackPosition);
-		}
-
 		protected ZoneLocation CurrentZone
 		{
 			get { return CurrentStation.ZoneLocation(); }
@@ -42,26 +35,26 @@ namespace BLL.Threats.Internal
 
 		protected PlayerActionType? ActionType { get; private set; }
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations) :
-			base(type, difficulty, health, speed)
+		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations) :
+			base(threatType, difficulty, health, speed)
 		{
 			CurrentStations = currentStations;
 
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
-			this(type, difficulty, health, speed, currentStations)
+		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
+			this(threatType, difficulty, health, speed, currentStations)
 		{
 			ActionType = actionType;
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType) :
-			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
+		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType) :
+			this(threatType, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
 		{
 		}
 
-		protected InternalThreat(ThreatType type, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility) :
-			this(type, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
+		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility) :
+			this(threatType, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
 		{
 			totalInaccessibility = remainingInaccessibility = inaccessibility;
 		}
@@ -166,12 +159,6 @@ namespace BLL.Threats.Internal
 			AddIrreparableMalfunction();
 		}
 
-		protected override void OnThreatTerminated()
-		{
-			base.OnThreatTerminated();
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
-		}
-
 		private void AddIrreparableMalfunction()
 		{
 			if (ActionType!= null && ActionType != PlayerActionType.BattleBots)
@@ -180,8 +167,9 @@ namespace BLL.Threats.Internal
 					new IrreparableMalfunction {ActionType = ActionType.Value});
 		}
 
-		protected virtual void PerformEndOfTurn()
+		protected override void HandleEndOfTurn()
 		{
+			base.HandleEndOfTurn();
 			remainingInaccessibility = totalInaccessibility;
 		}
 

@@ -119,7 +119,7 @@ namespace BLL.ShipComponents
 			return RedwardAirlock != null && RedwardAirlock.CanUse;
 		}
 
-		public bool CanMoveOutTowardsOppositeDeck()
+		public static bool CanMoveOutTowardsOppositeDeck()
 		{
 			return true;
 		}

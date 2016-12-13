@@ -19,8 +19,7 @@ namespace BLL.Threats.External.Serious.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfDamageResolution += PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn += PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler += HandleEndOfDamageResolution;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -40,14 +39,15 @@ namespace BLL.Threats.External.Serious.Red
 			foreach(var zone in EnumFactory.All<ZoneLocation>())
 				AttackCurrentZone(1 + SittingDuck.GetEnergyInReactor(zone));
 		}
-		private void PerformEndOfDamageResolution()
+		private void HandleEndOfDamageResolution()
 		{
 			if (TookDamageThisTurn)
 				Speed -= 2;
 		}
 
-		private void PerformEndOfTurn()
+		protected override void HandleEndOfTurn()
 		{
+			base.HandleEndOfTurn();
 			if (TookDamageThisTurn)
 				Speed += 2;
 			healthAtStartOfTurn = RemainingHealth;
@@ -70,8 +70,7 @@ namespace BLL.Threats.External.Serious.Red
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatController.EndOfDamageResolution -= PerformEndOfDamageResolution;
-			ThreatController.EndOfTurn -= PerformEndOfTurn;
+			ThreatController.EndOfDamageResolutionEventHandler -= HandleEndOfDamageResolution;
 		}
 	}
 }

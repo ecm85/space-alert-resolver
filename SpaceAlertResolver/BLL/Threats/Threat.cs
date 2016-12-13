@@ -6,8 +6,9 @@ namespace BLL.Threats
 {
 	public abstract class Threat
 	{
-		public event Action BeforeMove = () => { };
-		public event Action AfterMove = () => { };
+		public event Action MovingEventHandler = () => { };
+		public event Action MovedEventHandler = () => { };
+		public event Action EndOfTurnEventHandler = () => { };
 
 		public void PlaceOnBoard(Track track)
 		{
@@ -19,6 +20,12 @@ namespace BLL.Threats
 			Track = track;
 			Position = trackPosition;
 			HasBeenPlaced = true;
+			EndOfTurnEventHandler += HandleEndOfTurn;
+			ThreatController.EndOfTurnEventHandler += () => EndOfTurnEventHandler();
+		}
+
+		protected virtual void HandleEndOfTurn()
+		{
 		}
 
 		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController)
@@ -27,43 +34,40 @@ namespace BLL.Threats
 			ThreatController = threatController;
 		}
 
-		public virtual bool IsDamageable { get { return HasBeenPlaced && Position != null; } }
-		public virtual bool IsMoveable { get { return HasBeenPlaced && Position != null; } }
-		public bool IsOnTrack { get { return HasBeenPlaced && Position != null; } }
+		public virtual bool IsDamageable => HasBeenPlaced && Position != null;
+		public virtual bool IsMoveable => HasBeenPlaced && Position != null;
+		public bool IsOnTrack => HasBeenPlaced && Position != null;
 
 		private bool HasBeenPlaced { get; set; }
 
-		public virtual int Points
-		{
-			get { return !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0; }
-		}
+		public virtual int Points => !HasBeenPlaced ? 0 : IsDefeated ? GetPointsForDefeating() : IsSurvived ? GetPointsForSurviving() : 0;
 
-		public virtual bool NeedsBonusExternalThreat { get { return false; } }
-		public virtual bool NeedsBonusInternalThreat { get { return false; } }
+		public virtual bool NeedsBonusExternalThreat => false;
+		public virtual bool NeedsBonusInternalThreat => false;
 
 		protected Track Track { get; set; }
 
 		public virtual int GetPointsForDefeating()
 		{
-			return ThreatPoints.GetPointsForDefeating(Type, Difficulty);
+			return ThreatPoints.GetPointsForDefeating(ThreatType, Difficulty);
 		}
 
 		protected virtual int GetPointsForSurviving()
 		{
-			return ThreatPoints.GetPointsForSurviving(Type, Difficulty);
+			return ThreatPoints.GetPointsForSurviving(ThreatType, Difficulty);
 		}
 
 		public virtual bool IsDefeated { get; protected set; }
 		public virtual bool IsSurvived { get; private set; }
 
 		public int TimeAppears { get; set; }
-		protected int TotalHealth { get; private set; }
+		protected int TotalHealth { get; }
 		protected int RemainingHealth { get; set; }
 		public int Speed { get; set; }
 		public int? Position { get; private set; }
 		protected ThreatController ThreatController { get; private set; }
 
-		public ThreatType Type { get; private set; }
+		public ThreatType ThreatType { get; }
 		protected readonly ThreatDifficulty Difficulty;
 
 		protected ISittingDuck SittingDuck { get; private set; }
@@ -93,12 +97,10 @@ namespace BLL.Threats
 		protected virtual void OnThreatTerminated()
 		{
 			Position = null;
+			ThreatController.EndOfTurnEventHandler -= HandleEndOfTurn;
 		}
 
-		protected bool IsDamaged
-		{
-			get { return RemainingHealth < TotalHealth; }
-		}
+		protected bool IsDamaged => RemainingHealth < TotalHealth;
 
 		public void Repair(int amount)
 		{
@@ -106,10 +108,10 @@ namespace BLL.Threats
 			RemainingHealth = (newHealth < TotalHealth) ? newHealth : TotalHealth;
 		}
 
-		protected Threat(ThreatType type, ThreatDifficulty difficulty, int health, int speed)
+		protected Threat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed)
 		{
 			Difficulty = difficulty;
-			Type = type;
+			ThreatType = threatType;
 			TotalHealth = RemainingHealth = health;
 			Speed = speed;
 		}
@@ -124,7 +126,7 @@ namespace BLL.Threats
 
 		public void Move(int currentTurn, int amount)
 		{
-			BeforeMove();
+			MovingEventHandler();
 			var oldPosition = Position;
 			Position -= amount;
 			var newPosition = Position;
@@ -145,7 +147,7 @@ namespace BLL.Threats
 							break;
 					}
 			}
-			AfterMove();
+			MovedEventHandler();
 		}
 	}
 }

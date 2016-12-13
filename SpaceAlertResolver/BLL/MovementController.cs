@@ -101,7 +101,7 @@ namespace BLL
 		private static bool CanMoveOut(StandardStation fromStation, StationLocation toStationLocation)
 		{
 			if (toStationLocation == fromStation.StationLocation.OppositeStationLocation())
-				return fromStation.CanMoveOutTowardsOppositeDeck();
+				return StandardStation.CanMoveOutTowardsOppositeDeck();
 			if (toStationLocation == fromStation.StationLocation.RedwardStationLocation())
 				return fromStation.CanMoveOutTowardsRed();
 			if (toStationLocation == fromStation.StationLocation.BluewardStationLocation())

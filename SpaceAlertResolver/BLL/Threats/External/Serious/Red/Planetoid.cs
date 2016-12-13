@@ -1,5 +1,4 @@
 ﻿using BLL.Common;
-using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.Red
 {
@@ -12,14 +11,9 @@ namespace BLL.Threats.External.Serious.Red
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		protected override void HandleEndOfTurn()
 		{
-			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.EndOfTurn += IncreaseSpeed;
-		}
-
-		private void IncreaseSpeed()
-		{
+			base.HandleEndOfTurn();
 			Speed++;
 		}
 
@@ -47,12 +41,6 @@ namespace BLL.Threats.External.Serious.Red
 		{
 			base.OnHealthReducedToZero();
 			AttackCurrentZone(4 * breakpointsCrossed);
-		}
-
-		protected override void OnThreatTerminated()
-		{
-			base.OnThreatTerminated();
-			ThreatController.EndOfTurn -= IncreaseSpeed;
 		}
 	}
 }

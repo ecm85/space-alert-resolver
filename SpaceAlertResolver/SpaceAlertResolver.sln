@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfResolver", "WpfResolver\WpfResolver.csproj", "{7F34A577-7DDB-4122-9530-F2ED3A742C8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleResolverTest", "ConsoleResolverTest\ConsoleResolverTest.csproj", "{777DA730-7BF6-4CC2-965B-3CDDC69DF00E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CEB9218E-CD34-4A63-8D0A-2675657EA002}"
+	ProjectSection(SolutionItems) = preProject
+		Custom.AllRules.ruleset = Custom.AllRules.ruleset
+		CustomDictionary.xml = CustomDictionary.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -31,10 +31,12 @@ namespace BLL
 		//TODO: Unit test playeractionfactory
 		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
 		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
+		//TODO: Code cleanup: Threats: Extract more common behavior to base and/or impl - such as shield killed by pulse, retaliate against battle bots, etc
 		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
 		//TODO: Bug: Make sure all places that set a players station set it in that station too.
 		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
 		//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
+		//TODO: Bug: Currently threats that move other threats (i.e. transmitter sattelite) don't interact with phasing threats correclty - they cause them to phase an extra time
 		public SittingDuck SittingDuck { get; private set; }
 		private readonly IList<Player> players;
 		private int nextTurn;

@@ -13,10 +13,10 @@ namespace BLL.Threats.Internal.Serious.Red
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
+			ThreatController.JumpingToHyperspaceEventHandler += HandleJumpingToHyperspace;
 		}
 
-		private void OnJumpingToHyperspace()
+		private void HandleJumpingToHyperspace()
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
 		}
@@ -42,9 +42,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.A),
-				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.B),
-				new Sabotage(Type, Difficulty, CurrentStation, PlayerActionType.C)
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.A),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.B),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.C)
 			};
 			foreach (var newThreat in newThreats)
 			{
@@ -56,7 +56,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void OnHealthReducedToZero()
 		{
 			OnThreatTerminated();
-			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
+			ThreatController.JumpingToHyperspaceEventHandler -= HandleJumpingToHyperspace;
 		}
 
 		private class Sabotage : InternalThreat

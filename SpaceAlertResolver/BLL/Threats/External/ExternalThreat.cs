@@ -13,8 +13,8 @@ namespace BLL.Threats.External
 
 		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
 
-		protected ExternalThreat(ThreatType type, ThreatDifficulty difficulty, int shields, int health, int speed) :
-			base(type, difficulty, health, speed)
+		protected ExternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int shields, int health, int speed) :
+			base(threatType, difficulty, health, speed)
 		{
 			Shields = shields;
 		}
