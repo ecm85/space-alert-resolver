@@ -105,13 +105,13 @@ namespace BLL.Tracks
 				case TrackConfiguration.Track1:
 					return new Dictionary<int, TrackBreakpointType>
 					{
-						{8, TrackBreakpointType.X},
+						{5, TrackBreakpointType.X},
 						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track2:
 					return new Dictionary<int, TrackBreakpointType>
 					{
-						{5, TrackBreakpointType.X},
+						{8, TrackBreakpointType.X},
 						{1, TrackBreakpointType.Z}
 					};
 				case TrackConfiguration.Track3:

@@ -8,7 +8,7 @@ namespace BLL.Threats.External.Serious.White
 		private bool cryoshieldUp = true;
 
 		public CryoshieldFrigate()
-			: base(1, 7, 3)
+			: base(1, 7, 2)
 		{
 		}
 
