@@ -27,7 +27,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		}
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DisableInactiveBattleBots(new[] {StationLocation.LowerRed});
+			SittingDuck.DisableLowerRedInactiveBattleBots();
 			SittingDuck.RemoveRocket();
 		}
 

@@ -1,21 +1,19 @@
 ﻿namespace BLL.ShipComponents
 {
-	public class UpperStation : StandardStation
+	public abstract class UpperStation : StandardStation
 	{
-		private Shield Shield { get; set; }
+		protected abstract Shield Shield { get; }
 
-		public UpperStation(
+		protected override IBravoComponent BravoComponent => Shield;
+
+		protected UpperStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
-			ICharlieComponent charlieComponent,
 			Gravolift gravolift,
 			Airlock bluewardAirlock,
 			Airlock redwardAirlock,
-			Cannon cannon,
-			SittingDuck sittingDuck,
-			Shield shield) : base(stationLocation, threatController, shield, charlieComponent, gravolift, bluewardAirlock, redwardAirlock, cannon, sittingDuck)
+			SittingDuck sittingDuck) : base(stationLocation, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
 		{
-			Shield = shield;
 		}
 
 		public int ShieldThroughAttack(int amount)

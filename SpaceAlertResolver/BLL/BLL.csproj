@@ -60,6 +60,7 @@
     <Compile Include="ShipComponents\Airlock.cs" />
     <Compile Include="ShipComponents\BattleBots.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
+    <Compile Include="ShipComponents\BlueZone.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
     <Compile Include="ShipComponents\IAlphaComponent.cs" />
     <Compile Include="ShipComponents\IBravoComponent.cs" />
@@ -77,9 +78,13 @@
     <Compile Include="ShipComponents\CentralHeavyLaserCannon.cs" />
     <Compile Include="ShipComponents\Gravolift.cs" />
     <Compile Include="ShipComponents\HeavyLaserCannon.cs" />
+    <Compile Include="ShipComponents\LowerBlueStation.cs" />
+    <Compile Include="ShipComponents\LowerRedStation.cs" />
     <Compile Include="ShipComponents\LowerStation.cs" />
+    <Compile Include="ShipComponents\LowerWhiteStation.cs" />
     <Compile Include="ShipComponents\PlayerMoveEventArgs.cs" />
     <Compile Include="ShipComponents\Reactor.cs" />
+    <Compile Include="ShipComponents\RedZone.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
     <Compile Include="Player.cs" />
@@ -94,8 +99,12 @@
     <Compile Include="ShipComponents\SideReactor.cs" />
     <Compile Include="ShipComponents\SideShield.cs" />
     <Compile Include="ShipComponents\StationLocation.cs" />
+    <Compile Include="ShipComponents\UpperBlueStation.cs" />
+    <Compile Include="ShipComponents\UpperRedStation.cs" />
     <Compile Include="ShipComponents\UpperStation.cs" />
+    <Compile Include="ShipComponents\UpperWhiteStation.cs" />
     <Compile Include="ShipComponents\VisualConfirmationComponent.cs" />
+    <Compile Include="ShipComponents\WhiteZone.cs" />
     <Compile Include="ShipComponents\Zone.cs" />
     <Compile Include="ShipComponents\ZoneLocation.cs" />
     <Compile Include="SittingDuck.cs" />

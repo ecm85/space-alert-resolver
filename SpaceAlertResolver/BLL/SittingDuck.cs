@@ -8,24 +8,19 @@ namespace BLL
 {
 	public class SittingDuck : ISittingDuck
 	{
-		public Zone BlueZone { get; }
-		public Zone WhiteZone { get; }
-		public Zone RedZone { get; }
+		public BlueZone BlueZone { get; }
+		public WhiteZone WhiteZone { get; }
+		public RedZone RedZone { get; }
 		public IDictionary<ZoneLocation, Zone> ZonesByLocation { get; }
 		public IDictionary<StationLocation, Station> StationsByLocation { get; }
 		public IEnumerable<Zone> Zones => ZonesByLocation.Values;
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; }
 		public IList<InterceptorStation> InterceptorStations { get; }
-		public ComputerComponent Computer { get; private set; }
-		public RocketsComponent RocketsComponent { get; }
-		public VisualConfirmationComponent VisualConfirmationComponent { get; private set; }
 		public event EventHandler RocketsModified = (sender, args) => { };
 		public event EventHandler CentralLaserCannonFired = (sender, args) => { };
 		public ThreatController ThreatController { get; private set; }
 		public Game Game { get; private set; }
 
-		private CentralReactor CentralReactor { get; }
-		private IDictionary<StationLocation, BattleBotsComponent> BattleBotsComponentsByLocation { get; }
 		private Airlock BlueAirlock { get; }
 		private Airlock RedAirlock { get; }
 
@@ -34,44 +29,14 @@ namespace BLL
 			ThreatController = threatController;
 			Game = game;
 
-			var redGravolift = new Gravolift();
-			var whiteGravolift = new Gravolift();
-			var blueGravolift = new Gravolift();
-
 			var redAirlock = new Airlock();
 			var blueAirlock = new Airlock();
 
-			var whiteReactor = new CentralReactor();
-			var redReactor = new SideReactor(whiteReactor);
-			var blueReactor = new SideReactor(whiteReactor);
-
-			var redBatteryPack = new BatteryPack();
-			var blueBatteryPack = new BatteryPack();
-
-			var computerComponent = new ComputerComponent();
-			var visualConfirmationComponent = new VisualConfirmationComponent();
-			var rocketsComponent = new RocketsComponent();
-			rocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
 
 			var interceptors = new Interceptors();
-			var interceptorComponent0 = new InterceptorComponent(this, interceptors, StationLocation.UpperRed);
 			var interceptorComponent1 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor1);
 			var interceptorComponent2 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
 			var interceptorComponent3 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
-
-			var upperBlueBattleBots = new BattleBotsComponent();
-			var lowerRedBattleBots = new BattleBotsComponent();
-
-			var blueSideHeavyLaserCannon = new SideHeavyLaserCannon(blueReactor, ZoneLocation.Blue);
-			var redSideLightLaserCannon = new SideLightLaserCannon(redBatteryPack, ZoneLocation.Red);
-			var pulseCannon = new PulseCannon(whiteReactor);
-			var blueSideLightLaserCannon = new SideLightLaserCannon(blueBatteryPack, ZoneLocation.Blue);
-			var redSideHeavyLaserCannon = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
-			var centralHeavyLaserCannon = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
-			centralHeavyLaserCannon.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
-
-			var blueSideShield = new SideShield(blueReactor);
-			var redSideShield = new SideShield(redReactor);
 
 			var interceptorStation1 = new InterceptorStation(
 				StationLocation.Interceptor1,
@@ -85,77 +50,17 @@ namespace BLL
 				StationLocation.Interceptor3,
 				threatController,
 				interceptorComponent3);
-			var upperRedStation = new UpperStation(
-				StationLocation.UpperRed,
-				threatController,
-				interceptorComponent0,
-				redGravolift,
-				redAirlock,
-				null,
-				redSideHeavyLaserCannon,
-				this,
-				redSideShield);
-			var upperWhiteStation = new UpperStation(
-				StationLocation.UpperWhite,
-				threatController,
-				computerComponent,
-				whiteGravolift,
-				blueAirlock,
-				redAirlock,
-				centralHeavyLaserCannon,
-				this,
-				new CentralShield(whiteReactor));
-			var upperBlueStation = new UpperStation(
-				StationLocation.UpperBlue,
-				threatController,
-				upperBlueBattleBots,
-				blueGravolift,
-				null,
-				BlueAirlock,
-				blueSideHeavyLaserCannon,
-				this,
-				blueSideShield);
-			var lowerRedStation = new LowerStation(
-				StationLocation.LowerRed,
-				threatController,
-				lowerRedBattleBots,
-				redGravolift,
-				RedAirlock,
-				null,
-				redSideLightLaserCannon,
-				this,
-				redReactor);
-			var lowerWhiteStation = new LowerStation(
-				StationLocation.LowerWhite,
-				threatController,
-				visualConfirmationComponent,
-				whiteGravolift,
-				blueAirlock,
-				redAirlock,
-				pulseCannon,
-				this,
-				whiteReactor);
-			var lowerBlueStation = new LowerStation(
-				StationLocation.LowerBlue,
-				threatController,
-				rocketsComponent,
-				blueGravolift,
-				null,
-				blueAirlock,
-				blueSideLightLaserCannon,
-				this,
-				blueReactor);
 
-			CentralReactor = whiteReactor;
-			Computer = computerComponent;
-			VisualConfirmationComponent = visualConfirmationComponent;
-			RocketsComponent = rocketsComponent;
 			BlueAirlock = blueAirlock;
 			RedAirlock = redAirlock;
-			RedZone = new Zone { LowerStation = lowerRedStation, UpperStation = upperRedStation, ZoneLocation = ZoneLocation.Red, Gravolift = redGravolift};
-			WhiteZone = new Zone { LowerStation = lowerWhiteStation, UpperStation = upperWhiteStation, ZoneLocation = ZoneLocation.White, Gravolift = whiteGravolift};
-			BlueZone = new Zone { LowerStation = lowerBlueStation, UpperStation = upperBlueStation, ZoneLocation = ZoneLocation.Blue, Gravolift = blueGravolift};
-			ZonesByLocation = new[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
+			WhiteZone = new WhiteZone(threatController, redAirlock, blueAirlock, this);
+			RedZone = new RedZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, redAirlock, this, interceptors);
+			BlueZone = new BlueZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, blueAirlock, this);
+
+			BlueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
+			WhiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
+
+			ZonesByLocation = new Zone[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 			InterceptorStations = new [] {interceptorStation1, interceptorStation2, interceptorStation3};
 			StationsByLocation = Zones
 				.SelectMany(zone => new Station[] {zone.LowerStation, zone.UpperStation})
@@ -164,12 +69,6 @@ namespace BLL
 			StandardStationsByLocation = Zones
 				.SelectMany(zone => new StandardStation[] {zone.LowerStation, zone.UpperStation})
 				.ToDictionary(station => station.StationLocation);
-
-			BattleBotsComponentsByLocation = new Dictionary<StationLocation, BattleBotsComponent>
-			{
-				{StationLocation.UpperBlue, upperBlueBattleBots},
-				{StationLocation.LowerRed, lowerRedBattleBots}
-			};
 		}
 
 		public void SetPlayers(IEnumerable<Player> players)
@@ -322,22 +221,21 @@ namespace BLL
 				zone.RemoveDebuffForSource(source);
 		}
 
-		public void DisableInactiveBattleBots(IEnumerable<StationLocation> stationLocations)
+		public void DisableLowerRedInactiveBattleBots()
 		{
-			foreach (var stationLocation in stationLocations.Where(stationLocation => BattleBotsComponentsByLocation.ContainsKey(stationLocation)))
-				BattleBotsComponentsByLocation[stationLocation].DisableInactiveBattleBots();
+			RedZone.LowerRedStation.BattleBotsComponent.DisableInactiveBattleBots();
 		}
 
-		public int RocketCount => RocketsComponent.RocketCount;
+		public int RocketCount => BlueZone.LowerBlueStation.RocketsComponent.RocketCount;
 
 		public void RemoveRocket()
 		{
-			RocketsComponent.RemoveRocket();
+			BlueZone.LowerBlueStation.RocketsComponent.RemoveRocket();
 		}
 
 		public void RemoveAllRockets()
 		{
-			RocketsComponent.RemoveAllRockets();
+			BlueZone.LowerBlueStation.RocketsComponent.RemoveAllRockets();
 		}
 
 		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
@@ -390,9 +288,10 @@ namespace BLL
 
 		public bool DestroyFuelCapsule()
 		{
-			var oldFuelCapsules = CentralReactor.FuelCapsules;
-			CentralReactor.FuelCapsules--;
-			return CentralReactor.FuelCapsules < oldFuelCapsules;
+			var centralReactor = WhiteZone.LowerWhiteStation.CentralReactor;
+			var oldFuelCapsules = centralReactor.FuelCapsules;
+			centralReactor.FuelCapsules--;
+			return centralReactor.FuelCapsules < oldFuelCapsules;
 		}
 
 		public int GetEnergyInReactor(ZoneLocation zoneLocation)

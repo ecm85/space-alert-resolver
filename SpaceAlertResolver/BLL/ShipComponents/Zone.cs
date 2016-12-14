@@ -5,21 +5,23 @@ using BLL.Threats.Internal;
 
 namespace BLL.ShipComponents
 {
-	public class Zone
+	public abstract class Zone
 	{
-		public UpperStation UpperStation { get; set; }
-		public LowerStation LowerStation { get; set; }
 		public int TotalDamage { get; private set; }
-		public ZoneLocation ZoneLocation { get; set; }
-		public Gravolift Gravolift { get; set; }
+		public Gravolift Gravolift { get; }
 		public IEnumerable<Player> Players => UpperStation.Players.Concat(LowerStation.Players).ToList();
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
 		public List<DamageToken> CurrentDamageTokens  { get; }
 		public List<DamageToken> AllDamageTokensTaken { get; }
 		private readonly Random random = new Random();
 
-		public Zone()
+		public abstract ZoneLocation ZoneLocation { get; }
+		public abstract UpperStation UpperStation { get; }
+		public abstract LowerStation LowerStation { get; }
+
+		protected Zone()
 		{
+			Gravolift = new Gravolift();
 			DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
 			CurrentDamageTokens = new List<DamageToken>();
 			AllDamageTokensTaken = new List<DamageToken>();
@@ -111,7 +113,7 @@ namespace BLL.ShipComponents
 
 		public int DrainReactor()
 		{
-			return LowerStation.DrainReactor();
+			return LowerStation.EmptyReactor();
 		}
 
 		public int DrainReactor(int amount)

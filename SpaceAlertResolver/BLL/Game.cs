@@ -45,7 +45,7 @@ namespace BLL
 		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
-		public Boolean HasLost { get; private set; }
+		public bool HasLost { get; private set; }
 
 		public Game(
 			IList<Player> players,
@@ -120,7 +120,7 @@ namespace BLL
 		private void PerformEndOfGame(int currentTurn)
 		{
 			ThreatController.MoveThreats(currentTurn + 1);
-			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
+			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
 			var playersInFarInterceptors = SittingDuck.InterceptorStations
@@ -137,20 +137,20 @@ namespace BLL
 
 		private void CalculateScore()
 		{
-			TotalPoints += SittingDuck.VisualConfirmationComponent.TotalVisualConfirmationPoints;
+			TotalPoints += SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.TotalVisualConfirmationPoints;
 			TotalPoints += ThreatController.TotalThreatPoints;
 			TotalPoints += players.Sum(player => player.BonusPoints);
 		}
 
 		private void PerformEndOfPhase()
 		{
-			SittingDuck.VisualConfirmationComponent.PerformEndOfPhase();
-			SittingDuck.Computer.PerformEndOfPhase();
+			SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.PerformEndOfPhase();
+			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformEndOfPhase();
 		}
 
 		private void CheckForComputer(int currentTurn)
 		{
-			if (!SittingDuck.Computer.MaintenancePerformedThisPhase)
+			if (!SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.MaintenancePerformedThisPhase)
 				foreach (var player in players)
 					player.Shift(currentTurn + 1);
 		}
@@ -168,7 +168,7 @@ namespace BLL
 				.ToList();
 			ThreatController.OnPlayerActionsEnded();
 
-			var rocketFiredLastTurn = SittingDuck.RocketsComponent.RocketFiredLastTurn;
+			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack(null));
 			var interceptorDamages = SittingDuck.InterceptorStations
@@ -184,7 +184,7 @@ namespace BLL
 			get
 			{
 				var anyPlayersInInterceptors = SittingDuck.InterceptorStations.SelectMany(station => station.Players).Any();
-				var visualConfirmationPerformed = SittingDuck.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
+				var visualConfirmationPerformed = SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.NumberOfConfirmationsThisTurn > 0;
 				var targetingAssistanceProvided = anyPlayersInInterceptors || visualConfirmationPerformed;
 				return targetingAssistanceProvided;
 			}
@@ -220,8 +220,8 @@ namespace BLL
 				foreach (var player in players)
 					player.SetPreventsKnockOut(false);
 			}
-			SittingDuck.VisualConfirmationComponent.PerformEndOfTurn();
-			SittingDuck.RocketsComponent.PerformEndOfTurn();
+			SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.PerformEndOfTurn();
+			SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.PerformEndOfTurn();
 			foreach (var interceptorStation in SittingDuck.InterceptorStations)
 				interceptorStation.PerformEndOfTurn();
 			ThreatController.PerformEndOfTurn();
