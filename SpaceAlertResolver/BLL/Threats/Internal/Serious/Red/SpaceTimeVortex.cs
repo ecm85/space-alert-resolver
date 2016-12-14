@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private InternalThreat BonusThreat { get; set; }
 
 		public SpaceTimeVortex()
-			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.C)
+			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.Charlie)
 		{
 		}
 

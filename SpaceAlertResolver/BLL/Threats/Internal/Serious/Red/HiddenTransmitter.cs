@@ -8,7 +8,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		private ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 		protected HiddenTransmitter(StationLocation stationLocation)
-			: base(3, 2, stationLocation, PlayerActionType.C, 1)
+			: base(3, 2, stationLocation, PlayerActionType.Charlie, 1)
 		{
 		}
 

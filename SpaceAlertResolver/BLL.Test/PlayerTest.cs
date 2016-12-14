@@ -27,17 +27,17 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A,
-				PlayerActionType.B,
+				PlayerActionType.Alpha,
+				PlayerActionType.Bravo,
 				null,
 				PlayerActionType.BattleBots,
-				PlayerActionType.C
+				PlayerActionType.Charlie
 			});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
@@ -48,7 +48,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.Shift(2);
@@ -56,11 +56,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
 					null,
 					PlayerActionType.BattleBots,
-					PlayerActionType.C,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -72,7 +72,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.Shift(2);
@@ -80,10 +80,10 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
 					null,
-					PlayerActionType.C,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -95,7 +95,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null
 			});
 
 			player.Shift(2);
@@ -103,10 +103,10 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
 					null,
-					PlayerActionType.C,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -118,7 +118,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
 			player.Shift(2);
@@ -127,10 +127,10 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
 					null,
-					PlayerActionType.C,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -142,7 +142,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
 			player.Shift(2);
@@ -151,11 +151,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
 					null,
 					null,
-					PlayerActionType.C
+					PlayerActionType.Charlie
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
@@ -166,7 +166,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -174,11 +174,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
 					PlayerActionType.BattleBots,
-					PlayerActionType.C
+					PlayerActionType.Charlie
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
@@ -189,7 +189,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.BattleBots, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -197,11 +197,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
 					PlayerActionType.BattleBots,
-					PlayerActionType.C,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -213,7 +213,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, null, PlayerActionType.C, PlayerActionType.ChangeDeck
+				PlayerActionType.Alpha, PlayerActionType.Bravo, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -221,10 +221,10 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.C,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -236,7 +236,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, null
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -244,10 +244,10 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.C,
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Charlie,
 					PlayerActionType.ChangeDeck
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
@@ -259,7 +259,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -268,11 +268,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.C
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Charlie
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
@@ -283,7 +283,7 @@ namespace BLL.Test
 			var player = new Player();
 			player.Actions = PlayerActionFactory.CreateSingleActionList(player, new PlayerActionType?[]
 			{
-				PlayerActionType.A, PlayerActionType.B, PlayerActionType.C, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
+				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
 			});
 
 			player.ShiftAndRepeatPreviousAction(2);
@@ -292,11 +292,11 @@ namespace BLL.Test
 				player,
 				new PlayerActionType?[]
 				{
-					PlayerActionType.A,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.B,
-					PlayerActionType.C
+					PlayerActionType.Alpha,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Bravo,
+					PlayerActionType.Charlie
 				});
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}

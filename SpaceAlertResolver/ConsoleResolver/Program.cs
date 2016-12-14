@@ -181,9 +181,9 @@ namespace ConsoleResolver
 
 		private static readonly IDictionary<char, PlayerActionType?> ActionTypesByCode = new Dictionary<char, PlayerActionType?>
 		{
-			{'a', PlayerActionType.A},
-			{'b', PlayerActionType.B},
-			{'c', PlayerActionType.C},
+			{'a', PlayerActionType.Alpha},
+			{'b', PlayerActionType.Bravo},
+			{'c', PlayerActionType.Charlie},
 			{'x', PlayerActionType.BattleBots},
 			{'<', PlayerActionType.MoveRed},
 			{'>', PlayerActionType.MoveBlue},

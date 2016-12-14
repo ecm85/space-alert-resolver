@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.White
 	public class UnstableWarheads : MinorWhiteInternalThreat
 	{
 		public UnstableWarheads()
-			: base(3, 3, StationLocation.LowerBlue, PlayerActionType.C)
+			: base(3, 3, StationLocation.LowerBlue, PlayerActionType.Charlie)
 		{
 		}
 

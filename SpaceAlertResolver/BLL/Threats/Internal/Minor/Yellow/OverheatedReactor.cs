@@ -5,7 +5,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	public class OverheatedReactor : MinorYellowInternalThreat
 	{
 		public OverheatedReactor()
-			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.B)
+			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.Bravo)
 		{
 		}
 		protected override void PerformXAction(int currentTurn)

@@ -5,9 +5,9 @@ namespace BLL
 {
 	public enum PlayerActionType
 	{
-		A,
-		B,
-		C,
+		Alpha,
+		Bravo,
+		Charlie,
 		MoveRed,
 		MoveBlue,
 		ChangeDeck,
@@ -31,8 +31,8 @@ namespace BLL
 		{
 			switch (playerActionType)
 			{
-				case PlayerActionType.A:
-				case PlayerActionType.B:
+				case PlayerActionType.Alpha:
+				case PlayerActionType.Bravo:
 				case PlayerActionType.BattleBots:
 					return true;
 				default:
@@ -44,9 +44,9 @@ namespace BLL
 		{
 			switch (playerActionType)
 			{
-				case PlayerActionType.A:
+				case PlayerActionType.Alpha:
 					return PlayerActionType.HeroicA;
-				case PlayerActionType.B:
+				case PlayerActionType.Bravo:
 					return PlayerActionType.HeroicB;
 				case PlayerActionType.BattleBots:
 					return PlayerActionType.HeroicBattleBots;

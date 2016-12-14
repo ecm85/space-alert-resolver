@@ -146,11 +146,11 @@ namespace WpfResolver
 			switch (action)
 			{
 				case 'a':
-					return PlayerActionType.A;
+					return PlayerActionType.Alpha;
 				case 'b':
-					return PlayerActionType.B;
+					return PlayerActionType.Bravo;
 				case 'c':
-					return PlayerActionType.C;
+					return PlayerActionType.Charlie;
 				case '<':
 					return PlayerActionType.MoveRed;
 				case '>':

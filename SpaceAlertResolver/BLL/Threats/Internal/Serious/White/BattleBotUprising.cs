@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.White
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
 		public BattleBotUprising()
-			: base(4, 2,new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerActionType.C)
+			: base(4, 2,new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerActionType.Charlie)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}

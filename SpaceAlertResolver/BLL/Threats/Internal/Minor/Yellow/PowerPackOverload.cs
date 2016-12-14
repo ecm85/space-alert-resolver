@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				4,
 				3,
 				new List<StationLocation> {StationLocation.LowerBlue, StationLocation.LowerRed},
-				PlayerActionType.A)
+				PlayerActionType.Alpha)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();
 		}

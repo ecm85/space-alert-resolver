@@ -52,14 +52,14 @@ namespace BLL.ShipComponents
 
 		private bool CanFireCannon(Player performingPlayer)
 		{
-			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
-			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.A) && AlphaComponent.CanFire();
+			var firstAThreat = GetFirstThreatOfType(PlayerActionType.Alpha, performingPlayer);
+			return firstAThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.Alpha) && AlphaComponent.CanFire();
 		}
 
 		private bool CanUseCharlieComponent(Player performingPlayer)
 		{
-			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
-			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.C) && CharlieComponent.CanPerformCAction(performingPlayer);
+			var firstCThreat = GetFirstThreatOfType(PlayerActionType.Charlie, performingPlayer);
+			return firstCThreat == null && !HasIrreparableMalfunctionOfType(PlayerActionType.Charlie) && CharlieComponent.CanPerformCAction(performingPlayer);
 		}
 
 		public bool PerformMoveOutTowardsRed(Player performingPlayer, int currentTurn)
@@ -120,35 +120,35 @@ namespace BLL.ShipComponents
 
 		private void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
 		{
-			var firstAThreat = GetFirstThreatOfType(PlayerActionType.A, performingPlayer);
+			var firstAThreat = GetFirstThreatOfType(PlayerActionType.Alpha, performingPlayer);
 			if (firstAThreat != null)
 				DamageThreat(isHeroic ? 2 : 1, firstAThreat, performingPlayer, isHeroic);
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.A))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.Alpha))
 				AlphaComponent.PerformAAction(isHeroic, performingPlayer, isAdvanced);
 			AlphaComponent.RemoveMechanicBuff();
 		}
 
 		private void PerformBAction(Player performingPlayer, bool isHeroic, bool isRemote = false)
 		{
-			var firstBThreat = GetFirstThreatOfType(PlayerActionType.B, performingPlayer);
+			var firstBThreat = GetFirstThreatOfType(PlayerActionType.Bravo, performingPlayer);
 			if (firstBThreat != null)
 			{
 				if (!(isRemote && firstBThreat.NextDamageWillDestroyThreat()))
 					DamageThreat(isHeroic ? 2 : 1, firstBThreat, performingPlayer, isHeroic);
 			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.B))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.Bravo))
 				BravoComponent.PerformBAction(isHeroic);
 		}
 
 		private void PerformCAction(Player performingPlayer, int currentTurn, bool isRemote = false, bool isAdvanced = false)
 		{
-			var firstCThreat = GetFirstThreatOfType(PlayerActionType.C, performingPlayer);
+			var firstCThreat = GetFirstThreatOfType(PlayerActionType.Charlie, performingPlayer);
 			if (firstCThreat != null)
 			{
 				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
 					DamageThreat(1, firstCThreat, performingPlayer, false);
 			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.C))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.Charlie))
 				CharlieComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
 		}
 
@@ -165,13 +165,13 @@ namespace BLL.ShipComponents
 		{
 			switch (performingPlayer.Actions[currentTurn].ActionType)
 			{
-				case PlayerActionType.A:
+				case PlayerActionType.Alpha:
 					PerformAAction(performingPlayer, false);
 					break;
-				case PlayerActionType.B:
+				case PlayerActionType.Bravo:
 					PerformBAction(performingPlayer, false);
 					break;
-				case PlayerActionType.C:
+				case PlayerActionType.Charlie:
 					PerformCAction(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.MoveBlue:
@@ -375,7 +375,7 @@ namespace BLL.ShipComponents
 
 		private void PerformAdvancedMechanic(Player performingPlayer)
 		{
-			var firstThreat = new[] {PlayerActionType.A, PlayerActionType.B, PlayerActionType.C}
+			var firstThreat = new[] {PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie}
 				.Select(actionType => GetFirstThreatOfType(actionType, performingPlayer))
 				.FirstOrDefault(threat => threat != null);
 			if (firstThreat != null)

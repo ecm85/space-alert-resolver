@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.Red
 	public class PulseCannonShortCircuit : MinorRedInternalThreat
 	{
 		public PulseCannonShortCircuit()
-			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.A, 1)
+			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.Alpha, 1)
 		{
 		}
 

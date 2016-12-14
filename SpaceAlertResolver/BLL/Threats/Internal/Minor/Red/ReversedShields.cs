@@ -13,7 +13,7 @@ namespace BLL.Threats.Internal.Minor.Red
 				5,
 				4,
 				new List<StationLocation> {StationLocation.UpperBlue, StationLocation.UpperWhite, StationLocation.UpperRed},
-				PlayerActionType.B)
+				PlayerActionType.Bravo)
 		{
 		}
 

@@ -43,9 +43,9 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.A),
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.B),
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.C)
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Alpha),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Bravo),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Charlie)
 			};
 			foreach (var newThreat in newThreats)
 			{

@@ -5,7 +5,7 @@ namespace BLL.Threats.Internal.Minor.White
 	public class CentralLaserJam : MinorWhiteInternalThreat
 	{
 		public CentralLaserJam()
-			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.A)
+			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.Alpha)
 		{
 		}
 

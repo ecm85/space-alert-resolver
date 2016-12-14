@@ -48,7 +48,7 @@ namespace BLL.ShipComponents
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			switch (performingPlayer.Actions[currentTurn].ActionType)
 			{
-				case PlayerActionType.C:
+				case PlayerActionType.Charlie:
 					PerformCAction(performingPlayer, currentTurn);
 					break;
 				case PlayerActionType.BattleBots:

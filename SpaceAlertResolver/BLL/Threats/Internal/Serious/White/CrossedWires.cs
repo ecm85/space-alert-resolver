@@ -5,7 +5,7 @@ namespace BLL.Threats.Internal.Serious.White
 	public class CrossedWires : SeriousWhiteInternalThreat
 	{
 		public CrossedWires()
-			: base(4, 3, StationLocation.UpperWhite, PlayerActionType.B)
+			: base(4, 3, StationLocation.UpperWhite, PlayerActionType.Bravo)
 		{
 		}
 

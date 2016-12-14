@@ -108,39 +108,39 @@ namespace BLL.Test
 			{
 				null,
 				PlayerActionType.ChangeDeck,
-				PlayerActionType.B,
+				PlayerActionType.Bravo,
 				PlayerActionType.ChangeDeck,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A,
-				PlayerActionType.A
+				PlayerActionType.Alpha,
+				PlayerActionType.Alpha,
+				PlayerActionType.Alpha,
+				PlayerActionType.Alpha,
+				PlayerActionType.Alpha,
+				PlayerActionType.Alpha
 			});
 			players[0].Index = 0;
 			players[1].Actions = PlayerActionFactory.CreateSingleActionList(players[1], new PlayerActionType?[]
 			{
 				PlayerActionType.MoveRed,
 				PlayerActionType.ChangeDeck,
-				PlayerActionType.C,
+				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck,
 				null,
-				PlayerActionType.C,
+				PlayerActionType.Charlie,
 				PlayerActionType.BattleBots,
-				PlayerActionType.C,
+				PlayerActionType.Charlie,
 				PlayerActionType.BattleBots,
-				PlayerActionType.A
+				PlayerActionType.Alpha
 			});
 			players[1].Index = 1;
 			players[2].Actions = PlayerActionFactory.CreateSingleActionList(players[2], new PlayerActionType?[]
 			{
 				null,
-				PlayerActionType.C,
+				PlayerActionType.Charlie,
 				null,
 				null,
-				PlayerActionType.C,
+				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck,
-				PlayerActionType.C
+				PlayerActionType.Charlie
 			});
 			players[2].Index = 2;
 			players[3].Actions = PlayerActionFactory.CreateSingleActionList(players[3], new PlayerActionType?[]
@@ -151,7 +151,7 @@ namespace BLL.Test
 				null,
 				null,
 				null,
-				PlayerActionType.C
+				PlayerActionType.Charlie
 			});
 			players[3].Index = 3;
 			players[4].Actions = PlayerActionFactory.CreateSingleActionList(players[4], new PlayerActionType?[]
@@ -162,7 +162,7 @@ namespace BLL.Test
 				null,
 				null,
 				null,
-				PlayerActionType.C
+				PlayerActionType.Charlie
 			});
 			players[4].Index = 4;
 			players[5].Actions = PlayerActionFactory.CreateSingleActionList(players[5], new PlayerActionType?[]
