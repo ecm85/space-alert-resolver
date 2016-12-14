@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BLL.Tracks
 {
+	[SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
 	public enum TrackConfiguration
 	{
 		Track1 = 1,

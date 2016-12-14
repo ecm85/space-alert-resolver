@@ -13,7 +13,7 @@
 			Gravolift gravolift,
 			Airlock bluewardAirlock,
 			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(StationLocation.LowerWhite, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			SittingDuck sittingDuck) : base(StationLocation.UpperWhite, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
 		{
 			AlphaComponent = new CentralHeavyLaserCannon(whiteReactor, ZoneLocation.White);
 			Shield = new CentralShield(whiteReactor);

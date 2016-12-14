@@ -20,7 +20,7 @@ namespace BLL.Test
 		[TestMethod]
 		public void JustAFighterNoActions()
 		{
-			var players = Enumerable.Range(0, 1).Select(index => new Player { Actions = new List<PlayerAction>() }).ToList();
+			var players = Enumerable.Range(0, 1).Select(index => new Player (new List<PlayerAction>())).ToList();
 
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
 			{
@@ -103,8 +103,8 @@ namespace BLL.Test
 
 		private static IList<Player> GetPlayers()
 		{
-			var players = Enumerable.Range(0, 6).Select(index => new Player()).ToList();
-			players[0].Actions = PlayerActionFactory.CreateSingleActionList(players[0], new PlayerActionType?[]
+			var players = new List<Player>();
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				null,
 				PlayerActionType.ChangeDeck,
@@ -116,9 +116,9 @@ namespace BLL.Test
 				PlayerActionType.Alpha,
 				PlayerActionType.Alpha,
 				PlayerActionType.Alpha
-			});
+			})));
 			players[0].Index = 0;
-			players[1].Actions = PlayerActionFactory.CreateSingleActionList(players[1], new PlayerActionType?[]
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.MoveRed,
 				PlayerActionType.ChangeDeck,
@@ -130,9 +130,9 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.BattleBots,
 				PlayerActionType.Alpha
-			});
+			})));
 			players[1].Index = 1;
-			players[2].Actions = PlayerActionFactory.CreateSingleActionList(players[2], new PlayerActionType?[]
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				null,
 				PlayerActionType.Charlie,
@@ -141,9 +141,9 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck,
 				PlayerActionType.Charlie
-			});
+			})));
 			players[2].Index = 2;
-			players[3].Actions = PlayerActionFactory.CreateSingleActionList(players[3], new PlayerActionType?[]
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.ChangeDeck,
 				null,
@@ -152,9 +152,9 @@ namespace BLL.Test
 				null,
 				null,
 				PlayerActionType.Charlie
-			});
+			})));
 			players[3].Index = 3;
-			players[4].Actions = PlayerActionFactory.CreateSingleActionList(players[4], new PlayerActionType?[]
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				null,
 				PlayerActionType.ChangeDeck,
@@ -163,15 +163,15 @@ namespace BLL.Test
 				null,
 				null,
 				PlayerActionType.Charlie
-			});
+			})));
 			players[4].Index = 4;
-			players[5].Actions = PlayerActionFactory.CreateSingleActionList(players[5], new PlayerActionType?[]
+			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.TeleportBlueLower,
 				PlayerActionType.TeleportRedUpper,
 				PlayerActionType.TeleportWhiteLower,
 				PlayerActionType.TeleportWhiteUpper
-			});
+			})));
 			players[5].Index = 5;
 			return players;
 		}

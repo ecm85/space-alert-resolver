@@ -171,8 +171,7 @@ namespace ConsoleResolver
 				var actions = ParsePlayerActions(actionsToken.Item2);
 				if (actions == null)
 					throw new InvalidOperationException("Error on player #" + players.Count + 1);
-				var player = new Player {Index = index.Value};
-				player.Actions = PlayerActionFactory.CreateSingleActionList(player, actions);
+				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions)) {Index = index.Value};
 				players.Add(player);
 				//TODO: Add specializations and teleport player/destination
 			}

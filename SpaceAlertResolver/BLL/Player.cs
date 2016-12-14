@@ -6,6 +6,11 @@ namespace BLL
 {
 	public class Player
 	{
+		public Player(IEnumerable<PlayerAction> actions)
+		{
+			Actions = actions.ToList();
+		}
+
 		private bool isKnockedOut;
 		public bool IsKnockedOut {
 			get { return isKnockedOut; }
@@ -16,7 +21,7 @@ namespace BLL
 			}
 		}
 		public Interceptors Interceptors { get; set; }
-		public IList<PlayerAction> Actions { get; set; }
+		public List<PlayerAction> Actions { get; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
 		public int Index { get; set; }
@@ -51,7 +56,7 @@ namespace BLL
 			var endTurn = turn;
 			while (endTurn + 1 < Actions.Count && Actions[endTurn].ActionType.HasValue)
 				endTurn++;
-			Actions.Insert(turn, PlayerActionFactory.CreateSingleAction(this, actionToInsert));
+			Actions.Insert(turn, PlayerActionFactory.CreateSingleAction(BasicSpecialization, AdvancedSpecialization, actionToInsert));
 			Actions.RemoveAt(endTurn + 1);
 		}
 

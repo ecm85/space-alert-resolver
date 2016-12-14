@@ -12,9 +12,9 @@ namespace BLL.Threats.Internal
 		private int? totalInaccessibility;
 		private int? remainingInaccessibility;
 
-		protected void SetTotalInaccessibility(int totalInaccessibility)
+		protected void SetTotalInaccessibility(int newTotalInaccessibility)
 		{
-			this.totalInaccessibility = totalInaccessibility;
+			totalInaccessibility = newTotalInaccessibility;
 		}
 
 		internal StationLocation CurrentStation

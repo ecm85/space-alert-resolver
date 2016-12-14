@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace BLL
 {
 	public static class PlayerActionFactory
 	{
-		public static IList<PlayerAction> CreateSingleActionList(Player player, IEnumerable<PlayerActionType?> actionTypes)
+		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
+		public static IList<PlayerAction> CreateSingleActionList(PlayerSpecialization? basicSpecialization, PlayerSpecialization? advancedSpecialization, IEnumerable<PlayerActionType?> actionTypes)
 		{
 			return actionTypes
-				.Select(actionType => CreateSingleAction(player, actionType))
+				.Select(actionType => CreateSingleAction(basicSpecialization, advancedSpecialization, actionType))
 				.ToList();
 		}
 
@@ -17,7 +19,7 @@ namespace BLL
 			return new StandardPlayerAction(null);
 		}
 
-		public static PlayerAction CreateSingleAction(Player player, PlayerActionType? actionType, PlayerActionType? extraAction = null)
+		public static PlayerAction CreateSingleAction(PlayerSpecialization? basicSpecialization, PlayerSpecialization? advancedSpecialization, PlayerActionType? actionType, PlayerActionType? extraAction = null)
 		{
 			var firstAction = actionType ?? extraAction;
 			var secondAction = actionType == null ? null : extraAction;
@@ -26,7 +28,7 @@ namespace BLL
 			switch (firstAction)
 			{
 				case PlayerActionType.BasicSpecialization:
-					switch (player.BasicSpecialization)
+					switch (basicSpecialization)
 					{
 						case PlayerSpecialization.Medic:
 							if (secondAction == null || secondAction.IsBasicMovement())
@@ -35,7 +37,7 @@ namespace BLL
 					}
 					break;
 				case PlayerActionType.AdvancedSpecialization:
-					switch (player.AdvancedSpecialization)
+					switch (advancedSpecialization)
 					{
 						case PlayerSpecialization.Medic:
 							if(secondAction.IsBasicMovement())

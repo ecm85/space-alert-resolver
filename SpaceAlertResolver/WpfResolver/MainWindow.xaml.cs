@@ -134,10 +134,9 @@ namespace WpfResolver
 
 		private Player CreatePlayer(string actionList)
 		{
-			var player = new Player();
-			player.Actions = actionList
-				.Select(action => PlayerActionFactory.CreateSingleAction(player, CreateActionFromCode(action)))
-				.ToList();
+			var player = new Player(actionList
+				.Select(action => PlayerActionFactory.CreateSingleAction(null, null, CreateActionFromCode(action)))
+				.ToList());
 			return player;
 		}
 
