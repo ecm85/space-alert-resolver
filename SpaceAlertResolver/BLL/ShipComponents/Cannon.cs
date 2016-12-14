@@ -42,7 +42,7 @@ namespace BLL.ShipComponents
 
 		public bool CanFire()
 		{
-			return CurrentPlayerDamage == null && source.Energy > 1;
+			return CurrentPlayerDamage == null && source.Energy >= 1;
 		}
 
 		protected abstract IEnumerable<PlayerDamage> GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);

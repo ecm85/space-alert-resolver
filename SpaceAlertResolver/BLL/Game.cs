@@ -11,9 +11,9 @@ namespace BLL
 {
 	public class Game
 	{
-		//TODO: Turn on code analysis in BLL Tests
-		//TODO: Turn on code analysis in Console Resolver
-		//TODO: Turn on code analysis in Console Resolver Tests
+		//TODO: Turn on code analysis and errors as warnings in BLL Tests
+		//TODO: Turn on code analysis and errors as warningsin Console Resolver
+		//TODO: Turn on code analysis and errors as warningsin Console Resolver Tests
 		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
@@ -42,7 +42,7 @@ namespace BLL
 		private readonly IList<Player> players;
 		private int nextTurn;
 		public int NumberOfTurns { get; set; }
-		private readonly IList<int> phaseStartTurns = new[] {1, 4, 8};
+		private readonly IList<int> phaseStartTurns = new[] {0, 3, 7};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
 		public bool HasLost { get; private set; }
