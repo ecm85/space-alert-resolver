@@ -42,7 +42,6 @@ namespace BLL
 		private readonly IList<Player> players;
 		private int nextTurn;
 		public int NumberOfTurns { get; set; }
-		private readonly IList<int> phaseStartTurns = new[] {0, 3, 7};
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; private set; }
 		public bool HasLost { get; private set; }
@@ -99,6 +98,7 @@ namespace BLL
 				PerformPlayerActionsAndResolveDamage(currentTurn);
 				ThreatController.MoveThreats(currentTurn);
 				PerformEndOfTurn();
+				var phaseStartTurns = new[] { 0, 3, 7, 12 };
 				var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
 				if (isSecondTurnOfPhase)
 					CheckForComputer(currentTurn);

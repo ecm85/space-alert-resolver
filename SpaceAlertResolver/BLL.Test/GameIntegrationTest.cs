@@ -247,7 +247,7 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
 			Assert.AreEqual(3, game.ThreatController.DefeatedThreats.Count());
 			Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
-			Assert.AreEqual(20 + 4, game.TotalPoints);
+			Assert.AreEqual(20 + 4 + 2 + 2, game.TotalPoints);
 			Assert.AreEqual(1, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
@@ -324,8 +324,86 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
 			Assert.AreEqual(3, game.ThreatController.DefeatedThreats.Count());
 			Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
-			Assert.AreEqual(20 + 4, game.TotalPoints);
+			Assert.AreEqual(20 + 4 + 2, game.TotalPoints);
 			Assert.AreEqual(2, players.Count(player => player.IsKnockedOut));
+			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count);
+			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count);
+			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
+		}
+
+		[TestMethod]
+		public void EzraCampaign1Mission3()
+		{
+			var players = new List<Player>
+			{
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					PlayerActionType.MoveBlue, null, PlayerActionType.BasicSpecialization,
+					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, null,
+					PlayerActionType.ChangeDeck, null, null, null, PlayerActionType.Charlie
+				}))
+				{
+					Index = 0, BasicSpecialization = PlayerSpecialization.EnergyTechnician, AdvancedSpecialization = PlayerSpecialization.EnergyTechnician
+				},
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					null, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck,
+					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, PlayerActionType.MoveRed,
+					PlayerActionType.Alpha, PlayerActionType.MoveBlue, null, null, PlayerActionType.Charlie
+				}))
+				{
+					Index = 1, BasicSpecialization = PlayerSpecialization.PulseGunner
+				},
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					null, null, PlayerActionType.AdvancedSpecialization,
+					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, PlayerActionType.Alpha,
+					PlayerActionType.Alpha, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null, PlayerActionType.Charlie
+				}))
+				{
+					Index = 2, BasicSpecialization = PlayerSpecialization.Mechanic, AdvancedSpecialization = PlayerSpecialization.Mechanic
+				},
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					PlayerActionType.Charlie, null, PlayerActionType.Alpha,
+					PlayerActionType.BasicSpecialization, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha,
+					PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null, null, PlayerActionType.AdvancedSpecialization
+				}))
+				{
+					Index = 3, BasicSpecialization = PlayerSpecialization.DataAnalyst, AdvancedSpecialization = PlayerSpecialization.DataAnalyst
+				}
+			};
+
+			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
+			{
+				{ZoneLocation.Blue, TrackConfiguration.Track6},
+				{ZoneLocation.Red, TrackConfiguration.Track2},
+				{ZoneLocation.White, TrackConfiguration.Track5},
+			};
+			var internalTrack = TrackConfiguration.Track3;
+
+			var spacecraftCarrier = new SpacecraftCarrier { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
+			var manOfWar = new ManOfWar { TimeAppears = 5, CurrentZone = ZoneLocation.White };
+			var frigate = new Frigate { TimeAppears = 7, CurrentZone = ZoneLocation.Red };
+			var externalThreats = new ExternalThreat[] { spacecraftCarrier, manOfWar, frigate };
+
+			var centralLaserJam = new CentralLaserJam { TimeAppears = 3 };
+			var internalThreats = new InternalThreat[] { centralLaserJam };
+
+			var bonusThreats = new Threat[0];
+
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+
+			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+				game.PerformTurn();
+			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
+			Assert.AreEqual(0, game.SittingDuck.RedZone.TotalDamage);
+			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
+			Assert.AreEqual(4, game.ThreatController.DefeatedThreats.Count());
+			Assert.AreEqual(0, game.ThreatController.SurvivedThreats.Count());
+			Assert.AreEqual(28 + 1 + 9, game.TotalPoints);
+			Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);

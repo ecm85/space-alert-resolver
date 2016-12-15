@@ -235,6 +235,7 @@ namespace BLL.ShipComponents
 			{
 				case PlayerSpecialization.DataAnalyst:
 					SittingDuck.StandardStationsByLocation[StationLocation.UpperWhite].PerformCAction(performingPlayer, currentTurn, true);
+					performingPlayer.BonusPoints++;
 					break;
 				case PlayerSpecialization.EnergyTechnician:
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerWhite].PerformBAction(performingPlayer, false, true);
@@ -321,11 +322,10 @@ namespace BLL.ShipComponents
 
 		private void PerformAdvancedSpecialization(Player performingPlayer, int currentTurn)
 		{
-			switch (performingPlayer.BasicSpecialization)
+			switch (performingPlayer.AdvancedSpecialization)
 			{
 				case PlayerSpecialization.DataAnalyst:
 					PerformCAction(performingPlayer, currentTurn, false, StationLocation == StationLocation.LowerWhite);
-					performingPlayer.BonusPoints++;
 					break;
 				case PlayerSpecialization.EnergyTechnician:
 					PerformAdvancedEnergyTechnician();
