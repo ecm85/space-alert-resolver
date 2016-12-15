@@ -12,7 +12,6 @@ namespace BLL
 	public class Game
 	{
 		//TODO: Review the CA suppressions and the ones turned off
-		//TODO: Turn on code analysis and errors as warningsin Console Resolver Tests
 		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
 		//TODO: Feature: Campaign repairs and damage carryover
