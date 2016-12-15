@@ -18,12 +18,14 @@
 			<Word>Hypernavigator</Word>
 			<Word>Shambler</Word>
 			<Word>Shipward</Word>
+			<Word>ConsoleResolver</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>
 			<Term CompoundAlternate="SideLight">sidelight</Term>
 			<Term CompountAlternate="MineLayer">minelayer</Term>
 			<Term CompountAlternate="OnBoard">onboard</Term>
+			<Term CompoundAlternate="ConsoleResolver">ConsoleResolver</Term>
 		</Compound>
 	</Words>
 </Dictionary>

@@ -82,7 +82,7 @@ namespace ConsoleResolver
 			var validArguments = args.Where(arg => !string.IsNullOrWhiteSpace(arg)).ToList();
 			var chunkIdentifiers = new[] {"-external-tracks", "-internal-track", "-players", "-external-threats", "-internal-threats"};
 			var chunks = ChunkArguments(validArguments, chunkIdentifiers).ToList();
-			if (chunks.Count() != 5 || chunkIdentifiers.Except(chunks.Select(chunk => chunk[0])).Any())
+			if (chunks.Count != 5 || chunkIdentifiers.Except(chunks.Select(chunk => chunk[0])).Any())
 				throw new InvalidOperationException("Invalid arguments.");
 
 			IDictionary<ZoneLocation, TrackConfiguration> externalTracksByZone = null;
@@ -119,10 +119,23 @@ namespace ConsoleResolver
 				}
 			}
 
-			if (internalThreats == null || externalThreats == null || externalTracksByZone == null || players == null)
-				throw new ArgumentNullException();
+			return RunGame(internalThreats, externalThreats, externalTracksByZone, players, bonusThreats, internalTrackConfiguration);
+		}
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrackConfiguration.GetValueOrDefault());
+		private static Game RunGame(IList<InternalThreat> internalThreats, IList<ExternalThreat> externalThreats, IDictionary<ZoneLocation, TrackConfiguration> externalTracksByZone,
+			IList<Player> players, IList<Threat> bonusThreats, TrackConfiguration? internalTrackConfiguration)
+		{
+			if (internalThreats == null)
+				throw new ArgumentNullException(nameof(internalThreats));
+			if (externalThreats == null)
+				throw new ArgumentNullException(nameof(externalThreats));
+			if (externalTracksByZone == null)
+				throw new ArgumentNullException(nameof(externalTracksByZone));
+			if (players == null)
+				throw new ArgumentNullException(nameof(players));
+
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone,
+				internalTrackConfiguration.GetValueOrDefault());
 
 			var currentTurn = 0;
 			try
@@ -138,12 +151,14 @@ namespace ConsoleResolver
 				game.SittingDuck.BlueZone.TotalDamage,
 				game.SittingDuck.RedZone.TotalDamage,
 				game.SittingDuck.WhiteZone.TotalDamage);
-			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", game.ThreatController.DefeatedThreats.Count(), game.ThreatController.SurvivedThreats.Count());
+			Console.WriteLine("Threats killed: {0}. Threats survived: {1}", game.ThreatController.DefeatedThreats.Count(),
+				game.ThreatController.SurvivedThreats.Count());
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
 			foreach (var zone in game.SittingDuck.Zones)
 			{
 				foreach (var token in zone.AllDamageTokensTaken)
-					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
+					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation,
+						zone.CurrentDamageTokens.Contains(token));
 			}
 
 			return game;
@@ -178,7 +193,7 @@ namespace ConsoleResolver
 			return players;
 		}
 
-		private static readonly IDictionary<char, PlayerActionType?> ActionTypesByCode = new Dictionary<char, PlayerActionType?>
+		private static readonly IDictionary<char, PlayerActionType?> actionTypesByCode = new Dictionary<char, PlayerActionType?>
 		{
 			{'a', PlayerActionType.Alpha},
 			{'b', PlayerActionType.Bravo},
@@ -203,10 +218,10 @@ namespace ConsoleResolver
 
 		private static IList<PlayerActionType?> ParsePlayerActions(string actionString)
 		{
-			if(actionString.Any(actionCode => !ActionTypesByCode.ContainsKey(actionCode)))
+			if(actionString.Any(actionCode => !actionTypesByCode.ContainsKey(actionCode)))
 				throw new InvalidOperationException("Invalid player actions.");
 			//TODO: Parse advanced spec ops/Medic both
-			return actionString.Select(action => ActionTypesByCode[action]).ToList();
+			return actionString.Select(action => actionTypesByCode[action]).ToList();
 		}
 
 		private static ParseThreatsResult<ExternalThreat> ParseExternalThreats(IEnumerable<string> chunk)
@@ -484,9 +499,7 @@ namespace ConsoleResolver
 			if (string.IsNullOrWhiteSpace(token))
 				return null;
 			var pieces = token.Split(new [] {":"}, StringSplitOptions.RemoveEmptyEntries);
-			if (pieces.Count() != 2)
-				return null;
-			return Tuple.Create(pieces[0], pieces[1]);
+			return pieces.Length != 2 ? null : Tuple.Create(pieces[0], pieces[1]);
 		}
 	}
 }
