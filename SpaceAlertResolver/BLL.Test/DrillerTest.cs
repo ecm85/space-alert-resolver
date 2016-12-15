@@ -90,10 +90,10 @@ namespace BLL.Test
 				StationLocation.UpperWhite);
 		}
 
-		private void Test_MoveTowardsMostDamagedZone_Helper(Dictionary<ZoneLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
+		private static void Test_MoveTowardsMostDamagedZone_Helper(Dictionary<ZoneLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var driller = new Driller {CurrentStation = currentStation, TimeAppears = 3};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null, (Game)null);
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, null, null);
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;

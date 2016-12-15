@@ -4,7 +4,6 @@ using BLL.Threats.External.Minor.White;
 using BLL.Threats.Internal;
 using BLL.Tracks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Threats;
@@ -52,12 +51,6 @@ namespace BLL.Test
 			Assert.AreEqual(5, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
-
-			foreach (var zone in game.SittingDuck.Zones)
-			{
-				foreach (var token in zone.AllDamageTokensTaken)
-					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
-			}
 		}
 
 		[TestMethod]
@@ -118,58 +111,58 @@ namespace BLL.Test
 					PlayerActionType.Alpha,
 					PlayerActionType.Alpha,
 					PlayerActionType.Alpha
+				})),
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					PlayerActionType.MoveRed,
+					PlayerActionType.ChangeDeck,
+					PlayerActionType.Charlie,
+					PlayerActionType.ChangeDeck,
+					null,
+					PlayerActionType.Charlie,
+					PlayerActionType.BattleBots,
+					PlayerActionType.Charlie,
+					PlayerActionType.BattleBots,
+					PlayerActionType.Alpha
+				})),
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					null,
+					PlayerActionType.Charlie,
+					null,
+					null,
+					PlayerActionType.Charlie,
+					PlayerActionType.ChangeDeck,
+					PlayerActionType.Charlie
+				})),
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					PlayerActionType.ChangeDeck,
+					null,
+					null,
+					null,
+					null,
+					null,
+					PlayerActionType.Charlie
+				})),
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					null,
+					PlayerActionType.ChangeDeck,
+					null,
+					null,
+					null,
+					null,
+					PlayerActionType.Charlie
+				})),
+				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				{
+					PlayerActionType.TeleportBlueLower,
+					PlayerActionType.TeleportRedUpper,
+					PlayerActionType.TeleportWhiteLower,
+					PlayerActionType.TeleportWhiteUpper
 				}))
 			};
-			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
-			{
-				PlayerActionType.MoveRed,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.Charlie,
-				PlayerActionType.ChangeDeck,
-				null,
-				PlayerActionType.Charlie,
-				PlayerActionType.BattleBots,
-				PlayerActionType.Charlie,
-				PlayerActionType.BattleBots,
-				PlayerActionType.Alpha
-			})));
-			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
-			{
-				null,
-				PlayerActionType.Charlie,
-				null,
-				null,
-				PlayerActionType.Charlie,
-				PlayerActionType.ChangeDeck,
-				PlayerActionType.Charlie
-			})));
-			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
-			{
-				PlayerActionType.ChangeDeck,
-				null,
-				null,
-				null,
-				null,
-				null,
-				PlayerActionType.Charlie
-			})));
-			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
-			{
-				null,
-				PlayerActionType.ChangeDeck,
-				null,
-				null,
-				null,
-				null,
-				PlayerActionType.Charlie
-			})));
-			players.Add(new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
-			{
-				PlayerActionType.TeleportBlueLower,
-				PlayerActionType.TeleportRedUpper,
-				PlayerActionType.TeleportWhiteLower,
-				PlayerActionType.TeleportWhiteUpper
-			})));
 			for (var i = 0; i < players.Count; i++)
 				players[i].Index = i;
 			return players;

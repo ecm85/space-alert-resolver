@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BLL.ShipComponents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -63,7 +61,7 @@ namespace BLL.Test
 			});
 		}
 
-		private void Test_Path_Helper(StationLocation toStation, StationLocation fromStation, List<StationLocation> expectedPath)
+		private static void Test_Path_Helper(StationLocation toStation, StationLocation fromStation, List<StationLocation> expectedPath)
 		{
 			var path = MovementController.Path(toStation, fromStation).ToList();
 			CollectionAssert.AreEqual(expectedPath, path);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using BLL.ShipComponents;
 using BLL.Threats.Internal.Serious.Yellow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -75,10 +72,10 @@ namespace BLL.Test
 				StationLocation.LowerWhite);
 		}
 
-		private void Test_MoveToMostPlayers_Helper(Dictionary<StationLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
+		private static void Test_MoveToMostPlayers_Helper(Dictionary<StationLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var seeker = new Seeker{CurrentStation = currentStation, TimeAppears = 4};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, (ThreatController)null, (Game)null);
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, null, null);
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;
