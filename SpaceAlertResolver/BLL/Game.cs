@@ -18,7 +18,6 @@ namespace BLL
 		//TODO: Feature: Let user select damage tokens
 		//TODO: Feature: include penalties in score, and break score up more?
 		//TODO: Code Cleanup: Threat factory, threat enum
-		//TODO: Code Cleanup: Event names and methods - Perform vs On vs Do vs just the verb, change all to use -ing for before and use -ed for after
 		//TODO: Feature: Change all threat display names to include threat #
 		//TODO: Code Cleanup: Make damage an event
 		//TODO: Rules clarification: Does a person heroically moving occupy the lift?

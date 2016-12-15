@@ -20,6 +20,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		private void SetHealthToRemainingRockets(object sender, EventArgs args)
 		{
+			//TODO: If this goes to 0, is the threat auto-defeated?
 			RemainingHealth = SittingDuck.RocketCount;
 		}
 

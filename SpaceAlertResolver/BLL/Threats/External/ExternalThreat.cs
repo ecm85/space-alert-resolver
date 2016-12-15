@@ -10,8 +10,10 @@ namespace BLL.Threats.External
 	{
 		public ZoneLocation CurrentZone { get; set; }
 		protected int Shields { get; set; }
+		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
+		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { }; 
 
-		protected int DistanceToShip { get { return Track.DistanceToThreat(Position.GetValueOrDefault()); } }
+		protected int DistanceToShip => Track.DistanceToThreat(Position.GetValueOrDefault());
 
 		protected ExternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int shields, int health, int speed) :
 			base(threatType, difficulty, health, speed)
@@ -58,42 +60,22 @@ namespace BLL.Threats.External
 			return false;
 		}
 
-		protected void AttackSpecificZones(int amount, IList<ZoneLocation> zones)
-		{
-			AttackSpecificZones(amount, zones, ThreatDamageType.Standard);
-		}
-
-		private void AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType threatDamageType)
+		protected void AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			Attack(amount, threatDamageType, zones);
 		}
 
-		protected ThreatDamageResult AttackCurrentZone(int amount)
-		{
-			return AttackCurrentZone(amount, ThreatDamageType.Standard);
-		}
-
-		protected ThreatDamageResult AttackCurrentZone(int amount, ThreatDamageType threatDamageType)
+		protected ThreatDamageResult AttackCurrentZone(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			return Attack(amount, threatDamageType, new[] { CurrentZone });
 		}
 
-		protected void AttackAllZones(int amount)
-		{
-			AttackAllZones(amount, ThreatDamageType.Standard);
-		}
-
-		protected void AttackAllZones(int amount, ThreatDamageType threatDamageType)
+		protected void AttackAllZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>());
 		}
 
-		protected void AttackOtherTwoZones(int amount)
-		{
-			AttackOtherTwoZones(amount, ThreatDamageType.Standard);
-		}
-
-		protected void AttackOtherTwoZones(int amount, ThreatDamageType threatDamageType)
+		protected void AttackOtherTwoZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}

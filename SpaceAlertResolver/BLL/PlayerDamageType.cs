@@ -26,6 +26,7 @@ namespace BLL
 				case PlayerDamageType.Rocket:
 					return BLL.DamageTargetType.Single;
 				case PlayerDamageType.InterceptorsMultiple:
+					//TODO: Do we need to distinguish between all (closest) and all (actually all)?
 					return BLL.DamageTargetType.All;
 				case PlayerDamageType.InterceptorsSingle:
 					return BLL.DamageTargetType.Single;
