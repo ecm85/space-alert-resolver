@@ -7,15 +7,10 @@ namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
-		protected IList<StationLocation> CurrentStations { get; private set; }
+		public IList<StationLocation> CurrentStations { get; private set; }
 
-		private int? totalInaccessibility;
-		private int? remainingInaccessibility;
-
-		protected void SetTotalInaccessibility(int newTotalInaccessibility)
-		{
-			totalInaccessibility = newTotalInaccessibility;
-		}
+		public int? TotalInaccessibility {get; protected set; }
+		private int? RemainingInaccessibility { get; set; }
 
 		internal StationLocation CurrentStation
 		{
@@ -53,17 +48,17 @@ namespace BLL.Threats.Internal
 		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType, int? inaccessibility) :
 			this(threatType, difficulty, health, speed, new List<StationLocation> {currentStation}, actionType)
 		{
-			totalInaccessibility = remainingInaccessibility = inaccessibility;
+			TotalInaccessibility = RemainingInaccessibility = inaccessibility;
 		}
 
 		public virtual void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			var damageRemaining = damage;
-			if (remainingInaccessibility.HasValue)
+			if (RemainingInaccessibility.HasValue)
 			{
-				var previousInaccessibility = remainingInaccessibility.Value;
-				remainingInaccessibility -= damageRemaining;
-				remainingInaccessibility = remainingInaccessibility < 0 ? 0 : remainingInaccessibility;
+				var previousInaccessibility = RemainingInaccessibility.Value;
+				RemainingInaccessibility -= damageRemaining;
+				RemainingInaccessibility = RemainingInaccessibility < 0 ? 0 : RemainingInaccessibility;
 				damageRemaining -= previousInaccessibility;
 			}
 			if (damageRemaining > 0)
@@ -167,7 +162,7 @@ namespace BLL.Threats.Internal
 		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
 			base.OnTurnEnded(sender, args);
-			remainingInaccessibility = totalInaccessibility;
+			RemainingInaccessibility = TotalInaccessibility;
 		}
 
 		public virtual bool CanBeTargetedBy(StationLocation stationLocation, PlayerActionType playerActionType, Player performingPlayer)
@@ -177,7 +172,7 @@ namespace BLL.Threats.Internal
 
 		public bool NextDamageWillDestroyThreat()
 		{
-			return remainingInaccessibility == 0 && RemainingHealth == 1;
+			return RemainingInaccessibility == 0 && RemainingHealth == 1;
 		}
 	}
 }

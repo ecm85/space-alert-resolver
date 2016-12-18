@@ -9,9 +9,9 @@ namespace BLL.Threats.External
 	public abstract class ExternalThreat : Threat
 	{
 		public ZoneLocation CurrentZone { get; set; }
-		protected int Shields { get; set; }
+		public int Shields { get; protected set; }
 		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
-		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { }; 
+		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
 
 		protected int DistanceToShip => Track.DistanceToThreat(Position.GetValueOrDefault());
 

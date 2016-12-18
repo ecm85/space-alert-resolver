@@ -47,8 +47,10 @@
     <Compile Include="Common\ValidatedNotNullAttribute.cs" />
     <Compile Include="DamageTargetType.cs" />
     <Compile Include="DamageToken.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalThreatEffect.cs" />
+    <Compile Include="GameParser.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threats\External\Minor\White\ArmoredGrappler.cs" />
     <Compile Include="Threats\External\Minor\White\Fighter.cs" />
+    <Compile Include="Threats\ThreatDamageEventArgs.cs" />
     <Compile Include="Threats\ThreatDifficulty.cs" />
     <Compile Include="Threats\ThreatFactory.cs" />
     <Compile Include="Threats\ThreatPoints.cs" />

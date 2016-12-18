@@ -65,7 +65,7 @@ namespace ConsoleResolverTest
 				"white:3"
 			};
 
-			var game = Program.ParseArgsAndRunGame(args);
+			var game = Program.ParseAndRunGame(args);
 
 			Assert.IsFalse(game.HasLost);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
@@ -128,7 +128,7 @@ namespace ConsoleResolverTest
 				"time:6"
 			};
 
-			var game = Program.ParseArgsAndRunGame(args);
+			var game = Program.ParseAndRunGame(args);
 
 			Assert.IsFalse(game.HasLost);
 			Assert.AreEqual(4, game.SittingDuck.BlueZone.TotalDamage);

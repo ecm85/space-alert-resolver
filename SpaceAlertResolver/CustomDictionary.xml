@@ -2,6 +2,7 @@
 	<Acronyms>
 		<CasingExceptions>
 			<Acronym>BLL</Acronym>
+			<Acronym>MVC</Acronym>
 		</CasingExceptions>
 	</Acronyms>
 	<Words>
@@ -19,6 +20,7 @@
 			<Word>Shambler</Word>
 			<Word>Shipward</Word>
 			<Word>ConsoleResolver</Word>
+			<Word>Mvc</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>

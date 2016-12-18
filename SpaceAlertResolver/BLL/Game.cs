@@ -33,14 +33,21 @@ namespace BLL
 		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
 		//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
 		//TODO: Code cleanup: Remove threat controller from all implementations of threats - make methods on Threat that subscribe to everything they care about
-		public SittingDuck SittingDuck { get; private set; }
-		private readonly IList<Player> players;
-		private int nextTurn;
+		public SittingDuck SittingDuck { get; }
+		public IList<Player> Players { get; }
+		public int CurrentTurn { get; private set; }
 		public int NumberOfTurns { get; set; }
 		public int TotalPoints { get; private set; }
-		public ThreatController ThreatController { get; private set; }
+		public ThreatController ThreatController { get; }
 		public bool HasLost { get; private set; }
 
+		public event EventHandler NewThreatsAdded = (sender, args) => { };
+		public event EventHandler PlayerActionsPerformed = (sender, args) => { };
+		public event EventHandler ResolvedDamage = (sender, args) => { };
+		public event EventHandler ThreatsMoved = (sender, args) => { };
+		public event EventHandler CheckedForComputer = (sender, args) => { };
+		public event EventHandler TurnEnding = (sender, args) => { };
+		
 		public Game(
 			IList<Player> players,
 			IList<InternalThreat> internalThreats,
@@ -61,23 +68,23 @@ namespace BLL
 			foreach (var threat in allThreats)
 				threat.Initialize(SittingDuck, ThreatController);
 			SittingDuck.SetPlayers(players);
-			this.players = players;
+			Players = players;
 			PadPlayerActions();
 			SetCaptain();
-			nextTurn = 0;
+			CurrentTurn = 0;
 		}
 
 		private void SetCaptain()
 		{
 			//TODO: Verify that player indicies are consecutive, non-repeating and start from 0
-			players.Single(player => player.Index == 0).IsCaptain = true;
-			foreach (var player in players.Except(new[] {players[0]}))
+			Players.Single(player => player.Index == 0).IsCaptain = true;
+			foreach (var player in Players.Except(new[] {Players[0]}))
 				player.IsCaptain = false;
 		}
 
 		private void PadPlayerActions()
 		{
-			foreach (var player in players)
+			foreach (var player in Players)
 			{
 				var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), NumberOfTurns - player.Actions.Count);
 				player.Actions.AddRange(extraNullActions);
@@ -88,22 +95,24 @@ namespace BLL
 		{
 			try
 			{
-				var currentTurn = nextTurn;
-				ThreatController.AddNewThreatsToTracks(currentTurn);
-				PerformPlayerActionsAndResolveDamage(currentTurn);
-				ThreatController.MoveThreats(currentTurn);
+				ThreatController.AddNewThreatsToTracks(CurrentTurn);
+				NewThreatsAdded(this, null);
+				PerformPlayerActionsAndResolveDamage();
+
+				ThreatController.MoveThreats(CurrentTurn);
+				ThreatsMoved(this, null);
 				PerformEndOfTurn();
 				var phaseStartTurns = new[] { 0, 3, 7, 12 };
-				var isSecondTurnOfPhase = phaseStartTurns.Contains(currentTurn - 1);
+				var isSecondTurnOfPhase = phaseStartTurns.Contains(CurrentTurn - 1);
 				if (isSecondTurnOfPhase)
-					CheckForComputer(currentTurn);
-				var isEndOfPhase = phaseStartTurns.Contains(currentTurn + 1);
+					CheckForComputer();
+				var isEndOfPhase = phaseStartTurns.Contains(CurrentTurn + 1);
 				if (isEndOfPhase)
 					PerformEndOfPhase();
-				if (currentTurn == NumberOfTurns - 1)
-					PerformEndOfGame(currentTurn);
-				nextTurn++;
-
+				if (CurrentTurn == NumberOfTurns - 1)
+					PerformEndOfGame();
+				TurnEnding(this, null);
+				CurrentTurn++;
 			}
 			catch (LoseException)
 			{
@@ -112,9 +121,9 @@ namespace BLL
 			}
 		}
 
-		private void PerformEndOfGame(int currentTurn)
+		private void PerformEndOfGame()
 		{
-			ThreatController.MoveThreats(currentTurn + 1);
+			ThreatController.MoveThreats(CurrentTurn + 1);
 			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
@@ -134,7 +143,7 @@ namespace BLL
 		{
 			TotalPoints += SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.TotalVisualConfirmationPoints;
 			TotalPoints += ThreatController.TotalThreatPoints;
-			TotalPoints += players.Sum(player => player.BonusPoints);
+			TotalPoints += Players.Sum(player => player.BonusPoints);
 		}
 
 		private void PerformEndOfPhase()
@@ -143,25 +152,25 @@ namespace BLL
 			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformEndOfPhase();
 		}
 
-		private void CheckForComputer(int currentTurn)
+		private void CheckForComputer()
 		{
 			if (!SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.MaintenancePerformedThisPhase)
-				foreach (var player in players)
-					player.Shift(currentTurn + 1);
+				foreach (var player in Players)
+					player.Shift(CurrentTurn + 1);
+			CheckedForComputer(this, null);
 		}
 
-		private void PerformPlayerActionsAndResolveDamage(int currentTurn)
+		private void PerformPlayerActionsAndResolveDamage()
 		{
-			CheckForAdvancedSpecialOpsProtection(currentTurn);
+			CheckForAdvancedSpecialOpsProtection();
 
-			PerformPlayerActions(currentTurn);
-
+			PerformPlayerActions();
 			var damages = SittingDuck.StandardStationsByLocation.Values
 				.Select(station => station.CurrentPlayerDamage())
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList.ToList())
 				.ToList();
-			ThreatController.OnPlayerActionsEnded();
+			PlayerActionsPerformed(this, null);
 
 			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
@@ -172,6 +181,7 @@ namespace BLL
 			if (!TargetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
 			ResolveDamage(damages, interceptorDamages);
+			ResolvedDamage(this, null);
 		}
 
 		private bool TargetingAssistanceProvided
@@ -185,21 +195,22 @@ namespace BLL
 			}
 		}
 
-		private void PerformPlayerActions(int currentTurn)
+		private void PerformPlayerActions()
 		{
-			var playerOrder = players
+			var playerOrder = Players
 				.Where(player => !player.IsKnockedOut)
-				.OrderBy(player => player.IsPerformingMedic(currentTurn))
+				.OrderBy(player => player.IsPerformingMedic(CurrentTurn))
 				.ThenBy(player => player.Index);
 
 			foreach (var player in playerOrder)
-				player.CurrentStation.PerformPlayerAction(player, currentTurn);
+				player.CurrentStation.PerformPlayerAction(player, CurrentTurn);
+			ThreatController.OnPlayerActionsEnded();
 		}
 
-		private void CheckForAdvancedSpecialOpsProtection(int currentTurn)
+		private void CheckForAdvancedSpecialOpsProtection()
 		{
-			var playersPerformingAdvancedSpecialOps = players
-				.Where(player => player.IsPerformingAdvancedSpecialOps(currentTurn))
+			var playersPerformingAdvancedSpecialOps = Players
+				.Where(player => player.IsPerformingAdvancedSpecialOps(CurrentTurn))
 				.ToList();
 			if (playersPerformingAdvancedSpecialOps.Any())
 				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
@@ -212,7 +223,7 @@ namespace BLL
 				zone.Gravolift.PerformEndOfTurn();
 				zone.UpperStation.PerformEndOfTurn();
 				zone.LowerStation.PerformEndOfTurn();
-				foreach (var player in players)
+				foreach (var player in Players)
 					player.SetPreventsKnockOut(false);
 			}
 			SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.PerformEndOfTurn();

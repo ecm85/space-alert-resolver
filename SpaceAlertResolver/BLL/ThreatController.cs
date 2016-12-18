@@ -36,12 +36,12 @@ namespace BLL
 			get { return ExternalThreats.Where(threat => threat.IsMoveable); }
 		}
 
-		private IEnumerable<InternalThreat> InternalThreatsOnTrack
+		public IEnumerable<InternalThreat> InternalThreatsOnTrack
 		{
 			get { return InternalThreats.Where(threat => threat.IsOnTrack); }
 		}
 
-		private IEnumerable<ExternalThreat> ExternalThreatsOnTrack
+		public IEnumerable<ExternalThreat> ExternalThreatsOnTrack
 		{
 			get { return ExternalThreats.Where(threat => threat.IsOnTrack); }
 		}

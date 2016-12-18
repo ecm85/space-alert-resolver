@@ -56,13 +56,13 @@ namespace BLL.Threats
 
 		public int TimeAppears { get; set; }
 		protected int TotalHealth { get; }
-		protected int RemainingHealth { get; set; }
+		public int RemainingHealth { get; protected set; }
 		public int Speed { get; set; }
 		public int? Position { get; private set; }
 		protected ThreatController ThreatController { get; private set; }
 
 		public ThreatType ThreatType { get; }
-		protected ThreatDifficulty Difficulty { get; }
+		public ThreatDifficulty Difficulty { get; }
 
 		protected ISittingDuck SittingDuck { get; private set; }
 

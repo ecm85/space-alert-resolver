@@ -1,4 +1,9 @@
 *.exe
 /SpaceAlertResolver/packages
-/SpaceAlertResolver/ConsoleResolverTest/bin/Debug
-/SpaceAlertResolver/ConsoleResolverTest/obj/Debug
+/SpaceAlertResolver/ConsoleResolverTest/bin
+/SpaceAlertResolver/ConsoleResolverTest/obj
+/SpaceAlertResolver/.vs/config/applicationhost.config
+*.dll
+*.pdb
+/SpaceAlertResolver/PL/bin
+/SpaceAlertResolver/PL/obj
