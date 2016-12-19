@@ -67,3 +67,12 @@ textarea {
 	display: block;
 	padding-bottom: 5px;
 }
+
+.track-space {
+	width: 20px;
+	height: 20px;
+	background-color: blue;
+	border: 1px solid violet;
+	position: absolute;
+	display: block;
+}

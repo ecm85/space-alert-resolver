@@ -52,16 +52,18 @@ namespace PL.Controllers
 				"time:6"
 			};
 			var game = GameParser.ParseArgsIntoGame(args);
-			var models = new List<GameSnapshotModel> {new GameSnapshotModel(game, "Start of Game")};
-			game.NewThreatsAdded += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Appeared"));
-			game.PlayerActionsPerformed += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Player Action Finished"));
-			game.ResolvedDamage += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Resolved Damage"));
-			game.ThreatsMoved += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Moved"));
-			game.CheckedForComputer += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Checked Computer Maintenance"));
-			game.TurnEnding += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "End of Turn"));
+			var nextPhase = 0;
+			var models = new List<GameSnapshotModel> {new GameSnapshotModel(game, "Start of Game", () => nextPhase++)};
+			game.NewThreatsAdded += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Appeared", () => nextPhase++));
+			game.PlayerActionsPerformed += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Player Action Finished", () => nextPhase++));
+			game.ResolvedDamage += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Resolved Damage", () => nextPhase++));
+			game.ThreatsMoved += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Moved", () => nextPhase++));
+			game.CheckedForComputer += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Checked Computer Maintenance", () => nextPhase++));
+			game.TurnEnding += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "End of Turn", () => nextPhase++));
 			for (var i = 0; i < game.NumberOfTurns; i++)
 			{
 				game.PerformTurn();
+				nextPhase = 0;
 			}
             var modelsString = JavaScriptConvert.SerializeObject(models.GroupBy(model => model.Turn).ToList());
 			return View(modelsString);

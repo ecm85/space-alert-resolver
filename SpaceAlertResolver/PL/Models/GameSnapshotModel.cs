@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL;
 using BLL.ShipComponents;
@@ -19,11 +20,12 @@ namespace PL.Models
 		public TrackSnapshotModel InternalTrack { get; }
 		public string Description { get; }
 		public int Turn { get; }
-		public GameSnapshotModel(Game game, string description)
+		public int Phase { get; }
+		public GameSnapshotModel(Game game, string description, Func<int> getPhase)
 		{
 			RedThreats = GetThreatsInZone(game, ZoneLocation.Red).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
 			WhiteThreats = GetThreatsInZone(game, ZoneLocation.White).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			RedThreats = GetThreatsInZone(game, ZoneLocation.Red).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			BlueThreats = GetThreatsInZone(game, ZoneLocation.Blue).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
 			InternalThreats = game.ThreatController.InternalThreatsOnTrack.Select(threat => new InternalThreatSnapshotModel(threat)).ToList();
 			Players = game.Players.Select(player => new PlayerSnapshotModel(player)).ToList();
 			RedTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Red]);
@@ -32,6 +34,7 @@ namespace PL.Models
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack);
 			Description = description;
 			Turn = game.CurrentTurn;
+			Phase = getPhase();
 		}
 
 		private static IEnumerable<ExternalThreat> GetThreatsInZone(Game game, ZoneLocation zoneLocation)

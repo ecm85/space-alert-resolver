@@ -7,58 +7,48 @@
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
-		@*<div style="height: 400px; overflow: auto;">
-			<h1>Space Alert</h1>
-
-			<h2>Turn <span ng-bind="gameData[currentTurn][0].turn + 1"></span> </h2>
-
-			<h3>{{gameData[currentTurn][0].Description}}</h3>
-			<h4>External Threats</h4>
-			<ul>
-				<li ng-repeat="externalThreat in gameData[currentTurn][0].externalThreats">{{externalThreat.description}} in {{externalThreat.currentZone}}</li>
-			</ul>
-			<h4>Internal Threats</h4>
-			<ul>
-				<li ng-repeat="internalThreat in gameData[currentTurn][0].internalThreats">{{internalThreat.description}} in <span ng-repeat="station in internalThreat.currentStations">{{station}}&nbsp;</span>
-			</ul>
-			<h4>Players</h4>
-			<ul>
-				<li ng-repeat="player in gameData[currentTurn][0].players">Player {{player.index}} is in {{player.stationLocation}}</li>
-			</ul>
-		</div>*@
 		<div class="external-tracks-wrapper">
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track red-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].redTrack.trackConfiguration}}.png"/>
+				<img class="track red-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].redTrack.trackConfiguration}}.png"/>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][0].redThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
 				</div>
 			</div>
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track white-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].whiteTrack.trackConfiguration}}.png"/>
+				<img class="track white-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].whiteTrack.trackConfiguration}}.png"/>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][0].whiteThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].whiteThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
 				</div>
 			</div>
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track blue-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].blueTrack.trackConfiguration}}.png"/>
+				<img class="track blue-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].blueTrack.trackConfiguration}}.png"/>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][0].blueThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].blueThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
 				</div>
 			</div>
 		</div>
 		<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
 		<div class="internal-track-outer-wrapper">
 			<div class="internal-track-inner-wrapper">
-				<img class="track internal-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].internalTrack.trackConfiguration}}.png"/>
+				<img class="track internal-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].internalTrack.trackConfiguration}}.png"/>
 				<div class="threat-list">
-					<img class="threat internal-threat" ng-repeat="internalThreat in gameData[currentTurn][0].internalThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{internalThreat.description}}.png" />
+					<img class="threat internal-threat" ng-repeat="internalThreat in gameData[currentTurn][currentPhase].internalThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{internalThreat.description}}.png" />
 				</div>
 			</div>
 		</div>
+		<h4>Turn:</h4>
 		<nav class="turn-selector">
 			<ul class="pagination">
 				<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
 					<a href="#" ng-click="selectTurn(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
+				</li>
+			</ul>
+		</nav>
+		<h4>Phase:</h4>
+		<nav class="turn-selector">
+			<ul class="pagination">
+				<li ng-repeat="phaseGroup in gameData[currentTurn]" ng-class="{'active': currentPhase === phaseGroup.phase}">
+					<a href="#" ng-click="selectPhase(phaseGroup.phase)">{{phaseGroup.description}}</a>
 				</li>
 			</ul>
 		</nav>
