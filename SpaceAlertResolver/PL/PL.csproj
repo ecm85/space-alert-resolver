@@ -161,14 +161,23 @@
     <Compile Include="Models\InternalThreatSnapshotModel.cs" />
     <Compile Include="Models\PlayerSnapshotModel.cs" />
     <Compile Include="Models\ThreatSnapshotModel.cs" />
+    <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <Content Include="Content\Images\board-front.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Tracks\Track1.png" />
+    <Content Include="Content\Images\Tracks\Track2.png" />
+    <Content Include="Content\Images\Tracks\Track3.png" />
+    <Content Include="Content\Images\Tracks\Track4.png" />
+    <Content Include="Content\Images\Tracks\Track5.png" />
+    <Content Include="Content\Images\Tracks\Track6.png" />
+    <Content Include="Content\Images\Tracks\Track7.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

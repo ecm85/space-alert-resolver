@@ -12,7 +12,7 @@ namespace BLL
 	public class ThreatController
 	{
 		public IDictionary<ZoneLocation, Track> ExternalTracks { get; }
-		private Track InternalTrack { get; }
+		public Track InternalTrack { get; }
 		private IList<ExternalThreat> ExternalThreats { get; }
 		private IList<InternalThreat> InternalThreats { get; }
 		public event EventHandler JumpingToHyperspace = (sender, args) => { };

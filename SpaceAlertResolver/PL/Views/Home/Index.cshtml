@@ -7,7 +7,7 @@
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
-		<div style="height: 400px; overflow: auto;">
+		@*<div style="height: 400px; overflow: auto;">
 			<h1>Space Alert</h1>
 
 			<h2>Turn <span ng-bind="gameData[currentTurn][0].turn + 1"></span> </h2>
@@ -25,8 +25,25 @@
 			<ul>
 				<li ng-repeat="player in gameData[currentTurn][0].players">Player {{player.index}} is in {{player.stationLocation}}</li>
 			</ul>
+		</div>*@
+		<div class="external-tracks-wrapper">
+			<div class="track-wrapper external-track-wrapper">
+				<img class="track red-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].redTrack.trackConfiguration}}.png"/>
+			</div>
+			<div class="track-wrapper external-track-wrapper">
+				<img class="track white-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].whiteTrack.trackConfiguration}}.png" />
+			</div>
+			<div class="track-wrapper external-track-wrapper">
+				<img class="track blue-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].blueTrack.trackConfiguration}}.png" />
+			</div>
 		</div>
-		<nav>
+		<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
+		<div class="internal-track-outer-wrapper">
+			<div class="internal-track-inner-wrapper">
+				<img class="track internal-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][0].internalTrack.trackConfiguration}}.png" />
+			</div>
+		</div>
+		<nav class="turn-selector">
 			<ul class="pagination">
 				<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
 					<a href="#" ng-click="selectTurn(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>

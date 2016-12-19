@@ -22,3 +22,30 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.sitting-duck {
+	
+	width: 700px;
+	height: auto;
+	display: inline-block;
+}
+
+.turn-selector {
+	display: inline-block;
+}
+
+.track {
+	width: auto;
+	height: 400px;
+	vertical-align: bottom;
+}
+
+.external-track-wrapper {
+	display: inline-block;
+	width: 233px;
+}
+
+.internal-track-outer-wrapper {
+	display: inline-block;
+	vertical-align: bottom;
+}

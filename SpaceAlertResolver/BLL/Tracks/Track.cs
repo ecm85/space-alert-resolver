@@ -6,21 +6,23 @@ namespace BLL.Tracks
 {
 	public class Track
 	{
-		private readonly IDictionary<int, TrackBreakpointType> breakpoints;
-		private readonly IList<TrackSection> sections;
+		public IDictionary<int, TrackBreakpointType> Breakpoints { get; }
+		public IList<TrackSection> Sections { get; }
+		public TrackConfiguration TrackConfiguration { get; }
 
 		public Track(TrackConfiguration trackConfiguration)
 		{
-			breakpoints = trackConfiguration.TrackBreakpoints();
-			sections = trackConfiguration.TrackSections();
+			Breakpoints = trackConfiguration.TrackBreakpoints();
+			Sections = trackConfiguration.TrackSections();
+			TrackConfiguration = trackConfiguration;
 		}
 
-		public int StartingPosition => sections.Sum(section => section.Length);
+		public int StartingPosition => Sections.Sum(section => section.Length);
 
 		public int DistanceToThreat(int position)
 		{
 			var distance = position;
-			foreach (var section in sections.OrderBy(section => section.DistanceFromShip))
+			foreach (var section in Sections.OrderBy(section => section.DistanceFromShip))
 			{
 				if (section.Length >= distance)
 					return section.DistanceFromShip;
@@ -33,8 +35,8 @@ namespace BLL.Tracks
 		{
 			var crossedBreakpoints = new List<TrackBreakpointType>();
 			for(var i = oldPosition - 1; i >= newPosition; i--)
-				if(breakpoints.ContainsKey(i))
-					crossedBreakpoints.Add(breakpoints[i]);
+				if(Breakpoints.ContainsKey(i))
+					crossedBreakpoints.Add(Breakpoints[i]);
 			return crossedBreakpoints;
 		}
 	}
