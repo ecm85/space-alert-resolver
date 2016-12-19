@@ -37,15 +37,33 @@ textarea {
 .track {
 	width: auto;
 	height: 400px;
-	vertical-align: bottom;
 }
 
 .external-track-wrapper {
 	display: inline-block;
 	width: 233px;
+	vertical-align: bottom;
+	padding-top: 10px;
 }
 
 .internal-track-outer-wrapper {
 	display: inline-block;
+	width: 233px;
 	vertical-align: bottom;
+}
+
+.threat-list {
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 10px;
+	overflow: auto;
+	height: 400px;
+	width: auto;
+}
+
+.threat {
+	width: 130px;
+	height: auto;
+	display: block;
+	padding-bottom: 5px;
 }

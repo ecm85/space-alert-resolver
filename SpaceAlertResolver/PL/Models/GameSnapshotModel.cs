@@ -2,12 +2,15 @@
 using System.Linq;
 using BLL;
 using BLL.ShipComponents;
+using BLL.Threats.External;
 
 namespace PL.Models
 {
 	public class GameSnapshotModel
 	{
-		public IEnumerable<ExternalThreatSnapshotModel> ExternalThreats { get; }
+		public IEnumerable<ExternalThreatSnapshotModel> RedThreats { get; }
+		public IEnumerable<ExternalThreatSnapshotModel> WhiteThreats { get; }
+		public IEnumerable<ExternalThreatSnapshotModel> BlueThreats { get; }
 		public IEnumerable<InternalThreatSnapshotModel> InternalThreats { get; }
 		public IEnumerable<PlayerSnapshotModel> Players { get; }
 		public TrackSnapshotModel RedTrack { get; }
@@ -18,7 +21,9 @@ namespace PL.Models
 		public int Turn { get; }
 		public GameSnapshotModel(Game game, string description)
 		{
-			ExternalThreats = game.ThreatController.ExternalThreatsOnTrack.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			RedThreats = GetThreatsInZone(game, ZoneLocation.Red).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			WhiteThreats = GetThreatsInZone(game, ZoneLocation.White).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			RedThreats = GetThreatsInZone(game, ZoneLocation.Red).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
 			InternalThreats = game.ThreatController.InternalThreatsOnTrack.Select(threat => new InternalThreatSnapshotModel(threat)).ToList();
 			Players = game.Players.Select(player => new PlayerSnapshotModel(player)).ToList();
 			RedTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Red]);
@@ -27,6 +32,11 @@ namespace PL.Models
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack);
 			Description = description;
 			Turn = game.CurrentTurn;
+		}
+
+		private static IEnumerable<ExternalThreat> GetThreatsInZone(Game game, ZoneLocation zoneLocation)
+		{
+			return game.ThreatController.ExternalThreatsOnTrack.Where(threat => threat.CurrentZone == zoneLocation);
 		}
 	}
 }
