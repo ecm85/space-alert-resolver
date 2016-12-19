@@ -10,25 +10,6 @@ namespace PL.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View();
-		}
-
-		public ActionResult About()
-		{
-			ViewBag.Message = "Your application description page.";
-
-			return View();
-		}
-
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
-
-			return View();
-		}
-
-		public ActionResult ProcessGame()
-		{
 			var args = new[]
 			{
 				"-players",
@@ -80,7 +61,8 @@ namespace PL.Controllers
 			{
 				game.PerformTurn();
 			}
-			return View(models.GroupBy(model => model.Turn).ToList());
+            var modelsString = JavaScriptConvert.SerializeObject(models.GroupBy(model => model.Turn).ToList());
+			return View(modelsString);
 		}
 	}
 }

@@ -1,31 +1,37 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
+﻿
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@model IHtmlString
+<script>
+    angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
+</script>
+@Scripts.Render("~/bundles/app")
+<div ng-app="spaceAlertModule">
+	<div ng-controller="ResolutionController">
+		<div style="height: 400px; overflow: auto;">
+			<h1>Space Alert</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+			<h2>Turn <span ng-bind="gameData[currentTurn][0].turn + 1"></span> </h2>
+
+			<h3>{{gameData[currentTurn][0].Description}}</h3>
+			<h4>External Threats</h4>
+			<ul>
+				<li ng-repeat="externalThreat in gameData[currentTurn][0].externalThreats">{{externalThreat.description}} in {{externalThreat.currentZone}}</li>
+			</ul>
+			<h4>Internal Threats</h4>
+			<ul>
+				<li ng-repeat="internalThreat in gameData[currentTurn][0].internalThreats">{{internalThreat.description}} in <span ng-repeat="station in internalThreat.currentStations">{{station}}&nbsp;</span>
+			</ul>
+			<h4>Players</h4>
+			<ul>
+				<li ng-repeat="player in gameData[currentTurn][0].players">Player {{player.index}} is in {{player.stationLocation}}</li>
+			</ul>
+		</div>
+		<nav>
+			<ul class="pagination">
+				<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
+					<a href="#" ng-click="selectTurn(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 </div>

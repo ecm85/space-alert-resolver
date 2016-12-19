@@ -1,10 +1,14 @@
 ﻿using BLL.Threats;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
 	public class ThreatSnapshotModel
 	{
+		[JsonConverter(typeof(StringEnumConverter))]
 		public ThreatType ThreatType { get; set; }
+		[JsonConverter(typeof(StringEnumConverter))]
 		public ThreatDifficulty ThreatDifficulty { get; set; }
 		public int Position { get; set; }
 		public int RemainingHealth { get; set; }
