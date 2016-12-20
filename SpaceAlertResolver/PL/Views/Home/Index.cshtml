@@ -9,31 +9,57 @@
 	<div ng-controller="ResolutionController">
 		<div class="external-tracks-wrapper">
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track red-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].redTrack.trackConfiguration}}.png"/>
+				<div class="track-spaces-wrapper">
+					<div class="track-outline"></div>
+					<div class="track-sections">
+						<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in gameData[currentTurn][currentPhase].redTrack.sections">
+							<div ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
+							</div>
+						</div>
+					</div>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
 				</div>
 			</div>
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track white-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].whiteTrack.trackConfiguration}}.png"/>
+				<div class="track-spaces-wrapper">
+					<div class="track-outline"></div>
+					<div class="track-sections">
+						<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in gameData[currentTurn][currentPhase].whiteTrack.sections">
+							<div ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
+						</div>
+					</div>
+				</div>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].whiteThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].whiteThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
 				</div>
 			</div>
 			<div class="track-wrapper external-track-wrapper">
-				<img class="track blue-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].blueTrack.trackConfiguration}}.png"/>
+				<div class="track-spaces-wrapper">
+					<div class="track-outline"></div>
+					<div class="track-sections">
+						<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in gameData[currentTurn][currentPhase].blueTrack.sections">
+							<div ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
+						</div>
+					</div>
+				</div>
 				<div class="threat-list">
-					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].blueThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
+					<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].blueThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png" />
 				</div>
 			</div>
 		</div>
 		<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
-		<div class="internal-track-outer-wrapper">
-			<div class="internal-track-inner-wrapper">
-				<img class="track internal-track" src="/SpaceAlertResolver/Content/Images/Tracks/{{gameData[currentTurn][currentPhase].internalTrack.trackConfiguration}}.png"/>
-				<div class="threat-list">
-					<img class="threat internal-threat" ng-repeat="internalThreat in gameData[currentTurn][currentPhase].internalThreats" src="/SpaceAlertResolver/Content/Images/Threats/{{internalThreat.description}}.png" />
+		<div class="track-wrapper internal-track-wrapper">
+			<div class="track-spaces-wrapper">
+				<div class="track-outline"></div>
+				<div class="track-sections">
+					<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in gameData[currentTurn][currentPhase].internalTrack.sections">
+						<div ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
+					</div>
 				</div>
+			</div>
+			<div class="threat-list">
+				<img class="threat external-threat" ng-repeat="internalThreat in gameData[currentTurn][currentPhase].internalThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{internalThreat.description}}.png" />
 			</div>
 		</div>
 		<h4>Turn:</h4>

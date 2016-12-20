@@ -161,6 +161,7 @@
     <Compile Include="Models\InternalThreatSnapshotModel.cs" />
     <Compile Include="Models\PlayerSnapshotModel.cs" />
     <Compile Include="Models\ThreatSnapshotModel.cs" />
+    <Compile Include="Models\TrackSectionSnapshotModel.cs" />
     <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
