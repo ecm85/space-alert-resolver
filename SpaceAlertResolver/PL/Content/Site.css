@@ -52,7 +52,7 @@ textarea {
     text-align: center;
 }
 
-.external-track-wrapper, .internal-track-wrapper {
+.track-wrapper {
 	display: inline-block;
 	width: 233px;
 	vertical-align: bottom;
@@ -76,7 +76,8 @@ textarea {
 	width: 130px;
 	height: auto;
 	display: block;
-	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border: 3px solid red;
 }
 
 .track-spaces-wrapper {
@@ -92,12 +93,14 @@ textarea {
 	border-right: 6px solid transparent;
 	width: 63px;
 	display: table;
+	z-index: -3;
 }
 
 .track-sections {
 	position: absolute;
 	bottom: 0;
 	display: table-cell;
+	z-index: -2
 }
 
 .track-section {
@@ -108,9 +111,10 @@ textarea {
 .track-space {
 	height: 18px;
 	width: 40px;
-	border: 1px solid blue;
+	border: 1px solid #FBDA66;
 	margin-left: 11px;
 	margin-bottom: 2px;
+	z-index: -2;
 }
 
 .track-section-1 > .track-space{
@@ -125,3 +129,19 @@ textarea {
 	background: linear-gradient(#EC6815, #8A5414);
 }
 
+.threat-line-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+.threat-line {
+	z-index: 0;
+}
+
+.track-space.threat-present {
+	border: 3px solid red;
+}

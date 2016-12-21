@@ -10,7 +10,7 @@ namespace PL.Models
 		public IEnumerable<int> TrackSpaces { get; set; }
 		public TrackSectionSnapshotModel(TrackSection section)
 		{
-			TrackSpaces = Enumerable.Range(1, section.Length).Reverse().ToList();
+			TrackSpaces = Enumerable.Range(1 + 5 * (section.DistanceFromShip - 1), section.Length).Reverse().ToList();
 			DistanceFromShip = section.DistanceFromShip;
 		}
 	}

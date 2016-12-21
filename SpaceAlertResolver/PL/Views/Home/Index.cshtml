@@ -32,12 +32,15 @@
 						<div class="track-outline"></div>
 						<div class="track-sections">
 							<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in gameData[currentTurn][currentPhase].redTrack.sections">
-								<div ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
+								<div id="redSpace{{trackSpace}}" ng-repeat="trackSpace in section.trackSpaces" class="track-space track-space-{{trackSpace}}"></div>
 							</div>
 						</div>
 					</div>
 					<div class="threat-list">
-						<img class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
+						<img id="redThreat{{$index}}" class="threat external-threat" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{externalThreat.description}}.png"/>
+						<svg class="threat-line-wrapper" ng-repeat="externalThreat in gameData[currentTurn][currentPhase].redThreats">
+							<line class="threat-line" stroke-width="3" stroke="red" id="redThreatLine{{$index}}" />
+						</svg>
 					</div>
 				</div>
 				<div class="track-wrapper external-track-wrapper">
