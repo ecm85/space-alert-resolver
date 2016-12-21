@@ -23,15 +23,20 @@ namespace PL.Models
 		public int Phase { get; }
 		public GameSnapshotModel(Game game, string description, Func<int> getPhase)
 		{
-			RedThreats = GetThreatsInZone(game, ZoneLocation.Red).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			WhiteThreats = GetThreatsInZone(game, ZoneLocation.White).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			BlueThreats = GetThreatsInZone(game, ZoneLocation.Blue).Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			InternalThreats = game.ThreatController.InternalThreatsOnTrack.Select(threat => new InternalThreatSnapshotModel(threat)).ToList();
+			var redThreats = GetThreatsInZone(game, ZoneLocation.Red).ToList();
+			var whiteThreats = GetThreatsInZone(game, ZoneLocation.White).ToList();
+			var blueThreats = GetThreatsInZone(game, ZoneLocation.Blue).ToList();
+			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
+
+			RedThreats = redThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			WhiteThreats = whiteThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			BlueThreats = blueThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
+			InternalThreats = internalThreats.Select(threat => new InternalThreatSnapshotModel(threat)).ToList();
 			Players = game.Players.Select(player => new PlayerSnapshotModel(player)).ToList();
-			RedTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Red]);
-			WhiteTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.White]);
-			BlueTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Blue]);
-			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack);
+			RedTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Red], redThreats);
+			WhiteTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.White], whiteThreats);
+			BlueTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Blue], blueThreats);
+			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			Description = description;
 			Turn = game.CurrentTurn;
 			Phase = getPhase();
