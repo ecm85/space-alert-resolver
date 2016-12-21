@@ -24,7 +24,7 @@ textarea {
 }
 
 .sitting-duck {
-	width: 700px;
+	width: 715px;
 	height: auto;
 	display: inline-block;
 }
@@ -68,7 +68,7 @@ textarea {
 	vertical-align: top;
 	padding-top: 10px;
 	overflow: auto;
-	height: 300px;
+	height: 350px;
 	width: auto;
 }
 
@@ -86,7 +86,7 @@ textarea {
 
 .track-outline {
 	position: relative;
-	border-bottom: 300px solid black;
+	border-bottom: 350px solid black;
 	height: 0;
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
