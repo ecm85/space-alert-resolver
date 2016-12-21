@@ -29,8 +29,27 @@ textarea {
 	display: inline-block;
 }
 
-.turn-selector {
+.full-board {
 	display: inline-block;
+}
+
+.turn-selectors {
+	display: inline-block;
+	width: 250px;
+	max-width: 250px;
+	vertical-align: top;
+}
+
+.turn-selector-option {
+    width:42px;
+    max-width:42px;
+    text-align: center;
+}
+
+.phase-selector-option {
+    width:167px;
+    max-width:167px;
+    text-align: center;
 }
 
 .external-track-wrapper, .internal-track-wrapper {
