@@ -1,6 +1,7 @@
 ﻿"use strict";
 
-angular.module("spaceAlertModule").controller("ResolutionController", ["$scope", "gameData", function ($scope, gameData) {
+angular.module("spaceAlertModule")
+.controller("ResolutionController", ["$scope", "gameData", function ($scope, gameData) {
 	$scope.gameData = gameData;
 
 	$scope.selectPhase = function (phase) {
@@ -11,26 +12,47 @@ angular.module("spaceAlertModule").controller("ResolutionController", ["$scope",
 		$scope.selectPhase(0);
 	}
 
-	$scope.getThreatCornerX = function(color, index) {
-		return $('#' + color + 'Threat' + index).offset().left;
-	}
-
-	$scope.getThreatCornerY = function (color, index) {
-		var threatElement = $('#' + color + 'Threat' + index);
-		return threatElement.offset().top + (threatElement.height() / 2);
-	}
-
-	$scope.getTrackSpaceCornerX = function(color, threat) {
-		var spaceElement = $('#' + color + 'Space' + threat.position);
-		return spaceElement.offset().left + spaceElement.width();
-	}
-
-	$scope.getTrackSpaceCornerY = function (color, threat) {
-		return $('#' + color + 'Space' + threat.position).offset().top;
-	}
-
-	//TODO: Check what happens when threats scroll
-	//TODO: Add to other 2 tracks and internal
+	//TODO: Fix lines when threats scroll
 
 	$scope.selectTurn(0);
-}]);
+}])
+.directive('threatTrack', function() {
+	return {
+		templateUrl: 'SpaceAlertResolver/Content/Templates/ThreatTrack.html',
+		restrict: 'E',
+		scope: {
+			threats: '=',
+			track: '=',
+			trackId: '='
+		},
+		controller: ['$scope', function ThreatTrackController($scope) {
+			$scope.getThreatCornerX = function (index) {
+				var threatElement = $('#threat' + $scope.trackId + index);
+				if (threatElement.offset())
+					return threatElement.offset().left;
+				return 0;
+			}
+
+			$scope.getThreatCornerY = function (index) {
+				var threatElement = $('#threat' + $scope.trackId + index);
+				if (threatElement.offset())
+					return threatElement.offset().top + (threatElement.height() / 2);
+				return 0;
+			}
+
+			$scope.getTrackSpaceCornerX = function (threat) {
+				var spaceElement = $('#space' + $scope.trackId + threat.position);
+				if (spaceElement.offset())
+					return spaceElement.offset().left + spaceElement.width();
+				return 0;
+			}
+
+			$scope.getTrackSpaceCornerY = function (threat) {
+				var spaceElement = $('#space' + $scope.trackId + threat.position);
+				if (spaceElement.offset())
+					return spaceElement.offset().top;
+				return 0;
+			}
+		}]
+	}
+});

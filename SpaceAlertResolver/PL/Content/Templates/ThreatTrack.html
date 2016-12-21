@@ -1,0 +1,23 @@
+﻿<div class="track-wrapper">
+	<div class="track-spaces-wrapper">
+		<div class="track-outline"></div>
+		<div class="track-sections">
+			<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in track.sections">
+				<div id="space{{trackId}}{{trackSpace.space}}"
+					ng-repeat="trackSpace in section.trackSpaces"
+					class="track-space track-space-{{trackSpace.space}}"
+					ng-class="{'threat-present': trackSpace.hasAnyThreats}"></div>
+			</div>
+		</div>
+	</div>
+	<div class="threat-list">
+		<img id="threat{{trackId}}{{$index}}" class="threat threat" ng-repeat="threat in threats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
+		<svg class="threat-line-wrapper" ng-repeat="threat in threats">
+			<line class="threat-line" stroke-width="3" stroke="red"
+				ng-attr-x1="{{getThreatCornerX($index)}}"
+				ng-attr-y1="{{getThreatCornerY($index)}}"
+				ng-attr-x2="{{getTrackSpaceCornerX(threat)}}"
+				ng-attr-y2="{{getTrackSpaceCornerY(threat)}}"/>
+		</svg>
+	</div>
+</div>
