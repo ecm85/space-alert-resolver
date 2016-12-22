@@ -11,7 +11,7 @@ namespace PL.Models
 	
 		public TrackSnapshotModel(Track track, IEnumerable<Threat> threatsOnTrack)
 		{
-			Sections = track.Sections.Select(section => new TrackSectionModel(section, threatsOnTrack)).ToList();
+			Sections = track.Sections.Select(section => new TrackSectionModel(section, threatsOnTrack, track.Breakpoints)).ToList();
 		}
 	}
 }

@@ -117,6 +117,16 @@ textarea {
 	z-index: -2;
 }
 
+.track-section-1 > .track-breakpoint.track-space, .track-section-2 > .track-breakpoint.track-space, .track-section-3 > .track-breakpoint.track-space {
+	background: yellow;
+	text-align: center;
+}
+
+.track-breakpoint-text {
+	font-weight: 300;
+	font-family: Arial Black;
+}
+
 .track-section-1 > .track-space{
 	background: linear-gradient(#522B1F, #322817);
 }
@@ -144,6 +154,7 @@ textarea {
 
 .track-space.threat-present {
 	border: 3px solid red;
+	line-height: .9em;
 }
 
 .sitting-duck-wrapper {
