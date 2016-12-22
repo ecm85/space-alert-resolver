@@ -18,7 +18,7 @@ angular.module("spaceAlertModule")
 }])
 .directive('threatTrack', function() {
 	return {
-		templateUrl: 'SpaceAlertResolver/Content/Templates/ThreatTrack.html',
+		templateUrl: 'Content/Templates/ThreatTrack.html',
 		restrict: 'E',
 		scope: {
 			threats: '=',

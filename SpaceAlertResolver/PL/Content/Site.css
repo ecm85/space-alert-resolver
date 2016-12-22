@@ -191,3 +191,43 @@ textarea {
 	margin-right: -15px;
 }
 
+.energy-cubes {
+	position: absolute
+}
+
+.energy-cubes-upper-white {
+	top: 75px;
+	left: 400px;
+}
+
+.energy-cubes-lower-white {
+	top: 360px;
+	left: 315px;
+}
+
+.energy-cubes-upper-blue {
+	top: 133px;
+	left: 550px;
+}
+
+.energy-cubes-lower-blue {
+	top: 360px;
+	left: 515px;
+}
+
+.energy-cubes-upper-red {
+	top: 133px;
+	left: 128px;
+}
+
+.energy-cubes-lower-red {
+	top: 360px;
+	left: 115px;
+}
+
+.energy-cube {
+	width: 20px;
+	height: auto;
+	margin-right: -2px;
+}
+

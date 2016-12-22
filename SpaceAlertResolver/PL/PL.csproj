@@ -175,6 +175,7 @@
     <Content Include="Content\Images\board-front.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\greenCube.png" />
     <Content Include="Content\Images\Threats\Alien.png" />
     <Content Include="Content\Images\Threats\Amoeba.png" />
     <Content Include="Content\Images\Threats\ArmoredGrappler.png" />

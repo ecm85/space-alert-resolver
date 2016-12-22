@@ -13,7 +13,7 @@ namespace PL.Models
 		public StationModel(Game game, StationLocation station)
 		{
 			Players = GetPlayersInStation(game, station).Select(player => new PlayerModel(player)).ToList();
-			EnergyCubes = Enumerable.Range(0, game.SittingDuck.StandardStationsByLocation[station].BravoComponent.EnergyInComponent);
+			EnergyCubes = Enumerable.Range(1, game.SittingDuck.StandardStationsByLocation[station].BravoComponent.EnergyInComponent);
 		}
 
 		private static IEnumerable<Player> GetPlayersInStation(Game game, StationLocation location)
