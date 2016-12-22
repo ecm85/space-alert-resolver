@@ -74,7 +74,7 @@ namespace BLL
 				throw new InvalidOperationException("Need at least one player");
 			var players = new List<Player>();
 			var playerTokens = new Queue<string>(chunk.Skip(1));
-			if (playerTokens.Count % 2 != 0)
+			if (playerTokens.Count % 3 != 0)
 				throw new InvalidOperationException("Invalid players.");
 			while (playerTokens.Any())
 			{
@@ -90,7 +90,13 @@ namespace BLL
 				var actions = ParsePlayerActions(actionsToken.Item2);
 				if (actions == null)
 					throw new InvalidOperationException("Error on player #" + players.Count + 1);
-				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions)) { Index = index.Value };
+				var colorToken = ParseToken(playerTokens.Dequeue());
+				if (colorToken == null || colorToken.Item1 != "player-color")
+					throw new InvalidOperationException("Error on player # " + players.Count + 1);
+				var color = TryParseEnum<PlayerColor>(colorToken.Item2);
+				if (color == null)
+					throw new InvalidOperationException("Error on player # " + players.Count + 1);
+				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions)) { Index = index.Value, PlayerColor = color.Value};
 				players.Add(player);
 				//TODO: Add specializations and teleport player/destination
 			}

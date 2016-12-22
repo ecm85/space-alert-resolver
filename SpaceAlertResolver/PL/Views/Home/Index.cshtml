@@ -31,7 +31,27 @@
 				<threat-track track="gameData[currentTurn][currentPhase].whiteTrack" threats="gameData[currentTurn][currentPhase].whiteThreats" track-id="'white'"></threat-track>
 				<threat-track track="gameData[currentTurn][currentPhase].blueTrack" threats="gameData[currentTurn][currentPhase].blueThreats" track-id="'blue'"></threat-track>
 			</div>
-			<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
+			<div class="sitting-duck-wrapper">
+				<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
+				<div class="players players-upper-white">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].upperWhitePlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png"/>
+				</div>
+				<div class="players players-lower-white">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].lowerWhitePlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				</div>
+				<div class="players players-upper-blue">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].upperBluePlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				</div>
+				<div class="players players-lower-blue">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].lowerBluePlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				</div>
+				<div class="players players-upper-red">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].upperRedPlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				</div>
+				<div class="players players-lower-red">
+					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].lowerRedPlayers" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				</div>
+			</div>
 			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>
 		</div>
 	</div>

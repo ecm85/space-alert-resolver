@@ -6,8 +6,6 @@ namespace ConsoleResolver
 {
 	public static class Program
 	{
-		
-
 		public static int Main(string[] args)
 		{
 			var game = ParseAndRunGame(args);

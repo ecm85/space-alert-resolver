@@ -33,6 +33,8 @@ namespace BLL
 		public bool TeleportDestination { get; set; }
 		private bool PreventsKnockOut { get; set; }
 
+		public PlayerColor PlayerColor { get; set; }
+
 		public void SetPreventsKnockOut(bool preventsKnockOut)
 		{
 			PreventsKnockOut = preventsKnockOut;

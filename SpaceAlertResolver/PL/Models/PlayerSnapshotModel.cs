@@ -11,12 +11,15 @@ namespace PL.Models
 		[JsonConverter(typeof(StringEnumConverter))]
 		public StationLocation StationLocation { get; set; }
 		public bool HasBattleBots { get; set; }
+		[JsonConverter(typeof(StringEnumConverter))]
+		public PlayerColor PlayerColor { get; set; }
 
 		public PlayerSnapshotModel(Player player)
 		{
 			Index = player.Index;
 			StationLocation = player.CurrentStation.StationLocation;
 			HasBattleBots = player.BattleBots != null;
+			PlayerColor = player.PlayerColor;
 		}
 	}
 }
