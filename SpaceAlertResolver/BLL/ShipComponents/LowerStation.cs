@@ -4,7 +4,7 @@
 	{
 		public abstract Reactor Reactor { get; }
 
-		protected override IBravoComponent BravoComponent => Reactor;
+		public override IBravoComponent BravoComponent => Reactor;
 
 		protected LowerStation(
 			StationLocation stationLocation,

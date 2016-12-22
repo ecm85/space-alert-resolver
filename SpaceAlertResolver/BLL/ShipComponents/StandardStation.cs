@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 	public abstract class StandardStation : Station
 	{
 		public abstract IAlphaComponent AlphaComponent { get; }
-		protected abstract IBravoComponent BravoComponent { get; }
+		public abstract IBravoComponent BravoComponent { get; }
 		protected abstract ICharlieComponent CharlieComponent { get; }
 
 		private Gravolift Gravolift { get; }

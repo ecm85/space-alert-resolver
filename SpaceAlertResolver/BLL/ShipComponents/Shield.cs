@@ -1,6 +1,6 @@
 ﻿namespace BLL.ShipComponents
 {
-	public class Shield : EnergyContainer, IBravoComponent
+	public abstract class Shield : EnergyContainer
 	{
 		private EnergyContainer Source { get; set; }
 
@@ -9,7 +9,7 @@
 			Source = source;
 		}
 
-		public void PerformBAction(bool isHeroic)
+		public override void PerformBAction(bool isHeroic)
 		{
 			FillToCapacity(isHeroic);
 		}

@@ -11,11 +11,13 @@ namespace ConsoleResolverTest
 		[TestMethod]
 		public void TestBigCase()
 		{
+			//TODO: This test isn't that useful. Make it so!
 			var args = new[]
 			{
 				"-players",
 				"player-index:0",
 				"actions:bba",
+				"player-color: red",
 				"-external-threats",
 				"id:E1-07",
 				"time:3",
@@ -52,6 +54,7 @@ namespace ConsoleResolverTest
 				"-players",
 				"player-index:0",
 				"actions:-",
+				"player-color: red",
 				"-external-threats",
 				"id:E1-07",
 				"time:5",
@@ -93,16 +96,19 @@ namespace ConsoleResolverTest
 				"-players",
 				"player-index:0",
 				"actions:-^b^aaaaaa",
+				"player-color: red",
 				"player-index:1",
 				"actions:<^c^-cxcxa",
+				"player-color: blue",
 				"player-index:2",
 				"actions:-c--c^c",
+				"player-color: green",
 				"player-index:3",
 				"actions:^-----c",
+				"player-color: yellow",
 				"player-index:4",
 				"actions:-^----c",
-				"player-index:5",
-				"actions:3425",
+				"player-color: purple",
 				"-external-tracks",
 				"blue:1",
 				"red:2",

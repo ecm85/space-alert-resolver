@@ -1,12 +1,10 @@
 ﻿namespace BLL.ShipComponents
 {
-	public abstract class Reactor : EnergyContainer, IBravoComponent
+	public abstract class Reactor : EnergyContainer
 	{
 		protected Reactor(int capacity, int energy) : base(capacity, energy)
 		{
 		}
-
-		public abstract void PerformBAction(bool isHeroic);
 
 		public int Drain(int amount)
 		{

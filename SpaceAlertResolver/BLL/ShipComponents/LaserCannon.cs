@@ -4,7 +4,7 @@ namespace BLL.ShipComponents
 {
 	public abstract class LaserCannon : Cannon
 	{
-		protected LaserCannon(EnergyContainer source, int baseDamage, PlayerDamageType playerDamageType, ZoneLocation currentZone)
+		protected LaserCannon(IEnergyProvider source, int baseDamage, PlayerDamageType playerDamageType, ZoneLocation currentZone)
 			: base(source, baseDamage, new [] {1, 2, 3}, playerDamageType, currentZone)
 		{
 		}

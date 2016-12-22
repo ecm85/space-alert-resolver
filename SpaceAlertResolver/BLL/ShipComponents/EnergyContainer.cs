@@ -1,6 +1,6 @@
 ﻿namespace BLL.ShipComponents
 {
-	public abstract class EnergyContainer
+	public abstract class EnergyContainer : IBravoComponent
 	{
 		protected int Capacity { get; private set; }
 
@@ -10,6 +10,9 @@
 			get { return energy; }
 			set { energy = value > 0 ? value : 0; }
 		}
+
+		public abstract void PerformBAction(bool isHeroic);
+		public int EnergyInComponent => Energy;
 
 		protected EnergyContainer(int capacity, int energy)
 		{
@@ -37,6 +40,16 @@
 			IsDamaged = false;
 			if (wasAlreadyDamaged)
 				Capacity++;
+		}
+
+		public void UseEnergy(int amount)
+		{
+			Energy -= amount;
+		}
+
+		public bool CanUseEnergy(int amount)
+		{
+			return Energy >= amount;
 		}
 	}
 }

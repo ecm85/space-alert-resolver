@@ -4,7 +4,7 @@
 	{
 		protected abstract Shield Shield { get; }
 
-		protected override IBravoComponent BravoComponent => Shield;
+		public override IBravoComponent BravoComponent => Shield;
 
 		protected UpperStation(
 			StationLocation stationLocation,

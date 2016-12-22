@@ -9,7 +9,7 @@ namespace BLL.ShipComponents
 		private readonly IList<ZoneLocation> affectedZones;
 		private readonly IEnumerable<int> baseAffectedDistances;
 		private readonly PlayerDamageType playerDamageType;
-		private readonly EnergyContainer source;
+		private readonly IEnergyProvider source;
 		protected bool OpticsDisrupted { get; private set; }
 		protected int BaseDamage { get { return baseDamage;} }
 		protected IList<ZoneLocation> AffectedZones { get { return affectedZones;} }
@@ -33,7 +33,7 @@ namespace BLL.ShipComponents
 		{
 			if (CanFire())
 			{
-				source.Energy -= 1;
+				source.UseEnergy(1);
 				CannonFired(this, EventArgs.Empty);
 				CurrentPlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}
@@ -42,7 +42,7 @@ namespace BLL.ShipComponents
 
 		public bool CanFire()
 		{
-			return CurrentPlayerDamage == null && source.Energy >= 1;
+			return CurrentPlayerDamage == null && source.CanUseEnergy(1);
 		}
 
 		protected abstract IEnumerable<PlayerDamage> GetPlayerDamage(Player performingPlayer, bool isHeroic, bool isAdvanced);
@@ -59,7 +59,7 @@ namespace BLL.ShipComponents
 			IsDamaged = false;
 		}
 
-		protected Cannon(EnergyContainer source, int baseDamage, IEnumerable<int> baseAffectedDistances, PlayerDamageType playerDamageType, params ZoneLocation[] affectedZones)
+		protected Cannon(IEnergyProvider source, int baseDamage, IEnumerable<int> baseAffectedDistances, PlayerDamageType playerDamageType, params ZoneLocation[] affectedZones)
 		{
 			this.source = source;
 			this.baseDamage = baseDamage;

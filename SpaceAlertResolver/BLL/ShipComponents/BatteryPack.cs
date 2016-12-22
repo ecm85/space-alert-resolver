@@ -1,16 +1,16 @@
 ﻿namespace BLL.ShipComponents
 {
-	public class BatteryPack : EnergyContainer
+	public class BatteryPack : IEnergyProvider
 	{
-		public BatteryPack() : base(1, 1)
+		//Battery pack recharges so doesn't need to indicate useage and can always be used, but only has 1 capacity.
+
+		public void UseEnergy(int amount)
 		{
 		}
 
-		public override int Energy
+		public bool CanUseEnergy(int amount)
 		{
-			get { return 1; }
-			// ReSharper disable once ValueParameterNotUsed
-			// Value is ignored to simulate infinite energy (since only doubles have an infinity constant and energy is integral).
+			return amount == 1;
 		}
 	}
 }
