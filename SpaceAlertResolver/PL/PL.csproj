@@ -160,10 +160,12 @@
     <Compile Include="Models\GameSnapshotModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
+    <Compile Include="Models\StationModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />
     <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Models\TrackSpaceModel.cs" />
+    <Compile Include="Models\ZoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

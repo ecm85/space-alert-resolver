@@ -74,5 +74,35 @@ namespace BLL.ShipComponents
 					throw new InvalidOperationException("Invalid Zone Location encountered.");
 			}
 		}
+
+		public static StationLocation GetUpperStation(this ZoneLocation zoneLocation)
+		{
+			switch (zoneLocation)
+			{
+				case ZoneLocation.Red:
+					return StationLocation.UpperRed;
+				case ZoneLocation.White:
+					return StationLocation.UpperWhite;
+				case ZoneLocation.Blue:
+					return StationLocation.UpperBlue;
+				default:
+					throw new InvalidOperationException("Invalid Zone Location encountered.");
+			}
+		}
+
+		public static StationLocation GetLowerStation(this ZoneLocation zoneLocation)
+		{
+			switch (zoneLocation)
+			{
+				case ZoneLocation.Red:
+					return StationLocation.LowerRed;
+				case ZoneLocation.White:
+					return StationLocation.LowerWhite;
+				case ZoneLocation.Blue:
+					return StationLocation.LowerBlue;
+				default:
+					throw new InvalidOperationException("Invalid Zone Location encountered.");
+			}
+		}
 	}
 }
