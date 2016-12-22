@@ -156,12 +156,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JavaScriptConvert.cs" />
-    <Compile Include="Models\ExternalThreatSnapshotModel.cs" />
+    <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
-    <Compile Include="Models\InternalThreatSnapshotModel.cs" />
-    <Compile Include="Models\PlayerSnapshotModel.cs" />
-    <Compile Include="Models\ThreatSnapshotModel.cs" />
-    <Compile Include="Models\TrackSectionSnapshotModel.cs" />
+    <Compile Include="Models\InternalThreatModel.cs" />
+    <Compile Include="Models\PlayerModel.cs" />
+    <Compile Include="Models\ThreatModel.cs" />
+    <Compile Include="Models\TrackSectionModel.cs" />
     <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Models\TrackSpaceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

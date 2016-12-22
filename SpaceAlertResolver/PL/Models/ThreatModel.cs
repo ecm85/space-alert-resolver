@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class ThreatSnapshotModel
+	public class ThreatModel
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ThreatType ThreatType { get; set; }
@@ -15,7 +15,7 @@ namespace PL.Models
 		public int Speed { get; set; }
 		public string Description { get; }
 
-		public ThreatSnapshotModel(Threat threat)
+		public ThreatModel(Threat threat)
 		{
 			Position = threat.Position.GetValueOrDefault();
 			RemainingHealth = threat.RemainingHealth;

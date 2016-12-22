@@ -5,11 +5,11 @@ using BLL.Tracks;
 
 namespace PL.Models
 {
-	public class TrackSectionSnapshotModel
+	public class TrackSectionModel
 	{
 		public int DistanceFromShip { get; set; }
 		public IEnumerable<TrackSpaceModel> TrackSpaces { get; set; }
-		public TrackSectionSnapshotModel(TrackSection section, IEnumerable<Threat> threatsOnTrack)
+		public TrackSectionModel(TrackSection section, IEnumerable<Threat> threatsOnTrack)
 		{
 			TrackSpaces = Enumerable.Range(1 + 5 * (section.DistanceFromShip - 1), section.Length)
 				.Reverse()

@@ -6,13 +6,13 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class InternalThreatSnapshotModel : ThreatSnapshotModel
+	public class InternalThreatModel : ThreatModel
 	{
 		public int TotalInaccessibility { get; set; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public IEnumerable<StationLocation> CurrentStations { get; set; }
 
-		public InternalThreatSnapshotModel(InternalThreat threat) : base(threat)
+		public InternalThreatModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
 			CurrentStations = threat.CurrentStations;

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class PlayerSnapshotModel
+	public class PlayerModel
 	{
 		public int Index { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -14,7 +14,7 @@ namespace PL.Models
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PlayerColor PlayerColor { get; set; }
 
-		public PlayerSnapshotModel(Player player)
+		public PlayerModel(Player player)
 		{
 			Index = player.Index;
 			StationLocation = player.CurrentStation.StationLocation;

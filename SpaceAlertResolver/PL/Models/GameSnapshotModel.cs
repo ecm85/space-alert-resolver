@@ -9,21 +9,21 @@ namespace PL.Models
 {
 	public class GameSnapshotModel
 	{
-		public IEnumerable<ExternalThreatSnapshotModel> RedThreats { get; }
-		public IEnumerable<ExternalThreatSnapshotModel> WhiteThreats { get; }
-		public IEnumerable<ExternalThreatSnapshotModel> BlueThreats { get; }
-		public IEnumerable<InternalThreatSnapshotModel> InternalThreats { get; }
-		public IEnumerable<PlayerSnapshotModel> Players { get; }
+		public IEnumerable<ExternalThreatModel> RedThreats { get; }
+		public IEnumerable<ExternalThreatModel> WhiteThreats { get; }
+		public IEnumerable<ExternalThreatModel> BlueThreats { get; }
+		public IEnumerable<InternalThreatModel> InternalThreats { get; }
+		public IEnumerable<PlayerModel> Players { get; }
 		public TrackSnapshotModel RedTrack { get; }
 		public TrackSnapshotModel WhiteTrack { get; }
 		public TrackSnapshotModel BlueTrack { get; }
 		public TrackSnapshotModel InternalTrack { get; }
-		public IEnumerable<PlayerSnapshotModel> UpperRedPlayers { get; }
-		public IEnumerable<PlayerSnapshotModel> LowerRedPlayers { get; }
-		public IEnumerable<PlayerSnapshotModel> UpperWhitePlayers { get; }
-		public IEnumerable<PlayerSnapshotModel> LowerWhitePlayers { get; }
-		public IEnumerable<PlayerSnapshotModel> UpperBluePlayers { get; }
-		public IEnumerable<PlayerSnapshotModel> LowerBluePlayers { get; }
+		public IEnumerable<PlayerModel> UpperRedPlayers { get; }
+		public IEnumerable<PlayerModel> LowerRedPlayers { get; }
+		public IEnumerable<PlayerModel> UpperWhitePlayers { get; }
+		public IEnumerable<PlayerModel> LowerWhitePlayers { get; }
+		public IEnumerable<PlayerModel> UpperBluePlayers { get; }
+		public IEnumerable<PlayerModel> LowerBluePlayers { get; }
 
 		public string Description { get; }
 		public int Turn { get; }
@@ -35,21 +35,21 @@ namespace PL.Models
 			var blueThreats = GetThreatsInZone(game, ZoneLocation.Blue).ToList();
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
 
-			RedThreats = redThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			WhiteThreats = whiteThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			BlueThreats = blueThreats.Select(threat => new ExternalThreatSnapshotModel(threat)).ToList();
-			InternalThreats = internalThreats.Select(threat => new InternalThreatSnapshotModel(threat)).ToList();
-			Players = game.Players.Select(player => new PlayerSnapshotModel(player)).ToList();
+			RedThreats = redThreats.Select(threat => new ExternalThreatModel(threat)).ToList();
+			WhiteThreats = whiteThreats.Select(threat => new ExternalThreatModel(threat)).ToList();
+			BlueThreats = blueThreats.Select(threat => new ExternalThreatModel(threat)).ToList();
+			InternalThreats = internalThreats.Select(threat => new InternalThreatModel(threat)).ToList();
+			Players = game.Players.Select(player => new PlayerModel(player)).ToList();
 			RedTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Red], redThreats);
 			WhiteTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.White], whiteThreats);
 			BlueTrack = new TrackSnapshotModel(game.ThreatController.ExternalTracks[ZoneLocation.Blue], blueThreats);
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
-			UpperRedPlayers = GetPlayersInStation(game, StationLocation.UpperRed).Select(player => new PlayerSnapshotModel(player)).ToList();
-			LowerRedPlayers = GetPlayersInStation(game, StationLocation.LowerRed).Select(player => new PlayerSnapshotModel(player)).ToList();
-			UpperWhitePlayers = GetPlayersInStation(game, StationLocation.UpperWhite).Select(player => new PlayerSnapshotModel(player)).ToList();
-			LowerWhitePlayers = GetPlayersInStation(game, StationLocation.LowerWhite).Select(player => new PlayerSnapshotModel(player)).ToList();
-			UpperBluePlayers = GetPlayersInStation(game, StationLocation.UpperBlue).Select(player => new PlayerSnapshotModel(player)).ToList();
-			LowerBluePlayers = GetPlayersInStation(game, StationLocation.LowerBlue).Select(player => new PlayerSnapshotModel(player)).ToList();
+			UpperRedPlayers = GetPlayersInStation(game, StationLocation.UpperRed).Select(player => new PlayerModel(player)).ToList();
+			LowerRedPlayers = GetPlayersInStation(game, StationLocation.LowerRed).Select(player => new PlayerModel(player)).ToList();
+			UpperWhitePlayers = GetPlayersInStation(game, StationLocation.UpperWhite).Select(player => new PlayerModel(player)).ToList();
+			LowerWhitePlayers = GetPlayersInStation(game, StationLocation.LowerWhite).Select(player => new PlayerModel(player)).ToList();
+			UpperBluePlayers = GetPlayersInStation(game, StationLocation.UpperBlue).Select(player => new PlayerModel(player)).ToList();
+			LowerBluePlayers = GetPlayersInStation(game, StationLocation.LowerBlue).Select(player => new PlayerModel(player)).ToList();
 			Description = description;
 			Turn = game.CurrentTurn;
 			Phase = getPhase();
