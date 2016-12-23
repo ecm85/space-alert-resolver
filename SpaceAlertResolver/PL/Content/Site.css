@@ -164,6 +164,9 @@ textarea {
 
 .players {
 	position: absolute;
+	width: 70px;
+	background-color: rgba(50, 50, 50, .1);
+	height: 55px;
 }
 
 .players-upper-white {
@@ -242,3 +245,17 @@ textarea {
 	margin-right: -2px;
 }
 
+.rockets {
+	position: absolute;
+	top: 385px;
+	left: 535px;
+	height:45px;
+	width: 90px;
+	background-color: rgba(50, 50, 50, .1);
+}
+
+.rocket {
+	width: 45px;
+	height: auto;
+	margin-right: -20px
+}

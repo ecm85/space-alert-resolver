@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BLL;
-using BLL.ShipComponents;
 
 namespace PL.Models
 {
@@ -21,9 +20,9 @@ namespace PL.Models
 		public GameSnapshotModel(Game game, string description, Func<int> getPhase)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
-			RedZone = new ZoneModel(game, ZoneLocation.Red);
-			WhiteZone = new ZoneModel(game, ZoneLocation.White);
-			BlueZone = new ZoneModel(game, ZoneLocation.Blue);
+			RedZone = new RedZoneModel(game);
+			WhiteZone = new WhiteZoneModel(game);
+			BlueZone = new BlueZoneModel(game);
 			InternalThreats = internalThreats.Select(threat => new InternalThreatModel(threat)).ToList();
 			Players = game.Players.Select(player => new PlayerModel(player)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);

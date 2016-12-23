@@ -5,15 +5,15 @@ using BLL.ShipComponents;
 
 namespace PL.Models
 {
-	public class ZoneModel
+	public abstract class ZoneModel
 	{
 		public ZoneLocation ZoneLocation { get; set; }
 		public IEnumerable<ThreatModel> ExternalThreats { get; set; }
-		public StationModel LowerStation { get; set; }
-		public StationModel UpperStation { get; set; }
 		public TrackSnapshotModel Track { get; }
+		public StandardStationModel LowerStation { get; set; }
+		public StandardStationModel UpperStation { get; set; }
 
-		public ZoneModel(Game game, ZoneLocation zoneLocation)
+		protected ZoneModel(Game game, ZoneLocation zoneLocation)
 		{
 			ZoneLocation = zoneLocation;
 			var externalThreatsInZone = game.ThreatController.ExternalThreatsOnTrack
@@ -22,8 +22,6 @@ namespace PL.Models
 			ExternalThreats = externalThreatsInZone
 				.Select(threat => new ExternalThreatModel(threat))
 				.ToList();
-			UpperStation = new StationModel(game, zoneLocation.GetUpperStation());
-			LowerStation = new StationModel(game, zoneLocation.GetLowerStation());
 			Track = new TrackSnapshotModel(game.ThreatController.ExternalTracks[zoneLocation], externalThreatsInZone);
 		}
 	}

@@ -156,15 +156,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JavaScriptConvert.cs" />
+    <Compile Include="Models\BlueZoneModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />
+    <Compile Include="Models\LowerRedStationModel.cs" />
+    <Compile Include="Models\LowerBlueStationModel.cs" />
+    <Compile Include="Models\LowerWhiteStationModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
-    <Compile Include="Models\StationModel.cs" />
+    <Compile Include="Models\RedZoneModel.cs" />
+    <Compile Include="Models\StandardStationModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />
     <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Models\TrackSpaceModel.cs" />
+    <Compile Include="Models\UpperRedStationModel.cs" />
+    <Compile Include="Models\UpperBlueStationModel.cs" />
+    <Compile Include="Models\UpperWhiteStationModel.cs" />
+    <Compile Include="Models\WhiteZoneModel.cs" />
     <Compile Include="Models\ZoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +185,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\greenCube.png" />
+    <Content Include="Content\Images\rocket2.png" />
     <Content Include="Content\Images\Threats\Alien.png" />
     <Content Include="Content\Images\Threats\Amoeba.png" />
     <Content Include="Content\Images\Threats\ArmoredGrappler.png" />

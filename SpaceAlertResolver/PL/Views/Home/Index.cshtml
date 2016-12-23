@@ -71,6 +71,10 @@
 				<div class="energy-cubes energy-cubes-lower-blue">
 					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].blueZone.lowerStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png"></img>
 				</div>
+
+				<div class="rockets">
+					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="/SpaceAlertResolver/Content/Images/Rocket2.png "/>
+				</div>
 			</div>
 			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>
 		</div>
