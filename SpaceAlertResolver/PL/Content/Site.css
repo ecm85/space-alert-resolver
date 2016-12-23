@@ -180,7 +180,7 @@ textarea {
 }
 
 .players-upper-blue {
-	top: 170px;
+	top: 160px;
 	left: 475px;
 }
 
@@ -190,7 +190,7 @@ textarea {
 }
 
 .players-upper-red {
-	top: 170px;
+	top: 160px;
 	left: 155px;
 }
 
@@ -258,4 +258,22 @@ textarea {
 	width: 45px;
 	height: auto;
 	margin-right: -20px
+}
+
+.inactiveLowerRedBattleBots {
+	position: absolute;
+    top: 368px;
+    left: 166px;
+    width: 45px;
+	height: auto;
+	background-color: rgba(50, 50, 50, .1);
+}
+
+.inactiveUpperBlueBattleBots {
+	position: absolute;
+	top: 217px;
+	left: 514px;
+	width: 45px;
+	height: auto;
+	background-color: rgba(50, 50, 50, .1);
 }

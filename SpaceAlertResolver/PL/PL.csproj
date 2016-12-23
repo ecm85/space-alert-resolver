@@ -156,6 +156,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JavaScriptConvert.cs" />
+    <Compile Include="Models\BattleBotsModel.cs" />
     <Compile Include="Models\BlueZoneModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
@@ -181,6 +182,7 @@
     <CodeAnalysisDictionary Include="..\CustomDictionary.xml">
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
+    <Content Include="Content\Images\BattleBots.png" />
     <Content Include="Content\Images\board-front.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

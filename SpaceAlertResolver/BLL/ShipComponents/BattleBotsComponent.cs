@@ -4,12 +4,12 @@ namespace BLL.ShipComponents
 {
 	public class BattleBotsComponent : ICharlieComponent
 	{
-		private BattleBots battleBots = new BattleBots();
+		public BattleBots BattleBots { get; private set; } = new BattleBots();
 
 		public void DisableInactiveBattleBots()
 		{
-			if (battleBots != null)
-				battleBots.IsDisabled = true;
+			if (BattleBots != null)
+				BattleBots.IsDisabled = true;
 		}
 
 		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
@@ -20,17 +20,17 @@ namespace BLL.ShipComponents
 				if (performingPlayer.BattleBots.IsDisabled)
 					performingPlayer.BattleBots.IsDisabled = false;
 			}
-			else if (battleBots != null)
+			else if (BattleBots != null)
 			{
-				performingPlayer.BattleBots = battleBots;
-				battleBots = null;
+				performingPlayer.BattleBots = BattleBots;
+				BattleBots = null;
 			}
 		}
 
 		public bool CanPerformCAction(Player performingPlayer)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
-			return performingPlayer.BattleBots != null || battleBots != null;
+			return performingPlayer.BattleBots != null || BattleBots != null;
 		}
 	}
 }
