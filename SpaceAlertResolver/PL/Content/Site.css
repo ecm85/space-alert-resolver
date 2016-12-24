@@ -210,10 +210,11 @@ textarea {
 
 .energy-cubes {
 	position: absolute;
+	height: 24px;
 }
 
 .energy-cubes-max-3 {
-	width: 56px;	
+	width: 56px;
 }
 
 .energy-cubes-max-4 {
@@ -254,7 +255,7 @@ textarea {
 	left: 90px;
 }
 
-.energy-cube, .battery-pack {
+.energy-cube{
 	width: 20px;
 	height: auto;
 	margin-right: -2px;
@@ -278,12 +279,16 @@ textarea {
 	position: absolute;
     top: 368px;
 	left: 168px;
+	width: 45px;
+	height: 33px;
 }
 
 .inactive-upper-blue-battle-bots {
 	position: absolute;
 	top: 217px;
 	left: 514px;
+	width: 45px;
+	height: 33px;
 }
 
 .inactive-battle-bots {
@@ -299,12 +304,14 @@ textarea {
 }
 
 .station-area {
-	background-color: rgba(50, 50, 50, .1);
+	background-color: rgba(50, 50, 50, .15);
 	border: yellow 1px solid;
 }
 
 .battery-pack-container {
 	position: absolute;
+	width: 20px;
+	height: 24px;
 }
 
 .battery-pack-container-lower-blue {
@@ -315,4 +322,40 @@ textarea {
 .battery-pack-container-lower-red {
 	top: 389px;
 	left: 60px;
+}
+
+.energy-in-cannon-container {
+	position: absolute;
+	width: 20px;
+	height: 24px;
+}
+
+.energy-in-upper-white-cannon {
+	top: 77px;
+	left: 349px;
+}
+
+.energy-in-lower-white-cannon {
+	top: 400px;
+	left: 349px;
+}
+
+.energy-in-upper-blue-cannon {
+	top: 116px;
+	left: 504px;
+}
+
+.energy-in-lower-blue-cannon {
+	top: 306px;
+	left: 640px;
+}
+
+.energy-in-upper-red-cannon {
+	top: 116px;
+	left: 197px;
+}
+
+.energy-in-lower-red-cannon {
+	top: 306px;
+	left: 53px;
 }

@@ -51,8 +51,9 @@
 				Energy++;
 		}
 
-		public void PerformEndOfTurn()
+		public override void PerformEndOfTurn()
 		{
+			base.PerformEndOfTurn();
 			BonusShield = 0;
 		}
 

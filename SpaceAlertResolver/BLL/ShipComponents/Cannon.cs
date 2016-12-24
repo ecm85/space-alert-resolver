@@ -15,6 +15,7 @@ namespace BLL.ShipComponents
 		protected IList<ZoneLocation> AffectedZones { get { return affectedZones;} }
 		protected IEnumerable<int> BaseAffectedDistances { get { return baseAffectedDistances;} }
 		protected PlayerDamageType PlayerDamageType { get { return playerDamageType;} }
+		public EnergyType? EnergyInCannon { get; private set; }
 
 		public void SetOpticsDisrupted(bool opticsDisrupted)
 		{
@@ -27,6 +28,8 @@ namespace BLL.ShipComponents
 		public void PerformEndOfTurn()
 		{
 			CurrentPlayerDamage = null;
+			EnergyInCannon = null;
+			source.PerformEndOfTurn();
 		}
 
 		public void PerformAAction(bool isHeroic, Player performingPlayer, bool isAdvanced)
@@ -34,6 +37,7 @@ namespace BLL.ShipComponents
 			if (CanFire())
 			{
 				source.UseEnergy(1);
+				EnergyInCannon = source.EnergyType;
 				CannonFired(this, EventArgs.Empty);
 				CurrentPlayerDamage = GetPlayerDamage(performingPlayer, isHeroic, isAdvanced);
 			}

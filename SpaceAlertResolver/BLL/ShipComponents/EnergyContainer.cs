@@ -51,5 +51,10 @@
 		{
 			return Energy >= amount;
 		}
+
+		public EnergyType EnergyType { get; } = EnergyType.Standard;
+		public virtual void PerformEndOfTurn()
+		{
+		}
 	}
 }

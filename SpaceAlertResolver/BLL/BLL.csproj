@@ -65,6 +65,7 @@
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />
     <Compile Include="ShipComponents\BlueZone.cs" />
     <Compile Include="ShipComponents\ComputerComponent.cs" />
+    <Compile Include="ShipComponents\EnergyType.cs" />
     <Compile Include="ShipComponents\IAlphaComponent.cs" />
     <Compile Include="ShipComponents\IBravoComponent.cs" />
     <Compile Include="ShipComponents\ICharlieComponent.cs" />

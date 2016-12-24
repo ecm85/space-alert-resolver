@@ -23,7 +23,7 @@ namespace PL.Controllers
 				"actions:-c--c^c",
 				"player-color: red",
 				"player-index:3",
-				"actions:^-----c",
+				"actions:^-----c>aa-a",
 				"player-color: yellow",
 				"player-index:4",
 				"actions:-^----c",

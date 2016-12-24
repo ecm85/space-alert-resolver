@@ -160,6 +160,7 @@
     <Compile Include="JavaScriptConvert.cs" />
     <Compile Include="Models\BattleBotsModel.cs" />
     <Compile Include="Models\BlueZoneModel.cs" />
+    <Compile Include="Models\CannonModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />

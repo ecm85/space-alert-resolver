@@ -13,5 +13,6 @@ namespace BLL.ShipComponents
 		bool CanFire();
 		void RemoveMechanicBuff();
 		void AddMechanicBuff();
+		EnergyType? EnergyInCannon { get; }
 	}
 }
