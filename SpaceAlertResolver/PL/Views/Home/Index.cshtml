@@ -38,14 +38,20 @@
 				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>
 
-				<div class="inactiveLowerRedBattleBots station-area">
-					<img class="inactiveBattleBotsIcon" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
+				<div class="inactive-lower-red-battle-bots station-area">
+					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
 				</div>
-				<div class="inactiveUpperBlueBattleBots station-area">
-					<img class="inactiveBattleBotsIcon" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
+				<div class="inactive-upper-blue-battle-bots station-area">
+					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
 				</div>
 				<div class="rockets station-area">
 					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="/SpaceAlertResolver/Content/Images/Rocket2.png "/>
+				</div>
+				<div class="battery-pack-container battery-pack-container-lower-red station-area">
+					<img class="battery-pack" src="/SpaceAlertResolver/Content/Images/OrangeCube.png" />
+				</div>
+				<div class="battery-pack-container battery-pack-container-lower-blue station-area">
+					<img class="battery-pack" src="/SpaceAlertResolver/Content/Images/OrangeCube.png"/>
 				</div>
 			</div>
 			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>

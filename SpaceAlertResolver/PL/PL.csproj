@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\Images\orangeCube.png" />
     <Content Include="Content\Templates\StandardZone.html" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

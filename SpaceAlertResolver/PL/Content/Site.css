@@ -254,7 +254,7 @@ textarea {
 	left: 90px;
 }
 
-.energy-cube {
+.energy-cube, .battery-pack {
 	width: 20px;
 	height: auto;
 	margin-right: -2px;
@@ -274,24 +274,24 @@ textarea {
 	margin-right: -20px
 }
 
-.inactiveLowerRedBattleBots {
+.inactive-lower-red-battle-bots {
 	position: absolute;
     top: 368px;
 	left: 168px;
 }
 
-.inactiveUpperBlueBattleBots {
+.inactive-upper-blue-battle-bots {
 	position: absolute;
 	top: 217px;
 	left: 514px;
 }
 
-.inactiveBattleBotsIcon {
+.inactive-battle-bots {
 	height: auto;
 	width: 45px;
 }
 
-.activeBattleBots {
+.active-battle-bots {
 	width: 25px;
 	height: 25px;
 	vertical-align: bottom;
@@ -301,4 +301,18 @@ textarea {
 .station-area {
 	background-color: rgba(50, 50, 50, .1);
 	border: yellow 1px solid;
+}
+
+.battery-pack-container {
+	position: absolute;
+}
+
+.battery-pack-container-lower-blue {
+	top: 389px;
+	left: 646px;
+}
+
+.battery-pack-container-lower-red {
+	top: 389px;
+	left: 60px;
 }
