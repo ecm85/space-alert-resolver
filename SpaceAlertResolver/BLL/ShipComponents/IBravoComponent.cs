@@ -4,5 +4,6 @@
 	{
 		void PerformBAction(bool isHeroic);
 		int EnergyInComponent { get; }
+		int Capacity { get; }
 	}
 }

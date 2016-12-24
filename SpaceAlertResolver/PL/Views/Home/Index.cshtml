@@ -33,48 +33,18 @@
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="/SpaceAlertResolver/Content/Images/board-front.jpg"/>
-				<div class="players players-upper-red">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].redZone.upperStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png"/>
-				</div>
-				<div class="energy-cubes energy-cubes-upper-red">
-					<img class="energy-cube" ng-repeat ="cube in  gameData[currentTurn][currentPhase].redZone.upperStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
-				</div>
-				<div class="players players-lower-red">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].redZone.lowerStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png"/>
-				</div>
-				<div class="energy-cubes energy-cubes-lower-red">
-					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].redZone.lowerStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
-				</div>
 
-				<div class="players players-upper-white">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].whiteZone.upperStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
-				</div>
-				<div class="energy-cubes energy-cubes-upper-white">
-					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].whiteZone.upperStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
-				</div>
-				<div class="players players-lower-white">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].whiteZone.lowerStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
-				</div>
-				<div class="energy-cubes energy-cubes-lower-white">
-					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].whiteZone.lowerStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
-				</div>
+				<standard-zone zone="gameData[currentTurn][currentPhase].whiteZone" zone-id="'white'"></standard-zone>
+				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
+				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>
 
-				<div class="players players-upper-blue">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].blueZone.upperStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+				<div class="inactiveLowerRedBattleBots station-area">
+					<img class="inactiveBattleBotsIcon" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
 				</div>
-				<div class="energy-cubes energy-cubes-upper-blue">
-					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].blueZone.upperStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
+				<div class="inactiveUpperBlueBattleBots station-area">
+					<img class="inactiveBattleBotsIcon" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
 				</div>
-				<div class="players players-lower-blue">
-					<img class="player" ng-repeat="player in gameData[currentTurn][currentPhase].blueZone.lowerStation.players" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
-				</div>
-				<div class="energy-cubes energy-cubes-lower-blue">
-					<img class="energy-cube"ng-repeat="cube in  gameData[currentTurn][currentPhase].blueZone.lowerStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
-				</div>
-
-				<img class="inactiveLowerRedBattleBots" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
-				<img class="inactiveUpperBlueBattleBots" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
-				<div class="rockets">
+				<div class="rockets station-area">
 					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="/SpaceAlertResolver/Content/Images/Rocket2.png "/>
 				</div>
 			</div>

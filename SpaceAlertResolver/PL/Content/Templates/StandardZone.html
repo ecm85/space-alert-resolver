@@ -1,0 +1,18 @@
+﻿<div class="players players-upper-{{zoneId}} station-area">
+	<div ng-repeat="player in zone.upperStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
+		<img class="player-icon" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+		<img class="activeBattleBots" ng-if="player.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
+	</div>
+</div>
+<div class="energy-cubes energy-cubes-upper-{{zoneId}} energy-cubes-max-{{zone.upperStation.maxEnergyCubes}} station-area">
+	<img class="energy-cube" ng-repeat="cube in zone.upperStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png" />
+</div>
+<div class="players players-lower-{{zoneId}} station-area">
+	<div ng-repeat="player in zone.lowerStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
+		<img class="player-icon" ng-src="/SpaceAlertResolver/Content/Images/Players/Male{{player.playerColor}}.png" />
+		<img class="activeBattleBots" ng-if="player.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png" />
+	</div>
+</div>
+<div class="energy-cubes energy-cubes-lower-{{zoneId}} energy-cubes-max-{{zone.lowerStation.maxEnergyCubes}} station-area">
+	<img class="energy-cube" ng-repeat="cube in  zone.lowerStation.energyCubes" src="/SpaceAlertResolver/Content/Images/GreenCube.png"/>
+</div>

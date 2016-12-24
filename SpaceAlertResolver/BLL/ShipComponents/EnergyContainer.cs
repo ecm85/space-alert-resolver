@@ -2,7 +2,7 @@
 {
 	public abstract class EnergyContainer : IBravoComponent
 	{
-		protected int Capacity { get; private set; }
+		public int Capacity { get; private set; }
 
 		private int energy;
 		public virtual int Energy

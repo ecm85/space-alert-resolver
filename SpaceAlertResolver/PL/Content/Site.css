@@ -164,8 +164,7 @@ textarea {
 
 .players {
 	position: absolute;
-	width: 70px;
-	background-color: rgba(50, 50, 50, .1);
+	width: 100px;
 	height: 55px;
 }
 
@@ -181,7 +180,7 @@ textarea {
 
 .players-upper-blue {
 	top: 160px;
-	left: 475px;
+	left: 455px;
 }
 
 .players-lower-blue {
@@ -200,13 +199,29 @@ textarea {
 }
 
 .player {
+	margin-right: -15px;
+	display: inline-block;
+}
+
+.player-icon {
 	width: 25px;
 	height: auto;
-	margin-right: -15px;
 }
 
 .energy-cubes {
-	position: absolute
+	position: absolute;
+}
+
+.energy-cubes-max-3 {
+	width: 56px;	
+}
+
+.energy-cubes-max-4 {
+	width: 74px;
+}
+
+.energy-cubes-max-6 {
+	width: 110px; 
 }
 
 .energy-cubes-upper-white {
@@ -236,7 +251,7 @@ textarea {
 
 .energy-cubes-lower-red {
 	top: 360px;
-	left: 115px;
+	left: 90px;
 }
 
 .energy-cube {
@@ -251,7 +266,6 @@ textarea {
 	left: 535px;
 	height:45px;
 	width: 90px;
-	background-color: rgba(50, 50, 50, .1);
 }
 
 .rocket {
@@ -263,17 +277,28 @@ textarea {
 .inactiveLowerRedBattleBots {
 	position: absolute;
     top: 368px;
-    left: 166px;
-    width: 45px;
-	height: auto;
-	background-color: rgba(50, 50, 50, .1);
+	left: 168px;
 }
 
 .inactiveUpperBlueBattleBots {
 	position: absolute;
 	top: 217px;
 	left: 514px;
-	width: 45px;
+}
+
+.inactiveBattleBotsIcon {
 	height: auto;
+	width: 45px;
+}
+
+.activeBattleBots {
+	width: 25px;
+	height: 25px;
+	vertical-align: bottom;
+	margin-left: -12.5px;
+}
+
+.station-area {
 	background-color: rgba(50, 50, 50, .1);
+	border: yellow 1px solid;
 }
