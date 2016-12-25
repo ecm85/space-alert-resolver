@@ -2,6 +2,7 @@
 {
 	public class LowerRedStation : LowerStation
 	{
+		public BatteryPack BatteryPack { get; }
 		public override IAlphaComponent AlphaComponent { get; }
 		public override Reactor Reactor => SideReactor;
 		public SideReactor SideReactor { get; }
@@ -16,7 +17,8 @@
 			Airlock redwardAirlock,
 			SittingDuck sittingDuck) : base(StationLocation.LowerRed, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
 		{
-			AlphaComponent = new SideLightLaserCannon(new BatteryPack(), ZoneLocation.Red);
+			BatteryPack = new BatteryPack();
+			AlphaComponent = new SideLightLaserCannon(BatteryPack, ZoneLocation.Red);
 			BattleBotsComponent = new BattleBotsComponent();
 			SideReactor = new SideReactor(whiteReactor);
 		}

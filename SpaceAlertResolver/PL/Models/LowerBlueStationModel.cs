@@ -8,10 +8,12 @@ namespace PL.Models
 	public class LowerBlueStationModel : StandardStationModel
 	{
 		public IEnumerable<int> Rockets { get; set; }
+		public bool BatteryPackHasEnergy { get; set; }
 
 		public LowerBlueStationModel(Game game) : base(game, StationLocation.LowerBlue)
 		{
 			Rockets = Enumerable.Range(1, game.SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketCount);
+			BatteryPackHasEnergy = game.SittingDuck.BlueZone.LowerBlueStation.BatteryPack.HasEnergy;
 		}
 	}
 }

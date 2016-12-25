@@ -2,22 +2,22 @@
 {
 	public class BatteryPack : IEnergyProvider
 	{
-		public int Energy { get; private set; } = 1;
+		public bool HasEnergy { get; private set; } = true;
 
 		public void UseEnergy(int amount)
 		{
-			Energy = 0;
+			HasEnergy = false;
 		}
 
 		public bool CanUseEnergy(int amount)
 		{
-			return amount == 1 && Energy == 1;
+			return amount == 1 && HasEnergy;
 		}
 
 		public EnergyType EnergyType { get; } = EnergyType.Battery;
 		public void PerformEndOfTurn()
 		{
-			Energy = 1;
+			HasEnergy = true;
 		}
 	}
 }

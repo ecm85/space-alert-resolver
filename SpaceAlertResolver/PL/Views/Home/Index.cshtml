@@ -48,10 +48,10 @@
 					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="/SpaceAlertResolver/Content/Images/Rocket2.png "/>
 				</div>
 				<div class="battery-pack-container battery-pack-container-lower-red station-area">
-					<img class="energy-cube" src="/SpaceAlertResolver/Content/Images/OrangeCube.png" />
+					<img ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="/SpaceAlertResolver/Content/Images/OrangeCube.png" />
 				</div>
 				<div class="battery-pack-container battery-pack-container-lower-blue station-area">
-					<img class="energy-cube" src="/SpaceAlertResolver/Content/Images/OrangeCube.png"/>
+					<img ng-if="gameData[currentTurn][currentPhase].blueZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="/SpaceAlertResolver/Content/Images/OrangeCube.png"/>
 				</div>
 			</div>
 			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>

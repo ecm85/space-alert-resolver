@@ -305,7 +305,7 @@ textarea {
 
 .station-area {
 	background-color: rgba(50, 50, 50, .15);
-	border: yellow 1px solid;
+	/*border: yellow 1px solid;*/
 }
 
 .battery-pack-container {
