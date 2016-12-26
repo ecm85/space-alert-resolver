@@ -11,17 +11,33 @@ angular.module("spaceAlertModule")
 		$scope.currentTurn = turn;
 		$scope.selectPhase(0);
 	}
+
+	$scope.isAtStartOfTurn = function() {
+		return $scope.currentPhase === 0;
+	}
+	$scope.isAtStartOfGame = function() {
+		return $scope.currentTurn === 0 && $scope.isAtStartOfTurn();
+	}
+	$scope.isAtEndOfTurn = function() {
+		return $scope.currentPhase === $scope.gameData[$scope.currentTurn].length - 1;
+	}
+	$scope.isAtEndOfGame = function() {
+		return $scope.currentTurn === $scope.gameData.length - 1 && $scope.isAtEndOfTurn();
+	}
+
 	$scope.play = function() {
-		$scope.playing = $interval(function() {
-			if ($scope.currentPhase < $scope.gameData[$scope.currentTurn].length - 1)
-				$scope.selectPhase($scope.currentPhase + 1);
-			else if ($scope.currentTurn < $scope.gameData.length - 1)
-				$scope.selectTurn($scope.currentTurn + 1);
-			else {
-				$scope.stop();
-			}
-		},
-		400);
+		if (!$scope.playing) {
+			$scope.playing = $interval(function() {
+					if (!$scope.isAtEndOfTurn())
+						$scope.selectPhase($scope.currentPhase + 1);
+					else if (!$scope.isAtEndOfGame())
+						$scope.selectTurn($scope.currentTurn + 1);
+					else {
+						$scope.stop();
+					}
+				},
+				400);
+		}
 	}
 	$scope.stop = function() {
 		if ($scope.playing != null) {
@@ -30,13 +46,17 @@ angular.module("spaceAlertModule")
 		}
 	}
 	$scope.goToStart = function() {
-		$scope.stop();
-		$scope.selectTurn(0);
+		if (!$scope.isAtStartOfGame()) {
+			$scope.stop();
+			$scope.selectTurn(0);
+		}
 	}
-	$scope.goToEnd = function() {
-		$scope.stop();
-		$scope.selectTurn($scope.gameData.length - 1);
-		$scope.selectPhase($scope.gameData[$scope.currentTurn].length - 1);
+	$scope.goToEnd = function () {
+		if (!$scope.isAtEndOfGame) {
+			$scope.stop();
+			$scope.selectTurn($scope.gameData.length - 1);
+			$scope.selectPhase($scope.gameData[$scope.currentTurn].length - 1);
+		}
 	}
 	$scope.$on('$destroy', function() {
 		$scope.stop();
