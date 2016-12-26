@@ -4,12 +4,28 @@ angular.module("spaceAlertModule")
 .controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
 	$scope.gameData = gameData;
 	$scope.playing = null
-	$scope.selectPhase = function (phase) {
+	var selectPhase = function (phase) {
 		$scope.currentPhase = phase;
 	}
-	$scope.selectTurn = function (turn) {
+	var selectTurn = function (turn) {
 		$scope.currentTurn = turn;
-		$scope.selectPhase(0);
+		selectPhase(0);
+	}
+
+	$scope.selectTurnManually = function (turn) {
+		$scope.stop();
+		selectTurn(turn);
+	}
+	$scope.selectTurnAutomatically = function(turn) {
+		selectTurn(turn);
+	}
+
+	$scope.selectPhaseManually = function(phase) {
+		$scope.stop();
+		selectPhase(phase);
+	}
+	$scope.selectPhaseAutomatically = function (phase) {
+		selectPhase(phase);
 	}
 
 	$scope.isAtStartOfTurn = function() {
@@ -29,9 +45,9 @@ angular.module("spaceAlertModule")
 		if (!$scope.playing) {
 			$scope.playing = $interval(function() {
 					if (!$scope.isAtEndOfTurn())
-						$scope.selectPhase($scope.currentPhase + 1);
+						$scope.selectPhaseAutomatically($scope.currentPhase + 1);
 					else if (!$scope.isAtEndOfGame())
-						$scope.selectTurn($scope.currentTurn + 1);
+						$scope.selectTurnAutomatically($scope.currentTurn + 1);
 					else {
 						$scope.stop();
 					}
@@ -48,14 +64,14 @@ angular.module("spaceAlertModule")
 	$scope.goToStart = function() {
 		if (!$scope.isAtStartOfGame()) {
 			$scope.stop();
-			$scope.selectTurn(0);
+			$scope.selectTurnManually(0);
 		}
 	}
 	$scope.goToEnd = function () {
 		if (!$scope.isAtEndOfGame) {
 			$scope.stop();
-			$scope.selectTurn($scope.gameData.length - 1);
-			$scope.selectPhase($scope.gameData[$scope.currentTurn].length - 1);
+			$scope.selectTurnManually($scope.gameData.length - 1);
+			$scope.selectPhaseManually($scope.gameData[$scope.currentTurn].length - 1);
 		}
 	}
 	$scope.$on('$destroy', function() {
@@ -63,7 +79,7 @@ angular.module("spaceAlertModule")
 	});
 	//TODO: Fix lines when threats scroll
 
-	$scope.selectTurn(0);
+	$scope.selectTurnManually(0);
 }])
 .directive('threatTrack', function() {
 	return {
@@ -85,7 +101,7 @@ angular.module("spaceAlertModule")
 			$scope.getThreatCornerY = function (index) {
 				var threatElement = $('#threat' + $scope.trackId + index);
 				if (threatElement.offset())
-					return threatElement.offset().top + (threatElement.outerHeight() / 2);
+					return threatElement.offset().top;
 				return 0;
 			}
 

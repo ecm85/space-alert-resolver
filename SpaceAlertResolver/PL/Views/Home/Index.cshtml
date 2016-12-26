@@ -17,14 +17,14 @@
 			<div>
 				<ul class="pagination" turn-selector>
 					<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
-						<a href="#" class="turn-selector-option" ng-click="selectTurn(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
+						<a href="#" class="turn-selector-option" ng-click="selectTurnManually(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
 					</li>
 				</ul>
 			</div>
 			<div>
 				<ul class="pagination phase-selector">
 					<li ng-repeat="phaseGroup in gameData[currentTurn]" ng-class="{'active': currentPhase === phaseGroup.phase}">
-						<a href="#" class="phase-selector-option" ng-click="selectPhase(phaseGroup.phase)">{{phaseGroup.description}}</a>
+						<a href="#" class="phase-selector-option" ng-click="selectPhaseManually(phaseGroup.phase)">{{phaseGroup.description}}</a>
 					</li>
 				</ul>
 			</div>
