@@ -33,11 +33,19 @@ textarea {
 	display: inline-block;
 }
 
-.turn-selectors {
+.game-runthrough {
 	display: inline-block;
 	width: 250px;
 	max-width: 250px;
 	vertical-align: top;
+}
+
+.automated-run-through {
+	margin: 20px 0;
+}
+
+.phase-selector {
+	height: 275px;
 }
 
 .turn-selector-option {
@@ -154,7 +162,7 @@ textarea {
 
 .track-space.threat-present {
 	border: 3px solid red;
-	line-height: .9em;
+	/*line-height: .9em;*/
 }
 
 .sitting-duck-wrapper {

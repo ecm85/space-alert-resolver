@@ -7,23 +7,27 @@
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
-		<div class="turn-selectors">
-			<h4>Turn:</h4>
-			<nav class="turn-selector">
-				<ul class="pagination">
+		<div class="game-runthrough">
+			<div class="btn-group automated-run-through">
+				<a class="btn btn-default" ng-click="goToStart()"><i class="fa fa-fast-backward"></i></a>
+				<a class="btn btn-default" ng-click="play()" ng-disabled="playing"><i class="fa fa-play"></i></a>
+				<a class="btn btn-default" ng-click="stop()" ng-disabled="!playing"><i class="fa fa-pause"></i></a>
+				<a class="btn btn-default" ng-click="goToEnd()"><i class="fa fa-fast-forward"></i></a>
+			</div>
+			<div>
+				<ul class="pagination" turn-selector>
 					<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
 						<a href="#" class="turn-selector-option" ng-click="selectTurn(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
 					</li>
 				</ul>
-			</nav>
-			<h4>Phase:</h4>
-			<nav class="turn-selector">
-				<ul class="pagination">
+			</div>
+			<div>
+				<ul class="pagination phase-selector">
 					<li ng-repeat="phaseGroup in gameData[currentTurn]" ng-class="{'active': currentPhase === phaseGroup.phase}">
 						<a href="#" class="phase-selector-option" ng-click="selectPhase(phaseGroup.phase)">{{phaseGroup.description}}</a>
 					</li>
 				</ul>
-			</nav>
+			</div>
 		</div>
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
