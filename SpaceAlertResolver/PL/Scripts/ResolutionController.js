@@ -3,7 +3,8 @@
 angular.module("spaceAlertModule")
 .controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
 	$scope.gameData = gameData;
-	$scope.playing = null
+	$scope.playing = null;
+	$scope.turnsPerTwoSeconds = 5;
 	var selectPhase = function (phase) {
 		$scope.currentPhase = phase;
 	}
@@ -11,9 +12,33 @@ angular.module("spaceAlertModule")
 		$scope.currentTurn = turn;
 		selectPhase(0);
 	}
+	var stop = function () {
+		if ($scope.playing != null) {
+			$interval.cancel($scope.playing);
+			$scope.playing = null;
+		}
+	};
+	var play = function () {
+		$scope.playing = $interval(function () {
+			if (!$scope.isAtEndOfTurn())
+				$scope.selectPhaseAutomatically($scope.currentPhase + 1);
+			else if (!$scope.isAtEndOfGame())
+				$scope.selectTurnAutomatically($scope.currentTurn + 1);
+			else {
+				stop();
+			}
+		},
+			2000 / $scope.turnsPerTwoSeconds);
+	};
+	$scope.$watch('turnsPerTwoSeconds', function(newValue) {
+		if ($scope.playing != null){
+			stop();
+			play();
+		}
+	});
 
 	$scope.selectTurnManually = function (turn) {
-		$scope.stop();
+		stop();
 		selectTurn(turn);
 	}
 	$scope.selectTurnAutomatically = function(turn) {
@@ -21,7 +46,7 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.selectPhaseManually = function(phase) {
-		$scope.stop();
+		stop();
 		selectPhase(phase);
 	}
 	$scope.selectPhaseAutomatically = function (phase) {
@@ -40,42 +65,27 @@ angular.module("spaceAlertModule")
 	$scope.isAtEndOfGame = function() {
 		return $scope.currentTurn === $scope.gameData.length - 1 && $scope.isAtEndOfTurn();
 	}
-
-	$scope.play = function() {
-		if (!$scope.playing) {
-			$scope.playing = $interval(function() {
-					if (!$scope.isAtEndOfTurn())
-						$scope.selectPhaseAutomatically($scope.currentPhase + 1);
-					else if (!$scope.isAtEndOfGame())
-						$scope.selectTurnAutomatically($scope.currentTurn + 1);
-					else {
-						$scope.stop();
-					}
-				},
-				400);
-		}
-	}
-	$scope.stop = function() {
-		if ($scope.playing != null) {
-			$interval.cancel($scope.playing);
-			$scope.playing = null;
-		}
+	$scope.playPause = function() {
+		if ($scope.playing)
+			stop();
+		else
+			play();
 	}
 	$scope.goToStart = function() {
 		if (!$scope.isAtStartOfGame()) {
-			$scope.stop();
+			stop();
 			$scope.selectTurnManually(0);
 		}
 	}
 	$scope.goToEnd = function () {
-		if (!$scope.isAtEndOfGame) {
-			$scope.stop();
+		if (!$scope.isAtEndOfGame()) {
+			stop();
 			$scope.selectTurnManually($scope.gameData.length - 1);
 			$scope.selectPhaseManually($scope.gameData[$scope.currentTurn].length - 1);
 		}
 	}
 	$scope.$on('$destroy', function() {
-		$scope.stop();
+		stop();
 	});
 	//TODO: Fix lines when threats scroll
 

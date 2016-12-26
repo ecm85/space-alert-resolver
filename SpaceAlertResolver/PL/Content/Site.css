@@ -162,7 +162,7 @@ textarea {
 
 .track-space.threat-present {
 	border: 3px solid red;
-	/*line-height: .9em;*/
+	line-height: .9em;
 }
 
 .sitting-duck-wrapper {
@@ -366,4 +366,16 @@ textarea {
 .energy-in-lower-red-cannon {
 	top: 306px;
 	left: 53px;
+}
+
+.fast-speed-label {
+	float: right;
+}
+
+.speed-selection-container {
+	width: 200px;
+}
+
+.speed-selector {
+	width: 200px;
 }
