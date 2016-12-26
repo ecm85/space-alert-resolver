@@ -65,6 +65,21 @@ angular.module("spaceAlertModule")
 	$scope.isAtEndOfGame = function() {
 		return $scope.currentTurn === $scope.gameData.length - 1 && $scope.isAtEndOfTurn();
 	}
+	$scope.goBackOnePhase = function() {
+		if (!$scope.isAtStartOfTurn())
+			$scope.selectPhaseManually($scope.currentPhase - 1);
+		else if (!$scope.isAtStartOfGame()) {
+			$scope.selectTurnManually($scope.currentTurn - 1);
+			$scope.selectPhaseManually($scope.gameData[$scope.currentTurn].length - 1);
+		}
+	}
+	$scope.goForwardOnePhase = function() {
+		if (!$scope.isAtEndOfTurn())
+			$scope.selectPhaseManually($scope.currentPhase + 1);
+		else if (!$scope.isAtEndOfGame()) {
+			$scope.selectTurnManually($scope.currentTurn + 1);
+		}
+	}
 	$scope.playPause = function() {
 		if ($scope.playing)
 			stop();

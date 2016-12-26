@@ -10,9 +10,11 @@
 		<div class="game-runthrough">
 			<div class="btn-group automated-run-through">
 				<a class="btn btn-default" ng-click="goToStart()"><i class="fa fa-fast-backward"></i></a>
+				<a class="btn btn-default" ng-click="goBackOnePhase()"><i class="fa fa-backward"></i></a>
 				<a class="btn btn-default" ng-click="playPause()">
 					<i ng-class="{'fa-play': !playing, 'fa-pause': playing}" class="fa"></i>
 				</a>
+				<a class="btn btn-default" ng-click="goForwardOnePhase()"><i class="fa fa-forward"></i></a>
 				<a class="btn btn-default" ng-click="goToEnd()"><i class="fa fa-fast-forward"></i></a>
 			</div>
 			<div class="speed-selection-container">
