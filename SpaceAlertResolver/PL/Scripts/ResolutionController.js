@@ -102,7 +102,6 @@ angular.module("spaceAlertModule")
 	$scope.$on('$destroy', function() {
 		stop();
 	});
-	//TODO: Fix lines when threats scroll
 
 	$scope.selectTurnManually(0);
 }])

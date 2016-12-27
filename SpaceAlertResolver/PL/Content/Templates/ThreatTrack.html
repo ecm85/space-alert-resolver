@@ -13,7 +13,27 @@
 		</div>
 	</div>
 	<div class="threat-list">
-		<img id="threat{{trackId}}{{$index}}" class="threat threat" ng-repeat="threat in threats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
+		<div class="threat-wrapper" ng-repeat="threat in threats">
+			<img id="threat{{trackId}}{{$index}}" class="threat" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
+			<div class="threat-info">
+				<div class="threat-health-wrapper">
+					<img class="threat-health" src="/SpaceAlertResolver/Content/Images/redCube.png"/>
+					<div class="threat-health-text">{{threat.remainingHealth}}</div>
+				</div>
+				<div ng-if="threat.shields" class="threat-shield-wrapper">
+					<img class="threat-shield" src="/SpaceAlertResolver/Content/Images/greenCube.png"/>
+					<div class="threat-shield-text">{{threat.shields}}</div>
+				</div>
+				<div ng-if="threat.totalInaccessibility" class="threat-total-inaccessibility-wrapper">
+					<img class="threat-total-inaccessibility" src="/SpaceAlertResolver/Content/Images/greenCube.png" />
+					<div class="threat-total-inaccessibility-text">{{threat.totalInaccessibility}}</div>
+				</div>
+				<div class="threat-speed-wrapper">
+					<img class="threat-speed" src="/SpaceAlertResolver/Content/Images/threatSpeed.png"/>
+					<div class="threat-speed-text">{{threat.speed}}</div>
+				</div>
+			</div>
+		</div>
 		<svg class="threat-line-wrapper" ng-repeat="threat in threats">
 			<line class="threat-line" stroke-width="3" stroke="red"
 				ng-attr-x1="{{getThreatCornerX($index)}}"

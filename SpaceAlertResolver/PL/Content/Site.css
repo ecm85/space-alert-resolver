@@ -75,17 +75,16 @@ textarea {
 	display: inline-block;
 	vertical-align: top;
 	padding-top: 10px;
-	overflow: auto;
+	overflow: hidden;
 	height: 350px;
 	width: auto;
 }
 
 .threat {
-	width: 130px;
+	width: 120px;
 	height: auto;
-	display: block;
-	margin-bottom: 5px;
-	border: 3px solid red;
+	position: relative;
+	vertical-align: top;
 }
 
 .track-spaces-wrapper {
@@ -378,4 +377,58 @@ textarea {
 
 .speed-selector {
 	width: 200px;
+}
+
+.threat-wrapper {
+	display: block;
+	border: 3px solid red;
+	margin-bottom: 5px;
+}
+
+.threat-info {
+	padding-right: 2px;
+	padding-top: 5px;
+	display: inline-block;
+}
+
+.threat-health-wrapper, .threat-shield-wrapper, .threat-speed-wrapper, .threat-total-inaccessibility-wrapper {
+	position: relative;
+	margin-bottom: 2px;
+}
+
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 1.6em;
+	padding-left: 8px;
+}
+
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
+	color: white;
+}
+
+.threat-speed-text {
+	color: black;
+	padding-top: 4px;
+}
+
+.threat-health {
+	width: 28px;
+	height: auto;
+}
+
+.threat-speed {
+	width: 28px;
+	height: auto;
+}
+
+.threat-total-inaccessibility {
+	width: 28px;
+	height: auto;
+}
+
+.threat-shield {
+	width: 28px;
+	height: auto;
 }

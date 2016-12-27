@@ -51,8 +51,8 @@ namespace PL.Controllers
 				"time:2",
 				"id:SI2-05",
 				"time:6",
-				"id:I1-06",
-				"time:6"
+				//"id:I1-06",
+				//"time:6"
 			};
 			var game = GameParser.ParseArgsIntoGame(args);
 			var nextPhase = 0;
