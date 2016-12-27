@@ -2,7 +2,7 @@
 
 @model IHtmlString
 <script>
-    angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
+	angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
 </script>
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
@@ -18,7 +18,7 @@
 				<a class="btn btn-default" ng-click="goToEnd()"><i class="fa fa-fast-forward"></i></a>
 			</div>
 			<div class="speed-selection-container">
-				<input class="speed-selector" type="range" ng-model="turnsPerTwoSeconds" min="1" max="10"/>
+				<input class="speed-selector" type="range" ng-model="turnsPerTwoSeconds" min="1" max="10" />
 				<div class="speed-selection-labels-container">
 					<span class="slow-speed-label">Slow</span>
 					<span class="fast-speed-label">Fast</span>
@@ -46,29 +46,40 @@
 				<threat-track track="gameData[currentTurn][currentPhase].blueZone.track" threats="gameData[currentTurn][currentPhase].blueZone.externalThreats" track-id="'blue'"></threat-track>
 			</div>
 			<div class="sitting-duck-wrapper">
-				<img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
+				<img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
 
 				<standard-zone zone="gameData[currentTurn][currentPhase].whiteZone" zone-id="'white'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>
 
 				<div class="inactive-lower-red-battle-bots station-area">
-					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png"/>
+					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png" />
 				</div>
 				<div class="inactive-upper-blue-battle-bots station-area">
 					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="~/Content/Images/BattleBots.png" />
 				</div>
 				<div class="rockets station-area">
-					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="~/Content/Images/rocket2.png"/>
+					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="~/Content/Images/rocket2.png" />
 				</div>
 				<div class="battery-pack-container battery-pack-container-lower-red station-area">
 					<img ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 				</div>
 				<div class="battery-pack-container battery-pack-container-lower-blue station-area">
-					<img ng-if="gameData[currentTurn][currentPhase].blueZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png"/>
+					<img ng-if="gameData[currentTurn][currentPhase].blueZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 				</div>
 			</div>
 			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>
 		</div>
 	</div>
+
+
+
+	<script type="text/ng-template" id="templates/standardZone">
+		@Html.Action("StandardZone");
+	</script>
+
+	<script type="text/ng-template" id="templates/threatTrack">
+		@Html.Action("ThreatTrack");
+	</script>
+
 </div>

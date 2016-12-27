@@ -107,7 +107,7 @@ angular.module("spaceAlertModule")
 }])
 .directive('threatTrack', function() {
 	return {
-		templateUrl: '/SpaceAlertResolver/Home/ThreatTrack',
+		templateUrl: 'templates/threatTrack',
 		restrict: 'E',
 		scope: {
 			threats: '=',
@@ -161,7 +161,7 @@ angular.module("spaceAlertModule")
 })
 .directive('standardZone', function () {
 	return {
-		templateUrl: '/SpaceAlertResolver/Home/StandardZone',
+		templateUrl: 'templates/standardZone',
 		restrict: 'E',
 		scope: {
 			zone: '=',
