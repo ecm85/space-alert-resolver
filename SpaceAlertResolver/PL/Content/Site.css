@@ -235,6 +235,7 @@ textarea {
 	position: absolute;
 	width: 100px;
 	height: 25px;
+	overflow: hidden;
 }
 
 .threat-on-ship {
