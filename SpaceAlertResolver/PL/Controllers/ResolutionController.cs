@@ -6,7 +6,7 @@ using PL.Models;
 
 namespace PL.Controllers
 {
-	public class HomeController : Controller
+	public class ResolutionController : Controller
 	{
 		public ActionResult Index()
 		{

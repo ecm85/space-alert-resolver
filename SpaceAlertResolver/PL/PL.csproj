@@ -202,8 +202,8 @@
     <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
-    <Content Include="Views\Home\StandardZone.cshtml" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Content Include="Views\Resolution\StandardZone.cshtml" />
+    <Compile Include="Controllers\ResolutionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -386,10 +386,10 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\ThreatTrack.cshtml" />
+    <Content Include="Views\Resolution\About.cshtml" />
+    <Content Include="Views\Resolution\Contact.cshtml" />
+    <Content Include="Views\Resolution\Index.cshtml" />
+    <Content Include="Views\Resolution\ThreatTrack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
