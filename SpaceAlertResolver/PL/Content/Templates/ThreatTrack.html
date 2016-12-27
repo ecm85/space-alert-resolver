@@ -14,7 +14,7 @@
 	</div>
 	<div class="threat-list">
 		<div class="threat-wrapper" ng-repeat="threat in threats">
-			<img id="threat{{trackId}}{{$index}}" class="threat" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
+			<img id="threat{{trackId}}{{$index}}" class="threat-on-track" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
 			<div class="threat-info">
 				<div class="threat-health-wrapper">
 					<img class="threat-health" src="/SpaceAlertResolver/Content/Images/redCube.png"/>
@@ -25,7 +25,7 @@
 					<div class="threat-shield-text">{{threat.shields}}</div>
 				</div>
 				<div ng-if="threat.totalInaccessibility" class="threat-total-inaccessibility-wrapper">
-					<img class="threat-total-inaccessibility" src="/SpaceAlertResolver/Content/Images/greenCube.png" />
+					<img class="threat-total-inaccessibility" src="/SpaceAlertResolver/Content/Images/greenCube.png"/>
 					<div class="threat-total-inaccessibility-text">{{threat.totalInaccessibility}}</div>
 				</div>
 				<div class="threat-speed-wrapper">
@@ -33,13 +33,20 @@
 					<div class="threat-speed-text">{{threat.speed}}</div>
 				</div>
 			</div>
+			<svg class="threat-on-track-line-wrapper">
+				<line class="threat-on-track-line" stroke-width="3" stroke="red"
+					ng-attr-x1="{{getThreatCornerX($index)}}"
+					ng-attr-y1="{{getThreatCornerY($index)}}"
+					ng-attr-x2="{{getTrackSpaceCornerX(threat)}}"
+					ng-attr-y2="{{getTrackSpaceCornerY(threat)}}"/>
+			</svg>
+			<!--<svg ng-if="threat.currentStations" ng-repeat="station in threat.currentStations" class="threat-on-ship-line-wrapper">
+				<line class="threat-on-ship-line" stroke-width="1" stroke="red"
+					ng-attr-x1="{{getThreatCornerX($index)}}"
+					ng-attr-y1="{{getThreatCornerY($index)}}"
+					ng-attr-x2="{{getStationCornerX(threat, station)}}"
+					ng-attr-y2="{{getStationCornerY(threat, station)}}" />
+			</svg>-->
 		</div>
-		<svg class="threat-line-wrapper" ng-repeat="threat in threats">
-			<line class="threat-line" stroke-width="3" stroke="red"
-				ng-attr-x1="{{getThreatCornerX($index)}}"
-				ng-attr-y1="{{getThreatCornerY($index)}}"
-				ng-attr-x2="{{getTrackSpaceCornerX(threat)}}"
-				ng-attr-y2="{{getTrackSpaceCornerY(threat)}}"/>
-		</svg>
 	</div>
 </div>

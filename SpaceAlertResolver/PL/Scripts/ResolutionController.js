@@ -142,6 +142,20 @@ angular.module("spaceAlertModule")
 					return spaceElement.offset().top;
 				return 0;
 			}
+
+			$scope.getStationCornerX = function(threat, station) {
+				var stationElement = $('#' + station + 'Threats');
+				if (stationElement.offset())
+					return stationElement.offset().left;
+				return 0;
+			}
+
+			$scope.getStationCornerY = function (threat, station) {
+				var stationElement = $('#' + station + 'Threats');
+				if (stationElement.offset())
+					return stationElement.offset().top;
+				return 0;
+			}
 		}]
 	}
 })

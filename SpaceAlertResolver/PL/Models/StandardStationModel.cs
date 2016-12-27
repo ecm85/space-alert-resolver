@@ -11,6 +11,7 @@ namespace PL.Models
 		public int MaxEnergyCubes { get; set; }
 		public IEnumerable<PlayerModel> Players { get; set; }
 		public CannonModel Cannon { get; set; }
+		public IEnumerable<InternalThreatModel> InternalThreats { get; set; }
 
 		protected StandardStationModel(Game game, StationLocation station)
 		{
@@ -19,6 +20,10 @@ namespace PL.Models
 			EnergyCubes = Enumerable.Range(1, standardStation.BravoComponent.EnergyInComponent);
 			MaxEnergyCubes = standardStation.BravoComponent.Capacity + 1;
 			Cannon = new CannonModel(standardStation.AlphaComponent);
+			InternalThreats = game.SittingDuck.ThreatController.InternalThreatsOnTrack
+				.Where(threat => threat.CurrentStations.Contains(station))
+				.Select(threat => new InternalThreatModel(threat))
+				.ToList();
 		}
 
 		private static IEnumerable<Player> GetPlayersInStation(Game game, StationLocation location)

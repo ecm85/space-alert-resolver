@@ -80,7 +80,7 @@ textarea {
 	width: auto;
 }
 
-.threat {
+.threat-on-track {
 	width: 105px;
 	height: 97px;
 	position: relative;
@@ -146,7 +146,7 @@ textarea {
 	background: linear-gradient(#EC6815, #8A5414);
 }
 
-.threat-line-wrapper {
+.threat-on-track-line-wrapper {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -155,7 +155,7 @@ textarea {
 	z-index: -1;
 }
 
-.threat-line {
+.threat-on-track-line {
 	z-index: 0;
 }
 
@@ -181,27 +181,27 @@ textarea {
 }
 
 .players-lower-white {
-	top: 300px;
+	top: 275px;
 	left: 315px;
 }
 
 .players-upper-blue {
 	top: 160px;
-	left: 455px;
+	left: 448px;
 }
 
 .players-lower-blue {
-	top: 300px;
+	top: 275px;
 	left: 515px;
 }
 
 .players-upper-red {
 	top: 160px;
-	left: 155px;
+	left: 170px;
 }
 
 .players-lower-red {
-	top: 300px;
+	top: 275px;
 	left: 115px;
 }
 
@@ -215,21 +215,76 @@ textarea {
 	height: auto;
 }
 
+.threats-on-ship {
+	position: absolute;
+	width: 100px;
+	height: 25px;
+}
+
+.threat-on-ship {
+	width: 25px;
+	height: 23px;
+	padding-right: 1px;
+	border: 1px solid red;
+}
+
+.threats-upper-white {
+	top: 173px;
+	left: 315px;
+}
+
+.threats-lower-white {
+	top: 333px;
+	left: 315px;
+}
+
+.threats-upper-blue {
+	top: 218px;
+	left: 448px;
+}
+
+.threats-lower-blue {
+	top: 333px;
+	left: 515px;
+}
+
+.threats-upper-red {
+	top: 218px;
+	left: 170px;
+}
+
+.threats-lower-red {
+	top: 333px;
+	left: 115px;
+}
+
 .energy-cubes {
 	position: absolute;
 	height: 24px;
 }
 
+.energy-cubes-max-1 {
+	width: 21px;
+}
+
+.energy-cubes-max-2 {
+	width: 40px;
+}
+
 .energy-cubes-max-3 {
-	width: 56px;
+	width: 59px;
 }
 
 .energy-cubes-max-4 {
-	width: 74px;
+	width: 78px;
+}
+
+.energy-cubes-max-5 {
+	width: 97px;
 }
 
 .energy-cubes-max-6 {
-	width: 110px; 
+	width: 116px; 
 }
 
 .energy-cubes-upper-white {
@@ -272,12 +327,12 @@ textarea {
 	position: absolute;
 	top: 385px;
 	left: 535px;
-	height:45px;
-	width: 90px;
+	height: 39px;
+	width: 80px;
 }
 
 .rocket {
-	width: 45px;
+	width: 40px;
 	height: auto;
 	margin-right: -20px
 }
@@ -292,8 +347,8 @@ textarea {
 
 .inactive-upper-blue-battle-bots {
 	position: absolute;
-	top: 217px;
-	left: 514px;
+	top: 184px;
+	left: 552px;
 	width: 45px;
 	height: 33px;
 }
@@ -312,7 +367,7 @@ textarea {
 
 .station-area {
 	background-color: rgba(50, 50, 50, .15);
-	/*border: yellow 1px solid;*/
+	border: yellow 1px solid;
 }
 
 .battery-pack-container {
