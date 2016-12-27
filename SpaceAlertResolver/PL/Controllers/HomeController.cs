@@ -68,8 +68,18 @@ namespace PL.Controllers
 				game.PerformTurn();
 				nextPhase = 0;
 			}
-            var modelsString = JavaScriptConvert.SerializeObject(models.GroupBy(model => model.Turn).ToList());
+			var modelsString = JavaScriptConvert.SerializeObject(models.GroupBy(model => model.Turn).ToList());
 			return View(modelsString);
+		}
+
+		public ActionResult StandardZone()
+		{
+			return PartialView();
+		}
+
+		public ActionResult ThreatTrack()
+		{
+			return PartialView();
 		}
 	}
 }
