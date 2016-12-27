@@ -152,6 +152,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Content\Images\orangeCube.png" />
+    <Content Include="Content\Images\Players\BattleBots.png" />
+    <Content Include="Content\Images\Players\MaleBlue.png" />
+    <Content Include="Content\Images\Players\MaleGreen.png" />
+    <Content Include="Content\Images\Players\MalePurple.png" />
+    <Content Include="Content\Images\Players\MaleRed.png" />
+    <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
     <Content Include="Views\Home\StandardZone.cshtml" />
