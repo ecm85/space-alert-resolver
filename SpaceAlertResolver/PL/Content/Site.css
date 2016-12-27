@@ -81,8 +81,8 @@ textarea {
 }
 
 .threat {
-	width: 120px;
-	height: auto;
+	width: 105px;
+	height: 97px;
 	position: relative;
 	vertical-align: top;
 }
@@ -400,8 +400,8 @@ textarea {
 	position: absolute;
 	top: 0;
 	left: 0;
-	font-size: 1.6em;
-	padding-left: 8px;
+    font-size: 1.3em;
+    padding-left: 7px;
 }
 
 .threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
@@ -413,22 +413,7 @@ textarea {
 	padding-top: 4px;
 }
 
-.threat-health {
-	width: 28px;
-	height: auto;
-}
-
-.threat-speed {
-	width: 28px;
-	height: auto;
-}
-
-.threat-total-inaccessibility {
-	width: 28px;
-	height: auto;
-}
-
-.threat-shield {
-	width: 28px;
+.threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield {
+	width: 25px;
 	height: auto;
 }
