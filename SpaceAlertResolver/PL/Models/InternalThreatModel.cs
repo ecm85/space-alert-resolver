@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats.Internal;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace PL.Models
 		public InternalThreatModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
-			CurrentStations = threat.CurrentStations;
+			CurrentStations = threat.CurrentStations.ToList();
 		}
 	}
 }

@@ -27,6 +27,7 @@ textarea {
 	width: 715px;
 	height: auto;
 	display: inline-block;
+	z-index: -1000;
 }
 
 .full-board {
@@ -107,7 +108,7 @@ textarea {
 	position: absolute;
 	bottom: 0;
 	display: table-cell;
-	z-index: -2
+	z-index: -2;
 }
 
 .track-section {
@@ -159,6 +160,20 @@ textarea {
 	z-index: 0;
 }
 
+.threat-on-ship-line-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
+.threat-on-ship-line {
+	z-index: 0;
+	display: none;
+}
+
 .track-space.threat-present {
 	border: 3px solid red;
 	line-height: .9em;
@@ -167,6 +182,7 @@ textarea {
 .sitting-duck-wrapper {
 	position: relative;
 	display: inline-block;
+	z-index: -1000;
 }
 
 .players {
@@ -226,6 +242,10 @@ textarea {
 	height: 23px;
 	padding-right: 1px;
 	border: 1px solid red;
+}
+
+.threat-wrapper:hover .threat-on-ship-line {
+	display: block;
 }
 
 .threats-upper-white {
@@ -367,7 +387,7 @@ textarea {
 
 .station-area {
 	background-color: rgba(50, 50, 50, .15);
-	border: yellow 1px solid;
+	/*border: yellow 1px solid;*/
 }
 
 .battery-pack-container {

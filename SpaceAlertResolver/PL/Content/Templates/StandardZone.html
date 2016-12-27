@@ -4,7 +4,7 @@
 		<img class="active-battle-bots" ng-if="player.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
 	</div>
 </div>
-<div class="threats-on-ship threats-upper-{{zoneId}} station-area" id="upper{{zoneId}}Threats">
+<div class="threats-on-ship threats-upper-{{zoneId}} station-area" id="upper{{zoneId}}threats">
 	<img class="threat-on-ship" ng-repeat="threat in zone.upperStation.internalThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png"/>
 </div>
 <div class="energy-cubes energy-cubes-upper-{{zoneId}} energy-cubes-max-{{zone.upperStation.maxEnergyCubes}} station-area">
@@ -19,7 +19,7 @@
 		<img class="active-battle-bots" ng-if="player.battleBots" src="/SpaceAlertResolver/Content/Images/BattleBots.png"/>
 	</div>
 </div>
-<div class="threats-on-ship threats-lower-{{zoneId}} station-area" id="lower{{zoneId}}Threats">
+<div class="threats-on-ship threats-lower-{{zoneId}} station-area" id="lower{{zoneId}}threats">
 	<img class="threat-on-ship" ng-repeat="threat in zone.lowerStation.internalThreats" ng-src="/SpaceAlertResolver/Content/Images/Threats/{{threat.description}}.png" />
 </div>
 <div class="energy-cubes energy-cubes-lower-{{zoneId}} energy-cubes-max-{{zone.lowerStation.maxEnergyCubes}} station-area">
