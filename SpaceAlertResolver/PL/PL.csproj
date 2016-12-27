@@ -154,7 +154,7 @@
     <Content Include="Content\Images\orangeCube.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
-    <None Include="Views\Home\StandardZone.cshtml" />
+    <Content Include="Views\Home\StandardZone.cshtml" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -341,7 +341,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\ThreatTrack.cshtml" />
+    <Content Include="Views\Home\ThreatTrack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
