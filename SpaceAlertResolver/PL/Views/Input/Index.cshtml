@@ -16,7 +16,7 @@
 
 		<div class="tab-content input-nav-content">
 			<div role="tabpanel" class="tab-pane active" id="players">
-				<div class="btn-group player-count-selectors">
+				<div class="btn-group">
 					<label ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</label>
 				</div>
 				<div ng-repeat="player in players" class="panel panel-default" ng-if="player.isInGame">
@@ -29,10 +29,16 @@
 					</div>
 					<div class="panel-body">
 						<div>
-							<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color}}.png"/>
-							@*<div class="form-group">
-								<input class="form-control" type="text" ng-model="player.name" />
-							</div>*@
+							<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
+								<div class="btn-group color-button-group">
+									@*<label ng-repeat="color in colors" class="btn player-color-selector player-color-selector-{{color}}" ng-model="player.color.model" uib-btn-radio="color">&nbsp;</label>*@
+									@* TODO: Switch this to an ng-repeat *@
+									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'blue'">blue <span class="badge player-color-selector player-color-selector-blue">&nbsp;</span></label>
+									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'red'">red <span class="badge player-color-selector player-color-selector-red">&nbsp;</span></label>
+									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'green'">green <span class="badge player-color-selector player-color-selector-green">&nbsp;</span></label>
+									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'purple'">purple <span class="badge player-color-selector player-color-selector-purple">&nbsp;</span></label>
+									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'yellow'">yellow <span class="badge player-color-selector player-color-selector-yellow">&nbsp;</span></label>
+							</div>
 						</div>
 					</div>
 				</div>

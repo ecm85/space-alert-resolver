@@ -512,3 +512,43 @@ textarea {
 .player-count-selectors {
 	margin-bottom: 20px;
 }
+
+.player-color-selector {
+	/*width: 25px;
+	height: 25px;*/
+	/*color: white;*/
+}
+
+.player-color-selector.active {
+	/*border-color: black;*/
+}
+
+.player-color-selector-blue {
+	background-color: #000CFF;
+}
+
+.player-color-selector-green {
+	background-color: #00CC17;
+}
+
+.player-color-selector-red {
+	background-color: #FF2100;
+}
+
+.player-color-selector-yellow {
+	background-color: #F6FF00;
+}
+
+.player-color-selector-purple {
+	background-color: #FF00E9;
+}
+
+.btn {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.color-selector-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

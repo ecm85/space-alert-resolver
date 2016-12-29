@@ -173,14 +173,17 @@ angular.module("spaceAlertModule")
 	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 	$scope.playerCounts = [1, 2, 3, 4, 5];
 	$scope.players = [
-		{ title: 'Captain', color: $scope.colors[0] },
-		{ title: 'Player 2', color: $scope.colors[1] },
-		{ title: 'Player 3', color: $scope.colors[2] },
-		{ title: 'Player 4', color: $scope.colors[3] },
-		{ title: 'Player 5', color: $scope.colors[4] }
+		{ title: 'Captain', color: { model: $scope.colors[0] } },
+		{ title: 'Player 2', color: { model: $scope.colors[1] } },
+		{ title: 'Player 3', color: { model: $scope.colors[2] } },
+		{ title: 'Player 4', color: { model: $scope.colors[3] } },
+		{ title: 'Player 5', color: { model: $scope.colors[4] } }
 	];
 
-	
+	$scope.dropdownStatus = {
+		isopen: false
+	};
+
 	$scope.selectPlayerCount = function (newPlayerCount) {
 		$scope.selectedPlayerCountRadio = { model: newPlayerCount };
 		$scope.players.forEach(function(player, index) {
@@ -192,5 +195,18 @@ angular.module("spaceAlertModule")
 
 	$scope.$watch('selectedPlayerCountRadio.model', function(newPlayerCount) {
 		$scope.selectPlayerCount(newPlayerCount);
+	});
+
+	$scope.players.forEach(function (player, index) {
+		$scope.$watch(
+			function (scope) {
+				return scope.players[index].color.model;
+			},
+			function (newValue, oldValue) {
+				$scope.players.forEach(function (player, exisitingPlayerIndex) {
+					if (index !== exisitingPlayerIndex && player.color.model === newValue)
+						player.color.model = oldValue;
+				});
+			});
 	});
 }]);
