@@ -203,6 +203,7 @@
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
     <Content Include="Views\Resolution\StandardZone.cshtml" />
+    <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\ResolutionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -371,7 +372,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\ResolutionController.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -390,6 +391,7 @@
     <Content Include="Views\Resolution\Contact.cshtml" />
     <Content Include="Views\Resolution\Index.cshtml" />
     <Content Include="Views\Resolution\ThreatTrack.cshtml" />
+    <Content Include="Views\Input\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,7 +30,7 @@ angular.module("spaceAlertModule")
 		},
 			2000 / $scope.turnsPerTwoSeconds);
 	};
-	$scope.$watch('turnsPerTwoSeconds', function(newValue) {
+	$scope.$watch('turnsPerTwoSeconds', function() {
 		if ($scope.playing != null){
 			stop();
 			play();
@@ -168,4 +168,29 @@ angular.module("spaceAlertModule")
 			zoneId: '='
 		}
 	}
-});
+})
+.controller("InputController", ["$scope", function ($scope) {
+	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
+	$scope.playerCounts = [1, 2, 3, 4, 5];
+	$scope.players = [
+		{ title: 'Captain', color: $scope.colors[0] },
+		{ title: 'Player 2', color: $scope.colors[1] },
+		{ title: 'Player 3', color: $scope.colors[2] },
+		{ title: 'Player 4', color: $scope.colors[3] },
+		{ title: 'Player 5', color: $scope.colors[4] }
+	];
+
+	
+	$scope.selectPlayerCount = function (newPlayerCount) {
+		$scope.selectedPlayerCountRadio = { model: newPlayerCount };
+		$scope.players.forEach(function(player, index) {
+			player.isInGame = index < newPlayerCount;
+		});
+	}
+
+	$scope.selectPlayerCount(4);
+
+	$scope.$watch('selectedPlayerCountRadio.model', function(newPlayerCount) {
+		$scope.selectPlayerCount(newPlayerCount);
+	});
+}]);

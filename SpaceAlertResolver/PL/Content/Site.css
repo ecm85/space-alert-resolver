@@ -231,6 +231,11 @@ textarea {
 	height: auto;
 }
 
+.player-icon-large {
+	width: 35px;
+	height: auto;
+}
+
 .threats-on-ship {
 	position: absolute;
 	width: 100px;
@@ -492,4 +497,18 @@ textarea {
 .threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield {
 	width: 25px;
 	height: auto;
+}
+
+.input-nav {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.input-nav-content {
+	height: 600px;
+	max-height: 600px;
+}
+
+.player-count-selectors {
+	margin-bottom: 20px;
 }
