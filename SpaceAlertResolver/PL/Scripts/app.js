@@ -169,7 +169,7 @@ angular.module("spaceAlertModule")
 		}
 	}
 })
-.controller("InputController", ["$scope", function ($scope) {
+.controller("InputController", ["$scope", '$uibModal', function ($scope, $uibModal) {
 	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 	$scope.playerCounts = [1, 2, 3, 4, 5];
 	$scope.players = [
@@ -209,4 +209,44 @@ angular.module("spaceAlertModule")
 				});
 			});
 	});
+
+	$scope.items = ['item1', 'item2', 'item3'];
+
+	$scope.animationsEnabled = true;
+
+	$scope.open = function (player, size) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: 'templates/actionsModal',
+			controller: 'ModalInstanceCtrl',
+			size: size,
+			resolve: {
+				items: function () {
+					return $scope.items;
+				}
+			}
+		});
+
+		modalInstance.result.then(function (selectedItem) {
+			player.selectedItem = selectedItem;
+		}, function () {
+			
+		});
+	};
+}])
+.controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'items', function ($uibModalInstance, $scope, items) {
+	$scope.items = items;
+	$scope.selected = {
+		item: $scope.items[0]
+	};
+
+	$scope.ok = function () {
+		$uibModalInstance.close($scope.selected.item);
+	};
+
+	$scope.cancel = function () {
+		$uibModalInstance.dismiss('cancel');
+	};
 }]);

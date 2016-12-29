@@ -392,6 +392,7 @@
     <Content Include="Views\Resolution\Index.cshtml" />
     <Content Include="Views\Resolution\ThreatTrack.cshtml" />
     <Content Include="Views\Input\Index.cshtml" />
+    <Content Include="Views\Input\ActionsDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

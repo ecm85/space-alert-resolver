@@ -30,14 +30,15 @@
 						</div>
 						<div class="panel-body">
 							<div class="player-color-with-selector">
-								<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png" />
+								<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
 								<div class="btn-group color-button-group">
 									<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
 										<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
 									</label>
 								</div>
 							</div>
-
+							<button type="button" class="btn btn-primary actions-button" ng-click="open(player, 'lg')">Actions</button>
+							Selected item: {{player.selectedItem}}
 						</div>
 					</div>
 				</div>
@@ -46,6 +47,9 @@
 			<div role="tabpanel" class="tab-pane" id="tracks"></div>
 		</div>
 
+		<script type="text/ng-template" id="templates/actionsModal">
+			@Html.Action("ActionsDialog");
+		</script>
 		@*<button type="button" class="btn">Resolve Game</button>*@
 	</div>
 </div>

@@ -8,5 +8,10 @@ namespace PL.Controllers
 		{
 			return View();
 		}
+
+		public ActionResult ActionsDialog()
+		{
+			return PartialView();
+		}
 	}
 }
