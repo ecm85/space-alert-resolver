@@ -172,6 +172,7 @@ angular.module("spaceAlertModule")
 .controller("InputController", ["$scope", '$uibModal', function ($scope, $uibModal) {
 
 	$scope.allActions = [
+		{ text: '-', image: null },
 		{ text: 'a', image: 'A' },
 		{ text: 'b', image: 'B' },
 		{ text: 'c', image: 'C' },
@@ -187,8 +188,7 @@ angular.module("spaceAlertModule")
 		{ text: '3', image: 'TeleportUpperBlue' },
 		{ text: '4', image: 'TeleportLowerRed' },
 		{ text: '5', image: 'TeleportLowerWhite' },
-		{ text: '6', image: 'TeleportLowerBlue' },
-		{ text: '-', image: null }
+		{ text: '6', image: 'TeleportLowerBlue' }
 	];
 
 	//TODO: Add specializations
@@ -239,7 +239,7 @@ angular.module("spaceAlertModule")
 	$scope.animationsEnabled = true;
 
 	$scope.open = function (player, size) {
-		var modalInstance = $uibModal.open({
+		$uibModal.open({
 			animation: true,
 			templateUrl: 'templates/actionsModal',
 			controller: 'ModalInstanceCtrl',
@@ -257,11 +257,35 @@ angular.module("spaceAlertModule")
 }])
 .controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
-	$scope.selectedActions = [];
+	$scope.selectedActions = [
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+		{ text: allActions[0].text, image: allActions[0].image },
+	];
 	$scope.playerColor = player.color.model;
+	$scope.cursor = 0;
 
-	$scope.addAction = function(action) {
-		$scope.selectedActions.push({text: action.text, image: action.image});
+	$scope.addAction = function (action) {
+		if ($scope.cursor < 12) {
+			$scope.selectedActions[$scope.cursor] = { text: action.text, image: action.image };
+			$scope.cursor++;
+		}
+		//TODO: Do something otherwise?
+		if ($scope.cursor === 12)
+			$scope.cursor = 0;
+	}
+
+	$scope.moveCursor = function(index) {
+		$scope.cursor = index;
 	}
 
 	$scope.ok = function () {

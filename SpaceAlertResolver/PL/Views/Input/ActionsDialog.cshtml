@@ -4,15 +4,15 @@
 <div class="modal-body" id="modal-body">
 	<div>
 		<h3>Selected Actions</h3>
-		<img class="board-1" ng-src="~/Content/Images/Boards/{{playerColor}}1.png" />
-		<img class="board-2" ng-src="~/Content/Images/Boards/{{playerColor}}2.png" />
-	</div>	
-	@*<div class="selected-actions-wrapper">
-		<div class="selected-action-wrapper" ng-repeat="selectedAction in selectedActions">
-			<img ng-if="selectedAction.image != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.image}}.png"/>
-			<i ng-if="selectedAction.image == null" class="fa fa-ban action-selected-image-icon"></i>
+		<div class="selected-actions-wrapper">
+			<img class="board-1" ng-src="~/Content/Images/Boards/{{playerColor}}1.png" />
+			<img class="board-2" ng-src="~/Content/Images/Boards/{{playerColor}}2.png" />
+			<a href="#" ng-repeat="selectedAction in selectedActions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}" ng-click="moveCursor($index)">
+				<img ng-if="selectedAction.image != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.image}}.png" />
+				<i ng-if="selectedAction.image == null" class="fa fa-ban action-selected-image-icon"></i>
+			</a>
 		</div>
-	</div>*@
+	</div>
 	@*<div>
 		Action string: <input ng-model="selectedActionsText" ng-model-options="{ getterSetter: true }"/>
 	</div>*@
