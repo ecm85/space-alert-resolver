@@ -577,10 +577,11 @@ textarea {
 
 .fa.action-choosable-image-icon {
 	font-size: 8em;
+	color: black;
 }
 
 .action-choosable-key {
-	font-size: 3em;
+	font-size: 2em;
 	font-weight: 300;
 	text-align: center;
 }
@@ -604,6 +605,7 @@ textarea {
 	top: 30px;
     left: 126px;
     height: 111px;
+	width: 60px;
     padding-top: 20px;
 }
 
@@ -680,10 +682,3 @@ textarea {
 	font-size: 5em;
 	color: white;
 }
-
-.action-selected-key {
-	font-size: 3em;
-	font-weight: 300;
-	text-align: center;
-}
-

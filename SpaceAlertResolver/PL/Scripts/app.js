@@ -1,5 +1,8 @@
 ﻿"use strict";
 
+var cloneAction = function(action) {
+	return { displayText: action.displayText, entryText: action.entryText, image: action.image };
+}
 angular.module("spaceAlertModule")
 .controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
 	$scope.gameData = gameData;
@@ -172,23 +175,23 @@ angular.module("spaceAlertModule")
 .controller("InputController", ["$scope", '$uibModal', function ($scope, $uibModal) {
 
 	$scope.allActions = [
-		{ text: '-', image: null },
-		{ text: 'a', image: 'A' },
-		{ text: 'b', image: 'B' },
-		{ text: 'c', image: 'C' },
-		{ text: 'x', image: 'BattleBots' },
-		{ text: '<', image: 'Red' },
-		{ text: '>', image: 'Blue' },
-		{ text: '^', image: 'Down' },
-		{ text: 'A', image: 'HeroicA' },
-		{ text: 'B', image: 'HeroicB' },
-		{ text: 'X', image: 'HeroicBattleBots' },
-		{ text: '1', image: 'TeleportUpperRed' },
-		{ text: '2', image: 'TeleportUpperWhite' },
-		{ text: '3', image: 'TeleportUpperBlue' },
-		{ text: '4', image: 'TeleportLowerRed' },
-		{ text: '5', image: 'TeleportLowerWhite' },
-		{ text: '6', image: 'TeleportLowerBlue' }
+		{ displayText: '[space]', entryText: ' ', image: null },
+		{ displayText: 'a', entryText: 'a', image: 'A' },
+		{ displayText: 'b', entryText: 'b', image: 'B' },
+		{ displayText: 'c', entryText: 'c', image: 'C' },
+		{ displayText: 'x', entryText: 'x', image: 'BattleBots' },
+		{ displayText: '<', entryText: '<', image: 'Red' },
+		{ displayText: '>', entryText: '>', image: 'Blue' },
+		{ displayText: '^', entryText: '^', image: 'Down' },
+		{ displayText: 'A', entryText: 'A', image: 'HeroicA' },
+		{ displayText: 'B', entryText: 'B', image: 'HeroicB' },
+		{ displayText: 'X', entryText: 'X', image: 'HeroicBattleBots' },
+		{ displayText: '1', entryText: '1', image: 'TeleportUpperRed' },
+		{ displayText: '2', entryText: '2', image: 'TeleportUpperWhite' },
+		{ displayText: '3', entryText: '3', image: 'TeleportUpperBlue' },
+		{ displayText: '4', entryText: '4', image: 'TeleportLowerRed' },
+		{ displayText: '5', entryText: '5', image: 'TeleportLowerWhite' },
+		{ displayText: '6', entryText: '6', image: 'TeleportLowerBlue' }
 	];
 
 	//TODO: Add specializations
@@ -257,26 +260,15 @@ angular.module("spaceAlertModule")
 }])
 .controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
-	$scope.selectedActions = [
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-		{ text: allActions[0].text, image: allActions[0].image },
-	];
+	$scope.selectedActions = [];
+	for(var i = 0; i < 12; i++)
+		$scope.selectedActions.push(cloneAction($scope.allActions[0]));
 	$scope.playerColor = player.color.model;
 	$scope.cursor = 0;
 
-	$scope.addAction = function (action) {
+	$scope.addActionAtCursor = function (action) {
 		if ($scope.cursor < 12) {
-			$scope.selectedActions[$scope.cursor] = { text: action.text, image: action.image };
+			$scope.selectedActions[$scope.cursor] = cloneAction(action);
 			$scope.cursor++;
 		}
 		//TODO: Do something otherwise?
@@ -295,5 +287,18 @@ angular.module("spaceAlertModule")
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
+	};
+
+	$scope.newActionHotkey = function (newText) {
+		if (newText == undefined) {
+			return '';
+		}
+		var addedAction = false;
+		for (var i = 0; i < $scope.allActions.length && !addedAction; i++)
+			if ($scope.allActions[i].entryText === newText) {
+				$scope.addActionAtCursor($scope.allActions[i]);
+				addedAction = true;
+			}
+		return '';
 	};
 }]);
