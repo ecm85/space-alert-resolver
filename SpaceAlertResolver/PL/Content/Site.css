@@ -1,26 +1,26 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+	padding-top: 50px;
+	padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+	white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+	max-width: 280px;
 }
 
 .sitting-duck {
@@ -50,15 +50,15 @@ textarea {
 }
 
 .turn-selector-option {
-    width:42px;
-    max-width:42px;
-    text-align: center;
+	width:42px;
+	max-width:42px;
+	text-align: center;
 }
 
 .phase-selector-option {
-    width:167px;
-    max-width:167px;
-    text-align: center;
+	width:167px;
+	max-width:167px;
+	text-align: center;
 }
 
 .track-wrapper {
@@ -231,9 +231,15 @@ textarea {
 	height: auto;
 }
 
+.player-color-with-selector {
+	width: 243px;
+}
+
 .player-icon-large {
 	width: 35px;
 	height: auto;
+	display: block;
+	margin: 0 auto;
 }
 
 .threats-on-ship {
@@ -365,7 +371,7 @@ textarea {
 
 .inactive-lower-red-battle-bots {
 	position: absolute;
-    top: 368px;
+	top: 368px;
 	left: 168px;
 	width: 45px;
 	height: 33px;
@@ -481,8 +487,8 @@ textarea {
 	position: absolute;
 	top: 0;
 	left: 0;
-    font-size: 1.3em;
-    padding-left: 7px;
+	font-size: 1.3em;
+	padding-left: 7px;
 }
 
 .threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
@@ -514,13 +520,8 @@ textarea {
 }
 
 .player-color-selector {
-	/*width: 25px;
-	height: 25px;*/
-	/*color: white;*/
-}
-
-.player-color-selector.active {
-	/*border-color: black;*/
+	width: 23px;
+	height: 19px;
 }
 
 .player-color-selector-blue {
@@ -549,6 +550,12 @@ textarea {
 }
 
 .color-selector-button {
-    padding-top: 10px;
-    padding-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.player-panel {
+	width: 40%;
+	display: inline-block;
+	margin-right: 10px;
 }

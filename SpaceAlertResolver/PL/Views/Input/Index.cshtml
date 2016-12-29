@@ -19,24 +19,26 @@
 				<div class="btn-group">
 					<label ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</label>
 				</div>
-				<div ng-repeat="player in players" class="panel panel-default" ng-if="player.isInGame">
-					<div class="panel-heading">
-						<div class="panel-title">
-							<div>
-								{{player.title}}
+				<div>
+					<div ng-repeat="player in players" class="panel panel-default player-panel" ng-if="player.isInGame">
+						<div class="panel-heading">
+							<div class="panel-title">
+								<div>
+									{{player.title}}
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="panel-body">
-						<div>
-							<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
-							<div class="btn-group color-button-group">
-								<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
-									<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
-								</label>
+						<div class="panel-body">
+							<div class="player-color-with-selector">
+								<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png" />
+								<div class="btn-group color-button-group">
+									<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+										<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
+									</label>
+								</div>
 							</div>
-						</div>
 
+						</div>
 					</div>
 				</div>
 			</div>
