@@ -30,16 +30,13 @@
 					<div class="panel-body">
 						<div>
 							<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
-								<div class="btn-group color-button-group">
-									@*<label ng-repeat="color in colors" class="btn player-color-selector player-color-selector-{{color}}" ng-model="player.color.model" uib-btn-radio="color">&nbsp;</label>*@
-									@* TODO: Switch this to an ng-repeat *@
-									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'blue'"> <span class="badge player-color-selector player-color-selector-blue">&nbsp;</span></label>
-									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'red'"> <span class="badge player-color-selector player-color-selector-red">&nbsp;</span></label>
-									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'green'"> <span class="badge player-color-selector player-color-selector-green">&nbsp;</span></label>
-									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'purple'"> <span class="badge player-color-selector player-color-selector-purple">&nbsp;</span></label>
-									<label class="btn btn-default color-selector-button" ng-model="player.color.model" ng-model-options="{ getterSetter: true }" uib-btn-radio="'yellow'"> <span class="badge player-color-selector player-color-selector-yellow">&nbsp;</span></label>
+							<div class="btn-group color-button-group">
+								<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+									<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
+								</label>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
