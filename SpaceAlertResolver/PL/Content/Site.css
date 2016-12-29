@@ -560,3 +560,41 @@ textarea {
 .actions-button {
 	vertical-align: top;
 }
+
+.action-choosable-wrapper {
+	display: inline-block;
+}
+
+.action-choosable-image {
+	width: 100px;
+	height: auto;
+}
+
+.fa.action-choosable-image-icon {
+	font-size: 8em;
+}
+
+.modal-lg {
+	width: 900px;
+}
+
+.action-choosable-key {
+	font-size: 3em;
+	font-weight: 300;
+	text-align: center;
+}
+
+.action-selected-image {
+	width: 150px;
+	height: auto;
+}
+
+.board-1 {
+	width: 700px;
+	height: auto;
+}
+
+.board-2 {
+	width: 500px;
+	height: auto;
+}

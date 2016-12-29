@@ -170,6 +170,30 @@ angular.module("spaceAlertModule")
 	}
 })
 .controller("InputController", ["$scope", '$uibModal', function ($scope, $uibModal) {
+
+	$scope.allActions = [
+		{ text: 'a', image: 'A' },
+		{ text: 'b', image: 'B' },
+		{ text: 'c', image: 'C' },
+		{ text: 'x', image: 'BattleBots' },
+		{ text: '<', image: 'Red' },
+		{ text: '>', image: 'Blue' },
+		{ text: '^', image: 'Down' },
+		{ text: 'A', image: 'HeroicA' },
+		{ text: 'B', image: 'HeroicB' },
+		{ text: 'X', image: 'HeroicBattleBots' },
+		{ text: '1', image: 'TeleportUpperRed' },
+		{ text: '2', image: 'TeleportUpperWhite' },
+		{ text: '3', image: 'TeleportUpperBlue' },
+		{ text: '4', image: 'TeleportLowerRed' },
+		{ text: '5', image: 'TeleportLowerWhite' },
+		{ text: '6', image: 'TeleportLowerBlue' },
+		{ text: '-', image: null }
+	];
+
+	//TODO: Add specializations
+	//TODO: Add double actions
+
 	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 	$scope.playerCounts = [1, 2, 3, 4, 5];
 	$scope.players = [
@@ -217,33 +241,32 @@ angular.module("spaceAlertModule")
 	$scope.open = function (player, size) {
 		var modalInstance = $uibModal.open({
 			animation: true,
-			ariaLabelledBy: 'modal-title',
-			ariaDescribedBy: 'modal-body',
 			templateUrl: 'templates/actionsModal',
 			controller: 'ModalInstanceCtrl',
 			size: size,
 			resolve: {
-				items: function () {
-					return $scope.items;
+				player: function() {
+					return player;
+				},
+				allActions: function() {
+					return $scope.allActions;
 				}
 			}
 		});
-
-		modalInstance.result.then(function (selectedItem) {
-			player.selectedItem = selectedItem;
-		}, function () {
-			
-		});
 	};
 }])
-.controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'items', function ($uibModalInstance, $scope, items) {
-	$scope.items = items;
-	$scope.selected = {
-		item: $scope.items[0]
-	};
+.controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
+	$scope.allActions = allActions;
+	$scope.selectedActions = [];
+	$scope.playerColor = player.color.model;
+
+	$scope.addAction = function(action) {
+		$scope.selectedActions.push({text: action.text, image: action.image});
+	}
 
 	$scope.ok = function () {
-		$uibModalInstance.close($scope.selected.item);
+		//TODO: Save the actions onto player actions
+		$uibModalInstance.close();
 	};
 
 	$scope.cancel = function () {

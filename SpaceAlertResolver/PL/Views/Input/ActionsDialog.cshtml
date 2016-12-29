@@ -1,13 +1,28 @@
 ﻿<div class="modal-header">
-	<h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+	<h3 class="modal-title" id="modal-title">actions</h3>
 </div>
 <div class="modal-body" id="modal-body">
-	<ul>
-		<li ng-repeat="item in items">
-			<a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-		</li>
-	</ul>
-	Selected: <b>{{ selected.item }}</b>
+	<div>
+		<h3>Selected Actions</h3>
+		<img class="board-1" ng-src="~/Content/Images/Boards/{{playerColor}}1.png" />
+		<img class="board-2" ng-src="~/Content/Images/Boards/{{playerColor}}2.png" />
+	</div>	
+	@*<div class="selected-actions-wrapper">
+		<div class="selected-action-wrapper" ng-repeat="selectedAction in selectedActions">
+			<img ng-if="selectedAction.image != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.image}}.png"/>
+			<i ng-if="selectedAction.image == null" class="fa fa-ban action-selected-image-icon"></i>
+		</div>
+	</div>*@
+	@*<div>
+		Action string: <input ng-model="selectedActionsText" ng-model-options="{ getterSetter: true }"/>
+	</div>*@
+	<div class="action-choosable-wrapper" ng-repeat="action in allActions">
+		<a href="#" ng-click="addAction(action)">
+			<img ng-if="action.image != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.image}}.png"/>
+			<i ng-if="action.image == null" class="fa fa-ban action-choosable-image-icon"></i>
+		</a>
+		<p class="action-choosable-key">{{action.text}}</p>
+	</div>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
