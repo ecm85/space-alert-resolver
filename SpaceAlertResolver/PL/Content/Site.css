@@ -554,7 +554,7 @@ textarea {
 	width: 40%;
 	display: inline-block;
 	margin-right: 10px;
-	min-width: 375px;
+	min-width: 750px;
 }
 
 
@@ -602,8 +602,6 @@ textarea {
 
 .selected-action-wrapper {
 	position: absolute;
-	top: 30px;
-    left: 126px;
     height: 111px;
 	width: 60px;
     padding-top: 20px;

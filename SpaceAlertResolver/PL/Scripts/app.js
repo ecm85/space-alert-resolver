@@ -260,9 +260,13 @@ angular.module("spaceAlertModule")
 }])
 .controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
-	$scope.selectedActions = [];
-	for(var i = 0; i < 12; i++)
-		$scope.selectedActions.push(cloneAction($scope.allActions[0]));
+	if (player.actions != null)
+		$scope.selectedActions = player.actions.slice();
+	else {
+		$scope.selectedActions = [];
+		for(var i = 0; i < 12; i++)
+			$scope.selectedActions.push(cloneAction($scope.allActions[0]));
+	}
 	$scope.playerColor = player.color.model;
 	$scope.cursor = 0;
 
@@ -281,6 +285,7 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.ok = function () {
+		player.actions = $scope.selectedActions;
 		//TODO: Save the actions onto player actions
 		$uibModalInstance.close();
 	};
