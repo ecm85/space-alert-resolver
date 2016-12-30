@@ -2,56 +2,46 @@
 
 @model IHtmlString
 <script>
-	angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+	angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']).value("inputData", @Html.Raw(Model));
 </script>
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="InputController">
-
-		<ul class="nav nav-tabs input-nav" role="tablist">
-			<li class="active"><a href="#players" data-toggle="tab">Players</a></li>
-			<li><a href="#threats" data-toggle="tab">Threats</a></li>
-			<li><a href="#tracks" data-toggle="tab">Tracks</a></li>
-		</ul>
-
-		<div class="tab-content input-nav-content">
-			<div role="tabpanel" class="tab-pane active" id="players">
-				<div class="btn-group">
-					<label ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</label>
-				</div>
-				<div>
-					<div ng-repeat="player in players" class="panel panel-default player-panel" ng-if="player.isInGame">
-						<div class="panel-heading">
-							<div class="panel-title">
-								<div>
-									{{player.title}}
-								</div>
-							</div>
+		<h1>Game Input</h1>
+		<h2>Players</h2>
+		<div class="btn-group">
+			<label ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</label>
+		</div>
+		<div>
+			<div ng-repeat="player in players" class="panel panel-default player-panel" ng-if="player.isInGame">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<div>
+							{{player.title}}
 						</div>
-						<div class="panel-body">
-							<div class="player-color-with-selector">
-								<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
-								<div class="btn-group color-button-group">
-									<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
-										<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
-									</label>
-								</div>
-							</div>
-							<button type="button" class="btn btn-primary actions-button" ng-click="open(player, 'lg')">Actions</button>
-							<div class="selected-actions-wrapper">
-								<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
-								<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
-								<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
-									<img ng-if="action.image != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.image}}.png" />
-								</div>
-							</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="player-color-with-selector">
+						<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
+						<div class="btn-group color-button-group">
+							<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+								<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
+							</label>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary actions-button" ng-click="open(player, 'lg')">Actions</button>
+					<div class="selected-actions-wrapper">
+						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
+						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
+						<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
+							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
 						</div>
 					</div>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="threats"></div>
-			<div role="tabpanel" class="tab-pane" id="tracks"></div>
 		</div>
+		<h2>Tracks</h2>
 
 		<script type="text/ng-template" id="templates/actionsModal">
 			@Html.Action("ActionsDialog");

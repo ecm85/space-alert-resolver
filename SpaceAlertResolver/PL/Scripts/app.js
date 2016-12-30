@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 var cloneAction = function(action) {
-	return { displayText: action.displayText, entryText: action.entryText, image: action.image };
+	return { displayText: action.displayText, entryText: action.entryText, description: action.description, action: action.action };
 }
 angular.module("spaceAlertModule")
 .controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
@@ -172,27 +172,9 @@ angular.module("spaceAlertModule")
 		}
 	}
 })
-.controller("InputController", ["$scope", '$uibModal', function ($scope, $uibModal) {
+.controller("InputController", ["$scope", '$uibModal', 'inputData', function ($scope, $uibModal, inputData) {
 
-	$scope.allActions = [
-		{ displayText: '[space]', entryText: ' ', image: null },
-		{ displayText: 'a', entryText: 'a', image: 'A' },
-		{ displayText: 'b', entryText: 'b', image: 'B' },
-		{ displayText: 'c', entryText: 'c', image: 'C' },
-		{ displayText: 'x', entryText: 'x', image: 'BattleBots' },
-		{ displayText: '<', entryText: '<', image: 'Red' },
-		{ displayText: '>', entryText: '>', image: 'Blue' },
-		{ displayText: '^', entryText: '^', image: 'Down' },
-		{ displayText: 'A', entryText: 'A', image: 'HeroicA' },
-		{ displayText: 'B', entryText: 'B', image: 'HeroicB' },
-		{ displayText: 'X', entryText: 'X', image: 'HeroicBattleBots' },
-		{ displayText: '1', entryText: '1', image: 'TeleportUpperRed' },
-		{ displayText: '2', entryText: '2', image: 'TeleportUpperWhite' },
-		{ displayText: '3', entryText: '3', image: 'TeleportUpperBlue' },
-		{ displayText: '4', entryText: '4', image: 'TeleportLowerRed' },
-		{ displayText: '5', entryText: '5', image: 'TeleportLowerWhite' },
-		{ displayText: '6', entryText: '6', image: 'TeleportLowerBlue' }
-	];
+	$scope.allActions = inputData.actions
 
 	//TODO: Add specializations
 	//TODO: Add double actions

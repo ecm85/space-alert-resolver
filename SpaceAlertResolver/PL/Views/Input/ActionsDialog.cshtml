@@ -8,7 +8,7 @@
 			<img class="board-1" ng-src="~/Content/Images/Boards/{{playerColor}}1.png" />
 			<img class="board-2" ng-src="~/Content/Images/Boards/{{playerColor}}2.png" />
 			<a href="#" ng-repeat="selectedAction in selectedActions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}" ng-click="moveCursor($index)">
-				<img ng-if="selectedAction.image != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.image}}.png" />
+				<img ng-if="selectedAction.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.description}}.png" />
 			</a>
 		</div>
 	</div>
@@ -17,8 +17,8 @@
 	</div>
 	<div class="action-choosable-wrapper" ng-repeat="action in allActions">
 		<a href="#" ng-click="addActionAtCursor(action)">
-			<img ng-if="action.image != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.image}}.png"/>
-			<i ng-if="action.image == null" class="fa fa-ban action-choosable-image-icon"></i>
+			<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png"/>
+			<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
 		</a>
 		<p class="action-choosable-key">{{action.displayText}}</p>
 	</div>

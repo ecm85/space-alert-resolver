@@ -248,11 +248,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JavaScriptConvert.cs" />
+    <Compile Include="Models\ActionModel.cs" />
     <Compile Include="Models\BattleBotsModel.cs" />
     <Compile Include="Models\BlueZoneModel.cs" />
     <Compile Include="Models\CannonModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
+    <Compile Include="Models\InputModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />
     <Compile Include="Models\LowerRedStationModel.cs" />
     <Compile Include="Models\LowerBlueStationModel.cs" />
