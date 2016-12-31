@@ -14,6 +14,7 @@ namespace PL.Models
 		public int RemainingHealth { get; set; }
 		public int Speed { get; set; }
 		public string Description { get; }
+		public int TimeAppears { get; }
 
 		public ThreatModel(Threat threat)
 		{
@@ -23,6 +24,7 @@ namespace PL.Models
 			ThreatType = threat.ThreatType;
 			ThreatDifficulty = threat.Difficulty;
 			Description = threat.GetType().Name;
+			TimeAppears = threat.TimeAppears;
 		}
 	}
 }

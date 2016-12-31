@@ -241,6 +241,7 @@
     <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
+    <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
     <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\ResolutionController.cs" />
