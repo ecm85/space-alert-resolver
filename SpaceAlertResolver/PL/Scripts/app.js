@@ -174,7 +174,8 @@ angular.module("spaceAlertModule")
 })
 .controller("InputController", ["$scope", '$uibModal', 'inputData', function ($scope, $uibModal, inputData) {
 
-	$scope.allActions = inputData.actions
+	$scope.allTracks = inputData.tracks;
+	$scope.allActions = inputData.actions;
 
 	//TODO: Add specializations
 	//TODO: Add double actions
@@ -223,11 +224,11 @@ angular.module("spaceAlertModule")
 
 	$scope.animationsEnabled = true;
 
-	$scope.open = function (player, size) {
+	$scope.openActionsDialog = function (player, size) {
 		$uibModal.open({
 			animation: true,
 			templateUrl: 'templates/actionsModal',
-			controller: 'ModalInstanceCtrl',
+			controller: 'ActionsModalInstanceCtrl',
 			size: size,
 			resolve: {
 				player: function() {
@@ -239,8 +240,44 @@ angular.module("spaceAlertModule")
 			}
 		});
 	};
+
+	var openTrackDialog = function (size, currentTrack, zone, trackSetterFn) {
+		var modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'templates/trackModal',
+			controller: 'TrackModalInstanceCtrl',
+			size: size,
+			resolve: {
+				currentTrack: function () {
+					return currentTrack;
+				},
+				allTracks: function() {
+					return $scope.allTracks;
+				},
+				zone: function() {
+					return zone;
+				}
+			}
+		});
+		modal.result.then(function(selectedTrack) {
+			trackSetterFn(selectedTrack);
+		});
+	}
+
+	$scope.openRedTrackDialog = function(size) {
+		openTrackDialog(size, $scope.redTrack, 'Red', function(selectedTrack) { $scope.redTrack = selectedTrack; });
+	}
+	$scope.openWhiteTrackDialog = function (size) {
+		openTrackDialog(size, $scope.whiteTrack, 'White', function (selectedTrack) { $scope.whiteTrack = selectedTrack; });
+	}
+	$scope.openBlueTrackDialog = function (size) {
+		openTrackDialog(size, $scope.blueTrack, 'Blue', function (selectedTrack) { $scope.blueTrack = selectedTrack; });
+	}
+	$scope.openInternalTrackDialog = function (size) {
+		openTrackDialog(size, $scope.internalTrack, 'Internal', function (selectedTrack) { $scope.internalTrack = selectedTrack; });
+	}
 }])
-.controller('ModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
+.controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
 	if (player.actions != null)
 		$scope.selectedActions = player.actions.slice();
@@ -268,7 +305,6 @@ angular.module("spaceAlertModule")
 
 	$scope.ok = function () {
 		player.actions = $scope.selectedActions;
-		//TODO: Save the actions onto player actions
 		$uibModalInstance.close();
 	};
 
@@ -287,5 +323,22 @@ angular.module("spaceAlertModule")
 				addedAction = true;
 			}
 		return '';
+	};
+}])
+.controller('TrackModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentTrack', 'allTracks', 'zone', function ($uibModalInstance, $scope, currentTrack, allTracks, zone) {
+	$scope.selectedTrack = currentTrack;
+	$scope.allTracks = allTracks;
+	$scope.zone = zone;
+
+	$scope.selectTrack = function(track) {
+		$scope.selectedTrack = track.track;
+	}
+
+	$scope.ok = function () {
+		$uibModalInstance.close($scope.selectedTrack);
+	};
+
+	$scope.cancel = function () {
+		$uibModalInstance.dismiss('cancel');
 	};
 }]);

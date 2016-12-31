@@ -241,9 +241,10 @@
     <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
-    <Content Include="Views\Resolution\StandardZone.cshtml" />
+    <Content Include="Views\Templates\StandardZone.cshtml" />
     <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\ResolutionController.cs" />
+    <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -431,9 +432,10 @@
     <Content Include="Views\Resolution\About.cshtml" />
     <Content Include="Views\Resolution\Contact.cshtml" />
     <Content Include="Views\Resolution\Index.cshtml" />
-    <Content Include="Views\Resolution\ThreatTrack.cshtml" />
+    <Content Include="Views\Templates\ThreatTrack.cshtml" />
     <Content Include="Views\Input\Index.cshtml" />
-    <Content Include="Views\Input\ActionsDialog.cshtml" />
+    <Content Include="Views\Templates\ActionsDialog.cshtml" />
+    <Content Include="Views\Templates\TrackDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

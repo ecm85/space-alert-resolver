@@ -30,7 +30,7 @@
 							</label>
 						</div>
 					</div>
-					<button type="button" class="btn btn-primary actions-button" ng-click="open(player, 'lg')">Actions</button>
+					<button type="button" class="btn btn-primary actions-button" ng-click="openActionsDialog(player, 'lg')">Actions</button>
 					<div class="selected-actions-wrapper">
 						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
 						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
@@ -42,9 +42,34 @@
 			</div>
 		</div>
 		<h2>Tracks</h2>
-
+		<div>
+			Red Track
+			<button type="button" class="btn btn-primary" ng-click="openRedTrackDialog('lg')">Select Track</button>
+			Selected track: {{redTrack}}
+		</div>
+		<div>
+			White Track
+			<button type="button" class="btn btn-primary" ng-click="openWhiteTrackDialog('lg')">Select Track</button>
+			Selected track: {{whiteTrack}}
+		</div>
+		<div>
+			Blue Track
+			<button type="button" class="btn btn-primary" ng-click="openBlueTrackDialog('lg')">Select Track</button>
+			Selected track: {{blueTrack}}
+		</div>
+		<div>
+			Internal Track
+			<button type="button" class="btn btn-primary" ng-click="openInternalTrackDialog('lg')">Select Track</button>
+			Selected track: {{internalTrack}}
+		</div>
 		<script type="text/ng-template" id="templates/actionsModal">
-			@Html.Action("ActionsDialog");
+			@Html.Action("ActionsDialog", "Templates");
+		</script>
+		<script type="text/ng-template" id="templates/threatTrack">
+			@Html.Action("ThreatTrack", "Templates");
+		</script>
+		<script type="text/ng-template" id="templates/trackModal">
+			@Html.Action("TrackDialog", "Templates");
 		</script>
 		@*<button type="button" class="btn">Resolve Game</button>*@
 	</div>

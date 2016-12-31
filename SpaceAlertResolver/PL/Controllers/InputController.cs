@@ -1,5 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using BLL;
+using BLL.Threats;
+using BLL.Tracks;
 using PL.Models;
 
 namespace PL.Controllers
@@ -29,19 +33,14 @@ namespace PL.Controllers
 					new ActionModel {DisplayText = "4", EntryText = "4", Description = "TeleportLowerRed", Action = PlayerActionType.TeleportRedLower},
 					new ActionModel {DisplayText = "5", EntryText = "5", Description = "TeleportLowerWhite", Action = PlayerActionType.TeleportWhiteLower},
 					new ActionModel {DisplayText = "6", EntryText = "6", Description = "TeleportLowerBlue", Action = PlayerActionType.TeleportBlueLower}
-				}
+				},
+				Tracks = EnumFactory.All<TrackConfiguration>()
+					.Select(trackConfiguration => new Track(trackConfiguration))
+					.Select(track => new TrackSnapshotModel(track, new List<Threat>()))
+					.ToList()
 			};
 			var modelsString = JavaScriptConvert.SerializeObject(inputModel);
 			return View(modelsString);
 		}
-
-		public ActionResult ActionsDialog()
-		{
-			return PartialView();
-		}
-
-
-		
-
 	}
 }

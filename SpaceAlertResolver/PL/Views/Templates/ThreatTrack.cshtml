@@ -1,4 +1,4 @@
-﻿<div class="track-wrapper">
+﻿<div ng-class="{'track-wrapper': threats == null || threats.length === 0, 'track-with-threats-wrapper': threats != null && threats.length > 0}">
 	<div class="track-spaces-wrapper">
 		<div class="track-outline"></div>
 		<div class="track-sections">
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="threat-list">
+	<div ng-if="threats.length > 0" class="threat-list">
 		<div class="threat-wrapper" ng-repeat="threat in threats">
 			<img id="threat{{trackId}}{{$index}}" class="threat-on-track" ng-src="~/Content/Images/Threats/{{threat.description}}.png"/>
 			<div class="threat-info">

@@ -1,0 +1,17 @@
+﻿<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">actions</h3>
+</div>
+<div class="modal-body" id="modal-body">
+	<div>
+		<h3>{{zone }} Track</h3>
+		<div ng-repeat="track in allTracks" href="#" ng-click="selectTrack(track)" class="selectable-track-wrapper" ng-class="{'selected-track-wrapper': track.track === selectedTrack}">
+			<threat-track track="track" threats="null" track-id="track.track" class="selectable-track"></threat-track>
+			{{track.displayName}}
+		</div>
+	</div>
+
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

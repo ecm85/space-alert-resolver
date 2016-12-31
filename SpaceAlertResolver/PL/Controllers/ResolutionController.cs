@@ -72,14 +72,6 @@ namespace PL.Controllers
 			return View(modelsString);
 		}
 
-		public ActionResult StandardZone()
-		{
-			return PartialView();
-		}
-
-		public ActionResult ThreatTrack()
-		{
-			return PartialView();
-		}
+		
 	}
 }
