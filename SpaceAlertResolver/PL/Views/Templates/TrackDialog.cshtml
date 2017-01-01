@@ -3,8 +3,8 @@
 </div>
 <div class="modal-body" id="modal-body">
 	<div>
-		<div ng-repeat="track in allTracks" href="#" ng-click="selectTrack(track)" class="selectable-track-wrapper" ng-class="{'selected-track-wrapper': track.track === selectedTrack}">
-			<threat-track track="track" threats="null" track-id="track.track" class="selectable-track"></threat-track>
+		<div ng-repeat="track in allTracks" href="#" ng-click="selectTrack(track)" class="selectable-track-option-wrapper" ng-class="{'selected-track-option-wrapper': track.track === selectedTrack.track}">
+			<threat-track track="track" threats="null" track-id="track.track" class="selectable-track-option"></threat-track>
 			{{track.displayName}}
 		</div>
 	</div>

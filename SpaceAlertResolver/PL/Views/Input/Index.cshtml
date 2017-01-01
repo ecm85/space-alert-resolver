@@ -32,35 +32,25 @@
 					</div>
 					<button type="button" class="btn btn-primary actions-button" ng-click="openActionsDialog(player, 'lg')">Actions</button>
 					<div class="selected-actions-wrapper">
-						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
-						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
+						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png"/>
+						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png"/>
 						<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
-							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png"/>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<h2>Tracks</h2>
-		<div>
-			Red Track
-			<button type="button" class="btn btn-primary" ng-click="openRedTrackDialog('lg')">Select Track</button>
-			Selected track: {{redTrack}}
-		</div>
-		<div>
-			White Track
-			<button type="button" class="btn btn-primary" ng-click="openWhiteTrackDialog('lg')">Select Track</button>
-			Selected track: {{whiteTrack}}
-		</div>
-		<div>
-			Blue Track
-			<button type="button" class="btn btn-primary" ng-click="openBlueTrackDialog('lg')">Select Track</button>
-			Selected track: {{blueTrack}}
-		</div>
-		<div>
-			Internal Track
-			<button type="button" class="btn btn-primary" ng-click="openInternalTrackDialog('lg')">Select Track</button>
-			Selected track: {{internalTrack}}
+		<div class="full-board">
+			<div class="external-tracks-wrapper">
+				<threat-track track="redTrack" threats="redThreats" track-id="'red'" ng-click="openRedTrackDialog('lg')" class="selectable-track"></threat-track>
+				<threat-track track="whiteTrack" threats="whiteThreats" track-id="'white'" ng-click="openWhiteTrackDialog('lg')" class="selectable-track"></threat-track>
+				<threat-track track="blueTrack" threats="blueThreats" track-id="'blue'" ng-click="openBlueTrackDialog('lg')" class="selectable-track"></threat-track>
+			</div>
+			<div class="sitting-duck-wrapper">
+				<img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
+			</div>
+			<threat-track track="internalTrack" threats="internalThreats" ng-click="openInternalTrackDialog('lg')" track-id="'internal'" class="selectable-track"></threat-track>
 		</div>
 		<script type="text/ng-template" id="templates/actionsModal">
 			@Html.Action("ActionsDialog", "Templates")

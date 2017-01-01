@@ -696,16 +696,16 @@ textarea {
 	color: white;
 }
 
-.selectable-track-wrapper.selected-track-wrapper {
+.selectable-track-option-wrapper.selected-track-option-wrapper {
 	border: 4px solid blue;
 	margin: 0 1px;
 }
 
-.selectable-track-wrapper div {
+.selectable-track-option-wrapper div {
 	z-index: 0;
 }
 
-.selectable-track-wrapper {
+.selectable-track-option-wrapper {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 5px;
@@ -713,7 +713,11 @@ textarea {
 	text-align: center;
 }
 
-.selectable-track {
+.selectable-track-option {
 	display: block;
 	padding-right: 7px;
+}
+
+.selectable-track {
+	cursor: pointer;
 }

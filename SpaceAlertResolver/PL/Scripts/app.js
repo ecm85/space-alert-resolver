@@ -276,6 +276,10 @@ angular.module("spaceAlertModule")
 	$scope.openInternalTrackDialog = function (size) {
 		openTrackDialog(size, $scope.internalTrack, 'Internal', function (selectedTrack) { $scope.internalTrack = selectedTrack; });
 	}
+
+	$scope.redThreats = [];
+	$scope.whiteThreats = [];
+	$scope.blueThreats = [];
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
@@ -331,7 +335,7 @@ angular.module("spaceAlertModule")
 	$scope.zone = zone;
 
 	$scope.selectTrack = function(track) {
-		$scope.selectedTrack = track.track;
+		$scope.selectedTrack = track;
 	}
 
 	$scope.ok = function () {
