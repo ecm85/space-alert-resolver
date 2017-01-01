@@ -709,9 +709,11 @@ textarea {
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 5px;
+	padding: 0 5px;
 	text-align: center;
 }
 
 .selectable-track {
 	display: block;
+	padding-right: 2px;
 }
