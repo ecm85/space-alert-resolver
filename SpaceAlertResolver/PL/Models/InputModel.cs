@@ -6,5 +6,6 @@ namespace PL.Models
 	{
 		public IEnumerable<ActionModel> Actions { get; set; }
 		public IEnumerable<TrackSnapshotModel> Tracks { get; set; }
+		public AllThreatsModel AllThreats { get; set; }
 	}
 }

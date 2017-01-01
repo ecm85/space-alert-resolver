@@ -176,7 +176,7 @@ angular.module("spaceAlertModule")
 
 	$scope.allTracks = inputData.tracks;
 	$scope.allActions = inputData.actions;
-
+	$scope.allThreats = inputData.allThreats;
 	//TODO: Add specializations
 	//TODO: Add double actions
 

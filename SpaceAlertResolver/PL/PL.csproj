@@ -251,6 +251,7 @@
     </Compile>
     <Compile Include="JavaScriptConvert.cs" />
     <Compile Include="Models\ActionModel.cs" />
+    <Compile Include="Models\AllThreatsModel.cs" />
     <Compile Include="Models\BattleBotsModel.cs" />
     <Compile Include="Models\BlueZoneModel.cs" />
     <Compile Include="Models\CannonModel.cs" />
