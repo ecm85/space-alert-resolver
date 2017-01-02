@@ -479,6 +479,7 @@ textarea {
 
 .threat-info-col-1, .threat-info-col-2 {
 	display: inline-block;
+	vertical-align: top;
 }
 
 .threat-health-wrapper, .threat-shield-wrapper, .threat-speed-wrapper, .threat-total-inaccessibility-wrapper, .threat-time-appears-wrapper {

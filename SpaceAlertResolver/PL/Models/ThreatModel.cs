@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class ThreatModel
+	public abstract class ThreatModel
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ThreatType ThreatType { get; set; }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.Threats;
+using BLL.Threats.External;
+using BLL.Threats.Internal;
 
 namespace PL.Models
 {
@@ -14,10 +16,10 @@ namespace PL.Models
 		public ThreatsByTypeModel(IEnumerable<Threat> threats)
 		{
 			var threatsGroupedByType = threats.GroupBy(threat => threat.ThreatType).ToDictionary(grouping => grouping.Key, grouping => grouping.ToList());
-			SeriousExternalThreats = threatsGroupedByType[ThreatType.SeriousExternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
-			SeriousInternalThreats = threatsGroupedByType[ThreatType.SeriousInternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
-			MinorExternalThreats = threatsGroupedByType[ThreatType.MinorExternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
-			MinorInternalThreats = threatsGroupedByType[ThreatType.MinorInternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
+			SeriousExternalThreats = threatsGroupedByType[ThreatType.SeriousExternal].Select(threat => new ExternalThreatModel(threat as ExternalThreat)).OrderBy(threat => threat.Id).ToList();
+			SeriousInternalThreats = threatsGroupedByType[ThreatType.SeriousInternal].Select(threat => new InternalThreatModel(threat as InternalThreat)).OrderBy(threat => threat.Id).ToList();
+			MinorExternalThreats = threatsGroupedByType[ThreatType.MinorExternal].Select(threat => new ExternalThreatModel(threat as ExternalThreat)).OrderBy(threat => threat.Id).ToList();
+			MinorInternalThreats = threatsGroupedByType[ThreatType.MinorInternal].Select(threat => new InternalThreatModel(threat as InternalThreat)).OrderBy(threat => threat.Id).ToList();
 		}
 	}
 }

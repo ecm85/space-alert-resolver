@@ -3,6 +3,18 @@
 var cloneAction = function(action) {
 	return { displayText: action.displayText, entryText: action.entryText, description: action.description, action: action.action };
 }
+var cloneThreat = function(threat) {
+	return {
+		threatType: threat.threatType,
+		threatDifficulty: threat.threatDifficulty,
+		position: threat.position,
+		remainingHealth: threat.remainingHealth,
+		speed: threat.speed,
+		description: threat.description,
+		timeAppears: threat.timeAppears,
+		id: threat.id
+	};
+}
 angular.module("spaceAlertModule")
 .controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
 	$scope.gameData = gameData;
@@ -414,8 +426,9 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.addThreat = function () {
-		$scope.selectedThreatToAdd.timeAppears = $scope.selectedTimeOfThreatToAdd;
-		$scope.selectedThreats.push($scope.selectedThreatToAdd);
+		var newThreat = cloneThreat($scope.selectedThreatToAdd);
+		newThreat.timeAppears = $scope.selectedTimeOfThreatToAdd;
+		$scope.selectedThreats.push(newThreat);
 		$scope.selectedThreatToAdd = null;
 		$scope.selectedTimeOfThreatToAdd = null;
 	}
