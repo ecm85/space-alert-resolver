@@ -21,10 +21,8 @@
 			<a class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.redThreats">Red</a>
 		</div>
 		<div class="btn-group">
-			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousExternalThreats">Serious External</a>
-			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousInternalThreats">Serious Internal</a>
-			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorExternalThreats">Minor External</a>
-			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorInternalThreats">Minor Internal</a>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousThreats">Serious</a>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorThreats">Minor</a>
 		</div>
 	</div>
 	<div ng-repeat="threat in threats" class="selectable-threat" ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}" ng-click="selectThreatToAdd(threat)">

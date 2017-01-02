@@ -6,6 +6,7 @@ using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Tracks;
+using ThreatFactory = BLL.Threats.Internal.ThreatFactory;
 
 namespace BLL
 {
@@ -150,7 +151,7 @@ namespace BLL
 					case "id":
 						if (nextThreatInfo != null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
-						nextThreatInfo = new ExternalThreatInfo { Threat = ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2) };
+						nextThreatInfo = new ExternalThreatInfo { Threat = Threats.External.ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2) };
 						if (nextThreatInfo.Threat == null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						break;
@@ -243,7 +244,7 @@ namespace BLL
 			StandardThreatInfo<T> nextThreatInfo,
 			int currentThreatIndex) where T : Threat
 		{
-			var bonusExternalThreat = ThreatFactory.CreateThreat<ExternalThreat>(extraExternalThreatId);
+			var bonusExternalThreat = Threats.External.ThreatFactory.CreateThreat<ExternalThreat>(extraExternalThreatId);
 			if (nextThreatInfo == null || bonusExternalThreat == null)
 				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusExternalThreat);

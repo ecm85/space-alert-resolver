@@ -10,11 +10,13 @@ namespace PL.Models
 		public int Shields { get;  }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ZoneLocation CurrentZone { get; }
+		public override string Id { get; }
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
 			Shields = threat.Shields;
 			CurrentZone = threat.CurrentZone;
+			Id = ThreatFactory.ThreatIdsByType[threat.GetType()];
 		}
 	}
 }

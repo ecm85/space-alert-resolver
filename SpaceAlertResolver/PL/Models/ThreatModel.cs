@@ -15,7 +15,7 @@ namespace PL.Models
 		public int Speed { get; set; }
 		public string Description { get; }
 		public int TimeAppears { get; }
-		public string Id { get; }
+		public abstract string Id { get; }
 
 		protected ThreatModel(Threat threat)
 		{
@@ -26,7 +26,6 @@ namespace PL.Models
 			ThreatDifficulty = threat.Difficulty;
 			Description = threat.GetType().Name;
 			TimeAppears = threat.TimeAppears;
-			Id = ThreatFactory.ThreatIdsByType[threat.GetType()];
 		}
 	}
 }

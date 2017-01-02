@@ -3,8 +3,11 @@ using System.Linq;
 using System.Web.Mvc;
 using BLL;
 using BLL.Threats;
+using BLL.Threats.External;
+using BLL.Threats.Internal;
 using BLL.Tracks;
 using PL.Models;
+using ThreatFactory = BLL.Threats.Internal.ThreatFactory;
 
 namespace PL.Controllers
 {
@@ -12,6 +15,14 @@ namespace PL.Controllers
 	{
 		public ActionResult Index()
 		{
+			var allExternalThreats = BLL.Threats.External.ThreatFactory.ThreatTypesById
+				.Select(threat => BLL.Threats.External.ThreatFactory.CreateThreat<ExternalThreat>(threat.Key))
+				.Select(threat => new ExternalThreatModel(threat))
+				.ToList();
+			var allInternalThreats = ThreatFactory.ThreatTypesById
+				.Select(threat => ThreatFactory.CreateThreat<InternalThreat>(threat.Key))
+				.Select(threat => new InternalThreatModel(threat))
+				.ToList();
 			var inputModel = new InputModel
 			{
 				Actions = CreateAllActionModels(),
@@ -19,7 +30,8 @@ namespace PL.Controllers
 					.Select(trackConfiguration => new Track(trackConfiguration))
 					.Select(track => new TrackSnapshotModel(track, new List<Threat>()))
 					.ToList(),
-				AllThreats = new AllThreatsModel(ThreatFactory.ThreatTypesById.Select(threat => ThreatFactory.CreateThreat<Threat>(threat.Key)))
+				AllInternalThreats = new AllThreatsModel(allInternalThreats),
+				AllExternalThreats = new AllThreatsModel(allExternalThreats)
 			};
 			var modelsString = JavaScriptConvert.SerializeObject(inputModel);
 			return View(modelsString);

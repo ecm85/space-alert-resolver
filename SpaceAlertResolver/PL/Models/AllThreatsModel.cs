@@ -10,9 +10,9 @@ namespace PL.Models
 		public ThreatsByTypeModel YellowThreats { get; set; }
 		public ThreatsByTypeModel RedThreats { get; set; }
 
-		public AllThreatsModel(IEnumerable<Threat> allThreats)
+		public AllThreatsModel(IEnumerable<ThreatModel> allThreats)
 		{
-			var threatsGroupedByColor = allThreats.GroupBy(threat => threat.Difficulty).ToDictionary(grouping => grouping.Key, grouping => grouping.ToList());
+			var threatsGroupedByColor = allThreats.GroupBy(threat => threat.ThreatDifficulty).ToDictionary(grouping => grouping.Key, grouping => grouping.ToList());
 			WhiteThreats= new ThreatsByTypeModel(threatsGroupedByColor[ThreatDifficulty.White]);
 			YellowThreats = new ThreatsByTypeModel(threatsGroupedByColor[ThreatDifficulty.Yellow]);
 			RedThreats = new ThreatsByTypeModel(threatsGroupedByColor[ThreatDifficulty.Red]);

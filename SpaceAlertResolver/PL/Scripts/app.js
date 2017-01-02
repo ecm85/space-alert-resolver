@@ -16,7 +16,7 @@ var cloneThreat = function(threat) {
 
 		shields: threat.shields,
 		currentZone: threat.currentZone,
-
+		
 		totalInaccessibility: threat.totalInaccessibility,
 		currentStations: threat.currentStations
 	};
@@ -206,7 +206,8 @@ angular.module("spaceAlertModule")
 
 	$scope.allTracks = inputData.tracks;
 	$scope.allActions = inputData.actions;
-	$scope.allThreats = inputData.allThreats;
+	$scope.allInternalThreats = inputData.allInternalThreats;
+	$scope.allExternalThreats = inputData.allExternalThreats;
 	//TODO: Add specializations
 	//TODO: Add double actions
 
@@ -312,7 +313,7 @@ angular.module("spaceAlertModule")
 	$scope.blueThreats = [];
 	$scope.internalThreats = [];
 
-	var openThreatsDialog = function(size, currentThreats, zone, threatsSetterFn) {
+	var openThreatsDialog = function(size, currentThreats, allThreats, zone, threatsSetterFn) {
 		var modal = $uibModal.open({
 			animation: true,
 			templateUrl: 'templates/threatsModal',
@@ -323,7 +324,7 @@ angular.module("spaceAlertModule")
 					return currentThreats;
 				},
 				allThreats: function () {
-					return $scope.allThreats;
+					return allThreats;
 				},
 				zone: function () {
 					return zone;
@@ -336,16 +337,16 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.openRedThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.redThreats, 'Red', function (threats) { $scope.redThreats = threats; });
+		openThreatsDialog(size, $scope.redThreats, $scope.allExternalThreats, 'Red', function (threats) { $scope.redThreats = threats; });
 	}
 	$scope.openWhiteThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.whiteThreats, 'White', function (threats) { $scope.whiteThreats = threats; });
+		openThreatsDialog(size, $scope.whiteThreats, $scope.allExternalThreats, 'White', function (threats) { $scope.whiteThreats = threats; });
 	}
 	$scope.openBlueThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.blueThreats, 'Blue', function (threats) { $scope.blueThreats = threats; });
+		openThreatsDialog(size, $scope.blueThreats, $scope.allExternalThreats, 'Blue', function (threats) { $scope.blueThreats = threats; });
 	}
 	$scope.openInternalThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.internalThreats, 'Internal', function (threats) { $scope.internalThreats = threats; });
+		openThreatsDialog(size, $scope.internalThreats, $scope.allInternalThreats, 'Internal', function (threats) { $scope.internalThreats = threats; });
 	}
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
@@ -424,7 +425,7 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.$watch('threatsGroupedByType', function(newValue) {
-		$scope.threats = newValue.seriousExternalThreats;
+		$scope.threats = newValue.seriousThreats;
 	});
 	$scope.$watch('threats', function() {
 		$scope.selectedThreatToAdd = null;
