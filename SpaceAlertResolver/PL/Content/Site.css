@@ -255,7 +255,7 @@ textarea {
 	border: 1px solid red;
 }
 
-.threat-wrapper:hover .threat-on-ship-line {
+.threat-with-lines:hover .threat-on-ship-line {
 	display: block;
 }
 

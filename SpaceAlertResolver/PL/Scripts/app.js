@@ -173,6 +173,17 @@ angular.module("spaceAlertModule")
 		}
 	}
 })
+.directive('threat', function () {
+	return {
+		templateUrl: 'templates/threat',
+		restrict: 'E',
+		scope: {
+			threatIndex: '=',
+			threat: '=',
+			trackId: '='
+		}
+	}
+})
 .controller("InputController", ["$scope", '$uibModal', 'inputData', function ($scope, $uibModal, inputData) {
 
 	$scope.allTracks = inputData.tracks;
