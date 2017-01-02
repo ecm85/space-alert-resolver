@@ -23,5 +23,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult ThreatsDialog()
+		{
+			return PartialView();
+		}
 	}
 }

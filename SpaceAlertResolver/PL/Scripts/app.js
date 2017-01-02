@@ -280,6 +280,42 @@ angular.module("spaceAlertModule")
 	$scope.redThreats = [];
 	$scope.whiteThreats = [];
 	$scope.blueThreats = [];
+
+	var openThreatsDialog = function(size, currentThreats, zone, threatsSetterFn) {
+		var modal = $uibModal.open({
+			animation: true,
+			templateUrl: 'templates/threatsModal',
+			controller: 'ThreatsModalInstanceCtrl',
+			size: size,
+			resolve: {
+				currentThreats: function () {
+					return currentThreats;
+				},
+				allThreats: function () {
+					return $scope.allThreats;
+				},
+				zone: function () {
+					return zone;
+				}
+			}
+		});
+		modal.result.then(function (threats) {
+			threatsSetterFn(threats);
+		});
+	}
+
+	$scope.openRedThreatsDialog = function (size) {
+		openThreatsDialog(size, $scope.redThreats, 'Red', function (threats) { $scope.redThreats = threats; });
+	}
+	$scope.openWhiteThreatsDialog = function (size) {
+		openThreatsDialog(size, $scope.whiteThreats, 'White', function (threats) { $scope.whiteThreats = threats; });
+	}
+	$scope.openBlueThreatsDialog = function (size) {
+		openThreatsDialog(size, $scope.blueThreats, 'Blue', function (threats) { $scope.blueThreats = threats; });
+	}
+	$scope.openInternalThreatsDialog = function (size) {
+		openThreatsDialog(size, $scope.internalThreats, 'Internal', function (threats) { $scope.internalThreats = threats; });
+	}
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
@@ -291,6 +327,7 @@ angular.module("spaceAlertModule")
 			$scope.selectedActions.push(cloneAction($scope.allActions[0]));
 	}
 	$scope.playerColor = player.color.model;
+	$scope.playerTitle = player.title;
 	$scope.cursor = 0;
 
 	$scope.addActionAtCursor = function (action) {
@@ -334,12 +371,29 @@ angular.module("spaceAlertModule")
 	$scope.allTracks = allTracks;
 	$scope.zone = zone;
 
-	$scope.selectTrack = function(track) {
+	$scope.selectTrack = function (track) {
 		$scope.selectedTrack = track;
 	}
 
 	$scope.ok = function () {
 		$uibModalInstance.close($scope.selectedTrack);
+	};
+
+	$scope.cancel = function () {
+		$uibModalInstance.dismiss('cancel');
+	};
+}])
+.controller('ThreatsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'zone', function ($uibModalInstance, $scope, currentThreats, allThreats, zone) {
+	$scope.selectedThreats = currentThreats;
+	$scope.allThreats = allThreats;
+	$scope.zone = zone;
+
+	$scope.selectThreats = function(threats) {
+		$scope.selectedThreats = threats;
+	}
+
+	$scope.ok = function () {
+		$uibModalInstance.close($scope.selectedThreats);
 	};
 
 	$scope.cancel = function () {

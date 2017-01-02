@@ -718,6 +718,14 @@ textarea {
 	padding-right: 7px;
 }
 
-.selectable-track {
+ .selected-track .track-spaces-wrapper{
 	cursor: pointer;
 }
+
+ .selected-track-wrapper {
+	 display: inline-block;
+ }
+
+ .add-threats-button {
+	 display: block;
+ }
