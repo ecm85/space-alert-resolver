@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using BLL;
@@ -8,9 +9,11 @@ namespace PL.Controllers
 {
 	public class ResolutionController : Controller
 	{
-		public ActionResult Index()
+		[HttpPost]
+		public ActionResult Index(string args)
 		{
-			var args = new[]
+			Debug.WriteLine(args);
+			var splitArgs = new[]
 			{
 				"-players",
 				"player-index:0",
@@ -54,7 +57,7 @@ namespace PL.Controllers
 				//"id:I1-06",
 				//"time:6"
 			};
-			var game = GameParser.ParseArgsIntoGame(args);
+			var game = GameParser.ParseArgsIntoGame(splitArgs);
 			var nextPhase = 0;
 			var models = new List<GameSnapshotModel> {new GameSnapshotModel(game, "Start of Game", () => nextPhase++)};
 			game.NewThreatsAdded += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Appeared", () => nextPhase++));
@@ -69,9 +72,7 @@ namespace PL.Controllers
 				nextPhase = 0;
 			}
 			var modelsString = JavaScriptConvert.SerializeObject(models.GroupBy(model => model.Turn).ToList());
-			return View(modelsString);
+			return View(new TempModel {GameData = modelsString, TempString = args});
 		}
-
-		
 	}
 }

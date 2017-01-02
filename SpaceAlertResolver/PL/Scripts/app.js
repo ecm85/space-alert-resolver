@@ -348,6 +348,12 @@ angular.module("spaceAlertModule")
 	$scope.openInternalThreatsDialog = function (size) {
 		openThreatsDialog(size, $scope.internalThreats, $scope.allInternalThreats, 'Internal', function (threats) { $scope.internalThreats = threats; });
 	}
+
+	$scope.canCreateGame = function() {
+		return $scope.redTrack != null && $scope.whiteTrack != null && $scope.blueTrack != null;
+	}
+
+	$scope.gameArgs = 'testargs';
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;

@@ -270,6 +270,7 @@
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
+    <Compile Include="Models\TempModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\ThreatsByTypeModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />

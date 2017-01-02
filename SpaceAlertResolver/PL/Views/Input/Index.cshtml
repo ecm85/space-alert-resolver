@@ -77,6 +77,9 @@
 		<script type="text/ng-template" id="templates/threatsModal">
 			@Html.Action("ThreatsDialog", "Templates")
 		</script>
-		@*<button type="button" class="btn">Resolve Game</button>*@
+		<form action="@Url.Action("Index", "Resolution")" method="post">
+			<input type="hidden" value="{{gameArgs}}" name="args"/> 
+			<button type="submit" class="btn btn-primary" ng-click="createGame()" @*ng-disabled="!canCreateGame()"*@>Create Game</button>
+		</form>
 	</div>
 </div>
