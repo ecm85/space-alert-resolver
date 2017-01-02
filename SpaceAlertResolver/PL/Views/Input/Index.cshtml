@@ -46,21 +46,24 @@
 			<div class="external-tracks-wrapper">
 				<div class="selected-track-wrapper">
 					<button class="btn btn-primary add-threats-button" ng-click="openRedThreatsDialog('lg')">Red Threats</button>
-					<threat-track track="redTrack" threats="redThreats" track-id="'red'" ng-click="openRedTrackDialog('lg')" class="selected-track"></threat-track>
+					<threat-track track="redTrack" threats="redThreats" track-id="'red'" on-track-clicked="openRedTrackDialog()" class="selected-track"></threat-track>
 				</div>
 				<div class="selected-track-wrapper">
-						<button class="btn btn-primary add-threats-button" ng-click="openWhiteThreatsDialog('lg')">White Threats</button>
-						<threat-track track="whiteTrack" threats="whiteThreats" track-id="'white'" ng-click="openWhiteTrackDialog('lg')" class="selected-track"></threat-track>
-					</div>
+					<button class="btn btn-primary add-threats-button" ng-click="openWhiteThreatsDialog('lg')">White Threats</button>
+					<threat-track track="whiteTrack" threats="whiteThreats" track-id="'white'" on-track-clicked="openWhiteTrackDialog()" class="selected-track"></threat-track>
+				</div>
 				<div class="selected-track-wrapper">
 					<button class="btn btn-primary add-threats-button" ng-click="openBlueThreatsDialog('lg')">Blue Threats</button>
-					<threat-track track="blueTrack" threats="blueThreats" track-id="'blue'" ng-click="openBlueTrackDialog('lg')" class="selected-track"></threat-track>
+					<threat-track track="blueTrack" threats="blueThreats" track-id="'blue'" on-track-clicked="openBlueTrackDialog()" class="selected-track"></threat-track>
 				</div>
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
 			</div>
-			<threat-track track="internalTrack" threats="internalThreats" ng-click="openInternalTrackDialog('lg')" track-id="'internal'" class="selectable-track"></threat-track>
+			<div class="selected-track-wrapper">
+				<button class="btn btn-primary add-threats-button" ng-click="openInternalThreatsDialog('lg')">Internal Threats</button>
+				<threat-track track="internalTrack" threats="internalThreats" on-track-clicked="openInternalTrackDialog()" track-id="'internal'" class="selectable-track"></threat-track>
+			</div>
 		</div>
 		<script type="text/ng-template" id="templates/actionsModal">
 			@Html.Action("ActionsDialog", "Templates")

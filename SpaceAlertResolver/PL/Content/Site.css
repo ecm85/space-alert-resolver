@@ -706,7 +706,6 @@ textarea {
 }
 
 .selectable-track-option-wrapper {
-	cursor: pointer;
 	display: inline-block;
 	margin: 0 5px;
 	padding: 0 5px;
@@ -718,14 +717,15 @@ textarea {
 	padding-right: 7px;
 }
 
- .selected-track .track-spaces-wrapper{
-	cursor: pointer;
-}
-
  .selected-track-wrapper {
 	 display: inline-block;
+	 vertical-align: bottom;
  }
 
  .add-threats-button {
 	 display: block;
+ }
+
+ .track-spaces-wrapper-clickable {
+	 cursor: pointer;
  }

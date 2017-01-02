@@ -1,5 +1,5 @@
 ﻿<div ng-class="{'track-wrapper': threats == null, 'track-with-threats-wrapper': threats != null}">
-	<div class="track-spaces-wrapper">
+	<div class="track-spaces-wrapper" ng-click="onTrackClicked()" ng-class="{'track-spaces-wrapper-clickable': onTrackClicked != null}">
 		<div class="track-outline"></div>
 		<div class="track-sections">
 			<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in track.sections">

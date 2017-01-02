@@ -115,7 +115,8 @@ angular.module("spaceAlertModule")
 		scope: {
 			threats: '=',
 			track: '=',
-			trackId: '='
+			trackId: '=',
+			onTrackClicked: '&?'
 		},
 		controller: ['$scope', function ThreatTrackController($scope) {
 			$scope.getThreatCornerX = function (index) {
@@ -264,17 +265,17 @@ angular.module("spaceAlertModule")
 		});
 	}
 
-	$scope.openRedTrackDialog = function(size) {
-		openTrackDialog(size, $scope.redTrack, 'Red', function(selectedTrack) { $scope.redTrack = selectedTrack; });
+	$scope.openRedTrackDialog = function() {
+		openTrackDialog('lg', $scope.redTrack, 'Red', function(selectedTrack) { $scope.redTrack = selectedTrack; });
 	}
-	$scope.openWhiteTrackDialog = function (size) {
-		openTrackDialog(size, $scope.whiteTrack, 'White', function (selectedTrack) { $scope.whiteTrack = selectedTrack; });
+	$scope.openWhiteTrackDialog = function () {
+		openTrackDialog('lg', $scope.whiteTrack, 'White', function (selectedTrack) { $scope.whiteTrack = selectedTrack; });
 	}
-	$scope.openBlueTrackDialog = function (size) {
-		openTrackDialog(size, $scope.blueTrack, 'Blue', function (selectedTrack) { $scope.blueTrack = selectedTrack; });
+	$scope.openBlueTrackDialog = function () {
+		openTrackDialog('lg', $scope.blueTrack, 'Blue', function (selectedTrack) { $scope.blueTrack = selectedTrack; });
 	}
-	$scope.openInternalTrackDialog = function (size) {
-		openTrackDialog(size, $scope.internalTrack, 'Internal', function (selectedTrack) { $scope.internalTrack = selectedTrack; });
+	$scope.openInternalTrackDialog = function () {
+		openTrackDialog('lg', $scope.internalTrack, 'Internal', function (selectedTrack) { $scope.internalTrack = selectedTrack; });
 	}
 
 	$scope.redThreats = [];
