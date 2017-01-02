@@ -15,7 +15,7 @@
 	<div ng-if="threats.length > 0" class="threat-list">
 		<div ng-repeat="threat in threats" class="threat-with-lines">
 			<threat threat-index="$index" threat="threat" track-id="trackId"></threat>
-			<svg class="threat-on-track-line-wrapper">
+			<svg ng-if="threat.position > 0" class="threat-on-track-line-wrapper">
 				<line class="threat-on-track-line" stroke-width="3" stroke="red"
 					ng-attr-x1="{{getThreatCornerX($index)}}"
 					ng-attr-y1="{{getThreatCornerY($index)}}"

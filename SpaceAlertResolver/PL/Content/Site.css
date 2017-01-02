@@ -737,10 +737,11 @@ textarea {
 	 margin-left: 3px;
 	 margin-bottom: 12px;
 	 text-align: center;
+	 cursor: pointer;
  }
 
  .selected-threats {
-	 height: 100px;
+	 min-height: 160px;
  }
 
  .selected-threat-to-add .threat-wrapper {

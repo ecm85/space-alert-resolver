@@ -4,34 +4,36 @@
 <div class="modal-body" id="modal-body">
 	<h3>Current Threats</h3>
 	<div class="selected-threats">
-		<div ng-repeat="threat in selectedThreats">
-			{{threat.description}}
-			{{threat.timeAppears}}
+		<div ng-repeat="threat in selectedThreats" class="selectable-threat">
+			<threat threat-index="$index" threat="threat" track-id="zone" ng-click="selectThreatToAdd(threat)"></threat>
+			{{threat.id}}
+			<button class="btn btn-warning" ng-click="removeThreat(threat)">Remove</button>
 		</div>
-		@* TODO: Threat with remove button *@
+		<div ng-if="selectedThreats.length == 0">No Threats Selected</div>
 	</div>
 	<h3>Add Threat</h3>
 	<div class="btn-toolbar">
 		<div class="btn-group">
-			<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.whiteThreats">White</label>
-			<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.yellowThreats">Yellow</label>
-			<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.redThreats">Red</label>
+			<a class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.whiteThreats">White</a>
+			<a class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.yellowThreats">Yellow</a>
+			<a class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.redThreats">Red</a>
 		</div>
 		<div class="btn-group">
-			<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousExternalThreats">Serious External</label>
-			<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousInternalThreats">Serious Internal</label>
-			<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorExternalThreats">Minor External</label>
-			<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorInternalThreats">Minor Internal</label>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousExternalThreats">Serious External</a>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousInternalThreats">Serious Internal</a>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorExternalThreats">Minor External</a>
+			<a class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorInternalThreats">Minor Internal</a>
 		</div>
 	</div>
-	<div ng-repeat="threat in threats" class="selectable-threat" ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}">
-		<threat threat-index="$index" threat="threat" track-id="zone" ng-click="selectThreatToAdd(threat)"></threat>
+	<div ng-repeat="threat in threats" class="selectable-threat" ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}" ng-click="selectThreatToAdd(threat)">
+		<threat threat-index="$index" threat="threat" track-id="zone"></threat>
 		{{threat.id}}
 	</div>
-	<select class="form-control" ng-disabled="selectedThreatToAdd == null" ng-model="selectedTimeOfThreatToAdd">
-		<option value="">Time Appears</option>
-		<option ng-repeat="time in allTimes">{{time}}</option>
-	</select>
+	<div>
+		<div class="btn-group">
+			<a class="btn btn-default" ng-disabled="selectedThreatToAdd == null" ng-repeat="time in allTimes" ng-model="$parent.selectedTimeOfThreatToAdd" uib-btn-radio="time">{{time}}</a>
+		</div>
+	</div>
 	<button type="button" class="btn btn-primary" ng-disabled="selectedTimeOfThreatToAdd == null" ng-click="addThreat()">Add Threat</button>
 </div>
 <div class="modal-footer">

@@ -10,7 +10,7 @@
 		<h1>Game Input</h1>
 		<h2>Players</h2>
 		<div class="btn-group">
-			<label ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</label>
+			<a ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</a>
 		</div>
 		<div>
 			<div ng-repeat="player in players" class="panel panel-default player-panel" ng-if="player.isInGame">
@@ -25,9 +25,9 @@
 					<div class="player-color-with-selector">
 						<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
 						<div class="btn-group color-button-group">
-							<label ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+							<a ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
 								<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
-							</label>
+							</a>
 						</div>
 					</div>
 					<button type="button" class="btn btn-primary actions-button" ng-click="openActionsDialog(player, 'lg')">Actions</button>

@@ -420,6 +420,10 @@ angular.module("spaceAlertModule")
 		$scope.selectedTimeOfThreatToAdd = null;
 	}
 
+	$scope.removeThreat = function(threat) {
+		$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
+	}
+
 	$scope.ok = function () {
 		$uibModalInstance.close($scope.selectedThreats);
 	};
