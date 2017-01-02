@@ -17,7 +17,7 @@ namespace PL.Models
 		public int TimeAppears { get; }
 		public string Id { get; }
 
-		public ThreatModel(Threat threat)
+		protected ThreatModel(Threat threat)
 		{
 			Position = threat.Position.GetValueOrDefault();
 			RemainingHealth = threat.RemainingHealth;

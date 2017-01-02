@@ -7,7 +7,9 @@
 		<div ng-repeat="threat in selectedThreats" class="selectable-threat">
 			<threat threat-index="$index" threat="threat" track-id="zone" ng-click="selectThreatToAdd(threat)"></threat>
 			{{threat.id}}
-			<button class="btn btn-warning" ng-click="removeThreat(threat)">Remove</button>
+			<div>
+				<button class="btn btn-warning" ng-click="removeThreat(threat)">Remove</button>
+			</div>
 		</div>
 		<div ng-if="selectedThreats.length == 0">No Threats Selected</div>
 	</div>

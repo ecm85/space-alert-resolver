@@ -12,7 +12,13 @@ var cloneThreat = function(threat) {
 		speed: threat.speed,
 		description: threat.description,
 		timeAppears: threat.timeAppears,
-		id: threat.id
+		id: threat.id,
+
+		shields: threat.shields,
+		currentZone: threat.currentZone,
+
+		totalInaccessibility: threat.totalInaccessibility,
+		currentStations: threat.currentStations
 	};
 }
 angular.module("spaceAlertModule")
@@ -304,6 +310,7 @@ angular.module("spaceAlertModule")
 	$scope.redThreats = [];
 	$scope.whiteThreats = [];
 	$scope.blueThreats = [];
+	$scope.internalThreats = [];
 
 	var openThreatsDialog = function(size, currentThreats, zone, threatsSetterFn) {
 		var modal = $uibModal.open({
@@ -418,6 +425,10 @@ angular.module("spaceAlertModule")
 
 	$scope.$watch('threatsGroupedByType', function(newValue) {
 		$scope.threats = newValue.seriousExternalThreats;
+	});
+	$scope.$watch('threats', function() {
+		$scope.selectedThreatToAdd = null;
+		$scope.selectedTimeOfThreatToAdd = null;
 	});
 	$scope.threatsGroupedByType = allThreats.whiteThreats;
 
