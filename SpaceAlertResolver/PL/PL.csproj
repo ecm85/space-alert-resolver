@@ -241,6 +241,11 @@
     <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
+    <Content Include="Content\Images\Threats\MegashieldManOfWar.png" />
+    <Content Include="Content\Images\Threats\MotherSwarm.png" />
+    <Content Include="Content\Images\Threats\Ninja.png" />
+    <Content Include="Content\Images\Threats\PhasingPulser.png" />
+    <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
     <Compile Include="Controllers\InputController.cs" />
@@ -332,14 +337,11 @@
     <Content Include="Content\Images\Threats\Marauder.png" />
     <Content Include="Content\Images\Threats\MegashieldDestroyer.png" />
     <Content Include="Content\Images\Threats\MegashieldFighter.png" />
-    <Content Include="Content\Images\Threats\MegashieldFrigate.png" />
     <Content Include="Content\Images\Threats\Meteoroid.png" />
     <Content Include="Content\Images\Threats\MiniCarrier.png" />
     <Content Include="Content\Images\Threats\MinorAsteroid.png" />
-    <Content Include="Content\Images\Threats\Mother-Swarm.png" />
     <Content Include="Content\Images\Threats\NebulaCrab.png" />
     <Content Include="Content\Images\Threats\Nemesis.png" />
-    <Content Include="Content\Images\Threats\Ninjas.png" />
     <Content Include="Content\Images\Threats\NuclearDevice.png" />
     <Content Include="Content\Images\Threats\OverheatedReactor.png" />
     <Content Include="Content\Images\Threats\Overlord.png" />
@@ -364,8 +366,6 @@
     <Content Include="Content\Images\Threats\PsionicSatellite.png" />
     <Content Include="Content\Images\Threats\PulseBall.png" />
     <Content Include="Content\Images\Threats\PulseCannonShortCircuit.png" />
-    <Content Include="Content\Images\Threats\PulseSattelite.png" />
-    <Content Include="Content\Images\Threats\PulsingPhaser.png" />
     <Content Include="Content\Images\Threats\RabidBeast.png" />
     <Content Include="Content\Images\Threats\ReversedShields.png" />
     <Content Include="Content\Images\Threats\SaboteurA.png" />

@@ -729,3 +729,20 @@ textarea {
  .track-spaces-wrapper-clickable {
 	 cursor: pointer;
  }
+
+ .selectable-threat {
+	 display: inline-block;
+	 width: 166px;
+	 margin-right: 3px;
+	 margin-left: 3px;
+	 margin-bottom: 12px;
+	 text-align: center;
+ }
+
+ .selected-threats {
+	 height: 100px;
+ }
+
+ .selected-threat-to-add .threat-wrapper {
+	 border: 3px yellow solid;
+ }

@@ -396,7 +396,8 @@ angular.module("spaceAlertModule")
 	};
 }])
 .controller('ThreatsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'zone', function ($uibModalInstance, $scope, currentThreats, allThreats, zone) {
-	$scope.selectedThreats = currentThreats;
+	$scope.selectedThreats = currentThreats.slice();
+		$scope.allTimes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	$scope.allThreats = allThreats;
 	$scope.zone = zone;
 	$scope.selectThreats = function(threats) {
@@ -407,6 +408,17 @@ angular.module("spaceAlertModule")
 		$scope.threats = newValue.seriousExternalThreats;
 	});
 	$scope.threatsGroupedByType = allThreats.whiteThreats;
+
+	$scope.selectThreatToAdd = function(threat) {
+		$scope.selectedThreatToAdd = threat;
+	}
+
+	$scope.addThreat = function () {
+		$scope.selectedThreatToAdd.timeAppears = $scope.selectedTimeOfThreatToAdd;
+		$scope.selectedThreats.push($scope.selectedThreatToAdd);
+		$scope.selectedThreatToAdd = null;
+		$scope.selectedTimeOfThreatToAdd = null;
+	}
 
 	$scope.ok = function () {
 		$uibModalInstance.close($scope.selectedThreats);

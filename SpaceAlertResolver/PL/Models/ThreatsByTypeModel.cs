@@ -14,10 +14,10 @@ namespace PL.Models
 		public ThreatsByTypeModel(IEnumerable<Threat> threats)
 		{
 			var threatsGroupedByType = threats.GroupBy(threat => threat.ThreatType).ToDictionary(grouping => grouping.Key, grouping => grouping.ToList());
-			SeriousExternalThreats = threatsGroupedByType[ThreatType.SeriousExternal].Select(threat => new ThreatModel(threat));
-			SeriousInternalThreats = threatsGroupedByType[ThreatType.SeriousInternal].Select(threat => new ThreatModel(threat));
-			MinorExternalThreats = threatsGroupedByType[ThreatType.MinorExternal].Select(threat => new ThreatModel(threat));
-			MinorInternalThreats = threatsGroupedByType[ThreatType.MinorInternal].Select(threat => new ThreatModel(threat));
+			SeriousExternalThreats = threatsGroupedByType[ThreatType.SeriousExternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
+			SeriousInternalThreats = threatsGroupedByType[ThreatType.SeriousInternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
+			MinorExternalThreats = threatsGroupedByType[ThreatType.MinorExternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
+			MinorInternalThreats = threatsGroupedByType[ThreatType.MinorInternal].Select(threat => new ThreatModel(threat)).OrderBy(threat => threat.Id).ToList();
 		}
 	}
 }
