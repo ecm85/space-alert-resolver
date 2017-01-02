@@ -388,10 +388,14 @@ angular.module("spaceAlertModule")
 	$scope.selectedThreats = currentThreats;
 	$scope.allThreats = allThreats;
 	$scope.zone = zone;
-
 	$scope.selectThreats = function(threats) {
 		$scope.selectedThreats = threats;
 	}
+
+	$scope.$watch('threatsGroupedByType', function(newValue) {
+		$scope.threats = newValue.seriousExternalThreats;
+	});
+	$scope.threatsGroupedByType = allThreats.whiteThreats;
 
 	$scope.ok = function () {
 		$uibModalInstance.close($scope.selectedThreats);

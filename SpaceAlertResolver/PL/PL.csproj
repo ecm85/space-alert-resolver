@@ -266,6 +266,7 @@
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
+    <Compile Include="Models\ThreatsByTypeModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />
     <Compile Include="Models\TrackSnapshotModel.cs" />
     <Compile Include="Models\TrackSpaceModel.cs" />

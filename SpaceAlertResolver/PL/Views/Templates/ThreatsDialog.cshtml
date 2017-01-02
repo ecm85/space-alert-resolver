@@ -1,8 +1,28 @@
 ﻿<div class="modal-header">
 	<h3 class="modal-title" id="modal-title">{{zone}} Threats</h3>
 </div>
+<div ng-repeat="threat in selectedThreats">
+	{{threat.description}}
+	{{threat.timeAppears}}
+</div>
 <div class="modal-body" id="modal-body">
-	
+	<div class="btn-group">
+		<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.whiteThreats">White</label>
+		<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.yellowThreats">Yellow</label>
+		<label class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.redThreats">Red</label>
+	</div>
+</div>
+{{threatsGroupedByType.seriousExternalThreats[0].description}}
+<div class="modal-body" id="modal-body">
+	<div class="btn-group">
+		<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousExternalThreats">Serious External</label>
+		<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.seriousInternalThreats">Serious Internal</label>
+		<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorExternalThreats">Minor External</label>
+		<label class="btn btn-default" ng-model="threats" uib-btn-radio="threatsGroupedByType.minorInternalThreats">Minor Internal</label>
+	</div>
+</div>
+<div ng-repeat="threat in threats">
+	{{threat.description}}
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
