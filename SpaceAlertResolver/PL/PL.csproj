@@ -248,8 +248,7 @@
     <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
-    <Compile Include="Controllers\InputController.cs" />
-    <Compile Include="Controllers\ResolutionController.cs" />
+    <Compile Include="Controllers\SpaceAlertController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -270,7 +269,6 @@
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
-    <Compile Include="Models\TempModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\ThreatsByTypeModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />
@@ -433,11 +431,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Resolution\About.cshtml" />
-    <Content Include="Views\Resolution\Contact.cshtml" />
-    <Content Include="Views\Resolution\Index.cshtml" />
+    <None Include="Views\SpaceAlert\Resolution.cshtml" />
     <Content Include="Views\Templates\ThreatTrack.cshtml" />
-    <Content Include="Views\Input\Index.cshtml" />
+    <Content Include="Views\SpaceAlert\Input.cshtml" />
     <Content Include="Views\Templates\ActionsDialog.cshtml" />
     <Content Include="Views\Templates\TrackDialog.cshtml" />
     <Content Include="Views\Templates\ThreatsDialog.cshtml" />

@@ -1,7 +1,13 @@
 ﻿"use strict";
 
 var cloneAction = function(action) {
-	return { displayText: action.displayText, entryText: action.entryText, description: action.description, action: action.action };
+	return {
+		serializationText: action.serializationText,
+		displayText: action.displayText,
+		entryText: action.entryText,
+		description: action.description,
+		action: action.action
+	};
 }
 var cloneThreat = function(threat) {
 	return {
@@ -214,12 +220,17 @@ angular.module("spaceAlertModule")
 	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 	$scope.playerCounts = [1, 2, 3, 4, 5];
 	$scope.players = [
-		{ title: 'Captain', color: { model: $scope.colors[0] } },
-		{ title: 'Player 2', color: { model: $scope.colors[1] } },
-		{ title: 'Player 3', color: { model: $scope.colors[2] } },
-		{ title: 'Player 4', color: { model: $scope.colors[3] } },
-		{ title: 'Player 5', color: { model: $scope.colors[4] } }
+		{ title: 'Captain', color: { model: $scope.colors[0] }, actions: [] },
+		{ title: 'Player 2', color: { model: $scope.colors[1] }, actions: [] },
+		{ title: 'Player 3', color: { model: $scope.colors[2] }, actions: [] },
+		{ title: 'Player 4', color: { model: $scope.colors[3] }, actions: [] },
+		{ title: 'Player 5', color: { model: $scope.colors[4] }, actions: [] }
 	];
+
+	$scope.players.forEach(function (player) {
+		for (var i = 0; i < 12; i++)
+			player.actions.push(cloneAction($scope.allActions[0]));
+	});
 
 	$scope.dropdownStatus = {
 		isopen: false
@@ -350,20 +361,88 @@ angular.module("spaceAlertModule")
 	}
 
 	$scope.canCreateGame = function() {
-		return $scope.redTrack != null && $scope.whiteTrack != null && $scope.blueTrack != null;
+		return $scope.redTrack != null && $scope.whiteTrack != null && $scope.blueTrack != null && $scope.internalTrack != null;
 	}
 
-	$scope.gameArgs = 'testargs';
+	$scope.getGameArgs = function () {
+		if (!$scope.canCreateGame())
+			return '';
+		var gameArgs = '';
+
+		gameArgs += '-players';
+		gameArgs += ' ';
+		for (var playerIndex = 0; playerIndex < $scope.players.length; playerIndex++) {
+			gameArgs += 'player-index:' + playerIndex;
+			gameArgs += ' ';
+			gameArgs += 'actions:';
+			for (var actionIndex = 0; actionIndex < $scope.players[playerIndex].actions.length; actionIndex++)
+				gameArgs += $scope.players[playerIndex].actions[actionIndex].serializationText;
+			gameArgs += ' ';
+			gameArgs += 'player-color:' + $scope.players[playerIndex].color.model;
+			gameArgs += ' ';
+		}
+
+		gameArgs += '-external-tracks';
+		gameArgs += ' ';
+		gameArgs += 'red:' + $scope.redTrack.trackIndex,
+		gameArgs += ' ';
+		gameArgs += 'white:' + $scope.whiteTrack.trackIndex,
+		gameArgs += ' ';
+		gameArgs += 'blue:' + $scope.blueTrack.trackIndex,
+		gameArgs += ' ';
+		gameArgs += '-internal-track';
+		gameArgs += ' ';
+		gameArgs += $scope.internalTrack.trackIndex,
+		gameArgs += ' ';
+
+		gameArgs += '-external-threats';
+		gameArgs += ' ';
+		if ($scope.redThreats) {
+			for (var threatIndex = 0; threatIndex < $scope.redThreats.length; threatIndex++) {
+				gameArgs += 'id:' + $scope.redThreats[threatIndex].id;
+				gameArgs += ' ';
+				gameArgs += 'time:' + $scope.redThreats[threatIndex].timeAppears;
+				gameArgs += ' ';
+				gameArgs += 'location:red';
+				gameArgs += ' ';
+			}
+		}
+		if ($scope.whiteThreats) {
+			for (var threatIndex = 0; threatIndex < $scope.whiteThreats.length; threatIndex++) {
+				gameArgs += 'id:' + $scope.whiteThreats[threatIndex].id;
+				gameArgs += ' ';
+				gameArgs += 'time:' + $scope.whiteThreats[threatIndex].timeAppears;
+				gameArgs += ' ';
+				gameArgs += 'location:white';
+				gameArgs += ' ';
+			}
+		}
+		if ($scope.blueThreats) {
+			for (var threatIndex = 0; threatIndex < $scope.blueThreats.length; threatIndex++) {
+				gameArgs += 'id:' + $scope.blueThreats[threatIndex].id;
+				gameArgs += ' ';
+				gameArgs += 'time:' + $scope.blueThreats[threatIndex].timeAppears;
+				gameArgs += ' ';
+				gameArgs += 'location:blue';
+				gameArgs += ' ';
+			}
+		}
+
+		gameArgs += '-internal-threats';
+		gameArgs += ' ';
+		for (var threatIndex = 0; threatIndex < $scope.internalThreats.length; threatIndex++) {
+			gameArgs += 'id:' + $scope.internalThreats[threatIndex].id;
+			gameArgs += ' ';
+			gameArgs += 'time:' + $scope.internalThreats[threatIndex].timeAppears;
+			gameArgs += ' ';
+		}
+
+		return gameArgs;
+	}
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
 	$scope.allActions = allActions;
-	if (player.actions != null)
-		$scope.selectedActions = player.actions.slice();
-	else {
-		$scope.selectedActions = [];
-		for(var i = 0; i < 12; i++)
-			$scope.selectedActions.push(cloneAction($scope.allActions[0]));
-	}
+	$scope.selectedActions = player.actions.slice();
 	$scope.playerColor = player.color.model;
 	$scope.playerTitle = player.title;
 	$scope.cursor = 0;

@@ -11,12 +11,14 @@ namespace PL.Models
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TrackConfiguration Track { get; set; }
+		public int TrackIndex { get; set; }
 		public string DisplayName => Track.DisplayName();
 		public IEnumerable<TrackSectionModel> Sections { get; set; }
 	
 		public TrackSnapshotModel(Track track, IEnumerable<Threat> threatsOnTrack)
 		{
 			Track = track.TrackConfiguration;
+			TrackIndex = (int)track.TrackConfiguration;
 			Sections = track.Sections.Select(section => new TrackSectionModel(section, threatsOnTrack, track.Breakpoints)).ToList();
 		}
 	}

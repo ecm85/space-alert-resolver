@@ -12,7 +12,7 @@ namespace BLL
 {
 	public static class GameParser
 	{
-		public static Game ParseArgsIntoGame(string[] args)
+		public static Game ParseArgsIntoGame(IList<string> args)
 		{
 			if (!args.Any())
 				throw new InvalidOperationException();

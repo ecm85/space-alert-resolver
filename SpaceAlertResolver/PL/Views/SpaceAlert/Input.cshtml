@@ -1,6 +1,4 @@
-﻿
-
-@model IHtmlString
+﻿@model IHtmlString
 <script>
 	angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']).value("inputData", @Html.Raw(Model));
 </script>
@@ -77,9 +75,9 @@
 		<script type="text/ng-template" id="templates/threatsModal">
 			@Html.Action("ThreatsDialog", "Templates")
 		</script>
-		<form action="@Url.Action("Index", "Resolution")" method="post">
-			<input type="hidden" value="{{gameArgs}}" name="args"/> 
-			<button type="submit" class="btn btn-primary" ng-click="createGame()" @*ng-disabled="!canCreateGame()"*@>Create Game</button>
+		<form action="@Url.Action("Index")" method="post">
+			<input type="hidden" value="{{getGameArgs()}}" name="gameArgs"/> 
+			<button type="submit" class="btn btn-primary" ng-click="createGame()" ng-disabled="!canCreateGame()">Create Game</button>
 		</form>
 	</div>
 </div>

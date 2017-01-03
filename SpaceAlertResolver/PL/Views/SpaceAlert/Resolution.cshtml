@@ -1,13 +1,10 @@
-﻿
-
-@model PL.Models.TempModel
+﻿@model IHtmlString
 <script>
-	angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model.GameData));
+	angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
 </script>
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
-		Temp string: @Model.TempString
 		<div class="game-runthrough">
 			<div class="btn-group automated-run-through">
 				<a class="btn btn-default" ng-click="goToStart()"><i class="fa fa-fast-backward"></i></a>
