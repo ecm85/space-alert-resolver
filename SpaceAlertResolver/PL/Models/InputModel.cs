@@ -8,5 +8,6 @@ namespace PL.Models
 		public IEnumerable<TrackSnapshotModel> Tracks { get; set; }
 		public AllThreatsModel AllInternalThreats { get; set; }
 		public AllThreatsModel AllExternalThreats { get; set; }
+		public NewGameModel NewGameModel { get; set; }
 	}
 }

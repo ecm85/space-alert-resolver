@@ -1,4 +1,5 @@
 ﻿using BLL.ShipComponents;
+using Newtonsoft.Json;
 
 namespace PL.Models
 {
@@ -8,6 +9,12 @@ namespace PL.Models
 		public BattleBotsModel(BattleBots battleBots)
 		{
 			IsDisabled = battleBots.IsDisabled;
+		}
+
+		[JsonConstructor]
+		public BattleBotsModel()
+		{
+			
 		}
 	}
 }

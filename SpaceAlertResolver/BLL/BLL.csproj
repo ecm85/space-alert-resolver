@@ -187,7 +187,7 @@
     <Compile Include="Threats\External\Minor\White\SpinningSaucer.cs" />
     <Compile Include="Threats\External\Minor\White\StealthFighter.cs" />
     <Compile Include="Threats\External\Minor\Yellow\Swarm.cs" />
-    <Compile Include="Threats\Internal\ThreatFactory.cs" />
+    <Compile Include="Threats\Internal\InternalThreatFactory.cs" />
     <Compile Include="Threats\Internal\Minor\Red\BreachedAirlock.cs" />
     <Compile Include="Threats\Internal\Minor\Red\Driller.cs" />
     <Compile Include="Threats\Internal\Minor\Red\LateralLaserJam.cs" />
@@ -258,7 +258,7 @@
     <Compile Include="Threats\External\Minor\White\Fighter.cs" />
     <Compile Include="Threats\ThreatDamageEventArgs.cs" />
     <Compile Include="Threats\ThreatDifficulty.cs" />
-    <Compile Include="Threats\External\ThreatFactory.cs" />
+    <Compile Include="Threats\External\ExternalThreatFactory.cs" />
     <Compile Include="Threats\ThreatPoints.cs" />
     <Compile Include="Threats\ThreatType.cs" />
     <Compile Include="Tracks\Track.cs" />

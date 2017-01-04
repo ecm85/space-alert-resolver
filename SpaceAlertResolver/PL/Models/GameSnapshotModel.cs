@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BLL;
 
@@ -16,8 +15,8 @@ namespace PL.Models
 
 		public string Description { get; }
 		public int Turn { get; }
-		public int Phase { get; }
-		public GameSnapshotModel(Game game, string description, Func<int> getPhase)
+		public int Phase { get; set; }
+		public GameSnapshotModel(Game game, string description)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
 			RedZone = new RedZoneModel(game);
@@ -28,7 +27,6 @@ namespace PL.Models
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			Description = description;
 			Turn = game.CurrentTurn;
-			Phase = getPhase();
 		}
 	}
 }

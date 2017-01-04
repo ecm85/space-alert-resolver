@@ -2,6 +2,7 @@
 using System.Linq;
 using BLL.Threats;
 using BLL.Tracks;
+using Newtonsoft.Json;
 
 namespace PL.Models
 {
@@ -21,6 +22,12 @@ namespace PL.Models
 				})
 				.ToList();
 			DistanceFromShip = section.DistanceFromShip;
+		}
+
+		[JsonConstructor]
+		public TrackSectionModel()
+		{
+			
 		}
 	}
 }

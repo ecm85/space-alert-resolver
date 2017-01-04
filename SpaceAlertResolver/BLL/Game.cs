@@ -70,16 +70,7 @@ namespace BLL
 			SittingDuck.SetPlayers(players);
 			Players = players;
 			PadPlayerActions();
-			SetCaptain();
 			CurrentTurn = 0;
-		}
-
-		private void SetCaptain()
-		{
-			//TODO: Verify that player indicies are consecutive, non-repeating and start from 0
-			Players.Single(player => player.Index == 0).IsCaptain = true;
-			foreach (var player in Players.Except(new[] {Players[0]}))
-				player.IsCaptain = false;
 		}
 
 		private void PadPlayerActions()

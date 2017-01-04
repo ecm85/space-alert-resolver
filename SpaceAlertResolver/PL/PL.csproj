@@ -266,9 +266,11 @@
     <Compile Include="Models\LowerRedStationModel.cs" />
     <Compile Include="Models\LowerBlueStationModel.cs" />
     <Compile Include="Models\LowerWhiteStationModel.cs" />
+    <Compile Include="Models\NewGameModel.cs" />
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\ThreatsByTypeModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />

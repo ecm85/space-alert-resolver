@@ -6,9 +6,18 @@ namespace BLL
 {
 	public class Player
 	{
-		public Player(IEnumerable<PlayerAction> actions)
+		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color) :
+			this(actions, index, color, null, null)
+		{
+		}
+
+		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? basicSpecialization, PlayerSpecialization? advancedSpecialization)
 		{
 			Actions = actions.ToList();
+			Index = index;
+			PlayerColor = color;
+			BasicSpecialization = basicSpecialization;
+			AdvancedSpecialization = advancedSpecialization;
 		}
 
 		private bool isKnockedOut;
@@ -20,27 +29,28 @@ namespace BLL
 					isKnockedOut = value;
 			}
 		}
-		public Interceptors Interceptors { get; set; }
+
+		public int Index { get; }
+		public PlayerColor PlayerColor { get; }
+		public PlayerSpecialization? BasicSpecialization { get; }
+		public PlayerSpecialization? AdvancedSpecialization { get; }
 		public List<PlayerAction> Actions { get; }
+
+		public Interceptors Interceptors { get; set; }
 		public Station CurrentStation { get; set; }
 		public BattleBots BattleBots { get; set; }
-		public int Index { get; set; }
-		public bool IsCaptain { get; set; }
-		public PlayerSpecialization? BasicSpecialization { get; set; }
-		public PlayerSpecialization? AdvancedSpecialization { get; set; }
 		public int BonusPoints { get; set; }
 		public bool PlayerToTeleport { get; set; }
 		public bool TeleportDestination { get; set; }
+		public bool HasSpecialOpsProtection { get; set; }
+
+		public bool IsCaptain => Index == 0;
+
 		private bool PreventsKnockOut { get; set; }
-
-		public PlayerColor PlayerColor { get; set; }
-
 		public void SetPreventsKnockOut(bool preventsKnockOut)
 		{
 			PreventsKnockOut = preventsKnockOut;
 		}
-
-		public bool HasSpecialOpsProtection { get; set; }
 
 		public void Shift(int turn)
 		{

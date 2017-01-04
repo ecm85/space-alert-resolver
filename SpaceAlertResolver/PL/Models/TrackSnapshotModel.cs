@@ -14,7 +14,13 @@ namespace PL.Models
 		public int TrackIndex { get; set; }
 		public string DisplayName => Track.DisplayName();
 		public IEnumerable<TrackSectionModel> Sections { get; set; }
-	
+
+		[JsonConstructor]
+		public TrackSnapshotModel()
+		{
+
+		}
+
 		public TrackSnapshotModel(Track track, IEnumerable<Threat> threatsOnTrack)
 		{
 			Track = track.TrackConfiguration;

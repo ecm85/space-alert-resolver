@@ -10,5 +10,11 @@ namespace PL.Models
 		public bool HasAnyThreats { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public TrackBreakpointType? Breakpoint { get; set; }
+
+		[JsonConstructor]
+		public TrackSpaceModel()
+		{
+			
+		}
 	}
 }

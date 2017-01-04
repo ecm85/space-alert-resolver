@@ -6,7 +6,6 @@ using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Tracks;
-using ThreatFactory = BLL.Threats.Internal.ThreatFactory;
 
 namespace BLL
 {
@@ -97,7 +96,7 @@ namespace BLL
 				var color = TryParseEnum<PlayerColor>(colorToken.Item2);
 				if (color == null)
 					throw new InvalidOperationException("Error on player # " + players.Count + 1);
-				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions)) { Index = index.Value, PlayerColor = color.Value};
+				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions), index.Value, color.Value);
 				players.Add(player);
 				//TODO: Add specializations and teleport player/destination
 			}
@@ -151,7 +150,7 @@ namespace BLL
 					case "id":
 						if (nextThreatInfo != null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
-						nextThreatInfo = new ExternalThreatInfo { Threat = Threats.External.ThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2) };
+						nextThreatInfo = new ExternalThreatInfo { Threat = ExternalThreatFactory.CreateThreat<ExternalThreat>(nextToken.Item2) };
 						if (nextThreatInfo.Threat == null)
 							throw new InvalidOperationException("Error on external threat #" + (externalThreats.Count + 1));
 						break;
@@ -205,7 +204,7 @@ namespace BLL
 					case "id":
 						if (nextThreatInfo != null)
 							throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
-						nextThreatInfo = new InternalThreatInfo { Threat = ThreatFactory.CreateThreat<InternalThreat>(nextToken.Item2) };
+						nextThreatInfo = new InternalThreatInfo { Threat = InternalThreatFactory.CreateThreat<InternalThreat>(nextToken.Item2) };
 						if (nextThreatInfo.Threat == null)
 							throw new InvalidOperationException("Error on internal threat #" + (internalThreats.Count + 1));
 						break;
@@ -244,7 +243,7 @@ namespace BLL
 			StandardThreatInfo<T> nextThreatInfo,
 			int currentThreatIndex) where T : Threat
 		{
-			var bonusExternalThreat = Threats.External.ThreatFactory.CreateThreat<ExternalThreat>(extraExternalThreatId);
+			var bonusExternalThreat = ExternalThreatFactory.CreateThreat<ExternalThreat>(extraExternalThreatId);
 			if (nextThreatInfo == null || bonusExternalThreat == null)
 				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusExternalThreat);
@@ -256,7 +255,7 @@ namespace BLL
 			StandardThreatInfo<T> nextThreatInfo,
 			int currentThreatIndex) where T : Threat
 		{
-			var bonusInternalThreat = ThreatFactory.CreateThreat<InternalThreat>(extraInternalThreatId);
+			var bonusInternalThreat = InternalThreatFactory.CreateThreat<InternalThreat>(extraInternalThreatId);
 			if (nextThreatInfo == null || bonusInternalThreat == null)
 				throw new InvalidOperationException("Error on external threat #" + currentThreatIndex);
 			AddBonusThreatInfo(nextThreatInfo, bonusInternalThreat);

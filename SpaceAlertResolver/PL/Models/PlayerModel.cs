@@ -1,4 +1,6 @@
-﻿using BLL;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BLL;
 using BLL.ShipComponents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -14,6 +16,13 @@ namespace PL.Models
 		[JsonConverter(typeof(StringEnumConverter))]
 		public PlayerColor PlayerColor { get; set; }
 		public BattleBotsModel BattleBots { get; set; }
+		public IEnumerable<ActionModel> Actions { get; set; }
+
+		[JsonConstructor]
+		public PlayerModel()
+		{
+			
+		}
 
 		public PlayerModel(Player player)
 		{
@@ -23,6 +32,7 @@ namespace PL.Models
 			PlayerColor = player.PlayerColor;
 			if (player.BattleBots != null)
 				BattleBots = new BattleBotsModel(player.BattleBots);
+			Actions = player.Actions.Select(action => ActionModel.AllActionModels.Single(actionModel => actionModel.Action == action.ActionType)).ToList();
 
 			//Uncomment this to get battle bots in turn 1 on the client.
 			//else if (player.PlayerColor == PlayerColor.Red || player.PlayerColor == PlayerColor.Green)

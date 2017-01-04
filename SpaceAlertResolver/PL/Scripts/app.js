@@ -364,80 +364,38 @@ angular.module("spaceAlertModule")
 		return $scope.redTrack != null && $scope.whiteTrack != null && $scope.blueTrack != null && $scope.internalTrack != null;
 	}
 
+	var getColorIndex = function(playerColor) {
+		for(var i = 0; i < $scope.colors.length; i++)
+			if ($scope.colors[i] === playerColor)
+				return i;
+		return -1;
+	}
+
 	$scope.getGameArgs = function () {
 		if (!$scope.canCreateGame())
 			return '';
-		var gameArgs = '';
-
-		gameArgs += '-players';
-		gameArgs += ' ';
-		for (var playerIndex = 0; playerIndex < $scope.players.length; playerIndex++) {
-			gameArgs += 'player-index:' + playerIndex;
-			gameArgs += ' ';
-			gameArgs += 'actions:';
-			for (var actionIndex = 0; actionIndex < $scope.players[playerIndex].actions.length; actionIndex++)
-				gameArgs += $scope.players[playerIndex].actions[actionIndex].serializationText;
-			gameArgs += ' ';
-			gameArgs += 'player-color:' + $scope.players[playerIndex].color.model;
-			gameArgs += ' ';
+		var players = [];
+		for (var i = 0; i < $scope.players.length; i++) {
+			var player = $scope.players[i];
+			if (player.isInGame)
+				players.push({
+					actions: player.actions,
+					index: i,
+					playerColor: getColorIndex(player.color.model)
+				});
 		}
-
-		gameArgs += '-external-tracks';
-		gameArgs += ' ';
-		gameArgs += 'red:' + $scope.redTrack.trackIndex,
-		gameArgs += ' ';
-		gameArgs += 'white:' + $scope.whiteTrack.trackIndex,
-		gameArgs += ' ';
-		gameArgs += 'blue:' + $scope.blueTrack.trackIndex,
-		gameArgs += ' ';
-		gameArgs += '-internal-track';
-		gameArgs += ' ';
-		gameArgs += $scope.internalTrack.trackIndex,
-		gameArgs += ' ';
-
-		gameArgs += '-external-threats';
-		gameArgs += ' ';
-		if ($scope.redThreats) {
-			for (var threatIndex = 0; threatIndex < $scope.redThreats.length; threatIndex++) {
-				gameArgs += 'id:' + $scope.redThreats[threatIndex].id;
-				gameArgs += ' ';
-				gameArgs += 'time:' + $scope.redThreats[threatIndex].timeAppears;
-				gameArgs += ' ';
-				gameArgs += 'location:red';
-				gameArgs += ' ';
-			}
-		}
-		if ($scope.whiteThreats) {
-			for (var threatIndex = 0; threatIndex < $scope.whiteThreats.length; threatIndex++) {
-				gameArgs += 'id:' + $scope.whiteThreats[threatIndex].id;
-				gameArgs += ' ';
-				gameArgs += 'time:' + $scope.whiteThreats[threatIndex].timeAppears;
-				gameArgs += ' ';
-				gameArgs += 'location:white';
-				gameArgs += ' ';
-			}
-		}
-		if ($scope.blueThreats) {
-			for (var threatIndex = 0; threatIndex < $scope.blueThreats.length; threatIndex++) {
-				gameArgs += 'id:' + $scope.blueThreats[threatIndex].id;
-				gameArgs += ' ';
-				gameArgs += 'time:' + $scope.blueThreats[threatIndex].timeAppears;
-				gameArgs += ' ';
-				gameArgs += 'location:blue';
-				gameArgs += ' ';
-			}
-		}
-
-		gameArgs += '-internal-threats';
-		gameArgs += ' ';
-		for (var threatIndex = 0; threatIndex < $scope.internalThreats.length; threatIndex++) {
-			gameArgs += 'id:' + $scope.internalThreats[threatIndex].id;
-			gameArgs += ' ';
-			gameArgs += 'time:' + $scope.internalThreats[threatIndex].timeAppears;
-			gameArgs += ' ';
-		}
-
-		return gameArgs;
+		var game = {
+			players: players,
+			redThreats: $scope.redThreats,
+			whiteThreats: $scope.whiteThreats,
+			blueThreats: $scope.blueThreats,
+			internalThreats: $scope.internalThreats,
+			redTrack: $scope.redTrack,
+			whiteTrack: $scope.whiteTrack,
+			blueTrack: $scope.blueTrack,
+			internalTrack: $scope.internalTrack
+		};
+		return JSON.stringify(game);
 	}
 }])
 .controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {

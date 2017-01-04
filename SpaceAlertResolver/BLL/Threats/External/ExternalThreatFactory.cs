@@ -10,7 +10,7 @@ using BLL.Threats.External.Serious.Yellow;
 
 namespace BLL.Threats.External
 {
-	public static class ThreatFactory
+	public static class ExternalThreatFactory
 	{
 		//private static readonly Dictionary<Type, string> ThreatTypesByDisplayName = new Dictionary<Type, string>
 		//{

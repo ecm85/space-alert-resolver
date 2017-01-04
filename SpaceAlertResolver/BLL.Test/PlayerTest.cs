@@ -25,7 +25,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
@@ -45,7 +45,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -69,7 +69,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -92,7 +92,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -115,7 +115,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			player.Shift(2);
@@ -139,7 +139,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.Shift(2);
 			player.Shift(3);
@@ -163,7 +163,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -186,7 +186,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.BattleBots, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -210,7 +210,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, null, PlayerActionType.Charlie, PlayerActionType.ChangeDeck
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -233,7 +233,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			var expectedActions = PlayerActionFactory.CreateSingleActionList(
@@ -256,7 +256,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			player.ShiftAndRepeatPreviousAction(2);
@@ -280,7 +280,7 @@ namespace BLL.Test
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
 				PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.HeroicA
-			}));
+			}), 0, PlayerColor.Blue);
 
 			player.ShiftAndRepeatPreviousAction(2);
 			player.ShiftAndRepeatPreviousAction(3);
