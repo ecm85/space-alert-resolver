@@ -12,7 +12,7 @@
 			</div>
 		</div>
 	</div>
-	<div ng-if="threats.length > 0" class="threat-list">
+	<div ng-if="threats.length > 0 || addNewThreat != null" class="threat-list">
 		<div ng-repeat="threat in threats" class="threat-with-lines">
 			<threat threat-index="$index" threat="threat" track-id="trackId"></threat>
 			<svg ng-if="threat.position > 0" class="threat-on-track-line-wrapper">
@@ -30,6 +30,10 @@
 					ng-attr-y2="{{getStationCornerY(threat, station)}}"/>
 			</svg>
 		</div>
+		@*add-new-threat*@
+		<a ng-if="addNewThreat != null && (threats == null || threats.length < 3)" ng-click="addNewThreat()" class="btn btn-default add-new-threat" href="#">
+			<i class="fa fa-plus add-new-threat-icon"></i>
+		</a>
 	</div>
 </div>
 

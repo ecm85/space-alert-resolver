@@ -471,6 +471,15 @@ textarea {
 	margin-bottom: 5px;
 }
 
+.add-new-threat {
+	width: 166px;
+	text-align: center;
+}
+
+.fa.add-new-threat-icon {
+	font-size: 5em;
+}
+
 .threat-info {
 	padding-right: 2px;
 	padding-top: 5px;
@@ -727,10 +736,6 @@ textarea {
  .selected-track-wrapper {
 	 display: inline-block;
 	 vertical-align: bottom;
- }
-
- .add-threats-button {
-	 display: block;
  }
 
  .track-spaces-wrapper-clickable {

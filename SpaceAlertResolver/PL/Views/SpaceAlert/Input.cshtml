@@ -45,16 +45,31 @@
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
 				<div class="selected-track-wrapper">
-					<button class="btn btn-primary add-threats-button" ng-click="openRedThreatsDialog('lg')">Red Threats</button>
-					<threat-track track="redTrack" threats="redThreats" track-id="'red'" on-track-clicked="openRedTrackDialog()" class="selected-track"></threat-track>
+					<threat-track
+						track="redTrack"
+						threats="redThreats"
+						track-id="'red'"
+						on-track-clicked="openRedTrackDialog()"
+						add-new-threat="openRedThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 				<div class="selected-track-wrapper">
-					<button class="btn btn-primary add-threats-button" ng-click="openWhiteThreatsDialog('lg')">White Threats</button>
-					<threat-track track="whiteTrack" threats="whiteThreats" track-id="'white'" on-track-clicked="openWhiteTrackDialog()" class="selected-track"></threat-track>
+					<threat-track
+						track="whiteTrack"
+						threats="whiteThreats"
+						track-id="'white'"
+						on-track-clicked="openWhiteTrackDialog()"
+						add-new-threat="openWhiteThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 				<div class="selected-track-wrapper">
-					<button class="btn btn-primary add-threats-button" ng-click="openBlueThreatsDialog('lg')">Blue Threats</button>
-					<threat-track track="blueTrack" threats="blueThreats" track-id="'blue'" on-track-clicked="openBlueTrackDialog()" class="selected-track"></threat-track>
+					<threat-track
+						track="blueTrack"
+						threats="blueThreats"
+						track-id="'blue'"
+						on-track-clicked="openBlueTrackDialog()"
+						add-new-threat="openBlueThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 			</div>
 			<div class="sitting-duck-wrapper">

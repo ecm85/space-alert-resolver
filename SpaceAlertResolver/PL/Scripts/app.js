@@ -139,7 +139,8 @@ angular.module("spaceAlertModule")
 			threats: '=',
 			track: '=',
 			trackId: '=',
-			onTrackClicked: '&?'
+			onTrackClicked: '&?',
+			addNewThreat: '&?'
 		},
 		controller: ['$scope', function ThreatTrackController($scope) {
 			$scope.getThreatCornerX = function (index) {

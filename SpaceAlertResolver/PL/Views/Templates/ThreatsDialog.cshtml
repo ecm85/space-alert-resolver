@@ -18,8 +18,8 @@
 		ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}">
 		<a href="#" ng-click="selectThreatToAdd(threat)">
 			<threat threat-index="$index" threat="threat" track-id="zone"></threat>
-			{{threat.id}}
 		</a>
+		{{threat.id}}
 	</div>
 	<div>
 		<div class="btn-group">
@@ -28,7 +28,7 @@
 	</div>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+	<button class="btn btn-primary" type="button" ng-disabled="selectedTimeOfThreatToAdd == null" ng-click="ok()">OK</button>
 	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
 <script type="text/ng-template" id="templates/threat">
