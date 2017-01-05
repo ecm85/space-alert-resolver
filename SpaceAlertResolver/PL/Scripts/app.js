@@ -297,6 +297,9 @@ angular.module("spaceAlertModule")
 				},
 				zone: function() {
 					return zone;
+				},
+				usedTracks: function() {
+					return [$scope.redTrack, $scope.whiteTrack, $scope.blueTrack, $scope.internalTrack];
 				}
 			}
 		});
@@ -305,17 +308,54 @@ angular.module("spaceAlertModule")
 		});
 	}
 
+	var checkDuplicateRedTrack = function(track) {
+		if ($scope.redTrack === track)
+			$scope.redTrack = null;
+	}
+	var checkDuplicateWhiteTrack = function (track) {
+		if ($scope.whiteTrack === track)
+			$scope.whiteTrack = null;
+	}
+	var checkDuplicateBlueTrack = function (track) {
+		if ($scope.blueTrack === track)
+			$scope.blueTrack = null;
+	}
+	var checkDuplicateInternalTrack = function (track) {
+		if ($scope.internalTrack === track)
+			$scope.internalTrack = null;
+	}
+
 	$scope.openRedTrackDialog = function() {
-		openTrackDialog('lg', $scope.redTrack, 'Red', function(selectedTrack) { $scope.redTrack = selectedTrack; });
+		openTrackDialog('lg', $scope.redTrack, 'Red', function (selectedTrack) {
+			$scope.redTrack = selectedTrack;
+			checkDuplicateWhiteTrack(selectedTrack);
+			checkDuplicateBlueTrack(selectedTrack);
+			checkDuplicateInternalTrack(selectedTrack);
+		});
 	}
 	$scope.openWhiteTrackDialog = function () {
-		openTrackDialog('lg', $scope.whiteTrack, 'White', function (selectedTrack) { $scope.whiteTrack = selectedTrack; });
+		openTrackDialog('lg', $scope.whiteTrack, 'White', function(selectedTrack) {
+			$scope.whiteTrack = selectedTrack;
+			checkDuplicateRedTrack(selectedTrack);
+			checkDuplicateBlueTrack(selectedTrack);
+			checkDuplicateInternalTrack(selectedTrack);
+		});
 	}
 	$scope.openBlueTrackDialog = function () {
-		openTrackDialog('lg', $scope.blueTrack, 'Blue', function (selectedTrack) { $scope.blueTrack = selectedTrack; });
+		openTrackDialog('lg', $scope.blueTrack, 'Blue', function(selectedTrack) {
+			$scope.blueTrack = selectedTrack;
+			checkDuplicateRedTrack(selectedTrack);
+			checkDuplicateWhiteTrack(selectedTrack);
+			checkDuplicateInternalTrack(selectedTrack);
+		});
 	}
 	$scope.openInternalTrackDialog = function () {
-		openTrackDialog('lg', $scope.internalTrack, 'Internal', function (selectedTrack) { $scope.internalTrack = selectedTrack; });
+		openTrackDialog('lg', $scope.internalTrack, 'Internal', function(selectedTrack) {
+			$scope.internalTrack = selectedTrack;
+			checkDuplicateRedTrack(selectedTrack);
+			checkDuplicateWhiteTrack(selectedTrack);
+			checkDuplicateBlueTrack(selectedTrack);
+		});
 	}
 
 	$scope.redThreats = [];
@@ -436,18 +476,25 @@ angular.module("spaceAlertModule")
 		$uibModalInstance.dismiss('cancel');
 	};
 }])
-.controller('TrackModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentTrack', 'allTracks', 'zone', function ($uibModalInstance, $scope, currentTrack, allTracks, zone) {
+.controller('TrackModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentTrack', 'allTracks', 'zone', 'usedTracks', function ($uibModalInstance, $scope, currentTrack, allTracks, zone, usedTracks) {
 	$scope.selectedTrack = currentTrack;
 	$scope.allTracks = allTracks;
 	$scope.zone = zone;
+	$scope.usedTracks = usedTracks;
+
+	$scope.trackIsInUse = function(track) {
+		if ($scope.selectedTrack === track)
+			return false;
+		for(var i = 0; i < $scope.usedTracks.length; i++)
+			if ($scope.usedTracks[i] === track)
+				return true;
+		return false;
+	}
 
 	$scope.selectTrack = function (track) {
 		$scope.selectedTrack = track;
-	}
-
-	$scope.ok = function () {
 		$uibModalInstance.close($scope.selectedTrack);
-	};
+	}
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');

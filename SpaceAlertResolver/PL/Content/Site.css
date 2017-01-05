@@ -702,6 +702,11 @@ textarea {
 	margin: 0 1px;
 }
 
+.selectable-track-option-wrapper.track-option-wrapper-in-use {
+	border: 4px dashed red;
+	margin: 0 1px;
+}
+
 .selectable-track-option-wrapper div {
 	z-index: 0;
 }
