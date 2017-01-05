@@ -29,13 +29,14 @@
 							</a>
 						</div>
 					</div>
-					<button type="button" class="btn btn-primary actions-button" ng-click="openActionsDialog(player, 'lg')">Actions</button>
 					<div class="selected-actions-wrapper">
-						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png"/>
-						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png"/>
-						<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
-							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png"/>
-						</div>
+						<a href="#" ng-click="openActionsDialog(player, 'lg')">
+							<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
+							<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
+							<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
+								<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
