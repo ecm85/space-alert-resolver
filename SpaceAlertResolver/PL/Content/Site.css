@@ -748,3 +748,7 @@ textarea {
  .selected-threat-to-add .threat-wrapper {
 	 border: 3px yellow solid;
  }
+
+ .game-args-text {
+	 display: none;
+ }

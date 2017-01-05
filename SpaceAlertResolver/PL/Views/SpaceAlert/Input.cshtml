@@ -76,7 +76,7 @@
 			@Html.Action("ThreatsDialog", "Templates")
 		</script>
 		<form action="@Url.Action("Index")" method="post">
-			<input type="hidden" value="{{getGameArgs()}}" name="newGameText"/>
+			<input type="text" class="game-args-text" value="{{getGameArgs()}}" name="newGameText" />
 			<button type="submit" class="btn btn-primary" ng-disabled="!canCreateGame()">Create Game</button>
 		</form>
 	</div>
