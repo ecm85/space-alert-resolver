@@ -363,7 +363,7 @@ angular.module("spaceAlertModule")
 	$scope.blueThreats = [];
 	$scope.internalThreats = [];
 
-	var openThreatsDialog = function(size, currentThreats, allThreats, zone, threatsSetterFn) {
+	var openThreatsDialog = function(size, currentThreats, allThreats, zone) {
 		var modal = $uibModal.open({
 			animation: true,
 			templateUrl: 'templates/threatsModal',
@@ -381,22 +381,26 @@ angular.module("spaceAlertModule")
 				}
 			}
 		});
-		modal.result.then(function (threats) {
-			threatsSetterFn(threats);
+		modal.result.then(function (threat) {
+			currentThreats.push(threat);
 		});
 	}
 
 	$scope.openRedThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.redThreats, $scope.allExternalThreats, 'Red', function (threats) { $scope.redThreats = threats; });
+		openThreatsDialog(size, $scope.redThreats, $scope.allExternalThreats, 'Red');
 	}
 	$scope.openWhiteThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.whiteThreats, $scope.allExternalThreats, 'White', function (threats) { $scope.whiteThreats = threats; });
+		openThreatsDialog(size, $scope.whiteThreats, $scope.allExternalThreats, 'White');
 	}
 	$scope.openBlueThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.blueThreats, $scope.allExternalThreats, 'Blue', function (threats) { $scope.blueThreats = threats; });
+		openThreatsDialog(size, $scope.blueThreats, $scope.allExternalThreats, 'Blue');
 	}
 	$scope.openInternalThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.internalThreats, $scope.allInternalThreats, 'Internal', function (threats) { $scope.internalThreats = threats; });
+		openThreatsDialog(size, $scope.internalThreats, $scope.allInternalThreats, 'Internal');
+	}
+
+	$scope.removeThreat = function (threat) {
+		$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
 	}
 
 	$scope.canCreateGame = function() {
@@ -501,18 +505,15 @@ angular.module("spaceAlertModule")
 	};
 }])
 .controller('ThreatsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'zone', function ($uibModalInstance, $scope, currentThreats, allThreats, zone) {
-	$scope.selectedThreats = currentThreats.slice();
-		$scope.allTimes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	$scope.currentThreats = currentThreats;
+	$scope.allTimes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	$scope.allThreats = allThreats;
 	$scope.zone = zone;
-	$scope.selectThreats = function(threats) {
-		$scope.selectedThreats = threats;
-	}
 
 	$scope.$watch('threatsGroupedByType', function(newValue) {
-		$scope.threats = newValue.seriousThreats;
+		$scope.threatsToChooseFrom = newValue.seriousThreats;
 	});
-	$scope.$watch('threats', function() {
+	$scope.$watch('threatsToChooseFrom', function () {
 		$scope.selectedThreatToAdd = null;
 		$scope.selectedTimeOfThreatToAdd = null;
 	});
@@ -521,21 +522,16 @@ angular.module("spaceAlertModule")
 	$scope.selectThreatToAdd = function(threat) {
 		$scope.selectedThreatToAdd = threat;
 	}
-
-	$scope.addThreat = function () {
-		var newThreat = cloneThreat($scope.selectedThreatToAdd);
-		newThreat.timeAppears = $scope.selectedTimeOfThreatToAdd;
-		$scope.selectedThreats.push(newThreat);
-		$scope.selectedThreatToAdd = null;
-		$scope.selectedTimeOfThreatToAdd = null;
-	}
-
-	$scope.removeThreat = function(threat) {
-		$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
+	
+	$scope.getAvailableThreats = function()
+	{
+		return _.differenceBy($scope.threatsToChooseFrom, $scope.currentThreats, 'id');
 	}
 
 	$scope.ok = function () {
-		$uibModalInstance.close($scope.selectedThreats);
+		var newThreat = cloneThreat($scope.selectedThreatToAdd);
+		newThreat.timeAppears = $scope.selectedTimeOfThreatToAdd;
+		$uibModalInstance.close(newThreat);
 	};
 
 	$scope.cancel = function () {

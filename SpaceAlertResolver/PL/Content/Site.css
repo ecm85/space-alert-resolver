@@ -491,7 +491,9 @@ textarea {
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding-left: 7px;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
@@ -502,8 +504,7 @@ textarea {
 .threat-time-appears-text {
 	color: yellow;
     font-size: 1.0em;
-    padding-left: 8px;
-    padding-top: 4px;
+	padding-top: 4px;
 }
 
 .threat-speed-text {
@@ -743,7 +744,6 @@ textarea {
 	 margin-left: 3px;
 	 margin-bottom: 12px;
 	 text-align: center;
-	 cursor: pointer;
  }
 
  .selected-threats {
