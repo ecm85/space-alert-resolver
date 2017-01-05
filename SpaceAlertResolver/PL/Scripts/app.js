@@ -2,9 +2,8 @@
 
 var cloneAction = function(action) {
 	return {
-		serializationText: action.serializationText,
+		hotkey: action.hotkey,
 		displayText: action.displayText,
-		entryText: action.entryText,
 		description: action.description,
 		action: action.action
 	};
@@ -398,12 +397,21 @@ angular.module("spaceAlertModule")
 		return JSON.stringify(game);
 	}
 }])
-.controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', function ($uibModalInstance, $scope, player, allActions) {
+.controller('ActionsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'player', 'allActions', 'hotkeys', function ($uibModalInstance, $scope, player, allActions, hotkeys) {
 	$scope.allActions = allActions;
 	$scope.selectedActions = player.actions.slice();
 	$scope.playerColor = player.color.model;
 	$scope.playerTitle = player.title;
 	$scope.cursor = 0;
+
+	$scope.allActions.forEach(function(action) {
+		hotkeys.bindTo($scope)
+		.add({
+			combo: action.hotkey,
+			description: action.displayText,
+			callback: function () { $scope.addActionAtCursor(action); }
+		});
+	});
 
 	$scope.addActionAtCursor = function (action) {
 		if ($scope.cursor < 12) {
@@ -426,19 +434,6 @@ angular.module("spaceAlertModule")
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
-	};
-
-	$scope.newActionHotkey = function (newText) {
-		if (newText == undefined) {
-			return '';
-		}
-		var addedAction = false;
-		for (var i = 0; i < $scope.allActions.length && !addedAction; i++)
-			if ($scope.allActions[i].entryText === newText) {
-				$scope.addActionAtCursor($scope.allActions[i]);
-				addedAction = true;
-			}
-		return '';
 	};
 }])
 .controller('TrackModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentTrack', 'allTracks', 'zone', function ($uibModalInstance, $scope, currentTrack, allTracks, zone) {

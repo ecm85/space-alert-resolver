@@ -12,15 +12,12 @@
 			</a>
 		</div>
 	</div>
-	<div>
-		Keyboard action entry: <input ng-model="newActionHotkey" ng-model-options="{ getterSetter: true }" data-ng-trim="false"/>
-	</div>
 	<div class="action-choosable-wrapper" ng-repeat="action in allActions">
 		<a href="#" ng-click="addActionAtCursor(action)">
 			<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png"/>
 			<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
 		</a>
-		<p class="action-choosable-key">{{action.displayText}}</p>
+		<p class="action-choosable-key">{{action.hotkey}}</p>
 	</div>
 </div>
 <div class="modal-footer">

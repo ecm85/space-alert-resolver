@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\hotkeys.css" />
     <Content Include="Content\Images\Actions\AB.png" />
     <Content Include="Content\Images\Actions\ABlue.png" />
     <Content Include="Content\Images\Actions\AC.png" />
@@ -247,6 +248,7 @@
     <Content Include="Content\Images\Threats\PhasingPulser.png" />
     <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
+    <Content Include="Scripts\hotkeys.js" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
     <Compile Include="Controllers\SpaceAlertController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
