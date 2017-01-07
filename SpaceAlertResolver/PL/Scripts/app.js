@@ -208,6 +208,16 @@ angular.module("spaceAlertModule")
 		}
 	}
 })
+.directive('track', function () {
+	return {
+		templateUrl: 'templates/track',
+		restrict: 'E',
+		scope: {
+			track: '=',
+			trackId: '='
+		}
+	}
+})
 .controller("InputController", ["$scope", '$uibModal', 'inputData', function ($scope, $uibModal, inputData) {
 
 	$scope.allTracks = inputData.tracks;

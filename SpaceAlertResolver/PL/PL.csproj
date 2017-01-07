@@ -442,6 +442,7 @@
     <Content Include="Views\Templates\TrackDialog.cshtml" />
     <Content Include="Views\Templates\ThreatsDialog.cshtml" />
     <Content Include="Views\Templates\Threat.cshtml" />
+    <Content Include="Views\Templates\Track.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -33,5 +33,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult Track()
+		{
+			return PartialView();
+		}
 	}
 }
