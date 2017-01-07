@@ -436,13 +436,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\SpaceAlert\Resolution.cshtml" />
-    <Content Include="Views\Templates\TrackWithThreats.cshtml" />
+    <Content Include="Views\Templates\ThreatTrack.cshtml" />
     <Content Include="Views\SpaceAlert\Input.cshtml" />
     <Content Include="Views\Templates\ActionsDialog.cshtml" />
     <Content Include="Views\Templates\TrackDialog.cshtml" />
     <Content Include="Views\Templates\ThreatsDialog.cshtml" />
     <Content Include="Views\Templates\Threat.cshtml" />
-    <Content Include="Views\Templates\TrackSpaces.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

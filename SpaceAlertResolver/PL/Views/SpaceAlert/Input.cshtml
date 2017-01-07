@@ -45,71 +45,46 @@
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
 				<div class="selected-track-wrapper">
-					<track-with-threats
-						track="selectedTracks.redTrack"
+					<threat-track
+						track="redTrack"
+						threats="redThreats"
 						track-id="'red'"
-						zone-description="'Red'"
-						all-tracks="allTracks"
-						all-used-tracks="allSelectedTracks"
-						track-is-configurable="true"
-						threats="selectedThreats.redThreats"
-						all-threats="allExternalThreats"
-						all-used-threats="allSelectedExternalThreats"
-						threats-are-configurable="true"
-						class="selected-track"></track-with-threats>
+						on-track-clicked="openRedTrackDialog()"
+						add-new-threat="openRedThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 				<div class="selected-track-wrapper">
-					<track-with-threats
-						track="selectedTracks.whiteTrack"
+					<threat-track
+						track="whiteTrack"
+						threats="whiteThreats"
 						track-id="'white'"
-						zone-description="'White'"
-						all-tracks="allTracks"
-						all-used-tracks="allSelectedTracks"
-						track-is-configurable="true"
-						threats="selectedThreats.whiteThreats"
-						all-threats="allExternalThreats"
-						all-used-threats="allSelectedExternalThreats"
-						threats-are-configurable="true"
-						class="selected-track"></track-with-threats>
+						on-track-clicked="openWhiteTrackDialog()"
+						add-new-threat="openWhiteThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 				<div class="selected-track-wrapper">
-					<track-with-threats
-						track="selectedTracks.blueTrack"
+					<threat-track
+						track="blueTrack"
+						threats="blueThreats"
 						track-id="'blue'"
-						zone-description="'Blue'"
-						all-tracks="allTracks"
-						all-used-tracks="allSelectedTracks"
-						track-is-configurable="true"
-						threats="selectedThreats.blueThreats"
-						all-threats="allExternalThreats"
-						all-used-threats="allSelectedExternalThreats"
-						threats-are-configurable="true"
-						class="selected-track"></track-with-threats>
+						on-track-clicked="openBlueTrackDialog()"
+						add-new-threat="openBlueThreatsDialog('lg')"
+						class="selected-track"></threat-track>
 				</div>
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
 			</div>
 			<div class="selected-track-wrapper">
-				<track-with-threats
-					track="selectedTracks.internalTrack"
-					track-id="'internal'"
-					zone-description="'Internal'"
-					all-tracks="allTracks"
-					all-used-tracks="allSelectedTracks"
-					track-is-configurable="true"
-					threats="selectedThreats.internalThreats"
-					all-threats="allInternalThreats"
-					all-used-threats="selectedThreats.internalThreats"
-					threats-are-configurable="true"
-					class="selectable-track"></track-with-threats>
+				<button class="btn btn-primary add-threats-button" ng-click="openInternalThreatsDialog('lg')">Internal Threats</button>
+				<threat-track track="internalTrack" threats="internalThreats" on-track-clicked="openInternalTrackDialog()" track-id="'internal'" class="selectable-track"></threat-track>
 			</div>
 		</div>
 		<script type="text/ng-template" id="templates/actionsModal">
 			@Html.Action("ActionsDialog", "Templates")
 		</script>
-		<script type="text/ng-template" id="templates/trackWithThreats">
-			@Html.Action("TrackWithThreats", "Templates")
+		<script type="text/ng-template" id="templates/threatTrack">
+			@Html.Action("ThreatTrack", "Templates")
 		</script>
 		<script type="text/ng-template" id="templates/trackModal">
 			@Html.Action("TrackDialog", "Templates")

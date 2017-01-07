@@ -1,8 +1,7 @@
 ﻿@model IHtmlString
 <script>
-	angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'cfp.hotkeys']).value("gameData", @Html.Raw(Model));
+	angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
 </script>
-@Scripts.Render("~/bundles/hotkeys")
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
@@ -40,9 +39,9 @@
 		</div>
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
-				<track-with-threats track="gameData[currentTurn][currentPhase].redZone.track" threats="gameData[currentTurn][currentPhase].redZone.externalThreats" track-id="'red'"></track-with-threats>
-				<track-with-threats track="gameData[currentTurn][currentPhase].whiteZone.track" threats="gameData[currentTurn][currentPhase].whiteZone.externalThreats" track-id="'white'"></track-with-threats>
-				<track-with-threats track="gameData[currentTurn][currentPhase].blueZone.track" threats="gameData[currentTurn][currentPhase].blueZone.externalThreats" track-id="'blue'"></track-with-threats>
+				<threat-track track="gameData[currentTurn][currentPhase].redZone.track" threats="gameData[currentTurn][currentPhase].redZone.externalThreats" track-id="'red'"></threat-track>
+				<threat-track track="gameData[currentTurn][currentPhase].whiteZone.track" threats="gameData[currentTurn][currentPhase].whiteZone.externalThreats" track-id="'white'"></threat-track>
+				<threat-track track="gameData[currentTurn][currentPhase].blueZone.track" threats="gameData[currentTurn][currentPhase].blueZone.externalThreats" track-id="'blue'"></threat-track>
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
@@ -67,7 +66,7 @@
 					<img ng-if="gameData[currentTurn][currentPhase].blueZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png"/>
 				</div>
 			</div>
-			<track-with-threats track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></track-with-threats>
+			<threat-track track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></threat-track>
 		</div>
 	</div>
 
@@ -77,7 +76,7 @@
 		@Html.Action("StandardZone", "Templates")
 	</script>
 
-	<script type="text/ng-template" id="templates/trackWithThreats">
-		@Html.Action("TrackWithThreats", "Templates")
+	<script type="text/ng-template" id="templates/threatTrack">
+		@Html.Action("ThreatTrack", "Templates")
 	</script>
 </div>

@@ -14,12 +14,7 @@ namespace PL.Controllers
 			return PartialView();
 		}
 
-		public ActionResult TrackWithThreats()
-		{
-			return PartialView();
-		}
-
-		public ActionResult TrackSpaces()
+		public ActionResult ThreatTrack()
 		{
 			return PartialView();
 		}
