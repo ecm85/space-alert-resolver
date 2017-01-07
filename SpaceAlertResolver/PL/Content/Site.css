@@ -731,6 +731,7 @@ textarea {
 .selectable-track-option {
 	display: block;
 	padding-right: 7px;
+	cursor: pointer;
 }
 
  .selected-track-wrapper {
