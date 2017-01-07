@@ -131,59 +131,128 @@ angular.module("spaceAlertModule")
 
 	$scope.selectTurnManually(0);
 }])
-.directive('threatTrack', function() {
+.directive('trackWithThreats', function() {
 	return {
-		templateUrl: 'templates/threatTrack',
+		templateUrl: 'templates/trackWithThreats',
 		restrict: 'E',
 		scope: {
-			threats: '=',
 			track: '=',
 			trackId: '=',
-			onTrackClicked: '&?',
-			addNewThreat: '&?'
+			zoneDescription: '=',
+			allTracks: '=',
+			allUsedTracks: '=',
+			trackIsConfigurable: '=',
+			threats: '=',
+			allThreats: '=',
+			allUsedThreats: '=',
+			threatsAreConfigurable: '='
 		},
-		controller: ['$scope', function ThreatTrackController($scope) {
+		controller: ['$scope', '$uibModal', function TrackWithThreatsController($scope, $uibModal) {
 			$scope.getThreatCornerX = function (index) {
 				var threatElement = $('#threat' + $scope.trackId + index);
 				if (threatElement.offset())
 					return threatElement.offset().left;
 				return 0;
 			}
-
 			$scope.getThreatCornerY = function (index) {
 				var threatElement = $('#threat' + $scope.trackId + index);
 				if (threatElement.offset())
 					return threatElement.offset().top;
 				return 0;
 			}
-
 			$scope.getTrackSpaceCornerX = function (threat) {
 				var spaceElement = $('#space' + $scope.trackId + threat.position);
 				if (spaceElement.offset())
 					return spaceElement.offset().left + spaceElement.outerWidth() - 1;
 				return 0;
 			}
-
 			$scope.getTrackSpaceCornerY = function (threat) {
 				var spaceElement = $('#space' + $scope.trackId + threat.position);
 				if (spaceElement.offset())
 					return spaceElement.offset().top;
 				return 0;
 			}
-
 			$scope.getStationCornerX = function(threat, station) {
 				var stationElement = $('#' + station.toLowerCase() + 'threats');
 				if (stationElement.offset())
 					return stationElement.offset().left;
 				return 0;
 			}
-
 			$scope.getStationCornerY = function (threat, station) {
 				var stationElement = $('#' + station.toLowerCase() + 'threats');
 				if (stationElement.offset())
 					return stationElement.offset().top;
 				return 0;
 			}
+
+			$scope.configureTrack = function () {
+				if (!$scope.trackIsConfigurable)
+					return;
+				var modal = $uibModal.open({
+					animation: true,
+					templateUrl: 'templates/trackModal',
+					controller: 'TrackModalInstanceCtrl',
+					size: 'lg',
+					resolve: {
+						currentTrack: function () {
+							return $scope.track;
+						},
+						allTracks: function () {
+							return $scope.allTracks;
+						},
+						zone: function () {
+							return $scope.zoneDescription;
+						},
+						usedTracks: function () {
+							return $scope.allUsedTracks;
+						}
+					}
+				});
+				modal.result.then(function (selectedTrack) {
+					$scope.track = selectedTrack;
+				});
+			}
+
+			$scope.addNewThreat = function () {
+				if (!$scope.threatsAreConfigurable)
+					return;
+				var modal = $uibModal.open({
+					animation: true,
+					templateUrl: 'templates/threatsModal',
+					controller: 'ThreatsModalInstanceCtrl',
+					size: 'lg',
+					resolve: {
+						currentThreats: function () {
+							return $scope.threats;
+						},
+						allThreats: function () {
+							return $scope.allThreats;
+						},
+						allUsedThreats: function() {
+							return $scope.allUsedThreats;
+						},
+						zone: function () {
+							return $scope.zoneDescription;
+						}
+					}
+				});
+				modal.result.then(function (threat) {
+					$scope.threats.push(threat);
+				});
+			}
+
+			$scope.showThreats = function() {
+				return $scope.threats || $scope.threatsAreConfigurable;
+			}
+
+			$scope.canAddNewThreat = function() {
+				return $scope.threatsAreConfigurable && $scope.threats.length < 3;
+			}
+
+			//TODO:
+			//$scope.removeThreat = function (threat) {
+			//	$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
+			//}
 		}]
 	}
 })
@@ -206,16 +275,122 @@ angular.module("spaceAlertModule")
 			threat: '=',
 			trackId: '='
 		}
-	}
+	};
+})
+.directive('trackSpaces', function() {
+	return {
+		templateUrl: 'templates/trackSpaces',
+		retrict: 'E',
+		scope: {
+			track: '=',
+			trackId: '='
+		}
+	};
 })
 .controller("InputController", ["$scope", '$uibModal', 'inputData', function ($scope, $uibModal, inputData) {
-
 	$scope.allTracks = inputData.tracks;
-	$scope.allActions = inputData.actions;
+	$scope.selectedTracks = {
+		redTrack: null,
+		whiteTrack: null,
+		blueTrack: null,
+		internalTrack: null
+	};
+	var updateAllSelectedTracks = function() {
+		$scope.allSelectedTracks = [
+			$scope.selectedTracks.redTrack,
+			$scope.selectedTracks.whiteTrack,
+			$scope.selectedTracks.blueTrack,
+			$scope.selectedTracks.internalTrack
+		];
+	}
+	updateAllSelectedTracks();
+	$scope.$watch('selectedTracks.redTrack', function () {
+		updateAllSelectedTracks();
+	});
+	$scope.$watch('selectedTracks.whiteTrack', function () {
+		updateAllSelectedTracks();
+	});
+	$scope.$watch('selectedTracks.blueTrack', function () {
+		updateAllSelectedTracks();
+	});
+	$scope.$watch('selectedTracks.internalTrack', function () {
+		updateAllSelectedTracks();
+	});
+
+	var checkDuplicateRedTrack = function (track) {
+		if ($scope.selectedTracks.redTrack === track)
+			$scope.selectedTracks.redTrack = null;
+	}
+	var checkDuplicateWhiteTrack = function (track) {
+		if ($scope.selectedTracks.whiteTrack === track)
+			$scope.selectedTracks.whiteTrack = null;
+	}
+	var checkDuplicateBlueTrack = function (track) {
+		if ($scope.selectedTracks.blueTrack === track)
+			$scope.selectedTracks.blueTrack = null;
+	}
+	var checkDuplicateInternalTrack = function (track) {
+		if ($scope.selectedTracks.internalTrack === track)
+			$scope.selectedTracks.internalTrack = null;
+	}
+	$scope.$watch('selectedTracks.redTrack',
+		function (newValue) {
+			if (!newValue)
+				return;
+			checkDuplicateWhiteTrack(newValue);
+			checkDuplicateBlueTrack(newValue);
+			checkDuplicateInternalTrack(newValue);
+		});
+	$scope.$watch('selectedTracks.whiteTrack',
+		function (newValue) {
+			if (!newValue)
+				return;
+			checkDuplicateRedTrack(newValue);
+			checkDuplicateBlueTrack(newValue);
+			checkDuplicateInternalTrack(newValue);
+		});
+	$scope.$watch('selectedTracks.blueTrack',
+		function (newValue) {
+			if (!newValue)
+				return;
+			checkDuplicateRedTrack(newValue);
+			checkDuplicateWhiteTrack(newValue);
+			checkDuplicateInternalTrack(newValue);
+		});
+	$scope.$watch('selectedTracks.internalTrack',
+		function (newValue) {
+			if (!newValue)
+				return;
+			checkDuplicateRedTrack(newValue);
+			checkDuplicateWhiteTrack(newValue);
+			checkDuplicateBlueTrack(newValue);
+		});
+
 	$scope.allInternalThreats = inputData.allInternalThreats;
 	$scope.allExternalThreats = inputData.allExternalThreats;
+	$scope.selectedThreats = {
+		redThreats: [],
+		whiteThreats: [],
+		blueThreats: [],
+		internalThreats: []
+	}
+	var updateAllSelectedExternalThreats = function() {
+		$scope.allSelectedExternalThreats = $scope.selectedThreats.redThreats.concat($scope.selectedThreats.whiteThreats).concat($scope.selectedThreats.blueThreats);
+	}
+	$scope.$watchCollection('selectedThreats.redThreats', function () {
+		updateAllSelectedExternalThreats();
+	});
+	$scope.$watchCollection('selectedThreats.whiteThreats', function () {
+		updateAllSelectedExternalThreats();
+	});
+	$scope.$watchCollection('selectedThreats.blueThreats', function () {
+		updateAllSelectedExternalThreats();
+	});
+
 	//TODO: Add specializations
 	//TODO: Add double actions
+
+	$scope.allActions = inputData.actions;
 
 	$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 	$scope.playerCounts = [1, 2, 3, 4, 5];
@@ -226,29 +401,20 @@ angular.module("spaceAlertModule")
 		{ title: 'Player 4', color: { model: $scope.colors[3] }, actions: [] },
 		{ title: 'Player 5', color: { model: $scope.colors[4] }, actions: [] }
 	];
-
 	$scope.players.forEach(function (player) {
 		for (var i = 0; i < 12; i++)
 			player.actions.push(cloneAction($scope.allActions[0]));
 	});
-
-	$scope.dropdownStatus = {
-		isopen: false
-	};
-
 	$scope.selectPlayerCount = function (newPlayerCount) {
 		$scope.selectedPlayerCountRadio = { model: newPlayerCount };
 		$scope.players.forEach(function(player, index) {
 			player.isInGame = index < newPlayerCount;
 		});
 	}
-
 	$scope.selectPlayerCount(4);
-
 	$scope.$watch('selectedPlayerCountRadio.model', function(newPlayerCount) {
 		$scope.selectPlayerCount(newPlayerCount);
 	});
-
 	$scope.players.forEach(function (player, index) {
 		$scope.$watch(
 			function (scope) {
@@ -261,8 +427,6 @@ angular.module("spaceAlertModule")
 				});
 			});
 	});
-
-	$scope.items = ['item1', 'item2', 'item3'];
 
 	$scope.animationsEnabled = true;
 
@@ -283,129 +447,8 @@ angular.module("spaceAlertModule")
 		});
 	};
 
-	var openTrackDialog = function (size, currentTrack, zone, trackSetterFn) {
-		var modal = $uibModal.open({
-			animation: true,
-			templateUrl: 'templates/trackModal',
-			controller: 'TrackModalInstanceCtrl',
-			size: size,
-			resolve: {
-				currentTrack: function () {
-					return currentTrack;
-				},
-				allTracks: function() {
-					return $scope.allTracks;
-				},
-				zone: function() {
-					return zone;
-				},
-				usedTracks: function() {
-					return [$scope.redTrack, $scope.whiteTrack, $scope.blueTrack, $scope.internalTrack];
-				}
-			}
-		});
-		modal.result.then(function(selectedTrack) {
-			trackSetterFn(selectedTrack);
-		});
-	}
-
-	var checkDuplicateRedTrack = function(track) {
-		if ($scope.redTrack === track)
-			$scope.redTrack = null;
-	}
-	var checkDuplicateWhiteTrack = function (track) {
-		if ($scope.whiteTrack === track)
-			$scope.whiteTrack = null;
-	}
-	var checkDuplicateBlueTrack = function (track) {
-		if ($scope.blueTrack === track)
-			$scope.blueTrack = null;
-	}
-	var checkDuplicateInternalTrack = function (track) {
-		if ($scope.internalTrack === track)
-			$scope.internalTrack = null;
-	}
-
-	$scope.openRedTrackDialog = function() {
-		openTrackDialog('lg', $scope.redTrack, 'Red', function (selectedTrack) {
-			$scope.redTrack = selectedTrack;
-			checkDuplicateWhiteTrack(selectedTrack);
-			checkDuplicateBlueTrack(selectedTrack);
-			checkDuplicateInternalTrack(selectedTrack);
-		});
-	}
-	$scope.openWhiteTrackDialog = function () {
-		openTrackDialog('lg', $scope.whiteTrack, 'White', function(selectedTrack) {
-			$scope.whiteTrack = selectedTrack;
-			checkDuplicateRedTrack(selectedTrack);
-			checkDuplicateBlueTrack(selectedTrack);
-			checkDuplicateInternalTrack(selectedTrack);
-		});
-	}
-	$scope.openBlueTrackDialog = function () {
-		openTrackDialog('lg', $scope.blueTrack, 'Blue', function(selectedTrack) {
-			$scope.blueTrack = selectedTrack;
-			checkDuplicateRedTrack(selectedTrack);
-			checkDuplicateWhiteTrack(selectedTrack);
-			checkDuplicateInternalTrack(selectedTrack);
-		});
-	}
-	$scope.openInternalTrackDialog = function () {
-		openTrackDialog('lg', $scope.internalTrack, 'Internal', function(selectedTrack) {
-			$scope.internalTrack = selectedTrack;
-			checkDuplicateRedTrack(selectedTrack);
-			checkDuplicateWhiteTrack(selectedTrack);
-			checkDuplicateBlueTrack(selectedTrack);
-		});
-	}
-
-	$scope.redThreats = [];
-	$scope.whiteThreats = [];
-	$scope.blueThreats = [];
-	$scope.internalThreats = [];
-
-	var openThreatsDialog = function(size, currentThreats, allThreats, zone) {
-		var modal = $uibModal.open({
-			animation: true,
-			templateUrl: 'templates/threatsModal',
-			controller: 'ThreatsModalInstanceCtrl',
-			size: size,
-			resolve: {
-				currentThreats: function () {
-					return currentThreats;
-				},
-				allThreats: function () {
-					return allThreats;
-				},
-				zone: function () {
-					return zone;
-				}
-			}
-		});
-		modal.result.then(function (threat) {
-			currentThreats.push(threat);
-		});
-	}
-
-	$scope.openRedThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.redThreats, $scope.allExternalThreats, 'Red');
-	}
-	$scope.openWhiteThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.whiteThreats, $scope.allExternalThreats, 'White');
-	}
-	$scope.openBlueThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.blueThreats, $scope.allExternalThreats, 'Blue');
-	}
-	$scope.openInternalThreatsDialog = function (size) {
-		openThreatsDialog(size, $scope.internalThreats, $scope.allInternalThreats, 'Internal');
-	}
-
-	$scope.removeThreat = function (threat) {
-		$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
-	}
-
 	$scope.canCreateGame = function() {
-		return $scope.redTrack != null && $scope.whiteTrack != null && $scope.blueTrack != null && $scope.internalTrack != null;
+		return $scope.selectedTracks.redTrack != null && $scope.selectedTracks.whiteTrack != null && $scope.selectedTracks.blueTrack != null && $scope.selectedTracks.internalTrack != null;
 	}
 
 	var getColorIndex = function(playerColor) {
@@ -414,7 +457,6 @@ angular.module("spaceAlertModule")
 				return i;
 		return -1;
 	}
-
 	$scope.getGameArgs = function () {
 		if (!$scope.canCreateGame())
 			return '';
@@ -430,14 +472,14 @@ angular.module("spaceAlertModule")
 		}
 		var game = {
 			players: players,
-			redThreats: $scope.redThreats,
-			whiteThreats: $scope.whiteThreats,
-			blueThreats: $scope.blueThreats,
-			internalThreats: $scope.internalThreats,
-			redTrack: $scope.redTrack,
-			whiteTrack: $scope.whiteTrack,
-			blueTrack: $scope.blueTrack,
-			internalTrack: $scope.internalTrack
+			redThreats: $scope.selectedThreats.redThreats,
+			whiteThreats: $scope.selectedThreats.whiteThreats,
+			blueThreats: $scope.selectedThreats.blueThreats,
+			internalThreats: $scope.selectedThreats.internalThreats,
+			redTrack: $scope.selectedTracks.redTrack,
+			whiteTrack: $scope.selectedTracks.whiteTrack,
+			blueTrack: $scope.selectedTracks.blueTrack,
+			internalTrack: $scope.selectedTracks.internalTrack
 		};
 		return JSON.stringify(game);
 	}
@@ -505,11 +547,12 @@ angular.module("spaceAlertModule")
 		$uibModalInstance.dismiss('cancel');
 	};
 }])
-.controller('ThreatsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'zone', function ($uibModalInstance, $scope, currentThreats, allThreats, zone) {
+.controller('ThreatsModalInstanceCtrl', ['$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'allUsedThreats', 'zone', function ($uibModalInstance, $scope, currentThreats, allThreats, allUsedThreats, zone) {
 	$scope.currentThreats = currentThreats;
 	$scope.allTimes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	$scope.allThreats = allThreats;
 	$scope.zone = zone;
+	$scope.allUsedThreats = allUsedThreats;
 
 	$scope.$watch('threatsGroupedByType', function(newValue) {
 		$scope.threatsToChooseFrom = newValue.seriousThreats;
@@ -526,7 +569,7 @@ angular.module("spaceAlertModule")
 	
 	$scope.getAvailableThreats = function()
 	{
-		return _.differenceBy($scope.threatsToChooseFrom, $scope.currentThreats, 'id');
+		return _.differenceBy($scope.threatsToChooseFrom, $scope.allUsedThreats, 'id');
 	}
 
 	$scope.ok = function () {
