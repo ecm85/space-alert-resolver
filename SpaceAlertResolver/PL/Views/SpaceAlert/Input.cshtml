@@ -45,31 +45,31 @@
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
 				<div class="selected-track-wrapper">
-					<threat-track
+					<track-with-threats
 						track="redTrack"
 						threats="redThreats"
 						track-id="'red'"
 						on-track-clicked="openRedTrackDialog()"
 						add-new-threat="openRedThreatsDialog('lg')"
-						class="selected-track"></threat-track>
+						class="selected-track"></track-with-threats>
 				</div>
 				<div class="selected-track-wrapper">
-					<threat-track
+					<track-with-threats
 						track="whiteTrack"
 						threats="whiteThreats"
 						track-id="'white'"
 						on-track-clicked="openWhiteTrackDialog()"
 						add-new-threat="openWhiteThreatsDialog('lg')"
-						class="selected-track"></threat-track>
+						class="selected-track"></track-with-threats>
 				</div>
 				<div class="selected-track-wrapper">
-					<threat-track
+					<track-with-threats
 						track="blueTrack"
 						threats="blueThreats"
 						track-id="'blue'"
 						on-track-clicked="openBlueTrackDialog()"
 						add-new-threat="openBlueThreatsDialog('lg')"
-						class="selected-track"></threat-track>
+						class="selected-track"></track-with-threats>
 				</div>
 			</div>
 			<div class="sitting-duck-wrapper">
@@ -77,14 +77,14 @@
 			</div>
 			<div class="selected-track-wrapper">
 				<button class="btn btn-primary add-threats-button" ng-click="openInternalThreatsDialog('lg')">Internal Threats</button>
-				<threat-track track="internalTrack" threats="internalThreats" on-track-clicked="openInternalTrackDialog()" track-id="'internal'" class="selectable-track"></threat-track>
+				<track-with-threats track="internalTrack" threats="internalThreats" on-track-clicked="openInternalTrackDialog()" track-id="'internal'" class="selectable-track"></track-with-threats>
 			</div>
 		</div>
 		<script type="text/ng-template" id="templates/actionsModal">
 			@Html.Action("ActionsDialog", "Templates")
 		</script>
-		<script type="text/ng-template" id="templates/threatTrack">
-			@Html.Action("ThreatTrack", "Templates")
+		<script type="text/ng-template" id="templates/trackWithThreats">
+			@Html.Action("TrackWithThreats", "Templates")
 		</script>
 		<script type="text/ng-template" id="templates/trackModal">
 			@Html.Action("TrackDialog", "Templates")

@@ -131,9 +131,9 @@ angular.module("spaceAlertModule")
 
 	$scope.selectTurnManually(0);
 }])
-.directive('threatTrack', function() {
+.directive('trackWithThreats', function() {
 	return {
-		templateUrl: 'templates/threatTrack',
+		templateUrl: 'templates/trackWithThreats',
 		restrict: 'E',
 		scope: {
 			threats: '=',
@@ -142,7 +142,7 @@ angular.module("spaceAlertModule")
 			onTrackClicked: '&?',
 			addNewThreat: '&?'
 		},
-		controller: ['$scope', function ThreatTrackController($scope) {
+		controller: ['$scope', function TrackWithThreatsController($scope) {
 			$scope.getThreatCornerX = function (index) {
 				var threatElement = $('#threat' + $scope.trackId + index);
 				if (threatElement.offset())

@@ -4,7 +4,7 @@
 <div class="modal-body" id="modal-body">
 	<div>
 		<div ng-repeat="track in allTracks" href="#"  class="selectable-track-option-wrapper" ng-class="{'selected-track-option-wrapper': track.track === selectedTrack.track, 'track-option-wrapper-in-use': trackIsInUse(track)}">
-			<threat-track track="track" threats="null" on-track-clicked="selectTrack(track)" track-id="track.track" class="selectable-track-option"></threat-track>
+			<track-with-threats track="track" threats="null" on-track-clicked="selectTrack(track)" track-id="track.track" class="selectable-track-option"></track-with-threats>
 			{{track.displayName}}
 		</div>
 	</div>
