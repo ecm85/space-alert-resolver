@@ -27,7 +27,8 @@ var cloneThreat = function(threat) {
 	};
 }
 angular.module("spaceAlertModule")
-.controller("ResolutionController", ["$scope", "gameData", '$interval', function ($scope, gameData, $interval) {
+.controller("ResolutionController", ["$scope", "gameData", '$interval', '$animate', function ($scope, gameData, $interval, $animate) {
+	$animate.enabled(false);
 	$scope.gameData = gameData;
 	$scope.playing = null;
 	$scope.turnsPerTwoSeconds = 5;

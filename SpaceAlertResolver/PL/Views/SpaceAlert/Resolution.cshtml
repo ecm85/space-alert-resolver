@@ -1,6 +1,6 @@
 ﻿@model IHtmlString
 <script>
-	angular.module("spaceAlertModule", []).value("gameData", @Html.Raw(Model));
+	angular.module("spaceAlertModule", ['ngAnimate']).value("gameData", @Html.Raw(Model));
 </script>
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
