@@ -13,12 +13,14 @@ namespace PL.Models
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public IEnumerable<StationLocation> CurrentStations { get; set; }
 		public string Id { get; set; }
+		public string Name { get; set; }
 
 		public InternalThreatModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
 			CurrentStations = threat.CurrentStations.ToList();
 			Id = InternalThreatFactory.ThreatIdsByType[threat.GetType()];
+			Name = InternalThreatFactory.ThreatNamesByType[threat.GetType()];
 		}
 
 		[JsonConstructor]

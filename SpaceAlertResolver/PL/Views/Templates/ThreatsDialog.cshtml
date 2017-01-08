@@ -2,12 +2,14 @@
 	<h3 class="modal-title" id="modal-title">Add {{zone}} Threat</h3>
 </div>
 <div class="modal-body" id="modal-body">
-	<div class="btn-toolbar">
+	<div>
 		<div class="btn-group">
 			<div class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.whiteThreats">White</div>
 			<div class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.yellowThreats">Yellow</div>
 			<div class="btn btn-default" ng-model="threatsGroupedByType" uib-btn-radio="allThreats.redThreats">Red</div>
 		</div>
+	</div>
+	<div>
 		<div class="btn-group">
 			<div class="btn btn-default" ng-model="threatsToChooseFrom" uib-btn-radio="threatsGroupedByType.seriousThreats">Serious</div>
 			<div class="btn btn-default" ng-model="threatsToChooseFrom" uib-btn-radio="threatsGroupedByType.minorThreats">Minor</div>
@@ -17,8 +19,9 @@
 		class="selectable-threat"
 		ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}"
 		ng-click="selectThreatToAdd(threat)">
-			<threat threat-index="$index" threat="threat" track-id="zone"></threat>
-		{{threat.id}}
+		<threat threat-index="$index" threat="threat" track-id="zone"></threat>
+		<div class="threat-name">{{threat.name}}</div>
+		<div class="threat-name">{{threat.id}}</div>
 	</div>
 	<div>
 		<div class="btn-group">

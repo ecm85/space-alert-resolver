@@ -783,3 +783,8 @@ textarea {
 	text-align: center;
 	cursor: pointer;
  }
+
+ .threat-name {
+	 font-family: Consolas;
+	 font-size: .8em;
+ }
