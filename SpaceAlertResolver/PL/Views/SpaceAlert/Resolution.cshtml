@@ -1,7 +1,8 @@
 ﻿@model IHtmlString
 <script>
-	angular.module("spaceAlertModule", ['ngAnimate']).value("gameData", @Html.Raw(Model));
+	angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'cfp.hotkeys']).value("gameData", @Html.Raw(Model));
 </script>
+@Scripts.Render("~/bundles/hotkeys")
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">

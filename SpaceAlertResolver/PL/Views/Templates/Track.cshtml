@@ -1,12 +1,14 @@
-﻿<div class="track-spaces-wrapper">
-	<div class="track-outline"></div>
-	<div class="track-sections">
-		<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in track.sections">
-			<div id="space{{trackId}}{{trackSpace.space}}"
-				ng-repeat="trackSpace in section.trackSpaces"
-				class="track-space track-space-{{trackSpace.space}}"
-				ng-class="{'threat-present': trackSpace.hasAnyThreats, 'track-breakpoint': trackSpace.breakpoint != null }">
-				<span class="track-breakpoint-text" ng-if="trackSpace.breakpoint != null">{{trackSpace.breakpoint}}</span>
+﻿<div class="track-wrapper">
+	<div class="track-spaces-wrapper">
+		<div class="track-outline"></div>
+		<div class="track-sections">
+			<div class="track-section track-section-{{section.distanceFromShip}}" ng-repeat="section in track.sections">
+				<div id="space{{trackId}}{{trackSpace.space}}"
+					 ng-repeat="trackSpace in section.trackSpaces"
+					 class="track-space track-space-{{trackSpace.space}}"
+					 ng-class="{'threat-present': trackSpace.hasAnyThreats, 'track-breakpoint': trackSpace.breakpoint != null }">
+					<span class="track-breakpoint-text" ng-if="trackSpace.breakpoint != null">{{trackSpace.breakpoint}}</span>
+				</div>
 			</div>
 		</div>
 	</div>

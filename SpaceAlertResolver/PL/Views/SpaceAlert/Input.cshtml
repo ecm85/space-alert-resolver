@@ -46,29 +46,44 @@
 			<div class="external-tracks-wrapper">
 				<div class="selected-track-wrapper">
 					<track-with-threats
-						track="redTrack"
-						threats="redThreats"
+						track="selectedTracks.redTrack"
 						track-id="'red'"
-						on-track-clicked="openRedTrackDialog()"
-						add-new-threat="openRedThreatsDialog('lg')"
+						zone-description="'Red'"
+						all-tracks="allTracks"
+						all-used-tracks="allSelectedTracks"
+						track-is-configurable="true"
+						threats="selectedThreats.redThreats"
+						all-threats="allExternalThreats"
+						all-used-threats="allSelectedExternalThreats"
+						threats-are-configurable="true"
 						class="selected-track"></track-with-threats>
 				</div>
 				<div class="selected-track-wrapper">
 					<track-with-threats
-						track="whiteTrack"
-						threats="whiteThreats"
+						track="selectedTracks.whiteTrack"
 						track-id="'white'"
-						on-track-clicked="openWhiteTrackDialog()"
-						add-new-threat="openWhiteThreatsDialog('lg')"
+						zone-description="'White'"
+						all-tracks="allTracks"
+						all-used-tracks="allSelectedTracks"
+						track-is-configurable="true"
+						threats="selectedThreats.whiteThreats"
+						all-threats="allExternalThreats"
+						all-used-threats="allSelectedExternalThreats"
+						threats-are-configurable="true"
 						class="selected-track"></track-with-threats>
 				</div>
 				<div class="selected-track-wrapper">
 					<track-with-threats
-						track="blueTrack"
-						threats="blueThreats"
+						track="selectedTracks.blueTrack"
 						track-id="'blue'"
-						on-track-clicked="openBlueTrackDialog()"
-						add-new-threat="openBlueThreatsDialog('lg')"
+						zone-description="'Blue'"
+						all-tracks="allTracks"
+						all-used-tracks="allSelectedTracks"
+						track-is-configurable="true"
+						threats="selectedThreats.blueThreats"
+						all-threats="allExternalThreats"
+						all-used-threats="allSelectedExternalThreats"
+						threats-are-configurable="true"
 						class="selected-track"></track-with-threats>
 				</div>
 			</div>
@@ -77,11 +92,16 @@
 			</div>
 			<div class="selected-track-wrapper">
 				<track-with-threats
-					track="internalTrack"
-					threats="internalThreats"
+					track="selectedTracks.internalTrack"
 					track-id="'internal'"
-					on-track-clicked="openInternalTrackDialog()"
-					add-new-threat="openInternalThreatsDialog('lg')"
+					zone-description="'Internal'"
+					all-tracks="allTracks"
+					all-used-tracks="allSelectedTracks"
+					track-is-configurable="true"
+					threats="selectedThreats.internalThreats"
+					all-threats="allInternalThreats"
+					all-used-threats="selectedThreats.internalThreats"
+					threats-are-configurable="true"
 					class="selectable-track"></track-with-threats>
 			</div>
 		</div>

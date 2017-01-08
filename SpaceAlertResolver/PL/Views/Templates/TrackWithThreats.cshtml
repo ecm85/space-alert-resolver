@@ -1,6 +1,6 @@
-﻿<div ng-class="{'track-wrapper': threats == null, 'track-with-threats-wrapper': threats != null}">
-	<track track-id="trackId" track="track" ng-click="onTrackClicked()" ng-class="{'track-spaces-wrapper-clickable': onTrackClicked != null}"></track> 
-	<div ng-if="threats.length > 0 || addNewThreat != null" class="threat-list">
+﻿<div class="track-with-threats-wrapper">
+	<track ng-class="{'track-spaces-wrapper-clickable': trackIsConfigurable}" ng-click="configureTrack()" track="track" track-id="trackId"></track>
+	<div ng-if="showThreats()" class="threat-list">
 		<div ng-repeat="threat in threats" class="threat-with-lines">
 			<threat threat-index="$index" threat="threat" track-id="trackId"></threat>
 			<svg ng-if="threat.position > 0" class="threat-on-track-line-wrapper">
@@ -18,8 +18,7 @@
 					ng-attr-y2="{{getStationCornerY(threat, station)}}"/>
 			</svg>
 		</div>
-		@*add-new-threat*@
-		<a ng-if="addNewThreat != null && (threats == null || threats.length < 3)" ng-click="addNewThreat()" class="btn btn-default add-new-threat" href="#">
+		<a ng-if="canAddNewThreat()" ng-click="addNewThreat()" class="btn btn-default add-new-threat" href="#">
 			<i class="fa fa-plus add-new-threat-icon"></i>
 		</a>
 	</div>
