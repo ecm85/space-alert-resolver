@@ -18,9 +18,9 @@
 					ng-attr-y2="{{getStationCornerY(threat, station)}}"/>
 			</svg>
 		</div>
-		<a ng-if="canAddNewThreat()" ng-click="addNewThreat()" class="btn btn-default add-new-threat" href="#">
+		<div ng-if="canAddNewThreat()" ng-click="addNewThreat()" class="add-new-threat" href="#">
 			<i class="fa fa-plus add-new-threat-icon"></i>
-		</a>
+		</div>
 	</div>
 </div>
 

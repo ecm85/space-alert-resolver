@@ -9,7 +9,7 @@
 		<h1>Game Input</h1>
 		<h2>Players</h2>
 		<div class="btn-group">
-			<a ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</a>
+			<div ng-repeat="playerCount in playerCounts" class="btn btn-default" ng-model="selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</div>
 		</div>
 		<div>
 			<div ng-repeat="player in players" class="panel panel-default player-panel" ng-if="player.isInGame">
@@ -24,19 +24,17 @@
 					<div class="player-color-with-selector">
 						<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
 						<div class="btn-group color-button-group">
-							<a ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+							<div ng-repeat="color in colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
 								<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
-							</a>
+							</div>
 						</div>
 					</div>
-					<div class="selected-actions-wrapper">
-						<a href="#" ng-click="openActionsDialog(player, 'lg')">
-							<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
-							<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
-							<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
-								<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
-							</div>
-						</a>
+					<div class="selected-actions-wrapper" ng-click="openActionsDialog(player, 'lg')">
+						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
+						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
+						<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
+							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+						</div>
 					</div>
 				</div>
 			</div>

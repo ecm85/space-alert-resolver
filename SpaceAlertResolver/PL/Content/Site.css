@@ -474,6 +474,8 @@ textarea {
 .add-new-threat {
 	width: 166px;
 	text-align: center;
+	cursor: pointer;
+	border: 3px solid red;
 }
 
 .fa.add-new-threat-icon {
@@ -624,6 +626,7 @@ textarea {
 
 .selected-actions-wrapper {
 	position: relative;
+	cursor: pointer;
 }
 
 .selected-action-wrapper {
@@ -631,6 +634,11 @@ textarea {
     height: 111px;
 	width: 60px;
     padding-top: 20px;
+	cursor: pointer;
+}
+
+.action-choosable-wrapper {
+	cursor: pointer;
 }
 
 .selected-action-wrapper.cursor {
@@ -750,6 +758,7 @@ textarea {
 	 margin-left: 3px;
 	 margin-bottom: 12px;
 	 text-align: center;
+	 cursor: pointer;
  }
 
  .selected-threats {
