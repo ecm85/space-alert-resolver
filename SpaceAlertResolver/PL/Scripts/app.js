@@ -250,10 +250,9 @@ angular.module("spaceAlertModule")
 				return $scope.threatsAreConfigurable && $scope.threats.length < 3;
 			}
 
-			//TODO:
-			//$scope.removeThreat = function (threat) {
-			//	$scope.selectedThreats.splice($scope.selectedThreats.indexOf(threat), 1);
-			//}
+			$scope.removeThreat = function (threatToRemove) {
+				_.remove($scope.threats, function (threat) { return threat.id === threatToRemove.id });
+			}
 		}]
 	}
 })
@@ -274,7 +273,9 @@ angular.module("spaceAlertModule")
 		scope: {
 			threatIndex: '=',
 			threat: '=',
-			trackId: '='
+			trackId: '=',
+			removable: '=',
+			removeThreat: '&?'
 		}
 	};
 })
