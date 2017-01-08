@@ -65,7 +65,7 @@ textarea {
 
 .track-wrapper {
 	display: inline-block;
-	width: 55px;
+	width: 63px;
 	vertical-align: bottom;
 	padding-top: 10px;
 }
@@ -741,7 +741,6 @@ textarea {
 
 .selectable-track-option {
 	display: block;
-	padding-right: 7px;
 	cursor: pointer;
 }
 
