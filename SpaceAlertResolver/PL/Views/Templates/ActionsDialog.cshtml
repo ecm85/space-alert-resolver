@@ -4,13 +4,7 @@
 <div class="modal-body" id="modal-body">
 	<div>
 		<h3>Selected Actions</h3>
-		<div class="selected-actions-wrapper">
-			<img class="board-1" ng-src="~/Content/Images/Boards/{{playerColor}}1.png" />
-			<img class="board-2" ng-src="~/Content/Images/Boards/{{playerColor}}2.png" />
-			<div ng-repeat="selectedAction in selectedActions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}" ng-click="moveCursor($index)">
-				<img ng-if="selectedAction.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{selectedAction.description}}.png" />
-			</div>
-		</div>
+		<player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
 	</div>
 	<div class="action-choosable-wrapper" ng-repeat="action in allActions">
 		<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
@@ -24,3 +18,7 @@
 	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
 	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
+
+<script type="text/ng-template" id="templates/playerBoard">
+	@Html.Action("PlayerBoard", "Templates")
+</script>

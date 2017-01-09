@@ -29,13 +29,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="selected-actions-wrapper" ng-click="openActionsDialog(player, 'lg')">
-						<img class="board-1" ng-src="~/Content/Images/Boards/{{player.color.model}}1.png" />
-						<img class="board-2" ng-src="~/Content/Images/Boards/{{player.color.model}}2.png" />
-						<div href="#" ng-repeat="action in player.actions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor === $index}">
-							<img ng-if="action.description != null" class="action-selected-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
-						</div>
-					</div>
+					<player-board class="configurable-player-board" player-color="player.color.model" ng-click="openActionsDialog(player, 'lg')" selected-actions="player.actions"></player-board>
 				</div>
 			</div>
 		</div>
@@ -114,6 +108,9 @@
 		</script>
 		<script type="text/ng-template" id="templates/threatsModal">
 			@Html.Action("ThreatsDialog", "Templates")
+		</script>
+		<script type="text/ng-template" id="templates/playerBoard">
+			@Html.Action("PlayerBoard", "Templates")
 		</script>
 		<form action="@Url.Action("Index")" method="post">
 			<input type="text" class="game-args-text" value="{{getGameArgs()}}" name="newGameText" />

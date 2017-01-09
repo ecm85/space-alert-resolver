@@ -38,5 +38,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult PlayerBoard()
+		{
+			return PartialView();
+		}
 	}
 }

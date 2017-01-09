@@ -18,7 +18,7 @@ angular.module("spaceAlertModule")
 			$scope.selectedActions = player.actions.slice();
 			$scope.playerColor = player.color.model;
 			$scope.playerTitle = player.title;
-			$scope.cursor = 0;
+			$scope.cursor = { index: 0 };
 
 			$scope.allActions.forEach(function(action) {
 				hotkeys.bindTo($scope)
@@ -30,17 +30,13 @@ angular.module("spaceAlertModule")
 			});
 
 			$scope.addActionAtCursor = function(action) {
-				if ($scope.cursor < 12) {
-					$scope.selectedActions[$scope.cursor] = cloneAction(action);
-					$scope.cursor++;
+				if ($scope.cursor.index < 12) {
+					$scope.selectedActions[$scope.cursor.index] = cloneAction(action);
+					$scope.cursor.index++;
 				}
 				//TODO: Do something otherwise?
-				if ($scope.cursor === 12)
-					$scope.cursor = 0;
-			}
-
-			$scope.moveCursor = function(index) {
-				$scope.cursor = index;
+				if ($scope.cursor.index=== 12)
+					$scope.cursor.index = 0;
 			}
 
 			$scope.ok = function() {
