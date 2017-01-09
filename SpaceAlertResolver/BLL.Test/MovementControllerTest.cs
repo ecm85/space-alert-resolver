@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BLL.Test
 {
-	[TestClass]
-	public class MovementControllerTest
+	[TestFixture]
+	public static class MovementControllerTest
 	{
-		[TestMethod]
-		public void Test_Path_Corners()
+		[Test]
+		public static void Test_Path_Corners()
 		{
 			Test_Path_Helper(StationLocation.LowerBlue, StationLocation.UpperRed, new List<StationLocation>
 			{
@@ -25,15 +25,15 @@ namespace BLL.Test
 			});
 		}
 
-		[TestMethod]
-		public void Test_Path_ChangeDecks()
+		[Test]
+		public static void Test_Path_ChangeDecks()
 		{
 			Test_Path_Helper(StationLocation.UpperBlue, StationLocation.LowerBlue, new List<StationLocation> { StationLocation.LowerBlue });
 			Test_Path_Helper(StationLocation.LowerWhite, StationLocation.UpperWhite, new List<StationLocation> { StationLocation.UpperWhite });
 		}
 
-		[TestMethod]
-		public void Test_Path_Move()
+		[Test]
+		public static void Test_Path_Move()
 		{
 			Test_Path_Helper(StationLocation.UpperBlue, StationLocation.UpperWhite, new List<StationLocation>
 			{
@@ -45,8 +45,8 @@ namespace BLL.Test
 			});
 		}
 
-		[TestMethod]
-		public void Test_Path_MoveAndChangeDecks()
+		[Test]
+		public static void Test_Path_MoveAndChangeDecks()
 		{
 			Test_Path_Helper(StationLocation.LowerWhite, StationLocation.UpperBlue, new List<StationLocation>
 			{

@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace BLL.Test
 {
-	[TestClass]
-	public class GameUnitTest
+	[TestFixture]
+	public static class GameUnitTest
 	{
 	}
 }

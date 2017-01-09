@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using BLL.ShipComponents;
 using BLL.Threats.Internal.Serious.Yellow;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 
 namespace BLL.Test
 {
-	[TestClass]
-	public class SeekerTest
+	[TestFixture]
+	public static class SeekerTest
 	{
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerBlueMovesUp()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerBlueMovesUp()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 2 }, { StationLocation.UpperBlue, 3 } },
@@ -18,8 +18,8 @@ namespace BLL.Test
 				StationLocation.UpperBlue);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerBlueMovesRed()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerBlueMovesRed()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 3 }, { StationLocation.UpperBlue, 2 } },
@@ -27,8 +27,8 @@ namespace BLL.Test
 				StationLocation.LowerWhite);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerBlueStays()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerBlueStays()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerWhite, 2 }, { StationLocation.UpperBlue, 2 } },
@@ -36,8 +36,8 @@ namespace BLL.Test
 				StationLocation.LowerBlue);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerWhiteMovesUp()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerWhiteMovesUp()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 2 }, { StationLocation.UpperWhite, 3 } , {StationLocation.LowerRed, 2}},
@@ -45,8 +45,8 @@ namespace BLL.Test
 				StationLocation.UpperWhite);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerWhiteMovesRed()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerWhiteMovesRed()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 2 }, { StationLocation.UpperWhite, 3 }, { StationLocation.LowerRed, 4 } },
@@ -54,8 +54,8 @@ namespace BLL.Test
 				StationLocation.LowerRed);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerWhiteMovesBlue()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerWhiteMovesBlue()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 5 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },
@@ -63,8 +63,8 @@ namespace BLL.Test
 				StationLocation.LowerBlue);
 		}
 
-		[TestMethod]
-		public void Test_MoveToMostPlayers_LowerWhiteStays()
+		[Test]
+		public static void Test_MoveToMostPlayers_LowerWhiteStays()
 		{
 			Test_MoveToMostPlayers_Helper(
 				new Dictionary<StationLocation, int> { { StationLocation.LowerBlue, 3 }, { StationLocation.UpperWhite, 4 }, { StationLocation.LowerRed, 4 } },

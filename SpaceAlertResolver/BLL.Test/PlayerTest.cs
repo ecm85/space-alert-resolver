@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace BLL.Test
 {
-	[TestClass]
-	public class PlayerTest
+	[TestFixture]
+	public static class PlayerTest
 	{
 		private class ActionComparer : IComparer
 		{
@@ -19,8 +19,8 @@ namespace BLL.Test
 			}
 		}
 
-		[TestMethod]
-		public void Test_Shift_NoBlanks()
+		[Test]
+		public static void Test_Shift_NoBlanks()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -39,8 +39,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_WithBlanks()
+		[Test]
+		public static void Test_Shift_WithBlanks()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -63,8 +63,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_AtBlank()
+		[Test]
+		public static void Test_Shift_AtBlank()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -86,8 +86,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_LastBlank()
+		[Test]
+		public static void Test_Shift_LastBlank()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -109,8 +109,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_MultipleTimesSameTurn()
+		[Test]
+		public static void Test_Shift_MultipleTimesSameTurn()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -133,8 +133,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_MultipleTimesConsecutiveTurns()
+		[Test]
+		public static void Test_Shift_MultipleTimesConsecutiveTurns()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -157,8 +157,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_Shift_NoBlanks_RepeatPreviousAction()
+		[Test]
+		public static void Test_Shift_NoBlanks_RepeatPreviousAction()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -180,8 +180,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_ShiftAndRepeatPreviousAction_WithBlanks()
+		[Test]
+		public static void Test_ShiftAndRepeatPreviousAction_WithBlanks()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -204,8 +204,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_ShiftAndRepeatPreviousAction_AtBlank()
+		[Test]
+		public static void Test_ShiftAndRepeatPreviousAction_AtBlank()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -227,8 +227,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_ShiftAndRepeatPreviousAction_LastBlank()
+		[Test]
+		public static void Test_ShiftAndRepeatPreviousAction_LastBlank()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -250,8 +250,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_ShiftAndRepeatPreviousAction_MultipleTimesSameTurn()
+		[Test]
+		public static void Test_ShiftAndRepeatPreviousAction_MultipleTimesSameTurn()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{
@@ -274,8 +274,8 @@ namespace BLL.Test
 			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
 		}
 
-		[TestMethod]
-		public void Test_ShiftAndRepeatPreviousAction_MultipleTimesConsecutiveTurns()
+		[Test]
+		public static void Test_ShiftAndRepeatPreviousAction_MultipleTimesConsecutiveTurns()
 		{
 			var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
 			{

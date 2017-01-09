@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
 using ConsoleResolver;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace ConsoleResolverTest
 {
-	[TestClass]
-	public class ProgramTest
+	[TestFixture]
+	public static class ProgramTest
 	{
-		[TestMethod]
-		public void TestBigCase()
+		[Test]
+		public static void TestBigCase()
 		{
 			//TODO: This test isn't that useful. Make it so!
 			var args = new[]
@@ -46,8 +46,8 @@ namespace ConsoleResolverTest
 			Program.Main(args);
 		}
 
-		[TestMethod]
-		public void JustAFighterNoActions()
+		[Test]
+		public static void JustAFighterNoActions()
 		{
 			var args = new[]
 			{
@@ -88,8 +88,8 @@ namespace ConsoleResolverTest
 			}
 		}
 
-		[TestMethod]
-		public void SixBasicThreats()
+		[Test]
+		public static void SixBasicThreats()
 		{
 			var args = new[]
 			{

@@ -3,7 +3,6 @@ using BLL.Threats.External;
 using BLL.Threats.External.Minor.White;
 using BLL.Threats.Internal;
 using BLL.Tracks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Threats;
@@ -11,14 +10,15 @@ using BLL.Threats.External.Serious.White;
 using BLL.Threats.Internal.Minor.White;
 using BLL.Threats.Internal.Serious.White;
 using BLL.Threats.Internal.Serious.Yellow;
+using NUnit.Framework;
 
 namespace BLL.Test
 {
-	[TestClass]
-	public class GameIntegrationTest
+	[TestFixture]
+	public static class GameIntegrationTest
 	{
-		[TestMethod]
-		public void JustAFighterNoActions()
+		[Test]
+		public static void JustAFighterNoActions()
 		{
 			var players = Enumerable.Range(0, 1).Select(index => new Player (new List<PlayerAction>(), 0, PlayerColor.Blue)).ToList();
 
@@ -53,8 +53,8 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
 		}
 
-		[TestMethod]
-		public void SixBasicThreats()
+		[Test]
+		public static void SixBasicThreats()
 		{
 			var players = GetPlayers();
 
@@ -166,8 +166,8 @@ namespace BLL.Test
 			return players;
 		}
 
-		[TestMethod]
-		public void EzraCampaign1Mission1()
+		[Test]
+		public static void EzraCampaign1Mission1()
 		{
 			var players = new List<Player>
 			{
@@ -232,8 +232,8 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
 		}
 
-		[TestMethod]
-		public void EzraCampaign1Mission2()
+		[Test]
+		public static void EzraCampaign1Mission2()
 		{
 			var players = new List<Player>
 			{
@@ -298,8 +298,8 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
 		}
 
-		[TestMethod]
-		public void EzraCampaign1Mission3()
+		[Test]
+		public static void EzraCampaign1Mission3()
 		{
 			var players = new List<Player>
 			{
