@@ -43,6 +43,7 @@ namespace ConsoleResolver
 
 		public static void RunGame(Game game)
 		{
+			game.StartGame();
 			var currentTurn = 0;
 			try
 			{

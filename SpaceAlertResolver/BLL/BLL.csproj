@@ -55,11 +55,13 @@
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="MovementController.cs" />
+    <Compile Include="PhaseEventArgs.cs" />
     <Compile Include="PlayerAction.cs" />
     <Compile Include="PlayerActionFactory.cs" />
     <Compile Include="PlayerColor.cs" />
     <Compile Include="PlayerInterceptorDamage.cs" />
     <Compile Include="PlayerSpecialization.cs" />
+    <Compile Include="ResolutionPhase.cs" />
     <Compile Include="ShipComponents\Airlock.cs" />
     <Compile Include="ShipComponents\BattleBots.cs" />
     <Compile Include="ShipComponents\BattleBotsComponent.cs" />

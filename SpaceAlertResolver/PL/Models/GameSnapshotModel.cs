@@ -16,7 +16,8 @@ namespace PL.Models
 		public string Description { get; }
 		public int Turn { get; }
 		public int Phase { get; set; }
-		public GameSnapshotModel(Game game, string description)
+
+		public GameSnapshotModel(Game game, ResolutionPhase phase)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
 			RedZone = new RedZoneModel(game);
@@ -25,7 +26,7 @@ namespace PL.Models
 			InternalThreats = internalThreats.Select(threat => new InternalThreatModel(threat)).ToList();
 			Players = game.Players.Select(player => new PlayerModel(player)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
-			Description = description;
+			Description = game.HasLost ? phase.GetDescription() + " - Lost!" : phase.GetDescription();
 			Turn = game.CurrentTurn;
 		}
 	}

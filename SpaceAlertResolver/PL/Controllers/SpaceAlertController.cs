@@ -47,39 +47,44 @@ namespace PL.Controllers
 		{
 			var newGameModel = new JavaScriptSerializer().Deserialize<NewGameModel>(newGameText);
 			var game = newGameModel.ConvertToGame();
-			var models = new List<GameSnapshotModel> { new GameSnapshotModel(game, "Start of Game") };
-			game.NewThreatsAdded += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Appeared"));
-			game.PlayerActionsPerformed += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Player Action Finished"));
-			game.ResolvedDamage += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Resolved Damage"));
-			game.ThreatsMoved += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Threats Moved"));
-			game.CheckedForComputer += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "Checked Computer Maintenance"));
-			game.TurnEnding += (sender, eventArgs) => models.Add(new GameSnapshotModel((Game)sender, "End of Turn"));
+			var models = new List<GameSnapshotModel>();
+			var currentTurnModels = new Dictionary<ResolutionPhase, GameSnapshotModel>();
+			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = null;
+			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = (new GameSnapshotModel((Game)sender, eventArgs.Phase));
+			game.StartGame();
 			var lost = false;
 			for (var i = 0; i < game.NumberOfTurns && !lost; i++)
 			{
 				try
 				{
 					game.PerformTurn();
+					AddCurrentTurnToModels(models, currentTurnModels);
+					currentTurnModels.Clear();
 				}
 				catch (LoseException)
 				{
-					models.Add(new GameSnapshotModel (game, "Lost!"));
+					var currentPhase = currentTurnModels.Single(modelWithPhase => modelWithPhase.Value == null).Key;
+					currentTurnModels[currentPhase] = new GameSnapshotModel (game, currentPhase);
+					AddCurrentTurnToModels(models, currentTurnModels);
 					lost = true;
 				}
 			}
 
 			var modelsByTurn = models.GroupBy(model => model.Turn).ToList();
-			foreach (var modelGroup in modelsByTurn)
-			{
-				var phase = 0;
-				foreach (var gameSnapshotModel in modelGroup)
-				{
-					gameSnapshotModel.Phase = phase;
-					phase++;
-				}
-			}
 			var modelsString = JavaScriptConvert.SerializeObject(modelsByTurn);
 			return View("Resolution", modelsString);
+		}
+
+		private static void AddCurrentTurnToModels(List<GameSnapshotModel> models, Dictionary<ResolutionPhase, GameSnapshotModel> currentTurnModels)
+		{
+			var phase = 0;
+			foreach (var currentTurnModel in currentTurnModels)
+			{
+				var model = currentTurnModel.Value;
+				model.Phase = phase;
+				models.Add(model);
+				phase++;
+			}
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace BLL
 {
 	public class Game
 	{
+		private static int[] phaseStartTurns = new[] { 0, 3, 7, 12 };
 		//TODO: Review the CA suppressions and the ones turned off
 		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
@@ -41,12 +42,8 @@ namespace BLL
 		public ThreatController ThreatController { get; }
 		public bool HasLost { get; private set; }
 
-		public event EventHandler NewThreatsAdded = (sender, args) => { };
-		public event EventHandler PlayerActionsPerformed = (sender, args) => { };
-		public event EventHandler ResolvedDamage = (sender, args) => { };
-		public event EventHandler ThreatsMoved = (sender, args) => { };
-		public event EventHandler CheckedForComputer = (sender, args) => { };
-		public event EventHandler TurnEnding = (sender, args) => { };
+		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
+		public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
 		
 		public Game(
 			IList<Player> players,
@@ -70,7 +67,13 @@ namespace BLL
 			SittingDuck.SetPlayers(players);
 			Players = players;
 			PadPlayerActions();
+		}
+
+		public void StartGame()
+		{
+			PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
 			CurrentTurn = 0;
+			PhaseEnded(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
 		}
 
 		private void PadPlayerActions()
@@ -86,23 +89,43 @@ namespace BLL
 		{
 			try
 			{
+				PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.AddNewThreats});
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
-				NewThreatsAdded(this, null);
-				PerformPlayerActionsAndResolveDamage();
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.AddNewThreats });
 
+				CheckForAdvancedSpecialOpsProtection();
+
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.PerformPlayerActions });
+				PerformPlayerActions();
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.PerformPlayerActions });
+
+				var damage = GetStandardDamage();
+				var interceptorDamage = GetInterceptorDamage();
+
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage });
+				ResolveDamage(damage, interceptorDamage);
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage });
+
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.MoveThreats });
 				ThreatController.MoveThreats(CurrentTurn);
-				ThreatsMoved(this, null);
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.MoveThreats });
+
 				PerformEndOfTurn();
-				var phaseStartTurns = new[] { 0, 3, 7, 12 };
+
 				var isSecondTurnOfPhase = phaseStartTurns.Contains(CurrentTurn - 1);
 				if (isSecondTurnOfPhase)
 					CheckForComputer();
+
 				var isEndOfPhase = phaseStartTurns.Contains(CurrentTurn + 1);
 				if (isEndOfPhase)
 					PerformEndOfPhase();
+
 				if (CurrentTurn == NumberOfTurns - 1)
 					PerformEndOfGame();
-				TurnEnding(this, null);
+
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn });
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn });
+
 				CurrentTurn++;
 			}
 			catch (LoseException)
@@ -145,34 +168,34 @@ namespace BLL
 
 		private void CheckForComputer()
 		{
+			PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
 			if (!SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.MaintenancePerformedThisPhase)
 				foreach (var player in Players)
 					player.Shift(CurrentTurn + 1);
-			CheckedForComputer(this, null);
+			PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
 		}
 
-		private void PerformPlayerActionsAndResolveDamage()
+		private IEnumerable<PlayerInterceptorDamage> GetInterceptorDamage()
 		{
-			CheckForAdvancedSpecialOpsProtection();
+			var interceptorDamages = SittingDuck.InterceptorStations
+				.Select(station => station.PlayerInterceptorDamage)
+				.Where(damage => damage != null);
+			return interceptorDamages;
+		}
 
-			PerformPlayerActions();
+		private List<PlayerDamage> GetStandardDamage()
+		{
 			var damages = SittingDuck.StandardStationsByLocation.Values
 				.Select(station => station.CurrentPlayerDamage())
 				.Where(damageList => damageList != null)
 				.SelectMany(damageList => damageList.ToList())
 				.ToList();
-			PlayerActionsPerformed(this, null);
-
 			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
 				damages.Add(rocketFiredLastTurn.PerformAttack(null));
-			var interceptorDamages = SittingDuck.InterceptorStations
-				.Select(station => station.PlayerInterceptorDamage)
-				.Where(damage => damage != null);
 			if (!TargetingAssistanceProvided)
 				damages = damages.Where(damage => !damage.RequiresTargetingAssistance).ToList();
-			ResolveDamage(damages, interceptorDamages);
-			ResolvedDamage(this, null);
+			return damages;
 		}
 
 		private bool TargetingAssistanceProvided

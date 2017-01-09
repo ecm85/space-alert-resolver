@@ -37,7 +37,7 @@ namespace BLL.Test
 			var bonusThreats = new Threat[0];
 
 			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
+			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 
@@ -79,7 +79,7 @@ namespace BLL.Test
 			var bonusThreats = new Threat[0];
 
 			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
+			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 
@@ -217,7 +217,7 @@ namespace BLL.Test
 			var bonusThreats = new Threat[0];
 
 			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
+			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 			Assert.IsFalse(game.HasLost);
@@ -282,7 +282,7 @@ namespace BLL.Test
 			var bonusThreats = new Threat[0];
 
 			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
+			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 			Assert.IsFalse(game.HasLost);
@@ -348,7 +348,7 @@ namespace BLL.Test
 			var bonusThreats = new Threat[0];
 
 			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
-
+			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 			Assert.IsFalse(game.HasLost);
