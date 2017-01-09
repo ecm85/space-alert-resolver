@@ -61,3 +61,11 @@
 	width: 25px;
 	height: auto;
 }
+
+ .remove-threat-action {
+	display: inline-block;
+	font-size: 1.3em;
+	color: blue;
+	text-align: center;
+	cursor: pointer;
+ }

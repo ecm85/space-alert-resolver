@@ -1,0 +1,25 @@
+﻿.selectable-track-option-wrapper.selected-track-option-wrapper {
+	border: 4px solid blue;
+	margin: 0 1px;
+}
+
+.selectable-track-option-wrapper.track-option-wrapper-in-use {
+	border: 4px dashed red;
+	margin: 0 1px;
+}
+
+.selectable-track-option-wrapper div {
+	z-index: 0;
+}
+
+.selectable-track-option-wrapper {
+	display: inline-block;
+	margin: 0 5px;
+	padding: 0 5px;
+	text-align: center;
+}
+
+.selectable-track-option {
+	display: block;
+	cursor: pointer;
+}

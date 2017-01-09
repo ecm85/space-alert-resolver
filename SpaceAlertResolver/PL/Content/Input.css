@@ -50,3 +50,16 @@
 	margin-right: 10px;
 	min-width: 750px;
 }
+
+.configurable-player-board {
+	cursor: pointer;
+}
+
+ .selected-track-wrapper {
+	display: inline-block;
+	vertical-align: bottom;
+ }
+
+ .game-args-text {
+	display: none;
+ }

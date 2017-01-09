@@ -65,3 +65,7 @@
 .fa.add-new-threat-icon {
 	font-size: 5em;
 }
+
+.track-spaces-wrapper-clickable {
+	cursor: pointer;
+ }

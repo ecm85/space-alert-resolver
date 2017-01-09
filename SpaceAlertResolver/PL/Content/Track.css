@@ -8,6 +8,7 @@
 .track-spaces-wrapper {
 	display: inline-block;
 	position: relative;
+	vertical-align: bottom;
 }
 
 .track-outline {

@@ -250,11 +250,14 @@
     <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Content\Input.css" />
+    <Content Include="Content\PlayerBoard.css" />
     <Content Include="Content\Resolution.css" />
     <Content Include="Content\SittingDuck.css" />
     <Content Include="Content\StandardZone.css" />
     <Content Include="Content\Threat.css" />
+    <Content Include="Content\ThreatDialog.css" />
     <Content Include="Content\Track.css" />
+    <Content Include="Content\TrackDialog.css" />
     <Content Include="Content\TrackWithThreats.css" />
     <Content Include="Scripts\App\Controllers\InputController.js" />
     <Content Include="Scripts\App\Controllers\ResolutionController.js" />
