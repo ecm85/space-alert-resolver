@@ -248,6 +248,15 @@
     <Content Include="Content\Images\Threats\PhasingPulser.png" />
     <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
+    <Content Include="Scripts\App\Controllers\InputController.js" />
+    <Content Include="Scripts\App\Controllers\ResolutionController.js" />
+    <Content Include="Scripts\App\Directives\StandardZone.js" />
+    <Content Include="Scripts\App\Directives\Threat.js" />
+    <Content Include="Scripts\App\Directives\Track.js" />
+    <Content Include="Scripts\App\Directives\TrackWithThreats.js" />
+    <Content Include="Scripts\App\ModalInstanceControllers\ActionsModalInstanceController.js" />
+    <Content Include="Scripts\App\ModalInstanceControllers\ThreatsModalInstanceController.js" />
+    <Content Include="Scripts\App\ModalInstanceControllers\TrackModalInstanceController.js" />
     <Content Include="Scripts\hotkeys.js" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
     <Compile Include="Controllers\SpaceAlertController.cs" />
@@ -420,7 +429,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
