@@ -1,0 +1,71 @@
+﻿.track-wrapper {
+	display: inline-block;
+	width: 63px;
+	vertical-align: bottom;
+	padding-top: 10px;
+}
+
+.track-spaces-wrapper {
+	display: inline-block;
+	position: relative;
+}
+
+.track-outline {
+	position: relative;
+	border-bottom: 350px solid black;
+	height: 0;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	width: 63px;
+	display: table;
+	z-index: -3;
+}
+
+.track-sections {
+	position: absolute;
+	bottom: 0;
+	display: table-cell;
+	z-index: -2;
+}
+
+.track-section {
+	vertical-align: bottom;
+	margin-bottom: 8px;
+}
+
+.track-space {
+	height: 18px;
+	width: 40px;
+	border: 1px solid #FBDA66;
+	margin-left: 11px;
+	margin-bottom: 2px;
+	z-index: -2;
+}
+
+.track-section-1 > .track-breakpoint.track-space, .track-section-2 > .track-breakpoint.track-space, .track-section-3 > .track-breakpoint.track-space {
+	background: yellow;
+	text-align: center;
+}
+
+.track-space.threat-present {
+	border: 3px solid red;
+	line-height: .9em;
+}
+
+
+.track-breakpoint-text {
+	font-weight: 300;
+	font-family: Arial Black;
+}
+
+.track-section-1 > .track-space{
+	background: linear-gradient(#522B1F, #322817);
+}
+
+.track-section-2 > .track-space{
+	background: linear-gradient(#7B3F34, #41260C);
+}
+
+.track-section-3 > .track-space{
+	background: linear-gradient(#EC6815, #8A5414);
+}

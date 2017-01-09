@@ -1,0 +1,63 @@
+﻿.threat {
+	width: 100px;
+	height: 90px;
+	position: relative;
+	vertical-align: top;
+}
+
+.threat-wrapper {
+	display: block;
+	border: 3px solid red;
+	margin-bottom: 5px;
+}
+
+.threat-info {
+	padding-right: 2px;
+	padding-top: 5px;
+	display: inline-block;
+}
+
+.threat-info-col-1, .threat-info-col-2 {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.threat-info-row {
+	text-align: center;
+}
+
+.threat-health-wrapper, .threat-shield-wrapper, .threat-speed-wrapper, .threat-total-inaccessibility-wrapper, .threat-time-appears-wrapper {
+	position: relative;
+	margin-bottom: 2px;
+}
+
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text, .threat-time-appears-text {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
+	color: white;
+	font-size: 1.3em;
+}
+
+.threat-time-appears-text {
+	color: yellow;
+    font-size: 1.0em;
+	padding-top: 4px;
+}
+
+.threat-speed-text {
+	color: black;
+	padding-top: 4px;
+	font-size: 1.3em;
+}
+
+.threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield, .threat-time-appears {
+	width: 25px;
+	height: auto;
+}

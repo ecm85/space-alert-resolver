@@ -50,29 +50,10 @@
 				<standard-zone zone="gameData[currentTurn][currentPhase].whiteZone" zone-id="'white'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>
-
-				<div class="inactive-lower-red-battle-bots station-area">
-					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png"/>
-				</div>
-				<div class="inactive-upper-blue-battle-bots station-area">
-					<img class="inactive-battle-bots" ng-if="gameData[currentTurn][currentPhase].blueZone.upperStation.battleBots" src="~/Content/Images/BattleBots.png"/>
-				</div>
-				<div class="rockets station-area">
-					<img class="rocket" ng-repeat="rocket in gameData[currentTurn][currentPhase].blueZone.lowerStation.rockets" src="~/Content/Images/rocket2.png"/>
-				</div>
-				<div class="battery-pack-container battery-pack-container-lower-red station-area">
-					<img ng-if="gameData[currentTurn][currentPhase].redZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png"/>
-				</div>
-				<div class="battery-pack-container battery-pack-container-lower-blue station-area">
-					<img ng-if="gameData[currentTurn][currentPhase].blueZone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png"/>
-				</div>
 			</div>
 			<track-with-threats track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></track-with-threats>
 		</div>
 	</div>
-
-
-
 	<script type="text/ng-template" id="templates/standardZone">
 		@Html.Action("StandardZone", "Templates")
 	</script>

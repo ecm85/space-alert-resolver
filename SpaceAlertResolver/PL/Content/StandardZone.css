@@ -1,0 +1,245 @@
+﻿.players {
+	position: absolute;
+	width: 100px;
+	height: 55px;
+}
+
+.players-upper-white {
+	top: 115px;
+	left: 315px;
+}
+
+.players-lower-white {
+	top: 275px;
+	left: 315px;
+}
+
+.players-upper-blue {
+	top: 160px;
+	left: 448px;
+}
+
+.players-lower-blue {
+	top: 275px;
+	left: 515px;
+}
+
+.players-upper-red {
+	top: 160px;
+	left: 170px;
+}
+
+.players-lower-red {
+	top: 275px;
+	left: 115px;
+}
+
+.player {
+	margin-right: -15px;
+	display: inline-block;
+}
+
+.player-icon {
+	width: 25px;
+	height: auto;
+}
+
+.threat-with-lines:hover .threat-on-ship-line {
+	display: block;
+}
+
+.threats-upper-white {
+	top: 173px;
+	left: 315px;
+}
+
+.threats-lower-white {
+	top: 333px;
+	left: 315px;
+}
+
+.threats-upper-blue {
+	top: 218px;
+	left: 448px;
+}
+
+.threats-lower-blue {
+	top: 333px;
+	left: 515px;
+}
+
+.threats-upper-red {
+	top: 218px;
+	left: 170px;
+}
+
+.threats-lower-red {
+	top: 333px;
+	left: 115px;
+}
+
+.energy-cubes {
+	position: absolute;
+	height: 24px;
+}
+
+.energy-cubes-max-1 {
+	width: 21px;
+}
+
+.energy-cubes-max-2 {
+	width: 40px;
+}
+
+.energy-cubes-max-3 {
+	width: 59px;
+}
+
+.energy-cubes-max-4 {
+	width: 78px;
+}
+
+.energy-cubes-max-5 {
+	width: 97px;
+}
+
+.energy-cubes-max-6 {
+	width: 116px; 
+}
+
+.energy-cubes-upper-white {
+	top: 75px;
+	left: 400px;
+}
+
+.energy-cubes-lower-white {
+	top: 360px;
+	left: 315px;
+}
+
+.energy-cubes-upper-blue {
+	top: 133px;
+	left: 550px;
+}
+
+.energy-cubes-lower-blue {
+	top: 360px;
+	left: 515px;
+}
+
+.energy-cubes-upper-red {
+	top: 133px;
+	left: 128px;
+}
+
+.energy-cubes-lower-red {
+	top: 360px;
+	left: 90px;
+}
+
+.energy-cube{
+	width: 20px;
+	height: auto;
+	margin-right: -2px;
+}
+
+
+
+.rockets {
+	position: absolute;
+	top: 385px;
+	left: 535px;
+	height: 39px;
+	width: 80px;
+}
+
+.rocket {
+	width: 40px;
+	height: auto;
+	margin-right: -20px
+}
+
+.inactive-lower-red-battle-bots {
+	position: absolute;
+	top: 368px;
+	left: 168px;
+	width: 45px;
+	height: 33px;
+}
+
+.inactive-upper-blue-battle-bots {
+	position: absolute;
+	top: 184px;
+	left: 552px;
+	width: 45px;
+	height: 33px;
+}
+
+.inactive-battle-bots {
+	height: auto;
+	width: 45px;
+}
+
+.active-battle-bots {
+	width: 25px;
+	height: 25px;
+	vertical-align: bottom;
+	margin-left: -12.5px;
+}
+
+.station-area {
+	background-color: rgba(50, 50, 50, .15);
+	/*border: yellow 1px solid;*/
+}
+
+.battery-pack-container {
+	position: absolute;
+	width: 20px;
+	height: 24px;
+}
+
+.battery-pack-container-lower-blue {
+	top: 389px;
+	left: 646px;
+}
+
+.battery-pack-container-lower-red {
+	top: 389px;
+	left: 60px;
+}
+
+.energy-in-cannon-container {
+	position: absolute;
+	width: 20px;
+	height: 24px;
+}
+
+.energy-in-upper-white-cannon {
+	top: 77px;
+	left: 349px;
+}
+
+.energy-in-lower-white-cannon {
+	top: 400px;
+	left: 349px;
+}
+
+.energy-in-upper-blue-cannon {
+	top: 116px;
+	left: 504px;
+}
+
+.energy-in-lower-blue-cannon {
+	top: 306px;
+	left: 640px;
+}
+
+.energy-in-upper-red-cannon {
+	top: 116px;
+	left: 197px;
+}
+
+.energy-in-lower-red-cannon {
+	top: 306px;
+	left: 53px;
+}

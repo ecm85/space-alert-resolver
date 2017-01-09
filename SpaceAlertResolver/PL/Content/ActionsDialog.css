@@ -1,0 +1,29 @@
+﻿.action-choosable-wrapper {
+	display: inline-block;
+}
+
+.action-choosable-image {
+	width: 110px;
+	height: auto;
+}
+
+.fa.action-choosable-image-icon {
+	font-size: 8em;
+	color: black;
+}
+
+.action-choosable-key {
+	font-size: 2em;
+	font-weight: 300;
+	text-align: center;
+}
+
+.board-1 {
+	width: 700px;
+	height: auto;
+}
+
+.board-2 {
+	width: 500px;
+	height: auto;
+}

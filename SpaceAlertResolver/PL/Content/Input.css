@@ -1,0 +1,52 @@
+﻿.player-color-with-selector {
+	width: 243px;
+	display: inline-block;
+}
+
+.player-icon-large {
+	width: 35px;
+	height: auto;
+	display: block;
+	margin: 0 auto;
+}
+
+.player-count-selectors {
+	margin-bottom: 20px;
+}
+
+.player-color-selector {
+	width: 23px;
+	height: 19px;
+}
+
+.player-color-selector-blue {
+	background-color: #000CFF;
+}
+
+.player-color-selector-green {
+	background-color: #00CC17;
+}
+
+.player-color-selector-red {
+	background-color: #FF2100;
+}
+
+.player-color-selector-yellow {
+	background-color: #F6FF00;
+}
+
+.player-color-selector-purple {
+	background-color: #FF00E9;
+}
+
+.color-selector-button {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.player-panel {
+	width: 40%;
+	display: inline-block;
+	margin-right: 10px;
+	min-width: 750px;
+}

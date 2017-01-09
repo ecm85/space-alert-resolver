@@ -1,0 +1,38 @@
+﻿.game-runthrough {
+	display: inline-block;
+	width: 250px;
+	max-width: 250px;
+	vertical-align: top;
+}
+
+.automated-run-through {
+	margin: 20px 0;
+}
+
+.phase-selector {
+	height: 275px;
+}
+
+.turn-selector-option {
+	width:42px;
+	max-width:42px;
+	text-align: center;
+}
+
+.phase-selector-option {
+	width:167px;
+	max-width:167px;
+	text-align: center;
+}
+
+.fast-speed-label {
+	float: right;
+}
+
+.speed-selection-container {
+	width: 200px;
+}
+
+.speed-selector {
+	width: 200px;
+}

@@ -1,0 +1,16 @@
+﻿.sitting-duck {
+	width: 715px;
+	height: auto;
+	display: inline-block;
+	z-index: -1000;
+}
+
+.sitting-duck-wrapper {
+	position: relative;
+	display: inline-block;
+	z-index: -1000;
+}
+
+.full-board {
+	display: inline-block;
+}
