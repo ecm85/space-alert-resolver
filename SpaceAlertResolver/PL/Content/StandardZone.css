@@ -249,7 +249,10 @@
 	width: 67px;
 	position: absolute;
 	height: auto;
-    border: 2px rgb(255, 0, 0) double;
+    border-top: 1px white solid;
+	border-left: 1px white solid;
+	box-shadow: 5px 5px 5px black;
+	border-radius: 20px;
 }
 
 .Red-Shield-damage-token {
