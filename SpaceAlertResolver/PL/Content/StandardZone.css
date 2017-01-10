@@ -249,8 +249,7 @@
 	width: 67px;
 	position: absolute;
 	height: auto;
-	border: yellow 2px dashed;;
-	/*z-index: -900;*/
+    border: 2px rgb(255, 0, 0) double;
 }
 
 .Red-Shield-damage-token {

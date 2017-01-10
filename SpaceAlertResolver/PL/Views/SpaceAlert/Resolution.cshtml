@@ -6,7 +6,7 @@
 @Scripts.Render("~/bundles/app")
 <div ng-app="spaceAlertModule">
 	<div ng-controller="ResolutionController">
-		<div class="game-runthrough">
+		<div class="game-sidebar">
 			<div class="btn-group automated-run-through">
 				<div class="btn btn-default" ng-click="goToStart()"><i class="fa fa-fast-backward"></i></div>
 				<div class="btn btn-default" ng-click="goBackOnePhase()"><i class="fa fa-backward"></i></div>
@@ -36,6 +36,21 @@
 						<a href="#" class="phase-selector-option" ng-click="selectPhaseManually(phaseGroup.phase)">{{phaseGroup.description}}</a>
 					</li>
 				</ul>
+			</div>
+			<div>
+				<h3>Damage</h3>
+				<table class="table table-condensed">
+					<tr>
+						<th>Red</th>
+						<th>White</th>
+						<th>Blue</th>
+					</tr>
+					<tr>
+						<td ng-class="{'danger': gameData[currentTurn][currentPhase].redZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].redZone.totalDamage}}</td>
+						<td ng-class="{'danger': gameData[currentTurn][currentPhase].whiteZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].whiteZone.totalDamage}}</td>
+						<td ng-class="{'danger': gameData[currentTurn][currentPhase].blueZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].blueZone.totalDamage}}</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 		<div class="full-board">
