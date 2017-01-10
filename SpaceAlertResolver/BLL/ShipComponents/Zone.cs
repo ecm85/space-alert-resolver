@@ -56,13 +56,10 @@ namespace BLL.ShipComponents
 			AllDamageTokensTaken.AddRange(newDamageTokens);
 			TotalDamage += damageDone;
 			var shipDestroyed = TotalDamage >= 7;
-			if (!shipDestroyed)
+			foreach (var token in newDamageTokens)
 			{
-				foreach (var token in newDamageTokens)
-				{
-					var damageableComponent = GetDamageableComponent(token);
-					damageableComponent?.SetDamaged();
-				}
+				var damageableComponent = GetDamageableComponent(token);
+				damageableComponent?.SetDamaged();
 			}
 			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
 		}

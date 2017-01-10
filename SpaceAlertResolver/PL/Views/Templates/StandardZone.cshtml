@@ -33,7 +33,7 @@
 	<img class="inactive-battle-bots" ng-if="zone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png" />
 </div>
 <div class="inactive-upper-blue-battle-bots station-area">
-	<img class="inactive-battle-bots" ng-if="zone..upperStation.battleBots" src="~/Content/Images/BattleBots.png" />
+	<img class="inactive-battle-bots" ng-if="zone.upperStation.battleBots" src="~/Content/Images/BattleBots.png" />
 </div>
 <div class="rockets station-area">
 	<img class="rocket" ng-repeat="rocket in zone.lowerStation.rockets" src="~/Content/Images/rocket2.png" />
@@ -44,3 +44,6 @@
 <div class="battery-pack-container battery-pack-container-lower-blue station-area">
 	<img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 </div>
+
+@*<div>{{zone.totalDamage}}</div>*@
+<img ng-repeat="damage in zone.damage" class="damage-token {{damage}}-damage-token" ng-src="~/Content/Images/Damage/{{damage}}.png"/>
