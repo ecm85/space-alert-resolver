@@ -127,17 +127,14 @@ angular.module("spaceAlertModule")
 
 			$scope.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 			$scope.playerCounts = [1, 2, 3, 4, 5];
+			var createEmptyAction = function() { return cloneAction($scope.allActions[0]); };
 			$scope.players = [
-				{ title: 'Captain', color: { model: $scope.colors[0] }, actions: [] },
-				{ title: 'Player 2', color: { model: $scope.colors[1] }, actions: [] },
-				{ title: 'Player 3', color: { model: $scope.colors[2] }, actions: [] },
-				{ title: 'Player 4', color: { model: $scope.colors[3] }, actions: [] },
-				{ title: 'Player 5', color: { model: $scope.colors[4] }, actions: [] }
+				{ title: 'Captain', color: { model: $scope.colors[0] }, actions: _.map(_.range(12), createEmptyAction) },
+				{ title: 'Player 2', color: { model: $scope.colors[1] }, actions: _.map(_.range(12), createEmptyAction) },
+				{ title: 'Player 3', color: { model: $scope.colors[2] }, actions: _.map(_.range(12), createEmptyAction) },
+				{ title: 'Player 4', color: { model: $scope.colors[3] }, actions: _.map(_.range(12), createEmptyAction) },
+				{ title: 'Player 5', color: { model: $scope.colors[4] }, actions: _.map(_.range(12), createEmptyAction) }
 			];
-			$scope.players.forEach(function(player) {
-				for (var i = 0; i < 12; i++)
-					player.actions.push(cloneAction($scope.allActions[0]));
-			});
 			$scope.selectPlayerCount = function(newPlayerCount) {
 				$scope.selectedPlayerCountRadio = { model: newPlayerCount };
 				$scope.players.forEach(function(player, index) {
@@ -188,25 +185,18 @@ angular.module("spaceAlertModule")
 					$scope.selectedTracks.internalTrack != null;
 			}
 
-			var getColorIndex = function(playerColor) {
-				for (var i = 0; i < $scope.colors.length; i++)
-					if ($scope.colors[i] === playerColor)
-						return i;
-				return -1;
-			}
 			$scope.getGameArgs = function() {
 				if (!$scope.canCreateGame())
 					return '';
-				var players = [];
-				for (var i = 0; i < $scope.players.length; i++) {
-					var player = $scope.players[i];
-					if (player.isInGame)
-						players.push({
+				var playersInGame = _.filter($scope.players, { isInGame: true });
+				var players = _.map(playersInGame,
+					function(player, index) {
+						return {
 							actions: player.actions,
-							index: i,
-							playerColor: getColorIndex(player.color.model)
-						});
-				}
+							index: index,
+							playerColor: _.findIndex($scope.colors, function(color) { return color === player.color.model; })
+						}
+					});
 				var game = {
 					players: players,
 					redThreats: $scope.selectedThreats.redThreats,
