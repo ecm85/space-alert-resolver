@@ -41,6 +41,7 @@ namespace BLL
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; }
 		public bool HasLost { get; private set; }
+		public string KilledBy { get; set; }
 
 		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
 		public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
@@ -128,9 +129,13 @@ namespace BLL
 
 				CurrentTurn++;
 			}
-			catch (LoseException)
+			catch (LoseException loseException)
 			{
 				HasLost = true;
+				var threatType = loseException.Threat.GetType();
+				KilledBy = ExternalThreatFactory.ThreatNamesByType.ContainsKey(threatType) ? 
+					ExternalThreatFactory.ThreatNamesByType[threatType] :
+					InternalThreatFactory.ThreatNamesByType[threatType];
 				throw;
 			}
 		}

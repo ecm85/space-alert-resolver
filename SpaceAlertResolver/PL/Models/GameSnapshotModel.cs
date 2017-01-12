@@ -12,6 +12,7 @@ namespace PL.Models
 		public StandardZoneModel WhiteZone { get; set; }
 		public StandardZoneModel BlueZone { get; set; }
 		public InterceptorsZoneModel InterceptorsZone { get; set; }
+		public string KilledBy { get; set; }
 
 		public string Description { get; }
 		public int Turn { get; }
@@ -28,6 +29,7 @@ namespace PL.Models
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			Description = game.HasLost ? phase.GetDescription() + " - Lost!" : phase.GetDescription();
 			Turn = game.CurrentTurn;
+			KilledBy = game.KilledBy;
 		}
 	}
 }

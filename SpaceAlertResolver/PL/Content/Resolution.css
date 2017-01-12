@@ -69,3 +69,7 @@
 .interceptors-in-space-placeholder {
 	opacity: .3;
 }
+
+.killed-by {
+	text-align: left;
+}
