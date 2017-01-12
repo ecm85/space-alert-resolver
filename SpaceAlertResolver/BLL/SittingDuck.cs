@@ -34,9 +34,9 @@ namespace BLL
 
 
 			var interceptors = new Interceptors();
-			var interceptorComponent1 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor1);
-			var interceptorComponent2 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
-			var interceptorComponent3 = new InterceptorComponent(this, interceptors, StationLocation.Interceptor2);
+			var interceptorComponent1 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor1);
+			var interceptorComponent2 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor2);
+			var interceptorComponent3 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor3);
 
 			var interceptorStation1 = new InterceptorStation(
 				StationLocation.Interceptor1,

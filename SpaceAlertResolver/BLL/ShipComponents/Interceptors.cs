@@ -2,6 +2,5 @@
 {
 	public class Interceptors
 	{
-		public Player PlayerOperating { get; set; }
 	}
 }

@@ -58,10 +58,23 @@
 				<track-with-threats track="gameData[currentTurn][currentPhase].redZone.track" threats="gameData[currentTurn][currentPhase].redZone.externalThreats" track-id="'red'"></track-with-threats>
 				<track-with-threats track="gameData[currentTurn][currentPhase].whiteZone.track" threats="gameData[currentTurn][currentPhase].whiteZone.externalThreats" track-id="'white'"></track-with-threats>
 				<track-with-threats track="gameData[currentTurn][currentPhase].blueZone.track" threats="gameData[currentTurn][currentPhase].blueZone.externalThreats" track-id="'blue'"></track-with-threats>
+				<div class="interceptors-zone">
+					<div class="interceptors-station interceptors-station-3">
+						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation3.players" class="interceptors-in-space" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation3.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+					</div>
+					<div class="interceptors-station interceptors-station-2">
+						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation2.players" class="interceptors-in-space interceptors-in-space-2" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation2.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+					</div>
+					<div class="interceptors-station interceptors-station-1">
+						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation1.players" class="interceptors-in-space interceptors-in-space-1" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation1.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+					</div>
+				</div>
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
-
 				<standard-zone zone="gameData[currentTurn][currentPhase].whiteZone" zone-id="'white'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
 				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>

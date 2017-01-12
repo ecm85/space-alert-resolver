@@ -6,7 +6,7 @@ using BLL.ShipComponents;
 
 namespace PL.Models
 {
-	public abstract class ZoneModel
+	public abstract class StandardZoneModel
 	{
 		public ZoneLocation ZoneLocation { get; set; }
 		public IEnumerable<ThreatModel> ExternalThreats { get; set; }
@@ -16,7 +16,7 @@ namespace PL.Models
 		public IEnumerable<string> Damage { get; set; }
 		public int TotalDamage { get; set; }
 
-		protected ZoneModel(Game game, ZoneLocation zoneLocation)
+		protected StandardZoneModel(Game game, ZoneLocation zoneLocation)
 		{
 			var zone = game.SittingDuck.ZonesByLocation[zoneLocation];
 			ZoneLocation = zoneLocation;

@@ -3,7 +3,7 @@ using BLL.ShipComponents;
 
 namespace PL.Models
 {
-	public class BlueZoneModel : ZoneModel
+	public class BlueZoneModel : StandardZoneModel
 	{
 		public BlueZoneModel(Game game) : base(game, ZoneLocation.Blue)
 		{

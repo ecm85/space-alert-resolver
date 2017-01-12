@@ -76,7 +76,8 @@
     <Compile Include="ShipComponents\ICharlieComponent.cs" />
     <Compile Include="ShipComponents\IDamageableComponent.cs" />
     <Compile Include="ShipComponents\IEnergyProvider.cs" />
-    <Compile Include="ShipComponents\InterceptorComponent.cs" />
+    <Compile Include="ShipComponents\InterceptorsOnShipComponent.cs" />
+    <Compile Include="ShipComponents\InterceptorsInSpaceComponent.cs" />
     <Compile Include="ShipComponents\Interceptors.cs" />
     <Compile Include="ShipComponents\InterceptorStation.cs" />
     <Compile Include="PlayerDamage.cs" />

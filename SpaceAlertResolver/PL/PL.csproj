@@ -247,6 +247,12 @@
     <Content Include="Content\Images\Damage\White-Reactor.png" />
     <Content Include="Content\Images\Damage\White-Shield.png" />
     <Content Include="Content\Images\Damage\White-Structural.png" />
+    <Content Include="Content\Images\Interceptors.png" />
+    <Content Include="Content\Images\InterceptorsBlue.png" />
+    <Content Include="Content\Images\InterceptorsGreen.png" />
+    <Content Include="Content\Images\InterceptorsPurple.png" />
+    <Content Include="Content\Images\InterceptorsRed.png" />
+    <Content Include="Content\Images\InterceptorsYellow.png" />
     <Content Include="Content\Images\orangeCube.png" />
     <Content Include="Content\Images\Players\BattleBots.png" />
     <Content Include="Content\Images\Players\MaleBlue.png" />
@@ -298,6 +304,9 @@
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
     <Compile Include="Models\InputModel.cs" />
+    <Compile Include="Models\InterceptorsModel.cs" />
+    <Compile Include="Models\InterceptorsStationModel.cs" />
+    <Compile Include="Models\InterceptorsZoneModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />
     <Compile Include="Models\LowerRedStationModel.cs" />
     <Compile Include="Models\LowerBlueStationModel.cs" />
@@ -306,6 +315,7 @@
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
+    <Compile Include="Models\StationModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\ThreatsByTypeModel.cs" />
@@ -316,7 +326,7 @@
     <Compile Include="Models\UpperBlueStationModel.cs" />
     <Compile Include="Models\UpperWhiteStationModel.cs" />
     <Compile Include="Models\WhiteZoneModel.cs" />
-    <Compile Include="Models\ZoneModel.cs" />
+    <Compile Include="Models\StandardZoneModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

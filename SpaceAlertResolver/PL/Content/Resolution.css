@@ -36,3 +36,36 @@
 .speed-selector {
 	width: 200px;
 }
+
+.interceptors-in-space {
+	width: 100px;
+	height: auto;
+}
+
+.interceptors-zone {
+	position: relative;
+    display: inline-block;
+    width: 107px;
+    height: 346px;
+}
+
+.interceptors-station {
+	border-bottom: 2px red dashed;
+	border-left: 2px red dashed;
+	border-right: 2px red dashed;
+	width: 107px;
+	padding-top: 30%;
+}
+
+.interceptors-station-1, .interceptors-station-2 {
+	height: 108px;
+}
+
+.interceptors-station-3 {
+	height: 135px;
+	border-top: 2px red dashed;
+}
+
+.interceptors-in-space-placeholder {
+	opacity: .3;
+}

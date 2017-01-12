@@ -5,17 +5,15 @@ using BLL.ShipComponents;
 
 namespace PL.Models
 {
-	public abstract class StandardStationModel
+	public abstract class StandardStationModel : StationModel
 	{
 		public IEnumerable<int> EnergyCubes { get; set; }
 		public int MaxEnergyCubes { get; set; }
-		public IEnumerable<PlayerModel> Players { get; set; }
 		public CannonModel Cannon { get; set; }
 		public IEnumerable<InternalThreatModel> InternalThreats { get; set; }
 
-		protected StandardStationModel(Game game, StationLocation station)
+		protected StandardStationModel(Game game, StationLocation station) : base(game, station)
 		{
-			Players = GetPlayersInStation(game, station).Select(player => new PlayerModel(player)).ToList();
 			var standardStation = game.SittingDuck.StandardStationsByLocation[station];
 			EnergyCubes = Enumerable.Range(1, standardStation.BravoComponent.EnergyInComponent);
 			MaxEnergyCubes = standardStation.BravoComponent.Capacity + 1;
@@ -24,11 +22,6 @@ namespace PL.Models
 				.Where(threat => threat.CurrentStations.Contains(station))
 				.Select(threat => new InternalThreatModel(threat))
 				.ToList();
-		}
-
-		private static IEnumerable<Player> GetPlayersInStation(Game game, StationLocation location)
-		{
-			return game.Players.Where(player => player.CurrentStation.StationLocation == location);
 		}
 	}
 }

@@ -349,3 +349,15 @@
     left: 568px;
 }
 
+.inactive-interceptors-wrapper {
+	position: absolute;
+    height: 33px;
+    width: 45px;
+    top: 230px;
+    left: 103px;
+}
+
+.inactive-interceptors {
+	height: auto;
+	width: 45px;
+}

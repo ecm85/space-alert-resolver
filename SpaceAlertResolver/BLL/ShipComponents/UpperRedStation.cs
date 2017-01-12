@@ -5,7 +5,7 @@
 		public override IAlphaComponent AlphaComponent { get; }
 		protected override Shield Shield { get; }
 		protected override ICharlieComponent CharlieComponent => InterceptorComponent;
-		public InterceptorComponent InterceptorComponent { get; }
+		public InterceptorsOnShipComponent InterceptorComponent { get; }
 
 		public UpperRedStation(
 			SideReactor redReactor,
@@ -18,7 +18,16 @@
 		{
 			AlphaComponent = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
 			Shield = new SideShield(redReactor);
-			InterceptorComponent = new InterceptorComponent(sittingDuck, interceptors, StationLocation.UpperRed);
+			InterceptorComponent = new InterceptorsOnShipComponent(sittingDuck, interceptors);
+		}
+
+		public override void MovePlayerIn(Player performingPlayer, int currentTurn)
+		{
+			base.MovePlayerIn(performingPlayer, currentTurn);
+			if (performingPlayer.Interceptors != null)
+			{
+				InterceptorComponent.DockInterceptors(performingPlayer);
+			}
 		}
 	}
 }

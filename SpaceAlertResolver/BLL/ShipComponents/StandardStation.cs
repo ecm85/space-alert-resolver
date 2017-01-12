@@ -96,11 +96,6 @@ namespace BLL.ShipComponents
 			OnPlayerMovingIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
-			if (performingPlayer.Interceptors != null)
-			{
-				performingPlayer.Interceptors.PlayerOperating = null;
-				performingPlayer.Interceptors = null;
-			}
 		}
 
 		public bool CanMoveOutTowardsRed()

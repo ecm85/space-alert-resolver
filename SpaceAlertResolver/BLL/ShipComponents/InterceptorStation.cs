@@ -4,13 +4,13 @@ namespace BLL.ShipComponents
 {
 	public class InterceptorStation : Station
 	{
-		private InterceptorComponent InterceptorComponent { get; set; }
+		public InterceptorsInSpaceComponent InterceptorComponent { get; private set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
 		public InterceptorStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
-			InterceptorComponent interceptorComponent) : base(stationLocation, threatController)
+			InterceptorsInSpaceComponent interceptorComponent) : base(stationLocation, threatController)
 		{
 			MovingIn += UseBattleBots;
 			InterceptorComponent = interceptorComponent;
