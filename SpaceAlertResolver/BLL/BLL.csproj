@@ -54,6 +54,7 @@
     <Compile Include="EnumFactory.cs" />
     <Compile Include="ExternalThreatEffect.cs" />
     <Compile Include="GameParser.cs" />
+    <Compile Include="GameStatus.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />

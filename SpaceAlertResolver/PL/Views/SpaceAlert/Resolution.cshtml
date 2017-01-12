@@ -51,9 +51,12 @@
 						<td ng-class="{'danger': gameData[currentTurn][currentPhase].blueZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].blueZone.totalDamage}}</td>
 					</tr>
 				</table>
-				<dl ng-if="gameData[currentTurn][currentPhase].killedBy != null">
-					<dt>Killed By</dt>
-					<dd>{{gameData[currentTurn][currentPhase].killedBy}}</dd>
+				
+				<dl>
+					<dt>Game Status</dt>
+					<dd>{{gameData[currentTurn][currentPhase].gameStatus}}</dd>
+					<dt ng-if="gameData[currentTurn][currentPhase].killedBy != null">Killed By</dt>
+					<dd ng-if="gameData[currentTurn][currentPhase].killedBy != null">{{gameData[currentTurn][currentPhase].killedBy}}</dd>
 				</dl>
 			</div>
 		</div>

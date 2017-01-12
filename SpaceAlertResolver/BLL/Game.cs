@@ -40,7 +40,7 @@ namespace BLL
 		public int NumberOfTurns { get; set; }
 		public int TotalPoints { get; private set; }
 		public ThreatController ThreatController { get; }
-		public bool HasLost { get; private set; }
+		public GameStatus GameStatus { get; private set; }
 		public string KilledBy { get; set; }
 
 		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
@@ -54,7 +54,7 @@ namespace BLL
 			IDictionary<ZoneLocation, TrackConfiguration> externalTrackConfigurationsByZone,
 			TrackConfiguration internalTrackConfiguration)
 		{
-			HasLost = false;
+			GameStatus = GameStatus.InProgress;
 			NumberOfTurns = 12;
 			var externalTracksByZone = externalTrackConfigurationsByZone.ToDictionary(
 				trackConfigurationWithZone => trackConfigurationWithZone.Key,
@@ -131,7 +131,7 @@ namespace BLL
 			}
 			catch (LoseException loseException)
 			{
-				HasLost = true;
+				GameStatus = GameStatus.Lost;
 				var threatType = loseException.Threat.GetType();
 				KilledBy = ExternalThreatFactory.ThreatNamesByType.ContainsKey(threatType) ? 
 					ExternalThreatFactory.ThreatNamesByType[threatType] :
@@ -156,6 +156,7 @@ namespace BLL
 			}
 			CalculateScore();
 			ThreatController.OnJumpingToHyperspace();
+			GameStatus = GameStatus.Won;
 		}
 
 		private void CalculateScore()

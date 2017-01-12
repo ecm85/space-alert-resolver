@@ -41,7 +41,7 @@ namespace BLL.Test
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 
-			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(5, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
@@ -83,7 +83,7 @@ namespace BLL.Test
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
 
-			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
 			Assert.AreEqual(4, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(3, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(3, game.SittingDuck.WhiteZone.TotalDamage);
@@ -220,7 +220,7 @@ namespace BLL.Test
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
-			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(1, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
@@ -285,7 +285,7 @@ namespace BLL.Test
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
-			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
@@ -351,7 +351,7 @@ namespace BLL.Test
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
-			Assert.IsFalse(game.HasLost);
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
 			Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.RedZone.TotalDamage);
 			Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
