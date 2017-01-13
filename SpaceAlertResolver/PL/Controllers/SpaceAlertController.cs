@@ -58,33 +58,21 @@ namespace PL.Controllers
 				try
 				{
 					game.PerformTurn();
-					AddCurrentTurnToModels(models, currentTurnModels);
+					models.AddRange(currentTurnModels.Select(currentTurnModel => currentTurnModel.Value));
 					currentTurnModels.Clear();
 				}
 				catch (LoseException)
 				{
 					var currentPhase = currentTurnModels.Single(modelWithPhase => modelWithPhase.Value == null).Key;
 					currentTurnModels[currentPhase] = new GameSnapshotModel (game, currentPhase);
-					AddCurrentTurnToModels(models, currentTurnModels);
+					models.AddRange(currentTurnModels.Values);
 					lost = true;
 				}
 			}
 
-			var modelsByTurn = models.GroupBy(model => model.Turn).ToList();
+			var modelsByTurn = models.GroupBy(model => model.TurnNumber).ToList();
 			var modelsString = JavaScriptConvert.SerializeObject(modelsByTurn);
 			return View("Resolution", modelsString);
-		}
-
-		private static void AddCurrentTurnToModels(List<GameSnapshotModel> models, Dictionary<ResolutionPhase, GameSnapshotModel> currentTurnModels)
-		{
-			var phase = 0;
-			foreach (var currentTurnModel in currentTurnModels)
-			{
-				var model = currentTurnModel.Value;
-				model.Phase = phase;
-				models.Add(model);
-				phase++;
-			}
 		}
 	}
 }

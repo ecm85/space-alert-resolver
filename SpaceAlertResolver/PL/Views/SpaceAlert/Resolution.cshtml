@@ -25,15 +25,15 @@
 			</div>
 			<div>
 				<ul class="pagination" turn-selector>
-					<li ng-repeat="snapshotGroup in gameData" ng-class="{'active': currentTurn === snapshotGroup[0].turn}">
-						<a href="#" class="turn-selector-option" ng-click="selectTurnManually(snapshotGroup[0].turn)">{{snapshotGroup[0].turn + 1}}</a>
+					<li ng-repeat="turn in gameData" ng-class="{'active': currentTurn[0].turnNumber === turn[0].turnNumber}">
+						<a href="#" class="turn-selector-option" ng-click="selectTurnManually($index)">{{turn[0].turnNumber}}</a>
 					</li>
 				</ul>
 			</div>
 			<div>
 				<ul class="pagination phase-selector">
-					<li ng-repeat="phaseGroup in gameData[currentTurn]" ng-class="{'active': currentPhase === phaseGroup.phase}">
-						<a href="#" class="phase-selector-option" ng-click="selectPhaseManually(phaseGroup.phase)">{{phaseGroup.description}}</a>
+					<li ng-repeat="phase in currentTurn" ng-class="{'active': currentPhase.phaseDescription === phase.phaseDescription}">
+						<a href="#" class="phase-selector-option" ng-click="selectPhaseManually($index)">{{phase.phaseDescription}}</a>
 					</li>
 				</ul>
 			</div>
@@ -46,47 +46,46 @@
 						<th>Blue</th>
 					</tr>
 					<tr>
-						<td ng-class="{'danger': gameData[currentTurn][currentPhase].redZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].redZone.totalDamage}}</td>
-						<td ng-class="{'danger': gameData[currentTurn][currentPhase].whiteZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].whiteZone.totalDamage}}</td>
-						<td ng-class="{'danger': gameData[currentTurn][currentPhase].blueZone.totalDamage > 6}">{{gameData[currentTurn][currentPhase].blueZone.totalDamage}}</td>
+						<td ng-class="{'danger': currentPhase.redZone.totalDamage > 6}">{{currentPhase.redZone.totalDamage}}</td>
+						<td ng-class="{'danger': currentPhase.whiteZone.totalDamage > 6}">{{currentPhase.whiteZone.totalDamage}}</td>
+						<td ng-class="{'danger': currentPhase.blueZone.totalDamage > 6}">{{currentPhase.blueZone.totalDamage}}</td>
 					</tr>
 				</table>
-				
 				<dl>
 					<dt>Game Status</dt>
-					<dd>{{gameData[currentTurn][currentPhase].gameStatus}}</dd>
-					<dt ng-if="gameData[currentTurn][currentPhase].killedBy != null">Killed By</dt>
-					<dd ng-if="gameData[currentTurn][currentPhase].killedBy != null">{{gameData[currentTurn][currentPhase].killedBy}}</dd>
+					<dd>{{currentPhase.gameStatus}}</dd>
+					<dt ng-if="currentPhase.killedBy != null">Killed By</dt>
+					<dd ng-if="currentPhase.killedBy != null">{{currentPhase.killedBy}}</dd>
 				</dl>
 			</div>
 		</div>
 		<div class="full-board">
 			<div class="external-tracks-wrapper">
-				<track-with-threats track="gameData[currentTurn][currentPhase].redZone.track" threats="gameData[currentTurn][currentPhase].redZone.externalThreats" track-id="'red'"></track-with-threats>
-				<track-with-threats track="gameData[currentTurn][currentPhase].whiteZone.track" threats="gameData[currentTurn][currentPhase].whiteZone.externalThreats" track-id="'white'"></track-with-threats>
-				<track-with-threats track="gameData[currentTurn][currentPhase].blueZone.track" threats="gameData[currentTurn][currentPhase].blueZone.externalThreats" track-id="'blue'"></track-with-threats>
+				<track-with-threats track="currentPhase.redZone.track" threats="currentPhase.redZone.externalThreats" track-id="'red'"></track-with-threats>
+				<track-with-threats track="currentPhase.whiteZone.track" threats="currentPhase.whiteZone.externalThreats" track-id="'white'"></track-with-threats>
+				<track-with-threats track="currentPhase.blueZone.track" threats="currentPhase.blueZone.externalThreats" track-id="'blue'"></track-with-threats>
 				<div class="interceptors-zone">
 					<div class="interceptors-station interceptors-station-3">
-						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation3.players" class="interceptors-in-space" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation3.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+						<img ng-repeat="player in currentPhase.interceptorsZone.interceptorsStation3.players" class="interceptors-in-space" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="currentPhase.interceptorsZone.interceptorsStation3.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
 					</div>
 					<div class="interceptors-station interceptors-station-2">
-						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation2.players" class="interceptors-in-space interceptors-in-space-2" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation2.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+						<img ng-repeat="player in currentPhase.interceptorsZone.interceptorsStation2.players" class="interceptors-in-space interceptors-in-space-2" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="currentPhase.interceptorsZone.interceptorsStation2.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
 					</div>
 					<div class="interceptors-station interceptors-station-1">
-						<img ng-repeat="player in gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation1.players" class="interceptors-in-space interceptors-in-space-1" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-						<img ng-if="gameData[currentTurn][currentPhase].interceptorsZone.interceptorsStation1.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
+						<img ng-repeat="player in currentPhase.interceptorsZone.interceptorsStation1.players" class="interceptors-in-space interceptors-in-space-1" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
+						<img ng-if="currentPhase.interceptorsZone.interceptorsStation1.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
 					</div>
 				</div>
 			</div>
 			<div class="sitting-duck-wrapper">
 				<img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
-				<standard-zone zone="gameData[currentTurn][currentPhase].whiteZone" zone-id="'white'"></standard-zone>
-				<standard-zone zone="gameData[currentTurn][currentPhase].redZone" zone-id="'red'"></standard-zone>
-				<standard-zone zone="gameData[currentTurn][currentPhase].blueZone" zone-id="'blue'"></standard-zone>
+				<standard-zone zone="currentPhase.whiteZone" zone-id="'white'"></standard-zone>
+				<standard-zone zone="currentPhase.redZone" zone-id="'red'"></standard-zone>
+				<standard-zone zone="currentPhase.blueZone" zone-id="'blue'"></standard-zone>
 			</div>
-			<track-with-threats track="gameData[currentTurn][currentPhase].internalTrack" threats="gameData[currentTurn][currentPhase].internalThreats" track-id="'internal'"></track-with-threats>
+			<track-with-threats track="currentPhase.internalTrack" threats="currentPhase.internalThreats" track-id="'internal'"></track-with-threats>
 		</div>
 	</div>
 	<script type="text/ng-template" id="templates/standardZone">

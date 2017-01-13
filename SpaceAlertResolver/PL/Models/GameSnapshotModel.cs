@@ -15,9 +15,8 @@ namespace PL.Models
 		public string KilledBy { get; set; }
 		public string GameStatus { get; set; }
 
-		public string Description { get; }
-		public int Turn { get; }
-		public int Phase { get; set; }
+		public string PhaseDescription { get; }
+		public int TurnNumber { get; }
 
 		public GameSnapshotModel(Game game, ResolutionPhase phase)
 		{
@@ -28,8 +27,8 @@ namespace PL.Models
 			InterceptorsZone = new InterceptorsZoneModel(game);
 			InternalThreats = internalThreats.Select(threat => new InternalThreatModel(threat)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
-			Description = phase.GetDescription();
-			Turn = game.CurrentTurn;
+			PhaseDescription = phase.GetDescription();
+			TurnNumber = game.CurrentTurn + 1;
 			KilledBy = game.KilledBy;
 			GameStatus = game.GameStatus.GetDisplayName();
 		}

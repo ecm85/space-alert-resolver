@@ -6,13 +6,18 @@ angular.module("spaceAlertModule")
 		"$scope", "gameData", '$interval', '$animate', function($scope, gameData, $interval, $animate) {
 			$animate.enabled(false);
 			$scope.gameData = gameData;
+			var turnCount = $scope.gameData.length;
 			$scope.playing = null;
 			$scope.turnsPerTwoSeconds = 5;
-			var selectPhase = function(phase) {
-				$scope.currentPhase = phase;
+			let phaseIndex = 0;
+			let turnIndex = 0;
+			var selectPhase = function (newPhaseIndex) {
+				phaseIndex = newPhaseIndex;
+				$scope.currentPhase = $scope.currentTurn[phaseIndex];
 			}
-			var selectTurn = function(turn) {
-				$scope.currentTurn = turn;
+			var selectTurn = function(newTurnIndex) {
+				turnIndex = newTurnIndex;
+				$scope.currentTurn = $scope.gameData[turnIndex];
 				selectPhase(0);
 			}
 			var stop = function() {
@@ -24,9 +29,9 @@ angular.module("spaceAlertModule")
 			var play = function() {
 				$scope.playing = $interval(function() {
 						if (!$scope.isAtEndOfTurn())
-							$scope.selectPhaseAutomatically($scope.currentPhase + 1);
+							$scope.selectPhaseAutomatically(phaseIndex + 1);
 						else if (!$scope.isAtEndOfGame())
-							$scope.selectTurnAutomatically($scope.currentTurn + 1);
+							$scope.selectTurnAutomatically(turnIndex + 1);
 						else {
 							stop();
 						}
@@ -41,47 +46,47 @@ angular.module("spaceAlertModule")
 					}
 				});
 
-			$scope.selectTurnManually = function(turn) {
+			$scope.selectTurnManually = function(newTurnIndex) {
 				stop();
-				selectTurn(turn);
+				selectTurn(newTurnIndex);
 			}
-			$scope.selectTurnAutomatically = function(turn) {
-				selectTurn(turn);
+			$scope.selectTurnAutomatically = function (newTurnIndex) {
+				selectTurn(newTurnIndex);
 			}
 
-			$scope.selectPhaseManually = function(phase) {
+			$scope.selectPhaseManually = function(newPhaseIndex) {
 				stop();
-				selectPhase(phase);
+				selectPhase(newPhaseIndex);
 			}
-			$scope.selectPhaseAutomatically = function(phase) {
-				selectPhase(phase);
+			$scope.selectPhaseAutomatically = function (newPhaseIndex) {
+				selectPhase(newPhaseIndex);
 			}
 
 			$scope.isAtStartOfTurn = function() {
-				return $scope.currentPhase === 0;
+				return phaseIndex === 0;
 			}
 			$scope.isAtStartOfGame = function() {
-				return $scope.currentTurn === 0 && $scope.isAtStartOfTurn();
+				return turnIndex === 0 && $scope.isAtStartOfTurn();
 			}
 			$scope.isAtEndOfTurn = function() {
-				return $scope.currentPhase === $scope.gameData[$scope.currentTurn].length - 1;
+				return phaseIndex === $scope.currentTurn.length - 1;
 			}
 			$scope.isAtEndOfGame = function() {
-				return $scope.currentTurn === $scope.gameData.length - 1 && $scope.isAtEndOfTurn();
+				return turnIndex === turnCount - 1 && $scope.isAtEndOfTurn();
 			}
 			$scope.goBackOnePhase = function() {
 				if (!$scope.isAtStartOfTurn())
-					$scope.selectPhaseManually($scope.currentPhase - 1);
+					$scope.selectPhaseManually(phaseIndex - 1);
 				else if (!$scope.isAtStartOfGame()) {
-					$scope.selectTurnManually($scope.currentTurn - 1);
-					$scope.selectPhaseManually($scope.gameData[$scope.currentTurn].length - 1);
+					$scope.selectTurnManually(turnIndex - 1);
+					$scope.selectPhaseManually($scope.currentTurn.length - 1);
 				}
 			}
 			$scope.goForwardOnePhase = function() {
 				if (!$scope.isAtEndOfTurn())
-					$scope.selectPhaseManually($scope.currentPhase + 1);
+					$scope.selectPhaseManually(phaseIndex + 1);
 				else if (!$scope.isAtEndOfGame()) {
-					$scope.selectTurnManually($scope.currentTurn + 1);
+					$scope.selectTurnManually(turnIndex + 1);
 				}
 			}
 			$scope.playPause = function() {
@@ -99,8 +104,8 @@ angular.module("spaceAlertModule")
 			$scope.goToEnd = function() {
 				if (!$scope.isAtEndOfGame()) {
 					stop();
-					$scope.selectTurnManually($scope.gameData.length - 1);
-					$scope.selectPhaseManually($scope.gameData[$scope.currentTurn].length - 1);
+					$scope.selectTurnManually(turnCount - 1);
+					$scope.selectPhaseManually($scope.currentTurn.length - 1);
 				}
 			}
 			$scope.$on('$destroy',
