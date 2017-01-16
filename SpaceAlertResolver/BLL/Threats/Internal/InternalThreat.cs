@@ -10,6 +10,8 @@ namespace BLL.Threats.Internal
 		public IList<StationLocation> CurrentStations { get; private set; }
 		public virtual IList<StationLocation> DisplayStations => CurrentStations;
 
+		public virtual IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
+
 		public virtual bool ShowOnTrack { get { return true; } }
 
 		public int? TotalInaccessibility {get; protected set; }

@@ -10,13 +10,13 @@ namespace BLL.Threats.Internal.Serious.Yellow
 	{
 		private PhasingThreatCore phasingThreatCore;
 
-		private readonly IList<StationLocation> mineLocations;
+		private IList<StationLocation> MineLocations => WarningIndicatorStations;
 
 		public PhasingMineLayer()
 			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.BattleBots)
 		{
-			mineLocations = new List<StationLocation>();
 		}
+
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
@@ -50,12 +50,12 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private void LayMine()
 		{
-			mineLocations.Add(CurrentStation);
+			MineLocations.Add(CurrentStation);
 		}
 
 		private void DetonateMines()
 		{
-			Damage(2, mineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
+			Damage(2, MineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)

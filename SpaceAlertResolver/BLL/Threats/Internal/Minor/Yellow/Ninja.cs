@@ -7,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class Ninja : MinorYellowInternalThreat
 	{
-		private IList<StationLocation> droneLocations = new List<StationLocation>();
+		private IList<StationLocation> DroneLocations => WarningIndicatorStations;
 		private PoisonedPlayers poisonedPlayers;
 
 		public Ninja()
@@ -17,9 +17,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			droneLocations = AdjacentLocations();
-			SittingDuck.SubscribeToMovingIn(droneLocations, PoisonPlayer);
-			SittingDuck.SubscribeToMovingOut(droneLocations, PoisonPlayer);
+			foreach (var adjacentLocation in AdjacentLocations())
+				DroneLocations.Add(adjacentLocation);
+			SittingDuck.SubscribeToMovingIn(DroneLocations, PoisonPlayer);
+			SittingDuck.SubscribeToMovingOut(DroneLocations, PoisonPlayer);
 		}
 
 		private void PoisonPlayer(object sender, PlayerMoveEventArgs args)
@@ -56,8 +57,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.UnsubscribeFromMovingIn(droneLocations, PoisonPlayer);
-			SittingDuck.UnsubscribeFromMovingOut(droneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMovingIn(DroneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMovingOut(DroneLocations, PoisonPlayer);
 		}
 
 		public override string Id { get; } = "I2-102";
