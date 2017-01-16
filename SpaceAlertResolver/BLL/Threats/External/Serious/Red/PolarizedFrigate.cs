@@ -26,6 +26,10 @@ namespace BLL.Threats.External.Serious.Red
 			AttackCurrentZone(5);
 		}
 
+		public override string Id { get; } = "SE3-109";
+		public override string DisplayName { get; } = "Polarized Frigate";
+		public override string FileName { get; } = "PolarizedFrigate";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var laserDamages = damages.Where(damage => damage.PlayerDamageType == PlayerDamageType.LightLaser || damage.PlayerDamageType == PlayerDamageType.HeavyLaser).ToList();

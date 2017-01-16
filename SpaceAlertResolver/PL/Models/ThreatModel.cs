@@ -14,7 +14,9 @@ namespace PL.Models
 		public int RemainingHealth { get; set; }
 		public int Speed { get; set; }
 		public int TimeAppears { get; set; }
-
+		public string Id { get; set; }
+		public string DisplayName { get; set; }
+		public string FileName { get; set; }
 		protected ThreatModel(Threat threat)
 		{
 			Position = threat.Position.GetValueOrDefault();
@@ -23,6 +25,9 @@ namespace PL.Models
 			ThreatType = threat.ThreatType;
 			ThreatDifficulty = threat.Difficulty;
 			TimeAppears = threat.TimeAppears;
+			Id = threat.Id;
+			DisplayName = threat.DisplayName;
+			FileName = threat.FileName;
 		}
 
 		[JsonConstructor]

@@ -13,5 +13,9 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			MoveRed();
 		}
+
+		public override string Id { get; } = "I1-02";
+		public override string DisplayName { get; } = "Skirmishers";
+		public override string FileName { get; } = "SkirmishersB";
 	}
 }

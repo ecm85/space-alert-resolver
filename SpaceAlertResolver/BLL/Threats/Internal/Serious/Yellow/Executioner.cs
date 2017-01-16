@@ -26,6 +26,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			Damage(3);
 		}
 
+		public override string Id { get; } = "SI2-01";
+		public override string DisplayName { get; } = "Executioner";
+		public override string FileName { get; } = "Executioner";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");

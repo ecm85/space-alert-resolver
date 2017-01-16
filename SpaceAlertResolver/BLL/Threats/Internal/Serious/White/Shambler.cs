@@ -27,6 +27,11 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			Damage(4);
 		}
+
+		public override string Id { get; } = "SI1-101";
+		public override string DisplayName { get; } = "Shambler";
+		public override string FileName { get; } = "Shambler";
+
 		private bool IsAnyPlayerPresent()
 		{
 			return SittingDuck.GetPlayerCount(CurrentStation) != 0;

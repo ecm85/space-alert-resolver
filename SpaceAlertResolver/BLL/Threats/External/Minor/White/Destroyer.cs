@@ -21,5 +21,9 @@
 		{
 			AttackCurrentZone(2, ThreatDamageType.DoubleDamageThroughShields);
 		}
+
+		public override string Id { get; } = "E1-02";
+		public override string DisplayName { get; } = "Destroyer";
+		public override string FileName { get; } = "Destroyer";
 	}
 }

@@ -25,6 +25,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			AttackCurrentZone(3, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
+		public override string Id { get; } = "E2-103";
+		public override string DisplayName { get; } = "Megashield Destroyer";
+		public override string FileName { get; } = "MegashieldDestroyer";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages);

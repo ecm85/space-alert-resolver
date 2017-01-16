@@ -29,5 +29,9 @@
 			foreach (var threat in ThreatController.DamageableExternalThreats)
 				threat.TakeIrreducibleDamage(1);
 		}
+
+		public override string Id { get; } = "SE1-03";
+		public override string DisplayName { get; } = "Leviathan Tanker";
+		public override string FileName { get; } = "LeviathanTanker";
 	}
 }

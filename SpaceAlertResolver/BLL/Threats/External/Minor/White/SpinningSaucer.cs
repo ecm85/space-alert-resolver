@@ -27,6 +27,11 @@ namespace BLL.Threats.External.Minor.White
 			if (!hitByRocket)
 				AttackCurrentZone(5);
 		}
+
+		public override string Id { get; } = "E1-102";
+		public override string DisplayName { get; } = "Spinning Saucer";
+		public override string FileName { get; } = "SpinningSaucer";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))

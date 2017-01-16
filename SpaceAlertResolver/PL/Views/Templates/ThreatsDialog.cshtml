@@ -20,7 +20,7 @@
 		ng-class="{'selected-threat-to-add': threat.id === selectedThreatToAdd.id}"
 		ng-click="selectThreatToAdd(threat)">
 		<threat threat-index="$index" threat="threat" track-id="zone"></threat>
-		<div class="threat-name">{{threat.name}}</div>
+		<div class="threat-name">{{threat.displayName}}</div>
 		<div class="threat-name">{{threat.id}}</div>
 	</div>
 	<div>

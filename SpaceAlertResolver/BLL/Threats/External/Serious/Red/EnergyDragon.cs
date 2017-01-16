@@ -73,5 +73,9 @@ namespace BLL.Threats.External.Serious.Red
 			base.OnThreatTerminated();
 			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
+
+		public override string Id { get; } = "SE3-108";
+		public override string DisplayName { get; } = "Energy Dragon";
+		public override string FileName { get; } = "EnergyDragon";
 	}
 }

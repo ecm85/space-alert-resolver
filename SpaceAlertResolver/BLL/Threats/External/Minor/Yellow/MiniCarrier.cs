@@ -21,5 +21,9 @@
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
+
+		public override string Id { get; } = "E2-101";
+		public override string DisplayName { get; } = "Mini-Carrier";
+		public override string FileName { get; } = "MiniCarrier";
 	}
 }

@@ -6,5 +6,9 @@
 		{
 			MoveBlue();
 		}
+
+		public override string Id { get; } = "I1-03";
+		public override string DisplayName { get; } = "Saboteur";
+		public override string FileName { get; } = "SaboteurB";
 	}
 }

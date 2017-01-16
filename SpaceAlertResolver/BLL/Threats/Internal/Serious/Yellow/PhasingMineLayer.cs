@@ -71,5 +71,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "SI2-102";
+		public override string DisplayName { get; } = "Phasing Mine Layer";
+		public override string FileName { get; } = "PhasingMineLayer";
 	}
 }

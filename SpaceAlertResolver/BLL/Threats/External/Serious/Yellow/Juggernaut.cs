@@ -27,6 +27,10 @@ namespace BLL.Threats.External.Serious.Yellow
 			AttackCurrentZone(7);
 		}
 
+		public override string Id { get; } = "SE2-02";
+		public override string DisplayName { get; } = "Juggernaut";
+		public override string FileName { get; } = "Juggernaut";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages);

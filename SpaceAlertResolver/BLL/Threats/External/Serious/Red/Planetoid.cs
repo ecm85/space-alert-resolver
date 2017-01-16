@@ -43,5 +43,9 @@ namespace BLL.Threats.External.Serious.Red
 			base.OnHealthReducedToZero();
 			AttackCurrentZone(4 * breakpointsCrossed);
 		}
+
+		public override string Id { get; } = "SE3-107";
+		public override string DisplayName { get; } = "Planetoid";
+		public override string FileName { get; } = "Planetoid";
 	}
 }

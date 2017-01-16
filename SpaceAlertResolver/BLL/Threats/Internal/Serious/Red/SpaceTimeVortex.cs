@@ -43,6 +43,10 @@ namespace BLL.Threats.Internal.Serious.Red
 				BonusThreat.Move(currentTurn);
 		}
 
+		public override string Id { get; } = "SI3-104";
+		public override string DisplayName { get; } = "Space Time Vortex";
+		public override string FileName { get; } = "SpaceTimeVortex";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			TeleportPlayersToOppositeDecks();

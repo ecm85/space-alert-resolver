@@ -36,5 +36,9 @@ namespace BLL.Threats.External.Serious.Yellow
 			base.OnHealthReducedToZero();
 			AttackCurrentZone(3 * breakpointsCrossed);
 		}
+
+		public override string Id { get; } = "SE2-06";
+		public override string DisplayName { get; } = "Major Asteroid";
+		public override string FileName { get; } = "MajorAsteroid";
 	}
 }

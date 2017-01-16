@@ -48,5 +48,9 @@ namespace BLL.Threats.External.Serious.White
 			base.OnThreatTerminated();
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
+
+		public override string Id { get; } = "SE1-102";
+		public override string DisplayName { get; } = "Dimension Spider";
+		public override string FileName { get; } = "DimensionSpider";
 	}
 }

@@ -36,6 +36,10 @@ namespace BLL.Threats.External.Serious.Red
 			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>(), currentTurn + 1);
 		}
 
+		public override string Id { get; } = "SE3-104";
+		public override string DisplayName { get; } = "Transmitter Satellite";
+		public override string FileName { get; } = "TransmitterSatellite";
+
 		public override int PointsForDefeating
 		{
 			get

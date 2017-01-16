@@ -36,5 +36,9 @@ namespace BLL.Threats.External.Minor.Yellow
 			base.OnHealthReducedToZero();
 			AttackCurrentZone(1 * breakpointsCrossed);
 		}
+
+		public override string Id { get; } = "E2-07";
+		public override string DisplayName { get; } = "Minor Asteroid";
+		public override string FileName { get; } = "MinorAsteroid";
 	}
 }

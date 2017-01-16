@@ -24,6 +24,10 @@ namespace BLL.Threats.External.Serious.Red
 			AttackAllZones(5, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
+		public override string Id { get; } = "SE3-103";
+		public override string DisplayName { get; } = "Super-Carrier";
+		public override string FileName { get; } = "SuperCarrier";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.AffectedDistances.Contains(DistanceToShip);

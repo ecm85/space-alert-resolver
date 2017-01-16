@@ -28,5 +28,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			base.OnHealthReducedToZero();
 			SittingDuck.KnockOutPlayers(new [] {StationLocation.LowerBlue, StationLocation.LowerRed});
 		}
+
+		public override string Id { get; } = "I2-06";
+		public override string DisplayName { get; } = "Overheated Reactor";
+		public override string FileName { get; } = "OverheatedReactor";
 	}
 }

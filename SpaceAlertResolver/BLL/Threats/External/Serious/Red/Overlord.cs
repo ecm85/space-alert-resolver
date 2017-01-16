@@ -59,6 +59,10 @@ namespace BLL.Threats.External.Serious.Red
 			throw new LoseException(this);
 		}
 
+		public override string Id { get; } = "SE3-105";
+		public override string DisplayName { get; } = "Overlord";
+		public override string FileName { get; } = "Overlord";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");

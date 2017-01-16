@@ -8,5 +8,9 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			get { return CurrentZone.RedwardZoneLocationWithWrapping(); }
 		}
+
+		public override string Id { get; } = "E3-105";
+		public override string DisplayName { get; } = "Jumper";
+		public override string FileName { get; } = "JumperA";
 	}
 }

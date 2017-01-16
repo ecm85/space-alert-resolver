@@ -63,5 +63,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "SI2-101";
+		public override string DisplayName { get; } = "Phasing Anomaly";
+		public override string FileName { get; } = "PhasingAnomaly";
 	}
 }

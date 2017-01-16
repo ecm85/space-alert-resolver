@@ -26,6 +26,10 @@ namespace BLL.Threats.External.Minor.Red
 			AttackCurrentZone(4);
 		}
 
+		public override string Id { get; } = "E3-108";
+		public override string DisplayName { get; } = "Polarized Fighter";
+		public override string FileName { get; } = "PolarizedFighter";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var laserDamages = damages.Where(damage => damage.PlayerDamageType == PlayerDamageType.LightLaser || damage.PlayerDamageType == PlayerDamageType.HeavyLaser).ToList();

@@ -27,6 +27,10 @@ namespace BLL.Threats.Internal.Minor.Red
 			Damage(4);
 		}
 
+		public override string Id { get; } = "I3-107";
+		public override string DisplayName { get; } = "Driller";
+		public override string FileName { get; } = "Driller";
+
 		internal void MoveTowardsMostDamagedZone()
 		{
 			var currentZone = (ZoneLocation?)CurrentZone;

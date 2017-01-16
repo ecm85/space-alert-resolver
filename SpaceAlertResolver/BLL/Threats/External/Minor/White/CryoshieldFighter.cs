@@ -26,6 +26,11 @@ namespace BLL.Threats.External.Minor.White
 		{
 			AttackCurrentZone(2);
 		}
+
+		public override string Id { get; } = "E1-06";
+		public override string DisplayName { get; } = "Cryoshield Fighter";
+		public override string FileName { get; } = "CryoshieldFighter";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())

@@ -132,10 +132,7 @@ namespace BLL
 			catch (LoseException loseException)
 			{
 				GameStatus = GameStatus.Lost;
-				var threatType = loseException.Threat.GetType();
-				KilledBy = ExternalThreatFactory.ThreatNamesByType.ContainsKey(threatType) ? 
-					ExternalThreatFactory.ThreatNamesByType[threatType] :
-					InternalThreatFactory.ThreatNamesByType[threatType];
+				KilledBy = loseException.Threat.DisplayName;
 				throw;
 			}
 		}

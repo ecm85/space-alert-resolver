@@ -36,5 +36,9 @@ namespace BLL.Threats.External.Serious.Red
 			Jump(CurrentZone.BluewardZoneLocationWithWrapping());
 			AttackCurrentZone(1);
 		}
+
+		public override string Id { get; } = "SE3-106";
+		public override string DisplayName { get; } = "Leaper";
+		public override string FileName { get; } = "Leaper";
 	}
 }

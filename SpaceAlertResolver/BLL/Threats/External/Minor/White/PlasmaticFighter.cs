@@ -21,5 +21,9 @@
 		{
 			AttackCurrentZone(2, ThreatDamageType.Plasmatic);
 		}
+
+		public override string Id { get; } = "E1-101";
+		public override string DisplayName { get; } = "Plasmatic Fighter";
+		public override string FileName { get; } = "PlasmaticFighter";
 	}
 }

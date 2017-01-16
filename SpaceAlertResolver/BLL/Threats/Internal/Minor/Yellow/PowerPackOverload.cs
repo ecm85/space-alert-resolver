@@ -61,5 +61,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "I2-101";
+		public override string DisplayName { get; } = "Power Pack Overload";
+		public override string FileName { get; } = "PowerPackOverload";
 	}
 }

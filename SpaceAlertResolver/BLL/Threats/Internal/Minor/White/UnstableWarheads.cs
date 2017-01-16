@@ -42,5 +42,9 @@ namespace BLL.Threats.Internal.Minor.White
 			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "I1-07";
+		public override string DisplayName { get; } = "Unstable Warheads";
+		public override string FileName { get; } = "UnstableWarheads";
 	}
 }

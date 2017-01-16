@@ -37,5 +37,9 @@ namespace BLL.Threats.External.Serious.White
 			base.OnHealthReducedToZero();
 			AttackCurrentZone(2 * breakpointsCrossed);
 		}
+
+		public override string Id { get; } = "SE1-08";
+		public override string DisplayName { get; } = "Asteroid";
+		public override string FileName { get; } = "Asteroid";
 	}
 }

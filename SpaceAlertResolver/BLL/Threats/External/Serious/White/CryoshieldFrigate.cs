@@ -26,6 +26,11 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackCurrentZone(4);
 		}
+
+		public override string Id { get; } = "SE1-05";
+		public override string DisplayName { get; } = "Cryoshield Frigate";
+		public override string FileName { get; } = "CryoshieldFrigate";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())

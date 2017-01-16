@@ -50,5 +50,9 @@ namespace BLL.Threats.Internal.Minor.Red
 			base.OnThreatTerminated();
 			SittingDuck.CentralLaserCannonFired -= HandleCentralLaserCannonFired;
 		}
+
+		public override string Id { get; } = "I3-102";
+		public override string DisplayName { get; } = "Pulse Cannon Short Circuit";
+		public override string FileName { get; } = "PulseCannonShortCircuit";
 	}
 }

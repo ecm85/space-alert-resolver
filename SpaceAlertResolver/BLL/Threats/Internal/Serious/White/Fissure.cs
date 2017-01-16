@@ -29,5 +29,9 @@ namespace BLL.Threats.Internal.Serious.White
 			SittingDuck.RemoveZoneDebuffForSource(EnumFactory.All<ZoneLocation>(), this);
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "SI1-04";
+		public override string DisplayName { get; } = "Fissure";
+		public override string FileName { get; } = "Fissure";
 	}
 }

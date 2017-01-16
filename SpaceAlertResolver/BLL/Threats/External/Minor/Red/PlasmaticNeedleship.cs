@@ -23,6 +23,11 @@ namespace BLL.Threats.External.Minor.Red
 		{
 			AttackCurrentZone(4, ThreatDamageType.Plasmatic);
 		}
+
+		public override string Id { get; } = "E3-101";
+		public override string DisplayName { get; } = "Plasmatic Needleship";
+		public override string FileName { get; } = "PlasmaticNeedleship";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");

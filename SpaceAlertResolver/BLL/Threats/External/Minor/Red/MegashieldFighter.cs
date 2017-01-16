@@ -25,6 +25,10 @@ namespace BLL.Threats.External.Minor.Red
 			AttackCurrentZone(3);
 		}
 
+		public override string Id { get; } = "E3-104";
+		public override string DisplayName { get; } = "Megashield Fighter";
+		public override string FileName { get; } = "MegashieldFighter";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages);

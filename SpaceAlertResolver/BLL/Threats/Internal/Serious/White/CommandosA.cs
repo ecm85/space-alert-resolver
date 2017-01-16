@@ -16,5 +16,9 @@ namespace BLL.Threats.Internal.Serious.White
 			else
 				Damage(2);
 		}
+
+		public override string Id { get; } = "SI1-01";
+		public override string DisplayName { get; } = "Commandos";
+		public override string FileName { get; } = "CommandosA";
 	}
 }

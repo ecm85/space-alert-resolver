@@ -60,6 +60,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			ThreatController.JumpingToHyperspace -= OnJumpingToHyperspace;
 		}
 
+		public override string Id { get; } = "SI3-106";
+		public override string DisplayName { get; } = "Cyber Gremlin";
+		public override string FileName { get; } = "CyberGremlin";
+
 		private class Sabotage : InternalThreat
 		{
 			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType)
@@ -78,6 +82,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			protected override void PerformZAction(int currentTurn)
 			{
 			}
+
+			public override string Id { get; }
+			public override string DisplayName { get {throw new NotImplementedException();} }
+			public override string FileName { get; } = "Sabotage";
 
 			public override int Points
 			{

@@ -37,6 +37,10 @@ namespace BLL.Threats.External.Minor.Red
 				BonusThreat.Speed++;
 		}
 
+		public override string Id { get; } = "E3-107";
+		public override string DisplayName { get; } = "Sealed Capsule";
+		public override string FileName { get; } = "SealedCapsule";
+
 		private void CallInInternalThreat(int currentTurn)
 		{
 			ThreatController.AddInternalThreat(BonusThreat, 1000 + currentTurn);

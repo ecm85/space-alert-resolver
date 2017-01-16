@@ -21,5 +21,9 @@
 		{
 			AttackCurrentZone(3);
 		}
+
+		public override string Id { get; } = "E1-05";
+		public override string DisplayName { get; } = "Gunship";
+		public override string FileName { get; } = "Gunship";
 	}
 }

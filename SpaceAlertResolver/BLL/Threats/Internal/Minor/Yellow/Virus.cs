@@ -23,5 +23,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			DamageAllZones(1);
 		}
+
+		public override string Id { get; } = "I2-05";
+		public override string DisplayName { get; } = "Virus";
+		public override string FileName { get; } = "Virus";
 	}
 }

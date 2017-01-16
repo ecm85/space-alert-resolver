@@ -7,10 +7,10 @@ var cloneThreat = function(threat) {
 		position: threat.position,
 		remainingHealth: threat.remainingHealth,
 		speed: threat.speed,
-		description: threat.description,
+		fileName: threat.fileName,
 		timeAppears: threat.timeAppears,
 		id: threat.id,
-		name: threat.name,
+		displayName: threat.displayName,
 
 		shields: threat.shields,
 		currentZone: threat.currentZone,

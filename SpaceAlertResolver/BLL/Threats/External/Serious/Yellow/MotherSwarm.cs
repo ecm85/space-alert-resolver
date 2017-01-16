@@ -27,6 +27,10 @@ namespace BLL.Threats.External.Serious.Yellow
 			AttackOtherTwoZones(3);
 		}
 
+		public override string Id { get; } = "SE2-103";
+		public override string DisplayName { get; } = "Mother Swarm";
+		public override string FileName { get; } = "MotherSwarm";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			TakeDamage(damages, 2);

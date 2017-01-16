@@ -12,5 +12,9 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 			MoveBlue();
 		}
+
+		public override string Id { get; } = "I3-105";
+		public override string DisplayName { get; } = "Phasing Troopers";
+		public override string FileName { get; } = "PhasingTroopersB";
 	}
 }

@@ -27,6 +27,11 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			throw new LoseException(this);
 		}
+
+		public override string Id { get; } = "SI1-03";
+		public override string DisplayName { get; } = "Alien";
+		public override string FileName { get; } = "Alien";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");

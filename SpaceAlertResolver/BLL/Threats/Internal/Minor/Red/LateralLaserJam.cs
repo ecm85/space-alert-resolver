@@ -35,6 +35,10 @@ namespace BLL.Threats.Internal.Minor.Red
 			Damage(1, new [] {otherZone});
 		}
 
+		public override string Id { get; } = "I3-101";
+		public override string DisplayName { get; } = "Lateral Laser Jam";
+		public override string FileName { get; } = "LateralLaserJam";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;

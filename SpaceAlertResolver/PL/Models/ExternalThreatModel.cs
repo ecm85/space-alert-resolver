@@ -10,17 +10,13 @@ namespace PL.Models
 		public int Shields { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ZoneLocation CurrentZone { get; set; }
-		public string Id { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
+
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
 			Shields = threat.Shields;
 			CurrentZone = threat.CurrentZone;
-			Id = ExternalThreatFactory.ThreatIdsByType[threat.GetType()];
-			Name = ExternalThreatFactory.ThreatNamesByType[threat.GetType()];
-			Description = threat.GetType().Name;
+			
 		}
 
 		[JsonConstructor]

@@ -41,5 +41,9 @@ namespace BLL.Threats.External.Minor.Yellow
 			phasingThreatCore.ThreatTerminated();
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "E2-102";
+		public override string DisplayName { get; } = "Phasing Fighter";
+		public override string FileName { get; } = "PhasingFighter";
 	}
 }

@@ -26,6 +26,10 @@ namespace BLL.Threats.External.Serious.Red
 			AttackCurrentZone(5);
 		}
 
+		public override string Id { get; } = "SE3-102";
+		public override string DisplayName { get; } = "Megashield Man-Of-War";
+		public override string FileName { get; } = "MegashieldManOfWar";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages);

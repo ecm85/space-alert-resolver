@@ -43,5 +43,9 @@ namespace BLL.Threats.External.Serious.Red
 			base.OnThreatTerminated();
 			phasingThreatCore.ThreatTerminated();
 		}
+
+		public override string Id { get; } = "SE3-101";
+		public override string DisplayName { get; } = "Phasing Man-Of-War";
+		public override string FileName { get; } = "PhasingManOfWar";
 	}
 }

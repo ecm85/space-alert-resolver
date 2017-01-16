@@ -17,12 +17,10 @@ namespace PL.Controllers
 		[ActionName("Index")]
 		public ActionResult IndexGet(string newGameText)
 		{
-			var allExternalThreats = ExternalThreatFactory.ThreatTypesById
-				.Select(threat => ExternalThreatFactory.CreateThreat<ExternalThreat>(threat.Key))
+			var allExternalThreats = ExternalThreatFactory.AllExternalThreats
 				.Select(threat => new ExternalThreatModel(threat))
 				.ToList();
-			var allInternalThreats = InternalThreatFactory.ThreatTypesById
-				.Select(threat => InternalThreatFactory.CreateThreat<InternalThreat>(threat.Key))
+			var allInternalThreats = InternalThreatFactory.AllInternalThreats
 				.Select(threat => new InternalThreatModel(threat))
 				.ToList();
 			var newGameModel = newGameText != null ? new JavaScriptSerializer().Deserialize<NewGameModel>(newGameText) : null;

@@ -30,6 +30,10 @@ namespace BLL.Threats.External.Serious.Yellow
 				AttackCurrentZone(6);
 		}
 
+		public override string Id { get; } = "SE2-01";
+		public override string DisplayName { get; } = "Behemoth";
+		public override string FileName { get; } = "Behemoth";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var modifiedDamages = damages.ToList();

@@ -25,6 +25,11 @@ namespace BLL.Threats.Internal.Serious.White
 			foreach (var zoneLocation in EnumFactory.All<ZoneLocation>())
 				EnergyLeaksOut(zoneLocation);
 		}
+
+		public override string Id { get; } = "SI1-05";
+		public override string DisplayName { get; } = "Crossed Wires";
+		public override string FileName { get; } = "CrossedWires";
+
 		private void EnergyLeaksOut(ZoneLocation zoneLocation)
 		{
 			var energyDrained = SittingDuck.DrainShield(zoneLocation);

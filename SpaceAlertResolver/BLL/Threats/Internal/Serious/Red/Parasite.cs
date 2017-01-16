@@ -75,5 +75,9 @@ namespace BLL.Threats.Internal.Serious.Red
 			base.OnThreatTerminated();
 			SittingDuck.UnsubscribeFromMovingIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);
 		}
+
+		public override string Id { get; } = "SI3-107";
+		public override string DisplayName { get; } = "Parasite";
+		public override string FileName { get; } = "Parasite";
 	}
 }

@@ -8,5 +8,9 @@ namespace BLL.Threats.Internal.Minor.White
 			: base(StationLocation.UpperRed)
 		{
 		}
+
+		public override string Id { get; } = "I1-06";
+		public override string DisplayName { get; } = "Hacked Shields";
+		public override string FileName { get; } = "HackedShieldsA";
 	}
 }

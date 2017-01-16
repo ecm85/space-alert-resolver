@@ -29,6 +29,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 
+		public override string Id { get; } = "SI2-02";
+		public override string DisplayName { get; } = "Seeker";
+		public override string FileName { get; } = "Seeker";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);

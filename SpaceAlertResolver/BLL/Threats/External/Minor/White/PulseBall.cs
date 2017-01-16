@@ -21,5 +21,9 @@
 		{
 			AttackAllZones(2);
 		}
+
+		public override string Id { get; } = "E1-01";
+		public override string DisplayName { get; } = "Pulse Ball";
+		public override string FileName { get; } = "PulseBall";
 	}
 }

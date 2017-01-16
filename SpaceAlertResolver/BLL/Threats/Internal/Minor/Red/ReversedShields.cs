@@ -51,6 +51,10 @@ namespace BLL.Threats.Internal.Minor.Red
 			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 		}
 
+		public override string Id { get; } = "I3-103";
+		public override string DisplayName { get; } = "Reversed Shields";
+		public override string FileName { get; } = "ReversedShields";
+
 		private void OnPlayerActionsEnding(object sender, EventArgs args)
 		{
 			if (attackingPlayersThisTurn.Count == 1)

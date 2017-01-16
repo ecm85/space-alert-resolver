@@ -25,6 +25,11 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			AttackSpecificZones(5, new[] {ZoneLocation.Red, ZoneLocation.Blue});
 		}
+
+		public override string Id { get; } = "SE2-04";
+		public override string DisplayName { get; } = "Nebula Crab";
+		public override string FileName { get; } = "NebulaCrab";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");

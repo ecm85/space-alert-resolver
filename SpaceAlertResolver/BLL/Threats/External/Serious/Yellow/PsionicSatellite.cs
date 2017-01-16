@@ -24,6 +24,11 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>().Where(stationLocation => stationLocation.IsOnShip()));
 		}
+
+		public override string Id { get; } = "SE2-03";
+		public override string DisplayName { get; } = "Psionic Satellite";
+		public override string FileName { get; } = "PsionicSatellite";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);

@@ -23,5 +23,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		{
 			throw new LoseException(this);
 		}
+
+		public override string Id { get; } = "SI2-05";
+		public override string DisplayName { get; } = "Nuclear Device";
+		public override string FileName { get; } = "NuclearDevice";
 	}
 }

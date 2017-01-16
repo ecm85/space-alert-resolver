@@ -35,6 +35,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			SittingDuck.SubscribeToMovingIn(CurrentStations, KnockOutPlayer);
 		}
 
+		public override string Id { get; } = "SI2-04";
+		public override string DisplayName { get; } = "Contamination";
+		public override string FileName { get; } = "Contamination";
+
 		private static void KnockOutPlayer(object sender, PlayerMoveEventArgs args)
 		{
 			args.MovingPlayer.IsKnockedOut = true;

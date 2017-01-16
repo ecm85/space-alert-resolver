@@ -25,6 +25,11 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackCurrentZone(RemainingHealth * 2);
 		}
+
+		public override string Id { get; } = "SE1-06";
+		public override string DisplayName { get; } = "Interstellar Octopus";
+		public override string FileName { get; } = "InterstellarOctopus";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");

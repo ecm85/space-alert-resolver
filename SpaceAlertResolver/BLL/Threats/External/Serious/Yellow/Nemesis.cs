@@ -54,5 +54,9 @@ namespace BLL.Threats.External.Serious.Yellow
 			base.OnThreatTerminated();
 			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
+
+		public override string Id { get; } = "SE2-05";
+		public override string DisplayName { get; } = "Nemesis";
+		public override string FileName { get; } = "Nemesis";
 	}
 }

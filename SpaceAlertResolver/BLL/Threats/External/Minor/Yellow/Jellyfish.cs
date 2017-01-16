@@ -26,6 +26,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			AttackAllZones(2);
 		}
 
+		public override string Id { get; } = "E2-05";
+		public override string DisplayName { get; } = "Jellyfish";
+		public override string FileName { get; } = "Jellyfish";
+
 		private void HealHalfDamage()
 		{
 			Repair((TotalHealth - RemainingHealth) / 2);

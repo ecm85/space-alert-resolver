@@ -26,6 +26,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			AttackOtherTwoZones(2);
 		}
 
+		public override string Id { get; } = "E2-04";
+		public override string DisplayName { get; } = "Swarm";
+		public override string FileName { get; } = "Swarm";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			TakeDamage(damages, 1);

@@ -21,16 +21,18 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var redwardStation = CurrentStation.RedwardStationLocation();
-			Spread(redwardStation);
+			Spread(CurrentStation.RedwardStationLocation());
 		}
 
-		private class ProgenySlime : SlimeA, IPseudoThreat
+		public override string Id { get; } = "I2-01";
+		public override string DisplayName { get; } = "Slime";
+		public override string FileName { get; } = "SlimeA";
+
+		private class ProgenySlime : SlimeA
 		{
 			public ProgenySlime(SlimeA parent, StationLocation stationLocation)
 				: base(1, stationLocation)
 			{
-				Parent = parent;
 				ParentSlime = parent;
 			}
 
@@ -51,10 +53,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 			protected override void PerformYAction(int currentTurn)
 			{
-				ParentSlime.Spread(CurrentStation.BluewardStationLocation());
+				ParentSlime.Spread(CurrentStation.RedwardStationLocation());
 			}
 
-			public Threat Parent { get; }
 			public SlimeA ParentSlime { get; set; }
 		}
 

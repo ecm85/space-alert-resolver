@@ -25,6 +25,11 @@ namespace BLL.Threats.External.Serious.White
 		{
 			AttackOtherTwoZones(3);
 		}
+
+		public override string Id { get; } = "SE1-07";
+		public override string DisplayName { get; } = "Maelstrom";
+		public override string FileName { get; } = "Maelstrom";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);

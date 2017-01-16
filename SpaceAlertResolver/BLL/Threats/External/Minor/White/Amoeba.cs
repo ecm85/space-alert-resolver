@@ -23,6 +23,11 @@ namespace BLL.Threats.External.Minor.White
 		{
 			AttackCurrentZone(5);
 		}
+
+		public override string Id { get; } = "E1-09";
+		public override string DisplayName { get; } = "Amoeba";
+		public override string FileName { get; } = "Amoeba";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");

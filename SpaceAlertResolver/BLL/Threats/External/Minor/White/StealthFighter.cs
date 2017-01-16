@@ -23,6 +23,11 @@
 		{
 			AttackCurrentZone(2);
 		}
+
+		public override string Id { get; } = "E1-03";
+		public override string DisplayName { get; } = "Stealth Fighter";
+		public override string FileName { get; } = "StealthFighter";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return !stealthed && base.CanBeTargetedBy(damage);

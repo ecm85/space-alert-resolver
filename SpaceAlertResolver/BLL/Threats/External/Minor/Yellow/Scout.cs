@@ -27,6 +27,11 @@
 			ThreatController.RemoveExternalThreatEffectForSource(this);
 			base.OnHealthReducedToZero();
 		}
+
+		public override string Id { get; } = "E2-02";
+		public override string DisplayName { get; } = "Scout";
+		public override string FileName { get; } = "Scout";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return damage.PlayerDamageType != PlayerDamageType.HeavyLaser && base.CanBeTargetedBy(damage);

@@ -21,6 +21,11 @@
 		{
 			AttackAllZones(3);
 		}
+
+		public override string Id { get; } = "SE1-04";
+		public override string DisplayName { get; } = "Pulse Satellite";
+		public override string FileName { get; } = "PulseSatellite";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			return DistanceToShip != 3 && base.CanBeTargetedBy(damage);

@@ -21,5 +21,9 @@
 		{
 			AttackAllZones(4, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
+
+		public override string Id { get; } = "SE1-101";
+		public override string DisplayName { get; } = "Spacecraft Carrier";
+		public override string FileName { get; } = "SpacecraftCarrier";
 	}
 }

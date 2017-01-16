@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
 
@@ -32,6 +33,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			Damage(4);
 		}
 
+		public override string Id { get; } = "SI3-101";
+		public override string DisplayName { get; } = "Rabid Beast";
+		public override string FileName { get; } = "RabidBeast";
+
 		private void InfectPlayers()
 		{
 			if (infectedPlayers == null)
@@ -56,7 +61,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			private readonly HashSet<Player> infectedPlayers;
 
 			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>())
+				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
 			{
 				infectedPlayers = new HashSet<Player>();
 			}
@@ -82,6 +87,10 @@ namespace BLL.Threats.Internal.Serious.Red
 					.ToList();
 				Damage(2, stationsToDamage);
 			}
+
+			public override string Id { get { throw new NotImplementedException(); } }
+			public override string DisplayName { get { throw new NotImplementedException(); } }
+			public override string FileName { get { throw new NotImplementedException(); } }
 
 			public override int Points
 			{

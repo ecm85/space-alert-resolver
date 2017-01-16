@@ -31,6 +31,10 @@ namespace BLL.Threats.Internal.Serious.Red
 			SittingDuck.KnockOutPlayers(EnumFactory.All<StationLocation>());
 		}
 
+		public override string Id { get; } = "SI3-105";
+		public override string DisplayName { get; } = "Siren";
+		public override string FileName { get; } = "Siren";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);

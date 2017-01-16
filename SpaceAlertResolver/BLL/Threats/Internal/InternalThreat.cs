@@ -27,17 +27,11 @@ namespace BLL.Threats.Internal
 
 		protected PlayerActionType? ActionType { get; }
 
-		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations) :
+		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
 			base(threatType, difficulty, health, speed)
 		{
-			CurrentStations = currentStations;
-
-		}
-
-		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
-			this(threatType, difficulty, health, speed, currentStations)
-		{
 			ActionType = actionType;
+			CurrentStations = currentStations;
 		}
 
 		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, StationLocation currentStation, PlayerActionType? actionType) :

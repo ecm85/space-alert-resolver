@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
 
@@ -59,12 +60,16 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			SittingDuck.UnsubscribeFromMovingOut(droneLocations, PoisonPlayer);
 		}
 
+		public override string Id { get; } = "I2-102";
+		public override string DisplayName { get; } = "Ninja";
+		public override string FileName { get; } = "Ninja";
+
 		private class PoisonedPlayers : InternalThreat
 		{
 			private readonly HashSet<Player> poisonedPlayers;
 
 			public PoisonedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>())
+				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
 			{
 				poisonedPlayers = new HashSet<Player>();
 			}
@@ -87,6 +92,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				foreach (var player in poisonedPlayers)
 					player.IsKnockedOut = true;
 			}
+
+			public override string Id { get { throw new NotImplementedException(); } }
+			public override string DisplayName { get { throw new NotImplementedException(); } }
+			public override string FileName { get { throw new NotImplementedException(); } }
 
 			public override int Points => 0;
 

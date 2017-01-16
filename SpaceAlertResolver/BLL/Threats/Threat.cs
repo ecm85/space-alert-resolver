@@ -96,6 +96,10 @@ namespace BLL.Threats
 
 		protected bool IsDamaged => RemainingHealth < TotalHealth;
 
+		public abstract string Id { get; }
+		public abstract string DisplayName { get; }
+		public abstract string FileName { get; }
+
 		public void Repair(int amount)
 		{
 			var newHealth = RemainingHealth + amount;

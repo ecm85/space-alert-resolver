@@ -55,5 +55,9 @@ namespace BLL.Threats.Internal.Serious.White
 			base.OnThreatTerminated();
 			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 		}
+
+		public override string Id { get; } = "SI1-06";
+		public override string DisplayName { get; } = "BattleBot Uprising";
+		public override string FileName { get; } = "BattleBotUprising";
 	}
 }

@@ -27,6 +27,10 @@ namespace BLL.Threats.External.Minor.Yellow
 			AttackCurrentZone(3);
 		}
 
+		public override string Id { get; } = "E2-03";
+		public override string DisplayName { get; } = "Phantom Fighter";
+		public override string FileName { get; } = "PhantomFighter";
+
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			base.TakeDamage(damages.Where(damage => damage.PlayerDamageType != PlayerDamageType.Rocket).ToList());

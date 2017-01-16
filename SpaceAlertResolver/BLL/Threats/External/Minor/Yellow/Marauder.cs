@@ -29,5 +29,9 @@ namespace BLL.Threats.External.Minor.Yellow
 			ThreatController.RemoveExternalThreatEffectForSource(this);
 			base.OnHealthReducedToZero();
 		}
+
+		public override string Id { get; } = "E2-06";
+		public override string DisplayName { get; } = "Marauder";
+		public override string FileName { get; } = "Marauder";
 	}
 }

@@ -32,6 +32,10 @@ namespace BLL.Threats.Internal.Minor.Red
 			SittingDuck.RepairAllAirlockBreaches();
 		}
 
+		public override string Id { get; } = "I3-104";
+		public override string DisplayName { get; } = "Breached Airlock";
+		public override string FileName { get; } = "BreachedAirlock";
+
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");

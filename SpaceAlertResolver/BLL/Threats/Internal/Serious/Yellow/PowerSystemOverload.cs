@@ -59,5 +59,9 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			ThreatController.PlayerActionsEnding -= OnPlayerActionsEnding;
 			base.OnThreatTerminated();
 		}
+
+		public override string Id { get; } = "SI2-03";
+		public override string DisplayName { get; } = "Power System Overload";
+		public override string FileName { get; } = "PowerSystemOverload";
 	}
 }

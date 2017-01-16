@@ -21,6 +21,11 @@ namespace BLL.Threats.External.Minor.White
 		{
 			AttackCurrentZone(RemainingHealth);
 		}
+
+		public override string Id { get; } = "E1-10";
+		public override string DisplayName { get; } = "Meteoroid";
+		public override string FileName { get; } = "Meteoroid";
+
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
 			Check.ArgumentIsNotNull(damage, "damage");
