@@ -29,6 +29,7 @@ namespace BLL.Threats.Internal
 		}
 
 		protected PlayerActionType? ActionType { get; }
+		public virtual bool IsTrackless { get { return false; } }
 
 		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
 			base(threatType, difficulty, health, speed)

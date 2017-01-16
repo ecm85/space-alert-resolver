@@ -262,6 +262,9 @@
     <Content Include="Content\Images\Players\MaleYellow.png" />
     <Content Include="Content\Images\redCube.png" />
     <Content Include="Content\Images\threatSpeed.png" />
+    <Content Include="Content\Images\Threats\Alpha.png" />
+    <Content Include="Content\Images\Threats\Bravo.png" />
+    <Content Include="Content\Images\Threats\Charlie.png" />
     <Content Include="Content\Images\Threats\MegashieldManOfWar.png" />
     <Content Include="Content\Images\Threats\MotherSwarm.png" />
     <Content Include="Content\Images\Threats\Ninja.png" />

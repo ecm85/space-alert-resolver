@@ -19,6 +19,7 @@ namespace PL.Models
 			MaxEnergyCubes = standardStation.BravoComponent.Capacity + 1;
 			Cannon = new CannonModel(standardStation.AlphaComponent);
 			InternalThreats = game.SittingDuck.ThreatController.InternalThreatsOnTrack
+				.Concat(game.SittingDuck.ThreatController.TracklessInternalThreats)
 				.Where(threat => threat.CurrentStations.Contains(station))
 				.Select(threat => new InternalThreatInZoneModel(threat))
 				.ToList();

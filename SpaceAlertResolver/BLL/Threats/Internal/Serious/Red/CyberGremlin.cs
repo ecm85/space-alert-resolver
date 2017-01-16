@@ -50,7 +50,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			foreach (var newThreat in newThreats)
 			{
 				newThreat.Initialize(SittingDuck, ThreatController);
-				ThreatController.AddInternalThreat(newThreat, TimeAppears);
+				ThreatController.AddInternalTracklessThreat(newThreat);
 			}
 		}
 
@@ -83,9 +83,30 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 			}
 
-			public override string Id { get; }
-			public override string DisplayName { get {throw new NotImplementedException();} }
-			public override string FileName { get; } = "Sabotage";
+			public override string Id { get; } = "SI3-106-X";
+			public override string DisplayName { get { return null; } }
+
+			public override bool IsTrackless { get { return true; } }
+
+			public override string FileName
+			{
+				get
+				{
+					switch (ActionType)
+					{
+						case PlayerActionType.Alpha:
+							return "Alpha";
+						case PlayerActionType.Bravo:
+							return "Bravo";
+						case PlayerActionType.Charlie:
+							return "Charlie";
+						default:
+							throw new InvalidOperationException();
+					}
+				}
+			}
+
+			public override bool ShowOnTrack { get; } = false;
 
 			public override int Points
 			{
@@ -101,6 +122,8 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 				get { return false; }
 			}
+
+			public override bool IsDamageable { get; } = true;
 
 			public override void PlaceOnBoard(Track track, int? trackPosition)
 			{

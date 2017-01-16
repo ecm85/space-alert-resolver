@@ -68,6 +68,11 @@ namespace BLL
 
 		public object SingleTurnThreatSource { get; }
 
+		public IEnumerable<InternalThreat> TracklessInternalThreats
+		{
+			get { return InternalThreats.Where(threat => threat.IsTrackless); }
+		}
+
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
 		{
 			InternalTrack = internalTrack;
@@ -164,6 +169,11 @@ namespace BLL
 		{
 			newThreat.TimeAppears = timeAppears;
 			newThreat.PlaceOnBoard(InternalTrack);
+			InternalThreats.Add(newThreat);
+		}
+
+		public void AddInternalTracklessThreat(InternalThreat newThreat)
+		{
 			InternalThreats.Add(newThreat);
 		}
 
