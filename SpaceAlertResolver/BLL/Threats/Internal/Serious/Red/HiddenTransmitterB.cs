@@ -16,6 +16,6 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		public override string Id { get; } = "SI3-102";
 		public override string DisplayName { get; } = "Hidden Transmitter";
-		public override string FileName { get; } = "HiddenTransmitterA";
+		public override string FileName { get; } = "HiddenTransmitterB";
 	}
 }
