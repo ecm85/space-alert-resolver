@@ -16,7 +16,7 @@ namespace PL.Models
 		public InternalThreatOnTrackModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
-			CurrentStations = threat.CurrentStations.ToList();
+			CurrentStations = threat.DisplayStations.ToList();
 		}
 
 		[JsonConstructor]

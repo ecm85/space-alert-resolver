@@ -8,6 +8,9 @@ namespace BLL.Threats.Internal
 	public abstract class InternalThreat : Threat
 	{
 		public IList<StationLocation> CurrentStations { get; private set; }
+		public virtual IList<StationLocation> DisplayStations => CurrentStations;
+
+		public virtual bool ShowOnTrack { get { return true; } }
 
 		public int? TotalInaccessibility {get; protected set; }
 		private int? RemainingInaccessibility { get; set; }

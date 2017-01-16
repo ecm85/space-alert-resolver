@@ -37,6 +37,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				ParentSlime = parent;
 			}
 
+			public override bool ShowOnTrack { get { return false; } }
+
 			public override int Points
 			{
 				get { return 0; }

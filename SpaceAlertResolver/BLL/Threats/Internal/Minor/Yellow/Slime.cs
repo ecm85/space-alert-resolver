@@ -9,6 +9,16 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	{
 		private readonly IList<Slime> currentProgeny;
 
+		public override IList<StationLocation> DisplayStations
+		{
+			get
+			{
+				return CurrentStations
+					.Concat(currentProgeny.SelectMany(progeny => progeny.CurrentStations))
+					.ToList();
+			}
+		}
+
 		protected Slime(StationLocation currentStation)
 			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{

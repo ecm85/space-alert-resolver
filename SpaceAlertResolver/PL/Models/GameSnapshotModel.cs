@@ -25,7 +25,7 @@ namespace PL.Models
 			WhiteZone = new WhiteZoneModel(game);
 			BlueZone = new BlueZoneModel(game);
 			InterceptorsZone = new InterceptorsZoneModel(game);
-			InternalThreats = internalThreats.Select(threat => new InternalThreatOnTrackModel(threat)).ToList();
+			InternalThreats = internalThreats.Where(threat => threat.ShowOnTrack).Select(threat => new InternalThreatOnTrackModel(threat)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			PhaseDescription = phase.GetDescription();
 			TurnNumber = game.CurrentTurn + 1;
