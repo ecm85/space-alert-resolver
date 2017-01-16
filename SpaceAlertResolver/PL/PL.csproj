@@ -307,7 +307,9 @@
     <Compile Include="Models\InterceptorsModel.cs" />
     <Compile Include="Models\InterceptorsStationModel.cs" />
     <Compile Include="Models\InterceptorsZoneModel.cs" />
+    <Compile Include="Models\InternalThreatInZoneModel.cs" />
     <Compile Include="Models\InternalThreatModel.cs" />
+    <Compile Include="Models\InternalThreatOnTrackModel.cs" />
     <Compile Include="Models\LowerRedStationModel.cs" />
     <Compile Include="Models\LowerBlueStationModel.cs" />
     <Compile Include="Models\LowerWhiteStationModel.cs" />

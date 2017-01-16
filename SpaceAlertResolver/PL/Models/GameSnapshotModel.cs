@@ -6,7 +6,7 @@ namespace PL.Models
 {
 	public class GameSnapshotModel
 	{
-		public IEnumerable<InternalThreatModel> InternalThreats { get; }
+		public IEnumerable<InternalThreatOnTrackModel> InternalThreats { get; }
 		public TrackSnapshotModel InternalTrack { get; }
 		public StandardZoneModel RedZone { get; set; }
 		public StandardZoneModel WhiteZone { get; set; }
@@ -25,7 +25,7 @@ namespace PL.Models
 			WhiteZone = new WhiteZoneModel(game);
 			BlueZone = new BlueZoneModel(game);
 			InterceptorsZone = new InterceptorsZoneModel(game);
-			InternalThreats = internalThreats.Select(threat => new InternalThreatModel(threat)).ToList();
+			InternalThreats = internalThreats.Select(threat => new InternalThreatOnTrackModel(threat)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			PhaseDescription = phase.GetDescription();
 			TurnNumber = game.CurrentTurn + 1;

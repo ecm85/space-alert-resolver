@@ -10,7 +10,7 @@ namespace PL.Models
 		public IEnumerable<int> EnergyCubes { get; set; }
 		public int MaxEnergyCubes { get; set; }
 		public CannonModel Cannon { get; set; }
-		public IEnumerable<InternalThreatModel> InternalThreats { get; set; }
+		public IEnumerable<InternalThreatInZoneModel> InternalThreats { get; set; }
 
 		protected StandardStationModel(Game game, StationLocation station) : base(game, station)
 		{
@@ -20,7 +20,7 @@ namespace PL.Models
 			Cannon = new CannonModel(standardStation.AlphaComponent);
 			InternalThreats = game.SittingDuck.ThreatController.InternalThreatsOnTrack
 				.Where(threat => threat.CurrentStations.Contains(station))
-				.Select(threat => new InternalThreatModel(threat))
+				.Select(threat => new InternalThreatInZoneModel(threat))
 				.ToList();
 		}
 	}

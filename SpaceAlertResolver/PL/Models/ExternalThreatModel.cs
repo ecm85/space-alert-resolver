@@ -12,6 +12,7 @@ namespace PL.Models
 		public ZoneLocation CurrentZone { get; set; }
 		public string Id { get; set; }
 		public string Name { get; set; }
+		public string Description { get; set; }
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
@@ -19,6 +20,7 @@ namespace PL.Models
 			CurrentZone = threat.CurrentZone;
 			Id = ExternalThreatFactory.ThreatIdsByType[threat.GetType()];
 			Name = ExternalThreatFactory.ThreatNamesByType[threat.GetType()];
+			Description = threat.GetType().Name;
 		}
 
 		[JsonConstructor]

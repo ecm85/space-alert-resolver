@@ -151,7 +151,7 @@ namespace BLL.Threats.Internal
 			AddIrreparableMalfunction();
 		}
 
-		private void AddIrreparableMalfunction()
+		protected void AddIrreparableMalfunction()
 		{
 			if (ActionType!= null && ActionType != PlayerActionType.BattleBots)
 				SittingDuck.AddIrreparableMalfunctionToStations(

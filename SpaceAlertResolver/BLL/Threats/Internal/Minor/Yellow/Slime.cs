@@ -15,6 +15,12 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			currentProgeny = new List<Slime>();
 		}
 
+		protected Slime(int health, StationLocation currentStation)
+			: base(health, 2, currentStation, PlayerActionType.BattleBots)
+		{
+			currentProgeny = new List<Slime>();
+		}
+
 		public override void PlaceOnBoard(Track track, int? trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
@@ -50,6 +56,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			{
 				var newProgeny = CreateProgeny(stationLocation.Value);
 				currentProgeny.Add(newProgeny);
+				newProgeny.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(newProgeny, TimeAppears, Position.GetValueOrDefault());
 			}
 		}

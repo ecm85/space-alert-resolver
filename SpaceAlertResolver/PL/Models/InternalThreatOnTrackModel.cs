@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class InternalThreatModel : ThreatModel
+	public class InternalThreatOnTrackModel : ThreatModel
 	{
 		public int TotalInaccessibility { get; set; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
@@ -17,7 +17,7 @@ namespace PL.Models
 		public string Name { get; set; }
 		public string Description { get; set; }
 
-		public InternalThreatModel(InternalThreat threat) : base(threat)
+		public InternalThreatOnTrackModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
 			CurrentStations = threat.CurrentStations.ToList();
@@ -38,7 +38,7 @@ namespace PL.Models
 		}
 
 		[JsonConstructor]
-		public InternalThreatModel()
+		public InternalThreatOnTrackModel()
 		{
 		}
 	}

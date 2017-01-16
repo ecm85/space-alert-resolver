@@ -9,8 +9,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		private SlimeB(StationLocation stationLocation)
-			: base(stationLocation)
+		private SlimeB(int health, StationLocation stationLocation)
+			: base(health, stationLocation)
 		{
 		}
 
@@ -22,15 +22,16 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var bluewardStation = CurrentStation.BluewardStationLocation();
-			Spread(bluewardStation);
+			Spread(CurrentStation.BluewardStationLocation());
 		}
 
-		private class ProgenySlime : SlimeB
+		private class ProgenySlime : SlimeB, IPseudoThreat
 		{
-			public ProgenySlime(StationLocation stationLocation)
-				: base(stationLocation)
+			public ProgenySlime(SlimeB parent, StationLocation stationLocation)
+				: base(1, stationLocation)
 			{
+				Parent = parent;
+				ParentSlime = parent;
 			}
 
 			public override int Points
@@ -47,11 +48,19 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			{
 				get { return false; }
 			}
+
+			protected override void PerformYAction(int currentTurn)
+			{
+				ParentSlime.Spread(CurrentStation.BluewardStationLocation());
+			}
+
+			public SlimeB ParentSlime { get; }
+			public Threat Parent { get; }
 		}
 
 		protected override Slime CreateProgeny(StationLocation stationLocation)
 		{
-			return new ProgenySlime(stationLocation);
+			return new ProgenySlime(this, stationLocation);
 		}
 	}
 }
