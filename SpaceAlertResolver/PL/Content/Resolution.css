@@ -11,17 +11,13 @@
 
 .phase-selector {
 	height: 275px;
+	width:215px;
+	max-width:215px;
 }
 
 .turn-selector-option {
 	width:42px;
 	max-width:42px;
-	text-align: center;
-}
-
-.phase-selector-option {
-	width:167px;
-	max-width:167px;
 	text-align: center;
 }
 

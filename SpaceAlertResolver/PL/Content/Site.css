@@ -23,6 +23,11 @@ textarea {
 	margin-bottom: 5px;
 }
 
+.btn-group-vertical > .btn {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 .modal-lg {
 	width: 900px;
 }

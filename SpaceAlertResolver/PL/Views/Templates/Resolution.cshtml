@@ -15,19 +15,13 @@
 			<span class="fast-speed-label">Fast</span>
 		</div>
 	</div>
-	<div>
-		<ul class="pagination" turn-selector>
-			<li ng-repeat="turn in gameData" ng-class="{'active': currentTurn[0].turnNumber === turn[0].turnNumber}">
-				<a href="#" class="turn-selector-option" ng-click="selectTurnManually($index)">{{turn[0].turnNumber}}</a>
-			</li>
-		</ul>
+	<div class="btn-group">
+		<div ng-repeat="turn in gameData" class="btn btn-default" ng-model="currentTurnIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">{{$index + 1}}</div>
 	</div>
 	<div>
-		<ul class="pagination phase-selector">
-			<li ng-repeat="phase in currentTurn" ng-class="{'active': currentPhase.phaseDescription === phase.phaseDescription}">
-				<a href="#" class="phase-selector-option" ng-click="selectPhaseManually($index)">{{phase.phaseDescription}}</a>
-			</li>
-		</ul>
+		<div class="btn-group btn-group-vertical phase-selector">
+			<div ng-repeat="phase in currentTurn" class="btn btn-default phase-selector-option" ng-model="currentPhaseIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">{{phase.phaseDescription}}</div>
+		</div>
 	</div>
 	<div>
 		<h3>Damage</h3>

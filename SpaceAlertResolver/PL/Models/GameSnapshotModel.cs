@@ -28,7 +28,7 @@ namespace PL.Models
 			InternalThreats = internalThreats.Where(threat => threat.ShowOnTrack).Select(threat => new InternalThreatModel(threat)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats);
 			PhaseDescription = phase.GetDescription();
-			TurnNumber = game.CurrentTurn + 1;
+			TurnNumber = game.CurrentTurn;
 			KilledBy = game.KilledBy;
 			GameStatus = game.GameStatus.GetDisplayName();
 		}

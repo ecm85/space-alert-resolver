@@ -9,29 +9,48 @@ angular.module("spaceAlertModule")
 			var turnCount = $scope.gameData.length;
 			$scope.playing = null;
 			$scope.turnsPerTwoSeconds = 5;
-			let phaseIndex = 0;
-			let turnIndex = 0;
-			var selectPhase = function (newPhaseIndex) {
-				phaseIndex = newPhaseIndex;
-				$scope.currentPhase = $scope.currentTurn[phaseIndex];
-			}
-			var selectTurn = function(newTurnIndex) {
-				turnIndex = newTurnIndex;
-				$scope.currentTurn = $scope.gameData[turnIndex];
-				selectPhase(0);
-			}
-			var stop = function() {
+			let currentPhaseIndex = 0;
+			let currentTurnIndex = 0;
+
+			var stop = function () {
 				if ($scope.playing != null) {
 					$interval.cancel($scope.playing);
 					$scope.playing = null;
 				}
 			};
+
+			var selectPhase = function (newPhaseIndex) {
+				currentPhaseIndex = newPhaseIndex;
+				$scope.currentPhase = $scope.currentTurn[currentPhaseIndex];
+			}
+			var selectTurn = function(newTurnIndex) {
+				currentTurnIndex = newTurnIndex;
+				$scope.currentTurn = $scope.gameData[currentTurnIndex];
+				selectPhase(0);
+			}
+
+			var selectTurnManually = function (newTurnIndex) {
+				stop();
+				selectTurn(newTurnIndex);
+			}
+			var selectTurnAutomatically = function (newTurnIndex) {
+				selectTurn(newTurnIndex);
+			}
+
+			var selectPhaseManually = function (newPhaseIndex) {
+				stop();
+				selectPhase(newPhaseIndex);
+			}
+			var selectPhaseAutomatically = function (newPhaseIndex) {
+				selectPhase(newPhaseIndex);
+			}
+			
 			var play = function() {
 				$scope.playing = $interval(function() {
 						if (!$scope.isAtEndOfTurn())
-							$scope.selectPhaseAutomatically(phaseIndex + 1);
+							selectPhaseAutomatically(currentPhaseIndex + 1);
 						else if (!$scope.isAtEndOfGame())
-							$scope.selectTurnAutomatically(turnIndex + 1);
+							selectTurnAutomatically(currentTurnIndex + 1);
 						else {
 							stop();
 						}
@@ -46,47 +65,46 @@ angular.module("spaceAlertModule")
 					}
 				});
 
-			$scope.selectTurnManually = function(newTurnIndex) {
-				stop();
-				selectTurn(newTurnIndex);
-			}
-			$scope.selectTurnAutomatically = function (newTurnIndex) {
-				selectTurn(newTurnIndex);
+			
+			$scope.currentTurnIndex = function(newTurnIndex) {
+				if (arguments.length) {
+					selectTurnManually(newTurnIndex);
+				}
+				return currentTurnIndex;
 			}
 
-			$scope.selectPhaseManually = function(newPhaseIndex) {
-				stop();
-				selectPhase(newPhaseIndex);
-			}
-			$scope.selectPhaseAutomatically = function (newPhaseIndex) {
-				selectPhase(newPhaseIndex);
+			$scope.currentPhaseIndex = function (newPhaseIndex) {
+				if (arguments.length) {
+					selectPhaseManually(newPhaseIndex);
+				}
+				return currentPhaseIndex;
 			}
 
 			$scope.isAtStartOfTurn = function() {
-				return phaseIndex === 0;
+				return currentPhaseIndex === 0;
 			}
 			$scope.isAtStartOfGame = function() {
-				return turnIndex === 0 && $scope.isAtStartOfTurn();
+				return currentTurnIndex === 0 && $scope.isAtStartOfTurn();
 			}
 			$scope.isAtEndOfTurn = function() {
-				return phaseIndex === $scope.currentTurn.length - 1;
+				return currentPhaseIndex === $scope.currentTurn.length - 1;
 			}
 			$scope.isAtEndOfGame = function() {
-				return turnIndex === turnCount - 1 && $scope.isAtEndOfTurn();
+				return currentTurnIndex === turnCount - 1 && $scope.isAtEndOfTurn();
 			}
 			$scope.goBackOnePhase = function() {
 				if (!$scope.isAtStartOfTurn())
-					$scope.selectPhaseManually(phaseIndex - 1);
+					selectPhaseManually(currentPhaseIndex - 1);
 				else if (!$scope.isAtStartOfGame()) {
-					$scope.selectTurnManually(turnIndex - 1);
-					$scope.selectPhaseManually($scope.currentTurn.length - 1);
+					selectTurnManually(currentTurnIndex - 1);
+					selectPhaseManually($scope.currentTurn.length - 1);
 				}
 			}
 			$scope.goForwardOnePhase = function() {
 				if (!$scope.isAtEndOfTurn())
-					$scope.selectPhaseManually(phaseIndex + 1);
+					selectPhaseManually(currentPhaseIndex + 1);
 				else if (!$scope.isAtEndOfGame()) {
-					$scope.selectTurnManually(turnIndex + 1);
+					selectTurnManually(currentTurnIndex + 1);
 				}
 			}
 			$scope.playPause = function() {
@@ -98,14 +116,14 @@ angular.module("spaceAlertModule")
 			$scope.goToStart = function() {
 				if (!$scope.isAtStartOfGame()) {
 					stop();
-					$scope.selectTurnManually(0);
+					selectTurnManually(0);
 				}
 			}
 			$scope.goToEnd = function() {
 				if (!$scope.isAtEndOfGame()) {
 					stop();
-					$scope.selectTurnManually(turnCount - 1);
-					$scope.selectPhaseManually($scope.currentTurn.length - 1);
+					selectTurnManually(turnCount - 1);
+					selectPhaseManually($scope.currentTurn.length - 1);
 				}
 			}
 			$scope.$on('$destroy',
@@ -113,6 +131,6 @@ angular.module("spaceAlertModule")
 					stop();
 				});
 
-			$scope.selectTurnManually(0);
+			selectTurnManually(0);
 		}
 	]);
