@@ -3,6 +3,7 @@
 		<CasingExceptions>
 			<Acronym>BLL</Acronym>
 			<Acronym>MVC</Acronym>
+			<Acronym>Api</Acronym>
 		</CasingExceptions>
 	</Acronyms>
 	<Words>
@@ -21,6 +22,7 @@
 			<Word>Shipward</Word>
 			<Word>ConsoleResolver</Word>
 			<Word>Mvc</Word>
+			<Word>Api</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>

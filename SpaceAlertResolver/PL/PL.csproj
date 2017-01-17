@@ -78,12 +78,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -144,7 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Content\ActionsDialog.css" />
     <Content Include="Content\hotkeys.css" />
@@ -292,14 +303,17 @@
     <Content Include="Scripts\App\ModalInstanceControllers\ActionsModalInstanceController.js" />
     <Content Include="Scripts\App\ModalInstanceControllers\ThreatsModalInstanceController.js" />
     <Content Include="Scripts\App\ModalInstanceControllers\TrackModalInstanceController.js" />
+    <Content Include="Scripts\App\Services\NewGameData.js" />
+    <Content Include="Scripts\App\SpaceAlertModule.js" />
     <Content Include="Scripts\hotkeys.js" />
     <Content Include="Views\Templates\StandardZone.cshtml" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SpaceAlertApiController.cs" />
     <Compile Include="Controllers\SpaceAlertController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="JavaScriptConvert.cs" />
     <Compile Include="Models\ActionModel.cs" />
     <Compile Include="Models\AllThreatsModel.cs" />
     <Compile Include="Models\BattleBotsModel.cs" />
@@ -321,7 +335,6 @@
     <Compile Include="Models\RedZoneModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
     <Compile Include="Models\StationModel.cs" />
-    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
     <Compile Include="Models\ThreatsByTypeModel.cs" />
     <Compile Include="Models\TrackSectionModel.cs" />
@@ -480,12 +493,11 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\SpaceAlert\Resolution.cshtml" />
+    <Content Include="Views\SpaceAlert\Index.cshtml" />
+    <Content Include="Views\Templates\Resolution.cshtml" />
     <Content Include="Views\Templates\TrackWithThreats.cshtml" />
-    <Content Include="Views\SpaceAlert\Input.cshtml" />
+    <Content Include="Views\Templates\Input.cshtml" />
     <Content Include="Views\Templates\ActionsDialog.cshtml" />
     <Content Include="Views\Templates\TrackDialog.cshtml" />
     <Content Include="Views\Templates\ThreatsDialog.cshtml" />

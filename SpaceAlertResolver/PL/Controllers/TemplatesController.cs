@@ -43,5 +43,15 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult Input()
+		{
+			return PartialView();
+		}
+
+		public ActionResult Resolution()
+		{
+			return PartialView();
+		}
 	}
 }
