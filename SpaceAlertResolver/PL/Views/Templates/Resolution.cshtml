@@ -15,8 +15,8 @@
 			<span class="fast-speed-label">Fast</span>
 		</div>
 	</div>
-	<div class="btn-group">
-		<div ng-repeat="turn in gameData" class="btn btn-default" ng-model="currentTurnIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">{{$index + 1}}</div>
+	<div class="btn-group turn-selector">
+		<div ng-repeat="turn in gameData" class="btn btn-default turn-selector-option" ng-model="currentTurnIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">{{$index + 1}}</div>
 	</div>
 	<div>
 		<div class="btn-group btn-group-vertical phase-selector">
