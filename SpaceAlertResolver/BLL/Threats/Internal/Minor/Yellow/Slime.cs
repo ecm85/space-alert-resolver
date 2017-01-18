@@ -7,14 +7,14 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public abstract class Slime : MinorYellowInternalThreat
 	{
-		private readonly IList<Slime> currentProgeny;
+		protected IList<MinorYellowInternalThreat> CurrentProgeny { get; }
 
 		public override IList<StationLocation> DisplayStations
 		{
 			get
 			{
 				return CurrentStations
-					.Concat(currentProgeny.SelectMany(progeny => progeny.CurrentStations))
+					.Concat(CurrentProgeny.SelectMany(progeny => progeny.CurrentStations))
 					.ToList();
 			}
 		}
@@ -22,13 +22,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected Slime(StationLocation currentStation)
 			: base(2, 2, currentStation, PlayerActionType.BattleBots)
 		{
-			currentProgeny = new List<Slime>();
-		}
-
-		protected Slime(int health, StationLocation currentStation)
-			: base(health, 2, currentStation, PlayerActionType.BattleBots)
-		{
-			currentProgeny = new List<Slime>();
+			CurrentProgeny = new List<MinorYellowInternalThreat>();
 		}
 
 		public override void PlaceOnBoard(Track track, int? trackPosition)
@@ -42,33 +36,71 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			args.MovingPlayer.Shift(args.CurrentTurn + 1);
 		}
 
-		protected override void PerformZAction(int currentTurn)
-		{
-			Damage(2);
-		}
-
-		public override bool IsDefeated
-		{
-			get { return base.IsDefeated && currentProgeny.All(progeny => progeny.IsDefeated); }
-		}
-
 		protected override void OnHealthReducedToZero()
 		{
+			CurrentStations.Remove(CurrentStation);
 			SittingDuck.UnsubscribeFromMovingIn(CurrentStations, DelayPlayer);
 			base.OnHealthReducedToZero();
 		}
 
-		protected abstract Slime CreateProgeny(StationLocation stationLocation);
-
-		protected void Spread(StationLocation? stationLocation)
+		protected override void OnThreatTerminated()
 		{
-			if (stationLocation != null && !ThreatController.DamageableInternalThreats.Any(threat => threat is Slime && threat.CurrentStation == stationLocation))
+			CheckForTerminated();
+		}
+
+		protected void CheckForTerminated()
+		{
+			if (IsDefeated || IsSurvived)
+				base.OnThreatTerminated();
+		}
+
+		protected abstract MinorYellowInternalThreat CreateProgeny(StationLocation stationLocation);
+
+		public void Spread(StationLocation? stationLocation)
+		{
+			if (stationLocation != null && !ThreatController.DamageableInternalThreats.Any(threat => threat is ProgenySlime && threat.CurrentStation == stationLocation))
 			{
 				var newProgeny = CreateProgeny(stationLocation.Value);
-				currentProgeny.Add(newProgeny);
+				CurrentProgeny.Add(newProgeny);
 				newProgeny.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(newProgeny, TimeAppears, Position.GetValueOrDefault());
 			}
+		}
+
+		protected abstract class ProgenySlime : MinorYellowInternalThreat
+		{
+			protected ProgenySlime(int health, int speed, StationLocation currentStation, PlayerActionType actionType) : base(health, speed, currentStation, actionType)
+			{
+			}
+
+			public override bool ShowOnTrack { get { return false; } }
+
+			public override int Points
+			{
+				get { return 0; }
+			}
+
+			public override bool IsSurvived
+			{
+				get { return false; }
+			}
+
+			protected override void PerformXAction(int currentTurn)
+			{
+			}
+
+			protected override void PerformZAction(int currentTurn)
+			{
+				Damage(2);
+			}
+
+			protected override void OnHealthReducedToZero()
+			{
+				ParentSlime.CheckForTerminated();
+				base.OnHealthReducedToZero();
+			}
+
+			protected Slime ParentSlime { get; set; }
 		}
 	}
 }

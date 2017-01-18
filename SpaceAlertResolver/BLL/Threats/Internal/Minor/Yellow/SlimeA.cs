@@ -1,4 +1,5 @@
-﻿using BLL.ShipComponents;
+﻿using System.Linq;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
@@ -9,48 +10,39 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 		}
 
-		private SlimeA(int health, StationLocation stationLocation)
-			: base(health, stationLocation)
-		{
-		}
-
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.RemoveRocket();
+			if (!base.IsDefeated)
+				SittingDuck.RemoveRocket();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Spread(CurrentStation.RedwardStationLocation());
+			if (!base.IsDefeated)
+				Spread(CurrentStation.RedwardStationLocation());
+		}
+
+		protected override void PerformZAction(int currentTurn)
+		{
+			if (!base.IsDefeated)
+				Damage(2);
+		}
+
+		public override bool IsDefeated
+		{
+			get { return base.IsDefeated && CurrentProgeny.All(progeny => progeny.IsDefeated); }
 		}
 
 		public override string Id { get; } = "I2-01";
 		public override string DisplayName { get; } = "Slime";
 		public override string FileName { get; } = "SlimeA";
 
-		private class ProgenySlime : SlimeA
+		private class ProgenySlimeA : ProgenySlime
 		{
-			public ProgenySlime(SlimeA parent, StationLocation stationLocation)
-				: base(1, stationLocation)
+			public ProgenySlimeA(SlimeA parent, StationLocation stationLocation)
+				: base(1, 2, stationLocation, PlayerActionType.BattleBots)
 			{
 				ParentSlime = parent;
-			}
-
-			public override bool ShowOnTrack { get { return false; } }
-
-			public override int Points
-			{
-				get { return 0; }
-			}
-
-			public override bool IsDefeated
-			{
-				get { return false; }
-			}
-
-			public override bool IsSurvived
-			{
-				get { return false; }
 			}
 
 			protected override void PerformYAction(int currentTurn)
@@ -58,12 +50,14 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				ParentSlime.Spread(CurrentStation.RedwardStationLocation());
 			}
 
-			public SlimeA ParentSlime { get; set; }
+			public override string Id { get; } = "I2-01";
+			public override string DisplayName { get; } = "Slime";
+			public override string FileName { get; } = "SlimeA";
 		}
 
-		protected override Slime CreateProgeny(StationLocation stationLocation)
+		protected override MinorYellowInternalThreat CreateProgeny(StationLocation stationLocation)
 		{
-			return new ProgenySlime(this, stationLocation);
+			return new ProgenySlimeA(this, stationLocation);
 		}
 	}
 }

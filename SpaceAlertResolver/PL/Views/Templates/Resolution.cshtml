@@ -43,6 +43,40 @@
 			<dt ng-if="currentPhase.killedBy != null">Killed By</dt>
 			<dd ng-if="currentPhase.killedBy != null">{{currentPhase.killedBy}}</dd>
 		</dl>
+		<div ng-if="currentPhase.defeatedThreats.length > 0">
+			<h3>Defeated Threats</h3>
+			<table class="table table-condensed">
+				<tr>
+					<th>Threat</th>
+					<th>Points</th>
+				</tr>
+				<tr ng-repeat="threat in currentPhase.defeatedThreats">
+					<td>{{threat.displayName}}</td>
+					<td>{{threat.points}}</td>
+				</tr>
+				<tr>
+					<td>Total</td>
+					<td>{{currentPhase.totalDefeatedPoints}}</td>
+				</tr>
+			</table>
+		</div>
+		<div ng-if="currentPhase.survivedThreats.length > 0">
+			<h3>Survived Threats</h3>
+			<table class="table table-condensed">
+				<tr>
+					<th>Threat</th>
+					<th>Points</th>
+				</tr>
+				<tr ng-repeat="threat in currentPhase.survivedThreats">
+					<td>{{threat.displayName}}</td>
+					<td>{{threat.points}}</td>
+				</tr>
+				<tr>
+					<td>Total</td>
+					<td>{{currentPhase.totalSurvivedPoints}}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
 <div class="full-board">

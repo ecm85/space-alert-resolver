@@ -15,6 +15,11 @@ namespace PL.Models
 		public string KilledBy { get; set; }
 		public string GameStatus { get; set; }
 
+		public IEnumerable<ThreatModel> DefeatedThreats { get; set; }
+		public IEnumerable<ThreatModel> SurvivedThreats { get; set; }
+		public int TotalDefeatedPoints { get { return DefeatedThreats.Sum(threat => threat.Points); } }
+		public int TotalSurvivedPoints { get { return SurvivedThreats.Sum(threat => threat.Points); } }
+
 		public string PhaseDescription { get; }
 		public int TurnNumber { get; }
 
@@ -31,6 +36,8 @@ namespace PL.Models
 			TurnNumber = game.CurrentTurn;
 			KilledBy = game.KilledBy;
 			GameStatus = game.GameStatus.GetDisplayName();
+			DefeatedThreats = game.ThreatController.DefeatedThreats.Select(threat => new ThreatModel(threat)).ToList();
+			SurvivedThreats = game.ThreatController.SurvivedThreats.Select(threat => new ThreatModel(threat)).ToList();
 		}
 	}
 }
