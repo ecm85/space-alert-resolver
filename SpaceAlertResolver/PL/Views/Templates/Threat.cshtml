@@ -29,6 +29,10 @@
 					<img class="threat-total-inaccessibility" src="~/Content/Images/greenCube.png"/>
 					<div class="threat-total-inaccessibility-text">{{threat.totalInaccessibility}}</div>
 				</div>
+				<div ng-if="threat.debuffCount" class="threat-debuff-count-wrapper">
+					<img class="threat-debuff-count" src="~/Content/Images/blackCube.png" />
+					<div class="threat-debuff-count-text">{{threat.debuffCount}}</div>
+				</div>
 			</div>
 		</div>
 		<div class="threat-info-row">

@@ -11,6 +11,7 @@ namespace BLL.Threats
 		public event EventHandler TurnEnded = (sender, args) => { };
 
 		public int BuffCount { get; set; }
+		public int DebuffCount { get; set; }
 
 		public void PlaceOnBoard(Track track)
 		{

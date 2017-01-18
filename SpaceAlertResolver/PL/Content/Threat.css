@@ -26,12 +26,19 @@
 	text-align: center;
 }
 
-.threat-health-wrapper, .threat-shield-wrapper, .threat-speed-wrapper, .threat-total-inaccessibility-wrapper, .threat-time-appears-wrapper, .threat-buff-count-wrapper {
+.threat-health-wrapper,
+.threat-shield-wrapper,
+.threat-speed-wrapper,
+.threat-total-inaccessibility-wrapper,
+.threat-time-appears-wrapper,
+.threat-buff-count-wrapper,
+.threat-debuff-count-wrapper
+{
 	position: relative;
 	margin-bottom: 2px;
 }
 
-.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text, .threat-time-appears-text, .threat-buff-count-text {
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text, .threat-time-appears-text, .threat-buff-count-text, .threat-debuff-count-text {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -40,7 +47,7 @@
 	vertical-align: middle;
 }
 
-.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text {
+.threat-health-text, .threat-shield-text, .threat-speed-text, .threat-total-inaccessibility-text, .threat-debuff-count-text {
 	color: white;
 	font-size: 1.3em;
 }
@@ -62,7 +69,7 @@
 	font-size: 1.3em;
 }
 
-.threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield, .threat-time-appears, .threat-buff-count {
+.threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield, .threat-time-appears, .threat-buff-count, .threat-debuff-count {
 	width: 25px;
 	height: auto;
 }

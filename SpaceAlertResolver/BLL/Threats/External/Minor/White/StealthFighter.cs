@@ -1,17 +1,27 @@
-﻿namespace BLL.Threats.External.Minor.White
+﻿using BLL.Tracks;
+
+namespace BLL.Threats.External.Minor.White
 {
 	public class StealthFighter : MinorWhiteExternalThreat
 	{
-		private bool stealthed = true;
+		private bool stealthed;
 
 		public StealthFighter()
 			: base(2, 4, 3)
 		{
 		}
 
+		public override void PlaceOnBoard(Track track, int? trackPosition)
+		{
+			base.PlaceOnBoard(track, trackPosition);
+			stealthed = true;
+			BuffCount++;
+		}
+
 		protected override void PerformXAction(int currentTurn)
 		{
 			stealthed = false;
+			BuffCount--;
 		}
 
 		protected override void PerformYAction(int currentTurn)

@@ -1,20 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Yellow
 {
 	public class PhantomFighter : MinorYellowExternalThreat
 	{
-		private bool phantomMode = true;
+		private bool phantomMode;
 
 		public PhantomFighter()
 			: base(3, 3, 3)
 		{
 		}
 
+		public override void PlaceOnBoard(Track track, int? trackPosition)
+		{
+			base.PlaceOnBoard(track, trackPosition);
+			phantomMode = true;
+			BuffCount++;
+		}
+
 		protected override void PerformXAction(int currentTurn)
 		{
 			phantomMode = false;
+			BuffCount--;
 		}
 
 		protected override void PerformYAction(int currentTurn)

@@ -15,6 +15,7 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void PerformXAction(int currentTurn)
 		{
 			grownUp = true;
+			BuffCount++;
 		}
 
 		protected override void PerformYAction(int currentTurn)

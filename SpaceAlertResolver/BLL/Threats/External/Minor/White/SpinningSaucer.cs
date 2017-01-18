@@ -35,7 +35,10 @@ namespace BLL.Threats.External.Minor.White
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
+			{
 				hitByRocket = true;
+				DebuffCount++;
+			}
 			base.TakeDamage(damages);
 		}
 	}
