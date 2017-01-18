@@ -87,6 +87,7 @@
 </div>
 <div>
 	<a href="#Resolution" class="btn btn-primary" ng-disabled="!newGameData.canCreateGame()">Create Game</a>
+	<button class="btn btn-default" ng-click="newGameData.initialize()">Reset</button>
 </div>
 <script type="text/ng-template" id="templates/actionsModal">
 	@Html.Action("ActionsDialog", "Templates")
