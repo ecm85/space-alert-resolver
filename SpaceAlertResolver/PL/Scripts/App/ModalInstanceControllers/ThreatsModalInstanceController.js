@@ -12,6 +12,7 @@ var cloneThreat = function(threat) {
 		id: threat.id,
 		displayName: threat.displayName,
 		points: threat.points,
+		buffCount: threat.buffCount,
 
 		shields: threat.shields,
 		currentZone: threat.currentZone,

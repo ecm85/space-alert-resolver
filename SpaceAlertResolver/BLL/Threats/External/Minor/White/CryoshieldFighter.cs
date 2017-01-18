@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.White
 {
 	public class CryoshieldFighter : MinorWhiteExternalThreat
 	{
-		private bool cryoshieldUp = true;
+		private bool cryoshieldUp;
 
 		public CryoshieldFighter()
 			: base(1, 4, 3)
 		{
+		}
+
+		public override void PlaceOnBoard(Track track, int? trackPosition)
+		{
+			base.PlaceOnBoard(track, trackPosition);
+			cryoshieldUp = true;
+			BuffCount++;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -34,7 +42,10 @@ namespace BLL.Threats.External.Minor.White
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())
+			{
 				cryoshieldUp = false;
+				BuffCount--;
+			}
 			else
 				base.TakeDamage(damages);
 		}

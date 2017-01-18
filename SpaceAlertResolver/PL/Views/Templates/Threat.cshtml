@@ -11,6 +11,10 @@
 					<img class="threat-speed" src="~/Content/Images/threatSpeed.png"/>
 					<div class="threat-speed-text">{{threat.speed}}</div>
 				</div>
+				<div ng-if="threat.buffCount" class="threat-buff-count-wrapper">
+					<img class="threat-buff-count" src="~/Content/Images/whiteCube.png"/>
+					<div class="threat-buff-count-text">{{threat.buffCount}}</div>
+				</div>
 			</div>
 			<div class="threat-info-col-2">
 				<div class="threat-health-wrapper">

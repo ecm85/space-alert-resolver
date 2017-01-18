@@ -18,6 +18,7 @@ namespace PL.Models
 		public string DisplayName { get; set; }
 		public string FileName { get; set; }
 		public int Points { get; set; }
+		public int BuffCount { get; set; }
 
 		public ThreatModel(Threat threat)
 		{
@@ -31,6 +32,7 @@ namespace PL.Models
 			DisplayName = threat.DisplayName;
 			FileName = threat.FileName;
 			Points = threat.Points;
+			BuffCount = threat.BuffCount;
 		}
 
 		[JsonConstructor]

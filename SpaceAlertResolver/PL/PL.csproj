@@ -230,6 +230,7 @@
     <Content Include="Content\Images\Actions\BasicSpecOps.png" />
     <Content Include="Content\Images\Actions\BasicSquadLeader.png" />
     <Content Include="Content\Images\Actions\BasicTeleporter.png" />
+    <Content Include="Content\Images\blackCube.png" />
     <Content Include="Content\Images\Boards\Blue1.png" />
     <Content Include="Content\Images\Boards\Blue2.png" />
     <Content Include="Content\Images\Boards\Green1.png" />
@@ -283,6 +284,7 @@
     <Content Include="Content\Images\Threats\PulseSatellite.png" />
     <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Content\Images\Warning.png" />
+    <Content Include="Content\Images\whiteCube.png" />
     <Content Include="Content\Input.css" />
     <Content Include="Content\PlayerBoard.css" />
     <Content Include="Content\Resolution.css" />

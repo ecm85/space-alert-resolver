@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.White
 {
 	public class CryoshieldFrigate : SeriousWhiteExternalThreat
 	{
-		private bool cryoshieldUp = true;
+		private bool cryoshieldUp;
 
 		public CryoshieldFrigate()
 			: base(1, 7, 2)
 		{
+		}
+
+		public override void PlaceOnBoard(Track track, int? trackPosition)
+		{
+			base.PlaceOnBoard(track, trackPosition);
+			cryoshieldUp = true;
+			BuffCount++;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -34,7 +42,10 @@ namespace BLL.Threats.External.Serious.White
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (cryoshieldUp && damages.Any())
+			{
 				cryoshieldUp = false;
+				BuffCount--;
+			}
 			else
 				base.TakeDamage(damages);
 		}

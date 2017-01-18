@@ -10,6 +10,8 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
+		public int BuffCount { get; set; }
+
 		public void PlaceOnBoard(Track track)
 		{
 			PlaceOnBoard(track, track.StartingPosition);
