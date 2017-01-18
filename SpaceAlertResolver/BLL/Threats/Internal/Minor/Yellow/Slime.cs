@@ -13,7 +13,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			get
 			{
-				return CurrentStations
+				return base.DisplayStations
 					.Concat(CurrentProgeny.SelectMany(progeny => progeny.CurrentStations))
 					.ToList();
 			}

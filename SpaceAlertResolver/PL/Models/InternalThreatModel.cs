@@ -12,11 +12,14 @@ namespace PL.Models
 		public int TotalInaccessibility { get; set; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public IEnumerable<StationLocation> CurrentStations { get; set; }
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public IEnumerable<StationLocation> DisplayStations { get; set; }
 
 		public InternalThreatModel(InternalThreat threat) : base(threat)
 		{
 			TotalInaccessibility = threat.TotalInaccessibility.GetValueOrDefault();
 			CurrentStations = threat.CurrentStations.ToList();
+			DisplayStations = threat.DisplayStations.ToList();
 		}
 
 		[JsonConstructor]

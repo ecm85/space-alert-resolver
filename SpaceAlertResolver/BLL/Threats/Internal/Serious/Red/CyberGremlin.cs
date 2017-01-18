@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -6,6 +8,20 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public class CyberGremlin : SeriousRedInternalThreat
 	{
+		private IList<Sabotage> CurrentSabotage { get; } = new List<Sabotage>();
+
+		public override IList<StationLocation> DisplayStations
+		{
+			get
+			{
+				return base.DisplayStations
+					.Concat(CurrentSabotage
+						.Select(sabotage => sabotage.CurrentStation)
+						.Distinct())
+					.ToList();
+			}
+		}
+
 		public CyberGremlin()
 			: base(1, 2, StationLocation.UpperRed, PlayerActionType.BattleBots, 1)
 		{
@@ -43,12 +59,13 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			var newThreats = new[]
 			{
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Alpha),
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Bravo),
-				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Charlie)
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Alpha, this),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Bravo, this),
+				new Sabotage(ThreatType, Difficulty, CurrentStation, PlayerActionType.Charlie, this)
 			};
 			foreach (var newThreat in newThreats)
 			{
+				CurrentSabotage.Add(newThreat);
 				newThreat.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalTracklessThreat(newThreat);
 			}
@@ -66,9 +83,10 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private class Sabotage : InternalThreat
 		{
-			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType)
+			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType, CyberGremlin cyberGremlin)
 				: base(threatType, threatDifficulty, 1, 0, currentStation, actionType)
 			{
+				Parent = cyberGremlin;
 			}
 
 			protected override void PerformXAction(int currentTurn)
@@ -82,6 +100,8 @@ namespace BLL.Threats.Internal.Serious.Red
 			protected override void PerformZAction(int currentTurn)
 			{
 			}
+
+			public CyberGremlin Parent { get; }
 
 			public override string Id { get; } = "SI3-106-X";
 			public override string DisplayName { get { return null; } }
@@ -129,6 +149,16 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 				base.PlaceOnBoard(null, null);
 			}
+
+			protected override void OnThreatTerminated()
+			{
+				Parent.RemoveSabotage(this);
+			}
+		}
+
+		private void RemoveSabotage(Sabotage sabotage)
+		{
+			CurrentSabotage.Remove(sabotage);
 		}
 	}
 }

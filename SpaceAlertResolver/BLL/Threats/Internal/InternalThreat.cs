@@ -8,8 +8,7 @@ namespace BLL.Threats.Internal
 	public abstract class InternalThreat : Threat
 	{
 		public IList<StationLocation> CurrentStations { get; private set; }
-		public virtual IList<StationLocation> DisplayStations => CurrentStations;
-
+		public virtual IList<StationLocation> DisplayStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
 		public virtual IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
 
 		public virtual bool ShowOnTrack { get { return true; } }
