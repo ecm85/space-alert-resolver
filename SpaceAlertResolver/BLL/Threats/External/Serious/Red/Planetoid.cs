@@ -30,7 +30,7 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			breakpointsCrossed++;
+			AttackCurrentZone(RemainingHealth);
 		}
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
