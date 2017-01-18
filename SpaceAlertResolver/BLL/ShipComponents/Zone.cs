@@ -13,7 +13,7 @@ namespace BLL.ShipComponents
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
 		public List<DamageToken> CurrentDamageTokens  { get; }
 		public List<DamageToken> AllDamageTokensTaken { get; }
-		private readonly Random random = new Random();
+		private static readonly Random random = new Random();
 
 		public abstract ZoneLocation ZoneLocation { get; }
 		public abstract UpperStation UpperStation { get; }
