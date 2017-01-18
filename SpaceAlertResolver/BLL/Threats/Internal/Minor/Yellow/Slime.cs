@@ -94,10 +94,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 				Damage(2);
 			}
 
-			protected override void OnHealthReducedToZero()
+			protected override void OnThreatTerminated()
 			{
+				base.OnThreatTerminated();
 				ParentSlime.CheckForTerminated();
-				base.OnHealthReducedToZero();
 			}
 
 			protected Slime ParentSlime { get; set; }
