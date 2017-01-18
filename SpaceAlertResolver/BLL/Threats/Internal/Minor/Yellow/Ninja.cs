@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
 
@@ -17,17 +16,21 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			foreach (var adjacentLocation in AdjacentLocations())
-				DroneLocations.Add(adjacentLocation);
-			SittingDuck.SubscribeToMovingIn(DroneLocations, PoisonPlayer);
-			SittingDuck.SubscribeToMovingOut(DroneLocations, PoisonPlayer);
+			if (!IsDefeated)
+			{
+				foreach (var adjacentLocation in AdjacentLocations())
+					DroneLocations.Add(adjacentLocation);
+				SittingDuck.SubscribeToMovingIn(DroneLocations, PoisonPlayer);
+				SittingDuck.SubscribeToMovingOut(DroneLocations, PoisonPlayer);
+			}
 		}
 
 		private void PoisonPlayer(object sender, PlayerMoveEventArgs args)
 		{
 			if (poisonedPlayers == null)
 			{
-				poisonedPlayers = new PoisonedPlayers(ThreatType, Difficulty);
+				poisonedPlayers = new PoisonedPlayers(ThreatType, Difficulty, Speed);
+				poisonedPlayers.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(poisonedPlayers, TimeAppears, Position.GetValueOrDefault());
 			}
 			poisonedPlayers.PoisonPlayer(args.MovingPlayer);
@@ -43,20 +46,38 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.DrainReactor(CurrentZone, 1);
+			if(!IsDefeated)
+				SittingDuck.DrainReactor(CurrentZone, 1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			var removedRocketCount = SittingDuck.RocketCount;
-			SittingDuck.RemoveAllRockets();
-			for (var i = 0;i < removedRocketCount;i++)
-				SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
+			if (!IsDefeated)
+			{
+				var removedRocketCount = SittingDuck.RocketCount;
+				SittingDuck.RemoveAllRockets();
+				for (var i = 0; i < removedRocketCount; i++)
+					SittingDuck.TakeAttack(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
+			}
+		}
+
+		protected override void OnReachingEndOfTrack()
+		{
+			if (IsDefeated)
+				base.OnThreatTerminated();
+			else
+				base.OnReachingEndOfTrack();
 		}
 
 		protected override void OnThreatTerminated()
 		{
-			base.OnThreatTerminated();
+			if (IsSurvived || (IsDefeated && poisonedPlayers == null))
+				base.OnThreatTerminated();
+			else
+			{
+				CurrentStations.Remove(CurrentStation);
+				DroneLocations.Clear();
+			}
 			SittingDuck.UnsubscribeFromMovingIn(DroneLocations, PoisonPlayer);
 			SittingDuck.UnsubscribeFromMovingOut(DroneLocations, PoisonPlayer);
 		}
@@ -69,8 +90,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			private readonly HashSet<Player> poisonedPlayers;
 
-			public PoisonedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
+			public PoisonedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty, int speed)
+				: base(threatType, threatDifficulty, 0, speed, new List<StationLocation>(), null)
 			{
 				poisonedPlayers = new HashSet<Player>();
 			}
@@ -94,9 +115,9 @@ namespace BLL.Threats.Internal.Minor.Yellow
 					player.IsKnockedOut = true;
 			}
 
-			public override string Id { get { throw new NotImplementedException(); } }
-			public override string DisplayName { get { throw new NotImplementedException(); } }
-			public override string FileName { get { throw new NotImplementedException(); } }
+			public override string Id { get; } = "I2-102";
+			public override string DisplayName { get; } = "Ninja";
+			public override string FileName { get; } = "Ninja";
 
 			public override int Points => 0;
 
@@ -105,6 +126,8 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			public override bool IsSurvived => false;
 
 			public override bool IsDamageable => false;
+
+			public override bool ShowOnTrack { get; } = false;
 		}
 	}
 }

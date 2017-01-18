@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
 
@@ -16,21 +15,28 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			InfectPlayers();
-			MoveRed();
-			MoveRed();
+			if (!IsDefeated)
+			{
+				InfectPlayers();
+				MoveRed();
+				MoveRed();
+			}
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			InfectPlayers();
-			ChangeDecks();
-			MoveBlue();
+			if (!IsDefeated)
+			{
+				InfectPlayers();
+				ChangeDecks();
+				MoveBlue();
+			}
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(4);
+			if(!IsDefeated)
+				Damage(4);
 		}
 
 		public override string Id { get; } = "SI3-101";
@@ -41,7 +47,8 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			if (infectedPlayers == null)
 			{
-				infectedPlayers = new InfectedPlayers(ThreatType, Difficulty);
+				infectedPlayers = new InfectedPlayers(ThreatType, Difficulty, Speed);
+				infectedPlayers.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(infectedPlayers, TimeAppears, Position.GetValueOrDefault());
 			}
 			var playersInCurrentStation = SittingDuck.GetPlayersInStation(CurrentStation);
@@ -56,12 +63,28 @@ namespace BLL.Threats.Internal.Serious.Red
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 
+		protected override void OnReachingEndOfTrack()
+		{
+			if (IsDefeated)
+				base.OnThreatTerminated();
+			else
+				base.OnReachingEndOfTrack();
+		}
+
+		protected override void OnThreatTerminated()
+		{
+			if (IsSurvived || (IsDefeated && infectedPlayers == null))
+				base.OnThreatTerminated();
+			else
+				CurrentStations.Remove(CurrentStation);
+		}
+
 		private class InfectedPlayers : InternalThreat
 		{
 			private readonly HashSet<Player> infectedPlayers;
 
-			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty)
-				: base(threatType, threatDifficulty, 0, 0, new List<StationLocation>(), null)
+			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty, int speed)
+				: base(threatType, threatDifficulty, 0, speed, new List<StationLocation>(), null)
 			{
 				infectedPlayers = new HashSet<Player>();
 			}
@@ -88,9 +111,9 @@ namespace BLL.Threats.Internal.Serious.Red
 				Damage(2, stationsToDamage);
 			}
 
-			public override string Id { get { throw new NotImplementedException(); } }
-			public override string DisplayName { get { throw new NotImplementedException(); } }
-			public override string FileName { get { throw new NotImplementedException(); } }
+			public override string Id { get; } = "SI3-101";
+			public override string DisplayName { get; } = "Rabid Beast";
+			public override string FileName { get; } = "RabidBeast";
 
 			public override int Points
 			{
@@ -111,6 +134,8 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 				get { return false; }
 			}
+
+			public override bool ShowOnTrack { get; } = false;
 		}
 	}
 }
