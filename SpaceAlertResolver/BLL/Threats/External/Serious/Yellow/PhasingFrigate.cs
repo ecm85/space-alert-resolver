@@ -11,7 +11,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			phasingThreatCore = new PhasingThreatCore(this);

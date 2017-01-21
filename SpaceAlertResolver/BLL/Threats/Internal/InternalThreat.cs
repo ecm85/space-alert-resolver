@@ -2,16 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using BLL.ShipComponents;
+using BLL.Tracks;
 
 namespace BLL.Threats.Internal
 {
 	public abstract class InternalThreat : Threat
 	{
+		public InternalThreat Parent { get; protected set; }
 		public IList<StationLocation> CurrentStations { get; private set; }
 		public virtual IList<StationLocation> DisplayStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
-		public virtual IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
+		public IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
 
-		public virtual bool ShowOnTrack { get { return true; } }
+		public override void PlaceOnBoard(Track track, int trackPosition)
+		{
+			base.PlaceOnBoard(track, trackPosition);
+			ThreatStatuses.Add(ThreatStatus.OnShip);
+		}
+
+		public virtual bool IsDamageable => IsOnShip;
+
+		public bool IsOnShip { get { return ThreatStatuses.Contains(ThreatStatus.OnShip); } }
 
 		public int? TotalInaccessibility {get; protected set; }
 		private int? RemainingInaccessibility { get; set; }
@@ -30,7 +40,6 @@ namespace BLL.Threats.Internal
 		}
 
 		protected PlayerActionType? ActionType { get; }
-		public virtual bool IsTrackless { get { return false; } }
 
 		protected InternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int health, int speed, IList<StationLocation> currentStations, PlayerActionType? actionType) :
 			base(threatType, difficulty, health, speed)
@@ -147,15 +156,22 @@ namespace BLL.Threats.Internal
 		protected override void OnReachingEndOfTrack()
 		{
 			base.OnReachingEndOfTrack();
-			AddIrreparableMalfunction();
-		}
-
-		protected void AddIrreparableMalfunction()
-		{
-			if (ActionType!= null && ActionType != PlayerActionType.BattleBots)
+			var malfunctionTypes = new[]
+			{
+				PlayerActionType.Alpha,
+				PlayerActionType.Bravo,
+				PlayerActionType.Charlie
+			};
+			if (ActionType != null && malfunctionTypes.Contains(ActionType.Value))
 				SittingDuck.AddIrreparableMalfunctionToStations(
 					CurrentStations,
-					new IrreparableMalfunction {ActionType = ActionType.Value});
+					new IrreparableMalfunction { ActionType = ActionType.Value });
+		}
+
+		protected override void OnThreatTerminated()
+		{
+			base.OnThreatTerminated();
+			ThreatStatuses.Remove(ThreatStatus.OnShip);
 		}
 
 		protected override void OnTurnEnded(object sender, EventArgs args)

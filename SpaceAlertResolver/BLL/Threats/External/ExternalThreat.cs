@@ -13,7 +13,9 @@ namespace BLL.Threats.External
 		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
 		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
 
-		protected int DistanceToShip => Track.DistanceToThreat(Position.GetValueOrDefault());
+		protected int DistanceToShip => Track.DistanceToThreat(Position);
+
+		public virtual bool IsDamageable => IsOnTrack;
 
 		protected ExternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int shields, int health, int speed) :
 			base(threatType, difficulty, health, speed)

@@ -4,6 +4,7 @@ using System.Linq;
 using BLL.Threats.Internal.Minor.Red;
 using BLL.Threats.Internal.Minor.White;
 using BLL.Threats.Internal.Minor.Yellow;
+using BLL.Threats.Internal.Minor.Yellow.Slime;
 using BLL.Threats.Internal.Serious.Red;
 using BLL.Threats.Internal.Serious.White;
 using BLL.Threats.Internal.Serious.Yellow;

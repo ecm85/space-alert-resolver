@@ -15,7 +15,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			SittingDuck.SubscribeToMovingIn(EnumFactory.All<StationLocation>().Where(station => station.IsOnShip()), AttachToPlayer);

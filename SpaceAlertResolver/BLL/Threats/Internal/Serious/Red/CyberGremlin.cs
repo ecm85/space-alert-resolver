@@ -8,16 +8,17 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public class CyberGremlin : SeriousRedInternalThreat
 	{
-		private IList<Sabotage> CurrentSabotage { get; } = new List<Sabotage>();
+		private IList<Sabotage> AllSabotage { get; } = new List<Sabotage>();
 
 		public override IList<StationLocation> DisplayStations
 		{
 			get
 			{
 				return base.DisplayStations
-					.Concat(CurrentSabotage
-						.Select(sabotage => sabotage.CurrentStation)
-						.Distinct())
+					.Concat(AllSabotage
+						.Where(sabotage => sabotage.IsOnShip)
+						.Select(sabotage => sabotage.CurrentStation))
+					.Distinct()
 					.ToList();
 			}
 		}
@@ -27,7 +28,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.JumpingToHyperspace += OnJumpingToHyperspace;
@@ -65,8 +66,9 @@ namespace BLL.Threats.Internal.Serious.Red
 			};
 			foreach (var newThreat in newThreats)
 			{
-				CurrentSabotage.Add(newThreat);
+				AllSabotage.Add(newThreat);
 				newThreat.Initialize(SittingDuck, ThreatController);
+				newThreat.ThreatStatuses.Add(ThreatStatus.OnShip);
 				ThreatController.AddInternalTracklessThreat(newThreat);
 			}
 		}
@@ -101,13 +103,8 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 			}
 
-			public CyberGremlin Parent { get; }
-
 			public override string Id { get; } = "SI3-106-X";
-			public override string DisplayName { get { return null; } }
-
-			public override bool IsTrackless { get { return true; } }
-
+			public override string DisplayName => null;
 			public override string FileName
 			{
 				get
@@ -126,39 +123,10 @@ namespace BLL.Threats.Internal.Serious.Red
 				}
 			}
 
-			public override bool ShowOnTrack { get; } = false;
-
-			public override int Points
-			{
-				get { return 0; }
-			}
-
-			public override bool IsDefeated
-			{
-				get { return false; }
-			}
-
-			public override bool IsSurvived
-			{
-				get { return false; }
-			}
+			protected override bool IsDefeatedWhenHealthReachesZero => false;
+			protected override bool IsSurvivedWhenReachingEndOfTrack => false;
 
 			public override bool IsDamageable { get; } = true;
-
-			public override void PlaceOnBoard(Track track, int? trackPosition)
-			{
-				base.PlaceOnBoard(null, null);
-			}
-
-			protected override void OnThreatTerminated()
-			{
-				Parent.RemoveSabotage(this);
-			}
-		}
-
-		private void RemoveSabotage(Sabotage sabotage)
-		{
-			CurrentSabotage.Remove(sabotage);
 		}
 	}
 }

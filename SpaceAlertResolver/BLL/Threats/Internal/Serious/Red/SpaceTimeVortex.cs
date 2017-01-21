@@ -39,7 +39,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void PerformZAction(int currentTurn)
 		{
 			ThreatController.AddInternalThreat(BonusThreat, currentTurn);
-			while(BonusThreat.Position != null)
+			while(BonusThreat.Position >= 0)
 				BonusThreat.Move(currentTurn);
 		}
 

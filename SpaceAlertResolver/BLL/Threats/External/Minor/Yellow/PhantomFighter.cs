@@ -13,7 +13,7 @@ namespace BLL.Threats.External.Minor.Yellow
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			phantomMode = true;

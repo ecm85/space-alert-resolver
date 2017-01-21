@@ -68,10 +68,7 @@ namespace BLL
 
 		public object SingleTurnThreatSource { get; }
 
-		public IEnumerable<InternalThreat> TracklessInternalThreats
-		{
-			get { return InternalThreats.Where(threat => threat.IsTrackless); }
-		}
+		public IEnumerable<InternalThreat> InternalThreatsOnShip { get {return InternalThreats.Where(threat => threat.IsOnShip);} }
 
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
 		{

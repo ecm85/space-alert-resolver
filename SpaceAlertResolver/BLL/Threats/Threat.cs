@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Tracks;
 
@@ -10,6 +11,8 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
+		public IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
+
 		public int BuffCount { get; set; }
 		public int DebuffCount { get; set; }
 
@@ -18,11 +21,12 @@ namespace BLL.Threats
 			PlaceOnBoard(track, track.StartingPosition);
 		}
 
-		public virtual void PlaceOnBoard(Track track, int? trackPosition)
+		public virtual void PlaceOnBoard(Track track, int trackPosition)
 		{
+			ThreatStatuses.Remove(ThreatStatus.NotAppeared);
+			ThreatStatuses.Add(ThreatStatus.OnTrack);
 			Track = track;
 			Position = trackPosition;
-			HasBeenPlaced = true;
 			TurnEnded += OnTurnEnded;
 			ThreatController.TurnEnding += (sender, args) => TurnEnded(sender, args);
 		}
@@ -37,13 +41,14 @@ namespace BLL.Threats
 			ThreatController = threatController;
 		}
 
-		public virtual bool IsDamageable => HasBeenPlaced && Position != null;
-		public virtual bool IsMoveable => HasBeenPlaced && Position != null;
-		public bool IsOnTrack => HasBeenPlaced && Position != null;
+		public bool IsDefeated => ThreatStatuses.Contains(ThreatStatus.Defeated);
+		public bool IsSurvived => ThreatStatuses.Contains(ThreatStatus.Survived);
+		public bool HasAppeared => !ThreatStatuses.Contains(ThreatStatus.NotAppeared);
 
-		private bool HasBeenPlaced { get; set; }
+		public virtual bool IsMoveable => IsOnTrack;
+		public bool IsOnTrack => ThreatStatuses.Contains(ThreatStatus.OnTrack);
 
-		public virtual int Points => !HasBeenPlaced ? 0 : IsDefeated ? PointsForDefeating: IsSurvived ? PointsForSurviving: 0;
+		public virtual int Points => !HasAppeared ? 0 : IsDefeated ? PointsForDefeating: IsSurvived ? PointsForSurviving: 0;
 
 		public virtual bool NeedsBonusExternalThreat => false;
 		public virtual bool NeedsBonusInternalThreat => false;
@@ -54,14 +59,11 @@ namespace BLL.Threats
 
 		protected virtual int PointsForSurviving => ThreatPoints.GetPointsForSurviving(ThreatType, Difficulty);
 
-		public virtual bool IsDefeated { get; protected set; }
-		public virtual bool IsSurvived { get; private set; }
-
 		public int TimeAppears { get; set; }
 		protected int TotalHealth { get; }
 		public int RemainingHealth { get; protected set; }
 		public int Speed { get; set; }
-		public int? Position { get; private set; }
+		public int Position { get; private set; }
 		protected ThreatController ThreatController { get; private set; }
 
 		public ThreatType ThreatType { get; }
@@ -81,19 +83,24 @@ namespace BLL.Threats
 
 		protected virtual void OnReachingEndOfTrack()
 		{
-			IsSurvived = true;
+			if(IsSurvivedWhenReachingEndOfTrack)
+				ThreatStatuses.Add(ThreatStatus.Survived);
 			OnThreatTerminated();
 		}
 
 		protected virtual void OnHealthReducedToZero()
 		{
-			IsDefeated = true;
+			if(IsDefeatedWhenHealthReachesZero)
+				ThreatStatuses.Add(ThreatStatus.Defeated);
 			OnThreatTerminated();
 		}
 
+		protected virtual bool IsDefeatedWhenHealthReachesZero => true;
+		protected virtual bool IsSurvivedWhenReachingEndOfTrack => true;
+		
 		protected virtual void OnThreatTerminated()
 		{
-			Position = null;
+			ThreatStatuses.Remove(ThreatStatus.OnTrack);
 			ThreatController.TurnEnding -= OnTurnEnded;
 		}
 
@@ -131,7 +138,7 @@ namespace BLL.Threats
 			var oldPosition = Position;
 			Position -= amount;
 			var newPosition = Position;
-			var crossedBreakpoints = Track.GetCrossedBreakpoints(oldPosition.GetValueOrDefault(), newPosition.GetValueOrDefault());
+			var crossedBreakpoints = Track.GetCrossedBreakpoints(oldPosition, newPosition);
 			foreach (var breakpoint in crossedBreakpoints)
 			{
 				switch (breakpoint)

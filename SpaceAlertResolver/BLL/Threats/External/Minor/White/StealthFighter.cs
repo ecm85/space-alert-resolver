@@ -11,7 +11,7 @@ namespace BLL.Threats.External.Minor.White
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			stealthed = true;

@@ -23,10 +23,13 @@ namespace PL.Models
 			var externalThreatsInZone = game.ThreatController.ExternalThreatsOnTrack
 				.Where(threat => threat.CurrentZone == zoneLocation)
 				.ToList();
+			var externalThreatPositions = externalThreatsInZone
+				.Select(threat => threat.Position)
+				.ToList();
 			ExternalThreats = externalThreatsInZone
 				.Select(threat => new ExternalThreatModel(threat))
 				.ToList();
-			Track = new TrackSnapshotModel(game.ThreatController.ExternalTracks[zoneLocation], externalThreatsInZone);
+			Track = new TrackSnapshotModel(game.ThreatController.ExternalTracks[zoneLocation], externalThreatPositions);
 			Damage = zone.AllDamageTokensTaken
 				.Select(damage => string.Format(CultureInfo.InvariantCulture, "{0}-{1}", zoneLocation, damage))
 				.ToList();

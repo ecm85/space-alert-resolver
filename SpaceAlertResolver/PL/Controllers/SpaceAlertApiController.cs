@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web.Http;
 using BLL;
-using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Tracks;
@@ -28,7 +27,7 @@ namespace PL.Controllers
 				Actions = ActionModel.AllActionModels,
 				Tracks = EnumFactory.All<TrackConfiguration>()
 					.Select(trackConfiguration => new Track(trackConfiguration))
-					.Select(track => new TrackSnapshotModel(track, new List<Threat>()))
+					.Select(track => new TrackSnapshotModel(track, new List<int>()))
 					.ToList(),
 				AllInternalThreats = new AllThreatsModel(allInternalThreats),
 				AllExternalThreats = new AllThreatsModel(allExternalThreats)

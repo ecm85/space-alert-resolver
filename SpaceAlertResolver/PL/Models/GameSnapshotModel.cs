@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL;
+using BLL.Threats.Internal;
 
 namespace PL.Models
 {
@@ -28,12 +29,17 @@ namespace PL.Models
 		public GameSnapshotModel(Game game, ResolutionPhase phase)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
+			var parentThreats = internalThreats.Where(threat => threat.Parent == null).ToList();
+			var internalThreatsOnTrack = parentThreats
+				.Concat(OrphanThreatRepresentatives(internalThreats))
+				.ToList();
+			var threatPositions = internalThreatsOnTrack.Select(threat => threat.Position).ToList();
 			RedZone = new RedZoneModel(game);
 			WhiteZone = new WhiteZoneModel(game);
 			BlueZone = new BlueZoneModel(game);
 			InterceptorsZone = new InterceptorsZoneModel(game);
-			InternalThreats = internalThreats.Where(threat => threat.ShowOnTrack).Select(threat => new InternalThreatModel(threat)).ToList();
-			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, internalThreats.Where(threat => threat.ShowOnTrack));
+			InternalThreats = internalThreatsOnTrack.Select(threat => new InternalThreatModel(threat)).ToList();
+			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, threatPositions);
 			PhaseDescription = phase.GetDescription();
 			TurnNumber = game.CurrentTurn;
 			KilledBy = game.KilledBy;
@@ -41,6 +47,15 @@ namespace PL.Models
 			DefeatedThreats = game.ThreatController.DefeatedThreats.Select(threat => new ThreatModel(threat)).ToList();
 			SurvivedThreats = game.ThreatController.SurvivedThreats.Select(threat => new ThreatModel(threat)).ToList();
 			KnockedOutPlayers = game.Players.Where(player => player.IsKnockedOut).Select(player => new PlayerModel(player)).ToList();
+		}
+
+		private static IEnumerable<InternalThreat> OrphanThreatRepresentatives(List<InternalThreat> internalThreats)
+		{
+			return internalThreats
+				.Where(threat => threat.Parent != null)
+				.GroupBy(threat => threat.Parent)
+				.Where(group => !group.Key.IsOnTrack)
+				.Select(group => group.First());
 		}
 	}
 }

@@ -10,13 +10,14 @@ namespace PL.Models
 		public int Shields { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ZoneLocation CurrentZone { get; set; }
-
+		public int Position { get; set; }
+		
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
 			Shields = threat.Shields;
 			CurrentZone = threat.CurrentZone;
-			
+			Position = threat.Position;
 		}
 
 		[JsonConstructor]

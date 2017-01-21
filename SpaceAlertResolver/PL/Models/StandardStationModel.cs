@@ -18,11 +18,10 @@ namespace PL.Models
 			EnergyCubes = Enumerable.Range(1, standardStation.BravoComponent.EnergyInComponent);
 			MaxEnergyCubes = standardStation.BravoComponent.Capacity + 1;
 			Cannon = new CannonModel(standardStation.AlphaComponent);
-			var internalThreatInZoneModels = game.SittingDuck.ThreatController.InternalThreatsOnTrack
-				.Concat(game.SittingDuck.ThreatController.TracklessInternalThreats)
+			var internalThreatInZoneModels = game.SittingDuck.ThreatController.InternalThreatsOnShip
 				.Where(threat => threat.CurrentStations.Contains(station))
 				.Select(threat => new InternalThreatInZoneModel {FileName = threat.FileName});
-			var warningModels = game.SittingDuck.ThreatController.InternalThreatsOnTrack
+			var warningModels = game.SittingDuck.ThreatController.InternalThreatsOnShip
 				.SelectMany(threat => threat.WarningIndicatorStations)
 				.Where(warningStation => warningStation == station)
 				.Select(warningStation => new InternalThreatInZoneModel {FileName = "Warning"});

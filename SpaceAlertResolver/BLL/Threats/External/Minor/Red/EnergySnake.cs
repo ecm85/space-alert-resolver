@@ -16,7 +16,7 @@ namespace BLL.Threats.External.Minor.Red
 			healthAtStartOfTurn = RemainingHealth;
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.DamageResolutionEnding += OnDamageResolutionEnding;

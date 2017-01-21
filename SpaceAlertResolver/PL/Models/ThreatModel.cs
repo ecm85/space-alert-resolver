@@ -10,7 +10,6 @@ namespace PL.Models
 		public ThreatType ThreatType { get; set; }
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ThreatDifficulty ThreatDifficulty { get; set; }
-		public int Position { get; set; }
 		public int RemainingHealth { get; set; }
 		public int Speed { get; set; }
 		public int TimeAppears { get; set; }
@@ -23,7 +22,6 @@ namespace PL.Models
 
 		public ThreatModel(Threat threat)
 		{
-			Position = threat.Position.GetValueOrDefault();
 			RemainingHealth = threat.RemainingHealth;
 			Speed = threat.Speed;
 			ThreatType = threat.ThreatType;

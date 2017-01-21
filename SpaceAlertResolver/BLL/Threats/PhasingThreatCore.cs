@@ -5,8 +5,19 @@ namespace BLL.Threats
 {
 	public class PhasingThreatCore
 	{
-		private bool isPhasedOut;
 		private readonly Threat threat;
+
+		private bool IsPhasedOut
+		{
+			get { return threat.ThreatStatuses.Contains(ThreatStatus.PhasedOut); }
+			set
+			{
+				if (value)
+					threat.ThreatStatuses.Add(ThreatStatus.PhasedOut);
+				else
+					threat.ThreatStatuses.Remove(ThreatStatus.PhasedOut);
+			}
+		}
 
 		public PhasingThreatCore(Threat threat)
 		{
@@ -18,22 +29,22 @@ namespace BLL.Threats
 
 		private void RecordPhasingStatus(object sender, EventArgs args)
 		{
-			WasPhasedOutAtStartOfTurn = isPhasedOut;
+			WasPhasedOutAtStartOfTurn = IsPhasedOut;
 		}
 
-		public bool IsDamageable => !isPhasedOut;
+		public bool IsDamageable => !IsPhasedOut;
 
 		public bool WasPhasedOutAtStartOfTurn { get; private set; }
 
 		private void PhaseIn(object sender, EventArgs args)
 		{
-			isPhasedOut = false;
+			IsPhasedOut = false;
 			WasPhasedOutAtStartOfTurn = false;
 		}
 
 		private void TogglePhasing(object sender, EventArgs args)
 		{
-			isPhasedOut = !WasPhasedOutAtStartOfTurn;
+			IsPhasedOut = !WasPhasedOutAtStartOfTurn;
 		}
 
 		public void ThreatTerminated()

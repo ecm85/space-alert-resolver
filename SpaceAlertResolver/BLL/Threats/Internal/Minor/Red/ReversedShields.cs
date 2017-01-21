@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int? trackPosition)
+		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
 			ThreatController.PlayerActionsEnding += OnPlayerActionsEnding;

@@ -15,28 +15,21 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			if (!IsDefeated)
-			{
-				InfectPlayers();
-				MoveRed();
-				MoveRed();
-			}
+			InfectPlayers();
+			MoveRed();
+			MoveRed();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			if (!IsDefeated)
-			{
-				InfectPlayers();
-				ChangeDecks();
-				MoveBlue();
-			}
+			InfectPlayers();
+			ChangeDecks();
+			MoveBlue();
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			if(!IsDefeated)
-				Damage(4);
+			Damage(4);
 		}
 
 		public override string Id { get; } = "SI3-101";
@@ -49,7 +42,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			{
 				infectedPlayers = new InfectedPlayers(ThreatType, Difficulty, Speed);
 				infectedPlayers.Initialize(SittingDuck, ThreatController);
-				ThreatController.AddInternalThreat(infectedPlayers, TimeAppears, Position.GetValueOrDefault());
+				ThreatController.AddInternalThreat(infectedPlayers, TimeAppears, Position);
 			}
 			var playersInCurrentStation = SittingDuck.GetPlayersInStation(CurrentStation);
 			foreach (var player in playersInCurrentStation)
@@ -61,22 +54,6 @@ namespace BLL.Threats.Internal.Serious.Red
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
-		}
-
-		protected override void OnReachingEndOfTrack()
-		{
-			if (IsDefeated)
-				base.OnThreatTerminated();
-			else
-				base.OnReachingEndOfTrack();
-		}
-
-		protected override void OnThreatTerminated()
-		{
-			if (IsSurvived || (IsDefeated && infectedPlayers == null))
-				base.OnThreatTerminated();
-			else
-				CurrentStations.Remove(CurrentStation);
 		}
 
 		private class InfectedPlayers : InternalThreat
@@ -115,27 +92,8 @@ namespace BLL.Threats.Internal.Serious.Red
 			public override string DisplayName { get; } = "Rabid Beast";
 			public override string FileName { get; } = "RabidBeast";
 
-			public override int Points
-			{
-				get { return 0; }
-			}
-
-			public override bool IsDefeated
-			{
-				get { return false; }
-			}
-
-			public override bool IsSurvived
-			{
-				get { return false; }
-			}
-
-			public override bool IsDamageable
-			{
-				get { return false; }
-			}
-
-			public override bool ShowOnTrack { get; } = false;
+			protected override bool IsDefeatedWhenHealthReachesZero => false;
+			protected override bool IsSurvivedWhenReachingEndOfTrack => false;
 		}
 	}
 }
