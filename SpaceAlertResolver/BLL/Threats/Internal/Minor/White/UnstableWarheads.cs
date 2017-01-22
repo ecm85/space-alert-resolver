@@ -1,5 +1,4 @@
-﻿using System;
-using BLL.ShipComponents;
+﻿using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.White
@@ -14,14 +13,14 @@ namespace BLL.Threats.Internal.Minor.White
 		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
-			SetHealthToRemainingRockets(this, EventArgs.Empty);
-			SittingDuck.RocketsModified += SetHealthToRemainingRockets;
+			RemainingHealth = SittingDuck.RocketCount;
+			SittingDuck.RocketsModified += UpdateHealthFromRemovedRockets;
 		}
 
-		private void SetHealthToRemainingRockets(object sender, EventArgs args)
+		private void UpdateHealthFromRemovedRockets(object sender, RocketsRemovedEventArgs args)
 		{
-			//TODO: If this goes to 0, is the threat auto-defeated?
-			RemainingHealth = SittingDuck.RocketCount;
+			RemainingHealth -= args.RocketsRemovedCount;
+			CheckDefeated();
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -39,7 +38,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void OnThreatTerminated()
 		{
-			SittingDuck.RocketsModified -= SetHealthToRemainingRockets;
+			SittingDuck.RocketsModified -= UpdateHealthFromRemovedRockets;
 			base.OnThreatTerminated();
 		}
 

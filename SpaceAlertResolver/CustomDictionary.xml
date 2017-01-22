@@ -9,6 +9,8 @@
 	<Words>
 		<Recognized>
 			<Word>Cryoshield</Word>
+			<Word>Cryoshielded</Word>
+			<Word>Stealthed</Word>
 			<Word>Gravolift</Word>
 			<Word>Debuff</Word>
 			<Word>Redward</Word>
@@ -30,6 +32,7 @@
 			<Term CompountAlternate="MineLayer">minelayer</Term>
 			<Term CompountAlternate="OnBoard">onboard</Term>
 			<Term CompoundAlternate="ConsoleResolver">ConsoleResolver</Term>
+			<Term CompoundAlternate="GrownUp">GrownUp</Term>
 		</Compound>
 	</Words>
 </Dictionary>

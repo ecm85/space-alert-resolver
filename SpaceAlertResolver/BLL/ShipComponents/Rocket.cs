@@ -9,11 +9,6 @@
 			IsDoubleRocket = true;
 		}
 
-		public PlayerDamage PerformAttack()
-		{
-			return new PlayerDamage(IsDoubleRocket ? 5 : 3, PlayerDamageType.Rocket, new [] {1, 2}, EnumFactory.All<ZoneLocation>());
-		}
-
 		public PlayerDamage PerformAttack(Player performingPlayer)
 		{
 			return new PlayerDamage(IsDoubleRocket ? 5 : 3, PlayerDamageType.Rocket, new [] {1, 2}, EnumFactory.All<ZoneLocation>(), performingPlayer);

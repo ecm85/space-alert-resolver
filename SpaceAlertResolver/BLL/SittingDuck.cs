@@ -16,7 +16,7 @@ namespace BLL
 		public IEnumerable<Zone> Zones => ZonesByLocation.Values;
 		public IDictionary<StationLocation, StandardStation> StandardStationsByLocation { get; }
 		public IList<InterceptorStation> InterceptorStations { get; }
-		public event EventHandler RocketsModified = (sender, args) => { };
+		public event EventHandler<RocketsRemovedEventArgs> RocketsModified = (sender, args) => { };
 		public event EventHandler CentralLaserCannonFired = (sender, args) => { };
 		public ThreatController ThreatController { get; private set; }
 		public Game Game { get; private set; }
@@ -233,9 +233,9 @@ namespace BLL
 			BlueZone.LowerBlueStation.RocketsComponent.RemoveRocket();
 		}
 
-		public void RemoveAllRockets()
+		public int RemoveAllRockets()
 		{
-			BlueZone.LowerBlueStation.RocketsComponent.RemoveAllRockets();
+			return BlueZone.LowerBlueStation.RocketsComponent.RemoveAllRockets();
 		}
 
 		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)

@@ -97,6 +97,7 @@
     <Compile Include="ShipComponents\PlayerMoveEventArgs.cs" />
     <Compile Include="ShipComponents\Reactor.cs" />
     <Compile Include="ShipComponents\RedZone.cs" />
+    <Compile Include="ShipComponents\RocketsRemovedEventArgs.cs" />
     <Compile Include="ShipComponents\Station.cs" />
     <Compile Include="ShipComponents\LaserCannon.cs" />
     <Compile Include="Player.cs" />

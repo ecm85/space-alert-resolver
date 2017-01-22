@@ -6,16 +6,13 @@ namespace BLL.ShipComponents
 {
 	public class RocketsComponent : ICharlieComponent
 	{
-		private List<Rocket> Rockets { get; set; } 
+		private List<Rocket> Rockets { get; } 
 		private Rocket RocketFiredThisTurn { get; set; }
 		public Rocket RocketFiredLastTurn { get; private set; }
 
-		public int RocketCount
-		{
-			get { return Rockets.Count; }
-		}
+		public int RocketCount => Rockets.Count;
 
-		public event EventHandler RocketsModified = (sender, eventArgs) => { };
+		public event EventHandler<RocketsRemovedEventArgs> RocketsModified = (sender, eventArgs) => { };
 
 		public RocketsComponent()
 		{
@@ -30,18 +27,19 @@ namespace BLL.ShipComponents
 				var firedRocket = Rockets.First();
 				Rockets.Remove(firedRocket);
 				RocketFiredThisTurn = firedRocket;
-				if (isAdvancedUsage && canFireDoubleRocket)
+				var isFiringDoubleRocket = isAdvancedUsage && canFireDoubleRocket;
+				if (isFiringDoubleRocket)
 				{
 					Rockets.Remove(Rockets.First());
 					firedRocket.SetDoubleRocket();
 				}
-				RocketsModified(this, EventArgs.Empty);
+				RocketsModified(this, new RocketsRemovedEventArgs {RocketsRemovedCount = isFiringDoubleRocket ? 2 : 1});
 			}
 		}
 
 		public bool CanPerformCAction(Player performingPlayer)
 		{
-			return RocketFiredLastTurn == null && Rockets.Any();
+			return RocketFiredThisTurn == null && Rockets.Any();
 		}
 
 		public void PerformEndOfTurn()
@@ -53,13 +51,15 @@ namespace BLL.ShipComponents
 		public void RemoveRocket()
 		{
 			Rockets.Remove(Rockets.First());
-			RocketsModified(this, EventArgs.Empty);
+			RocketsModified(this, new RocketsRemovedEventArgs {RocketsRemovedCount = 1});
 		}
 
-		public void RemoveAllRockets()
+		public int RemoveAllRockets()
 		{
+			var rocketCountRemoved = Rockets.Count;
 			Rockets.Clear();
-			RocketsModified(this, EventArgs.Empty);
+			RocketsModified(this, new RocketsRemovedEventArgs {RocketsRemovedCount = rocketCountRemoved});
+			return rocketCountRemoved;
 		}
 	}
 }

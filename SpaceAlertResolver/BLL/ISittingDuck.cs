@@ -33,11 +33,11 @@ namespace BLL
 
 		void DisableLowerRedInactiveBattleBots();
 
-		event EventHandler RocketsModified;
+		event EventHandler<RocketsRemovedEventArgs> RocketsModified;
 		event EventHandler CentralLaserCannonFired;
 		int RocketCount { get; }
 		void RemoveRocket();
-		void RemoveAllRockets();
+		int RemoveAllRockets();
 		void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
 		void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift);
 		void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift);
