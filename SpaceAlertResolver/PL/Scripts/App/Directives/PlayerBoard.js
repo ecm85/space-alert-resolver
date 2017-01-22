@@ -12,8 +12,6 @@ angular.module("spaceAlertModule")
 					selectedActions: '=',
 					playerColor: '=',
 					smallBoard: '='
-					//,
-					//showExpandedSelectedItem: '='
 				},
 				controller: [
 					'$scope',

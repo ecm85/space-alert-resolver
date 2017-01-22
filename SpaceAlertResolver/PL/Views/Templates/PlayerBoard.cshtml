@@ -5,5 +5,4 @@
 	<div ng-repeat="selectedAction in selectedActions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor.index === $index, 'configurable-action': !$parent.immutableCursor && $parent.cursor, 'small': smallBoard}" ng-click="moveCursor($index)">
 		<img ng-if="selectedAction.description != null" class="action-selected-image" ng-class="{'small': smallBoard}" ng-src="~/Content/Images/Actions/{{selectedAction.description}}.png" />
 	</div>
-	@*<img ng-if="selectedActions[cursor.index].description != null && showExpandedSelectedItem" class="action-selected-image-expanded" ng-class="{'small': smallBoard}" ng-src="~/Content/Images/Actions/{{selectedActions[cursor.index].description}}.png" />*@
 </div>
