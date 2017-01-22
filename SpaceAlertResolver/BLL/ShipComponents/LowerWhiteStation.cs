@@ -11,9 +11,9 @@
 		public LowerWhiteStation(
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(StationLocation.LowerWhite, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			Doors bluewardDoors,
+			Doors redwardDoors,
+			SittingDuck sittingDuck) : base(StationLocation.LowerWhite, threatController, gravolift, bluewardDoors, redwardDoors, sittingDuck)
 		{
 			CentralReactor = new CentralReactor();
 			AlphaComponent = new PulseCannon(CentralReactor);

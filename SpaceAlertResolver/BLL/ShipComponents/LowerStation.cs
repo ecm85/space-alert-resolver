@@ -10,9 +10,9 @@
 			StationLocation stationLocation,
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(stationLocation, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			Doors bluewardDoors,
+			Doors redwardDoors,
+			SittingDuck sittingDuck) : base(stationLocation, threatController, gravolift, bluewardDoors, redwardDoors, sittingDuck)
 		{
 		}
 

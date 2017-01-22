@@ -12,12 +12,12 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.BreachRedAirlock();
+			SittingDuck.SealRedDoors();
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.BreachBlueAirlock();
+			SittingDuck.SealBlueDoors();
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -29,7 +29,7 @@ namespace BLL.Threats.Internal.Minor.Red
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			SittingDuck.RepairAllAirlockBreaches();
+			SittingDuck.RepairAllSealedDoors();
 		}
 
 		public override string Id { get; } = "I3-104";

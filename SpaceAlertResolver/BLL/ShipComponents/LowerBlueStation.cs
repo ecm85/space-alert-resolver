@@ -13,9 +13,9 @@
 			CentralReactor whiteReactor,
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(StationLocation.LowerBlue, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			Doors bluewardDoors,
+			Doors redwardDoors,
+			SittingDuck sittingDuck) : base(StationLocation.LowerBlue, threatController, gravolift, bluewardDoors, redwardDoors, sittingDuck)
 		{
 			BatteryPack = new BatteryPack();
 			AlphaComponent = new SideLightLaserCannon(BatteryPack, ZoneLocation.Blue);

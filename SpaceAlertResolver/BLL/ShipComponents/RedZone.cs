@@ -8,13 +8,13 @@
 		public UpperRedStation UpperRedStation { get; set; }
 		public LowerRedStation LowerRedStation { get; set; }
 
-		public RedZone(ThreatController threatController, CentralReactor whiteReactor, Airlock redAirlock, SittingDuck sittingDuck, Interceptors interceptors)
+		public RedZone(ThreatController threatController, CentralReactor whiteReactor, Doors redDoors, SittingDuck sittingDuck, Interceptors interceptors)
 		{
 			LowerRedStation = new LowerRedStation(
 				whiteReactor,
 				threatController,
 				Gravolift,
-				redAirlock,
+				redDoors,
 				null,
 				sittingDuck);
 			UpperRedStation = new UpperRedStation(
@@ -22,7 +22,7 @@
 				interceptors,
 				threatController,
 				Gravolift,
-				redAirlock,
+				redDoors,
 				null,
 				sittingDuck);
 		}

@@ -85,10 +85,10 @@ namespace BLL.Test
 					.Returns(count)
 					.Verifiable();
 				mockSittingDuck
-					.Setup(f => f.RedAirlockIsBreached)
+					.Setup(f => f.RedDoorIsSealed)
 					.Returns(false);
 				mockSittingDuck
-					.Setup(f => f.BlueAirlockIsBreached)
+					.Setup(f => f.BlueDoorIsSealed)
 					.Returns(false);
 			}
 			seeker.Initialize(mockSittingDuck.Object, null);

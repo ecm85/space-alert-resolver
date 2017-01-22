@@ -51,11 +51,11 @@ namespace BLL
 		bool DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation zoneLocation);
 		void KnockOutCaptain();
-		void BreachRedAirlock();
-		void BreachBlueAirlock();
-		void RepairAllAirlockBreaches();
-		bool RedAirlockIsBreached { get; }
-		bool BlueAirlockIsBreached { get; }
+		void SealRedDoors();
+		void SealBlueDoors();
+		void RepairAllSealedDoors();
+		bool RedDoorIsSealed { get; }
+		bool BlueDoorIsSealed { get; }
 		int GetDamageToZone(ZoneLocation zoneLocation);
 		void TeleportPlayers(IEnumerable<Player> playersToTeleport, StationLocation newStationLocation);
 	}

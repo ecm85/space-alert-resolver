@@ -8,20 +8,20 @@
 		public UpperWhiteStation UpperWhiteStation { get; set; }
 		public LowerWhiteStation LowerWhiteStation { get; set; }
 
-		public WhiteZone(ThreatController threatController, Airlock redAirlock, Airlock blueAirlock, SittingDuck sittingDuck)
+		public WhiteZone(ThreatController threatController, Doors redDoors, Doors blueDoors, SittingDuck sittingDuck)
 		{
 			LowerWhiteStation = new LowerWhiteStation(
 				threatController,
 				Gravolift,
-				blueAirlock,
-				redAirlock,
+				blueDoors,
+				redDoors,
 				sittingDuck);
 			UpperWhiteStation = new UpperWhiteStation(
 				LowerWhiteStation.CentralReactor,
 				threatController,
 				Gravolift,
-				redAirlock,
-				redAirlock,
+				redDoors,
+				redDoors,
 				sittingDuck);
 		}
 	}

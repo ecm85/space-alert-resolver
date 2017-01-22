@@ -12,9 +12,9 @@
 			Interceptors interceptors,
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(StationLocation.UpperRed, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			Doors bluewardDoors,
+			Doors redwardDoors,
+			SittingDuck sittingDuck) : base(StationLocation.UpperRed, threatController, gravolift, bluewardDoors, redwardDoors, sittingDuck)
 		{
 			AlphaComponent = new SideHeavyLaserCannon(redReactor, ZoneLocation.Red);
 			Shield = new SideShield(redReactor);

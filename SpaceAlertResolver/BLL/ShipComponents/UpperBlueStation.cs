@@ -11,9 +11,9 @@
 			SideReactor redReactor,
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
-			SittingDuck sittingDuck) : base(StationLocation.UpperBlue, threatController, gravolift, bluewardAirlock, redwardAirlock, sittingDuck)
+			Doors bluewardDoors,
+			Doors redwardDoors,
+			SittingDuck sittingDuck) : base(StationLocation.UpperBlue, threatController, gravolift, bluewardDoors, redwardDoors, sittingDuck)
 		{
 			AlphaComponent = new SideHeavyLaserCannon(redReactor, ZoneLocation.Blue);
 			Shield = new SideShield(redReactor);

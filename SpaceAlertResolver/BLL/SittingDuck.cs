@@ -21,16 +21,16 @@ namespace BLL
 		public ThreatController ThreatController { get; private set; }
 		public Game Game { get; private set; }
 
-		private Airlock BlueAirlock { get; }
-		private Airlock RedAirlock { get; }
+		private Doors BlueDoors { get; }
+		private Doors RedDoors { get; }
 
 		public SittingDuck(ThreatController threatController, Game game)
 		{
 			ThreatController = threatController;
 			Game = game;
 
-			var redAirlock = new Airlock();
-			var blueAirlock = new Airlock();
+			var redDoors = new Doors();
+			var blueDoors = new Doors();
 
 
 			var interceptors = new Interceptors();
@@ -51,11 +51,11 @@ namespace BLL
 				threatController,
 				interceptorComponent3);
 
-			BlueAirlock = blueAirlock;
-			RedAirlock = redAirlock;
-			WhiteZone = new WhiteZone(threatController, redAirlock, blueAirlock, this);
-			RedZone = new RedZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, redAirlock, this, interceptors);
-			BlueZone = new BlueZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, blueAirlock, this);
+			BlueDoors = blueDoors;
+			RedDoors = redDoors;
+			WhiteZone = new WhiteZone(threatController, redDoors, blueDoors, this);
+			RedZone = new RedZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors);
+			BlueZone = new BlueZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, blueDoors, this);
 
 			BlueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
 			WhiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
@@ -305,24 +305,24 @@ namespace BLL
 			captain.IsKnockedOut = true;
 		}
 
-		public void BreachRedAirlock()
+		public void SealRedDoors()
 		{
-			BlueAirlock.Breached = true;
+			BlueDoors.Sealed = true;
 		}
 
-		public void BreachBlueAirlock()
+		public void SealBlueDoors()
 		{
-			RedAirlock.Breached = true;
+			RedDoors.Sealed = true;
 		}
 
-		public void RepairAllAirlockBreaches()
+		public void RepairAllSealedDoors()
 		{
-			BlueAirlock.Breached = false;
-			RedAirlock.Breached = false;
+			BlueDoors.Sealed = false;
+			RedDoors.Sealed = false;
 		}
 
-		public virtual bool RedAirlockIsBreached => RedAirlock.Breached;
-		public virtual bool BlueAirlockIsBreached => BlueAirlock.Breached;
+		public virtual bool RedDoorIsSealed => RedDoors.Sealed;
+		public virtual bool BlueDoorIsSealed => BlueDoors.Sealed;
 
 		public virtual int GetDamageToZone(ZoneLocation zoneLocation)
 		{

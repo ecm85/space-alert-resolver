@@ -11,21 +11,21 @@ namespace BLL.ShipComponents
 		protected abstract ICharlieComponent CharlieComponent { get; }
 
 		private Gravolift Gravolift { get; }
-		private Airlock BluewardAirlock { get; }
-		private Airlock RedwardAirlock { get; }
+		private Doors BluewardDoors { get; }
+		private Doors RedwardDoors { get; }
 		private SittingDuck SittingDuck { get; }
 
 		protected StandardStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
 			Gravolift gravolift,
-			Airlock bluewardAirlock,
-			Airlock redwardAirlock,
+			Doors bluewardDoors,
+			Doors redwardDoors,
 			SittingDuck sittingDuck) : base(stationLocation, threatController)
 		{
 			Gravolift = gravolift;
-			BluewardAirlock = bluewardAirlock;
-			RedwardAirlock = redwardAirlock;
+			BluewardDoors = bluewardDoors;
+			RedwardDoors = redwardDoors;
 			SittingDuck = sittingDuck;
 		}
 
@@ -100,7 +100,7 @@ namespace BLL.ShipComponents
 
 		public bool CanMoveOutTowardsRed()
 		{
-			return RedwardAirlock != null && RedwardAirlock.CanUse;
+			return RedwardDoors != null && RedwardDoors.CanUse;
 		}
 
 		public static bool CanMoveOutTowardsOppositeDeck()
@@ -110,7 +110,7 @@ namespace BLL.ShipComponents
 
 		public bool CanMoveOutTowardsBlue()
 		{
-			return BluewardAirlock != null && BluewardAirlock.CanUse;
+			return BluewardDoors != null && BluewardDoors.CanUse;
 		}
 
 		private void PerformAAction(Player performingPlayer, bool isHeroic, bool isAdvanced = false)
