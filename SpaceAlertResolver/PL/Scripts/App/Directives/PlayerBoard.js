@@ -7,16 +7,19 @@ angular.module("spaceAlertModule")
 				templateUrl: 'templates/playerBoard',
 				restrict: 'E',
 				scope: {
+					immutableCursor: '=',
 					cursor: '=',
 					selectedActions: '=',
 					playerColor: '=',
 					smallBoard: '='
+					//,
+					//showExpandedSelectedItem: '='
 				},
 				controller: [
 					'$scope',
 					function PlayerBoardController($scope) {
 						$scope.moveCursor = function (index) {
-							if ($scope.cursor)
+							if ($scope.cursor && !$scope.immutableCursor)
 								$scope.cursor.index = index;
 						};
 					}

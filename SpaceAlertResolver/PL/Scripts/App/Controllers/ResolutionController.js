@@ -131,6 +131,10 @@ angular.module("spaceAlertModule")
 					stop();
 				});
 
+			$scope.getActionCursor = function() {
+				return currentTurnIndex;
+			}
+
 			selectTurnManually(0);
 		}
 	]);

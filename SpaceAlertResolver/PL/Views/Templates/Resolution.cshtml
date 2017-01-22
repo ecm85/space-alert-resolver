@@ -113,7 +113,7 @@
 </div>
 <div class="player-boards">
 	<div class="player-board" ng-repeat="player in currentPhase.players">
-		<player-board player-color="player.playerColor" selected-actions="player.actions" small-board="true"></player-board>
+		<player-board player-color="player.playerColor" selected-actions="player.actions" small-board="true" immutable-cursor="true" cursor="{index: getActionCursor()}"></player-board>
 	</div>
 </div>
 

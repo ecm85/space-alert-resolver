@@ -49,6 +49,9 @@
 .selected-action-wrapper.cursor {
 	border: 2px yellow solid;
 }
+.selected-action-wrapper.cursor.small {
+	border: 1px yellow solid;
+}
 
 .selected-action-wrapper-0,
 .selected-action-wrapper-1,
@@ -175,6 +178,7 @@
 	height: auto;
 }
 .action-selected-image.small {
-	width: 30px;
+	width: 28px;
 	height: auto;
 }
+
