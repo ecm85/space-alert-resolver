@@ -9,7 +9,7 @@
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			ThreatController.AddExternalThreatEffect(ExternalThreatEffect.BonusAttack, this);
+			ThreatController.AddExternalThreatEffect(ThreatStatus.BonusAttack);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -24,7 +24,7 @@
 
 		protected override void OnHealthReducedToZero()
 		{
-			ThreatController.RemoveExternalThreatEffectForSource(this);
+			ThreatController.RemoveExternalThreatEffect(ThreatStatus.BonusAttack);
 			base.OnHealthReducedToZero();
 		}
 

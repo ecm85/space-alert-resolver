@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Threats;
 
 namespace BLL.ShipComponents
 {
@@ -271,8 +272,7 @@ namespace BLL.ShipComponents
 		private void BasicHypernavigator()
 		{
 			if (StationLocation.IsLowerDeck())
-				SittingDuck.ThreatController.AddExternalThreatEffect(ExternalThreatEffect.ReducedMovement,
-					ThreatController.SingleTurnThreatSource);
+				SittingDuck.ThreatController.AddSingleTurnExternalThreatEffect(ThreatStatus.ReducedMovement);
 		}
 
 		private void PerformBasicMedic(Player performingPlayer, int currentTurn)

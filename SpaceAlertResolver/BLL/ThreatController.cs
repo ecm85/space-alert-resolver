@@ -19,7 +19,8 @@ namespace BLL
 		public event EventHandler PlayerActionsEnding = (sender, args) => { };
 		public event EventHandler TurnEnding = (sender, args) => { };
 		public event EventHandler DamageResolutionEnding = (sender, args) => { };
-		private IDictionary<object, ExternalThreatEffect> CurrentExternalThreatBuffsBySource { get; }
+		private readonly IList<ThreatStatus> externalThreatStatusEffects = new List<ThreatStatus>();
+		private readonly IList<ThreatStatus> singleTurnExternalThreatStatusEffects = new List<ThreatStatus>();
 
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
@@ -66,8 +67,6 @@ namespace BLL
 			get { return new List<Threat>().Concat(ExternalThreats).Concat(InternalThreats).Sum(threat => threat.Points); }
 		}
 
-		public object SingleTurnThreatSource { get; }
-
 		public IEnumerable<InternalThreat> InternalThreatsOnShip { get {return InternalThreats.Where(threat => threat.IsOnShip);} }
 
 		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
@@ -76,8 +75,6 @@ namespace BLL
 			ExternalTracks = externalTracks;
 			ExternalThreats = externalThreats;
 			InternalThreats = internalThreats;
-			CurrentExternalThreatBuffsBySource = new Dictionary<object, ExternalThreatEffect>();
-			SingleTurnThreatSource = new object();
 		}
 
 		public void AddNewThreatsToTracks(int currentTurn)
@@ -131,8 +128,10 @@ namespace BLL
 
 		public void PerformEndOfTurn()
 		{
-			RemoveExternalThreatEffectForSource(SingleTurnThreatSource);
 			TurnEnding(null, null);
+			foreach (var singleTurnExternalThreatStatusEffect in singleTurnExternalThreatStatusEffects)
+				foreach (var externalThreat in ExternalThreats)
+					externalThreat.SetThreatStatus(singleTurnExternalThreatStatusEffect, false);
 		}
 
 		public void PerformEndOfDamageResolution()
@@ -140,19 +139,25 @@ namespace BLL
 			DamageResolutionEnding(null, null);
 		}
 
-		public IEnumerable<ExternalThreatEffect> CurrentExternalThreatBuffs()
+		public void AddExternalThreatEffect(ThreatStatus threatStatus)
 		{
-			return CurrentExternalThreatBuffsBySource.Values.ToList();
+			foreach (var externalThreat in ExternalThreats)
+				externalThreat.SetThreatStatus(threatStatus, true);
+			externalThreatStatusEffects.Add(threatStatus);
 		}
 
-		public void AddExternalThreatEffect(ExternalThreatEffect effect, object source)
+		public void RemoveExternalThreatEffect(ThreatStatus threatStatus)
 		{
-			CurrentExternalThreatBuffsBySource[source] = effect;
+			foreach (var externalThreat in ExternalThreats)
+				externalThreat.SetThreatStatus(threatStatus, false);
+			externalThreatStatusEffects.Remove(threatStatus);
 		}
 
-		public void RemoveExternalThreatEffectForSource(object source)
+		public void AddSingleTurnExternalThreatEffect(ThreatStatus threatStatus)
 		{
-			CurrentExternalThreatBuffsBySource.Remove(source);
+			foreach (var externalThreat in ExternalThreats)
+				externalThreat.SetThreatStatus(threatStatus, true);
+			singleTurnExternalThreatStatusEffects.Add(threatStatus);
 		}
 
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears, int position)
@@ -179,6 +184,8 @@ namespace BLL
 			newThreat.CurrentZone = zoneLocation;
 			newThreat.TimeAppears = timeAppears;
 			newThreat.PlaceOnTrack(ExternalTracks[zoneLocation]);
+			foreach (var threat in externalThreatStatusEffects.Concat(singleTurnExternalThreatStatusEffects))
+				newThreat.SetThreatStatus(threat, true);
 			ExternalThreats.Add(newThreat);
 		}
 	}

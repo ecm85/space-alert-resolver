@@ -1,4 +1,5 @@
 ﻿using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.External;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -15,7 +16,7 @@ namespace PL.Models
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
-			Shields = threat.Shields;
+			Shields = threat.Shields + (threat.GetThreatStatus(ThreatStatus.BonusShield) ? 1 : 0);
 			CurrentZone = threat.CurrentZone;
 			Position = threat.Position;
 		}

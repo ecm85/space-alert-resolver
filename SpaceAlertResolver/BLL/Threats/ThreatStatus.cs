@@ -12,6 +12,9 @@
 		KnockedOffCourse,
 		Stealthed,
 		GrownUp,
+		BonusShield,
+		BonusAttack,
+		ReducedMovement
 	}
 
 	public static class ThreatStatusExtensions

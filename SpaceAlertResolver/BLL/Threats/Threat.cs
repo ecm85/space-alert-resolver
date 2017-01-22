@@ -140,7 +140,7 @@ namespace BLL.Threats
 		public void Move(int currentTurn)
 		{
 			var amount = Speed;
-			if (ThreatController.CurrentExternalThreatBuffs().Contains(ExternalThreatEffect.ReducedMovement))
+			if (ThreatStatuses.Contains(ThreatStatus.ReducedMovement))
 				amount -= 1;
 			Move(currentTurn, amount);
 		}

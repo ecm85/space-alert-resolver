@@ -52,7 +52,6 @@
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EnumFactory.cs" />
-    <Compile Include="ExternalThreatEffect.cs" />
     <Compile Include="GameParser.cs" />
     <Compile Include="GameStatus.cs" />
     <Compile Include="GlobalSuppressions.cs" />
