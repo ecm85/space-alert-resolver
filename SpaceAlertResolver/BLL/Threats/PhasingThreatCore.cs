@@ -9,14 +9,8 @@ namespace BLL.Threats
 
 		private bool IsPhasedOut
 		{
-			get { return threat.ThreatStatuses.Contains(ThreatStatus.PhasedOut); }
-			set
-			{
-				if (value)
-					threat.ThreatStatuses.Add(ThreatStatus.PhasedOut);
-				else
-					threat.ThreatStatuses.Remove(ThreatStatus.PhasedOut);
-			}
+			get { return threat.GetThreatStatus(ThreatStatus.PhasedOut); } 
+			set { threat.SetThreatStatus(ThreatStatus.PhasedOut, value); }
 		}
 
 		public PhasingThreatCore(Threat threat)

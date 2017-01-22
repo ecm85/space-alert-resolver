@@ -13,8 +13,21 @@ namespace BLL.Threats
 
 		public IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
 
-		public int BuffCount { get; set; }
-		public int DebuffCount { get; set; }
+		public bool GetThreatStatus(ThreatStatus threatStatus)
+		{
+			return ThreatStatuses.Contains(threatStatus);
+		}
+
+		public void SetThreatStatus(ThreatStatus threatStatus, bool value)
+		{
+			if (value)
+				ThreatStatuses.Add(threatStatus);
+			else
+				ThreatStatuses.Remove(threatStatus);
+		}
+		
+		public int BuffCount => ThreatStatuses.Count(threatStatus => threatStatus.IsBuff());
+		public int DebuffCount => ThreatStatuses.Count(threatStatus => threatStatus.IsDebuff());
 
 		public void PlaceOnBoard(Track track)
 		{

@@ -6,7 +6,11 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class PhantomFighter : MinorYellowExternalThreat
 	{
-		private bool phantomMode;
+		private bool PhantomMode
+		{
+			get { return GetThreatStatus(ThreatStatus.Stealthed); }
+			set { SetThreatStatus(ThreatStatus.Stealthed, value); }
+		}
 
 		public PhantomFighter()
 			: base(3, 3, 3)
@@ -16,14 +20,12 @@ namespace BLL.Threats.External.Minor.Yellow
 		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			phantomMode = true;
-			BuffCount++;
+			PhantomMode = true;
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			phantomMode = false;
-			BuffCount--;
+			PhantomMode = false;
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -47,7 +49,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return !phantomMode && base.CanBeTargetedBy(damage);
+			return !PhantomMode && base.CanBeTargetedBy(damage);
 		}
 	}
 }

@@ -5,7 +5,11 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class Alien : SeriousWhiteInternalThreat
 	{
-		private bool grownUp;
+		private bool GrownUp
+		{
+			get { return GetThreatStatus(ThreatStatus.GrownUp); }
+			set { SetThreatStatus(ThreatStatus.GrownUp, value); }
+		}
 
 		public Alien()
 			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.BattleBots)
@@ -14,8 +18,7 @@ namespace BLL.Threats.Internal.Serious.White
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			grownUp = true;
-			BuffCount++;
+			GrownUp = true;
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -37,7 +40,7 @@ namespace BLL.Threats.Internal.Serious.White
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-			if (grownUp && !isHeroic)
+			if (GrownUp && !isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
 	}

@@ -6,7 +6,11 @@ namespace BLL.Threats.External.Serious.White
 {
 	public class CryoshieldFrigate : SeriousWhiteExternalThreat
 	{
-		private bool cryoshieldUp;
+		private bool CryoshieldUp
+		{
+			get { return GetThreatStatus(ThreatStatus.Cryoshielded); }
+			set { SetThreatStatus(ThreatStatus.Cryoshielded, value); }
+		}
 
 		public CryoshieldFrigate()
 			: base(1, 7, 2)
@@ -16,8 +20,7 @@ namespace BLL.Threats.External.Serious.White
 		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			cryoshieldUp = true;
-			BuffCount++;
+			CryoshieldUp = true;
 		}
 
 		protected override void PerformXAction(int currentTurn)
@@ -41,11 +44,8 @@ namespace BLL.Threats.External.Serious.White
 
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
-			if (cryoshieldUp && damages.Any())
-			{
-				cryoshieldUp = false;
-				BuffCount--;
-			}
+			if (CryoshieldUp && damages.Any())
+				CryoshieldUp = false;
 			else
 				base.TakeDamage(damages);
 		}

@@ -7,6 +7,35 @@
 		OnTrack,
 		PhasedOut,
 		Survived,
-		Defeated
+		Defeated,
+		Cryoshielded,
+		KnockedOffCourse,
+		Stealthed,
+		GrownUp,
+	}
+
+	public static class ThreatStatusExtensions
+	{
+		public static bool IsBuff(this ThreatStatus threatStatus)
+		{
+			switch (threatStatus)
+			{
+				case ThreatStatus.Cryoshielded:
+				case ThreatStatus.Stealthed:
+				case ThreatStatus.GrownUp:
+					return true;
+			}
+			return false;
+		}
+
+		public static bool IsDebuff(this ThreatStatus threatStatus)
+		{
+			switch (threatStatus)
+			{
+				case ThreatStatus.KnockedOffCourse:
+					return true;
+			}
+			return false;
+		}
 	}
 }

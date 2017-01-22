@@ -4,7 +4,11 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class StealthFighter : MinorWhiteExternalThreat
 	{
-		private bool stealthed;
+		private bool Stealthed
+		{
+			get { return GetThreatStatus(ThreatStatus.Stealthed); }
+			set { SetThreatStatus(ThreatStatus.Stealthed, value); }
+		}
 
 		public StealthFighter()
 			: base(2, 4, 3)
@@ -14,14 +18,12 @@ namespace BLL.Threats.External.Minor.White
 		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			stealthed = true;
-			BuffCount++;
+			Stealthed = true;
 		}
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			stealthed = false;
-			BuffCount--;
+			Stealthed = false;
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -40,7 +42,7 @@ namespace BLL.Threats.External.Minor.White
 
 		public override bool CanBeTargetedBy(PlayerDamage damage)
 		{
-			return !stealthed && base.CanBeTargetedBy(damage);
+			return !Stealthed && base.CanBeTargetedBy(damage);
 		}
 	}
 }

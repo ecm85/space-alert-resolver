@@ -5,7 +5,11 @@ namespace BLL.Threats.External.Minor.White
 {
 	public class SpinningSaucer : MinorWhiteExternalThreat
 	{
-		private bool hitByRocket;
+		private bool KnockedOffCourse
+		{
+			get { return GetThreatStatus(ThreatStatus.KnockedOffCourse); }
+			set { SetThreatStatus(ThreatStatus.KnockedOffCourse, value); }
+		}
 
 		public SpinningSaucer()
 			: base(4, 3, 3)
@@ -24,7 +28,7 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			if (!hitByRocket)
+			if (!KnockedOffCourse)
 				AttackCurrentZone(5);
 		}
 
@@ -35,10 +39,7 @@ namespace BLL.Threats.External.Minor.White
 		public override void TakeDamage(IList<PlayerDamage> damages)
 		{
 			if (damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Rocket))
-			{
-				hitByRocket = true;
-				DebuffCount++;
-			}
+				KnockedOffCourse = true;
 			base.TakeDamage(damages);
 		}
 	}
