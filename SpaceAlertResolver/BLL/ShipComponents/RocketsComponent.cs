@@ -7,7 +7,7 @@ namespace BLL.ShipComponents
 	public class RocketsComponent : ICharlieComponent
 	{
 		private List<Rocket> Rockets { get; } 
-		private Rocket RocketFiredThisTurn { get; set; }
+		public Rocket RocketFiredThisTurn { get; private set; }
 		public Rocket RocketFiredLastTurn { get; private set; }
 
 		public int RocketCount => Rockets.Count;

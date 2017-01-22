@@ -374,3 +374,27 @@
 	width: 18px;
 	height: auto;
 }
+
+.rocket-fired-this-turn-container {
+	position: absolute;
+    top: 490px;
+    left: 380px;
+	width: 45px;
+	height: 35px;
+}
+
+.rocket-fired-last-turn-container {
+	position: absolute;
+	top: 425px;
+	left: 240px;
+	width: 40px;
+	height: 40px;
+}
+
+.rocket-last-turn {
+    transform: rotate(120deg);
+}
+
+.rocket-this-turn {
+	transform: rotate(30deg);
+}

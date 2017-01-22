@@ -50,4 +50,10 @@
 <div class="fuel-capsules-container station-area">
 	<img ng-repeat="fuelCapsule in zone.lowerStation.fuelCapsules" class="fuel-capsule" src="~/Content/Images/GreenCylinder.png"/>
 </div>
+<div class="rocket-fired-this-turn-container station-area">
+	<img class="rocket rocket-this-turn" ng-if="zone.lowerStation.rocketFiredThisTurn" src="~/Content/Images/rocket2.png" />
+</div>
+<div class="rocket-fired-last-turn-container station-area">
+	<img class="rocket rocket-last-turn" ng-if="zone.lowerStation.rocketFiredLastTurn" src="~/Content/Images/rocket2.png" />
+</div>
 <img ng-repeat="damage in zone.damage" class="damage-token {{damage}}-damage-token" ng-src="~/Content/Images/Damage/{{damage}}.png"/>
