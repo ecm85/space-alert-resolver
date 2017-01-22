@@ -16,12 +16,12 @@ namespace BLL.Threats.Internal
 		public override void PlaceOnBoard(Track track, int trackPosition)
 		{
 			base.PlaceOnBoard(track, trackPosition);
-			ThreatStatuses.Add(ThreatStatus.OnShip);
+			SetThreatStatus(ThreatStatus.OnShip, true);
 		}
 
 		public virtual bool IsDamageable => IsOnShip;
 
-		public bool IsOnShip { get { return ThreatStatuses.Contains(ThreatStatus.OnShip); } }
+		public bool IsOnShip => GetThreatStatus(ThreatStatus.OnShip);
 
 		public int? TotalInaccessibility {get; protected set; }
 		private int? RemainingInaccessibility { get; set; }
@@ -171,7 +171,7 @@ namespace BLL.Threats.Internal
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			ThreatStatuses.Remove(ThreatStatus.OnShip);
+			SetThreatStatus(ThreatStatus.OnShip, false);
 		}
 
 		protected override void OnTurnEnded(object sender, EventArgs args)

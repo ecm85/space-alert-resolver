@@ -33,7 +33,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 		public void OnProgenyKilled()
 		{
 			if (!IsOnShip && Progeny.All(progeny => !progeny.IsOnShip))
-				ThreatStatuses.Add(ThreatStatus.Defeated);
+				SetThreatStatus(ThreatStatus.Defeated, true);
 		}
 
 		protected abstract ProgenySlime CreateProgeny(StationLocation stationLocation);

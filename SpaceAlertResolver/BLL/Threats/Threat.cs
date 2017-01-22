@@ -11,7 +11,7 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
-		public IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
+		private IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
 
 		public bool GetThreatStatus(ThreatStatus threatStatus)
 		{
@@ -36,8 +36,8 @@ namespace BLL.Threats
 
 		public virtual void PlaceOnBoard(Track track, int trackPosition)
 		{
-			ThreatStatuses.Remove(ThreatStatus.NotAppeared);
-			ThreatStatuses.Add(ThreatStatus.OnTrack);
+			SetThreatStatus(ThreatStatus.NotAppeared, false);
+			SetThreatStatus(ThreatStatus.OnTrack, true);
 			Track = track;
 			Position = trackPosition;
 			TurnEnded += OnTurnEnded;
@@ -54,14 +54,14 @@ namespace BLL.Threats
 			ThreatController = threatController;
 		}
 
-		public bool IsDefeated => ThreatStatuses.Contains(ThreatStatus.Defeated);
-		public bool IsSurvived => ThreatStatuses.Contains(ThreatStatus.Survived);
-		public bool HasAppeared => !ThreatStatuses.Contains(ThreatStatus.NotAppeared);
+		public bool IsDefeated => GetThreatStatus(ThreatStatus.Defeated);
+		public bool IsSurvived => GetThreatStatus(ThreatStatus.Survived);
+		private bool HasAppeared => !GetThreatStatus(ThreatStatus.NotAppeared);
 
 		public virtual bool IsMoveable => IsOnTrack;
-		public bool IsOnTrack => ThreatStatuses.Contains(ThreatStatus.OnTrack);
+		public bool IsOnTrack => GetThreatStatus(ThreatStatus.OnTrack);
 
-		public virtual int Points => !HasAppeared ? 0 : IsDefeated ? PointsForDefeating: IsSurvived ? PointsForSurviving: 0;
+		public int Points => !HasAppeared ? 0 : IsDefeated ? PointsForDefeating: IsSurvived ? PointsForSurviving: 0;
 
 		public virtual bool NeedsBonusExternalThreat => false;
 		public virtual bool NeedsBonusInternalThreat => false;
@@ -97,14 +97,14 @@ namespace BLL.Threats
 		protected virtual void OnReachingEndOfTrack()
 		{
 			if(IsSurvivedWhenReachingEndOfTrack)
-				ThreatStatuses.Add(ThreatStatus.Survived);
+				SetThreatStatus(ThreatStatus.Survived, true);
 			OnThreatTerminated();
 		}
 
 		protected virtual void OnHealthReducedToZero()
 		{
 			if(IsDefeatedWhenHealthReachesZero)
-				ThreatStatuses.Add(ThreatStatus.Defeated);
+				SetThreatStatus(ThreatStatus.Defeated, true);
 			OnThreatTerminated();
 		}
 
@@ -113,7 +113,7 @@ namespace BLL.Threats
 		
 		protected virtual void OnThreatTerminated()
 		{
-			ThreatStatuses.Remove(ThreatStatus.OnTrack);
+			SetThreatStatus(ThreatStatus.OnTrack, false);
 			ThreatController.TurnEnding -= OnTurnEnded;
 		}
 
