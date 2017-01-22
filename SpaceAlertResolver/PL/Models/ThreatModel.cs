@@ -19,6 +19,7 @@ namespace PL.Models
 		public int Points { get; set; }
 		public int BuffCount { get; set; }
 		public int DebuffCount { get; set; }
+		public bool IsPhasedOut { get; set; }
 
 		public ThreatModel(Threat threat)
 		{
@@ -33,6 +34,7 @@ namespace PL.Models
 			Points = threat.Points;
 			BuffCount = threat.BuffCount;
 			DebuffCount = threat.DebuffCount;
+			IsPhasedOut = threat.GetThreatStatus(ThreatStatus.PhasedOut);
 		}
 
 		[JsonConstructor]

@@ -33,7 +33,6 @@ namespace BLL.Threats
 		private void PhaseIn(object sender, EventArgs args)
 		{
 			IsPhasedOut = false;
-			WasPhasedOutAtStartOfTurn = false;
 		}
 
 		private void TogglePhasing(object sender, EventArgs args)

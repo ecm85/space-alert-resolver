@@ -11,6 +11,11 @@
 	margin-bottom: 5px;
 }
 
+.threat-wrapper.phased-threat-wrapper {
+	border: 3px red dashed;
+	opacity: .5;
+}
+
 .threat-info {
 	padding-right: 2px;
 	padding-top: 5px;

@@ -1,4 +1,4 @@
-﻿<div class="threat-wrapper">
+﻿<div class="threat-wrapper" ng-class="{'phased-threat-wrapper': threat.isPhasedOut}">
 	<img id="threat{{trackId}}{{threatIndex}}" class="threat" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png"/>
 	<div class="threat-info">
 		<div class="threat-info-row">
