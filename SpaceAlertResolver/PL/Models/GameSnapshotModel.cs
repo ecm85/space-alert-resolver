@@ -26,6 +26,8 @@ namespace PL.Models
 		public string PhaseDescription { get; }
 		public int TurnNumber { get; }
 
+		public IEnumerable<PlayerModel> Players { get; }
+
 		public GameSnapshotModel(Game game, ResolutionPhase phase)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
@@ -47,6 +49,7 @@ namespace PL.Models
 			DefeatedThreats = game.ThreatController.DefeatedThreats.Select(threat => new ThreatModel(threat)).ToList();
 			SurvivedThreats = game.ThreatController.SurvivedThreats.Select(threat => new ThreatModel(threat)).ToList();
 			KnockedOutPlayers = game.Players.Where(player => player.IsKnockedOut).Select(player => new PlayerModel(player)).ToList();
+			Players = game.Players.Select(player => new PlayerModel(player)).ToList();
 		}
 
 		private static IEnumerable<InternalThreat> OrphanThreatRepresentatives(List<InternalThreat> internalThreats)

@@ -1,5 +1,28 @@
-﻿.selected-actions-wrapper {
+﻿.boards {
 	position: relative;
+	width: 750px;
+}
+
+.boards.small {
+	width: 375px;
+}
+
+.board-1 {
+	width: 700px;
+	height: auto;
+}
+
+.board-1.small {
+	width: 350px;
+}
+
+.board-2 {
+	width: 500px;
+	height: auto;
+}
+
+.board-2.small {
+	width: 250px;
 }
 
 .configurable-action {
@@ -13,6 +36,12 @@
     padding-top: 20px;
 }
 
+.selected-action-wrapper.small {
+	height: 55.5px;
+	width: 30px;
+    padding-top: 10px;
+}
+
 .action-choosable-wrapper {
 	cursor: pointer;
 }
@@ -21,67 +50,131 @@
 	border: 2px yellow solid;
 }
 
-.selected-action-wrapper-0 {
+.selected-action-wrapper-0,
+.selected-action-wrapper-1,
+.selected-action-wrapper-2,
+.selected-action-wrapper-3,
+.selected-action-wrapper-4,
+.selected-action-wrapper-5,
+.selected-action-wrapper-6 {
 	top: 30px;
+}
+
+.selected-action-wrapper-0.small,
+.selected-action-wrapper-1.small,
+.selected-action-wrapper-2.small,
+.selected-action-wrapper-3.small,
+.selected-action-wrapper-4.small,
+.selected-action-wrapper-5.small,
+.selected-action-wrapper-6.small {
+	top: 15px;
+}
+
+.selected-action-wrapper-7,
+.selected-action-wrapper-8,
+.selected-action-wrapper-9,
+.selected-action-wrapper-10,
+.selected-action-wrapper-11 {
+	top: 214px;
+}
+
+.selected-action-wrapper-7.small,
+.selected-action-wrapper-8.small,
+.selected-action-wrapper-9.small,
+.selected-action-wrapper-10.small,
+.selected-action-wrapper-11.small {
+	top: 107px;
+}
+
+.selected-action-wrapper-0 {
 	left: 35px;
+}
+.selected-action-wrapper-0.small {
+	left: 17.5px;
 }
 
 .selected-action-wrapper-1 {
-	top: 30px;
 	left: 126px;
+}
+.selected-action-wrapper-1.small {
+	left: 63px;
 }
 
 .selected-action-wrapper-2 {
-	top: 30px;
 	left: 219px;
+}
+.selected-action-wrapper-2.small {
+	left: 109.5px;
 }
 
 .selected-action-wrapper-3 {
-	top: 30px;
 	left: 326px;
+}
+.selected-action-wrapper-3.small {
+	left: 163px;
 }
 
 .selected-action-wrapper-4 {
-	top: 30px;
 	left: 418px;
+}
+.selected-action-wrapper-4.small {
+	left: 209px;
 }
 
 .selected-action-wrapper-5 {
-	top: 30px;
 	left: 512px;
+}
+.selected-action-wrapper-5.small {
+	left: 256px;
 }
 
 .selected-action-wrapper-6 {
-	top: 30px;
 	left: 604px;
+}
+.selected-action-wrapper-6.small {
+	left: 302px;
 }
 
 .selected-action-wrapper-7 {
-	top: 214px;
 	left: 35px;
+}
+.selected-action-wrapper-7.small {
+	left: 17.5px;
 }
 
 .selected-action-wrapper-8 {
-	top: 214px;
 	left: 126px;
+}
+.selected-action-wrapper-8.small {
+	left: 63px;
 }
 
 .selected-action-wrapper-9 {
-	top: 214px;
 	left: 219px;
+}
+.selected-action-wrapper-9.small {
+	left: 109.5px;
 }
 
 .selected-action-wrapper-10 {
-	top: 214px;
 	left: 314px;
+}
+.selected-action-wrapper-10.small {
+	left: 157px;
 }
 
 .selected-action-wrapper-11 {
-	top: 214px;
 	left: 407px;
+}
+.selected-action-wrapper-11.small {
+	left: 203.5px;
 }
 
 .action-selected-image {
 	width: 60px;
+	height: auto;
+}
+.action-selected-image.small {
+	width: 30px;
 	height: auto;
 }

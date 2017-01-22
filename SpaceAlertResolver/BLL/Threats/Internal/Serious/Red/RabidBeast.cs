@@ -40,7 +40,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			if (infectedPlayers == null)
 			{
-				infectedPlayers = new InfectedPlayers(ThreatType, Difficulty, Speed);
+				infectedPlayers = new InfectedPlayers(this);
 				infectedPlayers.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(infectedPlayers, TimeAppears, Position);
 			}
@@ -60,10 +60,11 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			private readonly HashSet<Player> infectedPlayers;
 
-			public InfectedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty, int speed)
-				: base(threatType, threatDifficulty, 0, speed, new List<StationLocation>(), null)
+			public InfectedPlayers(InternalThreat parent)
+				: base(parent.ThreatType, parent.Difficulty, 0, parent.Speed, new List<StationLocation>(), null)
 			{
 				infectedPlayers = new HashSet<Player>();
+				Parent = parent;
 			}
 
 			public void InfectPlayer(Player player)

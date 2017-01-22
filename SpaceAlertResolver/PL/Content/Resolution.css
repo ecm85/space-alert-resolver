@@ -69,3 +69,13 @@
 .killed-by {
 	text-align: left;
 }
+
+.player-boards {
+	display: inline-block;
+	width: 600px;
+	vertical-align: top;
+}
+
+.player-board {
+	display: inline-block;
+}

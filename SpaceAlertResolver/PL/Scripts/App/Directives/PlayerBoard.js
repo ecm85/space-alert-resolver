@@ -9,7 +9,8 @@ angular.module("spaceAlertModule")
 				scope: {
 					cursor: '=',
 					selectedActions: '=',
-					playerColor: '='
+					playerColor: '=',
+					smallBoard: '='
 				},
 				controller: [
 					'$scope',

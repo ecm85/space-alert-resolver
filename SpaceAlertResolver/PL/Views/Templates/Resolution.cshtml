@@ -111,6 +111,11 @@
 	</div>
 	<track-with-threats track="currentPhase.internalTrack" threats="currentPhase.internalThreats" track-id="'internal'"></track-with-threats>
 </div>
+<div class="player-boards">
+	<div class="player-board" ng-repeat="player in currentPhase.players">
+		<player-board player-color="player.playerColor" selected-actions="player.actions" small-board="true"></player-board>
+	</div>
+</div>
 
 <script type="text/ng-template" id="templates/standardZone">
 	@Html.Action("StandardZone", "Templates")

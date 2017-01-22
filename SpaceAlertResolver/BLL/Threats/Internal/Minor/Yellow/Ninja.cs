@@ -26,7 +26,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			if (poisonedPlayers == null)
 			{
-				poisonedPlayers = new PoisonedPlayers(ThreatType, Difficulty, Speed);
+				poisonedPlayers = new PoisonedPlayers(this);
 				poisonedPlayers.Initialize(SittingDuck, ThreatController);
 				ThreatController.AddInternalThreat(poisonedPlayers, TimeAppears, Position);
 			}
@@ -56,6 +56,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void OnThreatTerminated()
 		{
+			base.OnThreatTerminated();
 			SittingDuck.UnsubscribeFromMovingIn(DroneLocations, PoisonPlayer);
 			SittingDuck.UnsubscribeFromMovingOut(DroneLocations, PoisonPlayer);
 		}
@@ -68,9 +69,10 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			private readonly HashSet<Player> poisonedPlayers;
 
-			public PoisonedPlayers(ThreatType threatType, ThreatDifficulty threatDifficulty, int speed)
-				: base(threatType, threatDifficulty, 0, speed, new List<StationLocation>(), null)
+			public PoisonedPlayers(InternalThreat parent)
+				: base(parent.ThreatType, parent.Difficulty, 0, parent.Speed, new List<StationLocation>(), null)
 			{
+				Parent = parent;
 				poisonedPlayers = new HashSet<Player>();
 			}
 
