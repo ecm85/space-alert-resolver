@@ -29,12 +29,12 @@ namespace BLL.Threats
 		public int BuffCount => ThreatStatuses.Count(threatStatus => threatStatus.IsBuff());
 		public int DebuffCount => ThreatStatuses.Count(threatStatus => threatStatus.IsDebuff());
 
-		public void PlaceOnBoard(Track track)
+		public void PlaceOnTrack(Track track)
 		{
-			PlaceOnBoard(track, track.StartingPosition);
+			PlaceOnTrack(track, track.StartingPosition);
 		}
 
-		public virtual void PlaceOnBoard(Track track, int trackPosition)
+		public virtual void PlaceOnTrack(Track track, int trackPosition)
 		{
 			SetThreatStatus(ThreatStatus.NotAppeared, false);
 			SetThreatStatus(ThreatStatus.OnTrack, true);

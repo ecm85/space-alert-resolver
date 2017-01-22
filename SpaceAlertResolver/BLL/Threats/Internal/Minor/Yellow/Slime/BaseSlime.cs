@@ -15,9 +15,9 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 			Damage(2);
 		}
 
-		public override void PlaceOnBoard(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.PlaceOnBoard(track, trackPosition);
+			base.PlaceOnTrack(track, trackPosition);
 			SittingDuck.SubscribeToMovingIn(CurrentStations, DelayPlayer);
 		}
 

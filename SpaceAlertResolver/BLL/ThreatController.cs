@@ -83,10 +83,10 @@ namespace BLL
 		public void AddNewThreatsToTracks(int currentTurn)
 		{
 			foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn + 1))
-				newThreat.PlaceOnBoard(ExternalTracks[newThreat.CurrentZone]);
+				newThreat.PlaceOnTrack(ExternalTracks[newThreat.CurrentZone]);
 
 			foreach (var newThreat in InternalThreats.Where(threat => threat.TimeAppears == currentTurn + 1))
-				newThreat.PlaceOnBoard(InternalTrack);
+				newThreat.PlaceOnTrack(InternalTrack);
 		}
 
 		public void MoveThreats(int currentTurn)
@@ -158,14 +158,14 @@ namespace BLL
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears, int position)
 		{
 			newThreat.TimeAppears = timeAppears;
-			newThreat.PlaceOnBoard(InternalTrack, position);
+			newThreat.PlaceOnTrack(InternalTrack, position);
 			InternalThreats.Add(newThreat);
 		}
 
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears)
 		{
 			newThreat.TimeAppears = timeAppears;
-			newThreat.PlaceOnBoard(InternalTrack);
+			newThreat.PlaceOnTrack(InternalTrack);
 			InternalThreats.Add(newThreat);
 		}
 
@@ -178,7 +178,7 @@ namespace BLL
 		{
 			newThreat.CurrentZone = zoneLocation;
 			newThreat.TimeAppears = timeAppears;
-			newThreat.PlaceOnBoard(ExternalTracks[zoneLocation]);
+			newThreat.PlaceOnTrack(ExternalTracks[zoneLocation]);
 			ExternalThreats.Add(newThreat);
 		}
 	}

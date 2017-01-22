@@ -11,9 +11,9 @@ namespace BLL.Threats.External.Minor.Red
 		{
 		}
 
-		public override void PlaceOnBoard(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.PlaceOnBoard(track, trackPosition);
+			base.PlaceOnTrack(track, trackPosition);
 			phasingThreatCore = new PhasingThreatCore(this);
 		}
 

@@ -13,9 +13,9 @@ namespace BLL.Threats.Internal
 		public virtual IList<StationLocation> DisplayStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
 		public IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
 
-		public override void PlaceOnBoard(Track track, int trackPosition)
+		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
-			base.PlaceOnBoard(track, trackPosition);
+			base.PlaceOnTrack(track, trackPosition);
 			SetThreatStatus(ThreatStatus.OnShip, true);
 		}
 
