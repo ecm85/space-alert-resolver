@@ -361,3 +361,16 @@
 	height: auto;
 	width: 45px;
 }
+
+.fuel-capsules-container {
+	position: absolute;
+    top: 341px;
+    left: 252px;
+    height: 32px;
+    width: 60px;
+}
+
+.fuel-capsule {
+	width: 18px;
+	height: auto;
+}

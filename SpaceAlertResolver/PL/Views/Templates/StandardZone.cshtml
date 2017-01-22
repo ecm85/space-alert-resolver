@@ -47,4 +47,7 @@
 <div class="battery-pack-container battery-pack-container-lower-blue station-area">
 	<img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 </div>
+<div class="fuel-capsules-container station-area">
+	<img ng-repeat="fuelCapsule in zone.lowerStation.fuelCapsules" class="fuel-capsule" src="~/Content/Images/GreenCylinder.png"/>
+</div>
 <img ng-repeat="damage in zone.damage" class="damage-token {{damage}}-damage-token" ng-src="~/Content/Images/Damage/{{damage}}.png"/>

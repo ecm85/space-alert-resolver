@@ -259,6 +259,7 @@
     <Content Include="Content\Images\Damage\White-Reactor.png" />
     <Content Include="Content\Images\Damage\White-Shield.png" />
     <Content Include="Content\Images\Damage\White-Structural.png" />
+    <Content Include="Content\Images\GreenCylinder.png" />
     <Content Include="Content\Images\Interceptors.png" />
     <Content Include="Content\Images\InterceptorsBlue.png" />
     <Content Include="Content\Images\InterceptorsGreen.png" />
