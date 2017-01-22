@@ -398,3 +398,17 @@
 .rocket-this-turn {
 	transform: rotate(30deg);
 }
+
+.maintenance-cubes-container {
+	position: absolute;
+    top: 207px;
+    left: 315px;
+	width: 59px;
+	height: 25px;
+}
+
+.computer-cube {
+	width: 20px;
+	height: auto;
+	margin-right: -2px;
+}

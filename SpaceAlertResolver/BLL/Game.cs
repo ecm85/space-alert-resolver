@@ -172,9 +172,7 @@ namespace BLL
 		private void CheckForComputer()
 		{
 			PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
-			if (!SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.MaintenancePerformedThisPhase)
-				foreach (var player in Players)
-					player.Shift(CurrentTurn + 1);
+			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformComputerCheck(Players, CurrentTurn);
 			PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
 		}
 

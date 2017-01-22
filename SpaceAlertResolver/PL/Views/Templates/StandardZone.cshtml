@@ -13,6 +13,9 @@
 <div class="energy-in-cannon-container energy-in-upper-{{zoneId}}-cannon station-area">
 	<img ng-if="zone.upperStation.cannon.energy" class="energy-cube" ng-src="~/Content/Images/{{zone.upperStation.cannon.energy === 'Battery' ? 'orange' : 'green'}}Cube.png "/>
 </div>
+<div class="maintenance-cubes-container station-area">
+	<img ng-repeat="cube in zone.upperStation.computerCubes" class="computer-cube" src="~/Content/Images/whiteCube.png"/>
+</div>
 <div class="players players-lower-{{zoneId}} station-area">
 	<div ng-repeat="player in zone.lowerStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
 		<img class="player-icon" ng-src="~/Content/Images/Players/Male{{player.playerColor}}.png"/>
