@@ -1,4 +1,5 @@
-﻿using BLL.ShipComponents;
+﻿using System.Collections.Generic;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
 {
@@ -8,6 +9,9 @@ namespace BLL.Threats.Internal.Serious.White
 			: base(2, 2, StationLocation.Interceptor1, PlayerActionType.BattleBots)
 		{
 		}
+
+		public override IList<StationLocation> DisplayOnTrackStations { get;} = new List<StationLocation> {StationLocation.UpperRed};
+		public override IList<StationLocation> DisplayOnShipStations { get; } = new List<StationLocation> { StationLocation.UpperRed };
 
 		protected override void PerformXAction(int currentTurn)
 		{

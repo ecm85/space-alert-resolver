@@ -10,7 +10,8 @@ namespace BLL.Threats.Internal
 	{
 		public InternalThreat Parent { get; protected set; }
 		public IList<StationLocation> CurrentStations { get; private set; }
-		public virtual IList<StationLocation> DisplayStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
+		public virtual IList<StationLocation> DisplayOnTrackStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
+		public virtual IList<StationLocation> DisplayOnShipStations => CurrentStations;
 		public IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
 
 		public override void PlaceOnTrack(Track track, int trackPosition)

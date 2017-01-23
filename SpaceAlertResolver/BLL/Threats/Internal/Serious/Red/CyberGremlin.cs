@@ -10,11 +10,11 @@ namespace BLL.Threats.Internal.Serious.Red
 	{
 		private IList<Sabotage> AllSabotage { get; } = new List<Sabotage>();
 
-		public override IList<StationLocation> DisplayStations
+		public override IList<StationLocation> DisplayOnTrackStations
 		{
 			get
 			{
-				return base.DisplayStations
+				return base.DisplayOnTrackStations
 					.Concat(AllSabotage
 						.Where(sabotage => sabotage.IsOnShip)
 						.Select(sabotage => sabotage.CurrentStation))

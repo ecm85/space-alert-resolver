@@ -18,11 +18,11 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		private IList<ProgenySlime> Progeny { get; }
 
-		public override IList<StationLocation> DisplayStations
+		public override IList<StationLocation> DisplayOnTrackStations
 		{
 			get
 			{
-				return base.DisplayStations
+				return base.DisplayOnTrackStations
 					.Concat(Progeny.Where(progeny => progeny.IsOnShip).SelectMany(progeny => progeny.CurrentStations))
 					.ToList();
 			}

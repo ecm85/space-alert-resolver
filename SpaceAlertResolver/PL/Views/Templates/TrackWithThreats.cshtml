@@ -10,7 +10,7 @@
 					ng-attr-x2="{{getTrackSpaceCornerX(threat)}}"
 					ng-attr-y2="{{getTrackSpaceCornerY(threat)}}"/>
 			</svg>
-			<svg ng-if="threat.displayStations" ng-repeat="station in threat.displayStations" class="threat-on-ship-line-wrapper">
+			<svg ng-repeat="station in threat.displayOnTrackStations" class="threat-on-ship-line-wrapper">
 				<line class="threat-on-ship-line" stroke-width="3" stroke="red"
 					ng-attr-x1="{{getThreatCornerX($index)}}"
 					ng-attr-y1="{{getThreatCornerY($index)}}"

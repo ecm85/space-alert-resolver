@@ -19,8 +19,7 @@ var cloneThreat = function(threat) {
 		currentZone: threat.currentZone,
 
 		totalInaccessibility: threat.totalInaccessibility,
-		currentStations: threat.currentStations,
-		displayStations: threat.displayStations
+		displayOnTrackStations: threat.displayOnTrackStations
 	};
 };
 
