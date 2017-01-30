@@ -33,7 +33,7 @@ namespace PL.Models
 			PlayerColor = player.PlayerColor;
 			if (player.BattleBots != null)
 				BattleBots = new BattleBotsModel(player.BattleBots);
-			Actions = player.Actions.Select(action => ActionModel.AllActionModels.Single(actionModel => actionModel.Action == action.ActionType)).ToList();
+			Actions = player.Actions.Select(ActionModel.Create).ToList();
 			if (player.Interceptors != null)
 				Interceptors = new InterceptorsModel();
 

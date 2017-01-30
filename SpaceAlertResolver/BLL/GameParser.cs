@@ -96,7 +96,7 @@ namespace BLL
 				var color = TryParseEnum<PlayerColor>(colorToken.Item2);
 				if (color == null)
 					throw new InvalidOperationException("Error on player # " + players.Count + 1);
-				var player = new Player(PlayerActionFactory.CreateSingleActionList(null, null, actions), index.Value, color.Value);
+				var player = new Player(PlayerActionFactory.CreateSingleActionList(actions), index.Value, color.Value);
 				players.Add(player);
 				//TODO: Add specializations and teleport player/destination
 			}

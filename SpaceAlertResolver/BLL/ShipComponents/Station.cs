@@ -47,6 +47,6 @@ namespace BLL.ShipComponents
 			MovingOut(this, new PlayerMoveEventArgs {CurrentTurn = currentTurn, MovingPlayer = performingPlayer});
 		}
 
-		public abstract void PerformPlayerAction(Player performingPlayer, int currentTurn);
+		public abstract void PerformNextPlayerAction(Player performingPlayer, int currentTurn);
 	}
 }

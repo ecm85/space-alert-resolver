@@ -218,7 +218,11 @@ namespace BLL
 				.ThenBy(player => player.Index);
 
 			foreach (var player in playerOrder)
-				player.CurrentStation.PerformPlayerAction(player, CurrentTurn);
+			{
+				var currentPlayerAction = player.Actions[CurrentTurn];
+				while(!(currentPlayerAction.FirstActionPerformed && currentPlayerAction.SecondActionPerformed))
+					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
+			}
 			ThreatController.OnPlayerActionsEnded();
 		}
 

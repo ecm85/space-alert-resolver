@@ -24,7 +24,8 @@ namespace PL.Controllers
 				.ToList();
 			var inputModel = new InputModel
 			{
-				Actions = ActionModel.AllActionModels,
+				SingleActions = ActionModel.AllSingleActionModels,
+				DoubleActions = ActionModel.AllDoubleActionModels,
 				Tracks = EnumFactory.All<TrackConfiguration>()
 					.Select(trackConfiguration => new Track(trackConfiguration))
 					.Select(track => new TrackSnapshotModel(track, new List<int>()))

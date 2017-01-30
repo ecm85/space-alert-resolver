@@ -1,24 +1,52 @@
 ﻿namespace BLL
 {
-	public abstract class PlayerAction
+	public class PlayerAction
 	{
-		public PlayerActionType? ActionType { get; private set; }
-		public abstract bool HasBasicSpecializationAttached { get; }
-		public abstract bool HasAdvancedSpecializationAttached { get; }
+		public PlayerActionType? FirstActionType { get; private set; }
+		public bool FirstActionPerformed { get; set; }
+		public PlayerActionType? SecondActionType { get; private set; }
+		public bool SecondActionPerformed { get; set; }
+		public PlayerActionType? BonusActionType { get; private set; }
+		public bool BonusActionPerformed { get; set; }
 
-		protected PlayerAction(PlayerActionType? actionType)
+		public PlayerActionType? MarkNextActionPerformed()
 		{
-			ActionType = actionType;
+			if (!BonusActionPerformed)
+			{
+				BonusActionPerformed = true;
+				return BonusActionType;
+			}
+			if (!FirstActionPerformed)
+			{
+				FirstActionPerformed = true;
+				return FirstActionType;
+			}
+			if (!SecondActionPerformed)
+			{
+				SecondActionPerformed = true;
+				return SecondActionType;
+			}
+			return null;
+		}
+
+		public PlayerAction(PlayerActionType? firstActionType, PlayerActionType? secondActionType, PlayerActionType? bonusActionType)
+		{
+			FirstActionType = firstActionType;
+			SecondActionType = secondActionType;
+			BonusActionType = bonusActionType;
 		}
 
 		public bool CanBeMadeHeroic()
 		{
-			return ActionType.CanBeMadeHeroic();
+			return FirstActionType.CanBeMadeHeroic() || SecondActionType.CanBeMadeHeroic();
 		}
 
 		public void MakeHeroic()
 		{
-			ActionType = ActionType.MakeHeroic();
+			if (FirstActionType.CanBeMadeHeroic())
+				FirstActionType = FirstActionType.MakeHeroic();
+			else if (SecondActionType.CanBeMadeHeroic())
+				SecondActionType = SecondActionType.MakeHeroic();
 		}
 	}
 }

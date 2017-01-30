@@ -20,13 +20,14 @@ angular.module("spaceAlertModule")
 			$scope.playerTitle = player.title;
 			$scope.cursor = { index: 0 };
 
-			$scope.allActions.forEach(function(action) {
-				hotkeys.bindTo($scope)
-					.add({
-						combo: action.hotkey,
-						description: action.displayText,
-						callback: function() { $scope.addActionAtCursor(action); }
-					});
+			$scope.allActions.forEach(function (action) {
+				if (action.hotkey)
+					hotkeys.bindTo($scope)
+						.add({
+							combo: action.hotkey,
+							description: action.displayText,
+							callback: function() { $scope.addActionAtCursor(action); }
+						});
 			});
 
 			$scope.addActionAtCursor = function(action) {

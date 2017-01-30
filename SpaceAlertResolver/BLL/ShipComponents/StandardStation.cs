@@ -157,9 +157,10 @@ namespace BLL.ShipComponents
 				DamageThreat(1, firstBattleBotThreat, performingPlayer, isHeroic);
 		}
 
-		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
+		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
 		{
-			switch (performingPlayer.Actions[currentTurn].ActionType)
+			var actionType = performingPlayer.Actions[currentTurn].MarkNextActionPerformed();
+			switch (actionType)
 			{
 				case PlayerActionType.Alpha:
 					PerformAAction(performingPlayer, false);
@@ -216,13 +217,6 @@ namespace BLL.ShipComponents
 					PerformAdvancedSpecialization(performingPlayer, currentTurn);
 					break;
 			}
-
-			if (performingPlayer.IsPerformingBasicMedic(currentTurn))
-				PerformBasicSpecialization(performingPlayer, currentTurn);
-			if (performingPlayer.IsPerformingAdvancedMedic(currentTurn))
-				PerformAdvancedSpecialization(performingPlayer, currentTurn);
-			if (performingPlayer.IsPerformingAdvancedSpecialOps(currentTurn))
-				PerformAdvancedSpecialization(performingPlayer, currentTurn);
 		}
 
 		private void PerformBasicSpecialization(Player performingPlayer, int currentTurn)

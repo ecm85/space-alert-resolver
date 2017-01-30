@@ -99,7 +99,7 @@ namespace BLL.Test
 		{
 			var players = new List<Player>
 			{
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null,
 					PlayerActionType.ChangeDeck,
@@ -112,7 +112,7 @@ namespace BLL.Test
 					PlayerActionType.Alpha,
 					PlayerActionType.Alpha
 				}), 0, PlayerColor.Blue),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed,
 					PlayerActionType.ChangeDeck,
@@ -125,7 +125,7 @@ namespace BLL.Test
 					PlayerActionType.BattleBots,
 					PlayerActionType.Alpha
 				}), 1, PlayerColor.Green),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null,
 					PlayerActionType.Charlie,
@@ -135,7 +135,7 @@ namespace BLL.Test
 					PlayerActionType.ChangeDeck,
 					PlayerActionType.Charlie
 				}), 2, PlayerColor.Purple),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.ChangeDeck,
 					null,
@@ -145,7 +145,7 @@ namespace BLL.Test
 					null,
 					PlayerActionType.Charlie
 				}), 3, PlayerColor.Red),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null,
 					PlayerActionType.ChangeDeck,
@@ -155,7 +155,7 @@ namespace BLL.Test
 					null,
 					PlayerActionType.Charlie
 				}), 4, PlayerColor.Yellow),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.TeleportBlueLower,
 					PlayerActionType.TeleportRedUpper,
@@ -171,26 +171,26 @@ namespace BLL.Test
 		{
 			var players = new List<Player>
 			{
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, null, PlayerActionType.BasicSpecialization,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
 					PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, null
 				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, null),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Alpha,
 					PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.MoveBlue, PlayerActionType.MoveBlue,
 					null, PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Alpha, null
 				}), 1, PlayerColor.Green),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, null, null,
 					PlayerActionType.MoveBlue, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.BattleBots,
 					PlayerActionType.BattleBots,
 					null, PlayerActionType.MoveRed, null, PlayerActionType.Charlie
 				}), 2, PlayerColor.Purple),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.Charlie, null, null,
 					PlayerActionType.BasicSpecialization, null, PlayerActionType.ChangeDeck, null,
@@ -237,25 +237,25 @@ namespace BLL.Test
 		{
 			var players = new List<Player>
 			{
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, PlayerActionType.MoveBlue, PlayerActionType.BasicSpecialization,
 					null, PlayerActionType.AdvancedSpecialization, PlayerActionType.ChangeDeck, PlayerActionType.Alpha, 
 					PlayerActionType.Alpha, null, null, null, null
 				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, PlayerSpecialization.EnergyTechnician),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null,
 					null, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
 					PlayerActionType.BasicSpecialization, null, null, null, null
 				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner, null),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Bravo,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, null,
 					null, null, null, null, null
 				}), 2, PlayerColor.Purple),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.Charlie, null, null,
 					PlayerActionType.BasicSpecialization, PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha,
@@ -303,25 +303,25 @@ namespace BLL.Test
 		{
 			var players = new List<Player>
 			{
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveBlue, null, PlayerActionType.BasicSpecialization,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, null,
 					PlayerActionType.ChangeDeck, null, null, null, PlayerActionType.Charlie
 				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, PlayerSpecialization.EnergyTechnician),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, PlayerActionType.MoveRed,
 					PlayerActionType.Alpha, PlayerActionType.MoveBlue, null, null, PlayerActionType.Charlie
 				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner, null),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, null, PlayerActionType.AdvancedSpecialization,
 					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, PlayerActionType.Alpha,
 					PlayerActionType.Alpha, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null, PlayerActionType.Charlie
 				}), 2, PlayerColor.Purple, PlayerSpecialization.Mechanic, PlayerSpecialization.Mechanic),
-				new Player(PlayerActionFactory.CreateSingleActionList(null, null, new PlayerActionType?[]
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.Charlie, null, PlayerActionType.Alpha,
 					PlayerActionType.BasicSpecialization, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha,

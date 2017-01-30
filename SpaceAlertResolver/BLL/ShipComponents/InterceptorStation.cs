@@ -1,4 +1,6 @@
-﻿using BLL.Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BLL.Common;
 
 namespace BLL.ShipComponents
 {
@@ -43,10 +45,43 @@ namespace BLL.ShipComponents
 			OnPlayerMovingIn(performingPlayer, currentTurn);
 		}
 
-		public override void PerformPlayerAction(Player performingPlayer, int currentTurn)
+		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
+		{
+			//TODO: Perform bonus action
+			var playerAction = performingPlayer.Actions[currentTurn];
+			if (playerAction.FirstActionPerformed)
+			{
+				playerAction.SecondActionPerformed = true;
+				return;
+			}
+			PerformPlayerAction(performingPlayer, GetActionPerformedInSpace(playerAction), currentTurn);
+			playerAction.FirstActionPerformed = true;
+			playerAction.SecondActionPerformed = true;
+			playerAction.BonusActionPerformed = true;
+		}
+
+		private static PlayerActionType? GetActionPerformedInSpace(PlayerAction action)
+		{
+			var actionPriority = new Queue<PlayerActionType?>(new List<PlayerActionType?>
+			{
+				PlayerActionType.Charlie,
+				PlayerActionType.BattleBots,
+				PlayerActionType.HeroicBattleBots,
+				PlayerActionType.AdvancedSpecialization
+			});
+			while (actionPriority.Any())
+			{
+				var nextActionPriority = actionPriority.Dequeue();
+				if (action.FirstActionType == nextActionPriority || action.SecondActionType == nextActionPriority)
+					return nextActionPriority;
+			}
+			return action.FirstActionType ?? action.SecondActionType;
+		}
+
+		private void PerformPlayerAction(Player performingPlayer, PlayerActionType? playerActionType, int currentTurn)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
-			switch (performingPlayer.Actions[currentTurn].ActionType)
+			switch (playerActionType)
 			{
 				case PlayerActionType.Charlie:
 					PerformCAction(performingPlayer, currentTurn);

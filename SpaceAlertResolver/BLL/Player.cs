@@ -54,21 +54,22 @@ namespace BLL
 
 		public void Shift(int turn)
 		{
+			//TODO: Shift partial double action if only one part was performed (do i have to track what was performed)
 			Shift(turn, null);
 		}
 
 		public void ShiftAndRepeatPreviousAction(int turn)
 		{
-			var actionToRepeat = turn <= 0 ? null : Actions[turn - 1].ActionType;
+			var actionToRepeat = turn <= 0 ? null : Actions[turn - 1];
 			Shift(turn, actionToRepeat);
 		}
 
-		private void Shift(int turn, PlayerActionType? actionToInsert)
+		private void Shift(int turn, PlayerAction actionToInsert)
 		{
 			var endTurn = turn;
-			while (endTurn + 1 < Actions.Count && Actions[endTurn].ActionType.HasValue)
+			while (endTurn + 1 < Actions.Count && Actions[endTurn].FirstActionType.HasValue)
 				endTurn++;
-			Actions.Insert(turn, PlayerActionFactory.CreateSingleAction(BasicSpecialization, AdvancedSpecialization, actionToInsert));
+			Actions.Insert(turn, new PlayerAction(actionToInsert?.FirstActionType, actionToInsert?.SecondActionType, actionToInsert?.BonusActionType));
 			Actions.RemoveAt(endTurn + 1);
 		}
 
@@ -77,20 +78,29 @@ namespace BLL
 			return IsPerformingAdvancedMedic(currentTurn) || IsPerformingBasicMedic(currentTurn);
 		}
 
-		public bool IsPerformingAdvancedMedic(int currentTurn)
+		private bool IsPerformingAdvancedMedic(int currentTurn)
 		{
-			return AdvancedSpecialization == PlayerSpecialization.Medic && (Actions[currentTurn].HasAdvancedSpecializationAttached);
+			return AdvancedSpecialization == PlayerSpecialization.Medic && IsPerformingAdvancedSpecialization(currentTurn);
 		}
 
-		public bool IsPerformingBasicMedic(int currentTurn)
+		private bool IsPerformingAdvancedSpecialization(int currentTurn)
 		{
-			return AdvancedSpecialization == PlayerSpecialization.Medic && (Actions[currentTurn].HasBasicSpecializationAttached);
+			return Actions[currentTurn].BonusActionType == PlayerActionType.AdvancedSpecialization || Actions[currentTurn].FirstActionType == PlayerActionType.AdvancedSpecialization;
+		}
+
+		private bool IsPerformingBasicSpecialization(int currentTurn)
+		{
+			return Actions[currentTurn].BonusActionType == PlayerActionType.BasicSpecialization || Actions[currentTurn].FirstActionType == PlayerActionType.BasicSpecialization;
+		}
+
+		private bool IsPerformingBasicMedic(int currentTurn)
+		{
+			return AdvancedSpecialization == PlayerSpecialization.Medic && IsPerformingBasicSpecialization(currentTurn);
 		}
 
 		public bool IsPerformingAdvancedSpecialOps(int currentTurn)
 		{
-			var currentAction = Actions[currentTurn];
-			return AdvancedSpecialization == PlayerSpecialization.SpecialOps && currentAction.HasAdvancedSpecializationAttached;
+			return AdvancedSpecialization == PlayerSpecialization.SpecialOps && IsPerformingAdvancedSpecialization(currentTurn);
 		}
 	}
 }

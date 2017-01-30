@@ -34,10 +34,7 @@ namespace PL.Models
 
 			var players = Players
 				.Select(player => new Player(
-					PlayerActionFactory.CreateSingleActionList(
-						null,
-						null,
-						player.Actions.Select(action => action.Action).ToList()),
+					player.Actions.Select(action => new PlayerAction(action.FirstAction, action.SecondAction, null)),
 					player.Index,
 					player.PlayerColor))
 				.ToList();
