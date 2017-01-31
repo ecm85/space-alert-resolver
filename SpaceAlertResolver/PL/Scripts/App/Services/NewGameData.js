@@ -3,7 +3,8 @@
 		hotkey: action.hotkey,
 		displayText: action.displayText,
 		description: action.description,
-		action: action.action
+		firstAction: action.firstAction,
+		secondAction: action.secondAction
 	};
 };
 
@@ -61,20 +62,12 @@ angular.module("spaceAlertModule")
 				newGameData.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 				newGameData.playerCounts = [1, 2, 3, 4, 5];
 
-				var createEmptyAction = function () {
-					return cloneAction({
-						Hotkey: "-",
-						DisplayText: "Blank",
-						Description: null,
-						Action: null
-					});
-				};
 				newGameData.players = [
-					{ title: 'Captain', color: { model: newGameData.colors[0] }, actions: _.map(_.range(12), createEmptyAction) },
-					{ title: 'Player 2', color: { model: newGameData.colors[1] }, actions: _.map(_.range(12), createEmptyAction) },
-					{ title: 'Player 3', color: { model: newGameData.colors[2] }, actions: _.map(_.range(12), createEmptyAction) },
-					{ title: 'Player 4', color: { model: newGameData.colors[3] }, actions: _.map(_.range(12), createEmptyAction) },
-					{ title: 'Player 5', color: { model: newGameData.colors[4] }, actions: _.map(_.range(12), createEmptyAction) }
+					{ title: 'Captain', color: { model: newGameData.colors[0] }, actions: _.map(_.range(12), function() { return {}; }) },
+					{ title: 'Player 2', color: { model: newGameData.colors[1] }, actions: _.map(_.range(12), function () { return {}; }) },
+					{ title: 'Player 3', color: { model: newGameData.colors[2] }, actions: _.map(_.range(12), function () { return {}; }) },
+					{ title: 'Player 4', color: { model: newGameData.colors[3] }, actions: _.map(_.range(12), function () { return {}; }) },
+					{ title: 'Player 5', color: { model: newGameData.colors[4] }, actions: _.map(_.range(12), function () { return {}; }) }
 				];
 
 				newGameData.selectPlayerCount = function (newPlayerCount) {

@@ -5,22 +5,23 @@ var cloneAction = function(action) {
 		hotkey: action.hotkey,
 		displayText: action.displayText,
 		description: action.description,
-		action: action.action
+		firstAction: action.firstAction,
+		secondAction: action.secondAction
 	};
 };
 
 angular.module("spaceAlertModule")
 	.controller('ActionsModalInstanceCtrl',
 	[
-		'$uibModalInstance', '$scope', 'player', 'allActions', 'hotkeys',
-		function($uibModalInstance, $scope, player, allActions, hotkeys) {
-			$scope.allActions = allActions;
+		'$uibModalInstance', '$scope', 'player', 'allSingleActions', 'hotkeys',
+		function ($uibModalInstance, $scope, player, allSingleActions, hotkeys) {
+			$scope.allSingleActions = allSingleActions;
 			$scope.selectedActions = player.actions.slice();
 			$scope.playerColor = player.color.model;
 			$scope.playerTitle = player.title;
 			$scope.cursor = { index: 0 };
 
-			$scope.allActions.forEach(function (action) {
+			$scope.allSingleActions.forEach(function (action) {
 				if (action.hotkey)
 					hotkeys.bindTo($scope)
 						.add({

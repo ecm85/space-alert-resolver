@@ -21,7 +21,7 @@ namespace PL.Models
 
 		public static ActionModel Create(PlayerAction action)
 		{
-			return AllDoubleActionModels.Concat(AllSingleActionModels).SingleOrDefault(actionModel =>
+			return AllDoubleActionModels.Concat(AllSingleActionModels).FirstOrDefault(actionModel =>
 				action.FirstActionType == actionModel.FirstAction &&
 				action.SecondActionType == actionModel.SecondAction);
 		}
