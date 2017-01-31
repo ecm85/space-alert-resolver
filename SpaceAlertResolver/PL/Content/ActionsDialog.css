@@ -1,5 +1,9 @@
 ﻿.action-choosable-wrapper {
 	display: inline-block;
+	vertical-align: top;
+	padding: 0 4px;
+	width: 119px;
+	text-align: center;
 }
 
 .action-choosable-image {
@@ -8,7 +12,7 @@
 }
 
 .fa.action-choosable-image-icon {
-	font-size: 8em;
+	font-size: 6.7em;
 	color: black;
 }
 
@@ -16,4 +20,8 @@
 	font-size: 2em;
 	font-weight: 300;
 	text-align: center;
+}
+
+.actions-tabset {
+	padding-top: 15px;
 }

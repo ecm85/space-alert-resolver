@@ -49,7 +49,7 @@ namespace PL.Models
 
 		public static IEnumerable<ActionModel> AllDoubleActionModels { get; } = new[]
 		{
-			new ActionModel {Hotkey = "-", DisplayText = "Blank", Description = null, FirstAction = null},
+			new ActionModel { Description = null, FirstAction = null},
 			new ActionModel { Description="AB", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Bravo },
 			new ActionModel { Description="ABlue", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.MoveBlue },
 			new ActionModel { Description="AC", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Charlie },

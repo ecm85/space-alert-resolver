@@ -64,6 +64,7 @@ angular.module("spaceAlertModule")
 			//TODO: Add double actions
 
 			$scope.allSingleActions = inputData.singleActions;
+			$scope.allDoubleActions = inputData.doubleActions;
 
 			$scope.$watch('newGameData.selectedPlayerCountRadio.model',
 				function(newPlayerCount) {
@@ -96,6 +97,9 @@ angular.module("spaceAlertModule")
 						},
 						allSingleActions: function () {
 							return $scope.allSingleActions;
+						},
+						allDoubleActions: function () {
+							return $scope.allDoubleActions;
 						}
 					}
 				});

@@ -6,13 +6,26 @@
 		<h3>Selected Actions</h3>
 		<player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
 	</div>
-	<div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
-		<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
-			<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png"/>
-			<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
-		</div>
-		<p class="action-choosable-key">{{action.hotkey}}</p>
-	</div>
+	<uib-tabset class="actions-tabset">
+		<uib-tab index="0" heading="Single Actions">
+			<div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
+				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+				</div>
+				<p class="action-choosable-key">{{action.hotkey}}</p>
+			</div>
+		</uib-tab>
+		<uib-tab index="1" heading="Double Actions">
+			<div class="action-choosable-wrapper" ng-repeat="action in allDoubleActions">
+				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+				</div>
+				<p class="action-choosable-key">{{action.hotkey}}</p>
+			</div>
+		</uib-tab>
+	</uib-tabset>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
