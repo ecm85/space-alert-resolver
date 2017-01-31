@@ -5,41 +5,45 @@ namespace BLL.ShipComponents
 {
 	public class ComputerComponent : ICharlieComponent
 	{
-		private static readonly int[] computerCheckTurns = { 2, 5, 8 };
-
-		public int MaintenanceChecksRemaining { get; set; } = 3;
+		private bool maintenanceNeededThisPhase = true;
+		public IList<int> RemainingComputerCheckTurns { get; } = new List<int>{ 2, 5, 9 };
 
 		public void PerformCAction(Player performingPlayer, int currentTurn, bool isAdvancedUsage)
 		{
-			MaintenancePerformedThisPhase = true;
-			MaintenanceChecksRemaining--;
+			if (!RemainingComputerCheckTurns.Any())
+				return;
+			var nextComputerCheck = RemainingComputerCheckTurns.First();
+			if (currentTurn <= nextComputerCheck && maintenanceNeededThisPhase)
+			{
+				maintenanceNeededThisPhase = false;
+				RemainingComputerCheckTurns.Remove(nextComputerCheck);
+			}
 		}
 
 		public bool CanPerformCAction(Player performingPlayer)
 		{
-			return true;
+			return maintenanceNeededThisPhase;
 		}
-
-		public bool MaintenancePerformedThisPhase { get; private set; }
 
 		public void PerformEndOfPhase()
 		{
-			MaintenancePerformedThisPhase = false;
+			maintenanceNeededThisPhase = true;
 		}
 
 		public void PerformComputerCheck(IEnumerable<Player> players, int currentTurn)
 		{
-			if (!MaintenancePerformedThisPhase)
+			if (maintenanceNeededThisPhase)
 			{
 				foreach (var player in players)
 					player.Shift(currentTurn + 1);
-				MaintenanceChecksRemaining--;
+				maintenanceNeededThisPhase = false;
+				RemainingComputerCheckTurns.Remove(currentTurn);
 			}
 		}
 
-		public static bool ShouldCheckComputer(int currentTurn)
+		public bool ShouldCheckComputer(int currentTurn)
 		{
-			return computerCheckTurns.Contains(currentTurn);
+			return RemainingComputerCheckTurns.Contains(currentTurn);
 		}
 	}
 }

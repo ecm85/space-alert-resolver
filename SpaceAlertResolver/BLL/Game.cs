@@ -113,7 +113,7 @@ namespace BLL
 
 				PerformEndOfTurn();
 
-				if (ComputerComponent.ShouldCheckComputer(CurrentTurn))
+				if (SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.ShouldCheckComputer(CurrentTurn))
 					CheckForComputer();
 
 				var isEndOfPhase = phaseEndTurns.Contains(CurrentTurn);

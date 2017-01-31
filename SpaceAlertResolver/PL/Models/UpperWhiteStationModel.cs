@@ -11,7 +11,7 @@ namespace PL.Models
 
 		public UpperWhiteStationModel(Game game) : base(game, StationLocation.UpperWhite)
 		{
-			ComputerCubes = Enumerable.Range(1, game.SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.MaintenanceChecksRemaining);
+			ComputerCubes = Enumerable.Range(1, game.SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.RemainingComputerCheckTurns.Count);
 		}
 	}
 }
