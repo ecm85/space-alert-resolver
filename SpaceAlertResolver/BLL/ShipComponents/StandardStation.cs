@@ -159,7 +159,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
 		{
-			var actionType = performingPlayer.Actions[currentTurn].MarkNextActionPerformed();
+			var actionType = performingPlayer.GetActionForTurn(currentTurn).MarkNextActionPerformed();
 			switch (actionType)
 			{
 				case PlayerActionType.Alpha:
@@ -247,7 +247,7 @@ namespace BLL.ShipComponents
 					break;
 				case PlayerSpecialization.SpecialOps:
 					var indexOfNextActionToMakeHeroic = performingPlayer.Actions.ToList().FindIndex(currentTurn + 1, action => action.CanBeMadeHeroic());
-					performingPlayer.Actions[indexOfNextActionToMakeHeroic].MakeHeroic();
+					performingPlayer.GetActionForTurn(indexOfNextActionToMakeHeroic).MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
 					PerformBasicSquadLeader(performingPlayer);
@@ -273,7 +273,7 @@ namespace BLL.ShipComponents
 		{
 			var actionsToMakeHeroic = Players
 				.Except(new[] {performingPlayer})
-				.Select(player => player.Actions[currentTurn])
+				.Select(player => player.GetActionForTurn(currentTurn))
 				.Where(action => action.CanBeMadeHeroic());
 			foreach (var action in actionsToMakeHeroic)
 				action.MakeHeroic();

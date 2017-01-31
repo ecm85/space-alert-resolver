@@ -11,7 +11,7 @@ namespace BLL
 {
 	public class Game
 	{
-		private static int[] phaseStartTurns = new[] { 0, 3, 7, 12 };
+		private static readonly int[] phaseEndTurns = new[] { 3, 7, 12 };
 		//TODO: Review the CA suppressions and the ones turned off
 		//TODO: Add more functional tests
 		//TODO: Feature: Double actions
@@ -73,7 +73,7 @@ namespace BLL
 		public void StartGame()
 		{
 			PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
-			CurrentTurn = 0;
+			CurrentTurn = 1;
 			PhaseEnded(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
 		}
 
@@ -81,8 +81,8 @@ namespace BLL
 		{
 			foreach (var player in Players)
 			{
-				var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), NumberOfTurns - player.Actions.Count);
-				player.Actions.AddRange(extraNullActions);
+				player.PadPlayerActions(NumberOfTurns);
+				
 			}
 		}
 
@@ -113,15 +113,14 @@ namespace BLL
 
 				PerformEndOfTurn();
 
-				var isSecondTurnOfPhase = phaseStartTurns.Contains(CurrentTurn - 1);
-				if (isSecondTurnOfPhase)
+				if (ComputerComponent.ShouldCheckComputer(CurrentTurn))
 					CheckForComputer();
 
-				var isEndOfPhase = phaseStartTurns.Contains(CurrentTurn + 1);
+				var isEndOfPhase = phaseEndTurns.Contains(CurrentTurn);
 				if (isEndOfPhase)
 					PerformEndOfPhase();
 
-				if (CurrentTurn == NumberOfTurns - 1)
+				if (CurrentTurn == NumberOfTurns)
 					PerformEndOfGame();
 
 				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn });
@@ -219,7 +218,7 @@ namespace BLL
 
 			foreach (var player in playerOrder)
 			{
-				var currentPlayerAction = player.Actions[CurrentTurn];
+				var currentPlayerAction = player.GetActionForTurn(CurrentTurn);
 				while(!(currentPlayerAction.FirstActionPerformed && currentPlayerAction.SecondActionPerformed))
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 			}

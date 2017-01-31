@@ -13,7 +13,7 @@ namespace BLL
 
 		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? basicSpecialization, PlayerSpecialization? advancedSpecialization)
 		{
-			Actions = actions.ToList();
+			ActionsList = actions.ToList();
 			Index = index;
 			PlayerColor = color;
 			BasicSpecialization = basicSpecialization;
@@ -34,7 +34,13 @@ namespace BLL
 		public PlayerColor PlayerColor { get; }
 		public PlayerSpecialization? BasicSpecialization { get; }
 		public PlayerSpecialization? AdvancedSpecialization { get; }
-		public List<PlayerAction> Actions { get; }
+		public IEnumerable<PlayerAction> Actions => ActionsList;
+		private List<PlayerAction> ActionsList { get; }
+
+		public PlayerAction GetActionForTurn(int turn)
+		{
+			return ActionsList[turn - 1];
+		}
 
 		public Interceptors Interceptors { get; set; }
 		public Station CurrentStation { get; set; }
@@ -60,17 +66,17 @@ namespace BLL
 
 		public void ShiftAndRepeatPreviousAction(int turn)
 		{
-			var actionToRepeat = turn <= 0 ? null : Actions[turn - 1];
+			var actionToRepeat = turn <= 0 ? null : GetActionForTurn(turn - 1);
 			Shift(turn, actionToRepeat);
 		}
 
 		private void Shift(int turn, PlayerAction actionToInsert)
 		{
 			var endTurn = turn;
-			while (endTurn + 1 < Actions.Count && Actions[endTurn].FirstActionType.HasValue)
+			while (endTurn < ActionsList.Count && GetActionForTurn(endTurn).FirstActionType.HasValue)
 				endTurn++;
-			Actions.Insert(turn, new PlayerAction(actionToInsert?.FirstActionType, actionToInsert?.SecondActionType, actionToInsert?.BonusActionType));
-			Actions.RemoveAt(endTurn + 1);
+			ActionsList.Insert(turn - 1, new PlayerAction(actionToInsert?.FirstActionType, actionToInsert?.SecondActionType, actionToInsert?.BonusActionType));
+			ActionsList.RemoveAt(endTurn);
 		}
 
 		public bool IsPerformingMedic(int currentTurn)
@@ -85,12 +91,12 @@ namespace BLL
 
 		private bool IsPerformingAdvancedSpecialization(int currentTurn)
 		{
-			return Actions[currentTurn].BonusActionType == PlayerActionType.AdvancedSpecialization || Actions[currentTurn].FirstActionType == PlayerActionType.AdvancedSpecialization;
+			return GetActionForTurn(currentTurn).BonusActionType == PlayerActionType.AdvancedSpecialization || GetActionForTurn(currentTurn).FirstActionType == PlayerActionType.AdvancedSpecialization;
 		}
 
 		private bool IsPerformingBasicSpecialization(int currentTurn)
 		{
-			return Actions[currentTurn].BonusActionType == PlayerActionType.BasicSpecialization || Actions[currentTurn].FirstActionType == PlayerActionType.BasicSpecialization;
+			return GetActionForTurn(currentTurn).BonusActionType == PlayerActionType.BasicSpecialization || GetActionForTurn(currentTurn).FirstActionType == PlayerActionType.BasicSpecialization;
 		}
 
 		private bool IsPerformingBasicMedic(int currentTurn)
@@ -101,6 +107,12 @@ namespace BLL
 		public bool IsPerformingAdvancedSpecialOps(int currentTurn)
 		{
 			return AdvancedSpecialization == PlayerSpecialization.SpecialOps && IsPerformingAdvancedSpecialization(currentTurn);
+		}
+
+		public void PadPlayerActions(int numberOfTurns)
+		{
+			var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), numberOfTurns - ActionsList.Count);
+			ActionsList.AddRange(extraNullActions);
 		}
 	}
 }

@@ -48,7 +48,7 @@ namespace BLL.ShipComponents
 		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
 		{
 			//TODO: Perform bonus action
-			var playerAction = performingPlayer.Actions[currentTurn];
+			var playerAction = performingPlayer.GetActionForTurn(currentTurn);
 			if (playerAction.FirstActionPerformed)
 			{
 				playerAction.SecondActionPerformed = true;
