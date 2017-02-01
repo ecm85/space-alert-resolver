@@ -63,6 +63,7 @@
     <Compile Include="DrillerTest.cs" />
     <Compile Include="GameIntegrationTest.cs" />
     <Compile Include="GameUnitTest.cs" />
+    <Compile Include="InterceptorStationTest.cs" />
     <Compile Include="MovementControllerTest.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

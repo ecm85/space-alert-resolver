@@ -218,8 +218,7 @@ namespace BLL
 
 			foreach (var player in playerOrder)
 			{
-				var currentPlayerAction = player.GetActionForTurn(CurrentTurn);
-				while(!(currentPlayerAction.FirstActionPerformed && currentPlayerAction.SecondActionPerformed))
+				while(!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed && player.GetActionForTurn(CurrentTurn).SecondActionPerformed))
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 			}
 			ThreatController.OnPlayerActionsEnded();

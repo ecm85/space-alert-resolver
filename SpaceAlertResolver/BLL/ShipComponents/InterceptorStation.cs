@@ -55,9 +55,6 @@ namespace BLL.ShipComponents
 				return;
 			}
 			PerformPlayerAction(performingPlayer, GetActionPerformedInSpace(playerAction), currentTurn);
-			playerAction.FirstActionPerformed = true;
-			playerAction.SecondActionPerformed = true;
-			playerAction.BonusActionPerformed = true;
 		}
 
 		private static PlayerActionType? GetActionPerformedInSpace(PlayerAction action)
@@ -102,6 +99,10 @@ namespace BLL.ShipComponents
 					PerformInvalidAction(performingPlayer, currentTurn);
 					break;
 			}
+			var playerAction = performingPlayer.GetActionForTurn(currentTurn);
+			playerAction.FirstActionPerformed = true;
+			playerAction.SecondActionPerformed = true;
+			playerAction.BonusActionPerformed = true;
 		}
 
 		private void PerformInvalidAction(Player player, int currentTurn)
