@@ -4,7 +4,7 @@
 	{
 		public PlayerActionType? FirstActionType { get; private set; }
 		public bool FirstActionPerformed { get; set; }
-		public PlayerActionType? SecondActionType { get; private set; }
+		public PlayerActionType? SecondActionType { get; set; }
 		public bool SecondActionPerformed { get; set; }
 		public PlayerActionType? BonusActionType { get; private set; }
 		public bool BonusActionPerformed { get; set; }

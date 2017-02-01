@@ -60,8 +60,16 @@ namespace BLL
 
 		public void Shift(int turn)
 		{
-			//TODO: Shift partial double action if only one part was performed (do i have to track what was performed)
-			Shift(turn, null);
+			var currentAction = GetActionForTurn(turn - 1);
+			if (currentAction.FirstActionPerformed && !currentAction.SecondActionPerformed)
+			{
+				var actionToShift = new PlayerAction(currentAction.SecondActionType, null, null);
+				currentAction.SecondActionType = null;
+				Shift(turn, actionToShift);
+
+			}
+			else
+				Shift(turn, null);
 		}
 
 		public void ShiftAndRepeatPreviousAction(int turn)
