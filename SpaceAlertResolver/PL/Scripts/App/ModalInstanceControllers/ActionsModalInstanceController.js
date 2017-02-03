@@ -33,7 +33,8 @@ angular.module("spaceAlertModule")
 						});
 			});
 
-			$scope.addActionAtCursor = function(action) {
+			$scope.addActionAtCursor = function (action) {
+				$scope.cursor.errorMessage = null;
 				if ($scope.cursor.index < 12) {
 					if (($scope.cursor.actionIndex || 0) === 0) {
 						$scope.selectedActions[$scope.cursor.index] = cloneAction(action);
@@ -60,7 +61,7 @@ angular.module("spaceAlertModule")
 								$scope.cursor.index++;
 								$scope.cursor.actionIndex = 0;
 							} else {
-								//TODO: Error message
+								$scope.cursor.errorMessage = 'Invalid double action: ' + $scope.selectedActions[$scope.cursor.index].hotkey + ' - ' + action.hotkey;
 							}
 						}
 					}

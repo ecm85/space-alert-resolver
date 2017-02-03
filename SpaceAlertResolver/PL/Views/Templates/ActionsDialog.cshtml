@@ -7,6 +7,7 @@
 		<player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
 	</div>
 	<div ng-if="useDoubleActions" class="alert alert-info">To enter a double action, type the constituent actions. To enter a single action, type '-' as the second half.</div>
+	<div ng-if="cursor.errorMessage != null" class="alert alert-danger">{{cursor.errorMessage}}</div>
 	<uib-tabset>
 		<uib-tab index="0" heading="Single Actions">
 			<div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
