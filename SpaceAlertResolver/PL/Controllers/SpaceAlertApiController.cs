@@ -24,8 +24,8 @@ namespace PL.Controllers
 				.ToList();
 			var inputModel = new InputModel
 			{
-				SingleActions = ActionModel.AllSingleActionModels,
-				DoubleActions = ActionModel.AllDoubleActionModels,
+				SingleActions = ActionModel.AllSingleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
+				DoubleActions = ActionModel.AllDoubleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
 				Tracks = EnumFactory.All<TrackConfiguration>()
 					.Select(trackConfiguration => new Track(trackConfiguration))
 					.Select(track => new TrackSnapshotModel(track, new List<int>()))

@@ -6,6 +6,7 @@ angular.module("spaceAlertModule")
 		"$scope", '$uibModal', 'inputData', 'newGameData', function($scope, $uibModal, inputData, newGameData) {
 			$scope.allTracks = inputData.tracks;
 			$scope.newGameData = newGameData;
+			$scope.useDoubleActions = $scope.useDoubleActions;
 
 			$scope.$watch('newGameData.selectedTracks.redTrack',
 				function(newValue) {
@@ -100,6 +101,9 @@ angular.module("spaceAlertModule")
 						},
 						allDoubleActions: function () {
 							return $scope.allDoubleActions;
+						},
+						useDoubleActions: function() {
+							return $scope.useDoubleActions;
 						}
 					}
 				});

@@ -15,12 +15,12 @@ namespace BLL
 		HeroicA,
 		HeroicB,
 		HeroicBattleBots,
-		TeleportBlueUpper,
-		TeleportBlueLower,
-		TeleportWhiteUpper,
-		TeleportWhiteLower,
 		TeleportRedUpper,
+		TeleportWhiteUpper,
+		TeleportBlueUpper,
 		TeleportRedLower,
+		TeleportWhiteLower,
+		TeleportBlueLower,
 		BasicSpecialization,
 		AdvancedSpecialization
 	}

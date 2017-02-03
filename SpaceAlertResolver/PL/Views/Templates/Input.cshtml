@@ -3,6 +3,12 @@
 <div class="btn-group">
 	<div ng-repeat="playerCount in newGameData.playerCounts" class="btn btn-default" ng-model="newGameData.selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</div>
 </div>
+<div class="checkbox">
+	<label type="checkbox">
+		<input type="checkbox" ng-model="useDoubleActions"/>
+		Double Actions
+	</label>
+</div>
 <div>
 	<div ng-repeat="player in newGameData.players" class="panel panel-default player-panel" ng-if="player.isInGame">
 		<div class="panel-heading">

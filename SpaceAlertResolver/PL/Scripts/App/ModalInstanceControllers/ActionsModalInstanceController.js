@@ -13,8 +13,9 @@ var cloneAction = function(action) {
 angular.module("spaceAlertModule")
 	.controller('ActionsModalInstanceCtrl',
 	[
-		'$uibModalInstance', '$scope', 'player', 'allSingleActions', 'allDoubleActions', 'hotkeys',
-		function ($uibModalInstance, $scope, player, allSingleActions, allDoubleActions, hotkeys) {
+		'$uibModalInstance', '$scope', 'player', 'allSingleActions', 'allDoubleActions', 'useDoubleActions', 'hotkeys',
+		function ($uibModalInstance, $scope, player, allSingleActions, allDoubleActions, useDoubleActions, hotkeys) {
+			$scope.useDoubleActions = useDoubleActions;
 			$scope.allSingleActions = allSingleActions;
 			$scope.allDoubleActions = allDoubleActions;
 			$scope.selectedActions = player.actions.slice();
@@ -22,7 +23,7 @@ angular.module("spaceAlertModule")
 			$scope.playerTitle = player.title;
 			$scope.cursor = { index: 0 };
 
-			$scope.allSingleActions.concat($scope.allDoubleActions).forEach(function (action) {
+			$scope.allSingleActions.forEach(function (action) {
 				if (action.hotkey)
 					hotkeys.bindTo($scope)
 						.add({
@@ -34,8 +35,35 @@ angular.module("spaceAlertModule")
 
 			$scope.addActionAtCursor = function(action) {
 				if ($scope.cursor.index < 12) {
-					$scope.selectedActions[$scope.cursor.index] = cloneAction(action);
-					$scope.cursor.index++;
+					if (($scope.cursor.actionIndex || 0) === 0) {
+						$scope.selectedActions[$scope.cursor.index] = cloneAction(action);
+						if ($scope.useDoubleActions && _.some($scope.allDoubleActions, function(doubleAction){return doubleAction.firstAction === action.firstAction})) {
+							$scope.cursor.actionIndex = 1;
+						} else {
+							$scope.cursor.index++;
+							$scope.cursor.actionIndex = 0;
+						}
+					} else {
+						if (action.firstAction === null) {
+							$scope.cursor.index++;
+							$scope.cursor.actionIndex = 0;
+						} else {
+							var firstActionOfDoubleAction = $scope.selectedActions[$scope.cursor.index].firstAction;
+							var secondActionOfDoubleAction = action.firstAction;
+							var selectedDoubleAction = _.find($scope.allDoubleActions,
+								function(doubleAction) {
+									return doubleAction.firstAction === firstActionOfDoubleAction &&
+										doubleAction.secondAction === secondActionOfDoubleAction;
+								});
+							if (selectedDoubleAction) {
+								$scope.selectedActions[$scope.cursor.index] = cloneAction(selectedDoubleAction);
+								$scope.cursor.index++;
+								$scope.cursor.actionIndex = 0;
+							} else {
+								//TODO: Error message
+							}
+						}
+					}
 				}
 				//TODO: Do something otherwise?
 				if ($scope.cursor.index=== 12)
