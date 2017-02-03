@@ -17,8 +17,10 @@ angular.module("spaceAlertModule")
 					'$scope',
 					function PlayerBoardController($scope) {
 						$scope.moveCursor = function (index) {
-							if ($scope.cursor && !$scope.immutableCursor)
+							if ($scope.cursor && !$scope.immutableCursor) {
 								$scope.cursor.index = index;
+								$scope.cursor.actionIndex = 0;
+							}
 						};
 					}
 				]
