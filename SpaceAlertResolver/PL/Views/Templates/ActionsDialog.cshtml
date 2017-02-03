@@ -2,11 +2,12 @@
 	<h3 class="modal-title" id="modal-title">{{playerTitle}}'s Actions</h3>
 </div>
 <div class="modal-body" id="modal-body">
-	<div>
+	<div class="selected-player-board">
 		<h3>Selected Actions</h3>
 		<player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
 	</div>
-	<uib-tabset class="actions-tabset">
+	<div ng-if="useDoubleActions" class="alert alert-info">To enter a double action, type the constituent actions. To enter a single action, type '-' as the second half.</div>
+	<uib-tabset>
 		<uib-tab index="0" heading="Single Actions">
 			<div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
 				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
