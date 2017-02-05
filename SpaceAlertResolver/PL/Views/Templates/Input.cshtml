@@ -9,6 +9,12 @@
 		Double Actions
 	</label>
 </div>
+<div class="checkbox">
+	<label type="checkbox">
+		<input type="checkbox" ng-model="useSpecializations" />
+		Specializations
+	</label>
+</div>
 <div>
 	<div ng-repeat="player in newGameData.players" class="panel panel-default player-panel" ng-if="player.isInGame">
 		<div class="panel-heading">
@@ -27,6 +33,9 @@
 					</div>
 				</div>
 			</div>
+			<select ng-if="useSpecializations" ng-model="player.playerSpecialization" ng-options="playerSpecialization for playerSpecialization in playerSpecializations">
+				<option value="">Choose Specialization</option>
+			</select>
 			<player-board class="configurable-player-board" player-color="player.color.model" ng-click="openActionsDialog(player, 'lg')" selected-actions="player.actions"></player-board>
 		</div>
 	</div>

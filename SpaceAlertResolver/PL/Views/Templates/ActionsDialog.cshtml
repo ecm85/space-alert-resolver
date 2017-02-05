@@ -27,6 +27,15 @@
 				<p class="action-choosable-key">{{action.hotkey}}</p>
 			</div>
 		</uib-tab>
+		<uib-tab index="2" heading="Specializations" ng-if="useSpecializations">
+			<div class="action-choosable-wrapper" ng-repeat="action in playerSpecializationActions">
+				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+				</div>
+				<p class="action-choosable-key">{{action.hotkey}}</p>
+			</div>
+		</uib-tab>
 	</uib-tabset>
 </div>
 <div class="modal-footer">

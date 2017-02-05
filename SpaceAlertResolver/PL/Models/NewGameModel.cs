@@ -34,7 +34,7 @@ namespace PL.Models
 
 			var players = Players
 				.Select(player => new Player(
-					player.Actions.Select(action => new PlayerAction(action.FirstAction, action.SecondAction, null)),
+					player.Actions.Select(action => new PlayerAction(action.FirstAction, action.SecondAction, action.BonusAction)),
 					player.Index,
 					player.PlayerColor))
 				.ToList();

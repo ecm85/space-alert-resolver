@@ -26,13 +26,17 @@ namespace PL.Controllers
 			{
 				SingleActions = ActionModel.AllSingleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
 				DoubleActions = ActionModel.AllDoubleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
+				SpecializationActions = PlayerSpecializationActionModel.CreatePlayerSpecializationActionModels()
+					.OrderBy(action => action.PlayerSpecialization)
+					.ThenBy(player => player.Hotkey),
 				Tracks = EnumFactory.All<TrackConfiguration>()
 					.Select(trackConfiguration => new Track(trackConfiguration))
 					.Select(track => new TrackSnapshotModel(track, new List<int>()))
 					.ToList(),
 				AllInternalThreats = new AllThreatsModel(allInternalThreats),
-				AllExternalThreats = new AllThreatsModel(allExternalThreats)
-			};
+				AllExternalThreats = new AllThreatsModel(allExternalThreats),
+				PlayerSpecializations = EnumFactory.All<PlayerSpecialization>().ToList()
+		};
 			return inputModel;
 		}
 

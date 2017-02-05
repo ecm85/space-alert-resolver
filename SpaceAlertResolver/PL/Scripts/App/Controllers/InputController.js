@@ -6,7 +6,7 @@ angular.module("spaceAlertModule")
 		"$scope", '$uibModal', 'inputData', 'newGameData', function($scope, $uibModal, inputData, newGameData) {
 			$scope.allTracks = inputData.tracks;
 			$scope.newGameData = newGameData;
-			$scope.useDoubleActions = $scope.useDoubleActions;
+			$scope.playerSpecializations = inputData.playerSpecializations;
 
 			$scope.$watch('newGameData.selectedTracks.redTrack',
 				function(newValue) {
@@ -66,6 +66,7 @@ angular.module("spaceAlertModule")
 
 			$scope.allSingleActions = inputData.singleActions;
 			$scope.allDoubleActions = inputData.doubleActions;
+			$scope.specializationActions = inputData.specializationActions;
 
 			$scope.$watch('newGameData.selectedPlayerCountRadio.model',
 				function(newPlayerCount) {
@@ -104,6 +105,14 @@ angular.module("spaceAlertModule")
 						},
 						useDoubleActions: function() {
 							return $scope.useDoubleActions;
+						},
+						playerSpecializationActions: function() {
+							return $scope.specializationActions.filter(function(specializationAction) {
+								return specializationAction.playerSpecialization === player.playerSpecialization;
+							});
+						},
+						useSpecializations: function () {
+							return $scope.useSpecializations && player.playerSpecialization != null;
 						}
 					}
 				});

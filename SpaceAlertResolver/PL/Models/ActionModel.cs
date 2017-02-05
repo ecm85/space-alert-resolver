@@ -7,11 +7,12 @@ namespace PL.Models
 {
 	public class ActionModel
 	{
-		public string Hotkey { get; set; }
+		public virtual string Hotkey { get; private set; }
 		public string DisplayText { get; set; }
 		public string Description { get; set; }
 		public PlayerActionType? FirstAction { get; set; }
 		public PlayerActionType? SecondAction { get; set; }
+		public PlayerActionType? BonusAction { get; set; }
 
 		[JsonConstructor]
 		public ActionModel()

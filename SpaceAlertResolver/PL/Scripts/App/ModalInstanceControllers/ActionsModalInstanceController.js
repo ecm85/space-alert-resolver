@@ -13,17 +13,19 @@ var cloneAction = function(action) {
 angular.module("spaceAlertModule")
 	.controller('ActionsModalInstanceCtrl',
 	[
-		'$uibModalInstance', '$scope', 'player', 'allSingleActions', 'allDoubleActions', 'useDoubleActions', 'hotkeys',
-		function ($uibModalInstance, $scope, player, allSingleActions, allDoubleActions, useDoubleActions, hotkeys) {
+		'$uibModalInstance', '$scope', 'player', 'allSingleActions', 'allDoubleActions', 'useDoubleActions', 'playerSpecializationActions', 'useSpecializations', 'hotkeys',
+		function ($uibModalInstance, $scope, player, allSingleActions, allDoubleActions, useDoubleActions, playerSpecializationActions, useSpecializations, hotkeys) {
 			$scope.useDoubleActions = useDoubleActions;
+			$scope.useSpecializations = useSpecializations;
 			$scope.allSingleActions = allSingleActions;
 			$scope.allDoubleActions = allDoubleActions;
+			$scope.playerSpecializationActions = playerSpecializationActions;
 			$scope.selectedActions = player.actions.slice();
 			$scope.playerColor = player.color.model;
 			$scope.playerTitle = player.title;
 			$scope.cursor = { index: 0 };
 
-			$scope.allSingleActions.forEach(function (action) {
+			$scope.allSingleActions.concat($scope.playerSpecializationActions).forEach(function (action) {
 				if (action.hotkey)
 					hotkeys.bindTo($scope)
 						.add({
