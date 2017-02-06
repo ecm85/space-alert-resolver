@@ -90,7 +90,7 @@ namespace BLL.ShipComponents
 					UseBattleBots(performingPlayer, true);
 					break;
 				case PlayerActionType.AdvancedSpecialization:
-					if (performingPlayer.AdvancedSpecialization == PlayerSpecialization.SquadLeader)
+					if (performingPlayer.Specialization == PlayerSpecialization.SquadLeader)
 						UseBattleBots(performingPlayer, true);
 					else
 						PerformInvalidAction(performingPlayer, currentTurn);

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BLL;
 using Newtonsoft.Json;
 
@@ -18,13 +17,6 @@ namespace PL.Models
 		public ActionModel()
 		{
 
-		}
-
-		public static ActionModel Create(PlayerAction action)
-		{
-			return AllDoubleActionModels.Concat(AllSingleActionModels).FirstOrDefault(actionModel =>
-				action.FirstActionType == actionModel.FirstAction &&
-				action.SecondActionType == actionModel.SecondAction);
 		}
 
 		public static IEnumerable<ActionModel> AllSingleActionModels { get; } = new []

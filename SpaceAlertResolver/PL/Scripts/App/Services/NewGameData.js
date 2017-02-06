@@ -87,7 +87,8 @@ angular.module("spaceAlertModule")
 							return {
 								actions: player.actions,
 								index: index,
-								playerColor: _.findIndex(newGameData.colors, function (color) { return color === player.color.model; })
+								playerColor: _.findIndex(newGameData.colors, function (color) { return color === player.color.model; }),
+								playerSpecialization: player.playerSpecialization
 							}
 						});
 					var game = {

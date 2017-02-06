@@ -18,6 +18,8 @@ namespace PL.Models
 		public BattleBotsModel BattleBots { get; set; }
 		public IEnumerable<ActionModel> Actions { get; set; }
 		public InterceptorsModel Interceptors { get; set; }
+		[JsonConverter(typeof(StringEnumConverter))]
+		public PlayerSpecialization? PlayerSpecialization { get; set; }
 
 		[JsonConstructor]
 		public PlayerModel()
@@ -33,9 +35,10 @@ namespace PL.Models
 			PlayerColor = player.PlayerColor;
 			if (player.BattleBots != null)
 				BattleBots = new BattleBotsModel(player.BattleBots);
-			Actions = player.Actions.Select(ActionModel.Create).ToList();
+			Actions = player.Actions.Select(action => ActionModelFactory.Create(action, player)).ToList();
 			if (player.Interceptors != null)
 				Interceptors = new InterceptorsModel();
+			PlayerSpecialization = player.Specialization;
 
 			//Uncomment this to get battle bots in turn 1 on the client.
 			//else if (player.PlayerColor == PlayerColor.Red || player.PlayerColor == PlayerColor.Green)

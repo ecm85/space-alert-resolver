@@ -26,7 +26,7 @@ namespace PL.Controllers
 			{
 				SingleActions = ActionModel.AllSingleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
 				DoubleActions = ActionModel.AllDoubleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
-				SpecializationActions = PlayerSpecializationActionModel.CreatePlayerSpecializationActionModels()
+				SpecializationActions = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
 					.OrderBy(action => action.PlayerSpecialization)
 					.ThenBy(player => player.Hotkey),
 				Tracks = EnumFactory.All<TrackConfiguration>()

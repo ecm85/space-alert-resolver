@@ -36,7 +36,8 @@ namespace PL.Models
 				.Select(player => new Player(
 					player.Actions.Select(action => new PlayerAction(action.FirstAction, action.SecondAction, action.BonusAction)),
 					player.Index,
-					player.PlayerColor))
+					player.PlayerColor,
+					player.PlayerSpecialization))
 				.ToList();
 			var internalThreats = CreateInternalThreatModels(InternalThreats);
 			var redThreats = CreateExternalThreatModels(RedThreats, ZoneLocation.Red);

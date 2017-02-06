@@ -7,17 +7,16 @@ namespace BLL
 	public class Player
 	{
 		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color) :
-			this(actions, index, color, null, null)
+			this(actions, index, color, null)
 		{
 		}
 
-		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? basicSpecialization, PlayerSpecialization? advancedSpecialization)
+		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? specialization)
 		{
 			ActionsList = actions.ToList();
 			Index = index;
 			PlayerColor = color;
-			BasicSpecialization = basicSpecialization;
-			AdvancedSpecialization = advancedSpecialization;
+			Specialization = specialization;
 		}
 
 		private bool isKnockedOut;
@@ -32,8 +31,7 @@ namespace BLL
 
 		public int Index { get; }
 		public PlayerColor PlayerColor { get; }
-		public PlayerSpecialization? BasicSpecialization { get; }
-		public PlayerSpecialization? AdvancedSpecialization { get; }
+		public PlayerSpecialization? Specialization { get; }
 		public IEnumerable<PlayerAction> Actions => ActionsList;
 		private List<PlayerAction> ActionsList { get; }
 
@@ -94,7 +92,7 @@ namespace BLL
 
 		private bool IsPerformingAdvancedMedic(int currentTurn)
 		{
-			return AdvancedSpecialization == PlayerSpecialization.Medic && IsPerformingAdvancedSpecialization(currentTurn);
+			return Specialization == PlayerSpecialization.Medic && IsPerformingAdvancedSpecialization(currentTurn);
 		}
 
 		private bool IsPerformingAdvancedSpecialization(int currentTurn)
@@ -109,12 +107,12 @@ namespace BLL
 
 		private bool IsPerformingBasicMedic(int currentTurn)
 		{
-			return AdvancedSpecialization == PlayerSpecialization.Medic && IsPerformingBasicSpecialization(currentTurn);
+			return Specialization == PlayerSpecialization.Medic && IsPerformingBasicSpecialization(currentTurn);
 		}
 
 		public bool IsPerformingAdvancedSpecialOps(int currentTurn)
 		{
-			return AdvancedSpecialization == PlayerSpecialization.SpecialOps && IsPerformingAdvancedSpecialization(currentTurn);
+			return Specialization == PlayerSpecialization.SpecialOps && IsPerformingAdvancedSpecialization(currentTurn);
 		}
 
 		public void PadPlayerActions(int numberOfTurns)

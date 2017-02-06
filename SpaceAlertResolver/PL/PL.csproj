@@ -318,6 +318,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActionModel.cs" />
+    <Compile Include="Models\ActionModelFactory.cs" />
     <Compile Include="Models\AllThreatsModel.cs" />
     <Compile Include="Models\BattleBotsModel.cs" />
     <Compile Include="Models\BlueZoneModel.cs" />

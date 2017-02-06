@@ -176,7 +176,7 @@ namespace BLL.Test
 					PlayerActionType.MoveRed, null, PlayerActionType.BasicSpecialization,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
 					PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, null
-				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, null),
+				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Alpha,
@@ -195,7 +195,7 @@ namespace BLL.Test
 					PlayerActionType.Charlie, null, null,
 					PlayerActionType.BasicSpecialization, null, PlayerActionType.ChangeDeck, null,
 					PlayerActionType.BasicSpecialization, null, null, null, PlayerActionType.Charlie
-				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst, null),
+				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst),
 			};
 
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
@@ -242,13 +242,13 @@ namespace BLL.Test
 					null, PlayerActionType.MoveBlue, PlayerActionType.BasicSpecialization,
 					null, PlayerActionType.AdvancedSpecialization, PlayerActionType.ChangeDeck, PlayerActionType.Alpha, 
 					PlayerActionType.Alpha, null, null, null, null
-				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, PlayerSpecialization.EnergyTechnician),
+				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null,
 					null, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
 					PlayerActionType.BasicSpecialization, null, null, null, null
-				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner, null),
+				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Bravo,
@@ -260,7 +260,7 @@ namespace BLL.Test
 					PlayerActionType.Charlie, null, null,
 					PlayerActionType.BasicSpecialization, PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha,
 					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, null, null
-				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst, null)
+				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst)
 			};
 
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
@@ -308,25 +308,25 @@ namespace BLL.Test
 					PlayerActionType.MoveBlue, null, PlayerActionType.BasicSpecialization,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, null,
 					PlayerActionType.ChangeDeck, null, null, null, PlayerActionType.Charlie
-				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician, PlayerSpecialization.EnergyTechnician),
+				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck,
 					PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, PlayerActionType.MoveRed,
 					PlayerActionType.Alpha, PlayerActionType.MoveBlue, null, null, PlayerActionType.Charlie
-				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner, null),
+				}), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					null, null, PlayerActionType.AdvancedSpecialization,
 					PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, PlayerActionType.Alpha,
 					PlayerActionType.Alpha, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null, PlayerActionType.Charlie
-				}), 2, PlayerColor.Purple, PlayerSpecialization.Mechanic, PlayerSpecialization.Mechanic),
+				}), 2, PlayerColor.Purple, PlayerSpecialization.Mechanic),
 				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
 				{
 					PlayerActionType.Charlie, null, PlayerActionType.Alpha,
 					PlayerActionType.BasicSpecialization, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha,
 					PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null, null, PlayerActionType.AdvancedSpecialization
-				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst, PlayerSpecialization.DataAnalyst)
+				}), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst)
 			};
 
 			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
