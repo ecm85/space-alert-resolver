@@ -78,6 +78,8 @@ namespace BLL
 
 		private void Shift(int turn, PlayerAction actionToInsert)
 		{
+			if (turn > ActionsList.Count)
+				return;
 			var endTurn = turn;
 			while (endTurn < ActionsList.Count && GetActionForTurn(endTurn).FirstActionType.HasValue)
 				endTurn++;

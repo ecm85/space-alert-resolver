@@ -363,5 +363,277 @@ namespace BLL.Test
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count);
 			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count);
 		}
+
+		[Test]
+		public static void EzraDoubleActionsCampaignMission1()
+		{
+			var players = new List<Player>
+			{
+				CreateBluePlayerDoubleActionsCampaignMission1(),
+				CreateGreenPlayerDoubleActionsCampaignMission1(),
+				CreateYellowPlayerDoubleActionsCampaignMission1(),
+				CreateRedPlayerDoubleActionsCampaignMission1()
+			};
+
+			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
+			{
+				{ZoneLocation.Blue, TrackConfiguration.Track6},
+				{ZoneLocation.White, TrackConfiguration.Track2},
+				{ZoneLocation.Red, TrackConfiguration.Track5},
+			};
+			var internalTrack = TrackConfiguration.Track7;
+
+			var armoredGrappler = new ArmoredGrappler { TimeAppears = 1, CurrentZone = ZoneLocation.Blue };
+			var meteoroid = new Meteoroid { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
+			var dimensionSpider = new DimensionSpider { TimeAppears = 2, CurrentZone = ZoneLocation.White };
+			var gunship = new Gunship { TimeAppears = 6, CurrentZone = ZoneLocation.White };
+			var asteroid = new Asteroid { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
+			var destroyer = new Destroyer { TimeAppears = 8, CurrentZone = ZoneLocation.Red };
+			var externalThreats = new ExternalThreat[] { armoredGrappler, meteoroid, dimensionSpider, gunship, asteroid, destroyer };
+
+			var shambler = new Shambler{ TimeAppears = 4 };
+			var internalThreats = new InternalThreat[] { shambler };
+
+			var bonusThreats = new Threat[0];
+
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			game.StartGame();
+			try
+			{
+				for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+					game.PerformTurn();
+			}
+			catch (LoseException loseException)
+			{
+				Assert.AreEqual(destroyer, loseException.Threat);
+				Assert.AreEqual(GameStatus.Lost, game.GameStatus);
+				Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
+				Assert.AreEqual(9, game.SittingDuck.RedZone.TotalDamage);
+				Assert.AreEqual(0, game.SittingDuck.WhiteZone.TotalDamage);
+				Assert.AreEqual(6, game.ThreatController.DefeatedThreats.Count());
+				Assert.AreEqual(0, game.ThreatController.SurvivedThreats.Count());
+				Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
+				Assert.AreEqual(0, game.SittingDuck.BlueZone.AllDamageTokensTaken.Count);
+				Assert.AreEqual(6, game.SittingDuck.RedZone.AllDamageTokensTaken.Count);
+				Assert.AreEqual(0, game.SittingDuck.WhiteZone.AllDamageTokensTaken.Count);
+			}
+		}
+
+		private static Player CreateGreenPlayerDoubleActionsCampaignMission1()
+		{
+			var greenActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveBlue, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Charlie, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Alpha, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null)
+			};
+			var greenPlayer = new Player(greenActions, 1, PlayerColor.Green);
+			return greenPlayer;
+		}
+
+		private static Player CreateRedPlayerDoubleActionsCampaignMission1()
+		{
+			var redActions = new[]
+			{
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Alpha, PlayerActionType.Charlie, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.Charlie, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null)
+			};
+			var redPlayer = new Player(redActions, 3, PlayerColor.Red);
+			return redPlayer;
+		}
+
+		private static Player CreateYellowPlayerDoubleActionsCampaignMission1()
+		{
+			var yellowActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.MoveRed, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Bravo, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Charlie, null)
+			};
+			var yellowPlayer = new Player(yellowActions, 2, PlayerColor.Yellow, PlayerSpecialization.SpecialOps);
+			return yellowPlayer;
+		}
+
+		private static Player CreateBluePlayerDoubleActionsCampaignMission1()
+		{
+			var blueActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(PlayerActionType.Charlie, PlayerActionType.MoveBlue, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Bravo, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Bravo, null),
+				new PlayerAction(PlayerActionType.ChangeDeck, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null),
+				new PlayerAction(PlayerActionType.ChangeDeck, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null)
+			};
+			var bluePlayer = new Player(blueActions, 0, PlayerColor.Blue);
+			return bluePlayer;
+		}
+
+		[Test]
+		public static void EzraDoubleActionsCampaignMission2()
+		{
+			var players = new List<Player>
+			{
+				CreateBluePlayerDoubleActionsCampaignMission2(),
+				CreateGreenPlayerDoubleActionsCampaignMission2(),
+				CreateYellowPlayerDoubleActionsCampaignMission2(),
+				CreateRedPlayerDoubleActionsCampaignMission2()
+			};
+
+			var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
+			{
+				{ZoneLocation.Blue, TrackConfiguration.Track7},
+				{ZoneLocation.White, TrackConfiguration.Track2},
+				{ZoneLocation.Red, TrackConfiguration.Track5}
+			};
+			var internalTrack = TrackConfiguration.Track4;
+
+			var interstellarOctopus = new InterstellarOctopus { TimeAppears = 3, CurrentZone = ZoneLocation.Blue };
+			var meteoroid = new Meteoroid { TimeAppears = 8, CurrentZone = ZoneLocation.Blue };
+			var amoeba = new Amoeba { TimeAppears = 2, CurrentZone = ZoneLocation.White };
+			var stealthFighter = new StealthFighter { TimeAppears = 4, CurrentZone = ZoneLocation.White };
+			var spinningSaucer = new SpinningSaucer { TimeAppears = 7, CurrentZone = ZoneLocation.White };
+			var armoredGrappler = new ArmoredGrappler { TimeAppears = 1, CurrentZone = ZoneLocation.Red };
+			var externalThreats = new ExternalThreat[] { interstellarOctopus, meteoroid, amoeba, stealthFighter, spinningSaucer, armoredGrappler };
+
+			var commandosB = new CommandosB() { TimeAppears = 5 };
+			var hackedShieldsB = new HackedShieldsB() { TimeAppears = 8 };
+			var internalThreats = new InternalThreat[] { commandosB, hackedShieldsB };
+
+			var bonusThreats = new Threat[0];
+
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			game.StartGame();
+			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+				game.PerformTurn();
+			Assert.AreEqual(GameStatus.Won, game.GameStatus);
+			Assert.AreEqual(2, game.SittingDuck.BlueZone.TotalDamage);
+			Assert.AreEqual(0, game.SittingDuck.RedZone.TotalDamage);
+			Assert.AreEqual(5, game.SittingDuck.WhiteZone.TotalDamage);
+			Assert.AreEqual(6, game.ThreatController.DefeatedThreats.Count());
+			Assert.AreEqual(2, game.ThreatController.SurvivedThreats.Count());
+			Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
+			Assert.AreEqual(2, game.SittingDuck.BlueZone.AllDamageTokensTaken.Count);
+			Assert.AreEqual(0, game.SittingDuck.RedZone.AllDamageTokensTaken.Count);
+			Assert.AreEqual(5, game.SittingDuck.WhiteZone.AllDamageTokensTaken.Count);
+		}
+
+		private static Player CreateGreenPlayerDoubleActionsCampaignMission2()
+		{
+			var greenActions = new[]
+			{
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Charlie, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Alpha, PlayerActionType.Charlie, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(PlayerActionType.ChangeDeck, PlayerActionType.Bravo, null),
+				new PlayerAction(PlayerActionType.ChangeDeck, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.ChangeDeck, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null)
+			};
+			var greenPlayer = new Player(greenActions, 1, PlayerColor.Green, PlayerSpecialization.Mechanic);
+			return greenPlayer;
+		}
+
+		private static Player CreateRedPlayerDoubleActionsCampaignMission2()
+		{
+			var redActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(PlayerActionType.Bravo, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.MoveBlue, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Bravo, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.MoveRed, null, null),
+				new PlayerAction(PlayerActionType.AdvancedSpecialization, null, null)
+			};
+			var redPlayer = new Player(redActions, 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst);
+			return redPlayer;
+		}
+
+		private static Player CreateYellowPlayerDoubleActionsCampaignMission2()
+		{
+			var yellowActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Charlie, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Charlie, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Charlie, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Bravo, null),
+				new PlayerAction(PlayerActionType.BattleBots, PlayerActionType.Bravo, null),
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null)
+			};
+			var yellowPlayer = new Player(yellowActions, 2, PlayerColor.Yellow, PlayerSpecialization.SpecialOps);
+			return yellowPlayer;
+		}
+
+		private static Player CreateBluePlayerDoubleActionsCampaignMission2()
+		{
+			var blueActions = new[]
+			{
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.Alpha, null, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.BasicSpecialization, null, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.MoveBlue, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Alpha, null),
+				new PlayerAction(PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(null, null, null),
+				new PlayerAction(PlayerActionType.Charlie, null, null)
+			};
+			var bluePlayer = new Player(blueActions, 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician);
+			return bluePlayer;
+		}
 	}
 }
