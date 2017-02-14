@@ -246,8 +246,8 @@ namespace BLL.ShipComponents
 					SittingDuck.StandardStationsByLocation[StationLocation.LowerBlue].PerformCAction(performingPlayer, currentTurn, true);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					var indexOfNextActionToMakeHeroic = performingPlayer.Actions.ToList().FindIndex(currentTurn + 1, action => action.CanBeMadeHeroic());
-					performingPlayer.GetActionForTurn(indexOfNextActionToMakeHeroic).MakeHeroic();
+					var actionToMakeHeroic = performingPlayer.Actions.Skip(currentTurn).FirstOrDefault(action => action.CanBeMadeHeroic());
+					actionToMakeHeroic?.MakeHeroic();
 					break;
 				case PlayerSpecialization.SquadLeader:
 					PerformBasicSquadLeader(performingPlayer);
