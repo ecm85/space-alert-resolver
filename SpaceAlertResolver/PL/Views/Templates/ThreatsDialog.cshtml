@@ -11,8 +11,8 @@
 	</div>
 	<div>
 		<div class="btn-group">
-			<div class="btn btn-default" ng-model="threatsToChooseFrom" uib-btn-radio="threatsGroupedByType.seriousThreats">Serious</div>
 			<div class="btn btn-default" ng-model="threatsToChooseFrom" uib-btn-radio="threatsGroupedByType.minorThreats">Minor</div>
+			<div class="btn btn-default" ng-model="threatsToChooseFrom" uib-btn-radio="threatsGroupedByType.seriousThreats">Serious</div>
 		</div>
 	</div>
 	<div ng-repeat="threat in getAvailableThreats()"

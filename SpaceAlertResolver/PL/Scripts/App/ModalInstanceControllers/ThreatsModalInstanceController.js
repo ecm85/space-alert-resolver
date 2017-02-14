@@ -36,7 +36,7 @@ angular.module("spaceAlertModule")
 
 			$scope.$watch('threatsGroupedByType',
 				function(newValue) {
-					$scope.threatsToChooseFrom = newValue.seriousThreats;
+					$scope.threatsToChooseFrom = newValue.minorThreats;
 				});
 			$scope.$watch('threatsToChooseFrom',
 				function() {
