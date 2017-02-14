@@ -213,12 +213,14 @@ namespace BLL
 		{
 			var playerOrder = Players
 				.Where(player => !player.IsKnockedOut)
-				.OrderBy(player => player.IsPerformingMedic(CurrentTurn))
+				.OrderByDescending(player => player.IsPerformingMedic(CurrentTurn))
 				.ThenBy(player => player.Index);
 
 			foreach (var player in playerOrder)
 			{
-				while(!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed && player.GetActionForTurn(CurrentTurn).SecondActionPerformed))
+				while(!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed &&
+					player.GetActionForTurn(CurrentTurn).SecondActionPerformed &&
+					player.GetActionForTurn(CurrentTurn).BonusActionPerformed))
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 			}
 			ThreatController.OnPlayerActionsEnded();

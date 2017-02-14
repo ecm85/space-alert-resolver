@@ -11,11 +11,7 @@
 
 		public PlayerActionType? MarkNextActionPerformed()
 		{
-			if (!BonusActionPerformed)
-			{
-				BonusActionPerformed = true;
-				return BonusActionType;
-			}
+			
 			if (!FirstActionPerformed)
 			{
 				FirstActionPerformed = true;
@@ -25,6 +21,11 @@
 			{
 				SecondActionPerformed = true;
 				return SecondActionType;
+			}
+			if (!BonusActionPerformed)
+			{
+				BonusActionPerformed = true;
+				return BonusActionType;
 			}
 			return null;
 		}

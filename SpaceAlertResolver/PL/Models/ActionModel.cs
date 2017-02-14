@@ -11,7 +11,20 @@ namespace PL.Models
 		public string Description { get; set; }
 		public PlayerActionType? FirstAction { get; set; }
 		public PlayerActionType? SecondAction { get; set; }
-		public PlayerActionType? BonusAction { get; set; }
+		public PlayerSpecializationActionModel BonusAction { get; set; }
+
+		public virtual ActionModel Clone()
+		{
+			return new ActionModel
+			{
+				Hotkey = Hotkey,
+				DisplayText = DisplayText,
+				Description = Description,
+				FirstAction = FirstAction,
+				SecondAction = SecondAction,
+				BonusAction = BonusAction
+			};
+		}
 
 		[JsonConstructor]
 		public ActionModel()

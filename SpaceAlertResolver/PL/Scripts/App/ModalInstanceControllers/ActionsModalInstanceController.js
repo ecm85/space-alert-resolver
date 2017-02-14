@@ -73,6 +73,10 @@ angular.module("spaceAlertModule")
 					$scope.cursor.index = 0;
 			}
 
+			$scope.addBonusActionAtCursor = function(action) {
+				$scope.selectedActions[$scope.cursor.index].bonusAction = action;
+			}
+
 			$scope.ok = function() {
 				player.actions = $scope.selectedActions;
 				$uibModalInstance.close();

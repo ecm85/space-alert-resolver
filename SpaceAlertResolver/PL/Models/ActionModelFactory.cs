@@ -11,12 +11,19 @@ namespace PL.Models
 				.FirstOrDefault(actionModel =>
 					action.FirstActionType == actionModel.FirstAction &&
 					action.SecondActionType == actionModel.SecondAction);
-			var machingSpecialiaztionAction = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
+			var matchingSpecializationAction = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
 				.FirstOrDefault(actionModel =>
 					action.FirstActionType == actionModel.FirstAction &&
 					player.Specialization == actionModel.PlayerSpecialization);
+			var matchingBonusAction = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
+				.FirstOrDefault(actionModel =>
+					action.BonusActionType == actionModel.FirstAction &&
+					player.Specialization == actionModel.PlayerSpecialization);
 
-			return matchingStandardAction ?? machingSpecialiaztionAction;
+			var matchingAction = (matchingStandardAction ?? matchingSpecializationAction)?.Clone();
+			if (matchingAction != null && action.BonusActionType != null)
+				matchingAction.BonusAction = matchingBonusAction;
+			return matchingAction;
 		}
 	}
 }

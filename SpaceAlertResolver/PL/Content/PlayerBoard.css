@@ -174,7 +174,7 @@
 }
 
 .action-selected-image {
-	width: 60px;
+	width: 56px;
 	height: auto;
 }
 .action-selected-image.small {
@@ -182,3 +182,6 @@
 	height: auto;
 }
 
+.action-bonus-selected-image {
+	margin-top: -10px;
+}

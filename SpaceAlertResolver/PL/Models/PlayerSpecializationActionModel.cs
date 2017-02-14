@@ -12,6 +12,20 @@ namespace PL.Models
 		public PlayerSpecialization PlayerSpecialization { get; set; }
 		public bool CanBeBonusAction { get; set; }
 
+		public override ActionModel Clone()
+		{
+			return new PlayerSpecializationActionModel
+			{
+				DisplayText = DisplayText,
+				Description = Description,
+				FirstAction = FirstAction,
+				SecondAction = SecondAction,
+				BonusAction = BonusAction,
+				PlayerSpecialization = PlayerSpecialization,
+				CanBeBonusAction = CanBeBonusAction
+			};
+		}
+
 		public override string Hotkey
 		{
 			get

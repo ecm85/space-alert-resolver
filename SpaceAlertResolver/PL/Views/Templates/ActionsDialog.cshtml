@@ -34,6 +34,7 @@
 					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
 				</div>
 				<p class="action-choosable-key">{{action.hotkey}}</p>
+				<div class="btn btn-default" ng-if="action.canBeBonusAction" ng-click="addBonusActionAtCursor(action)">Add As Bonus</div>
 			</div>
 		</uib-tab>
 	</uib-tabset>
