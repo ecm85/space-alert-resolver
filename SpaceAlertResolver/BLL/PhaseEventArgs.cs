@@ -4,6 +4,6 @@ namespace BLL
 {
 	public class PhaseEventArgs : EventArgs
 	{
-		public ResolutionPhase Phase { get; set; }
+		public string Phase { get; set; }
 	}
 }

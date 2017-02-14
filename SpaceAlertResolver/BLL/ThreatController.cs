@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats;
@@ -21,6 +22,9 @@ namespace BLL
 		public event EventHandler DamageResolutionEnding = (sender, args) => { };
 		private readonly IList<ThreatStatus> externalThreatStatusEffects = new List<ThreatStatus>();
 		private readonly IList<ThreatStatus> singleTurnExternalThreatStatusEffects = new List<ThreatStatus>();
+		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
+		public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
+
 
 		public IEnumerable<ExternalThreat> DamageableExternalThreats
 		{
@@ -95,7 +99,25 @@ namespace BLL
 				.ThenBy(threat => threat.ThreatType)
 				.ToList();
 			foreach (var moveableThreat in allMoveableThreats)
+			{
+				PhaseStarting(this, new PhaseEventArgs
+				{
+					Phase = string.Format(
+						CultureInfo.InvariantCulture,
+						"{0} - {1}",
+						ResolutionPhase.MoveThreats.GetDescription(),
+						moveableThreat.DisplayName)
+				});
 				moveableThreat.Move(currentTurn);
+				PhaseEnded(this, new PhaseEventArgs
+				{
+					Phase = string.Format(
+						CultureInfo.InvariantCulture,
+						"{0} - {1}",
+						ResolutionPhase.MoveThreats.GetDescription(),
+						moveableThreat.DisplayName)
+				});
+			}
 		}
 
 		public void MoveOtherExternalThreats(int currentTurn, int amount, ExternalThreat source)

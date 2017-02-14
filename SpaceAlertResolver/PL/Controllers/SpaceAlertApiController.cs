@@ -47,9 +47,9 @@ namespace PL.Controllers
 		{
 			var game = newGameModel.ConvertToGame();
 			var models = new List<GameSnapshotModel>();
-			var currentTurnModels = new Dictionary<ResolutionPhase, GameSnapshotModel>();
+			var currentTurnModels = new Dictionary<string, GameSnapshotModel>();
 			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = null;
-			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = (new GameSnapshotModel((Game)sender, eventArgs.Phase));
+			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = new GameSnapshotModel((Game)sender, eventArgs.Phase);
 			game.StartGame();
 			var lost = false;
 			for (var i = 0; i < game.NumberOfTurns && !lost; i++)

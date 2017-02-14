@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats.External;
@@ -61,6 +62,8 @@ namespace BLL
 				trackConfigurationWithZone => new Track(trackConfigurationWithZone.Value));
 			var internalTrack = new Track(internalTrackConfiguration);
 			ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
+			ThreatController.PhaseStarting += (sender, args) =>  PhaseStarting(this, args);
+			ThreatController.PhaseEnded += (sender, args) => PhaseEnded(this, args);
 			SittingDuck = new SittingDuck(ThreatController, this);
 			var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);
 			foreach (var threat in allThreats)
@@ -72,9 +75,9 @@ namespace BLL
 
 		public void StartGame()
 		{
-			PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
+			PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame.GetDescription()});
 			CurrentTurn = 1;
-			PhaseEnded(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame});
+			PhaseEnded(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame.GetDescription() });
 		}
 
 		private void PadPlayerActions()
@@ -90,26 +93,22 @@ namespace BLL
 		{
 			try
 			{
-				PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.AddNewThreats});
+				PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.AddNewThreats.GetDescription() });
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.AddNewThreats });
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.AddNewThreats.GetDescription() });
 
 				CheckForAdvancedSpecialOpsProtection();
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.PerformPlayerActions });
 				PerformPlayerActions();
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.PerformPlayerActions });
 
 				var damage = GetStandardDamage();
 				var interceptorDamage = GetInterceptorDamage();
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage });
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage.GetDescription() });
 				ResolveDamage(damage, interceptorDamage);
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage });
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage.GetDescription() });
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.MoveThreats });
 				ThreatController.MoveThreats(CurrentTurn);
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.MoveThreats });
 
 				PerformEndOfTurn();
 
@@ -123,8 +122,8 @@ namespace BLL
 				if (CurrentTurn == NumberOfTurns)
 					PerformEndOfGame();
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn });
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn });
+				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn.GetDescription() });
+				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn.GetDescription() });
 
 				CurrentTurn++;
 			}
@@ -170,9 +169,9 @@ namespace BLL
 
 		private void CheckForComputer()
 		{
-			PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
+			PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck.GetDescription() });
 			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformComputerCheck(Players, CurrentTurn);
-			PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck });
+			PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck.GetDescription() });
 		}
 
 		private IEnumerable<PlayerInterceptorDamage> GetInterceptorDamage()
@@ -218,10 +217,26 @@ namespace BLL
 
 			foreach (var player in playerOrder)
 			{
-				while(!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed &&
+				PhaseStarting(this, new PhaseEventArgs
+				{
+					Phase = string.Format(
+						CultureInfo.InvariantCulture,
+						"{0} - {1}",
+						ResolutionPhase.PerformPlayerActions.GetDescription(),
+						player.PlayerColor)
+				});
+				while (!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed &&
 					player.GetActionForTurn(CurrentTurn).SecondActionPerformed &&
 					player.GetActionForTurn(CurrentTurn).BonusActionPerformed))
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
+				PhaseEnded(this, new PhaseEventArgs
+				{
+					Phase = string.Format(
+						CultureInfo.InvariantCulture,
+						"{0} - {1}",
+						ResolutionPhase.PerformPlayerActions.GetDescription(),
+						player.PlayerColor)
+				});
 			}
 			ThreatController.OnPlayerActionsEnded();
 		}
