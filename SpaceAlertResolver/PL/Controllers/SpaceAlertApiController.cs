@@ -25,7 +25,7 @@ namespace PL.Controllers
 			var inputModel = new InputModel
 			{
 				SingleActions = ActionModel.AllSingleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
-				DoubleActions = ActionModel.AllDoubleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
+				DoubleActions = ActionModel.AllSelectableDoubleActionModels.OrderBy(action => action.FirstAction).ThenBy(action => action.SecondAction),
 				SpecializationActions = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
 					.OrderBy(action => action.PlayerSpecialization)
 					.ThenBy(player => player.Hotkey),

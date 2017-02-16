@@ -7,7 +7,7 @@ namespace PL.Models
 	{
 		public static ActionModel Create(PlayerAction action, Player player)
 		{
-			var matchingStandardAction = ActionModel.AllSingleActionModels.Concat(ActionModel.AllDoubleActionModels)
+			var matchingStandardAction = ActionModel.AllSingleActionModels.Concat(ActionModel.AllSelectableDoubleActionModels).Concat(ActionModel.AllNonSelectableDoubleActionModels)
 				.FirstOrDefault(actionModel =>
 					action.FirstActionType == actionModel.FirstAction &&
 					action.SecondActionType == actionModel.SecondAction);

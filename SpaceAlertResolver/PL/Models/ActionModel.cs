@@ -53,7 +53,7 @@ namespace PL.Models
 			new ActionModel {Hotkey = "6", DisplayText = "Heroic Move To Lower Blue", Description = "TeleportLowerBlue", FirstAction = PlayerActionType.TeleportBlueLower},
 		};
 
-		public static IEnumerable<ActionModel> AllDoubleActionModels { get; } = new[]
+		public static IEnumerable<ActionModel> AllSelectableDoubleActionModels { get; } = new[]
 		{
 			new ActionModel { Hotkey = "ab", Description="AB", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Bravo },
 			new ActionModel { Hotkey = "ac", Description="AC", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Charlie },
@@ -90,6 +90,35 @@ namespace PL.Models
 			new ActionModel { Hotkey = "^b", Description="DownB", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.Bravo },
 			new ActionModel { Hotkey = "^x", Description="DownBattleBots", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.BattleBots },
 			new ActionModel { Hotkey = "^c", Description="DownC", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.Charlie }
+		};
+
+		public static IEnumerable<ActionModel> AllNonSelectableDoubleActionModels { get; } = new []
+		{
+			new ActionModel { Description="HeroicAB", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Bravo },
+			new ActionModel { Description="HeroicAC", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.Charlie },
+			new ActionModel { Description="HeroicABlue", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.MoveBlue },
+			new ActionModel { Description="HeroicARed", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.MoveRed },
+			new ActionModel { Description="HeroicADown", FirstAction=PlayerActionType.Alpha, SecondAction=PlayerActionType.ChangeDeck },
+			new ActionModel { Description="HeroicBA", FirstAction=PlayerActionType.Bravo, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="HeroicBBlue", FirstAction=PlayerActionType.Bravo, SecondAction=PlayerActionType.MoveBlue },
+			new ActionModel { Description="HeroicBC", FirstAction=PlayerActionType.Bravo, SecondAction=PlayerActionType.Charlie },
+			new ActionModel { Description="HeroicBDown", FirstAction=PlayerActionType.Bravo, SecondAction=PlayerActionType.ChangeDeck },
+			new ActionModel { Description="HeroicBRed", FirstAction=PlayerActionType.Bravo, SecondAction=PlayerActionType.MoveRed },
+			new ActionModel { Description="CHeroicA", FirstAction=PlayerActionType.Charlie, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="HeroicBattleBotsA", FirstAction=PlayerActionType.BattleBots, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="HeroicBattleBotsB", FirstAction=PlayerActionType.BattleBots, SecondAction=PlayerActionType.Bravo },
+			new ActionModel { Description="HeroicBattleBotsBlue", FirstAction=PlayerActionType.BattleBots, SecondAction=PlayerActionType.MoveBlue },
+			new ActionModel { Description="HeroicBattleBotsC", FirstAction=PlayerActionType.BattleBots, SecondAction=PlayerActionType.Charlie },
+			new ActionModel { Description="HeroicBattleBotsDown", FirstAction=PlayerActionType.BattleBots, SecondAction=PlayerActionType.ChangeDeck },
+			new ActionModel { Description="BlueHeroicA", FirstAction=PlayerActionType.MoveBlue, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="BlueHeroicB", FirstAction=PlayerActionType.MoveBlue, SecondAction=PlayerActionType.Bravo },
+			new ActionModel { Description="BlueHeroicBattleBots", FirstAction=PlayerActionType.MoveBlue, SecondAction=PlayerActionType.BattleBots },
+			new ActionModel { Description="RedHeroicA", FirstAction=PlayerActionType.MoveRed, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="RedHeroicB", FirstAction=PlayerActionType.MoveRed, SecondAction=PlayerActionType.Bravo },
+			new ActionModel { Description="RedHeroicBattleBots", FirstAction=PlayerActionType.MoveRed, SecondAction=PlayerActionType.BattleBots },
+			new ActionModel { Description="DownHeroicA", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.Alpha },
+			new ActionModel { Description="DownHeroicB", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.Bravo },
+			new ActionModel { Description="DownHeroicBattleBots", FirstAction=PlayerActionType.ChangeDeck, SecondAction=PlayerActionType.BattleBots }
 		};
 	}
 }
