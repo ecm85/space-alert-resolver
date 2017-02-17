@@ -9,7 +9,7 @@
 					controller: 'InputController',
 					resolve: {
 						'inputData': ['$http', function ($http) {
-							return $http.get('api/SpaceAlertApi/NewGameInput').then(function (response) { return response.data; });
+							return $http.get('NewGameInput').then(function (response) { return response.data; });
 						}]
 					}
 				})
@@ -26,7 +26,7 @@
 						'gameData': ['$location', '$http', 'newGameData', function ($location, $http, newGameData) {
 							if (newGameData.canCreateGame())
 								return $http({
-										url: 'api/SpaceAlertApi/ProcessGame',
+										url: 'ProcessGame',
 										method: "POST",
 										data: newGameData.manualData || newGameData.getGameArgs(),
 										headers: { 'Content-Type': 'application/json' }
