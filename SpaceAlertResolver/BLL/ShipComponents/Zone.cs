@@ -12,7 +12,6 @@ namespace BLL.ShipComponents
 		public IEnumerable<Player> Players => UpperStation.Players.Concat(LowerStation.Players).ToList();
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
 		public List<DamageToken> CurrentDamageTokens  { get; }
-		public List<DamageToken> AllDamageTokensTaken { get; }
 		private static readonly Random random = new Random();
 
 		public abstract ZoneLocation ZoneLocation { get; }
@@ -24,7 +23,6 @@ namespace BLL.ShipComponents
 			Gravolift = new Gravolift();
 			DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
 			CurrentDamageTokens = new List<DamageToken>();
-			AllDamageTokensTaken = new List<DamageToken>();
 		}
 
 		public ThreatDamageResult TakeAttack(int amount, ThreatDamageType damageType)
@@ -53,7 +51,6 @@ namespace BLL.ShipComponents
 				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
 			var newDamageTokens = GetNewDamageTokens(Math.Min(damageDone, 6 - TotalDamage ));
 			CurrentDamageTokens.AddRange(newDamageTokens);
-			AllDamageTokensTaken.AddRange(newDamageTokens);
 			TotalDamage += damageDone;
 			var shipDestroyed = TotalDamage >= 7;
 			foreach (var token in newDamageTokens)

@@ -30,7 +30,7 @@ namespace PL.Models
 				.Select(threat => new ExternalThreatModel(threat))
 				.ToList();
 			Track = new TrackSnapshotModel(game.ThreatController.ExternalTracks[zoneLocation], externalThreatPositions);
-			Damage = zone.AllDamageTokensTaken
+			Damage = zone.CurrentDamageTokens
 				.Select(damage => string.Format(CultureInfo.InvariantCulture, "{0}-{1}", zoneLocation, damage))
 				.ToList();
 			TotalDamage = zone.TotalDamage;

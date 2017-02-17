@@ -78,13 +78,13 @@ namespace ConsoleResolverTest
 			Assert.AreEqual(0, game.ThreatController.DefeatedThreats.Count());
 			Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
 			Assert.AreEqual(2, game.TotalPoints);
-			Assert.AreEqual(5, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count());
-			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count());
-			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count());
+			Assert.AreEqual(5, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+			Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
 
 			foreach (var zone in game.SittingDuck.Zones)
 			{
-				foreach (var token in zone.AllDamageTokensTaken)
+				foreach (var token in zone.CurrentDamageTokens)
 					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation, zone.CurrentDamageTokens.Contains(token));
 			}
 		}
@@ -144,9 +144,9 @@ namespace ConsoleResolverTest
 			Assert.AreEqual(3, game.ThreatController.DefeatedThreats.Count());
 			Assert.AreEqual(3, game.ThreatController.SurvivedThreats.Count());
 			Assert.AreEqual(30, game.TotalPoints);
-			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(0).AllDamageTokensTaken.Count());
-			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(1).AllDamageTokensTaken.Count());
-			Assert.AreEqual(4, game.SittingDuck.Zones.ElementAt(2).AllDamageTokensTaken.Count());
+			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+			Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+			Assert.AreEqual(4, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
 		}
 	}
 }

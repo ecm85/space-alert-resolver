@@ -63,7 +63,7 @@ namespace ConsoleResolver
 			Console.WriteLine("Total points: {0}", game.TotalPoints);
 			foreach (var zone in game.SittingDuck.Zones)
 			{
-				foreach (var token in zone.AllDamageTokensTaken)
+				foreach (var token in zone.CurrentDamageTokens)
 					Console.WriteLine("{0} damage token taken in zone {1}. Still damaged: {2}", token, zone.ZoneLocation,
 						zone.CurrentDamageTokens.Contains(token));
 			}

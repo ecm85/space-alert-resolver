@@ -45,6 +45,7 @@ namespace PL.Controllers
 		[HttpPost]
 		[Route("ProcessGame")]
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
+		
 		public IList<IGrouping<int, GameSnapshotModel>> ProcessGame([FromBody]NewGameModel newGameModel)
 		{
 			var game = newGameModel.ConvertToGame();
