@@ -53,5 +53,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult Manual()
+		{
+			return PartialView();
+		}
 	}
 }

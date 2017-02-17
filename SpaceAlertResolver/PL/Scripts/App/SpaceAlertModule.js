@@ -13,6 +13,11 @@
 						}]
 					}
 				})
+				.when('/Manual',
+				{
+					templateUrl: 'templates/Manual',
+					controller: 'ManualController'
+				})
 				.when('/Resolution',
 				{
 					templateUrl: 'templates/Resolution',
@@ -23,7 +28,7 @@
 								return $http({
 										url: 'api/SpaceAlertApi/ProcessGame',
 										method: "POST",
-										data: newGameData.getGameArgs(),
+										data: newGameData.manualData || newGameData.getGameArgs(),
 										headers: { 'Content-Type': 'application/json' }
 									})
 									.then(function(response) { return response.data; });
