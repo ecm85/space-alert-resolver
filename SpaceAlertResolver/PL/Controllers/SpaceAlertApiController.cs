@@ -14,6 +14,7 @@ namespace PL.Controllers
 	{
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
 		[HttpGet]
+		[Route("NewGameInput")]
 		public InputModel NewGameInput()
 		{
 			var allExternalThreats = ExternalThreatFactory.AllExternalThreats
@@ -42,6 +43,7 @@ namespace PL.Controllers
 
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		[HttpPost]
+		[Route("ProcessGame")]
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
 		public IList<IGrouping<int, GameSnapshotModel>> ProcessGame([FromBody]NewGameModel newGameModel)
 		{
@@ -70,6 +72,14 @@ namespace PL.Controllers
 			}
 
 			return models.GroupBy(model => model.TurnNumber).ToList();
+		}
+
+		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
+		[HttpPost]
+		[Route("SendGameMessage")]
+		public void SendGameMessage([FromBody]string messageText, string senderEmailAddress)
+		{
+			EmailService.SendEmail(messageText, senderEmailAddress);
 		}
 	}
 }
