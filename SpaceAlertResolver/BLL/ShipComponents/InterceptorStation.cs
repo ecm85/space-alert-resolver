@@ -52,6 +52,7 @@ namespace BLL.ShipComponents
 			if (playerAction.FirstActionPerformed)
 			{
 				playerAction.SecondActionPerformed = true;
+				playerAction.BonusActionPerformed = true;
 				return;
 			}
 			PerformPlayerAction(performingPlayer, GetActionPerformedInSpace(playerAction), currentTurn);
