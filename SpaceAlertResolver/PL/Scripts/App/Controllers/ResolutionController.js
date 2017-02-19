@@ -4,6 +4,11 @@ angular.module("spaceAlertModule")
 	.controller("ResolutionController",
 	[
 		"$scope", "gameData", '$interval', '$animate', function($scope, gameData, $interval, $animate) {
+			//TODO: Remove the need for this (shouldn't need to do this check, on error it sohuld never hit this controller)
+			//Check if gamedata got populated - will be undefined if there was an error
+			if (!gameData)
+				return;
+
 			$animate.enabled(false);
 			$scope.gameData = gameData;
 			var turnCount = $scope.gameData.length;

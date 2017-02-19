@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web.Http;
@@ -45,10 +46,11 @@ namespace PL.Controllers
 		[HttpPost]
 		[Route("ProcessGame")]
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
-		
 		public IList<IGrouping<int, GameSnapshotModel>> ProcessGame([FromBody]NewGameModel newGameModel)
 		{
 			var game = newGameModel.ConvertToGame();
+			if (game.Players.First().Actions.All(action => action.FirstActionType == PlayerActionType.BattleBots))
+				throw new InvalidOperationException("Can't do that many battle bots!");
 			var models = new List<GameSnapshotModel>();
 			var currentTurnModels = new Dictionary<string, GameSnapshotModel>();
 			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = null;
@@ -78,9 +80,9 @@ namespace PL.Controllers
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
 		[HttpPost]
 		[Route("SendGameMessage")]
-		public void SendGameMessage([FromBody]string messageText, string senderEmailAddress)
+		public void SendGameMessage([FromBody]SendGameMessageModel model, string senderEmailAddress)
 		{
-			EmailService.SendEmail(messageText, senderEmailAddress);
+			EmailService.SendEmail(model.MessageText, senderEmailAddress);
 		}
 	}
 }

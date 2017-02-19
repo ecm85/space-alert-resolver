@@ -18,22 +18,42 @@
 					templateUrl: 'templates/Manual',
 					controller: 'ManualController'
 				})
+				.when('/Error',
+				{
+					templateUrl: 'templates/Error'
+				})
 				.when('/Resolution',
 				{
 					templateUrl: 'templates/Resolution',
 					controller: 'ResolutionController',
 					resolve: {
 						'gameData': ['$location', '$http', 'newGameData', function ($location, $http, newGameData) {
-							if (newGameData.canCreateGame())
+							if (newGameData.canCreateGame()) {
 								return $http({
 										url: 'ProcessGame',
 										method: "POST",
 										data: newGameData.manualData || newGameData.getGameArgs(),
 										headers: { 'Content-Type': 'application/json' }
 									})
-									.then(function(response) { return response.data; });
-							else
+									.then(
+										function(response) {
+											return response.data;
+										},
+										function (response) {
+											$http({
+												url: 'SendGameMessage?senderEmailAddress=',
+												method: "POST",
+												data: {
+													messageText: "Submitted data: " + JSON.stringify(newGameData.manualData || newGameData.getGameArgs())
+												},
+												headers: { 'Content-Type': 'application/json' }
+											});
+											$location.path('/Error');
+										});
+							} else {
 								$location.path('/');
+								return null;
+							}
 						}]
 					}
 				})

@@ -374,6 +374,7 @@
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\PlayerSpecializationActionModel.cs" />
     <Compile Include="Models\RedZoneModel.cs" />
+    <Compile Include="Models\SendGameMessageModel.cs" />
     <Compile Include="Models\StandardStationModel.cs" />
     <Compile Include="Models\StationModel.cs" />
     <Compile Include="Models\ThreatModel.cs" />
@@ -534,7 +535,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\SpaceAlert\Index.cshtml" />
     <Content Include="Views\Templates\Resolution.cshtml" />
     <Content Include="Views\Templates\TrackWithThreats.cshtml" />
@@ -546,9 +546,11 @@
     <Content Include="Views\Templates\Track.cshtml" />
     <Content Include="Views\Templates\PlayerBoard.cshtml" />
     <Content Include="Views\Templates\Manual.cshtml" />
+    <Content Include="Views\Templates\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
