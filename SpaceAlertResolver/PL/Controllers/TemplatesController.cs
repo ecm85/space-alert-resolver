@@ -63,5 +63,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult ReportBug()
+		{
+			return PartialView();
+		}
 	}
 }

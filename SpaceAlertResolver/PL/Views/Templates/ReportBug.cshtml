@@ -1,0 +1,20 @@
+﻿<h1>Bug Report</h1>
+<p>Game not functioning like it should? Let me know!</p>
+<div class="form">
+	
+	<div class="form-group">
+		<label for="email">Your Email (optional - if you include it I can reply when fixed)</label>
+		<input type="text" class="form-control" id="email" placeholder="Email" ng-model="email">
+	</div>
+	<div class="form-group">
+		<label for="problem">Describe your issue:</label>
+		<textarea ng-model="problem" class="form-control" id="problem" placeholder="Problem"></textarea>
+	</div>
+	<div class="checkbox" ng-if="canIncludeGameData">
+		<label>
+			<input type="checkbox" ng-model="includeGameData" />
+			Include game data
+		</label>
+	</div>
+	<a class="btn btn-default" ng-click="submitBug()">Submit Bug</a>
+</div>

@@ -22,6 +22,11 @@
 				{
 					templateUrl: 'templates/Error'
 				})
+				.when('/ReportBug',
+				{
+					templateUrl: 'templates/ReportBug',
+					controller: 'ReportBugController'
+				})
 				.when('/Resolution',
 				{
 					templateUrl: 'templates/Resolution',

@@ -331,6 +331,7 @@
     <Content Include="Content\TrackWithThreats.css" />
     <Content Include="Scripts\App\Controllers\InputController.js" />
     <Content Include="Scripts\App\Controllers\ManualController.js" />
+    <Content Include="Scripts\App\Controllers\ReportBugController.js" />
     <Content Include="Scripts\App\Controllers\ResolutionController.js" />
     <Content Include="Scripts\App\Directives\PlayerBoard.js" />
     <Content Include="Scripts\App\Directives\StandardZone.js" />
@@ -547,6 +548,7 @@
     <Content Include="Views\Templates\PlayerBoard.cshtml" />
     <Content Include="Views\Templates\Manual.cshtml" />
     <Content Include="Views\Templates\Error.cshtml" />
+    <Content Include="Views\Templates\ReportBug.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
