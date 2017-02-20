@@ -104,7 +104,7 @@ angular.module("spaceAlertModule")
 							return $scope.allDoubleActions;
 						},
 						useDoubleActions: function() {
-							return $scope.useDoubleActions;
+							return newGameData.useDoubleActions;
 						},
 						playerSpecializationActions: function() {
 							return $scope.specializationActions.filter(function(specializationAction) {
@@ -112,7 +112,7 @@ angular.module("spaceAlertModule")
 							});
 						},
 						useSpecializations: function () {
-							return $scope.useSpecializations && player.playerSpecialization != null;
+							return newGameData.useSpecializations && player.playerSpecialization != null;
 						}
 					}
 				});

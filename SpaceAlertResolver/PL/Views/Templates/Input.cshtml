@@ -5,13 +5,13 @@
 </div>
 <div class="checkbox">
 	<label type="checkbox">
-		<input type="checkbox" ng-model="useDoubleActions"/>
+		<input type="checkbox" ng-model="newGameData.useDoubleActions"/>
 		Double Actions
 	</label>
 </div>
 <div class="checkbox">
 	<label type="checkbox">
-		<input type="checkbox" ng-model="useSpecializations" />
+		<input type="checkbox" ng-model="newGameData.useSpecializations" />
 		Specializations
 	</label>
 </div>
@@ -33,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-			<select ng-if="useSpecializations" ng-model="player.playerSpecialization" ng-options="playerSpecialization for playerSpecialization in playerSpecializations">
+			<select ng-if="newGameData.useSpecializations" ng-model="player.playerSpecialization" ng-options="playerSpecialization for playerSpecialization in playerSpecializations">
 				<option value="">Choose Specialization</option>
 			</select>
 			<player-board class="configurable-player-board" player-color="player.color.model" ng-click="openActionsDialog(player, 'lg')" selected-actions="player.actions"></player-board>
