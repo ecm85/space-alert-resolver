@@ -52,7 +52,8 @@ namespace BLL
 			IList<ExternalThreat> externalThreats,
 			IList<Threat> bonusThreats,
 			IDictionary<ZoneLocation, TrackConfiguration> externalTrackConfigurationsByZone,
-			TrackConfiguration internalTrackConfiguration)
+			TrackConfiguration internalTrackConfiguration,
+			ILookup<ZoneLocation, DamageToken> initialDamage)
 		{
 			GameStatus = GameStatus.InProgress;
 			NumberOfTurns = 12;
@@ -63,7 +64,7 @@ namespace BLL
 			ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
 			ThreatController.PhaseStarting += (sender, args) =>  PhaseStarting(this, args);
 			ThreatController.PhaseEnded += (sender, args) => PhaseEnded(this, args);
-			SittingDuck = new SittingDuck(ThreatController, this);
+			SittingDuck = new SittingDuck(ThreatController, this, initialDamage);
 			var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);
 			foreach (var threat in allThreats)
 				threat.Initialize(SittingDuck, ThreatController);

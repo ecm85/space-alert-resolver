@@ -2,7 +2,7 @@
 {
 	public interface IDamageableComponent
 	{
-		void SetDamaged();
+		void SetDamaged(bool isCampaignDamage);
 		void Repair();
 	}
 }

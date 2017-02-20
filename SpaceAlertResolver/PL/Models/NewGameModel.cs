@@ -20,6 +20,7 @@ namespace PL.Models
 		public TrackSnapshotModel WhiteTrack { get; set; }
 		public TrackSnapshotModel BlueTrack { get; set; }
 		public TrackSnapshotModel InternalTrack { get; set; }
+		public IEnumerable<InitialDamageModel> InitialDamageModels { get; set; }
 
 		public Game ConvertToGame()
 		{
@@ -45,7 +46,8 @@ namespace PL.Models
 			var blueThreats = CreateExternalThreatModels(BlueThreats, ZoneLocation.Blue);
 			var externalThreats = redThreats.Concat(whiteThreats).Concat(blueThreats).ToList();
 			var bonusThreats = new List<Threat>();
-			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var damageTokens = InitialDamageModels.ToLookup(model => model.ZoneLocation, model => model.DamageToken);
+			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, damageTokens);
 		}
 
 		private static IList<ExternalThreat> CreateExternalThreatModels(IEnumerable<ExternalThreatModel> threatModels, ZoneLocation zone)

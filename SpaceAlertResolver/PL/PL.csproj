@@ -362,6 +362,7 @@
     <Compile Include="Models\CannonModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
+    <Compile Include="Models\InitialDamageModel.cs" />
     <Compile Include="Models\InputModel.cs" />
     <Compile Include="Models\InterceptorsModel.cs" />
     <Compile Include="Models\InterceptorsStationModel.cs" />

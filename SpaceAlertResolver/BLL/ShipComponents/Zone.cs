@@ -13,6 +13,7 @@ namespace BLL.ShipComponents
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
 		public List<DamageToken> CurrentDamageTokens  { get; }
 		private static readonly Random random = new Random();
+		private bool HasStructuralCarryoverDamage { get; set; }
 
 		public abstract ZoneLocation ZoneLocation { get; }
 		public abstract UpperStation UpperStation { get; }
@@ -49,16 +50,25 @@ namespace BLL.ShipComponents
 			var damageDone = DebuffsBySource.Values
 				.Where(debuff => debuff == ZoneDebuff.DoubleDamage)
 				.Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
+			if (HasStructuralCarryoverDamage)
+				damageDone *= 2;
 			var newDamageTokens = GetNewDamageTokens(Math.Min(damageDone, 6 - TotalDamage ));
-			CurrentDamageTokens.AddRange(newDamageTokens);
-			TotalDamage += damageDone;
-			var shipDestroyed = TotalDamage >= 7;
-			foreach (var token in newDamageTokens)
-			{
-				var damageableComponent = GetDamageableComponent(token);
-				damageableComponent?.SetDamaged();
-			}
+			foreach (var newDamageToken in newDamageTokens)
+				TakeDamage(newDamageToken);
+			var extraDamageTaken = damageDone > newDamageTokens.Count ? damageDone - newDamageTokens.Count : 0;
+			TotalDamage += extraDamageTaken;
+			var shipDestroyed = extraDamageTaken > 0;
 			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
+		}
+
+		public void TakeDamage(DamageToken newDamageToken, bool isCampaignDamage = false)
+		{
+			CurrentDamageTokens.Add(newDamageToken);
+			TotalDamage++;
+			var damageableComponent = GetDamageableComponent(newDamageToken);
+			damageableComponent?.SetDamaged(isCampaignDamage);
+			if (newDamageToken == DamageToken.Structural && isCampaignDamage)
+				HasStructuralCarryoverDamage = true;
 		}
 
 		private IDamageableComponent GetDamageableComponent(DamageToken token)
@@ -154,7 +164,9 @@ namespace BLL.ShipComponents
 			var damageToRepair = damageRepairOrder.First(damage => CurrentDamageTokens.Contains(damage));
 			CurrentDamageTokens.Remove(damageToRepair);
 			var component = GetDamageableComponent(damageToRepair);
-			component.Repair();
+			component?.Repair();
+			if (damageToRepair == DamageToken.Structural)
+				HasStructuralCarryoverDamage = false;
 		}
 
 		private static DamageToken[] DamageTokenRepairOrderInUpperDeck => new[]

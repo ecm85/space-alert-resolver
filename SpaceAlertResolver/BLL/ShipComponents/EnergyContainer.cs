@@ -22,7 +22,7 @@
 
 		private bool IsDamaged { get; set; }
 
-		public void SetDamaged()
+		public void SetDamaged(bool isCampaignDamage)
 		{
 			var wasAlreadyDamaged = IsDamaged;
 			IsDamaged = true;
@@ -31,6 +31,8 @@
 				Capacity--;
 				if (Energy > Capacity)
 					Energy = Capacity;
+				if (isCampaignDamage)
+					Energy--;
 			}
 		}
 

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web.Http;
 using BLL;
+using BLL.ShipComponents;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Tracks;
@@ -37,7 +38,9 @@ namespace PL.Controllers
 					.ToList(),
 				AllInternalThreats = new AllThreatsModel(allInternalThreats),
 				AllExternalThreats = new AllThreatsModel(allExternalThreats),
-				PlayerSpecializations = EnumFactory.All<PlayerSpecialization>().ToList()
+				PlayerSpecializations = EnumFactory.All<PlayerSpecialization>().ToList(),
+				AllDamageTokens = EnumFactory.All<DamageToken>(),
+				DamageableZones = EnumFactory.All<ZoneLocation>()
 		};
 			return inputModel;
 		}

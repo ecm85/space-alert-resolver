@@ -53,7 +53,7 @@ namespace BLL.ShipComponents
 
 		protected bool IsDamaged { get; private set; }
 
-		public void SetDamaged()
+		public void SetDamaged(bool isCampaignDamage)
 		{
 			IsDamaged = true;
 		}

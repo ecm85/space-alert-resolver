@@ -24,40 +24,41 @@ angular.module("spaceAlertModule")
 					whiteThreats: [],
 					blueThreats: [],
 					internalThreats: []
-				}
-				newGameData.updateAllSelectedTracks = function () {
+				};
+				newGameData.damage = {};
+				newGameData.updateAllSelectedTracks = function() {
 					newGameData.allSelectedTracks = [
 						newGameData.selectedTracks.redTrack,
 						newGameData.selectedTracks.whiteTrack,
 						newGameData.selectedTracks.blueTrack,
 						newGameData.selectedTracks.internalTrack
 					];
-				}
+				};
 				newGameData.updateAllSelectedTracks();
 
-				newGameData.checkDuplicateRedTrack = function (track) {
+				newGameData.checkDuplicateRedTrack = function(track) {
 					if (newGameData.selectedTracks.redTrack === track)
 						newGameData.selectedTracks.redTrack = null;
-				}
-				newGameData.checkDuplicateWhiteTrack = function (track) {
+				};
+				newGameData.checkDuplicateWhiteTrack = function(track) {
 					if (newGameData.selectedTracks.whiteTrack === track)
 						newGameData.selectedTracks.whiteTrack = null;
-				}
-				newGameData.checkDuplicateBlueTrack = function (track) {
+				};
+				newGameData.checkDuplicateBlueTrack = function(track) {
 					if (newGameData.selectedTracks.blueTrack === track)
 						newGameData.selectedTracks.blueTrack = null;
-				}
-				newGameData.checkDuplicateInternalTrack = function (track) {
+				};
+				newGameData.checkDuplicateInternalTrack = function(track) {
 					if (newGameData.selectedTracks.internalTrack === track)
 						newGameData.selectedTracks.internalTrack = null;
-				}
+				};
 
-				newGameData.updateAllSelectedExternalThreats = function () {
+				newGameData.updateAllSelectedExternalThreats = function() {
 					newGameData.allSelectedExternalThreats = []
 						.concat(newGameData.selectedThreats.redThreats)
 						.concat(newGameData.selectedThreats.whiteThreats)
 						.concat(newGameData.selectedThreats.blueThreats);
-				}
+				};
 
 				newGameData.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 				newGameData.playerCounts = [1, 2, 3, 4, 5];
@@ -70,12 +71,12 @@ angular.module("spaceAlertModule")
 					{ title: 'Player 5', color: { model: newGameData.colors[4] }, actions: _.map(_.range(12), function () { return {}; }) }
 				];
 
-				newGameData.selectPlayerCount = function (newPlayerCount) {
+				newGameData.selectPlayerCount = function(newPlayerCount) {
 					newGameData.selectedPlayerCountRadio = { model: newPlayerCount };
-					newGameData.players.forEach(function (player, index) {
+					newGameData.players.forEach(function(player, index) {
 						player.isInGame = index < newPlayerCount;
 					});
-				}
+				};
 				newGameData.selectPlayerCount(4);
 
 				newGameData.getGameArgs = function () {
@@ -91,6 +92,21 @@ angular.module("spaceAlertModule")
 								playerSpecialization: player.playerSpecialization
 							}
 						});
+					var damageModels = [];
+					for (var zoneKey in newGameData.damage) {
+						if (newGameData.damage.hasOwnProperty(zoneKey)) {
+							for (var damageTypeKey in newGameData.damage[zoneKey]) {
+								if (newGameData.damage[zoneKey].hasOwnProperty(damageTypeKey)) {
+									var damageTokenIsSelected = newGameData.damage[zoneKey][damageTypeKey];
+									if (damageTokenIsSelected)
+										damageModels.push({
+											zoneLocation: zoneKey,
+											damageToken: damageTypeKey
+										});
+								}
+							}
+						}
+					}
 					var game = {
 						players: players,
 						redThreats: newGameData.selectedThreats.redThreats,
@@ -100,7 +116,8 @@ angular.module("spaceAlertModule")
 						redTrack: newGameData.selectedTracks.redTrack,
 						whiteTrack: newGameData.selectedTracks.whiteTrack,
 						blueTrack: newGameData.selectedTracks.blueTrack,
-						internalTrack: newGameData.selectedTracks.internalTrack
+						internalTrack: newGameData.selectedTracks.internalTrack,
+						initialDamageModels: damageModels
 					};
 					return game;
 				}

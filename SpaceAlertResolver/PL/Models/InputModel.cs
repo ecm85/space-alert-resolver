@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BLL;
+using BLL.ShipComponents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -15,5 +16,9 @@ namespace PL.Models
 		public AllThreatsModel AllExternalThreats { get; set; }
 		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
 		public IEnumerable<PlayerSpecialization> PlayerSpecializations { get; set; }
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public IEnumerable<DamageToken> AllDamageTokens { get; set; }
+		[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
+		public IEnumerable<ZoneLocation> DamageableZones { get; set; }
 	}
 }

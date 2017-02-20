@@ -27,7 +27,7 @@ namespace BLL.ShipComponents
 		private bool ShiftsPlayers { get { return Occupied || IsDamaged; } }
 		private bool IsDamaged { get; set; }
 
-		public void SetDamaged()
+		public void SetDamaged(bool isCampaignDamage)
 		{
 			IsDamaged = true;
 		}

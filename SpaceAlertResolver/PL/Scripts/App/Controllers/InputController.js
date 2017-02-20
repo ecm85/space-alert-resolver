@@ -85,6 +85,14 @@ angular.module("spaceAlertModule")
 					});
 			});
 
+			$scope.allDamageTokens = inputData.allDamageTokens;
+			$scope.damageableZones = inputData.damageableZones;
+
+			$scope.damageableZones.forEach(function (damageableZone) {
+				if (newGameData.damage[damageableZone] == null)
+					newGameData.damage[damageableZone] = {};
+			});
+
 			$scope.animationsEnabled = true;
 
 			$scope.openActionsDialog = function(player, size) {

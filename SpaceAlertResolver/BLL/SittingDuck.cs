@@ -24,7 +24,7 @@ namespace BLL
 		private Doors BlueDoors { get; }
 		private Doors RedDoors { get; }
 
-		public SittingDuck(ThreatController threatController, Game game)
+		public SittingDuck(ThreatController threatController, Game game, ILookup<ZoneLocation, DamageToken> initialDamage)
 		{
 			ThreatController = threatController;
 			Game = game;
@@ -54,8 +54,11 @@ namespace BLL
 			BlueDoors = blueDoors;
 			RedDoors = redDoors;
 			WhiteZone = new WhiteZone(threatController, redDoors, blueDoors, this);
+			DamageZone(initialDamage, ZoneLocation.White, WhiteZone);
 			RedZone = new RedZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors);
+			DamageZone(initialDamage, ZoneLocation.Red, RedZone);
 			BlueZone = new BlueZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, blueDoors, this);
+			DamageZone(initialDamage, ZoneLocation.Blue, BlueZone);
 
 			BlueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
 			WhiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
@@ -69,6 +72,14 @@ namespace BLL
 			StandardStationsByLocation = Zones
 				.SelectMany(zone => new StandardStation[] {zone.LowerStation, zone.UpperStation})
 				.ToDictionary(station => station.StationLocation);
+		}
+
+		private static void DamageZone(ILookup<ZoneLocation, DamageToken> initialDamage, ZoneLocation zoneLocation, Zone zone)
+		{
+			if (initialDamage == null || !initialDamage.Any())
+				return;
+			foreach (var damageToken in initialDamage[zoneLocation].ToList())
+				zone.TakeDamage(damageToken, true);
 		}
 
 		public void SetPlayers(IEnumerable<Player> players)

@@ -35,8 +35,8 @@ namespace BLL.Test
 
 			var internalThreats = new InternalThreat[0];
 			var bonusThreats = new Threat[0];
-
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -78,7 +78,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -216,7 +217,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -281,7 +283,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -347,7 +350,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -396,7 +400,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			try
 			{
@@ -536,7 +541,8 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack);
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();

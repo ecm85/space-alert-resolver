@@ -249,112 +249,112 @@
 	width: 67px;
 	position: absolute;
 	height: auto;
-    border-top: 1px white solid;
+	border-top: 1px white solid;
 	border-left: 1px white solid;
 	box-shadow: 5px 5px 5px black;
 	border-radius: 20px;
 }
 
 .Red-Shield-damage-token {
-    top: 94px;
-    left: 91px;
+	top: 94px;
+	left: 91px;
 }
 
 .Red-FrontCannon-damage-token {
-    top: 38px;
-    left: 160px;
-    transform: rotate(-17deg);
+	top: 38px;
+	left: 160px;
+	transform: rotate(-17deg);
 }
 
 .Red-Gravolift-damage-token {
-    top: 200px;
-    left: 185px;
+	top: 200px;
+	left: 185px;
 }
 
 .Red-Reactor-damage-token {
-    top: 317px;
-    left: 110px;
+	top: 317px;
+	left: 110px;
 }
 
 .Red-BackCannon-damage-token {
-    top: 276px;
-    left: 6px;
-    transform: rotate(-18deg);
+	top: 276px;
+	left: 6px;
+	transform: rotate(-18deg);
 }
 
 .Red-Structural-damage-token {
-    top: 233px;
-    left: 81px;
+	top: 233px;
+	left: 81px;
 }
 
 .White-Shield-damage-token {
-    top: 28px;
-    left: 388px;
+	top: 28px;
+	left: 388px;
 }
 
 .White-FrontCannon-damage-token {
-    top: 2px;
-    left: 311px;
+	top: 2px;
+	left: 311px;
 }
 
 .White-Gravolift-damage-token {
-    top: 165px;
-    left: 325px;
+	top: 165px;
+	left: 325px;
 }
 
 .White-Reactor-damage-token {
 	top: 303px;
-    left: 330px;
+	left: 330px;
 }
 
 .White-BackCannon-damage-token {
-    top: 421px;
-    left: 357px;
+	top: 421px;
+	left: 357px;
 }
 
 .White-Structural-damage-token {
 	top: 237px;
-    left: 357px;
+	left: 357px;
 }
 
 .Blue-Shield-damage-token {
 	top: 100px;
-    left: 573px;
+	left: 573px;
 }
 
 .Blue-FrontCannon-damage-token {
 	top: 44px;
-    left: 489px;
-    transform: rotate(18deg);
+	left: 489px;
+	transform: rotate(18deg);
 }
 
 .Blue-Gravolift-damage-token {
-    top: 200px;
-    left: 461px;
+	top: 200px;
+	left: 461px;
 }
 
 .Blue-Reactor-damage-token {
-    top: 314px;
-    left: 532px;
+	top: 314px;
+	left: 532px;
 }
 
 .Blue-BackCannon-damage-token {
-    top: 275px;
-    left: 642px;
-    transform: rotate(17deg);
+	top: 275px;
+	left: 642px;
+	transform: rotate(17deg);
 }
 
 .Blue-Structural-damage-token {
 	top: 246px;
-    left: 568px;
+	left: 568px;
 }
 
 .inactive-interceptors-wrapper {
 	position: absolute;
-    height: 33px;
-    width: 45px;
-    top: 230px;
-    left: 103px;
+	height: 33px;
+	width: 45px;
+	top: 230px;
+	left: 103px;
 }
 
 .inactive-interceptors {
@@ -364,10 +364,10 @@
 
 .fuel-capsules-container {
 	position: absolute;
-    top: 341px;
-    left: 252px;
-    height: 32px;
-    width: 60px;
+	top: 341px;
+	left: 252px;
+	height: 32px;
+	width: 60px;
 }
 
 .fuel-capsule {
@@ -377,8 +377,8 @@
 
 .rocket-fired-this-turn-container {
 	position: absolute;
-    top: 490px;
-    left: 380px;
+	top: 490px;
+	left: 380px;
 	width: 45px;
 	height: 35px;
 }
@@ -392,7 +392,7 @@
 }
 
 .rocket-last-turn {
-    transform: rotate(120deg);
+	transform: rotate(120deg);
 }
 
 .rocket-this-turn {
@@ -401,8 +401,8 @@
 
 .maintenance-cubes-container {
 	position: absolute;
-    top: 207px;
-    left: 315px;
+	top: 207px;
+	left: 315px;
 	width: 59px;
 	height: 25px;
 }

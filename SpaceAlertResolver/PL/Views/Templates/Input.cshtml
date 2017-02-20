@@ -15,6 +15,12 @@
 		Specializations
 	</label>
 </div>
+<div class="checkbox">
+	<label type="checkbox">
+		<input type="checkbox" ng-model="newGameData.allowDamageEntry" />
+		Campaign Mode (damage carryover)
+	</label>
+</div>
 <div>
 	<div ng-repeat="player in newGameData.players" class="panel panel-default player-panel" ng-if="player.isInGame">
 		<div class="panel-heading">
@@ -98,6 +104,20 @@
 			all-threats="allInternalThreats"
 			all-used-threats="newGameData.selectedThreats.internalThreats"
 			threats-are-configurable="true"></track-with-threats>
+	</div>
+	<div ng-if="newGameData.allowDamageEntry">
+		<h2>Initial Damage</h2>
+		<div ng-repeat="damageableZone in damageableZones" class="damageable-zone">
+			<h3>
+				{{damageableZone}}
+			</h3>
+			<div class="checkbox" ng-repeat="damageToken in allDamageTokens">
+				<label type="checkbox">
+					<input type="checkbox" ng-model="newGameData.damage[damageableZone][damageToken]" />
+					<img class="selectable-damage-token " ng-src="~/Content/Images/Damage/{{damageableZone}}-{{damageToken}}.png"/>
+				</label>
+			</div>
+		</div>
 	</div>
 </div>
 <div>

@@ -63,9 +63,16 @@ namespace BLL
 				throw new InvalidOperationException("Could not find external tracks in game string.");
 			if (players == null)
 				throw new InvalidOperationException("Could not find players in game string.");
+			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
 
-			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone,
-				internalTrackConfiguration.GetValueOrDefault());
+			return new Game(
+				players,
+				internalThreats,
+				externalThreats,
+				bonusThreats,
+				externalTracksByZone,
+				internalTrackConfiguration.GetValueOrDefault(),
+				initialDamage);
 		}
 
 		private static IList<Player> ParsePlayers(IList<string> chunk)
