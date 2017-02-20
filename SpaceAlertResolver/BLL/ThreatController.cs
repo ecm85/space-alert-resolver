@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats;
@@ -102,20 +101,14 @@ namespace BLL
 			{
 				PhaseStarting(this, new PhaseEventArgs
 				{
-					Phase = string.Format(
-						CultureInfo.InvariantCulture,
-						"{0} - {1}",
-						ResolutionPhase.MoveThreats.GetDescription(),
-						moveableThreat.DisplayName)
+					PhaseHeader = ResolutionPhase.MoveThreats.GetDescription(),
+					PhaseSubHeader = moveableThreat.DisplayName
 				});
 				moveableThreat.Move(currentTurn);
 				PhaseEnded(this, new PhaseEventArgs
 				{
-					Phase = string.Format(
-						CultureInfo.InvariantCulture,
-						"{0} - {1}",
-						ResolutionPhase.MoveThreats.GetDescription(),
-						moveableThreat.DisplayName)
+					PhaseHeader = ResolutionPhase.MoveThreats.GetDescription(),
+					PhaseSubHeader = moveableThreat.DisplayName
 				});
 			}
 		}

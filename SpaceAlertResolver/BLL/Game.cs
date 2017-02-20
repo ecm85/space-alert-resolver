@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats.External;
@@ -75,9 +74,9 @@ namespace BLL
 
 		public void StartGame()
 		{
-			PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame.GetDescription()});
+			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.StartGame.GetDescription()});
 			CurrentTurn = 1;
-			PhaseEnded(this, new PhaseEventArgs {Phase = ResolutionPhase.StartGame.GetDescription() });
+			PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.StartGame.GetDescription() });
 		}
 
 		private void PadPlayerActions()
@@ -93,9 +92,9 @@ namespace BLL
 		{
 			try
 			{
-				PhaseStarting(this, new PhaseEventArgs {Phase = ResolutionPhase.AddNewThreats.GetDescription() });
+				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.AddNewThreats.GetDescription() });
+				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 
 				CheckForAdvancedSpecialOpsProtection();
 
@@ -104,9 +103,9 @@ namespace BLL
 				var damage = GetStandardDamage();
 				var interceptorDamage = GetInterceptorDamage();
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage.GetDescription() });
+				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 				ResolveDamage(damage, interceptorDamage);
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ResolveDamage.GetDescription() });
+				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 
 				ThreatController.MoveThreats(CurrentTurn);
 
@@ -122,8 +121,8 @@ namespace BLL
 				if (CurrentTurn == NumberOfTurns)
 					PerformEndOfGame();
 
-				PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn.GetDescription() });
-				PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.EndTurn.GetDescription() });
+				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.EndTurn.GetDescription() });
+				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.EndTurn.GetDescription() });
 
 				CurrentTurn++;
 			}
@@ -169,9 +168,9 @@ namespace BLL
 
 		private void CheckForComputer()
 		{
-			PhaseStarting(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck.GetDescription() });
+			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ComputerCheck.GetDescription() });
 			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformComputerCheck(Players, CurrentTurn);
-			PhaseEnded(this, new PhaseEventArgs { Phase = ResolutionPhase.ComputerCheck.GetDescription() });
+			PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ComputerCheck.GetDescription() });
 		}
 
 		private IEnumerable<PlayerInterceptorDamage> GetInterceptorDamage()
@@ -219,11 +218,8 @@ namespace BLL
 			{
 				PhaseStarting(this, new PhaseEventArgs
 				{
-					Phase = string.Format(
-						CultureInfo.InvariantCulture,
-						"{0} - {1}",
-						ResolutionPhase.PerformPlayerActions.GetDescription(),
-						player.PlayerColor)
+					PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription(),
+					PhaseSubHeader = player.PlayerColor.ToString()
 				});
 				while (!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed &&
 					player.GetActionForTurn(CurrentTurn).SecondActionPerformed &&
@@ -231,11 +227,8 @@ namespace BLL
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 				PhaseEnded(this, new PhaseEventArgs
 				{
-					Phase = string.Format(
-						CultureInfo.InvariantCulture,
-						"{0} - {1}",
-						ResolutionPhase.PerformPlayerActions.GetDescription(),
-						player.PlayerColor)
+					PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription(),
+					PhaseSubHeader = player.PlayerColor.ToString()
 				});
 			}
 			ThreatController.OnPlayerActionsEnded();

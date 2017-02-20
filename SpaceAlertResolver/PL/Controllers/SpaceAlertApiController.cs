@@ -53,8 +53,8 @@ namespace PL.Controllers
 				throw new InvalidOperationException("Can't do that many battle bots!");
 			var models = new List<GameSnapshotModel>();
 			var currentTurnModels = new Dictionary<string, GameSnapshotModel>();
-			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = null;
-			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.Phase] = new GameSnapshotModel((Game)sender, eventArgs.Phase);
+			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = null;
+			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = new GameSnapshotModel((Game)sender, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader);
 			game.StartGame();
 			var lost = false;
 			for (var i = 0; i < game.NumberOfTurns && !lost; i++)
@@ -68,7 +68,8 @@ namespace PL.Controllers
 				catch (LoseException)
 				{
 					var currentPhase = currentTurnModels.Single(modelWithPhase => modelWithPhase.Value == null).Key;
-					currentTurnModels[currentPhase] = new GameSnapshotModel(game, currentPhase);
+					var currentPhaseTokens = currentPhase.Split(',');
+					currentTurnModels[currentPhase] = new GameSnapshotModel(game, currentPhaseTokens[0], currentPhaseTokens[1]);
 					models.AddRange(currentTurnModels.Values);
 					lost = true;
 				}
