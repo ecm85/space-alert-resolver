@@ -6,7 +6,7 @@
 				<div id="space{{trackId}}{{trackSpace.space}}"
 					 ng-repeat="trackSpace in section.trackSpaces"
 					 class="track-space track-space-{{trackSpace.space}}"
-					 ng-class="{'threat-present': trackSpace.hasAnyThreats, 'track-breakpoint': trackSpace.breakpoint != null }">
+					 ng-class="{'threat-present': trackSpace.hasAnyThreats, 'track-breakpoint': trackSpace.breakpoint != null, 'track-breakpoint-x': trackSpace.breakpoint === 'X', 'track-breakpoint-y': trackSpace.breakpoint === 'Y', 'track-breakpoint-z': trackSpace.breakpoint === 'Z' }">
 					<span class="track-breakpoint-text" ng-if="trackSpace.breakpoint != null">{{trackSpace.breakpoint}}</span>
 				</div>
 			</div>

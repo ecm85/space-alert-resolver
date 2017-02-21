@@ -43,9 +43,20 @@
 	z-index: -2;
 }
 
-.track-section-1 > .track-breakpoint.track-space, .track-section-2 > .track-breakpoint.track-space, .track-section-3 > .track-breakpoint.track-space {
-	background: yellow;
+.track-breakpoint.track-space {
 	text-align: center;
+}
+
+.track-section-1 > .track-breakpoint-x.track-space, .track-section-2 > .track-breakpoint-x.track-space, .track-section-3 > .track-breakpoint-x.track-space {
+	background: yellow;
+}
+
+.track-section-1 > .track-breakpoint-y.track-space, .track-section-2 > .track-breakpoint-y.track-space, .track-section-3 > .track-breakpoint-y.track-space {
+	background: orange;
+}
+
+.track-section-1 > .track-breakpoint-z.track-space, .track-section-2 > .track-breakpoint-z.track-space, .track-section-3 > .track-breakpoint-z.track-space {
+	background: red;
 }
 
 .track-space.threat-present {
