@@ -40,7 +40,10 @@ angular.module("spaceAlertModule")
 				if ($scope.cursor.index < 12) {
 					if (($scope.cursor.actionIndex || 0) === 0) {
 						$scope.selectedActions[$scope.cursor.index] = cloneAction(action);
-						if ($scope.useDoubleActions && _.some($scope.allDoubleActions, function(doubleAction){return doubleAction.firstAction === action.firstAction})) {
+						const canAddSecondAction = $scope.useDoubleActions &&
+							action.secondAction == null
+							&& _.some($scope.allDoubleActions, function (doubleAction) { return doubleAction.firstAction === action.firstAction }); 
+						if (canAddSecondAction){
 							$scope.cursor.actionIndex = 1;
 						} else {
 							$scope.cursor.index++;
@@ -68,6 +71,7 @@ angular.module("spaceAlertModule")
 						}
 					}
 				}
+
 				//TODO: Do something otherwise?
 				if ($scope.cursor.index=== 12)
 					$scope.cursor.index = 0;
