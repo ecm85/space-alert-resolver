@@ -4,18 +4,23 @@ angular.module("spaceAlertModule")
 	.controller("ReportBugController",
 	[
 		"$scope", "newGameData", '$location', '$http', function ($scope, newGameData, $location, $http) {
-			$scope.canIncludeGameData = true && (newGameData.manualData || newGameData.getGameArgs());
-			$scope.includeGameData = $scope.canIncludeGameData;
+			const gameData = newGameData.manualData || newGameData.getGameArgs();
+			$scope.includeGameData = !!(gameData);
 			$scope.submitBug = function () {
 				var data = '';
-				if ($scope.problem != null)
+
+				const includeProblem = $scope.problem != null;
+				if (includeProblem)
 					data += 'User report: ' + $scope.problem + '\r\n';
-				var gameData = newGameData.manualData || newGameData.getGameArgs();
-				if (gameData)
+
+				if ($scope.includeGameData)
 					data += "Game data: " + JSON.stringify(gameData);
-				if (gameData || $scope.problem != null || $scope.email != null) {
+
+				const anyDataToInclude = $scope.includeGameData || includeProblem;
+				if (anyDataToInclude) {
+					const includeEmail = $scope.email != null;
 					$http({
-						url: 'SendGameMessage?senderEmailAddress=' + ($scope.email != null ? $scope.email : ''),
+						url: 'SendGameMessage?senderEmailAddress=' + (includeEmail ? $scope.email : ''),
 						method: "POST",
 						data: {
 							messageText: data

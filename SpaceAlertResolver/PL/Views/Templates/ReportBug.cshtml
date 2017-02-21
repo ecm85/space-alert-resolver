@@ -10,11 +10,8 @@
 		<label for="problem">Describe your issue:</label>
 		<textarea ng-model="problem" class="form-control" id="problem" placeholder="Problem"></textarea>
 	</div>
-	<div class="checkbox" ng-if="canIncludeGameData">
-		<label>
-			<input type="checkbox" ng-model="includeGameData" />
-			Include game data
-		</label>
-	</div>
+	<p ng-if="includeGameData">
+		Current game data from most recent submission will be included.
+	</p>
 	<a class="btn btn-default" ng-click="submitBug()">Submit Bug</a>
 </div>
