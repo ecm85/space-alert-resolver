@@ -320,12 +320,12 @@ namespace BLL
 			if (threatInfo.Threat.NeedsBonusInternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusInternalThreatInfo);
-				((IThreatWithBonusThreat<InternalThreat>)threatInfo.Threat).SetBonusThreat(threatInfo.BonusInternalThreatInfo.Threat);
+				((IThreatWithBonusThreat<InternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusInternalThreatInfo.Threat;
 			}
 			if (threatInfo.Threat.NeedsBonusExternalThreat)
 			{
 				InitializeBonusThreats(threatInfo.BonusExternalThreatInfo);
-				((IThreatWithBonusThreat<ExternalThreat>)threatInfo.Threat).SetBonusThreat(threatInfo.BonusExternalThreatInfo.Threat);
+				((IThreatWithBonusThreat<ExternalThreat>)threatInfo.Threat).BonusThreat = threatInfo.BonusExternalThreatInfo.Threat;
 			}
 		}
 

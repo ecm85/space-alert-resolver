@@ -5,7 +5,7 @@ namespace BLL.Threats.External.Serious.Red
 {
 	public class Overlord : SeriousRedExternalThreat, IThreatWithBonusThreat<ExternalThreat>
 	{
-		private ExternalThreat BonusThreat { get; set; }
+		public ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
 		public Overlord()
@@ -13,10 +13,6 @@ namespace BLL.Threats.External.Serious.Red
 		{
 		}
 
-		public void SetBonusThreat(ExternalThreat bonusThreat)
-		{
-			BonusThreat = bonusThreat;
-		}
 
 		public override bool NeedsBonusExternalThreat { get { return true; } }
 

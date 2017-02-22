@@ -5,17 +5,12 @@ namespace BLL.Threats.External.Serious.Red
 {
 	public class TransmitterSatellite : SeriousRedExternalThreat, IThreatWithBonusThreat<InternalThreat>
 	{
-		private InternalThreat BonusThreat { get; set; }
+		public InternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
 		public TransmitterSatellite()
 			: base(2, 5, 3)
 		{
-		}
-
-		public void SetBonusThreat(InternalThreat bonusThreat)
-		{
-			BonusThreat = bonusThreat;
 		}
 
 		public override bool NeedsBonusInternalThreat { get { return true; } }

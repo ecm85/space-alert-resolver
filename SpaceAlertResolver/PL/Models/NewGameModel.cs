@@ -40,30 +40,37 @@ namespace PL.Models
 					player.PlayerColor,
 					player.PlayerSpecialization))
 				.ToList();
-			var internalThreats = CreateInternalThreatModels(InternalThreats);
-			var redThreats = CreateExternalThreatModels(RedThreats, ZoneLocation.Red);
-			var whiteThreats = CreateExternalThreatModels(WhiteThreats, ZoneLocation.White);
-			var blueThreats = CreateExternalThreatModels(BlueThreats, ZoneLocation.Blue);
+			var internalThreats = CreateInternalThreats(InternalThreats);
+			var redThreats = CreateExternalThreats(RedThreats, ZoneLocation.Red);
+			var whiteThreats = CreateExternalThreats(WhiteThreats, ZoneLocation.White);
+			var blueThreats = CreateExternalThreats(BlueThreats, ZoneLocation.Blue);
 			var externalThreats = redThreats.Concat(whiteThreats).Concat(blueThreats).ToList();
-			var bonusThreats = new List<Threat>();
+			var allThreatModels = RedThreats.Concat(WhiteThreats).Concat(BlueThreats).ToList();
+			var externalThreatBonusModels = allThreatModels.Select(threat => threat.BonusExternalThreat).Where(threat => threat != null);
+			var internalThreatBonusModels = allThreatModels.Select(threat => threat.BonusInternalThreat).Where(threat => threat != null);
+			var bonusThreats = CreateExternalThreats(externalThreatBonusModels)
+				.Cast<Threat>()
+				.Concat(CreateInternalThreats(internalThreatBonusModels))
+				.ToList();
 			var damageTokens = InitialDamageModels.ToLookup(model => model.ZoneLocation, model => model.DamageToken);
 			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, damageTokens);
 		}
 
-		private static IList<ExternalThreat> CreateExternalThreatModels(IEnumerable<ExternalThreatModel> threatModels, ZoneLocation zone)
+		private static IList<ExternalThreat> CreateExternalThreats(IEnumerable<ExternalThreatModel> threatModels, ZoneLocation? zone = null)
 		{
 			return threatModels
 				.Select(threatModel =>
 				{
 					var threat = ExternalThreatFactory.CreateThreat<ExternalThreat>(threatModel.Id);
 					threat.TimeAppears = threatModel.TimeAppears;
-					threat.CurrentZone = zone;
+					if (zone != null)
+						threat.CurrentZone = zone.Value;
 					return threat;
 				})
 				.ToList();
 		}
 
-		private static IList<InternalThreat> CreateInternalThreatModels(IEnumerable<InternalThreatModel> threatModels)
+		private static IList<InternalThreat> CreateInternalThreats(IEnumerable<InternalThreatModel> threatModels)
 		{
 			return threatModels
 				.Select(threatModel =>

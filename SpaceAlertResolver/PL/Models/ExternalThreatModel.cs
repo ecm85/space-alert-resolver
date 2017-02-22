@@ -12,7 +12,6 @@ namespace PL.Models
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ZoneLocation CurrentZone { get; set; }
 		public int Position { get; set; }
-		
 
 		public ExternalThreatModel(ExternalThreat threat) : base(threat)
 		{
