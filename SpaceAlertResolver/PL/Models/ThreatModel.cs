@@ -42,13 +42,31 @@ namespace PL.Models
 			BuffCount = threat.BuffCount;
 			DebuffCount = threat.DebuffCount;
 			IsPhasedOut = threat.GetThreatStatus(ThreatStatus.PhasedOut);
-			NeedsBonusExternalThreat = threat.NeedsBonusExternalThreat;
 			NeedsBonusInternalThreat = threat.NeedsBonusInternalThreat;
-			BonusInternalThreat = threat.NeedsBonusExternalThreat ?
-				new InternalThreatModel(((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat) :
+			NeedsBonusExternalThreat = threat.NeedsBonusExternalThreat;
+			BonusInternalThreat = CreateBonusInternalThreatModel(threat);
+			BonusExternalThreat = CreateBonusExternalThreatModel(threat);
+		}
+
+		private static InternalThreatModel CreateBonusInternalThreatModel(Threat threat)
+		{
+			if (!threat.NeedsBonusInternalThreat)
+				return null;
+
+			var bonusInternalThreat = ((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat;
+			return bonusInternalThreat != null ?
+				new InternalThreatModel(bonusInternalThreat) :
 				null;
-			BonusExternalThreat = threat.NeedsBonusExternalThreat ?
-				new ExternalThreatModel(((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat) :
+		}
+
+		private static ExternalThreatModel CreateBonusExternalThreatModel(Threat threat)
+		{
+			if (!threat.NeedsBonusExternalThreat)
+				return null;
+
+			var bonusExternalThreat = ((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat;
+			return bonusExternalThreat != null ?
+				new ExternalThreatModel(bonusExternalThreat) :
 				null;
 		}
 
