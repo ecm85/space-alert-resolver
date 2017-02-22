@@ -9,25 +9,28 @@
 		public PlayerActionType? BonusActionType { get; private set; }
 		public bool BonusActionPerformed { get; set; }
 
-		public PlayerActionType? MarkNextActionPerformed()
+		public PlayerActionType? NextActionToPerform
 		{
-			
-			if (!FirstActionPerformed)
+			get
 			{
-				FirstActionPerformed = true;
-				return FirstActionType;
+				if (!BonusActionPerformed)
+					return BonusActionType;
+				if (!FirstActionPerformed)
+					return FirstActionType;
+				if (!SecondActionPerformed)
+					return SecondActionType;
+				return null;
 			}
-			if (!SecondActionPerformed)
-			{
-				SecondActionPerformed = true;
-				return SecondActionType;
-			}
+		}
+
+		public void MarkNextActionPerformed()
+		{
 			if (!BonusActionPerformed)
-			{
 				BonusActionPerformed = true;
-				return BonusActionType;
-			}
-			return null;
+			else if (!FirstActionPerformed)
+				FirstActionPerformed = true;
+			else if (!SecondActionPerformed)
+				SecondActionPerformed = true;
 		}
 
 		public PlayerAction(PlayerActionType? firstActionType, PlayerActionType? secondActionType, PlayerActionType? bonusActionType)

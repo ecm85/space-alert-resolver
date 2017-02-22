@@ -97,8 +97,6 @@ namespace BLL
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
 				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 
-				CheckForAdvancedSpecialOpsProtection();
-
 				PerformPlayerActions();
 
 				var damage = GetStandardDamage();
@@ -210,6 +208,9 @@ namespace BLL
 
 		private void PerformPlayerActions()
 		{
+			foreach (var player in Players)
+				player.PerformStartOfPlayerActions(CurrentTurn);
+
 			var playerOrder = Players
 				.Where(player => !player.IsKnockedOut)
 				.OrderByDescending(player => player.IsPerformingMedic(CurrentTurn))
@@ -233,15 +234,6 @@ namespace BLL
 				});
 			}
 			ThreatController.OnPlayerActionsEnded();
-		}
-
-		private void CheckForAdvancedSpecialOpsProtection()
-		{
-			var playersPerformingAdvancedSpecialOps = Players
-				.Where(player => player.IsPerformingAdvancedSpecialOps(CurrentTurn))
-				.ToList();
-			if (playersPerformingAdvancedSpecialOps.Any())
-				playersPerformingAdvancedSpecialOps.Single().HasSpecialOpsProtection = true;
 		}
 
 		private void PerformEndOfTurn()

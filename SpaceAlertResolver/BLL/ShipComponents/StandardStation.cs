@@ -159,7 +159,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
 		{
-			var actionType = performingPlayer.GetActionForTurn(currentTurn).MarkNextActionPerformed();
+			var actionType = performingPlayer.GetNextActionToPerform(currentTurn);
 			switch (actionType)
 			{
 				case PlayerActionType.Alpha:
@@ -217,6 +217,7 @@ namespace BLL.ShipComponents
 					PerformAdvancedSpecialization(performingPlayer, currentTurn);
 					break;
 			}
+			performingPlayer.MarkNextActionPerformed(currentTurn);
 		}
 
 		private void PerformBasicSpecialization(Player performingPlayer, int currentTurn)
@@ -336,8 +337,7 @@ namespace BLL.ShipComponents
 					PerformCAction(performingPlayer, currentTurn, false, StationLocation == StationLocation.LowerBlue);
 					break;
 				case PlayerSpecialization.SpecialOps:
-					//This spec does nothing on its actual turn, and only needs to remove the protection granted
-					performingPlayer.HasSpecialOpsProtection = false;
+					//This spec does nothing when playing the card - determining the protection happens earlier, and the protection lasts until end of this players action
 					break;
 				case PlayerSpecialization.SquadLeader:
 					PerformAdvancedSquadLeader(performingPlayer, currentTurn);

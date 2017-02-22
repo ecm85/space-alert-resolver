@@ -24,7 +24,8 @@ namespace BLL
 			get { return isKnockedOut; }
 			set
 			{
-				if (value || !CurrentStation.Players.Any(player => player.PreventsKnockOut))
+				var isImmune = HasSpecialOpsProtection || CurrentStation.Players.Any(player => player.PreventsKnockOut);
+				if (!isImmune)
 					isKnockedOut = value;
 			}
 		}
@@ -46,7 +47,7 @@ namespace BLL
 		public int BonusPoints { get; set; }
 		public bool PlayerToTeleport { get; set; }
 		public bool TeleportDestination { get; set; }
-		public bool HasSpecialOpsProtection { get; set; }
+		private bool HasSpecialOpsProtection { get; set; }
 
 		public bool IsCaptain => Index == 0;
 
@@ -58,13 +59,14 @@ namespace BLL
 
 		public void Shift(int turn)
 		{
+			if (HasSpecialOpsProtection)
+				return;
 			var currentAction = GetActionForTurn(turn - 1);
 			if (currentAction.FirstActionPerformed && !currentAction.SecondActionPerformed)
 			{
 				var actionToShift = new PlayerAction(currentAction.SecondActionType, null, null);
 				currentAction.SecondActionType = null;
 				Shift(turn, actionToShift);
-
 			}
 			else
 				Shift(turn, null);
@@ -78,6 +80,8 @@ namespace BLL
 
 		private void Shift(int turn, PlayerAction actionToInsert)
 		{
+			if (IsPerformingAdvancedSpecialOps(turn))
+				return;
 			if (turn > ActionsList.Count)
 				return;
 			var endTurn = turn;
@@ -121,6 +125,25 @@ namespace BLL
 		{
 			var extraNullActions = Enumerable.Repeat(PlayerActionFactory.CreateEmptyAction(), numberOfTurns - ActionsList.Count);
 			ActionsList.AddRange(extraNullActions);
+		}
+
+		public void MarkNextActionPerformed(int currentTurn)
+		{
+			var actionForTurn = GetActionForTurn(currentTurn);
+			actionForTurn.MarkNextActionPerformed();
+			if (actionForTurn.FirstActionPerformed)
+				HasSpecialOpsProtection = false;
+		}
+
+		public PlayerActionType? GetNextActionToPerform(int currentTurn)
+		{
+			return GetActionForTurn(currentTurn).NextActionToPerform;
+		}
+
+		public void PerformStartOfPlayerActions(int currentTurn)
+		{
+			if (IsPerformingAdvancedSpecialOps(currentTurn))
+				HasSpecialOpsProtection = true;
 		}
 	}
 }
