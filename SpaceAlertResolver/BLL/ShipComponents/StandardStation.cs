@@ -144,7 +144,7 @@ namespace BLL.ShipComponents
 				if (!(isRemote && firstCThreat.NextDamageWillDestroyThreat()))
 					DamageThreat(1, firstCThreat, performingPlayer, false);
 			}
-			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.Charlie))
+			else if (!HasIrreparableMalfunctionOfType(PlayerActionType.Charlie) && CharlieComponent.CanPerformCAction(performingPlayer))
 				CharlieComponent.PerformCAction(performingPlayer, currentTurn, isAdvanced);
 		}
 
