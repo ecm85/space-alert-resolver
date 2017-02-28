@@ -376,8 +376,8 @@ namespace BLL.ShipComponents
 			var canGoIntoSpace = performingPlayer.BattleBots != null && !performingPlayer.BattleBots.IsDisabled && StationLocation != StationLocation.LowerBlue;
 			if (!canGoIntoSpace) return;
 			MovementController.MoveHeroically(SittingDuck.StandardStationsByLocation, performingPlayer, StationLocation.UpperRed, currentTurn);
-			var newStation = SittingDuck.StandardStationsByLocation[StationLocation];
-			if (newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCharlieComponent(performingPlayer))
+			var newStation = performingPlayer.CurrentStation as StandardStation;
+			if (newStation != null && newStation.StationLocation == StationLocation.UpperRed && newStation.CanUseCharlieComponent(performingPlayer))
 				newStation.PerformCAction(performingPlayer, currentTurn);
 		}
 
