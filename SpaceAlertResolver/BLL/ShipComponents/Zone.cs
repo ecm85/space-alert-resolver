@@ -7,7 +7,9 @@ namespace BLL.ShipComponents
 {
 	public abstract class Zone
 	{
-		public int TotalDamage { get; private set; }
+		public int TotalDamage => CurrentDamageTokens.Count + ExtraDamageTaken;
+		private int ExtraDamageTaken { get; set; }
+
 		public Gravolift Gravolift { get; }
 		public IEnumerable<Player> Players => UpperStation.Players.Concat(LowerStation.Players).ToList();
 		private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
@@ -56,7 +58,7 @@ namespace BLL.ShipComponents
 			foreach (var newDamageToken in newDamageTokens)
 				TakeDamage(newDamageToken);
 			var extraDamageTaken = damageDone > newDamageTokens.Count ? damageDone - newDamageTokens.Count : 0;
-			TotalDamage += extraDamageTaken;
+			ExtraDamageTaken = extraDamageTaken;
 			var shipDestroyed = extraDamageTaken > 0;
 			return new ThreatDamageResult {ShipDestroyed = shipDestroyed, DamageShielded = 0};
 		}
@@ -64,7 +66,6 @@ namespace BLL.ShipComponents
 		public void TakeDamage(DamageToken newDamageToken, bool isCampaignDamage = false)
 		{
 			CurrentDamageTokens.Add(newDamageToken);
-			TotalDamage++;
 			var damageableComponent = GetDamageableComponent(newDamageToken);
 			damageableComponent?.SetDamaged(isCampaignDamage);
 			if (newDamageToken == DamageToken.Structural && isCampaignDamage)
