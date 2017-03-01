@@ -105,7 +105,7 @@
 			all-used-threats="newGameData.selectedThreats.internalThreats"
 			threats-are-configurable="true"></track-with-threats>
 	</div>
-	<div @*ng-if="threatsThatCallInOtherThreats.length > 0"*@>
+	<div ng-if="anyThreatsCallInBonusThreats()">
 		<h2>Threats Called In</h2>
 		<div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusInternalThreat">
 			<bonus-threat-entry threat="threat" bonus-threat="threat.bonusInternalThreat" set-bonus-threat="setCalledInInternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>

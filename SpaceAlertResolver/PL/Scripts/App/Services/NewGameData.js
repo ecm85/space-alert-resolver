@@ -131,7 +131,12 @@ angular.module("spaceAlertModule")
 				}
 
 				newGameData.canCreateGame = function () {
-					return newGameData.manualData || (newGameData.selectedTracks.redTrack != null &&
+					var missingBonusThreats = _.some(newGameData.allSelectedThreats, function(threat) {
+						return (threat.needsBonusExternalThreat && threat.bonusExternalThreat == null) ||
+						(threat.needsBonusInternalThreat && threat.bonusInternalThreat == null);
+					});
+					return newGameData.manualData || (!missingBonusThreats &&
+						newGameData.selectedTracks.redTrack != null &&
 						newGameData.selectedTracks.whiteTrack != null &&
 						newGameData.selectedTracks.blueTrack != null &&
 						newGameData.selectedTracks.internalTrack != null);

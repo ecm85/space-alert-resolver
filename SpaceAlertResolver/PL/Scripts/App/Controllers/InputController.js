@@ -141,6 +141,12 @@ angular.module("spaceAlertModule")
 				threat.bonusInternalThreat = null;
 			}
 
+			$scope.anyThreatsCallInBonusThreats = function() {
+				return _.some(newGameData.allSelectedThreats, function (threat) {
+					return threat.needsBonusExternalThreat || threat.needsBonusInternalThreat;
+				});
+			}
+
 			$scope.animationsEnabled = true;
 
 			$scope.openActionsDialog = function(player, size) {
