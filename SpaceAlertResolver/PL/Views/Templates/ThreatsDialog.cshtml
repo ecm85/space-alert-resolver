@@ -23,14 +23,14 @@
 		<div class="threat-name">{{threat.displayName}}</div>
 		<div class="threat-name">{{threat.id}}</div>
 	</div>
-	<div>
+	<div ng-if="threatAppearsNormally">
 		<div class="btn-group">
-			<a class="btn btn-default" ng-disabled="selectedThreatToAdd == null" ng-repeat="time in allTimes" ng-model="$parent.selectedTimeOfThreatToAdd" uib-btn-radio="time">{{time}}</a>
+			<a class="btn btn-default" ng-disabled="selectedThreatToAdd == null" ng-repeat="time in allTimes" ng-model="$parent.$parent.selectedTimeOfThreatToAdd" uib-btn-radio="time">{{time}}</a>
 		</div>
 	</div>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-disabled="selectedTimeOfThreatToAdd == null" ng-click="ok()">OK</button>
+	<button class="btn btn-primary" type="button" ng-disabled="selectedThreatToAdd == null || (threatAppearsNormally && selectedTimeOfThreatToAdd == null)" ng-click="ok()">OK</button>
 	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
 <script type="text/ng-template" id="templates/threat">

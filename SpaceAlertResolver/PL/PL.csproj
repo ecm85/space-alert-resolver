@@ -319,6 +319,7 @@
     <Content Include="Content\Images\threatTimeAppears.png" />
     <Content Include="Content\Images\Warning.png" />
     <Content Include="Content\Images\whiteCube.png" />
+    <Content Include="Content\BonusThreatEntry.css" />
     <Content Include="Content\Input.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\PlayerBoard.css" />
@@ -334,6 +335,7 @@
     <Content Include="Scripts\App\Controllers\ManualController.js" />
     <Content Include="Scripts\App\Controllers\ReportBugController.js" />
     <Content Include="Scripts\App\Controllers\ResolutionController.js" />
+    <Content Include="Scripts\App\Directives\BonusThreatEntry.js" />
     <Content Include="Scripts\App\Directives\PlayerBoard.js" />
     <Content Include="Scripts\App\Directives\StandardZone.js" />
     <Content Include="Scripts\App\Directives\Threat.js" />
@@ -553,6 +555,7 @@
     <Content Include="Views\Templates\Error.cshtml" />
     <Content Include="Views\Templates\ReportBug.cshtml" />
     <Content Include="Views\Templates\Loading.cshtml" />
+    <Content Include="Views\Templates\BonusThreatEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

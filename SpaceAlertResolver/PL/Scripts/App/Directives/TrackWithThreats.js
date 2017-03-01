@@ -94,9 +94,6 @@ angular.module("spaceAlertModule")
 								controller: 'ThreatsModalInstanceCtrl',
 								size: 'lg',
 								resolve: {
-									currentThreats: function() {
-										return $scope.threats;
-									},
 									allThreats: function() {
 										return $scope.allThreats;
 									},
@@ -105,6 +102,9 @@ angular.module("spaceAlertModule")
 									},
 									zone: function() {
 										return $scope.zoneDescription;
+									},
+									threatAppearsNormally: function() {
+										return true;
 									}
 								}
 							});

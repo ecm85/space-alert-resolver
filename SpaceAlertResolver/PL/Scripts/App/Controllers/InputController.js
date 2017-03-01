@@ -51,14 +51,21 @@ angular.module("spaceAlertModule")
 			$scope.$watchCollection('newGameData.selectedThreats.redThreats',
 				function() {
 					newGameData.updateAllSelectedExternalThreats();
+					newGameData.updateAllSelectedThreats();
 				});
 			$scope.$watchCollection('newGameData.selectedThreats.whiteThreats',
 				function() {
 					newGameData.updateAllSelectedExternalThreats();
+					newGameData.updateAllSelectedThreats();
 				});
 			$scope.$watchCollection('newGameData.selectedThreats.blueThreats',
 				function() {
 					newGameData.updateAllSelectedExternalThreats();
+					newGameData.updateAllSelectedThreats();
+				});
+			$scope.$watchCollection('newGameData.selectedThreats.internalThreats',
+				function () {
+					newGameData.updateAllSelectedThreats();
 				});
 
 			//TODO: Add specializations
@@ -92,6 +99,47 @@ angular.module("spaceAlertModule")
 				if (newGameData.damage[damageableZone] == null)
 					newGameData.damage[damageableZone] = {};
 			});
+
+			var setCalledInThreat = function (bonusThreatSetterFn, allThreats, allUsedThreats) {
+				var modal = $uibModal.open({
+					animation: true,
+					templateUrl: 'templates/threatsModal',
+					controller: 'ThreatsModalInstanceCtrl',
+					size: 'lg',
+					resolve: {
+						allThreats: function () {
+							return allThreats;
+						},
+						allUsedThreats: function () {
+							return allUsedThreats;
+						},
+						zone: function () {
+							return '';
+						},
+						threatAppearsNormally: function () {
+							return false;
+						}
+					}
+				});
+				modal.result.then(bonusThreatSetterFn);
+			}
+			
+			$scope.setCalledInExternalThreat = function (threat) {
+				setCalledInThreat(function(newThreat) {
+					threat.bonusExternalThreat = newThreat;
+				}, $scope.allExternalThreats, $scope.newGameData.allSelectedExternalThreats);
+			}
+
+			$scope.setCalledInInternalThreat = function (threat) {
+				setCalledInThreat(function (newThreat) {
+					threat.bonusInternalThreat = newThreat;
+				}, $scope.allInternalThreats, $scope.newGameData.allSelectedInternalThreats);
+			}
+
+			$scope.clearBonusThreat = function(threat) {
+				threat.bonusExternalThreat = null;
+				threat.bonusInternalThreat = null;
+			}
 
 			$scope.animationsEnabled = true;
 

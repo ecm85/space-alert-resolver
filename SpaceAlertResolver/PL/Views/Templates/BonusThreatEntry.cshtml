@@ -1,0 +1,6 @@
+﻿<threat threat="threat" removable="false" class="bonus-threat-section"></threat>
+<i class="fa fa-arrow-right add-new-threat-arrow" ></i>
+<threat ng-if="bonusThreat" threat-index="$index" threat="bonusThreat" removable="true" remove-threat="removeThreat()" class="bonus-threat-section"></threat>
+<div ng-if="!bonusThreat" ng-click="setBonusThreat()" class="add-new-threat bonus-threat-section" href="#">
+	<i class="fa fa-plus add-new-threat-icon"></i>
+</div>

@@ -14,6 +14,10 @@ var cloneThreat = function(threat) {
 		points: threat.points,
 		buffCount: threat.buffCount,
 		debuffCount: threat.debuffCount,
+		needsBonusExternalThreat: threat.needsBonusExternalThreat,
+		needsBonusInternalThreat: threat.needsBonusInternalThreat,
+		bonusInternalThreat: threat.bonusInternalThreat,
+		bonusExternalThreat: threat.bonusExternalThreat,
 
 		shields: threat.shields,
 		currentZone: threat.currentZone,
@@ -26,9 +30,9 @@ var cloneThreat = function(threat) {
 angular.module("spaceAlertModule")
 	.controller('ThreatsModalInstanceCtrl',
 	[
-		'$uibModalInstance', '$scope', 'currentThreats', 'allThreats', 'allUsedThreats', 'zone',
-		function($uibModalInstance, $scope, currentThreats, allThreats, allUsedThreats, zone) {
-			$scope.currentThreats = currentThreats;
+		'$uibModalInstance', '$scope', 'allThreats', 'allUsedThreats', 'zone', 'threatAppearsNormally',
+		function ($uibModalInstance, $scope, allThreats, allUsedThreats, zone, threatAppearsNormally) {
+			$scope.threatAppearsNormally = threatAppearsNormally;
 			$scope.allTimes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 			$scope.allThreats = allThreats;
 			$scope.zone = zone;

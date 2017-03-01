@@ -60,6 +60,14 @@ angular.module("spaceAlertModule")
 						.concat(newGameData.selectedThreats.blueThreats);
 				};
 
+				newGameData.updateAllSelectedThreats = function () {
+					newGameData.allSelectedThreats = []
+						.concat(newGameData.selectedThreats.redThreats)
+						.concat(newGameData.selectedThreats.whiteThreats)
+						.concat(newGameData.selectedThreats.blueThreats)
+						.concat(newGameData.selectedThreats.internalThreats);
+				};
+
 				newGameData.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
 				newGameData.playerCounts = [1, 2, 3, 4, 5];
 

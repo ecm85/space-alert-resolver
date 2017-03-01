@@ -73,5 +73,10 @@ namespace PL.Controllers
 		{
 			return PartialView();
 		}
+
+		public ActionResult BonusThreatEntry()
+		{
+			return PartialView();
+		}
 	}
 }

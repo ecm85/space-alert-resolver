@@ -45,13 +45,14 @@ namespace PL.Models
 			var whiteThreats = CreateExternalThreats(WhiteThreats, ZoneLocation.White);
 			var blueThreats = CreateExternalThreats(BlueThreats, ZoneLocation.Blue);
 			var externalThreats = redThreats.Concat(whiteThreats).Concat(blueThreats).ToList();
-			var allThreatModels = RedThreats.Concat(WhiteThreats).Concat(BlueThreats).ToList();
-			var externalThreatBonusModels = allThreatModels.Select(threat => threat.BonusExternalThreat).Where(threat => threat != null);
-			var internalThreatBonusModels = allThreatModels.Select(threat => threat.BonusInternalThreat).Where(threat => threat != null);
-			var bonusThreats = CreateExternalThreats(externalThreatBonusModels)
-				.Cast<Threat>()
-				.Concat(CreateInternalThreats(internalThreatBonusModels))
-				.ToList();
+			var allThreats = redThreats.Cast<Threat>().Concat(whiteThreats).Concat(blueThreats).Concat(internalThreats).ToList();
+			var bonusExternalThreats = allThreats
+				.Where(threat => threat.NeedsBonusExternalThreat)
+				.Select(threat => ((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat);
+			var bonusInternalThreats = allThreats
+				.Where(threat => threat.NeedsBonusExternalThreat)
+				.Select(threat => ((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat);
+			var bonusThreats = bonusExternalThreats.Cast<Threat>().Concat(bonusInternalThreats).ToList();
 			var damageTokens = InitialDamageModels.ToLookup(model => model.ZoneLocation, model => model.DamageToken);
 			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, damageTokens);
 		}
@@ -65,6 +66,10 @@ namespace PL.Models
 					threat.TimeAppears = threatModel.TimeAppears;
 					if (zone != null)
 						threat.CurrentZone = zone.Value;
+					if (threat.NeedsBonusInternalThreat)
+						((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.BonusInternalThreat.Id);
+					if (threat.NeedsBonusExternalThreat)
+						((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat = ExternalThreatFactory.CreateThreat<ExternalThreat>(threatModel.BonusExternalThreat.Id);
 					return threat;
 				})
 				.ToList();
@@ -77,6 +82,10 @@ namespace PL.Models
 				{
 					var threat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.Id);
 					threat.TimeAppears = threatModel.TimeAppears;
+					if (threat.NeedsBonusInternalThreat)
+						((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.BonusInternalThreat.Id);
+					if (threat.NeedsBonusExternalThreat)
+						((IThreatWithBonusThreat<ExternalThreat>)threat).BonusThreat = ExternalThreatFactory.CreateThreat<ExternalThreat>(threatModel.BonusExternalThreat.Id);
 					return threat;
 				})
 				.ToList();

@@ -105,6 +105,15 @@
 			all-used-threats="newGameData.selectedThreats.internalThreats"
 			threats-are-configurable="true"></track-with-threats>
 	</div>
+	<div @*ng-if="threatsThatCallInOtherThreats.length > 0"*@>
+		<h2>Threats Called In</h2>
+		<div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusInternalThreat">
+			<bonus-threat-entry threat="threat" bonus-threat="threat.bonusInternalThreat" set-bonus-threat="setCalledInInternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
+		</div>
+		<div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusExternalThreat">
+			<bonus-threat-entry threat="threat" bonus-threat="threat.bonusExternalThreat" set-bonus-threat="setCalledInExternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
+		</div>
+	</div>
 	<div ng-if="newGameData.allowDamageEntry">
 		<h2>Initial Damage</h2>
 		<div ng-repeat="damageableZone in damageableZones" class="damageable-zone">
