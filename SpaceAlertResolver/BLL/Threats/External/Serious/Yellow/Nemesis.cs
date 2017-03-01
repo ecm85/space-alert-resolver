@@ -42,17 +42,14 @@ namespace BLL.Threats.External.Serious.Yellow
 		{
 			if (TookDamageThisTurn)
 				AttackAllZones(1);
+			if (!IsOnTrack)
+				ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
+
 		protected override void OnTurnEnded(object sender, EventArgs args)
 		{
 			base.OnTurnEnded(sender, args);
 			healthAtStartOfTurn = RemainingHealth;
-		}
-
-		protected override void OnThreatTerminated()
-		{
-			base.OnThreatTerminated();
-			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
 
 		public override string Id { get; } = "SE2-05";
