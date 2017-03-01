@@ -68,6 +68,8 @@ namespace BLL
 			Check.ArgumentIsNotNull(standardStationsByLocation, "standardStationsByLocation");
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			var currentStationLocation = performingPlayer.CurrentStation.StationLocation;
+			if (currentStationLocation == newStationLocation)
+				return;
 			var currentStation = standardStationsByLocation[currentStationLocation];
 			var path = Path(currentStationLocation, newStationLocation)
 				.Select(stationLocation => standardStationsByLocation[stationLocation])
