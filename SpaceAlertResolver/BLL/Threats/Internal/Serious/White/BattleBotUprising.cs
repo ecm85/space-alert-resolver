@@ -39,7 +39,7 @@ namespace BLL.Threats.Internal.Serious.White
 		private void OnPlayerActionsEnding(object sender, EventArgs args)
 		{
 			if (CurrentStations.All(station => StationsHitThisTurn.Contains(station)))
-				base.TakeDamage(1, null, false, CurrentStation);
+				base.TakeDamage(1, null, false, null);
 			StationsHitThisTurn.Clear();
 		}
 
