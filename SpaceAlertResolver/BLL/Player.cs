@@ -80,9 +80,9 @@ namespace BLL
 
 		private void Shift(int turn, PlayerAction actionToInsert)
 		{
-			if (IsPerformingAdvancedSpecialOps(turn))
-				return;
 			if (turn > ActionsList.Count)
+				return;
+			if (IsPerformingAdvancedSpecialOps(turn))
 				return;
 			var endTurn = turn;
 			while (endTurn < ActionsList.Count && GetActionForTurn(endTurn).FirstActionType.HasValue)
