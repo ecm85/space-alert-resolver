@@ -140,7 +140,7 @@ namespace BLL
 			ThreatController.MoveThreats(CurrentTurn + 1);
 			var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
 			if (rocketFiredLastTurn != null)
-				ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, null);
+				ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, new List<PlayerInterceptorDamage>());
 			var playersInFarInterceptors = SittingDuck.InterceptorStations
 				.Where(station => station.StationLocation.DistanceFromShip() > 1)
 				.SelectMany(station => station.Players);
