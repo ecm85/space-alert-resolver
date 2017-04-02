@@ -41,7 +41,7 @@ namespace BLL.ShipComponents
 				damageDone *= 2;
 			if (damageShielded == 0 && damageDone > 0 && damageType == ThreatDamageType.Plasmatic)
 				foreach (var player in Players)
-					player.IsKnockedOut = true;
+					player.KnockOut();
 			var damageResult = TakeDamage(damageDone);
 			damageResult.DamageShielded = damageShielded;
 			return damageResult;

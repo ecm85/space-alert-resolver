@@ -44,7 +44,7 @@ namespace BLL.Threats.External.Serious.Yellow
 				{
 					Amount = interceptorDamages.Amount + 6
 				};
-				interceptorDamages.PerformingPlayer.IsKnockedOut = true;
+				interceptorDamages.PerformingPlayer.KnockOutFromOwnAction();
 				modifiedDamages.Remove(interceptorDamages);
 				modifiedDamages.Add(strongerInterceptorDamages);
 			}

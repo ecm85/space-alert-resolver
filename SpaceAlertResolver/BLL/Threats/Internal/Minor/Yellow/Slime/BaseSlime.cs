@@ -1,4 +1,5 @@
-﻿using BLL.ShipComponents;
+﻿using System;
+using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.Yellow.Slime
@@ -23,7 +24,9 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		private static void DelayPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			args.MovingPlayer.Shift(args.CurrentTurn + 1);
+			if (!args.CurrentTurn.HasValue)
+				throw new InvalidOperationException("Tried to delay player but didn't specify turn to do so.");
+			args.MovingPlayer.Shift(args.CurrentTurn.Value + 1);
 		}
 
 		protected override void OnHealthReducedToZero()

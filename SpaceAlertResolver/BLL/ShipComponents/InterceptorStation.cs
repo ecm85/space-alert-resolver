@@ -37,7 +37,7 @@ namespace BLL.ShipComponents
 				DamageThreat(1, firstThreat, performingPlayer, isHeroic);
 		}
 
-		public override void MovePlayerIn(Player performingPlayer, int currentTurn)
+		public override void MovePlayerIn(Player performingPlayer, int? currentTurn = null)
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			Players.Add(performingPlayer);

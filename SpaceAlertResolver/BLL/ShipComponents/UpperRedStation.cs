@@ -21,7 +21,7 @@
 			InterceptorComponent = new InterceptorsOnShipComponent(sittingDuck, interceptors);
 		}
 
-		public override void MovePlayerIn(Player performingPlayer, int currentTurn)
+		public override void MovePlayerIn(Player performingPlayer, int? currentTurn = null)
 		{
 			base.MovePlayerIn(performingPlayer, currentTurn);
 			if (performingPlayer.Interceptors != null)

@@ -19,14 +19,38 @@ namespace BLL
 			Specialization = specialization;
 		}
 
-		private bool isKnockedOut;
-		public bool IsKnockedOut {
-			get { return isKnockedOut; }
-			set
+		public void Initialize(SittingDuck sittingDuck)
+		{
+			SittingDuck = sittingDuck;
+		}
+
+		private SittingDuck SittingDuck { get; set; }
+
+		public bool IsKnockedOut { get; private set; }
+
+		public void KnockOut()
+		{
+			KnockOut(false);
+		}
+
+		public void KnockOutFromOwnAction()
+		{
+			KnockOut(true);
+		}
+
+		private void KnockOut(bool wasCausedByOwnAction)
+		{
+			var isImmune = HasSpecialOpsProtection ||
+				CurrentStation.Players.Any(player => player.PreventsKnockOut) ||
+				(wasCausedByOwnAction && HadSpecialOpsProtectionWhenActing);
+			if (!isImmune)
+				IsKnockedOut = true;
+			if (BattleBots != null)
+				BattleBots.IsDisabled = true;
+			while (!CurrentStation.StationLocation.IsOnShip())
 			{
-				var isImmune = HasSpecialOpsProtection || CurrentStation.Players.Any(player => player.PreventsKnockOut);
-				if (!isImmune)
-					isKnockedOut = value;
+				CurrentStation.Players.Remove(this);
+				SittingDuck.RedZone.UpperRedStation.MovePlayerIn(this);
 			}
 		}
 
@@ -48,6 +72,7 @@ namespace BLL
 		public bool PlayerToTeleport { get; set; }
 		public bool TeleportDestination { get; set; }
 		private bool HasSpecialOpsProtection { get; set; }
+		private bool HadSpecialOpsProtectionWhenActing { get; set; }
 
 		public bool IsCaptain => Index == 0;
 
@@ -143,7 +168,16 @@ namespace BLL
 		public void PerformStartOfPlayerActions(int currentTurn)
 		{
 			if (IsPerformingAdvancedSpecialOps(currentTurn))
+			{
 				HasSpecialOpsProtection = true;
+				HadSpecialOpsProtectionWhenActing = true;
+			}
+		}
+
+		public void PerformEndOfTurn()
+		{
+			SetPreventsKnockOut(false);
+			HadSpecialOpsProtectionWhenActing = false;
 		}
 	}
 }

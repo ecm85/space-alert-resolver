@@ -217,7 +217,7 @@ namespace BLL
 		private static void KnockOut(IEnumerable<Player> players)
 		{
 			foreach (var player in players)
-				player.IsKnockedOut = true;
+				player.KnockOut();
 		}
 
 		public void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source)
@@ -313,7 +313,7 @@ namespace BLL
 		public void KnockOutCaptain()
 		{
 			var captain = Zones.SelectMany(zone => zone.Players).Single(player => player.IsCaptain);
-			captain.IsKnockedOut = true;
+			captain.KnockOut();
 		}
 
 		public void SealRedDoors()

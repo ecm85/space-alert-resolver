@@ -37,9 +37,7 @@ namespace BLL.ShipComponents
 			}
 			else
 			{
-				performingPlayer.IsKnockedOut = true;
-				if (performingPlayer.BattleBots != null)
-					performingPlayer.BattleBots.IsDisabled = true;
+				performingPlayer.KnockOutFromOwnAction();
 			}
 		}
 

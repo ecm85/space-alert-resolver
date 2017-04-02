@@ -70,6 +70,8 @@ namespace BLL
 				threat.Initialize(SittingDuck, ThreatController);
 			SittingDuck.SetPlayers(players);
 			Players = players;
+			foreach (var player in players)
+				player.Initialize(SittingDuck);
 			PadPlayerActions();
 		}
 
@@ -143,10 +145,7 @@ namespace BLL
 				.Where(station => station.StationLocation.DistanceFromShip() > 1)
 				.SelectMany(station => station.Players);
 			foreach(var player in playersInFarInterceptors)
-			{
-				player.IsKnockedOut = true;
-				player.BattleBots.IsDisabled = true;
-			}
+				player.KnockOut();
 			CalculateScore();
 			ThreatController.OnJumpingToHyperspace();
 			GameStatus = GameStatus.Won;
@@ -244,7 +243,7 @@ namespace BLL
 				zone.UpperStation.PerformEndOfTurn();
 				zone.LowerStation.PerformEndOfTurn();
 				foreach (var player in Players)
-					player.SetPreventsKnockOut(false);
+					player.PerformEndOfTurn();
 			}
 			SittingDuck.WhiteZone.LowerWhiteStation.VisualConfirmationComponent.PerformEndOfTurn();
 			SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.PerformEndOfTurn();

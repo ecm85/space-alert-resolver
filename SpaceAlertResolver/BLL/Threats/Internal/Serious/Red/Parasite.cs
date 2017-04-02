@@ -29,7 +29,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			if (attachedPlayer != null && !attachedPlayer.IsKnockedOut && attachedPlayer.Interceptors != null)
+			if (attachedPlayer != null && !attachedPlayer.IsKnockedOut && attachedPlayer.CurrentStation.StationLocation.IsOnShip())
 				SittingDuck.DrainEnergy(attachedPlayer.CurrentStation.StationLocation, 1);
 		}
 
@@ -38,7 +38,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			var otherPlayersInStation = SittingDuck.GetPlayersInStation(attachedPlayer.CurrentStation.StationLocation)
 				.Except(new [] {attachedPlayer});
 			foreach (var player in otherPlayersInStation)
-				player.IsKnockedOut = true;
+				player.KnockOut();
 		}
 
 		protected override void PerformZAction(int currentTurn)
@@ -57,7 +57,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
 			if(IsDefeated)
-				attachedPlayer.IsKnockedOut = true;
+				attachedPlayer.KnockOut();
 			if (!isHeroic)
 				performingPlayer.BattleBots.IsDisabled = true;
 		}
