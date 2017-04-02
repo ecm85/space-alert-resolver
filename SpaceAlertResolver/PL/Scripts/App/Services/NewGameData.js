@@ -87,6 +87,28 @@ angular.module("spaceAlertModule")
 				};
 				newGameData.selectPlayerCount(4);
 
+				newGameData.initializeFromGameArgs = function (args) {
+					var parsed = JSON.parse(args);
+					newGameData.selectedThreats.redThreats = parsed.redThreats;
+					newGameData.selectedThreats.whiteThreats = parsed.whiteThreats;
+					newGameData.selectedThreats.blueThreats = parsed.blueThreats;
+					newGameData.selectedThreats.internalThreats = parsed.internalThreats;
+					newGameData.selectedTracks.redTrack = parsed.redTrack;
+					newGameData.selectedTracks.whiteTrack = parsed.whiteTrack;
+					newGameData.selectedTracks.blueTrack = parsed.blueTrack;
+					newGameData.selectedTracks.internalTrack = parsed.internalTrack;
+					for (var i = 0; i < newGameData.players.length; i++) {
+						if (i < parsed.players.length) {
+							var player = newGameData.players[i];
+							var parsedPlayer = parsed.players[i];
+							player.isInGame = true;
+							player.color.model = newGameData.colors[parsedPlayer.playerColor];
+							player.actions = parsedPlayer.actions;
+							player.playerSpecialization = parsedPlayer.playerSpecialization;
+						}
+					}
+				}
+
 				newGameData.getGameArgs = function () {
 					if (!newGameData.canCreateGame())
 						return '';
@@ -140,6 +162,10 @@ angular.module("spaceAlertModule")
 						newGameData.selectedTracks.whiteTrack != null &&
 						newGameData.selectedTracks.blueTrack != null &&
 						newGameData.selectedTracks.internalTrack != null);
+				}
+
+				newGameData.setManualData = function (manualData) {
+					newGameData.manualData = manualData;
 				}
 			}
 
