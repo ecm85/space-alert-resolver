@@ -12,27 +12,33 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void PerformXAction(int currentTurn)
 		{
 			SittingDuck.TransferEnergyToShields(new [] {CurrentZone});
-			EnergyLeaksOut(CurrentZone);
+			EnergyLeaksOutFromReactor(CurrentZone);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			EnergyLeaksOut(CurrentZone);
+			EnergyLeaksOutFromShield(CurrentZone);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			foreach (var zoneLocation in EnumFactory.All<ZoneLocation>())
-				EnergyLeaksOut(zoneLocation);
+				EnergyLeaksOutFromReactor(zoneLocation);
 		}
 
 		public override string Id { get; } = "SI1-05";
 		public override string DisplayName { get; } = "Crossed Wires";
 		public override string FileName { get; } = "CrossedWires";
 
-		private void EnergyLeaksOut(ZoneLocation zoneLocation)
+		private void EnergyLeaksOutFromShield(ZoneLocation zoneLocation)
 		{
 			var energyDrained = SittingDuck.DrainShield(zoneLocation);
+			Damage(energyDrained);
+		}
+
+		private void EnergyLeaksOutFromReactor(ZoneLocation zoneLocation)
+		{
+			var energyDrained = SittingDuck.DrainReactor(zoneLocation);
 			Damage(energyDrained);
 		}
 	}
