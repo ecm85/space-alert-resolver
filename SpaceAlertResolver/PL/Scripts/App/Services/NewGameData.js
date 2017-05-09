@@ -130,12 +130,15 @@ angular.module("spaceAlertModule")
 					return game;
 				}
 
-				newGameData.canCreateGame = function () {
-					var missingBonusThreats = _.some(newGameData.allSelectedThreats, function(threat) {
+				newGameData.isMissingBonusThreats = function() {
+					return _.some(newGameData.allSelectedThreats, function(threat) {
 						return (threat.needsBonusExternalThreat && threat.bonusExternalThreat == null) ||
 						(threat.needsBonusInternalThreat && threat.bonusInternalThreat == null);
 					});
-					return newGameData.manualData || (!missingBonusThreats &&
+				}
+
+				newGameData.canCreateGame = function () {
+					return newGameData.manualData || (!newGameData.isMissingBonusThreats() &&
 						newGameData.selectedTracks.redTrack != null &&
 						newGameData.selectedTracks.whiteTrack != null &&
 						newGameData.selectedTracks.blueTrack != null &&
