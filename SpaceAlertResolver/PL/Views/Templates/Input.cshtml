@@ -130,6 +130,15 @@
 	</div>
 </div>
 <div>
+	<div class="alert alert-danger" ng-if="!newGameData.canCreateGame()">
+		<ul>
+			<li ng-if="newGameData.selectedTracks.redTrack == null">Select a red track</li>
+			<li ng-if="newGameData.selectedTracks.whiteTrack == null">Select a white track</li>
+			<li ng-if="newGameData.selectedTracks.blueTrack == null">Select a red track</li>
+			<li ng-if="newGameData.selectedTracks.internalTrack == null">Select an internal track</li>
+			<li ng-if="newGameData.isMissingBonusThreats()">Add threats for each threat that calls in bonus threats</li>
+		</ul>
+	</div>
 	<a href="#Resolution" class="btn btn-primary" ng-disabled="!newGameData.canCreateGame()">Create Game</a>
 	<button class="btn btn-default" ng-click="newGameData.initialize()">Reset</button>
 </div>
