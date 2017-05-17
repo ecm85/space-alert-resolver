@@ -62,8 +62,7 @@ namespace BLL.Test
 			var player = new Player(actions, 0, PlayerColor.Green);
 			var computerPlayer = new Player(computerActions, 1, PlayerColor.Purple);
 			var players = new[] {player, computerPlayer};
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, new List<InternalThreat>(), new List<ExternalThreat>(), new List<Threat>(), externalTracks, TrackConfiguration.Track4, initialDamage);
+			var game = new Game(players, new List<InternalThreat>(), new List<ExternalThreat>(), new List<Threat>(), externalTracks, TrackConfiguration.Track4, null);
 			game.StartGame();
 			for (var i = 0; i < game.NumberOfTurns; i++)
 			{

@@ -28,15 +28,14 @@ namespace BLL.Test
 				{ZoneLocation.Red, TrackConfiguration.Track5},
 				{ZoneLocation.White, TrackConfiguration.Track3}
 			};
-			var internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
 			var fighter = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
 			var externalThreats = new ExternalThreat[] { fighter };
 
 			var internalThreats = new InternalThreat[0];
 			var bonusThreats = new Threat[0];
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -64,7 +63,7 @@ namespace BLL.Test
 				{ZoneLocation.Red, TrackConfiguration.Track2},
 				{ZoneLocation.White, TrackConfiguration.Track3},
 			};
-			var internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
 			var destroyer = new Destroyer { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
 			var fighter1 = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
@@ -78,8 +77,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -205,7 +203,7 @@ namespace BLL.Test
 				{ZoneLocation.Red, TrackConfiguration.Track2},
 				{ZoneLocation.White, TrackConfiguration.Track7},
 			};
-			var internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
 			var dimensionSpider = new DimensionSpider { TimeAppears = 6, CurrentZone = ZoneLocation.Blue };
 			var asteroid = new Asteroid { TimeAppears = 4, CurrentZone = ZoneLocation.Red };
@@ -217,8 +215,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -271,7 +268,7 @@ namespace BLL.Test
 				{ZoneLocation.Red, TrackConfiguration.Track2},
 				{ZoneLocation.White, TrackConfiguration.Track7},
 			};
-			var internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
 			var dimensionSpider = new DimensionSpider { TimeAppears = 6, CurrentZone = ZoneLocation.Blue };
 			var cryoshieldFrigate = new CryoshieldFrigate { TimeAppears = 4, CurrentZone = ZoneLocation.Red };
@@ -283,8 +280,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -338,7 +334,7 @@ namespace BLL.Test
 				{ZoneLocation.Red, TrackConfiguration.Track2},
 				{ZoneLocation.White, TrackConfiguration.Track5},
 			};
-			var internalTrack = TrackConfiguration.Track3;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track3;
 
 			var spacecraftCarrier = new SpacecraftCarrier { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
 			var manOfWar = new ManOfWar { TimeAppears = 5, CurrentZone = ZoneLocation.White };
@@ -350,8 +346,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();
@@ -385,7 +380,7 @@ namespace BLL.Test
 				{ZoneLocation.White, TrackConfiguration.Track2},
 				{ZoneLocation.Red, TrackConfiguration.Track5},
 			};
-			var internalTrack = TrackConfiguration.Track7;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track7;
 
 			var armoredGrappler = new ArmoredGrappler { TimeAppears = 1, CurrentZone = ZoneLocation.Blue };
 			var meteoroid = new Meteoroid { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
@@ -400,8 +395,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			try
 			{
@@ -541,8 +535,7 @@ namespace BLL.Test
 
 			var bonusThreats = new Threat[0];
 
-			var initialDamage = new List<DamageToken>().ToLookup(damageToken => ZoneLocation.White);
-			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, initialDamage);
+			var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
 			game.StartGame();
 			for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
 				game.PerformTurn();

@@ -76,8 +76,8 @@ namespace BLL
 		{
 			InternalTrack = internalTrack;
 			ExternalTracks = externalTracks;
-			ExternalThreats = externalThreats;
-			InternalThreats = internalThreats;
+			ExternalThreats = externalThreats.ToList();
+			InternalThreats = internalThreats.ToList();
 		}
 
 		public void AddNewThreatsToTracks(int currentTurn)

@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		protected override void OnHealthReducedToZero()
 		{
-			OnThreatTerminated();
+			base.OnHealthReducedToZero();
 			SittingDuck.UnsubscribeFromMovingIn(CurrentStations, DelayPlayer);
 		}
 	}
