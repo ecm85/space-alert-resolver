@@ -4,6 +4,8 @@
 			<Acronym>BLL</Acronym>
 			<Acronym>MVC</Acronym>
 			<Acronym>Api</Acronym>
+			<Acronym>XYY</Acronym>
+			<Acronym>XYZ</Acronym>
 		</CasingExceptions>
 	</Acronyms>
 	<Words>
@@ -25,6 +27,8 @@
 			<Word>ConsoleResolver</Word>
 			<Word>Mvc</Word>
 			<Word>Api</Word>
+			<Word>Xyy</Word>
+			<Word>Xyz</Word>
 		</Recognized>
 		<Compound>
 			<Term CompoundAlternate="KnockOut">knockout</Term>
