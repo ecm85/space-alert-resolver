@@ -36,6 +36,11 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 				SetThreatStatus(ThreatStatus.Defeated, true);
 		}
 
+		public void OnProgenySurvived()
+		{
+			SetThreatStatus(ThreatStatus.Survived, true);
+		}
+
 		protected abstract ProgenySlime CreateProgeny(StationLocation stationLocation);
 
 		public void SpreadFrom(StationLocation spreadFromStation, int position)

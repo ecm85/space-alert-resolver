@@ -21,6 +21,12 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 			ParentSlime.SpreadFrom(CurrentStation, Position);
 		}
 
+		protected override void PerformZAction(int currentTurn)
+		{
+			base.PerformZAction(currentTurn);
+			ParentSlime.OnProgenySurvived();
+		}
+
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
