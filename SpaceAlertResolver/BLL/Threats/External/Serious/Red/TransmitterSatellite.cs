@@ -28,7 +28,7 @@ namespace BLL.Threats.External.Serious.Red
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutCaptain();
-			SittingDuck.ShiftPlayers(EnumFactory.All<StationLocation>(), currentTurn + 1);
+			SittingDuck.ShiftPlayersAfterPlayerActions(EnumFactory.All<StationLocation>(), currentTurn + 1);
 		}
 
 		public override string Id { get; } = "SE3-104";

@@ -159,6 +159,7 @@ namespace BLL.ShipComponents
 
 		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)
 		{
+			performingPlayer.MarkNextActionPerforming(currentTurn);
 			var actionType = performingPlayer.GetNextActionToPerform(currentTurn);
 			switch (actionType)
 			{

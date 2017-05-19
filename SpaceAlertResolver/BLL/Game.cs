@@ -223,9 +223,7 @@ namespace BLL
 					PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription(),
 					PhaseSubHeader = player.PlayerColor.ToString()
 				});
-				while (!(player.GetActionForTurn(CurrentTurn).FirstActionPerformed &&
-					player.GetActionForTurn(CurrentTurn).SecondActionPerformed &&
-					player.GetActionForTurn(CurrentTurn).BonusActionPerformed))
+				while (!player.GetActionForTurn(CurrentTurn).AllActionsPerformed())
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 				PhaseEnded(this, new PhaseEventArgs
 				{

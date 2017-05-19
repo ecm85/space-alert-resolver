@@ -49,10 +49,9 @@ namespace BLL.ShipComponents
 		{
 			//TODO: Perform bonus action
 			var playerAction = performingPlayer.GetActionForTurn(currentTurn);
-			if (playerAction.FirstActionPerformed)
+			if (playerAction.FirstActionSegment.SegmentStatus == PlayerActionStatus.Performed)
 			{
-				playerAction.SecondActionPerformed = true;
-				playerAction.BonusActionPerformed = true;
+				playerAction.MarkAllActionsPerformed();
 				return;
 			}
 			PerformPlayerAction(performingPlayer, GetActionPerformedInSpace(playerAction), currentTurn);
@@ -70,10 +69,10 @@ namespace BLL.ShipComponents
 			while (actionPriority.Any())
 			{
 				var nextActionPriority = actionPriority.Dequeue();
-				if (action.FirstActionType == nextActionPriority || action.SecondActionType == nextActionPriority)
+				if (action.FirstActionSegment.SegmentType == nextActionPriority || action.SecondActionSegment.SegmentType == nextActionPriority)
 					return nextActionPriority;
 			}
-			return action.FirstActionType ?? action.SecondActionType;
+			return action.FirstActionSegment.SegmentType ?? action.SecondActionSegment.SegmentType;
 		}
 
 		private void PerformPlayerAction(Player performingPlayer, PlayerActionType? playerActionType, int currentTurn)
@@ -101,15 +100,13 @@ namespace BLL.ShipComponents
 					break;
 			}
 			var playerAction = performingPlayer.GetActionForTurn(currentTurn);
-			playerAction.FirstActionPerformed = true;
-			playerAction.SecondActionPerformed = true;
-			playerAction.BonusActionPerformed = true;
+			playerAction.MarkAllActionsPerformed();
 		}
 
 		private void PerformInvalidAction(Player player, int currentTurn)
 		{
 			InterceptorComponent.PerformNoAction(player, currentTurn);
-			player.Shift(currentTurn);
+			player.ShiftFromPlayerActions(currentTurn);
 		}
 
 		public void PerformEndOfTurn()

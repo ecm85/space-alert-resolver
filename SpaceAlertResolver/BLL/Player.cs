@@ -57,22 +57,35 @@ namespace BLL
 			PreventsKnockOut = preventsKnockOut;
 		}
 
-		public void Shift(int turn)
+		public void ShiftAfterPlayerActions(int turn)
 		{
 			if (HasSpecialOpsProtection)
 				return;
-			var currentAction = GetActionForTurn(turn - 1);
-			if (currentAction.FirstActionPerformed && !currentAction.SecondActionPerformed)
-			{
-				var actionToShift = new PlayerAction(currentAction.SecondActionType, null, null);
-				currentAction.SecondActionType = null;
-				Shift(turn, actionToShift);
-			}
-			else
-				Shift(turn, null);
+			Shift(turn + 1, null);
 		}
 
-		public void ShiftAndRepeatPreviousAction(int turn)
+		public void ShiftFromPlayerActions(int turn)
+		{
+			if (HasSpecialOpsProtection)
+				return;
+			var currentAction = GetActionForTurn(turn);
+			var firstActionWasStarted = currentAction.FirstActionSegment.SegmentStatus != PlayerActionStatus.NotPerformed;
+			var secondActionWasStarted = currentAction.SecondActionSegment.SegmentType == null || currentAction.SecondActionSegment.SegmentStatus != PlayerActionStatus.NotPerformed;
+			if (!firstActionWasStarted)
+			{
+				Shift(turn, null);
+			}
+			else if (!secondActionWasStarted)
+			{
+				var actionToShift = new PlayerAction(currentAction.SecondActionSegment.SegmentType, null, null);
+				currentAction.SecondActionSegment.SegmentType = null;
+				Shift(turn + 1, actionToShift);
+			}
+			else
+				Shift(turn + 1, null);
+		}
+
+		public void ShiftAndRepeatPreviousActionAfterPlayerActions(int turn)
 		{
 			var actionToRepeat = turn <= 0 ? null : GetActionForTurn(turn - 1);
 			Shift(turn, actionToRepeat);
@@ -85,9 +98,9 @@ namespace BLL
 			if (IsPerformingAdvancedSpecialOps(turn))
 				return;
 			var endTurn = turn;
-			while (endTurn < ActionsList.Count && GetActionForTurn(endTurn).FirstActionType.HasValue)
+			while (endTurn < ActionsList.Count && GetActionForTurn(endTurn).FirstActionSegment.SegmentType.HasValue)
 				endTurn++;
-			ActionsList.Insert(turn - 1, new PlayerAction(actionToInsert?.FirstActionType, actionToInsert?.SecondActionType, actionToInsert?.BonusActionType));
+			ActionsList.Insert(turn - 1, new PlayerAction(actionToInsert?.FirstActionSegment.SegmentType, actionToInsert?.SecondActionSegment.SegmentType, actionToInsert?.BonusActionSegment.SegmentType));
 			ActionsList.RemoveAt(endTurn);
 		}
 
@@ -103,12 +116,12 @@ namespace BLL
 
 		private bool IsPerformingAdvancedSpecialization(int currentTurn)
 		{
-			return GetActionForTurn(currentTurn).BonusActionType == PlayerActionType.AdvancedSpecialization || GetActionForTurn(currentTurn).FirstActionType == PlayerActionType.AdvancedSpecialization;
+			return GetActionForTurn(currentTurn).BonusActionSegment.SegmentType == PlayerActionType.AdvancedSpecialization || GetActionForTurn(currentTurn).FirstActionSegment.SegmentType == PlayerActionType.AdvancedSpecialization;
 		}
 
 		private bool IsPerformingBasicSpecialization(int currentTurn)
 		{
-			return GetActionForTurn(currentTurn).BonusActionType == PlayerActionType.BasicSpecialization || GetActionForTurn(currentTurn).FirstActionType == PlayerActionType.BasicSpecialization;
+			return GetActionForTurn(currentTurn).BonusActionSegment.SegmentType == PlayerActionType.BasicSpecialization || GetActionForTurn(currentTurn).FirstActionSegment.SegmentType == PlayerActionType.BasicSpecialization;
 		}
 
 		private bool IsPerformingBasicMedic(int currentTurn)
@@ -131,8 +144,14 @@ namespace BLL
 		{
 			var actionForTurn = GetActionForTurn(currentTurn);
 			actionForTurn.MarkNextActionPerformed();
-			if (actionForTurn.FirstActionPerformed)
+			if (actionForTurn.SecondActionSegment.SegmentStatus == PlayerActionStatus.Performed)
 				HasSpecialOpsProtection = false;
+		}
+
+		public void MarkNextActionPerforming(int currentTurn)
+		{
+			var actionForTurn = GetActionForTurn(currentTurn);
+			actionForTurn.MarkNextActionPerforming();
 		}
 
 		public PlayerActionType? GetNextActionToPerform(int currentTurn)

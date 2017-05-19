@@ -249,22 +249,22 @@ namespace BLL
 			return BlueZone.LowerBlueStation.RocketsComponent.RemoveAllRockets();
 		}
 
-		public void ShiftPlayers(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
+		public void ShiftPlayersAfterPlayerActions(IEnumerable<ZoneLocation> zoneLocations, int turnToShift)
 		{
 			foreach (var player in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]).SelectMany(zone => zone.Players))
-				player.Shift(turnToShift);
+				player.ShiftAfterPlayerActions(turnToShift);
 		}
 
-		public void ShiftPlayers(IEnumerable<StationLocation> stationLocations, int turnToShift)
+		public void ShiftPlayersAfterPlayerActions(IEnumerable<StationLocation> stationLocations, int turnToShift)
 		{
 			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
-				player.Shift(turnToShift);
+				player.ShiftAfterPlayerActions(turnToShift);
 		}
 
 		public void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift)
 		{
 			foreach (var player in stationLocations.Select(stationLocation => StationsByLocation[stationLocation]).SelectMany(station => station.Players))
-				player.ShiftAndRepeatPreviousAction(turnToShift);
+				player.ShiftAndRepeatPreviousActionAfterPlayerActions(turnToShift);
 		}
 
 		public void SubscribeToMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler)

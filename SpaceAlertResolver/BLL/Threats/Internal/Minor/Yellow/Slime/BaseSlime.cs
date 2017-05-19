@@ -23,7 +23,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		private static void DelayPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			args.MovingPlayer.Shift(args.CurrentTurn + 1);
+			args.MovingPlayer.ShiftFromPlayerActions(args.CurrentTurn);
 		}
 
 		protected override void OnHealthReducedToZero()

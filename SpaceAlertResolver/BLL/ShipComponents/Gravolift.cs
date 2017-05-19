@@ -10,7 +10,7 @@ namespace BLL.ShipComponents
 		{
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			if (ShiftsPlayers && !isHeroic)
-				performingPlayer.Shift(currentTurn + 1);
+				performingPlayer.ShiftFromPlayerActions(currentTurn);
 			SetOccupied();
 		}
 
@@ -24,7 +24,7 @@ namespace BLL.ShipComponents
 			Occupied = false;
 		}
 
-		private bool ShiftsPlayers { get { return Occupied || IsDamaged; } }
+		private bool ShiftsPlayers => Occupied || IsDamaged;
 		private bool IsDamaged { get; set; }
 
 		public void SetDamaged(bool isCampaignDamage)

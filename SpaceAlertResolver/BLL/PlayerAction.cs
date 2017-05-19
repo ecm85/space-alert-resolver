@@ -1,56 +1,60 @@
-﻿namespace BLL
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace BLL
 {
 	public class PlayerAction
 	{
-		public PlayerActionType? FirstActionType { get; private set; }
-		public bool FirstActionPerformed { get; set; }
-		public PlayerActionType? SecondActionType { get; set; }
-		public bool SecondActionPerformed { get; set; }
-		public PlayerActionType? BonusActionType { get; private set; }
-		public bool BonusActionPerformed { get; set; }
+		public PlayerActionSegment FirstActionSegment { get; private set; }
+		public PlayerActionSegment SecondActionSegment { get; private set; }
+		public PlayerActionSegment BonusActionSegment { get; private set; }
+		private IEnumerable<PlayerActionSegment> AllSegments => new [] {FirstActionSegment, SecondActionSegment, BonusActionSegment};
 
-		public PlayerActionType? NextActionToPerform
+		private PlayerActionSegment NextUnperformedSegment => AllSegments.First(segment => segment.SegmentStatus != PlayerActionStatus.Performed);
+
+		public PlayerActionType? NextActionToPerform => NextUnperformedSegment.SegmentType;
+
+		public void MarkNextActionPerforming()
 		{
-			get
-			{
-				if (!BonusActionPerformed)
-					return BonusActionType;
-				if (!FirstActionPerformed)
-					return FirstActionType;
-				if (!SecondActionPerformed)
-					return SecondActionType;
-				return null;
-			}
+			NextUnperformedSegment.SegmentStatus = PlayerActionStatus.Performing;
 		}
 
 		public void MarkNextActionPerformed()
 		{
-			if (!BonusActionPerformed)
-				BonusActionPerformed = true;
-			else if (!FirstActionPerformed)
-				FirstActionPerformed = true;
-			else if (!SecondActionPerformed)
-				SecondActionPerformed = true;
+			NextUnperformedSegment.SegmentStatus = PlayerActionStatus.Performed;
 		}
 
 		public PlayerAction(PlayerActionType? firstActionType, PlayerActionType? secondActionType, PlayerActionType? bonusActionType)
 		{
-			FirstActionType = firstActionType;
-			SecondActionType = secondActionType;
-			BonusActionType = bonusActionType;
+			FirstActionSegment = new PlayerActionSegment {SegmentType = firstActionType, SegmentStatus = PlayerActionStatus.NotPerformed};
+			SecondActionSegment = new PlayerActionSegment {SegmentType = secondActionType, SegmentStatus = PlayerActionStatus.NotPerformed};
+			BonusActionSegment = new PlayerActionSegment { SegmentType = bonusActionType, SegmentStatus = PlayerActionStatus.NotPerformed};
 		}
 
 		public bool CanBeMadeHeroic()
 		{
-			return FirstActionType.CanBeMadeHeroic() || SecondActionType.CanBeMadeHeroic();
+			return FirstActionSegment.CanBeMadeHeroic() || SecondActionSegment.CanBeMadeHeroic();
 		}
 
 		public void MakeHeroic()
 		{
-			if (FirstActionType.CanBeMadeHeroic())
-				FirstActionType = FirstActionType.MakeHeroic();
-			else if (SecondActionType.CanBeMadeHeroic())
-				SecondActionType = SecondActionType.MakeHeroic();
+			if (FirstActionSegment.CanBeMadeHeroic())
+				FirstActionSegment.MakeHeroic();
+			else if (SecondActionSegment.CanBeMadeHeroic())
+				SecondActionSegment.MakeHeroic();
+		}
+
+		public void MarkAllActionsPerformed()
+		{
+			foreach (var segment in AllSegments)
+			{
+				segment.SegmentStatus = PlayerActionStatus.Performed;
+			}
+		}
+
+		public bool AllActionsPerformed()
+		{
+			return AllSegments.All(segment => segment.SegmentStatus == PlayerActionStatus.Performed);
 		}
 	}
 }

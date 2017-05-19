@@ -52,8 +52,8 @@ namespace PL.Controllers
 		public IList<IGrouping<int, GameSnapshotModel>> ProcessGame([FromBody]NewGameModel newGameModel)
 		{
 			var game = newGameModel.ConvertToGame();
-			if (game.Players.First().Actions.All(action => action.FirstActionType == PlayerActionType.BattleBots))
-				throw new InvalidOperationException("Can't do that many battle bots!");
+			if (game.Players.First().Actions.All(action => action.FirstActionSegment.SegmentType == PlayerActionType.BattleBots))
+				throw new InvalidOperationException("Successfully triggered test Exception. You can't do that many battle bots!");
 			var models = new List<GameSnapshotModel>();
 			var currentTurnModels = new Dictionary<string, GameSnapshotModel>();
 			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = null;

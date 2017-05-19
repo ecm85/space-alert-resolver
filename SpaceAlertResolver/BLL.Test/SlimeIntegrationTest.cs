@@ -228,7 +228,7 @@ namespace BLL.Test
 				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
 				new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
 			};
-			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track5;
 			const int timeAppears = 4;
 
 			const int blueDamage = 0;
@@ -395,19 +395,30 @@ namespace BLL.Test
 		{
 			var players = new List<Player>
 			{
+				new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
+				{
+					PlayerActionType.MoveBlue,
+					PlayerActionType.Charlie,
+					PlayerActionType.MoveRed,
+					PlayerActionType.ChangeDeck,
+					null,
+					null,
+					null,
+					null,
+					PlayerActionType.BattleBots
+				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
 				new Player(PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
 				{
-					PlayerActionType.MoveBlue, PlayerActionType.Charlie,
-					PlayerActionType.MoveRed, PlayerActionType.MoveRed,
-					PlayerActionType.ChangeDeck, null,
+					PlayerActionType.MoveRed, PlayerActionType.ChangeDeck,
+					PlayerActionType.Charlie, null,
+					null, null,
 					null, null,
 					null, null,
 					null, null,
 					PlayerActionType.BattleBots, null,
-					PlayerActionType.BattleBots, null,
-					PlayerActionType.MoveBlue, PlayerActionType.BattleBots
-				}), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
-				new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
+					PlayerActionType.BattleBots, null
+				}), 1, PlayerColor.Red, PlayerSpecialization.EnergyTechnician),
+				new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track6;
 			const int timeAppears = 4;
@@ -417,7 +428,7 @@ namespace BLL.Test
 			const int redDamage = 0;
 			const bool isDefeated = true;
 			const bool isSurvived = false;
-			const bool battleBotsDisabled = true;
+			const bool battleBotsDisabled = false;
 
 			SlimeBHelper(isDefeated, isSurvived, internalTrack, timeAppears, players, blueDamage, redDamage, whiteDamage, battleBotsDisabled);
 		}

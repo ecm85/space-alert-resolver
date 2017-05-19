@@ -35,7 +35,7 @@ namespace BLL.ShipComponents
 			if (maintenanceNeededThisPhase)
 			{
 				foreach (var player in players)
-					player.Shift(currentTurn + 1);
+					player.ShiftAfterPlayerActions(currentTurn);
 				maintenanceNeededThisPhase = false;
 				RemainingComputerCheckTurns.Remove(currentTurn);
 			}
