@@ -41,7 +41,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private static void KnockOutPlayer(object sender, PlayerMoveEventArgs args)
 		{
-			args.MovingPlayer.IsKnockedOut = true;
+			args.MovingPlayer.KnockOut();
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)

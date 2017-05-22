@@ -1,6 +1,11 @@
 ﻿<h1>Manual Game Input</h1>
-<textarea ng-model="newGameData.manualData">
+<textarea ng-model="manualData">
 </textarea>
 <div>
-	<a href="#Resolution" class="btn btn-primary">Create Game</a>
+	<button type="button" class="btn btn-default" ng-click="newGameData.setManualData(manualData)">Use Raw Data</button>
+	<a href="#Resolution" class="btn btn-primary">Go to Resolution</a>
+</div>
+<div>
+	<button type="button" class="btn btn-default" ng-click="newGameData.initializeFromGameArgs(manualData)">Parse Data</button>
+	<a href="#Input" class="btn btn-primary">Go to Input</a>
 </div>

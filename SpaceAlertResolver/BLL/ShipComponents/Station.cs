@@ -22,7 +22,7 @@ namespace BLL.ShipComponents
 			ThreatController = threatController;
 		}
 
-		public abstract void MovePlayerIn(Player performingPlayer, int currentTurn);
+		public abstract void MovePlayerIn(Player performingPlayer, int? currentTurn = null);
 
 		protected InternalThreat GetFirstThreatOfType(PlayerActionType playerActionType, Player performingPlayer)
 		{
@@ -37,7 +37,7 @@ namespace BLL.ShipComponents
 			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
 		}
 
-		protected void OnPlayerMovingIn(Player performingPlayer, int currentTurn)
+		protected void OnPlayerMovingIn(Player performingPlayer, int? currentTurn)
 		{
 			MovingIn(this, new PlayerMoveEventArgs {CurrentTurn = currentTurn, MovingPlayer = performingPlayer});
 		}

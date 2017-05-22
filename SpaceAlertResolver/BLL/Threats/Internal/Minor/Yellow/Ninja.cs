@@ -91,7 +91,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 			protected override void PerformZAction(int currentTurn)
 			{
 				foreach (var player in poisonedPlayers)
-					player.IsKnockedOut = true;
+					player.KnockOut();
 			}
 
 			public override string Id { get; } = "I2-102";

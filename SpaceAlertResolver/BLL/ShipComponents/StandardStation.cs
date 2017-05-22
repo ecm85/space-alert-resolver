@@ -92,7 +92,7 @@ namespace BLL.ShipComponents
 			return true;
 		}
 
-		public override void MovePlayerIn(Player performingPlayer, int currentTurn)
+		public override void MovePlayerIn(Player performingPlayer, int? currentTurn = null)
 		{
 			OnPlayerMovingIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);

@@ -16,7 +16,7 @@ namespace PL
 				smtpClient.EnableSsl = true;
 				smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 				var emailAddress = "spacealerthelp@gmail.com";
-				smtpClient.Credentials = new NetworkCredential(emailAddress, "spacealert");
+				smtpClient.Credentials = new NetworkCredential(emailAddress, "spacealerthelp");
 				using (var message = new MailMessage())
 				{
 					message.From = new MailAddress(emailAddress);

@@ -24,9 +24,13 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		private static void DelayPlayer(object sender, PlayerMoveEventArgs args)
 		{
+<<<<<<< HEAD
+			args.MovingPlayer.ShiftFromPlayerActions(args.CurrentTurn);
+=======
 			if (!args.CurrentTurn.HasValue)
 				throw new InvalidOperationException("Tried to delay player but didn't specify turn to do so.");
-			args.MovingPlayer.ShiftFromPlayerActions(args.CurrentTurn);
+			args.MovingPlayer.Shift(args.CurrentTurn.Value + 1);
+>>>>>>> e48e91b184b7525266a3d317d6f087b0b3faa42e
 		}
 
 		protected override void OnHealthReducedToZero()
