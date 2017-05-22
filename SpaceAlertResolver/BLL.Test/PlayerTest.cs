@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -8,22 +8,6 @@ namespace BLL.Test
 	public static class PlayerTest
 	{
 		//TODO: Add tests for shifting at end
-		private class ActionComparer : IComparer
-		{
-			public int Compare(object x, object y)
-			{
-				var first = x as PlayerAction;
-				var second = y as PlayerAction;
-				if (first == null || second == null)
-					return -1;
-				return first.FirstActionSegment.SegmentType == second.FirstActionSegment.SegmentType &&
-					first.SecondActionSegment.SegmentType == second.SecondActionSegment.SegmentType &&
-					first.BonusActionSegment.SegmentType == second.BonusActionSegment.SegmentType ?
-					0 :
-					-1;
-			}
-		}
-
 		[Test]
 		public static void Test_ShiftAfterPlayerActions_NoBlanks()
 		{
@@ -41,7 +25,7 @@ namespace BLL.Test
 				PlayerActionType.BattleBots,
 				PlayerActionType.Charlie
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -62,7 +46,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -82,7 +66,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -102,7 +86,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -123,7 +107,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -143,8 +127,8 @@ namespace BLL.Test
 				null,
 				null,
 				PlayerActionType.Charlie
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -164,8 +148,10 @@ namespace BLL.Test
 				null,
 				PlayerActionType.BattleBots,
 				PlayerActionType.Charlie
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			expectedActions[0].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions[1].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -187,8 +173,10 @@ namespace BLL.Test
 				PlayerActionType.BattleBots,
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			expectedActions[0].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions[1].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -209,8 +197,11 @@ namespace BLL.Test
 				null,
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			expectedActions[0].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions[1].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -231,8 +222,10 @@ namespace BLL.Test
 				null,
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			expectedActions[0].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions[1].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -254,14 +247,43 @@ namespace BLL.Test
 				null,
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
-			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			}).ToList();
+			expectedActions[0].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions[1].FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
-		public static void Test_ShiftDoubleAction_NotYetPerformed()
+		public static void Test_ShiftDoubleAction_AfterPlayerActions()
 		{
-			//TODO:
+			var player = new Player(PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, PlayerActionType.Bravo,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie,
+				PlayerActionType.ChangeDeck, PlayerActionType.MoveBlue
+			}), 0, PlayerColor.Blue);
+
+			player.Actions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.ShiftAfterPlayerActions(2);
+			var expectedActions = PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, PlayerActionType.Bravo,
+				null, null,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie,
+				PlayerActionType.ChangeDeck, PlayerActionType.MoveBlue
+			});
+			player.Actions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -293,7 +315,7 @@ namespace BLL.Test
 				PlayerActionType.BattleBots,
 				PlayerActionType.Charlie
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -314,7 +336,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -334,7 +356,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -354,7 +376,7 @@ namespace BLL.Test
 				PlayerActionType.Charlie,
 				PlayerActionType.ChangeDeck
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -375,7 +397,7 @@ namespace BLL.Test
 				PlayerActionType.Bravo,
 				PlayerActionType.Charlie
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -396,7 +418,19 @@ namespace BLL.Test
 				PlayerActionType.Bravo,
 				PlayerActionType.Charlie
 			});
-			CollectionAssert.AreEqual(expectedActions.ToList(), player.Actions.ToList(), new ActionComparer());
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
+		}
+
+		private static void AssertActionAreEqual(IList<PlayerAction> expected, IList<PlayerAction> actual)
+		{
+			Assert.AreEqual(expected.Count, actual.Count);
+			for(var i = 0; i < expected.Count; i++)
+			{
+				Assert.AreEqual(expected[i].FirstActionSegment.SegmentType, actual[i].FirstActionSegment.SegmentType);
+				Assert.AreEqual(expected[i].FirstActionSegment.SegmentStatus, actual[i].FirstActionSegment.SegmentStatus);
+				Assert.AreEqual(expected[i].SecondActionSegment.SegmentType, actual[i].SecondActionSegment.SegmentType);
+				Assert.AreEqual(expected[i].SecondActionSegment.SegmentStatus, actual[i].SecondActionSegment.SegmentStatus);
+			}
 		}
 	}
 }

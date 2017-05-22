@@ -68,9 +68,6 @@ angular.module("spaceAlertModule")
 					newGameData.updateAllSelectedThreats();
 				});
 
-			//TODO: Add specializations
-			//TODO: Add double actions
-
 			$scope.allSingleActions = inputData.singleActions;
 			$scope.allDoubleActions = inputData.doubleActions;
 			$scope.specializationActions = inputData.specializationActions;
