@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NUnit.Framework;
 
@@ -276,26 +277,75 @@ namespace BLL.Test
 				PlayerActionType.MoveRed, PlayerActionType.Bravo,
 				null, null,
 				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
-				PlayerActionType.BattleBots, PlayerActionType.Charlie,
-				PlayerActionType.ChangeDeck, PlayerActionType.MoveBlue
-			});
-			player.Actions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
-			player.Actions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
-			player.Actions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
-			player.Actions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+				PlayerActionType.BattleBots, PlayerActionType.Charlie
+			}).ToList();
+			expectedActions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
 			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
-		public static void Test_ShiftDoubleAction_FirstActionPerformed()
+		public static void Test_ShiftDoubleAction_FromPlayerActions_FirstActionPerforming()
 		{
-			//TODO:
+			var player = new Player(PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, PlayerActionType.Bravo,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie,
+				PlayerActionType.ChangeDeck, PlayerActionType.MoveBlue
+			}), 0, PlayerColor.Blue);
+
+			player.Actions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			player.ShiftFromPlayerActions(2);
+			var expectedActions = PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, null,
+				PlayerActionType.Bravo, null,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie
+			}).ToList();
+			expectedActions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
 		public static void Test_ShiftDoubleAction_BothPerformed()
 		{
-			//TODO:
+			var player = new Player(PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, PlayerActionType.Bravo,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie,
+				PlayerActionType.ChangeDeck, PlayerActionType.MoveBlue
+			}), 0, PlayerColor.Blue);
+
+			player.Actions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			player.Actions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			player.ShiftFromPlayerActions(2);
+			var expectedActions = PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
+			{
+				PlayerActionType.Alpha, null,
+				PlayerActionType.MoveRed, PlayerActionType.Bravo, 
+				null, null,
+				PlayerActionType.ChangeDeck, PlayerActionType.Charlie,
+				PlayerActionType.BattleBots, PlayerActionType.Charlie
+			}).ToList();
+			expectedActions.ElementAt(0).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(0).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(1).FirstActionSegment.SegmentStatus = PlayerActionStatus.Performed;
+			expectedActions.ElementAt(1).SecondActionSegment.SegmentStatus = PlayerActionStatus.Performing;
+			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
 		[Test]
@@ -421,15 +471,16 @@ namespace BLL.Test
 			AssertActionAreEqual(expectedActions.ToList(), player.Actions.ToList());
 		}
 
+		[SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
 		private static void AssertActionAreEqual(IList<PlayerAction> expected, IList<PlayerAction> actual)
 		{
 			Assert.AreEqual(expected.Count, actual.Count);
 			for(var i = 0; i < expected.Count; i++)
 			{
-				Assert.AreEqual(expected[i].FirstActionSegment.SegmentType, actual[i].FirstActionSegment.SegmentType);
-				Assert.AreEqual(expected[i].FirstActionSegment.SegmentStatus, actual[i].FirstActionSegment.SegmentStatus);
-				Assert.AreEqual(expected[i].SecondActionSegment.SegmentType, actual[i].SecondActionSegment.SegmentType);
-				Assert.AreEqual(expected[i].SecondActionSegment.SegmentStatus, actual[i].SecondActionSegment.SegmentStatus);
+				Assert.AreEqual(expected[i].FirstActionSegment.SegmentType, actual[i].FirstActionSegment.SegmentType, $"Action {i}");
+				Assert.AreEqual(expected[i].FirstActionSegment.SegmentStatus, actual[i].FirstActionSegment.SegmentStatus, $"Action {i}");
+				Assert.AreEqual(expected[i].SecondActionSegment.SegmentType, actual[i].SecondActionSegment.SegmentType, $"Action {i}");
+				Assert.AreEqual(expected[i].SecondActionSegment.SegmentStatus, actual[i].SecondActionSegment.SegmentStatus, $"Action {i}");
 			}
 		}
 	}
