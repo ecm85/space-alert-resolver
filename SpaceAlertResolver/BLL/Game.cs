@@ -12,28 +12,6 @@ namespace BLL
 	public class Game
 	{
 		private static readonly int[] phaseEndTurns = new[] { 3, 7, 12 };
-		//TODO: Review the CA suppressions and the ones turned off
-		//TODO: Add more functional tests
-		//TODO: Feature: Double actions
-		//TODO: Feature: Campaign repairs and damage carryover
-		//TODO: Feature: Let user select damage tokens
-		//TODO: Feature: include penalties in score, and break score up more?
-		//TODO: Code Cleanup: Threat factory, threat enum
-		//TODO: Feature: Change all threat display names to include threat #
-		//TODO: Code Cleanup: Make damage an event
-		//TODO: Rules clarification: Does a person heroically moving occupy the lift?
-		//TODO: Code Cleanup: Make reusable threat 'components', Extract more common behavior to base and/or impl - such as shield killed by pulse, retaliate against battle bots, etc
-		//TODO: Code Cleanup: Change energy from int to actual blocks?
-		//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
-		//TODO: Unit test pulse cannon and laser cannon
-		//TODO: Unit test playeractionfactory
-		//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
-		//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
-		//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
-		//TODO: Bug: Make sure all places that set a players station set it in that station too.
-		//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
-		//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
-		//TODO: Code cleanup: Remove threat controller from all implementations of threats - make methods on Threat that subscribe to everything they care about
 		public SittingDuck SittingDuck { get; }
 		public IList<Player> Players { get; }
 		public int CurrentTurn { get; private set; }

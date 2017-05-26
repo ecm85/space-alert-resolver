@@ -1,0 +1,279 @@
+﻿To add animations:
+add DI
+add snapshot collector - inject it, make singleton per app (try a simple website test first)
+add a different kind of event for sub-event
+add state for anything to track, i.e. shield draining, gun firing, losing health, taking damage, etc
+fire new events for all state
+update client to handle new sub-states:
+  by default, just run through them silently
+  add option to view sub-events
+
+from game.cs:
+//TODO: Review the CA suppressions and the ones turned off
+//TODO: Add more functional tests
+//TODO: Feature: Double actions
+//TODO: Feature: Campaign repairs and damage carryover
+//TODO: Feature: Let user select damage tokens
+//TODO: Feature: include penalties in score, and break score up more?
+//TODO: Code Cleanup: Threat factory, threat enum
+//TODO: Feature: Change all threat display names to include threat #
+//TODO: Code Cleanup: Make damage an event
+//TODO: Rules clarification: Does a person heroically moving occupy the lift?
+//TODO: Code Cleanup: Make reusable threat 'components', Extract more common behavior to base and/or impl - such as shield killed by pulse, retaliate against battle bots, etc
+//TODO: Code Cleanup: Change energy from int to actual blocks?
+//TODO: Code Cleanup: Change all the PlayerDamage[] to IList<PlayerDamage> or IEnumerable<PlayerDamage> because what was i thinking.
+//TODO: Unit test pulse cannon and laser cannon
+//TODO: Unit test playeractionfactory
+//TODO: Code Cleanup: Change all mechanic buff removals to be event-based, and always fire 'tried to use cannon' event
+//TODO: Code Cleanup: Revisit construction and threatcontroller -> game -> sittingduck -> threats dependency graph
+//TODO: Double actions and Specializations: Change move-out to only fire before an 'turn' that has a movement and move-in to only fire after
+//TODO: Bug: Make sure all places that set a players station set it in that station too.
+//TODO: Make sure that all knocked out also disables battlebots if medic prevents knockout (and make sure spec ops behaves around parasite correctly)
+//TODO: Advanced Spec ops (can't be delayed, respect HasSpecialOpsProtection on that turn)
+//TODO: Code cleanup: Remove threat controller from all implementations of threats - make methods on Threat that subscribe to everything they care about
+
+
+
+bug: delay from double action first part - should delay 2nd part and it's not
+bug: delay from double action second part - moving second part to next spot and repeating it
+bug: delay from double action second part isn't protected by spec ops
+TODO: Change slime impl - add ThreatGroups
+
+https://craig.is/killing/mice
+
+add ability to go from text to input (instead of from text to resolution)
+changes in progress on work laptop:
+  1. add what you need in order to resolve
+  2. fix slime points
+  3. change input to use arrow keys, display as font awesome arrows
+when manually entering or going back, make things that are done via watches work properly
+when manually entering, make 5th player (maybe < 4 players too) and campaign damage work
+on manual entry, remove extra button presses
+
+allow left/right/up/down, use fontawesome assets, allow backspace
+
+
+make assets smaller
+make mobile/alt screen resolution friendly
+move to azure?
+allow 4+ threats in track - scroll? collapse?
+show message when can't go to resolution page - saying why
+fix bonus threats time appears
+fix bonus threats time appears collision
+switch to CDN?
+bug: using back button, tracks don't detect already used tracks
+tweak loading screen
+hide spoilers
+advanced spec ops - protect from change decks from space-time vortex, check for any other things
+add 'feature request?'
+show 'tried to fire but no energy' and 'fired at nothing'
+feature: show turn 13 separately
+feature: allow entering tracks by number
+fix navbar menu selected items - why does #/ vs # work, and when should selection change?
+disabled battlebots
+accordian
+dropdown for threats
+make left and right arrows move cursor? or ctrl-shift->?
+specializations:
+teleporter - allow setting teleport tokens
+weird impl - can change spec and set a different spec card, and it will not do it correctly (pick basic energy tech, then change spec, on another turn choose new spec, will perform new one twice instead of energy)
+future: support for variant where you can use different specs
+rename 'description' where it's filename to filename, action model needs filename, displaytext, hotkey, 
+if changing 'blank' to space instead of dash - find out what the ? menu shows for that
+
+QoL:
+player actions on resolution enhancesments:
+  make bigger?
+  show 'was performed' by opacity?
+
+
+get enums to client with client-usable name, id, and display string
+fix scrolling when auto-resolving
+
+
+  scout attack buff
+  threats on all 3 tracks
+  show parasite on player?
+
+
+switch threat-on-ship lines to instead grey out other sections of the ship when hovering over a threat
+change threat-on-track lines to something else?
+threat with multiple stations - lines broken
+
+damage - allow user to either have app choose or have client choose, and then send it to the server
+
+input page:
+show message when needing to select a threat, track, or time
+fix size and alignment of ok/cancel buttons in modal
+threat input: disallow multiple threats at same time in same zone
+tweak time-appears - add label, switch to dropdown?
+
+input-> resolution transition:
+send over colors from server, with indicies
+
+resolution:
+add 'back' button
+auto-resolution: disable auto-resolution buttons when ineffective?
+add animations?
+show player status - knocked out, poisoned, infected
+show all specialization buffs and abilities - special shield, spec ops buff, mechanic buff, etc
+fix lines in UI when screen resizes
+future: handle 4+ simultaneous threats in zone (lines will break if scrolls)
+split standard zone into two directives for upper and lower
+  disrupted optics
+  breached airlocks
+  ineffective shields (from reversed shields)
+  reversed shields
+    fissure x and y damage debuffs
+  show irreparable malfunction
+
+support for tutorials
+
+threat impl's:
+cryoshield?
+ShieldVulnerableToPulse
+polarized
+swarm (max damage per turn)
+canBeKnockedOffCourse
+stealth?
+decoy
+cannotBeTargetedByX - rockets, heavy lasers
+eatsShield
+megashield
+asteroid (attack = breakpoints)
+slowed by damage
+attack equal to shields?
+jump
+megashield
+speeds up
+untargetable @ distance 3
+
+already done:
+phasing (via Core class)
+plasmatic (via damage type)
+reduced by 2 vs interceptors (via damage type)
+double damage through shields (via damage type)
+bonus threats (via interface)
+ignore shields (via damage type)
+threat buffs (via threat buff on threat controller)
+
+
+action types to log:
+
+attack x (guns)
+attack x (crash)
+attack x (claws)
+repair
+player moves
+player uses a/b/c
+threat takes damage / reduced by shield
+ship takes damage
+ship loses shield
+speeds up
+slows down
+gains shield
+loses shield
+
+
+concrete threat dependencies on ThreatController:
+
+external threat + marauder + scout: CurrentExternalThreatBuffs, addexternalthreateffect, removeexternalthreateffectforsource
+overlord: damageableexternalthreats (could be changed to just something like repairAllExternalThreats)
+leviathan tanker: damageableexternalthreats (could be changed to just something like damageExternalThreats)
+transmitter sattelite + Hidden transmitter + scout: moveexternalthreats, moveExternalThreatsInZone, moveinternalthreats
+EnergySnake + EnergyDragon + Nemesis: DamageResolutionEnding event
+Jumper + Leaper: ExternalTracks
+sealed capusle + overlord + TransmitterSatellite + hidden transmitter + spacetimevortex: addinternalthreat, addexternalthreat (for reals)
+ninja + slime + cybergremlin + rabid beast: addinternalthreat, addexternalthreat (pseudo-threat)
+dimensionspider + cyber gremlin: jumpingtohyperspace event
+ReversedShields + BattleBotUprising + PowerPackOverload + PowerSystemOverload: PlayerActionsEnding event
+slime: DamageableInternalThreats (to check for spreading, can't spread where already spread)
+
+
+blue slime killed before any x (0\1\2 y dc) - \
+blue slime killed after x (0\1\2 y dc) - x
+blue slime not killed, no y - xz
+blue slime killed after first y, 1y, spawn summoned, killed - xy \
+blue slime killed after first y, 1y, spawn summoned, not killed - xy z
+blue slime killed after first y, 2y, spawn summoned, not killed, second spawn summoned, killed - xy y'z \
+blue slime killed after first y, 2y, spawn summoned, not killed, second spawn summoned, not killed - xy y'z z
+blue slime killed after first y, 2y, spawn summoned, killed after first y - xy \
+blue slime killed after first y, 2y, spawn summoned, killed after second y, spawn summoned, not killed - xy y' z
+blue slime killed after first y, 2y, spawn summoned, killed after second y, spawn summoned, killed - xy y' \
+blue slime not killed, 1y, spawn summoned, not killed - xyz z
+blue slime not killed, 1y, spawn summoned + killed - xyz \
+blue slime killed after second y, 2y, spawn summoned, killed after first y, spawn re-summoned, not killed - xyy' \z
+blue slime killed after second y, 2y, spawn summoned, killed after first y, spawn re-summoned, re-killed - xyy' \\
+blue slime killed after second y, 2y, spawn summoned, killed after second y, second spawn summoned, not killed - xyy' y' z
+blue slime killed after second y, 2y, spawn summoned, killed after second y, second spawn summoned, killed - xyy' y' \
+blue slime killed after second y, 2y, spawn summoned, not killed, second spawn summoned, not killed - xyy' y'z z
+blue slime killed after second y, 2y, spawn summoned, not killed, second spawn summoned, killed - xyy' y'z \
+blue slime not killed, 2y, spawn summoned, not killed, second spawn summoned, not killed - xyy'z y'z z
+blue slime not killed, 2y, spawn summoned, not killed, second spawn summoned, killed - xyy'z y'z \
+blue slime not killed, 2y, spawn summoned, killed after first y, spawn re-summoned, not killed - xyy'z \z
+blue slime not killed, 2y, spawn summoned, killed after first y, spawn re-summoned, re-killed - xyy'z \\
+blue slime not killed, 2y, spawn summoned, killed after second y, second spawn summoned, not killed - xyy'z y' z
+blue slime not killed, 2y, spawn summoned, killed after second y, second spawn summoned, killed - xyy'z y' \
+
+
+legend:
+x - crossed x
+y - crossed y (first if 2)
+y' - crossed second y
+z - crossed z
+\ - crossed nothing before death
+[- AAA BBB CCC] - Parent, first child (two entries concatenated if there first child spawned twice), second child
+
+
+no y's:
+\
+x
+xz
+
+1 y:
+\
+x
+xy \
+xy z
+xyz \
+xyz z
+
+2 y's:
+\
+x
+xy \
+xy y' \
+xy y' z
+xy y'z \
+xy y'z z
+
+xyy' \\
+xyy' \z
+xyy' y' \
+xyy' y' z
+xyy' y'z \
+xyy' y'z z
+
+
+xyy'z \\
+xyy'z \z
+xyy'z y' \
+xyy'z y' z
+xyy'z y'z \
+xyy'z y'z z
+
+
+
+
+shift causes:
+no computer - end of turn
+
+gravolift occupied or broken - caused by player
+moving into slime - caused by player
+invalid action in space - caused by player
+
+psionic sattelite's x, y - caused by threat
+TransmitterSatellite's z - caused by threat
+virus y - caused by threat
+
+spacetimevortex x - shift and repeat, caused by threat
