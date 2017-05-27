@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=4.0.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.7\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,9 +56,11 @@
     <Compile Include="DamageToken.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EnumFactory.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="GameParser.cs" />
     <Compile Include="GameStatus.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="IFactory.cs" />
     <Compile Include="ISittingDuck.cs" />
     <Compile Include="LoseException.cs" />
     <Compile Include="MovementController.cs" />
@@ -291,7 +297,9 @@
     <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

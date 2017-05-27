@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleInjector;
 
 namespace BLL
 {
-	class Factory
+	public class Factory : IFactory
 	{
+		private Container Container { get; set; }
+
+		public Factory(Container container)
+		{
+			Container = container;
+		}
+
+		public T Create<T>() where T : class
+		{
+			return Container.GetInstance<T>();
+		}
 	}
 }
