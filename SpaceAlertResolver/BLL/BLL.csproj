@@ -286,6 +286,7 @@
       <Link>CustomDictionary.xml</Link>
     </CodeAnalysisDictionary>
     <Content Include="Rule Clarifications.txt" />
+    <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
