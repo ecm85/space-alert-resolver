@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BLL;
+using BLL.Players;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

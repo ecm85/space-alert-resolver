@@ -1,13 +1,13 @@
 ﻿using BLL.ShipComponents;
 
-namespace BLL
+namespace BLL.Players
 {
 	public class PlayerInterceptorDamage
 	{
 		private readonly bool isHeroic;
 		private readonly Player performingPlayer;
 		private readonly int distance;
-		public PlayerInterceptorDamage(bool isHeroic, Player performingPlayer, int distance)
+		internal PlayerInterceptorDamage(bool isHeroic, Player performingPlayer, int distance)
 		{
 			this.isHeroic = isHeroic;
 			this.performingPlayer = performingPlayer;

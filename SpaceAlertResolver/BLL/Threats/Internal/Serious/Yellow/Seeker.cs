@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class Seeker : SeriousYellowInternalThreat
 	{
-		public Seeker()
+		internal Seeker()
 			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.BattleBots)
 		{
 		}

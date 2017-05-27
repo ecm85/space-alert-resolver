@@ -2,16 +2,16 @@
 using System.Linq;
 using BLL.ShipComponents;
 
-namespace BLL
+namespace BLL.Players
 {
 	public class Player
 	{
-		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color) :
+		internal Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color) :
 			this(actions, index, color, null)
 		{
 		}
 
-		public Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? specialization)
+		internal Player(IEnumerable<PlayerAction> actions, int index, PlayerColor color, PlayerSpecialization? specialization)
 		{
 			ActionsList = actions.ToList();
 			Index = index;

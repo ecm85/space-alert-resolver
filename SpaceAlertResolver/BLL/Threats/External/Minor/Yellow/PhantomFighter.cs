@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Yellow
@@ -12,7 +13,7 @@ namespace BLL.Threats.External.Minor.Yellow
 			set { SetThreatStatus(ThreatStatus.Stealthed, value); }
 		}
 
-		public PhantomFighter()
+		internal PhantomFighter()
 			: base(3, 3, 3)
 		{
 		}

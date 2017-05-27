@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
@@ -9,7 +10,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		private IList<StationLocation> DroneLocations => WarningIndicatorStations;
 		private PoisonedPlayers poisonedPlayers;
 
-		public Ninja()
+		internal Ninja()
 			: base(3, 2, StationLocation.LowerBlue, PlayerActionType.BattleBots)
 		{
 		}
@@ -68,7 +69,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			private readonly HashSet<Player> poisonedPlayers;
 
-			public PoisonedPlayers(InternalThreat parent)
+			internal PoisonedPlayers(InternalThreat parent)
 				: base(parent.ThreatType, parent.Difficulty, 0, parent.Speed, new List<StationLocation>(), null)
 			{
 				Parent = parent;

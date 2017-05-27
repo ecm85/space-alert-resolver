@@ -2,7 +2,7 @@
 {
 	public class MiniCarrier : MinorYellowExternalThreat
 	{
-		public MiniCarrier()
+		internal MiniCarrier()
 			: base(2, 5, 2)
 		{
 		}

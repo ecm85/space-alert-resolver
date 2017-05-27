@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Red
 {
@@ -8,7 +9,7 @@ namespace BLL.Threats.External.Serious.Red
 		public ExternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
-		public Overlord()
+		internal Overlord()
 			: base(5, 14, 2)
 		{
 		}

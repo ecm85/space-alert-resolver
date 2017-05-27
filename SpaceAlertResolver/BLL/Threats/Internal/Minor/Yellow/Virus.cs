@@ -1,11 +1,12 @@
 ﻿using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class Virus : MinorYellowInternalThreat
 	{
-		public Virus()
+		internal Virus()
 			: base(3, 3, StationLocation.UpperWhite, PlayerActionType.Charlie)
 		{
 		}

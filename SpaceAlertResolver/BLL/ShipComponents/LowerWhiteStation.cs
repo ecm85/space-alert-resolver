@@ -8,7 +8,7 @@
 		protected override ICharlieComponent CharlieComponent => VisualConfirmationComponent;
 		public VisualConfirmationComponent VisualConfirmationComponent { get; }
 
-		public LowerWhiteStation(
+		internal LowerWhiteStation(
 			ThreatController threatController,
 			Gravolift gravolift,
 			Doors bluewardDoors,

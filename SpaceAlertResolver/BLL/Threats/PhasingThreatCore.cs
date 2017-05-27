@@ -13,7 +13,7 @@ namespace BLL.Threats
 			set { threat.SetThreatStatus(ThreatStatus.PhasedOut, value); }
 		}
 
-		public PhasingThreatCore(Threat threat)
+		internal PhasingThreatCore(Threat threat)
 		{
 			this.threat = threat;
 			threat.Moving += PhaseIn;

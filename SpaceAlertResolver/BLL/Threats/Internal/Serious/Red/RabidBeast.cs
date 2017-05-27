@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Red
@@ -8,7 +9,7 @@ namespace BLL.Threats.Internal.Serious.Red
 	{
 		private InfectedPlayers infectedPlayers;
 
-		public RabidBeast()
+		internal RabidBeast()
 			: base(2, 2, StationLocation.UpperBlue, PlayerActionType.BattleBots)
 		{
 		}
@@ -60,7 +61,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		{
 			private readonly HashSet<Player> infectedPlayers;
 
-			public InfectedPlayers(InternalThreat parent)
+			internal InfectedPlayers(InternalThreat parent)
 				: base(parent.ThreatType, parent.Difficulty, 0, parent.Speed, new List<StationLocation>(), null)
 			{
 				infectedPlayers = new HashSet<Player>();

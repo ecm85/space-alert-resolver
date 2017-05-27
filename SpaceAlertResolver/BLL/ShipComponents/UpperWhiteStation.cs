@@ -7,7 +7,7 @@
 		protected override ICharlieComponent CharlieComponent => ComputerComponent;
 		public ComputerComponent ComputerComponent { get; }
 
-		public UpperWhiteStation(
+		internal UpperWhiteStation(
 			CentralReactor whiteReactor,
 			ThreatController threatController,
 			Gravolift gravolift,

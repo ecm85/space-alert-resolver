@@ -2,7 +2,7 @@
 {
 	public class PulseBall : MinorWhiteExternalThreat
 	{
-		public PulseBall()
+		internal PulseBall()
 			: base(1, 5, 2)
 		{
 		}

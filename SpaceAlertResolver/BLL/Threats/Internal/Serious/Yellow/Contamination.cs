@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class Contamination : SeriousYellowInternalThreat
 	{
-		public Contamination()
+		internal Contamination()
 			: base(
 				3,
 				2,

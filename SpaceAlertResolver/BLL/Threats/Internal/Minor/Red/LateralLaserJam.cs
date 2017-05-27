@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -6,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.Red
 {
 	public class LateralLaserJam : MinorRedInternalThreat
 	{
-		public LateralLaserJam()
+		internal LateralLaserJam()
 			: base(3, 3, new List<StationLocation>(), PlayerActionType.Alpha)
 		{
 		}

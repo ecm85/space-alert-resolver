@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BLL;
+using BLL.Players;
 using Newtonsoft.Json;
 
 namespace PL.Models

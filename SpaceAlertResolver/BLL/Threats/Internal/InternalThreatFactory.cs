@@ -67,7 +67,7 @@ namespace BLL.Threats.Internal
 		{
 			if (!ThreatTypesById.ContainsKey(id))
 				return null;
-			return Activator.CreateInstance(ThreatTypesById[id]) as T;
+			return Activator.CreateInstance(ThreatTypesById[id], true) as T;
 		}
 	}
 }

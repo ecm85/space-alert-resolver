@@ -1,11 +1,12 @@
 ﻿using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class PsionicSatellite : SeriousYellowExternalThreat
 	{
-		public PsionicSatellite()
+		internal PsionicSatellite()
 			: base(2, 5, 2)
 		{
 		}

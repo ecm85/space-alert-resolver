@@ -1,10 +1,11 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Jellyfish : MinorYellowExternalThreat
 	{
-		public Jellyfish()
+		internal Jellyfish()
 			: base(-2, 13, 2)
 		{
 		}

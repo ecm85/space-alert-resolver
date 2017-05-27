@@ -1,10 +1,11 @@
 ﻿using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Red
 {
 	public class SuperCarrier : SeriousRedExternalThreat
 	{
-		public SuperCarrier()
+		internal SuperCarrier()
 			: base(5, 13, 2)
 		{
 		}

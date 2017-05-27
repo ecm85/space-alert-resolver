@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -11,7 +12,7 @@ namespace BLL.Threats.External.Serious.Red
 		private int healthAtStartOfTurn;
 		private bool TookDamageThisTurn { get { return healthAtStartOfTurn > RemainingHealth; } }
 
-		public EnergyDragon()
+		internal EnergyDragon()
 			: base(3, 9, 4)
 		{
 			healthAtStartOfTurn = RemainingHealth;

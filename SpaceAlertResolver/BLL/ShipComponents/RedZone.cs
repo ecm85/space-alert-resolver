@@ -8,7 +8,7 @@
 		public UpperRedStation UpperRedStation { get; set; }
 		public LowerRedStation LowerRedStation { get; set; }
 
-		public RedZone(ThreatController threatController, CentralReactor whiteReactor, Doors redDoors, SittingDuck sittingDuck, Interceptors interceptors)
+		internal RedZone(ThreatController threatController, CentralReactor whiteReactor, Doors redDoors, SittingDuck sittingDuck, Interceptors interceptors)
 		{
 			LowerRedStation = new LowerRedStation(
 				whiteReactor,

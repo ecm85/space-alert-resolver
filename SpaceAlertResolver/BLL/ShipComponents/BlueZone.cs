@@ -8,7 +8,7 @@
 		public UpperBlueStation UpperBlueStation { get; set; }
 		public LowerBlueStation LowerBlueStation { get; set; }
 
-		public BlueZone(ThreatController threatController, CentralReactor whiteReactor, Doors blueDoors, SittingDuck sittingDuck)
+		internal BlueZone(ThreatController threatController, CentralReactor whiteReactor, Doors blueDoors, SittingDuck sittingDuck)
 		{
 			LowerBlueStation = new LowerBlueStation(
 				whiteReactor,

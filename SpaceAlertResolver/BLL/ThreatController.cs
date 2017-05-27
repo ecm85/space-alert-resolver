@@ -72,7 +72,7 @@ namespace BLL
 
 		public IEnumerable<InternalThreat> InternalThreatsOnShip { get {return InternalThreats.Where(threat => threat.IsOnShip);} }
 
-		public ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
+		internal ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
 		{
 			InternalTrack = internalTrack;
 			ExternalTracks = externalTracks;

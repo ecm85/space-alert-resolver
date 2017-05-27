@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
+using BLL.Players;
 
 namespace BLL.ShipComponents
 {
@@ -9,7 +10,7 @@ namespace BLL.ShipComponents
 		public InterceptorsInSpaceComponent InterceptorComponent { get; private set; }
 		public PlayerInterceptorDamage PlayerInterceptorDamage { get; private set; }
 
-		public InterceptorStation(
+		internal InterceptorStation(
 			StationLocation stationLocation,
 			ThreatController threatController,
 			InterceptorsInSpaceComponent interceptorComponent) : base(stationLocation, threatController)

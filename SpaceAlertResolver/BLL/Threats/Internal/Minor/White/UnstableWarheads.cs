@@ -1,11 +1,12 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats.Internal.Minor.White
 {
 	public class UnstableWarheads : MinorWhiteInternalThreat
 	{
-		public UnstableWarheads()
+		internal UnstableWarheads()
 			: base(3, 3, StationLocation.LowerBlue, PlayerActionType.Charlie)
 		{
 		}

@@ -1,4 +1,6 @@
-﻿namespace BLL.Threats.Internal
+﻿using BLL.Players;
+
+namespace BLL.Threats.Internal
 {
 	public class IrreparableMalfunction
 	{

@@ -8,7 +8,7 @@
 		public UpperWhiteStation UpperWhiteStation { get; set; }
 		public LowerWhiteStation LowerWhiteStation { get; set; }
 
-		public WhiteZone(ThreatController threatController, Doors redDoors, Doors blueDoors, SittingDuck sittingDuck)
+		internal WhiteZone(ThreatController threatController, Doors redDoors, Doors blueDoors, SittingDuck sittingDuck)
 		{
 			LowerWhiteStation = new LowerWhiteStation(
 				threatController,

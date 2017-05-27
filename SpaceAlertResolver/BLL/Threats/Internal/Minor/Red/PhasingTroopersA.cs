@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.Red
 {
 	public class PhasingTroopersA : PhasingTroopers
 	{
-		public PhasingTroopersA() : base(StationLocation.LowerBlue)
+		internal PhasingTroopersA() : base(StationLocation.LowerBlue)
 		{
 		}
 

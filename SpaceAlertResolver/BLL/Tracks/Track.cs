@@ -10,7 +10,7 @@ namespace BLL.Tracks
 		public IList<TrackSection> Sections { get; }
 		public TrackConfiguration TrackConfiguration { get; }
 
-		public Track(TrackConfiguration trackConfiguration)
+		internal Track(TrackConfiguration trackConfiguration)
 		{
 			Breakpoints = trackConfiguration.TrackBreakpoints();
 			Sections = trackConfiguration.TrackSections();

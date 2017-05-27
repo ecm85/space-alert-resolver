@@ -1,4 +1,6 @@
-﻿namespace BLL.ShipComponents
+﻿using BLL.Players;
+
+namespace BLL.ShipComponents
 {
 	public class UpperRedStation : UpperStation
 	{
@@ -7,7 +9,7 @@
 		protected override ICharlieComponent CharlieComponent => InterceptorComponent;
 		public InterceptorsOnShipComponent InterceptorComponent { get; }
 
-		public UpperRedStation(
+		internal UpperRedStation(
 			SideReactor redReactor,
 			Interceptors interceptors,
 			ThreatController threatController,

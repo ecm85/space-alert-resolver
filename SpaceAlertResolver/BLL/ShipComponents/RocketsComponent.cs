@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.ShipComponents
 {
@@ -14,7 +15,7 @@ namespace BLL.ShipComponents
 
 		public event EventHandler<RocketsRemovedEventArgs> RocketsModified = (sender, eventArgs) => { };
 
-		public RocketsComponent()
+		internal RocketsComponent()
 		{
 			Rockets = Enumerable.Range(0, 3).Select(index => new Rocket()).ToList();
 		}

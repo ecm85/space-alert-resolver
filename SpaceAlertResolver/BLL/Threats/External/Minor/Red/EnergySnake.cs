@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.Red
@@ -10,7 +11,7 @@ namespace BLL.Threats.External.Minor.Red
 		private int healthAtStartOfTurn;
 		private bool TookDamageThisTurn => healthAtStartOfTurn > RemainingHealth;
 
-		public EnergySnake()
+		internal EnergySnake()
 			: base(3, 6, 4)
 		{
 			healthAtStartOfTurn = RemainingHealth;

@@ -10,7 +10,7 @@ namespace BLL
 		public IList<ZoneLocation> ZoneLocations { get; private set; }
 		public int? DistanceToSource { get; private set; }
 
-		public ThreatDamage(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations, int? distanceToSource = null)
+		internal ThreatDamage(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations, int? distanceToSource = null)
 		{
 			Amount = amount;
 			ThreatDamageType = threatDamageType;

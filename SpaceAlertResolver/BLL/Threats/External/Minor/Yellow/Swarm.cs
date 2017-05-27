@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Swarm : MinorYellowExternalThreat
 	{
-		public Swarm()
+		internal Swarm()
 			: base(0, 3, 2)
 		{
 		}

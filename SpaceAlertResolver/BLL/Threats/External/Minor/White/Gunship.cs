@@ -2,7 +2,7 @@
 {
 	public class Gunship : MinorWhiteExternalThreat
 	{
-		public Gunship()
+		internal Gunship()
 			: base(2, 5, 2)
 		{
 		}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace BLL
+namespace BLL.Players
 {
 	public enum PlayerActionType
 	{

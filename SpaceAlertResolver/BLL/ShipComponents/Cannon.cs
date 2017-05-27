@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BLL.Players;
 
 namespace BLL.ShipComponents
 {

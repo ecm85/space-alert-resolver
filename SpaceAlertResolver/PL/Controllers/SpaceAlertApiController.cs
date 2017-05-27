@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Web.Http;
 using BLL;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
@@ -32,8 +33,7 @@ namespace PL.Controllers
 				SpecializationActions = PlayerSpecializationActionModel.AllPlayerSpecializationActionModels
 					.OrderBy(action => action.PlayerSpecialization)
 					.ThenBy(player => player.Hotkey),
-				Tracks = EnumFactory.All<TrackConfiguration>()
-					.Select(trackConfiguration => new Track(trackConfiguration))
+				Tracks = TrackFactory.CreateAllTracks()
 					.Select(track => new TrackSnapshotModel(track, new List<int>()))
 					.ToList(),
 				AllInternalThreats = new AllThreatsModel(allInternalThreats),

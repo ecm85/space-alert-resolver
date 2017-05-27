@@ -1,4 +1,5 @@
 ﻿using System;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -10,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private int numberOfYsCrossed;
 
-		public PhasingAnomaly()
+		internal PhasingAnomaly()
 			: base(2, 3, StationLocation.UpperWhite, PlayerActionType.Charlie, 1)
 		{
 		}

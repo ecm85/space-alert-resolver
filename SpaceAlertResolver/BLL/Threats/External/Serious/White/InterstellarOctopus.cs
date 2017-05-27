@@ -1,10 +1,11 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.White
 {
 	public class InterstellarOctopus : SeriousWhiteExternalThreat
 	{
-		public InterstellarOctopus()
+		internal InterstellarOctopus()
 			: base(1, 8, 2)
 		{
 		}

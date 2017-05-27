@@ -1,11 +1,12 @@
 ﻿using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Red
 {
 	public class BreachedAirlock : MinorRedInternalThreat
 	{
-		public BreachedAirlock()
+		internal BreachedAirlock()
 			: base(3, 4, StationLocation.UpperRed, PlayerActionType.Charlie)
 		{
 		}

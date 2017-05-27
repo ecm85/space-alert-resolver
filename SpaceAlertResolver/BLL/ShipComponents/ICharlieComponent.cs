@@ -1,4 +1,6 @@
-﻿namespace BLL.ShipComponents
+﻿using BLL.Players;
+
+namespace BLL.ShipComponents
 {
 	public interface ICharlieComponent
 	{

@@ -1,10 +1,11 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.White
 {
 	public class Meteoroid : MinorWhiteExternalThreat
 	{
-		public Meteoroid()
+		internal Meteoroid()
 			: base(0, 5, 5)
 		{
 		}

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.External.Serious.White
 {
 	public class Maelstrom : SeriousWhiteExternalThreat
 	{
-		public Maelstrom()
+		internal Maelstrom()
 			: base(3, 8, 2)
 		{
 		}

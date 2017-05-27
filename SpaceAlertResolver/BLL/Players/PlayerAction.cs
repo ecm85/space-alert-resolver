@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace BLL
+namespace BLL.Players
 {
 	public class PlayerAction
 	{
@@ -24,7 +24,7 @@ namespace BLL
 			NextUnperformedSegment.SegmentStatus = PlayerActionStatus.Performed;
 		}
 
-		public PlayerAction(PlayerActionType? firstActionType, PlayerActionType? secondActionType, PlayerActionType? bonusActionType)
+		internal PlayerAction(PlayerActionType? firstActionType, PlayerActionType? secondActionType, PlayerActionType? bonusActionType)
 		{
 			FirstActionSegment = new PlayerActionSegment {SegmentType = firstActionType, SegmentStatus = PlayerActionStatus.NotPerformed};
 			SecondActionSegment = new PlayerActionSegment {SegmentType = secondActionType, SegmentStatus = PlayerActionStatus.NotPerformed};

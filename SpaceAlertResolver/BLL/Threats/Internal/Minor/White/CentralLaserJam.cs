@@ -1,10 +1,11 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.White
 {
 	public class CentralLaserJam : MinorWhiteInternalThreat
 	{
-		public CentralLaserJam()
+		internal CentralLaserJam()
 			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.Alpha)
 		{
 		}

@@ -2,7 +2,7 @@
 {
 	public class Frigate : SeriousWhiteExternalThreat
 	{
-		public Frigate()
+		internal Frigate()
 			: base(2, 7, 2)
 		{
 		}

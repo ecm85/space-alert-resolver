@@ -1,8 +1,10 @@
-﻿namespace BLL.Threats.External.Serious.White
+﻿using BLL.Players;
+
+namespace BLL.Threats.External.Serious.White
 {
 	public class PulseSatellite : SeriousWhiteExternalThreat
 	{
-		public PulseSatellite()
+		internal PulseSatellite()
 			: base(2, 4, 3)
 		{
 		}

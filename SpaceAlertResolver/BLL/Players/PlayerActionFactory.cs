@@ -2,10 +2,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace BLL
+namespace BLL.Players
 {
 	public static class PlayerActionFactory
 	{
+		public static PlayerAction CreatePlayerAction(PlayerActionType? firstAction, PlayerActionType? secondAction, PlayerActionType? bonusAction)
+		{
+			return new PlayerAction(firstAction, secondAction, bonusAction);
+		}
+
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		public static IEnumerable<PlayerAction> CreateSingleActionList(IEnumerable<PlayerActionType?> actionTypes)
 		{

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class MotherSwarm : SeriousYellowExternalThreat
 	{
-		public MotherSwarm()
+		internal MotherSwarm()
 			: base(1, 6, 2)
 		{
 		}

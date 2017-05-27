@@ -1,8 +1,10 @@
-﻿namespace BLL.Threats.External.Minor.Yellow
+﻿using BLL.Players;
+
+namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Scout : MinorYellowExternalThreat
 	{
-		public Scout()
+		internal Scout()
 			: base(1, 3, 2)
 		{
 		}

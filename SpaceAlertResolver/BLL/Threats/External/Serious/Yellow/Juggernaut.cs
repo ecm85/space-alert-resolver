@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class Juggernaut : SeriousYellowExternalThreat
 	{
-		public Juggernaut()
+		internal Juggernaut()
 			: base(3, 10, 1)
 		{
 		}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -12,7 +13,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private IList<StationLocation> MineLocations => WarningIndicatorStations;
 
-		public PhasingMineLayer()
+		internal PhasingMineLayer()
 			: base(2, 2, StationLocation.UpperWhite, PlayerActionType.BattleBots)
 		{
 		}

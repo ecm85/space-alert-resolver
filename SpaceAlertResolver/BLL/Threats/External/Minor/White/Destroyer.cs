@@ -2,7 +2,7 @@
 {
 	public class Destroyer : MinorWhiteExternalThreat
 	{
-		public Destroyer()
+		internal Destroyer()
 			: base(2, 5, 2)
 		{
 		}

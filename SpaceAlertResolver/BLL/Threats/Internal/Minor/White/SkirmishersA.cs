@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class SkirmishersA : Skirmishers
 	{
-		public SkirmishersA()
+		internal SkirmishersA()
 			: base(StationLocation.UpperRed)
 		{
 		}

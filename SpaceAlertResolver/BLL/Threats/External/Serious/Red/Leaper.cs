@@ -4,7 +4,7 @@ namespace BLL.Threats.External.Serious.Red
 {
 	public class Leaper : SeriousRedExternalThreat
 	{
-		public Leaper()
+		internal Leaper()
 			: base(2, 7, 2)
 		{
 		}

@@ -2,7 +2,7 @@
 {
 	public class ArmoredGrappler : MinorWhiteExternalThreat
 	{
-		public ArmoredGrappler()
+		internal ArmoredGrappler()
 			: base(3, 4, 2)
 		{
 		}

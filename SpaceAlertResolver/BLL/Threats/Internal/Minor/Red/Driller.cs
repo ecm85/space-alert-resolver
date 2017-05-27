@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Red
 {
 	public class Driller : MinorRedInternalThreat
 	{
-		public Driller()
+		internal Driller()
 			: base(2, 3, StationLocation.LowerBlue, PlayerActionType.BattleBots, 1)
 		{
 		}

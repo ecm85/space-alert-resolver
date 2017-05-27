@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Red
 {
 	public class MegashieldManOfWar : SeriousRedExternalThreat
 	{
-		public MegashieldManOfWar()
+		internal MegashieldManOfWar()
 			: base(5, 7, 1)
 		{
 		}

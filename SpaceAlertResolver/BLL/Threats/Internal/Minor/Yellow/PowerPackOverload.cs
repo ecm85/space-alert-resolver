@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -10,7 +11,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public PowerPackOverload()
+		internal PowerPackOverload()
 			: base(
 				4,
 				3,

@@ -6,7 +6,7 @@ namespace BLL.Threats.External.Minor.Red
 	{
 		public InternalThreat BonusThreat { get; set; }
 
-		public SealedCapsule()
+		internal SealedCapsule()
 			: base(4, 4, 4)
 		{
 		}

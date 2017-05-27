@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.ShipComponents
 {
 	public class PulseCannon : Cannon
 	{
-		public PulseCannon(Reactor source) : base(source, 1, new [] {1, 2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>().ToArray())
+		internal PulseCannon(Reactor source) : base(source, 1, new [] {1, 2}, PlayerDamageType.Pulse, EnumFactory.All<ZoneLocation>().ToArray())
 		{
 		}
 

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
 {
 	public class Fissure : SeriousWhiteInternalThreat
 	{
-		public Fissure()
+		internal Fissure()
 			: base(2, 2, StationLocation.Interceptor1, PlayerActionType.BattleBots)
 		{
 		}

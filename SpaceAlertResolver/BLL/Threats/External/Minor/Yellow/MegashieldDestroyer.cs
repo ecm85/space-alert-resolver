@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.Yellow
 {
 	public class MegashieldDestroyer : MinorYellowExternalThreat
 	{
-		public MegashieldDestroyer()
+		internal MegashieldDestroyer()
 			: base(4, 3, 2)
 		{
 		}

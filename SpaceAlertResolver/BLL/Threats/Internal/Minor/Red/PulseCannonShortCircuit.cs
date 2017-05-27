@@ -1,4 +1,5 @@
 ﻿using System;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -6,7 +7,7 @@ namespace BLL.Threats.Internal.Minor.Red
 {
 	public class PulseCannonShortCircuit : MinorRedInternalThreat
 	{
-		public PulseCannonShortCircuit()
+		internal PulseCannonShortCircuit()
 			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.Alpha, 1)
 		{
 		}

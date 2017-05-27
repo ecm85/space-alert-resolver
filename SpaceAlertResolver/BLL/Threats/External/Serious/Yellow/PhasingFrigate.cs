@@ -6,7 +6,7 @@ namespace BLL.Threats.External.Serious.Yellow
 	{
 		private PhasingThreatCore phasingThreatCore;
 
-		public PhasingFrigate()
+		internal PhasingFrigate()
 			: base(2, 7, 2)
 		{
 		}

@@ -2,7 +2,7 @@
 using System.Linq;
 using BLL.ShipComponents;
 
-namespace BLL
+namespace BLL.Players
 {
 	public class PlayerDamage
 	{
@@ -13,7 +13,7 @@ namespace BLL
 		public bool RequiresTargetingAssistance { get; private set; }
 		public Player PerformingPlayer { get; private set; }
 
-		public PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones)
+		internal PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones)
 		{
 			Amount = amount;
 			PlayerDamageType = playerDamageType;
@@ -21,19 +21,19 @@ namespace BLL
 			AffectedZones = affectedZones;
 		}
 
-		public PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer)
+		internal PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer)
 			: this(amount, playerDamageType, affectedDistances, affectedZones)
 		{
 			PerformingPlayer = performingPlayer;
 		}
 
-		public PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer, bool requiresTargetingAssistance)
+		internal PlayerDamage(int amount, PlayerDamageType playerDamageType, IEnumerable<int> affectedDistances, IList<ZoneLocation> affectedZones, Player performingPlayer, bool requiresTargetingAssistance)
 			: this(amount, playerDamageType, affectedDistances, affectedZones, performingPlayer)
 		{
 			RequiresTargetingAssistance = requiresTargetingAssistance;
 		}
 
-		public PlayerDamage(PlayerDamage other)
+		internal PlayerDamage(PlayerDamage other)
 			: this(
 				other.Amount,
 				other.PlayerDamageType,

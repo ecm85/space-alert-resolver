@@ -6,7 +6,7 @@ namespace BLL.Threats.External.Serious.Red
 	{
 		private PhasingThreatCore phasingThreatCore;
 
-		public PhasingManOfWar()
+		internal PhasingManOfWar()
 			: base(2, 9, 1)
 		{
 		}

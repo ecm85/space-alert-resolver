@@ -1,11 +1,12 @@
 ﻿using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class Executioner : SeriousYellowInternalThreat
 	{
-		public Executioner()
+		internal Executioner()
 			: base(2, 2, StationLocation.UpperBlue, PlayerActionType.BattleBots)
 		{
 		}

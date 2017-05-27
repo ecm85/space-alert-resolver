@@ -1,4 +1,5 @@
-﻿using BLL.Tracks;
+﻿using BLL.Players;
+using BLL.Tracks;
 
 namespace BLL.Threats.External.Minor.White
 {
@@ -10,7 +11,7 @@ namespace BLL.Threats.External.Minor.White
 			set { SetThreatStatus(ThreatStatus.Stealthed, value); }
 		}
 
-		public StealthFighter()
+		internal StealthFighter()
 			: base(2, 4, 3)
 		{
 		}

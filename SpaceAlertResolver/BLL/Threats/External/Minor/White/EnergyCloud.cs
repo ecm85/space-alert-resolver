@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.External.Minor.White
 {
 	public class EnergyCloud : MinorWhiteExternalThreat
 	{
-		public EnergyCloud()
+		internal EnergyCloud()
 			: base(3, 5, 2)
 		{
 		}

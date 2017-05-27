@@ -2,7 +2,7 @@
 {
 	public class SpacecraftCarrier : SeriousWhiteExternalThreat
 	{
-		public SpacecraftCarrier()
+		internal SpacecraftCarrier()
 			: base(3, 6, 2)
 		{
 		}

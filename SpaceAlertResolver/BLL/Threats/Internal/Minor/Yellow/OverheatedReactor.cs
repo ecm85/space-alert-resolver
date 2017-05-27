@@ -1,10 +1,11 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class OverheatedReactor : MinorYellowInternalThreat
 	{
-		public OverheatedReactor()
+		internal OverheatedReactor()
 			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.Bravo)
 		{
 		}

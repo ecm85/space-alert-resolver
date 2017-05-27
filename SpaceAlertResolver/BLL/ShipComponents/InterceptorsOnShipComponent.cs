@@ -1,4 +1,5 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.ShipComponents
 {
@@ -9,7 +10,7 @@ namespace BLL.ShipComponents
 
 		private Station SpacewardStation => sittingDuck.StationsByLocation[StationLocation.Interceptor1];
 
-		public InterceptorsOnShipComponent(
+		internal InterceptorsOnShipComponent(
 			SittingDuck sittingDuck,
 			Interceptors interceptors)
 		{

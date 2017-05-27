@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class Behemoth : SeriousYellowExternalThreat
 	{
-		public Behemoth()
+		internal Behemoth()
 			: base(4, 7, 2)
 		{
 		}

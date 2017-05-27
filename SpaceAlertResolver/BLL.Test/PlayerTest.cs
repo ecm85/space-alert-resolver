@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using BLL.Players;
 using NUnit.Framework;
 
 namespace BLL.Test

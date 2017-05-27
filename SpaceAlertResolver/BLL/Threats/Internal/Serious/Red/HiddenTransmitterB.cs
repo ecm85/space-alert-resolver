@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Serious.Red
 {
 	public class HiddenTransmitterB : HiddenTransmitter
 	{
-		public HiddenTransmitterB() : base(StationLocation.UpperBlue)
+		internal HiddenTransmitterB() : base(StationLocation.UpperBlue)
 		{
 		}
 

@@ -1,11 +1,12 @@
 ﻿using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Red
 {
 	public class Siren : SeriousRedInternalThreat
 	{
-		public Siren()
+		internal Siren()
 			: base(2, 2, StationLocation.UpperRed, PlayerActionType.BattleBots)
 		{
 		}

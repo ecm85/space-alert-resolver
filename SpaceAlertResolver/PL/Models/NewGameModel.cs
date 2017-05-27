@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Threats;
 using BLL.Threats.External;
@@ -34,11 +35,11 @@ namespace PL.Models
 			var internalTrack = (TrackConfiguration)InternalTrack.TrackIndex;
 
 			var players = Players
-				.Select(player => new Player(
-					player.Actions.Select(action => new PlayerAction(action.FirstAction, action.SecondAction, action.BonusAction?.FirstAction)),
-					player.Index,
-					player.PlayerColor,
-					player.PlayerSpecialization))
+				.Select(playerModel => PlayerFactory.CreatePlayer(
+					playerModel.Actions.Select(action => PlayerActionFactory.CreatePlayerAction(action.FirstAction, action.SecondAction, action.BonusAction.FirstAction)),
+					playerModel.Index,
+					playerModel.PlayerColor,
+					playerModel.PlayerSpecialization))
 				.ToList();
 			var internalThreats = CreateInternalThreats(InternalThreats);
 			var redThreats = CreateExternalThreats(RedThreats, ZoneLocation.Red);

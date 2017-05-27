@@ -1,4 +1,5 @@
 ﻿using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
@@ -11,7 +12,7 @@ namespace BLL.Threats.Internal.Serious.White
 			set { SetThreatStatus(ThreatStatus.GrownUp, value); }
 		}
 
-		public Alien()
+		internal Alien()
 			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.BattleBots)
 		{
 		}

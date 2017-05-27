@@ -6,7 +6,7 @@ namespace BLL.Threats.External.Minor.Red
 	{
 		private PhasingThreatCore phasingThreatCore;
 
-		public PhasingPulser()
+		internal PhasingPulser()
 			: base(1, 6, 2)
 		{
 		}

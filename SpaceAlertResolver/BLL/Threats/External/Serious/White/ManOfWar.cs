@@ -2,7 +2,7 @@
 {
 	public class ManOfWar : SeriousWhiteExternalThreat
 	{
-		public ManOfWar()
+		internal ManOfWar()
 			: base(2, 9, 1)
 		{
 		}

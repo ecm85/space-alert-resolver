@@ -1,5 +1,6 @@
 ﻿using System;
 using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.Red
 {
@@ -7,7 +8,7 @@ namespace BLL.Threats.External.Serious.Red
 	{
 		private int breakpointsCrossed;
 
-		public Planetoid()
+		internal Planetoid()
 			: base(0, 13, 1)
 		{
 		}

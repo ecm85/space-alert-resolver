@@ -1,4 +1,5 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Serious.White
 {
@@ -6,7 +7,7 @@ namespace BLL.Threats.External.Serious.White
 	{
 		private int breakpointsCrossed;
 
-		public Asteroid()
+		internal Asteroid()
 			: base(0, 9, 3)
 		{
 		}

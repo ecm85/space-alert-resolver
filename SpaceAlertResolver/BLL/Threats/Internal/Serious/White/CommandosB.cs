@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Serious.White
 {
 	public class CommandosB : Commandos
 	{
-		public CommandosB()
+		internal CommandosB()
 			: base(StationLocation.UpperBlue)
 		{
 		}

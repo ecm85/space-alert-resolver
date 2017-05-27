@@ -1,4 +1,5 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 using BLL.Threats.Internal;
 
 namespace BLL.Threats.External.Serious.Red
@@ -8,7 +9,7 @@ namespace BLL.Threats.External.Serious.Red
 		public InternalThreat BonusThreat { get; set; }
 		private bool calledInThreat;
 
-		public TransmitterSatellite()
+		internal TransmitterSatellite()
 			: base(2, 5, 3)
 		{
 		}

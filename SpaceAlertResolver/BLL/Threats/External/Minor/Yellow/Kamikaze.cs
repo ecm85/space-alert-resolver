@@ -2,7 +2,7 @@
 {
 	public class Kamikaze : MinorYellowExternalThreat
 	{
-		public Kamikaze()
+		internal Kamikaze()
 			: base(2, 5, 4)
 		{
 		}

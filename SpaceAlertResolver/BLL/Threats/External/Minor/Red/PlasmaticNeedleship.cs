@@ -1,10 +1,11 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.Red
 {
 	public class PlasmaticNeedleship : MinorRedExternalThreat
 	{
-		public PlasmaticNeedleship()
+		internal PlasmaticNeedleship()
 			: base(1, 3, 3)
 		{
 		}

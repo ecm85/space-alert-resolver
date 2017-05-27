@@ -1,10 +1,11 @@
 ﻿using BLL.Common;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.White
 {
 	public class Amoeba : MinorWhiteExternalThreat
 	{
-		public Amoeba()
+		internal Amoeba()
 			: base(0, 8, 2)
 		{
 		}

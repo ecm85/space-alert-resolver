@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 {
 	public class TroopersB : Troopers
 	{
-		public TroopersB()
+		internal TroopersB()
 			: base(StationLocation.UpperRed)
 		{
 		}

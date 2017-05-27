@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -10,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.Red
 	{
 		private Player attachedPlayer;
 
-		public Parasite()
+		internal Parasite()
 			: base(1, 2, new List<StationLocation>(), PlayerActionType.BattleBots)
 		{
 		}

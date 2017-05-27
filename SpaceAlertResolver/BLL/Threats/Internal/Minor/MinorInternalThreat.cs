@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor

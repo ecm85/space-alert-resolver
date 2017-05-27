@@ -2,7 +2,7 @@
 {
 	public class Fighter : MinorWhiteExternalThreat
 	{
-		public Fighter()
+		internal Fighter()
 			: base(2, 4, 3)
 		{
 		}

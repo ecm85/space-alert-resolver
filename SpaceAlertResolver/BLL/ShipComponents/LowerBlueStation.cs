@@ -9,7 +9,7 @@
 		protected override ICharlieComponent CharlieComponent => RocketsComponent;
 		public RocketsComponent RocketsComponent { get; }
 
-		public LowerBlueStation(
+		internal LowerBlueStation(
 			CentralReactor whiteReactor,
 			ThreatController threatController,
 			Gravolift gravolift,

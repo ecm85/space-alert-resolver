@@ -1,10 +1,11 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
 {
 	public class Shambler : SeriousWhiteInternalThreat
 	{
-		public Shambler()
+		internal Shambler()
 			: base(2, 2, StationLocation.LowerWhite, PlayerActionType.BattleBots)
 		{
 		}

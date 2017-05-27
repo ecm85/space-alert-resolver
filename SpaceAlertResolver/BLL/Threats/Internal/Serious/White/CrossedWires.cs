@@ -1,10 +1,11 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.White
 {
 	public class CrossedWires : SeriousWhiteInternalThreat
 	{
-		public CrossedWires()
+		internal CrossedWires()
 			: base(4, 3, StationLocation.UpperWhite, PlayerActionType.Bravo)
 		{
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.External

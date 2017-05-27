@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -8,7 +9,7 @@ namespace BLL.Threats.Internal.Minor.Red
 	public class ReversedShields : MinorRedInternalThreat
 	{
 		private readonly ISet<Player> attackingPlayersThisTurn = new HashSet<Player>();
-		public ReversedShields()
+		internal ReversedShields()
 			: base(
 				5,
 				4,

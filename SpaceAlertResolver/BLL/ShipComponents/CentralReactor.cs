@@ -10,7 +10,7 @@
 			set { fuelCapsules = value < 0 ? 0 : value; }
 		}
 
-		public CentralReactor() : base(5, 3)
+		internal CentralReactor() : base(5, 3)
 		{
 		}
 

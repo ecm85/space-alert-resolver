@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.White
 {
 	public class HackedShieldsA : HackedShields
 	{
-		public HackedShieldsA()
+		internal HackedShieldsA()
 			: base(StationLocation.UpperRed)
 		{
 		}

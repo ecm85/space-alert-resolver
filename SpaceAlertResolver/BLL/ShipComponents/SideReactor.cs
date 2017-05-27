@@ -3,7 +3,7 @@
 	public class SideReactor : Reactor
 	{
 		private CentralReactor Source { get; set; }
-		public SideReactor(CentralReactor source) : base(3, 2)
+		internal SideReactor(CentralReactor source) : base(3, 2)
 		{
 			Source = source;
 		}

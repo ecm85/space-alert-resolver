@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Threats.Internal;
 
@@ -24,7 +25,7 @@ namespace BLL
 		private Doors BlueDoors { get; }
 		private Doors RedDoors { get; }
 
-		public SittingDuck(ThreatController threatController, Game game, ILookup<ZoneLocation, DamageToken> initialDamage)
+		internal SittingDuck(ThreatController threatController, Game game, ILookup<ZoneLocation, DamageToken> initialDamage)
 		{
 			ThreatController = threatController;
 			Game = game;

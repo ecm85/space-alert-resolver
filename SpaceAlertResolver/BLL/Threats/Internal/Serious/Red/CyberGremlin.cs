@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -23,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			}
 		}
 
-		public CyberGremlin()
+		internal CyberGremlin()
 			: base(1, 2, StationLocation.UpperRed, PlayerActionType.BattleBots, 1)
 		{
 		}
@@ -86,7 +87,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		private class Sabotage : InternalThreat
 		{
-			public Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType, CyberGremlin cyberGremlin)
+			internal Sabotage(ThreatType threatType, ThreatDifficulty threatDifficulty, StationLocation currentStation, PlayerActionType actionType, CyberGremlin cyberGremlin)
 				: base(threatType, threatDifficulty, 1, 0, currentStation, actionType)
 			{
 				Parent = cyberGremlin;

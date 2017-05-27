@@ -1,4 +1,4 @@
-﻿namespace BLL
+﻿namespace BLL.Players
 {
 	public enum PlayerColor
 	{

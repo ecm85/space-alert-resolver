@@ -1,11 +1,12 @@
 ﻿using BLL.Common;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.External.Serious.Yellow
 {
 	public class NebulaCrab : SeriousYellowExternalThreat
 	{
-		public NebulaCrab()
+		internal NebulaCrab()
 			: base(2, 7, 2)
 		{
 		}

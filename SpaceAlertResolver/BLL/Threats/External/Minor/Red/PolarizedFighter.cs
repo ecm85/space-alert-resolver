@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.Red
 {
 	public class PolarizedFighter : MinorRedExternalThreat
 	{
-		public PolarizedFighter()
+		internal PolarizedFighter()
 			: base(1, 4, 3)
 		{
 		}

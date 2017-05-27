@@ -2,7 +2,7 @@
 {
 	public class PlasmaticFighter : MinorWhiteExternalThreat
 	{
-		public PlasmaticFighter()
+		internal PlasmaticFighter()
 			: base(2, 4, 3)
 		{
 		}

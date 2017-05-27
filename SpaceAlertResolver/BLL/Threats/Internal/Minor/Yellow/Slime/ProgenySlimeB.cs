@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 {
 	public class ProgenySlimeB : ProgenySlime
 	{
-		public ProgenySlimeB(NormalSlime parent, StationLocation stationLocation)
+		internal ProgenySlimeB(NormalSlime parent, StationLocation stationLocation)
 			: base(parent, stationLocation)
 		{
 		}

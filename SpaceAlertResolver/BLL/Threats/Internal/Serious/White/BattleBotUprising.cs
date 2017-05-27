@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
 
@@ -10,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.White
 	{
 		private ISet<StationLocation> StationsHitThisTurn { get; set; }
 
-		public BattleBotUprising()
+		internal BattleBotUprising()
 			: base(4, 2,new List<StationLocation> {StationLocation.UpperBlue, StationLocation.LowerRed}, PlayerActionType.Charlie)
 		{
 			StationsHitThisTurn = new HashSet<StationLocation>();

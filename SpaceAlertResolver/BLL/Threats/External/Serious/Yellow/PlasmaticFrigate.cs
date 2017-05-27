@@ -2,7 +2,7 @@
 {
 	public class PlasmaticFrigate : SeriousYellowExternalThreat
 	{
-		public PlasmaticFrigate()
+		internal PlasmaticFrigate()
 			: base(2, 7, 2)
 		{
 		}

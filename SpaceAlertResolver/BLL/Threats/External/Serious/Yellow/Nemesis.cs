@@ -9,7 +9,7 @@ namespace BLL.Threats.External.Serious.Yellow
 		private int healthAtStartOfTurn;
 		private bool TookDamageThisTurn => healthAtStartOfTurn > RemainingHealth;
 
-		public Nemesis()
+		internal Nemesis()
 			: base(1, 9, 3)
 		{
 			healthAtStartOfTurn = RemainingHealth;

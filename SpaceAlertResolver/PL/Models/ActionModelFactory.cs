@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BLL;
+using BLL.Players;
 
 namespace PL.Models
 {

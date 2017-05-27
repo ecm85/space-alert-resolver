@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BLL.Players;
 using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Red
@@ -7,7 +8,7 @@ namespace BLL.Threats.Internal.Serious.Red
 	{
 		public InternalThreat BonusThreat { get; set; }
 
-		public SpaceTimeVortex()
+		internal SpaceTimeVortex()
 			: base(3, 2, StationLocation.LowerWhite, PlayerActionType.Charlie)
 		{
 		}

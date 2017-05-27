@@ -4,7 +4,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 {
 	public class SlimeA : NormalSlime
 	{
-		public SlimeA()
+		internal SlimeA()
 			: base(StationLocation.LowerBlue)
 		{
 		}

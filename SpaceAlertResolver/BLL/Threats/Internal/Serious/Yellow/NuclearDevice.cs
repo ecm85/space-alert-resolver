@@ -1,10 +1,11 @@
-﻿using BLL.ShipComponents;
+﻿using BLL.Players;
+using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Serious.Yellow
 {
 	public class NuclearDevice : SeriousYellowInternalThreat
 	{
-		public NuclearDevice()
+		internal NuclearDevice()
 			: base(1, 4, StationLocation.LowerWhite, PlayerActionType.Charlie, 2)
 		{
 		}

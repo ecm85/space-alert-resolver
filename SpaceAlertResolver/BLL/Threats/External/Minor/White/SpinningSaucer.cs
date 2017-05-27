@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 
 namespace BLL.Threats.External.Minor.White
 {
@@ -11,7 +12,7 @@ namespace BLL.Threats.External.Minor.White
 			set { SetThreatStatus(ThreatStatus.KnockedOffCourse, value); }
 		}
 
-		public SpinningSaucer()
+		internal SpinningSaucer()
 			: base(4, 3, 3)
 		{
 		}

@@ -2,7 +2,7 @@
 {
 	public class CentralShield : Shield
 	{
-		public CentralShield(Reactor source) : base(source, 3, 1)
+		internal CentralShield(Reactor source) : base(source, 3, 1)
 		{
 		}
 	}

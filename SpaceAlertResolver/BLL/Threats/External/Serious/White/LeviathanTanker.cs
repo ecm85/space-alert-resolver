@@ -2,7 +2,7 @@
 {
 	public class LeviathanTanker : SeriousWhiteExternalThreat
 	{
-		public LeviathanTanker()
+		internal LeviathanTanker()
 			: base(3, 8, 2)
 		{
 		}

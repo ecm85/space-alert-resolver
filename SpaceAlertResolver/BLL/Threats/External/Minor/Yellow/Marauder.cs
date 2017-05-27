@@ -4,7 +4,7 @@ namespace BLL.Threats.External.Minor.Yellow
 {
 	public class Marauder : MinorYellowExternalThreat
 	{
-		public Marauder()
+		internal Marauder()
 			: base(1, 6, 3)
 		{
 		}

@@ -1,12 +1,13 @@
 ﻿using System;
 using BLL.Common;
+using BLL.Players;
 using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.White
 {
 	public class DimensionSpider : SeriousWhiteExternalThreat
 	{
-		public DimensionSpider()
+		internal DimensionSpider()
 			: base(0, 13, 1)
 		{
 		}

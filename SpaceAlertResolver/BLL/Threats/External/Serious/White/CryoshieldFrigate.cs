@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BLL.Players;
 using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.White
@@ -12,7 +13,7 @@ namespace BLL.Threats.External.Serious.White
 			set { SetThreatStatus(ThreatStatus.Cryoshielded, value); }
 		}
 
-		public CryoshieldFrigate()
+		internal CryoshieldFrigate()
 			: base(1, 7, 2)
 		{
 		}
