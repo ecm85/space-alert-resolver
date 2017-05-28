@@ -9,9 +9,7 @@ namespace BLL
 	public interface ISittingDuck
 	{
 		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
-
 		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
-
 		void DrainEnergy(StationLocation stationLocation, int? amount);
 
 		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
@@ -26,6 +24,7 @@ namespace BLL
 		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<StationLocation> locations);
 		void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
+		void KnockOutCaptain();
 
 		void DisableLowerRedInactiveBattleBots();
 
@@ -46,7 +45,6 @@ namespace BLL
 		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
 		bool DestroyFuelCapsule();
 		int GetEnergyInReactor(ZoneLocation zoneLocation);
-		void KnockOutCaptain();
 		void SealRedDoors();
 		void SealBlueDoors();
 		void RepairAllSealedDoors();
