@@ -26,9 +26,10 @@ namespace BLL.Threats.Internal.Serious.Yellow
 			base.PlaceOnTrack(track, trackPosition);
 			ThreatController.PlayerActionsEnding += OnPlayerActionsEnding;
 		}
+
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainReactor(ZoneLocation.White, 2);
+			SittingDuck.DrainReactors(new [] {ZoneLocation.White}, 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)

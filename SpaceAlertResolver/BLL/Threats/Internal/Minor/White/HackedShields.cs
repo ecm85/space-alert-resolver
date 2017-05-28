@@ -12,12 +12,12 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainShield(CurrentZone);
+			SittingDuck.DrainShields(new [] {CurrentZone});
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			SittingDuck.DrainReactor(CurrentZone);
+			SittingDuck.DrainReactors(new [] {CurrentZone});
 		}
 
 		protected override void PerformZAction(int currentTurn)

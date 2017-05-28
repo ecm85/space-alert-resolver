@@ -20,7 +20,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainReactor(CurrentZone, 2);
+			SittingDuck.DrainReactors(new [] {CurrentZone}, 2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -45,7 +45,7 @@ namespace BLL.Threats.Internal.Minor.Red
 			var remainingDamageWillDestroyThreat = RemainingHealth <= damage;
 			var energyDrained = 0;
 			if (remainingDamageWillDestroyThreat)
-				energyDrained = SittingDuck.DrainReactor(CurrentZone, 1);
+				energyDrained = SittingDuck.DrainReactors(new [] {CurrentZone}, 1);
 			var cannotTakeDamage = remainingDamageWillDestroyThreat && energyDrained == 0;
 			if (!cannotTakeDamage)
 				base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);

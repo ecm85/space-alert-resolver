@@ -39,9 +39,11 @@
 			return oldEnergy;
 		}
 
-		public void DrainShield(int amount)
+		public int DrainShield(int amount)
 		{
+			var oldEnergy = Shield.Energy;
 			Shield.Energy -= amount;
+			return oldEnergy;
 		}
 
 		public void AddBonusShield(int amount)

@@ -42,7 +42,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			var energyDrained = SittingDuck.DrainReactor(CurrentZone);
+			var energyDrained = SittingDuck.DrainReactors(new [] { CurrentZone});
 			Speed += energyDrained;
 		}
 

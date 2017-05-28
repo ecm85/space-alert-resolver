@@ -112,9 +112,9 @@ namespace BLL.ShipComponents
 			return UpperStation.DrainShield();
 		}
 
-		public void DrainShield(int amount)
+		public int DrainShield(int amount)
 		{
-			UpperStation.DrainShield(amount);
+			return UpperStation.DrainShield(amount);
 		}
 
 		public int DrainReactor()

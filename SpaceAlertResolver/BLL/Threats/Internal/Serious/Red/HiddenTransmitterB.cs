@@ -10,7 +10,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			SittingDuck.DrainShield(CurrentZone);
+			SittingDuck.DrainShields(new [] {CurrentZone});
 			Damage(4);
 		}
 

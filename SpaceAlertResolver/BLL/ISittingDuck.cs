@@ -8,13 +8,11 @@ namespace BLL
 {
 	public interface ISittingDuck
 	{
-		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
-		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
-		int DrainShield(ZoneLocation zoneLocation);
+		int DrainShields(IEnumerable<ZoneLocation> zoneLocations);
+		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
 
-		int DrainReactor(ZoneLocation zoneLocation);
-		int DrainReactor(ZoneLocation zoneLocation, int amount);
-		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
+		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations);
+		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);
 
 		void DrainEnergy(StationLocation stationLocation, int amount);
 

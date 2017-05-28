@@ -142,37 +142,24 @@ namespace BLL
 			}
 		}
 
-		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations)
+		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShield();
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainShield()).Sum();
 		}
 
-		public void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainShield(amount);
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainShield(amount)).Sum();
 		}
 
-		public int DrainReactor(ZoneLocation zoneLocation)
+		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			return ZonesByLocation[zoneLocation].DrainReactor();
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainReactor()).Sum();
 		}
 
-		public void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
 		{
-			foreach (var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
-				zone.DrainReactor(amount);
-		}
-
-		public int DrainShield(ZoneLocation zoneLocation)
-		{
-			return ZonesByLocation[zoneLocation].DrainShield();
-		}
-
-		public int DrainReactor(ZoneLocation zoneLocation, int amount)
-		{
-			return ZonesByLocation[zoneLocation].DrainReactor(amount);
+			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainReactor(amount)).Sum();
 		}
 
 		public void DrainEnergy(StationLocation stationLocation, int amount)
@@ -180,7 +167,7 @@ namespace BLL
 			StandardStationsByLocation[stationLocation].DrainEnergy(amount);
 		}
 
-		public void TakeAttack(object sender, ThreatDamageEventArgs args)
+		private void TakeAttack(object sender, ThreatDamageEventArgs args)
 		{
 			var damage = args.ThreatDamage;
 			var damageShielded = 0;
