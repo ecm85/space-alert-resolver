@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BLL.Players;
 using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.Internal;
 
 namespace BLL
@@ -28,6 +29,7 @@ namespace BLL
 		internal SittingDuck(ThreatController threatController, Game game, ILookup<ZoneLocation, DamageToken> initialDamage)
 		{
 			ThreatController = threatController;
+			threatController.ThreatAttackedShip += TakeAttack;
 			Game = game;
 
 			var redDoors = new Doors();
@@ -35,34 +37,16 @@ namespace BLL
 
 
 			var interceptors = new Interceptors();
-			var interceptorComponent1 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor1);
-			var interceptorComponent2 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor2);
-			var interceptorComponent3 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor3);
 
-			var interceptorStation1 = new InterceptorStation(
-				StationLocation.Interceptor1,
-				threatController,
-				interceptorComponent1);
-			var interceptorStation2 = new InterceptorStation(
-				StationLocation.Interceptor2,
-				threatController,
-				interceptorComponent2);
-			var interceptorStation3 = new InterceptorStation(
-				StationLocation.Interceptor3,
-				threatController,
-				interceptorComponent3);
+			var interceptorStation1 = CreateInterceptorStation1(threatController);
+			var interceptorStation2 = CreateInterceptorStation2(threatController);
+			var interceptorStation3 = CreateInterceptorStation3(threatController);
 
 			BlueDoors = blueDoors;
 			RedDoors = redDoors;
-			WhiteZone = new WhiteZone(threatController, redDoors, blueDoors, this);
-			DamageZone(initialDamage, ZoneLocation.White, WhiteZone);
-			RedZone = new RedZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors);
-			DamageZone(initialDamage, ZoneLocation.Red, RedZone);
-			BlueZone = new BlueZone(threatController, WhiteZone.LowerWhiteStation.CentralReactor, blueDoors, this);
-			DamageZone(initialDamage, ZoneLocation.Blue, BlueZone);
-
-			BlueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
-			WhiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
+			WhiteZone = CreateWhiteZone(threatController, initialDamage, redDoors, blueDoors);
+			RedZone = CreateRedZone(threatController, initialDamage, redDoors, WhiteZone, interceptors);
+			BlueZone = CreateBlueZone(threatController, initialDamage, WhiteZone, blueDoors);
 
 			ZonesByLocation = new Zone[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
 			InterceptorStations = new [] {interceptorStation1, interceptorStation2, interceptorStation3};
@@ -73,6 +57,72 @@ namespace BLL
 			StandardStationsByLocation = Zones
 				.SelectMany(zone => new StandardStation[] {zone.LowerStation, zone.UpperStation})
 				.ToDictionary(station => station.StationLocation);
+		}
+
+		private InterceptorStation CreateInterceptorStation3(ThreatController threatController)
+		{
+			var interceptorComponent3 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor3);
+			var interceptorStation3 = new InterceptorStation(
+				StationLocation.Interceptor3,
+				threatController,
+				interceptorComponent3);
+			return interceptorStation3;
+		}
+
+		private InterceptorStation CreateInterceptorStation2(ThreatController threatController)
+		{
+			var interceptorComponent2 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor2);
+			var interceptorStation2 = new InterceptorStation(
+				StationLocation.Interceptor2,
+				threatController,
+				interceptorComponent2);
+			return interceptorStation2;
+		}
+
+		private InterceptorStation CreateInterceptorStation1(ThreatController threatController)
+		{
+			var interceptorComponent1 = new InterceptorsInSpaceComponent(this, StationLocation.Interceptor1);
+			var interceptorStation1 = new InterceptorStation(
+				StationLocation.Interceptor1,
+				threatController,
+				interceptorComponent1);
+			return interceptorStation1;
+		}
+
+		private BlueZone CreateBlueZone(
+			ThreatController threatController,
+			ILookup<ZoneLocation, DamageToken> initialDamage,
+			WhiteZone whiteZone,
+			Doors blueDoors)
+		{
+			var blueZone = new BlueZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, blueDoors, this);
+			DamageZone(initialDamage, ZoneLocation.Blue, blueZone);
+			blueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
+			return blueZone;
+		}
+
+		private RedZone CreateRedZone(
+			ThreatController threatController,
+			ILookup<ZoneLocation, DamageToken> initialDamage,
+			Doors redDoors,
+			WhiteZone whiteZone,
+			Interceptors interceptors)
+		{
+			var redZone = new RedZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors);
+			DamageZone(initialDamage, ZoneLocation.Red, redZone);
+			return redZone;
+		}
+
+		private WhiteZone CreateWhiteZone(
+			ThreatController threatController,
+			ILookup<ZoneLocation, DamageToken> initialDamage,
+			Doors redDoors,
+			Doors blueDoors)
+		{
+			var whiteZone = new WhiteZone(threatController, redDoors, blueDoors, this);
+			DamageZone(initialDamage, ZoneLocation.White, whiteZone);
+			whiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
+			return whiteZone;
 		}
 
 		private static void DamageZone(ILookup<ZoneLocation, DamageToken> initialDamage, ZoneLocation zoneLocation, Zone zone)
@@ -135,13 +185,13 @@ namespace BLL
 			StandardStationsByLocation[stationLocation].DrainEnergy(amount);
 		}
 
-		public ThreatDamageResult TakeAttack(ThreatDamage damage)
+		public void TakeAttack(object sender, ThreatDamageEventArgs args)
 		{
-			var shipDestroyed = false;
+			var damage = args.ThreatDamage;
 			var damageShielded = 0;
+			var threat = sender as Threat;
 			foreach (var zone in damage.ZoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
 			{
-				ThreatDamageResult damageResult;
 				switch (damage.ThreatDamageType)
 				{
 					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
@@ -153,18 +203,21 @@ namespace BLL
 							if (stationsBetweenThreatAndShip.Any(station => station.Players.Any()))
 								amount -= 2;
 						}
-						damageResult = zone.TakeAttack(amount, ThreatDamageType.Standard);
-						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
+						var damageResult = zone.TakeAttack(amount, ThreatDamageType.Standard);
+						if (damageResult.ShipDestroyed)
+							throw new LoseException(threat);
 						damageShielded += damageResult.DamageShielded;
 						break;
 					default:
 						damageResult = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
-						shipDestroyed = shipDestroyed || damageResult.ShipDestroyed;
+						if (damageResult.ShipDestroyed)
+							throw new LoseException(threat);
 						damageShielded += damageResult.DamageShielded;
 						break;
 				}
 			}
-			return new ThreatDamageResult{DamageShielded = damageShielded, ShipDestroyed = shipDestroyed};
+			
+			damage.DamageShielded = damageShielded;
 		}
 
 		public virtual int GetPlayerCount(StationLocation station)

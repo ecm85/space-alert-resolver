@@ -11,6 +11,13 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
+		public event EventHandler<ThreatDamageEventArgs> AttackedSittingDuck = (sender, args) => { };
+
+		protected void AttackSittingDuck(ThreatDamage threatDamage)
+		{
+			AttackedSittingDuck(this, new ThreatDamageEventArgs {ThreatDamage = threatDamage});
+		}
+
 		private IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
 
 		public bool GetThreatStatus(ThreatStatus threatStatus)

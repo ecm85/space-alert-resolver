@@ -19,6 +19,7 @@ namespace BLL
 		public event EventHandler PlayerActionsEnding = (sender, args) => { };
 		public event EventHandler TurnEnding = (sender, args) => { };
 		public event EventHandler DamageResolutionEnding = (sender, args) => { };
+		public event EventHandler<ThreatDamageEventArgs> ThreatAttackedShip = (sender, args) => { };
 		private readonly IList<ThreatStatus> externalThreatStatusEffects = new List<ThreatStatus>();
 		private readonly IList<ThreatStatus> singleTurnExternalThreatStatusEffects = new List<ThreatStatus>();
 		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
@@ -83,10 +84,16 @@ namespace BLL
 		public void AddNewThreatsToTracks(int currentTurn)
 		{
 			foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			{
+				newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 				newThreat.PlaceOnTrack(ExternalTracks[newThreat.CurrentZone]);
+			}
 
 			foreach (var newThreat in InternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+			{
+				newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 				newThreat.PlaceOnTrack(InternalTrack);
+			}
 		}
 
 		public void MoveThreats(int currentTurn)
@@ -178,6 +185,7 @@ namespace BLL
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears, int position)
 		{
 			newThreat.TimeAppears = timeAppears;
+			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			newThreat.PlaceOnTrack(InternalTrack, position);
 			InternalThreats.Add(newThreat);
 		}
@@ -185,6 +193,7 @@ namespace BLL
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears)
 		{
 			newThreat.TimeAppears = timeAppears;
+			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			newThreat.PlaceOnTrack(InternalTrack);
 			InternalThreats.Add(newThreat);
 		}
@@ -199,6 +208,7 @@ namespace BLL
 			newThreat.CurrentZone = zoneLocation;
 			newThreat.TimeAppears = timeAppears;
 			newThreat.PlaceOnTrack(ExternalTracks[zoneLocation]);
+			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			foreach (var threat in externalThreatStatusEffects.Concat(singleTurnExternalThreatStatusEffects))
 				newThreat.SetThreatStatus(threat, true);
 			ExternalThreats.Add(newThreat);

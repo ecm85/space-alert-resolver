@@ -68,7 +68,7 @@ namespace BLL.Threats.External
 			Attack(amount, threatDamageType, zones);
 		}
 
-		protected ThreatDamageResult AttackCurrentZone(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
+		protected int AttackCurrentZone(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
 		{
 			return Attack(amount, threatDamageType, new[] { CurrentZone });
 		}
@@ -83,14 +83,12 @@ namespace BLL.Threats.External
 			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
 		}
 
-		private ThreatDamageResult Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
+		private int Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
 			var bonusAttacks = GetThreatStatus(ThreatStatus.BonusAttack) ? 1 : 0;
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations, DistanceToShip);
-			var result = SittingDuck.TakeAttack(damage);
-			if (result.ShipDestroyed)
-				throw new LoseException(this);
-			return result;
+			AttackSittingDuck(damage);
+			return damage.DamageShielded;
 		}
 	}
 }

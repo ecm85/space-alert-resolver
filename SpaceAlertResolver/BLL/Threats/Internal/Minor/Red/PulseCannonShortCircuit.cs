@@ -43,7 +43,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		private void AttackAllZones(int amount)
 		{
-			SittingDuck.TakeAttack(new ThreatDamage(amount, ThreatDamageType.Standard, EnumFactory.All<ZoneLocation>()));
+			AttackSittingDuck(new ThreatDamage(amount, ThreatDamageType.Standard, EnumFactory.All<ZoneLocation>()));
 		}
 
 		protected override void OnThreatTerminated()

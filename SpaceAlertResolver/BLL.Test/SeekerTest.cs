@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BLL.ShipComponents;
+using BLL.Threats.External;
+using BLL.Threats.Internal;
 using BLL.Threats.Internal.Serious.Yellow;
 using Moq;
 using NUnit.Framework;
@@ -75,7 +77,8 @@ namespace BLL.Test
 		private static void Test_MoveToMostPlayers_Helper(Dictionary<StationLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var seeker = new Seeker{CurrentStation = currentStation, TimeAppears = 4};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, null, null, null);
+			var threatController = new ThreatController(null, null, new List<ExternalThreat>(), new List<InternalThreat>());
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, threatController, null, null);
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;

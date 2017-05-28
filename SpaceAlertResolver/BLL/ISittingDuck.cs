@@ -8,8 +8,6 @@ namespace BLL
 {
 	public interface ISittingDuck
 	{
-		ThreatDamageResult TakeAttack(ThreatDamage damage);
-
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations);
 		void DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount);
 		void DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount);

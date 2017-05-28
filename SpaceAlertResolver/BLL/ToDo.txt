@@ -1,4 +1,10 @@
-﻿To add animations:
+﻿DI notes:
+Threats:
+  currently have time appears, zone (if applicable) and bonus threat (if applicable) set as props
+  currently have threat controller and sitting duck set in initialize
+
+
+To add animations:
 add DI
 add snapshot collector - inject it, make singleton per app (try a simple website test first)
 add a different kind of event for sub-event

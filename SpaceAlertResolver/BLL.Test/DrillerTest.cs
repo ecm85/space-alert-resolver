@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BLL.ShipComponents;
+using BLL.Threats.External;
+using BLL.Threats.Internal;
 using BLL.Threats.Internal.Minor.Red;
 using Moq;
 using NUnit.Framework;
@@ -93,7 +95,9 @@ namespace BLL.Test
 		private static void Test_MoveTowardsMostDamagedZone_Helper(Dictionary<ZoneLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
 			var driller = new Driller {CurrentStation = currentStation, TimeAppears = 3};
-			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, null, null, null);
+			var threatController = new ThreatController(null, null, new List<ExternalThreat>(), new List<InternalThreat>());
+			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, threatController, null, null);
+
 			foreach (var countByLocation in countsByLocation)
 			{
 				var count = countByLocation.Value;

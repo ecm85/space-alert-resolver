@@ -26,14 +26,14 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			var result = AttackCurrentZone(2);
-			Repair(result.DamageShielded);
+			var damageShielded = AttackCurrentZone(2);
+			Repair(damageShielded);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var result = AttackCurrentZone(3);
-			Repair(result.DamageShielded);
+			var damageShielded = AttackCurrentZone(3);
+			Repair(damageShielded);
 		}
 
 		protected override void PerformZAction(int currentTurn)
