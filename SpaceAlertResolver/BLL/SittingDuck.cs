@@ -175,11 +175,6 @@ namespace BLL
 			return ZonesByLocation[zoneLocation].DrainReactor(amount);
 		}
 
-		public void DrainAllReactors(int amount)
-		{
-			DrainReactors(EnumFactory.All<ZoneLocation>(), amount);
-		}
-
 		public void DrainEnergy(StationLocation stationLocation, int amount)
 		{
 			StandardStationsByLocation[stationLocation].DrainEnergy(amount);

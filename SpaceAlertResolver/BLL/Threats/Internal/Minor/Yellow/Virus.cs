@@ -12,7 +12,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		}
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.DrainAllReactors(1);
+			SittingDuck.DrainReactors(EnumFactory.All<ZoneLocation>(), 1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
