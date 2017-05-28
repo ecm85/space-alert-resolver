@@ -36,7 +36,7 @@ namespace BLL.ShipComponents
 			AlphaComponent.SetOpticsDisrupted(opticsDisrupted);
 		}
 
-		public abstract void DrainEnergy(int amount);
+		public abstract void DrainEnergy(int? amount);
 
 		public IDamageableComponent DamageableBravoComponent => BravoComponent;
 

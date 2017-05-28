@@ -142,27 +142,17 @@ namespace BLL
 			}
 		}
 
-		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations)
-		{
-			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainShield()).Sum();
-		}
-
-		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int? amount = null)
 		{
 			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainShield(amount)).Sum();
 		}
 
-		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations)
-		{
-			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainReactor()).Sum();
-		}
-
-		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int amount)
+		public int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int? amount = null)
 		{
 			return zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation].DrainReactor(amount)).Sum();
 		}
 
-		public void DrainEnergy(StationLocation stationLocation, int amount)
+		public void DrainEnergy(StationLocation stationLocation, int? amount)
 		{
 			StandardStationsByLocation[stationLocation].DrainEnergy(amount);
 		}

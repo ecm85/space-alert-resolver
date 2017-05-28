@@ -6,17 +6,12 @@
 		{
 		}
 
-		public int Drain(int amount)
+		public int Drain(int? amount)
 		{
 			var oldEnergy = Energy;
-			Energy -= amount;
+			Energy -= amount ?? Energy;
 			var currentEnergy = Energy;
 			return oldEnergy - currentEnergy;
-		}
-
-		internal int Empty()
-		{
-			return Drain(Energy);
 		}
 	}
 }

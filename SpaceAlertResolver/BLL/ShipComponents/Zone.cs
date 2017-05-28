@@ -107,22 +107,12 @@ namespace BLL.ShipComponents
 			return newDamageTokens;
 		}
 
-		public int DrainShield()
-		{
-			return UpperStation.DrainShield();
-		}
-
-		public int DrainShield(int amount)
+		public int DrainShield(int? amount)
 		{
 			return UpperStation.DrainShield(amount);
 		}
 
-		public int DrainReactor()
-		{
-			return LowerStation.EmptyReactor();
-		}
-
-		public int DrainReactor(int amount)
+		public int DrainReactor(int? amount)
 		{
 			return LowerStation.DrainReactor(amount);
 		}

@@ -16,19 +16,14 @@
 		{
 		}
 
-		public override void DrainEnergy(int amount)
+		public override void DrainEnergy(int? amount)
 		{
 			DrainReactor(amount);
 		}
 
-		public int EmptyReactor()
+		public int DrainReactor(int? amount)
 		{
-			return Reactor.Empty();
-		}
-
-		public int DrainReactor(int amount)
-		{
-			return Reactor.Drain(amount);
+			return Reactor.Drain(amount ?? Reactor.Energy);
 		}
 
 		public int EnergyInReactor => Reactor.Energy;

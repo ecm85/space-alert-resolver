@@ -21,7 +21,7 @@
 			return Shield.ShieldThroughAttack(amount);
 		}
 
-		public override void DrainEnergy(int amount)
+		public override void DrainEnergy(int? amount)
 		{
 			DrainShield(amount);
 		}
@@ -32,18 +32,9 @@
 			Shield.PerformEndOfTurn();
 		}
 
-		public int DrainShield()
+		public int DrainShield(int? amount)
 		{
-			var oldEnergy = Shield.Energy;
-			Shield.Energy = 0;
-			return oldEnergy;
-		}
-
-		public int DrainShield(int amount)
-		{
-			var oldEnergy = Shield.Energy;
-			Shield.Energy -= amount;
-			return oldEnergy;
+			return Shield.Drain(amount);
 		}
 
 		public void AddBonusShield(int amount)

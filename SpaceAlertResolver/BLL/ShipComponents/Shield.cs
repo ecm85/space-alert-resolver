@@ -99,5 +99,13 @@
 			var newShields = Energy;
 			return (oldShields - newShields) + amountShielded;
 		}
+
+		public int Drain(int? amount)
+		{
+			var oldEnergy = Energy;
+			Energy -= amount ?? Energy;
+			var currentEnergy = Energy;
+			return oldEnergy - currentEnergy;
+		}
 	}
 }
