@@ -42,7 +42,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			if (infectedPlayers == null)
 			{
 				infectedPlayers = new InfectedPlayers(this);
-				infectedPlayers.Initialize(SittingDuck, ThreatController);
+				infectedPlayers.Initialize(SittingDuck, ThreatController, EventMaster);
 				ThreatController.AddInternalThreat(infectedPlayers, TimeAppears, Position);
 			}
 			var playersInCurrentStation = SittingDuck.GetPlayersInStation(CurrentStation);

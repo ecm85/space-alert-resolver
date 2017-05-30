@@ -68,7 +68,7 @@ namespace BLL.Threats.Internal.Serious.Red
 			foreach (var newThreat in newThreats)
 			{
 				AllSabotage.Add(newThreat);
-				newThreat.Initialize(SittingDuck, ThreatController);
+				newThreat.Initialize(SittingDuck, ThreatController, EventMaster);
 				newThreat.SetThreatStatus(ThreatStatus.NotAppeared, false);
 				newThreat.SetThreatStatus(ThreatStatus.OnShip, true);
 				ThreatController.AddInternalTracklessThreat(newThreat);

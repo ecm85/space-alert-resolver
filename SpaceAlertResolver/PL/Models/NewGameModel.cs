@@ -36,7 +36,7 @@ namespace PL.Models
 
 			var players = Players
 				.Select(playerModel => PlayerFactory.CreatePlayer(
-					playerModel.Actions.Select(action => PlayerActionFactory.CreatePlayerAction(action.FirstAction, action.SecondAction, action.BonusAction.FirstAction)),
+					playerModel.Actions.Select(action => PlayerActionFactory.CreatePlayerAction(action.FirstAction, action.SecondAction, action.BonusAction?.FirstAction)),
 					playerModel.Index,
 					playerModel.PlayerColor,
 					playerModel.PlayerSpecialization))

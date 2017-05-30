@@ -45,6 +45,7 @@ namespace PL.Controllers
 			return inputModel;
 		}
 
+		[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")] //TODO: Fix this
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		[HttpPost]
 		[Route("ProcessGame")]
@@ -55,9 +56,22 @@ namespace PL.Controllers
 			if (game.Players.First().Actions.All(action => action.FirstActionSegment.SegmentType == PlayerActionType.BattleBots))
 				throw new InvalidOperationException("Successfully triggered test Exception. You can't do that many battle bots!");
 			var models = new List<GameSnapshotModel>();
-			var currentTurnModels = new Dictionary<string, GameSnapshotModel>();
-			game.PhaseStarting += (sender, eventArgs) => currentTurnModels[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = null;
-			game.PhaseEnded += (sender, eventArgs) => currentTurnModels[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = new GameSnapshotModel((Game)sender, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader);
+			var currentTurnSnapshotModelsByPhase = new Dictionary<string, GameSnapshotModel>();
+			IList<GameSnapshotModel> currentPhaseSubSnapshotModels = null; 
+			var currentTurnSubSnapshotModelsByPhase = new Dictionary<string, IList<GameSnapshotModel>>();
+			game.PhaseStarting += (sender, eventArgs) =>
+			{
+				currentTurnSnapshotModelsByPhase[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = null;
+				currentPhaseSubSnapshotModels = new List<GameSnapshotModel>();
+			};
+			game.PhaseEnded += (sender, eventArgs) =>
+			{
+				var key = eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader;
+				currentTurnSnapshotModelsByPhase[key] =
+					new GameSnapshotModel((Game) sender, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader);
+				currentTurnSubSnapshotModelsByPhase[key] = currentPhaseSubSnapshotModels;
+			};
+			game.EventMaster.EventTriggered += (sender, eventArgs) => currentPhaseSubSnapshotModels.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader, null, true));
 			game.StartGame();
 			var lost = false;
 			for (var i = 0; i < game.NumberOfTurns && !lost; i++)
@@ -65,15 +79,20 @@ namespace PL.Controllers
 				try
 				{
 					game.PerformTurn();
-					models.AddRange(currentTurnModels.Select(currentTurnModel => currentTurnModel.Value));
-					currentTurnModels.Clear();
+					foreach (var key in currentTurnSnapshotModelsByPhase.Keys)
+					{
+						models.AddRange(currentTurnSubSnapshotModelsByPhase[key]);
+						models.Add(currentTurnSnapshotModelsByPhase[key]);
+					}
+					currentTurnSnapshotModelsByPhase.Clear();
+					currentTurnSubSnapshotModelsByPhase.Clear();
 				}
 				catch (LoseException)
 				{
-					var currentPhase = currentTurnModels.Single(modelWithPhase => modelWithPhase.Value == null).Key;
+					var currentPhase = currentTurnSnapshotModelsByPhase.Single(modelWithPhase => modelWithPhase.Value == null).Key;
 					var currentPhaseTokens = currentPhase.Split(',');
-					currentTurnModels[currentPhase] = new GameSnapshotModel(game, currentPhaseTokens[0], currentPhaseTokens[1]);
-					models.AddRange(currentTurnModels.Values);
+					currentTurnSnapshotModelsByPhase[currentPhase] = new GameSnapshotModel(game, currentPhaseTokens[0], currentPhaseTokens[1]);
+					models.AddRange(currentTurnSnapshotModelsByPhase.Values);
 					lost = true;
 				}
 			}

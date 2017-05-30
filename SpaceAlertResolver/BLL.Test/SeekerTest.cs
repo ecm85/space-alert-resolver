@@ -94,7 +94,7 @@ namespace BLL.Test
 					.Setup(f => f.BlueDoorIsSealed)
 					.Returns(false);
 			}
-			seeker.Initialize(mockSittingDuck.Object, null);
+			seeker.Initialize(mockSittingDuck.Object, null, null);
 			seeker.MoveToMostPlayers();
 			Assert.AreEqual(expectedNewStation, seeker.CurrentStation);
 		}

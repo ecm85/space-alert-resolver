@@ -51,7 +51,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 				return;
 			var newProgeny = CreateProgeny(spreadToStation.Value);
 			Progeny.Add(newProgeny);
-			newProgeny.Initialize(SittingDuck, ThreatController);
+			newProgeny.Initialize(SittingDuck, ThreatController, EventMaster);
 			ThreatController.AddInternalThreat(newProgeny, TimeAppears, position);
 		}
 

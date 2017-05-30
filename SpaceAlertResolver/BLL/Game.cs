@@ -7,14 +7,12 @@ using BLL.Threats.External;
 using BLL.Threats.Internal;
 using BLL.Threats;
 using BLL.Tracks;
-using SimpleInjector;
 
 namespace BLL
 {
 	public class Game
 	{
-		private Container Container { get; set; }
-
+		public EventMaster EventMaster { get; set; }
 		private static readonly int[] phaseEndTurns = new[] { 3, 7, 12 };
 		public SittingDuck SittingDuck { get; }
 		public IList<Player> Players { get; }
@@ -37,9 +35,7 @@ namespace BLL
 			TrackConfiguration internalTrackConfiguration,
 			ILookup<ZoneLocation, DamageToken> initialDamage)
 		{
-			Container = new Container();
-			Container.Register<IFactory, Factory>();
-
+			EventMaster = new EventMaster();
 			GameStatus = GameStatus.InProgress;
 			NumberOfTurns = 12;
 			var externalTracksByZone = externalTrackConfigurationsByZone.ToDictionary(
@@ -52,7 +48,7 @@ namespace BLL
 			SittingDuck = new SittingDuck(ThreatController, this, initialDamage);
 			var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);
 			foreach (var threat in allThreats)
-				threat.Initialize(SittingDuck, ThreatController);
+				threat.Initialize(SittingDuck, ThreatController, EventMaster);
 			SittingDuck.SetPlayers(players);
 			Players = players;
 			foreach (var player in players)

@@ -34,7 +34,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			BonusThreat.Initialize(SittingDuck, ThreatController);
+			BonusThreat.Initialize(SittingDuck, ThreatController, EventMaster);
 			ThreatController.AddInternalThreat(BonusThreat, currentTurn);
 			while (BonusThreat.Position >= 0)
 				BonusThreat.Move(currentTurn);

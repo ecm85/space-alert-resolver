@@ -27,10 +27,13 @@ namespace PL.Models
 		public string PhaseSubDescription { get; }
 		public int TurnNumber { get; }
 
+		public bool IsSubPhase { get; }
+
 		public IEnumerable<PlayerModel> Players { get; }
 
-		public GameSnapshotModel(Game game, string phaseDescription, string phaseSubDescription)
+		public GameSnapshotModel(Game game, string phaseDescription, string phaseSubDescription, bool isSubPhase = false)
 		{
+			IsSubPhase = isSubPhase;
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
 			var parentThreats = internalThreats.Where(threat => threat.Parent == null).ToList();
 			var internalThreatsOnTrack = parentThreats

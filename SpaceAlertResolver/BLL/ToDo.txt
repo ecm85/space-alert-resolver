@@ -5,8 +5,6 @@ Threats:
 
 
 To add animations:
-add DI
-add snapshot collector - inject it, make singleton per app (try a simple website test first)
 add a different kind of event for sub-event
 add state for anything to track, i.e. shield draining, gun firing, losing health, taking damage, etc
 add server-side compression
@@ -16,6 +14,9 @@ update client to handle new sub-states:
   add option to view sub-events
 
 move to azure? find another host?
+
+
+later: add DI
 
 from game.cs:
 //TODO: Review the CA suppressions and the ones turned off

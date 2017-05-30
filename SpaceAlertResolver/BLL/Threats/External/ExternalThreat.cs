@@ -85,9 +85,13 @@ namespace BLL.Threats.External
 
 		private int Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
 		{
+			IsAttacking = true;
+			EventMaster.LogEvent("Attacking");
 			var bonusAttacks = GetThreatStatus(ThreatStatus.BonusAttack) ? 1 : 0;
 			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations, DistanceToShip);
 			AttackSittingDuck(damage);
+			IsAttacking = false;
+			EventMaster.LogEvent("Done Attacking");
 			return damage.DamageShielded;
 		}
 	}

@@ -113,7 +113,7 @@ namespace BLL.Test
 					.Setup(f => f.BlueDoorIsSealed)
 					.Returns(false);
 			}
-			driller.Initialize(mockSittingDuck.Object, null);
+			driller.Initialize(mockSittingDuck.Object, null, null);
 			driller.MoveTowardsMostDamagedZone();
 			Assert.AreEqual(expectedNewStation, driller.CurrentStation);
 		}

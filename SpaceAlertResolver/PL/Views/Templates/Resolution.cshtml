@@ -20,7 +20,7 @@
 	</div>
 	<div>
 		<div class="btn-group btn-group-vertical phase-selector">
-			<div ng-repeat="phase in currentTurn" class="btn btn-default phase-selector-option" ng-model="currentPhaseIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">
+			<div ng-repeat="phase in currentTurn" ng-if="!phase.isSubPhase" class="btn btn-default phase-selector-option" ng-model="currentPhaseIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">
 				<div>{{phase.phaseDescription}}</div>
 				<div>{{phase.phaseSubDescription}}</div>
 			</div>

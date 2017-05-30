@@ -11,6 +11,9 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
+		public bool IsAttacking { get; set; }
+		public bool IsMoving { get; set; }
+
 		public event EventHandler<ThreatDamageEventArgs> AttackedSittingDuck = (sender, args) => { };
 
 		protected void AttackSittingDuck(ThreatDamage threatDamage)
@@ -55,11 +58,14 @@ namespace BLL.Threats
 		{
 		}
 
-		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController)
+		public void Initialize(ISittingDuck sittingDuck, ThreatController threatController, EventMaster eventMaster)
 		{
+			EventMaster = eventMaster;
 			SittingDuck = sittingDuck;
 			ThreatController = threatController;
 		}
+
+		protected EventMaster EventMaster { get; private set; }
 
 		public bool IsDefeated => GetThreatStatus(ThreatStatus.Defeated);
 		public bool IsSurvived => GetThreatStatus(ThreatStatus.Survived);
@@ -154,9 +160,15 @@ namespace BLL.Threats
 
 		public void Move(int currentTurn, int amount)
 		{
+			IsMoving = true;
+			EventMaster.LogEvent("Moving");
 			Moving(null, null);
 			var oldPosition = Position;
-			Position -= amount;
+			for (var i = 0; i < amount; i++)
+			{
+				Position--;
+				EventMaster.LogEvent("Moved a space.");
+			}
 			var newPosition = Position;
 			var crossedBreakpoints = Track.GetCrossedBreakpoints(oldPosition, newPosition);
 			foreach (var breakpoint in crossedBreakpoints)
@@ -176,6 +188,8 @@ namespace BLL.Threats
 					}
 			}
 			Moved(null, null);
+			IsMoving = true;
+			EventMaster.LogEvent("Done Moving");
 		}
 	}
 }
