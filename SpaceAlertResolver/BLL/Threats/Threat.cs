@@ -12,7 +12,6 @@ namespace BLL.Threats
 		public event EventHandler TurnEnded = (sender, args) => { };
 
 		public bool IsAttacking { get; set; }
-		public bool IsMoving { get; set; }
 
 		public event EventHandler<ThreatDamageEventArgs> AttackedSittingDuck = (sender, args) => { };
 
@@ -160,7 +159,6 @@ namespace BLL.Threats
 
 		public void Move(int currentTurn, int amount)
 		{
-			IsMoving = true;
 			EventMaster.LogEvent("Moving");
 			Moving(null, null);
 			var oldPosition = Position;
@@ -188,7 +186,6 @@ namespace BLL.Threats
 					}
 			}
 			Moved(null, null);
-			IsMoving = true;
 			EventMaster.LogEvent("Done Moving");
 		}
 	}

@@ -25,6 +25,8 @@ namespace PL.Models
 		public bool NeedsBonusExternalThreat { get; set; }
 		public bool NeedsBonusInternalThreat { get; set; }
 
+		public bool IsAttacking { get; set; }
+
 		public InternalThreatModel BonusInternalThreat { get; set; }
 		public ExternalThreatModel BonusExternalThreat { get; set; }
 
