@@ -18,6 +18,11 @@ namespace BLL.Threats.External
 			_currentZone = currentZone;
 		}
 
+		protected void MoveToNewZone(ZoneLocation newZone)
+		{
+			_currentZone = newZone;
+		}
+
 		public int Shields { get; protected set; }
 		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
 		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
