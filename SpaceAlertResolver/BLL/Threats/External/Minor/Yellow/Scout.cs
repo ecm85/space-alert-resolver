@@ -21,7 +21,7 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(2, ThreatDamageType.IgnoresShields);
+			Attack(2, ThreatDamageType.IgnoresShields);
 		}
 
 		protected override void OnHealthReducedToZero()

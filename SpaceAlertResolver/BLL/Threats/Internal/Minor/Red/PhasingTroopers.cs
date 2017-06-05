@@ -28,7 +28,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 3 : 4);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 3 : 4);
 		}
 
 		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;

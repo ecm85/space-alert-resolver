@@ -58,15 +58,13 @@ namespace PL.Models
 			return new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, damageTokens);
 		}
 
-		private static IList<ExternalThreat> CreateExternalThreats(IEnumerable<ExternalThreatModel> threatModels, ZoneLocation? zone = null)
+		private static IList<ExternalThreat> CreateExternalThreats(IEnumerable<ExternalThreatModel> threatModels, ZoneLocation zone)
 		{
 			return threatModels
 				.Select(threatModel =>
 				{
 					var threat = ExternalThreatFactory.CreateThreat<ExternalThreat>(threatModel.Id);
-					threat.TimeAppears = threatModel.TimeAppears;
-					if (zone != null)
-						threat.CurrentZone = zone.Value;
+					threat.SetInitialPlacement(threatModel.TimeAppears, zone);
 					if (threat.NeedsBonusInternalThreat)
 						((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.BonusInternalThreat.Id);
 					if (threat.NeedsBonusExternalThreat)
@@ -82,7 +80,7 @@ namespace PL.Models
 				.Select(threatModel =>
 				{
 					var threat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.Id);
-					threat.TimeAppears = threatModel.TimeAppears;
+					threat.SetInitialPlacement(threatModel.TimeAppears);
 					if (threat.NeedsBonusInternalThreat)
 						((IThreatWithBonusThreat<InternalThreat>)threat).BonusThreat = InternalThreatFactory.CreateThreat<InternalThreat>(threatModel.BonusInternalThreat.Id);
 					if (threat.NeedsBonusExternalThreat)

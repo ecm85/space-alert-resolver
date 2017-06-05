@@ -14,7 +14,7 @@ namespace BLL.Threats.Internal.Serious.White
 			if (IsDamaged)
 				MoveBlue();
 			else
-				Damage(2);
+				Attack(2);
 		}
 
 		public override string Id { get; } = "SI1-01";

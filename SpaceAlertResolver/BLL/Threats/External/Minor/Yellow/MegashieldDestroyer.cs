@@ -13,17 +13,17 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(1, ThreatDamageType.DoubleDamageThroughShields);
+			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(1, ThreatDamageType.DoubleDamageThroughShields);
+			Attack(1, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(3, ThreatDamageType.DoubleDamageThroughShields);
+			Attack(3, ThreatDamageType.DoubleDamageThroughShields);
 		}
 
 		public override string Id { get; } = "E2-103";

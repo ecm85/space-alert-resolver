@@ -19,17 +19,17 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(1);
+			Attack(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 1 : 2);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 1 : 2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
 		}
 
 		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;

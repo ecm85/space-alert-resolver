@@ -39,7 +39,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			DamageAllZones(3);
+			AttackAllZones(3);
 		}
 
 		private void OnPlayerActionsEnding(object sender, EventArgs args)

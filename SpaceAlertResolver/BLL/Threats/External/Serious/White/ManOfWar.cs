@@ -9,19 +9,19 @@
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 			Speed++;
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(3);
+			Attack(3);
 			Shields++;
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(3);
+			Attack(3);
 		}
 
 		public override string Id { get; } = "SE1-02";

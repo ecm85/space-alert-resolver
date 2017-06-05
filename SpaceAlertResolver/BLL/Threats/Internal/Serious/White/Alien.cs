@@ -25,7 +25,7 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void PerformYAction(int currentTurn)
 		{
 			ChangeDecks();
-			Damage(SittingDuck.GetPlayerCount(CurrentStation));
+			Attack(SittingDuck.GetPlayerCount(CurrentStation));
 		}
 
 		protected override void PerformZAction(int currentTurn)

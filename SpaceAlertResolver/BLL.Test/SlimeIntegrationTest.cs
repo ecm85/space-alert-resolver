@@ -1059,7 +1059,8 @@ namespace BLL.Test
 			};
 			var externalThreats = new ExternalThreat[0];
 
-			var slimeB = new SlimeB {TimeAppears = timeAppears};
+			var slimeB = new SlimeB();
+			slimeB.SetInitialPlacement(timeAppears);
 			var internalThreats = new InternalThreat[] {slimeB};
 
 			var bonusThreats = new Threat[0];

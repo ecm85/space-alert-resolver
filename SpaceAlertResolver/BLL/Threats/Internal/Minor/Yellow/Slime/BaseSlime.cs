@@ -14,7 +14,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(2);
+			Attack(2);
 		}
 
 		public override void PlaceOnTrack(Track track, int trackPosition)

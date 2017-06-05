@@ -10,11 +10,19 @@ namespace BLL.Threats.Internal
 	public abstract class InternalThreat : Threat
 	{
 		public InternalThreat Parent { get; protected set; }
+
 		public IList<StationLocation> CurrentStations { get; private set; }
 		public virtual IList<StationLocation> DisplayOnTrackStations => CurrentStations.Concat(WarningIndicatorStations).ToList();
 		public virtual IList<StationLocation> DisplayOnShipStations => CurrentStations;
 		public IList<StationLocation> WarningIndicatorStations { get; } = new List<StationLocation>();
 
+		public void SetInitialPlacement(int timeAppears)
+		{
+			TimeAppears = timeAppears;
+		}
+
+		public override ThreatDamageType StandardDamageType { get; } = ThreatDamageType.IgnoresShields;
+		public override int? DamageDistanceToSource => null;
 		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
@@ -34,7 +42,7 @@ namespace BLL.Threats.Internal
 			set { CurrentStations = new List<StationLocation>{value}; }
 		}
 
-		protected ZoneLocation CurrentZone => CurrentStation.ZoneLocation();
+		public override ZoneLocation CurrentZone => CurrentStation.ZoneLocation();
 
 		protected IList<ZoneLocation> CurrentZones
 		{
@@ -131,26 +139,6 @@ namespace BLL.Threats.Internal
 		internal void ChangeDecks()
 		{
 			MoveToNewStation(CurrentStation.OppositeStationLocation());
-		}
-
-		protected void Damage(int amount)
-		{
-			Damage(amount, new [] {CurrentZone});
-		}
-
-		protected void DamageOtherTwoZones(int amount)
-		{
-			Damage(amount, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
-		}
-
-		protected void DamageAllZones(int amount)
-		{
-			Damage(amount, EnumFactory.All<ZoneLocation>());
-		}
-
-		protected void Damage(int amount, IList<ZoneLocation> zones)
-		{
-			AttackSittingDuck(new ThreatDamage(amount, ThreatDamageType.IgnoresShields, zones));
 		}
 
 		protected override void OnReachingEndOfTrack()

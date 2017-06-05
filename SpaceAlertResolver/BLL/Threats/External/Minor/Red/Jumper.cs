@@ -12,21 +12,21 @@ namespace BLL.Threats.External.Minor.Red
 		protected override void PerformXAction(int currentTurn)
 		{
 			Jump(JumpDestination);
-			AttackCurrentZone(1);
+			Attack(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(1);
+			Attack(1);
 			Jump(JumpDestination);
-			AttackCurrentZone(1);
+			Attack(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(3);
+			Attack(3);
 			Jump(JumpDestination);
-			AttackCurrentZone(1);
+			Attack(1);
 		}
 
 		protected abstract ZoneLocation JumpDestination { get; }

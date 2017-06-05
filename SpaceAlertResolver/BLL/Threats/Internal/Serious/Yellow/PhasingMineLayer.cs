@@ -56,7 +56,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		private void DetonateMines()
 		{
-			Damage(2, MineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
+			AttackSpecificZones(2, MineLocations.Select(mineLocation => mineLocation.ZoneLocation()).ToList());
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)

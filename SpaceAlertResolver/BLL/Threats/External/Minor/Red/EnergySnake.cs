@@ -25,19 +25,19 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			var damageShielded = AttackCurrentZone(1);
+			var damageShielded = Attack(1);
 			Repair(damageShielded);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			var damageShielded = AttackCurrentZone(2);
+			var damageShielded = Attack(2);
 			Repair(damageShielded);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(1 + SittingDuck.GetEnergyInReactor(CurrentZone));
+			Attack(1 + SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
 		private void OnDamageResolutionEnding(object sender, EventArgs args)
 		{

@@ -51,7 +51,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			var removedRocketCount = SittingDuck.RemoveAllRockets();
 			for (var i = 0; i < removedRocketCount; i++)
-				AttackSittingDuck(new ThreatDamage(2, ThreatDamageType.Standard, new[] {ZoneLocation.Red}));
+				AttackSpecificZone(2, ZoneLocation.Red, ThreatDamageType.Standard);
 		}
 
 		protected override void OnThreatTerminated()

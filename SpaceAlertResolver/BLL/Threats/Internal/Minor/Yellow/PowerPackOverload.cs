@@ -40,7 +40,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
-			Damage(3, CurrentZones);
+			AttackSpecificZones(3, CurrentZones);
 		}
 
 		private void OnPlayerActionsEnding(object sender, EventArgs args)

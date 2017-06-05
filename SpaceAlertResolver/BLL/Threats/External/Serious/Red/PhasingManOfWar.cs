@@ -19,19 +19,19 @@ namespace BLL.Threats.External.Serious.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 1 : 2);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 1 : 2);
 			Speed++;
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 2 : 3);
 			Shields++;
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 4 : 5);
+			Attack(phasingThreatCore.WasPhasedOutAtStartOfTurn ? 4 : 5);
 		}
 
 		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;

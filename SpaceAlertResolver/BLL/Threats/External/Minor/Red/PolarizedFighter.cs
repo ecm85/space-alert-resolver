@@ -14,17 +14,17 @@ namespace BLL.Threats.External.Minor.Red
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(1);
+			Attack(1);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(4);
+			Attack(4);
 		}
 
 		public override string Id { get; } = "E3-108";

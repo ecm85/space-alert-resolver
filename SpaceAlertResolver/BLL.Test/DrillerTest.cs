@@ -94,7 +94,8 @@ namespace BLL.Test
 
 		private static void Test_MoveTowardsMostDamagedZone_Helper(Dictionary<ZoneLocation, int> countsByLocation, StationLocation currentStation, StationLocation expectedNewStation)
 		{
-			var driller = new Driller {CurrentStation = currentStation, TimeAppears = 3};
+			var driller = new Driller {CurrentStation = currentStation};
+			driller.SetInitialPlacement(3);
 			var threatController = new ThreatController(null, null, new List<ExternalThreat>(), new List<InternalThreat>());
 			var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, threatController, null, null);
 

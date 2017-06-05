@@ -46,7 +46,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(new[] {StationLocation.LowerWhite, StationLocation.UpperWhite});
-			Damage(3);
+			Attack(3);
 		}
 
 		public override bool IsDamageable => base.IsDamageable && phasingThreatCore.IsDamageable;

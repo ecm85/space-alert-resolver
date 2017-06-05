@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		}
 		protected override void PerformXAction(int currentTurn)
 		{
-			Damage(SittingDuck.GetEnergyInReactor(CurrentZone));
+			Attack(SittingDuck.GetEnergyInReactor(CurrentZone));
 		}
 
 		protected override void PerformYAction(int currentTurn)
@@ -21,7 +21,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(3);
+			Attack(3);
 		}
 
 		protected override void OnHealthReducedToZero()

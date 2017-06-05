@@ -31,7 +31,8 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
-			var fighter = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
+			var fighter = new Fighter();
+			fighter.SetInitialPlacement(5, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { fighter };
 
 			var internalThreats = new InternalThreat[0];
@@ -66,14 +67,20 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
-			var destroyer = new Destroyer { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
-			var fighter1 = new Fighter { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
-			var fighter2 = new Fighter { TimeAppears = 6, CurrentZone = ZoneLocation.White };
+			var destroyer = new Destroyer();
+			destroyer.SetInitialPlacement(4, ZoneLocation.Blue);
+			var fighter1 = new Fighter();
+			fighter1.SetInitialPlacement(5, ZoneLocation.Red);
+			var fighter2 = new Fighter();
+			fighter2.SetInitialPlacement(6, ZoneLocation.White);
 			var externalThreats = new ExternalThreat[] { destroyer, fighter1, fighter2 };
 
-			var skirmishers = new SkirmishersA { TimeAppears = 4 };
-			var fissure = new Fissure { TimeAppears = 2 };
-			var nuclearDevice = new NuclearDevice { TimeAppears = 6 };
+			var skirmishers = new SkirmishersA();
+			skirmishers.SetInitialPlacement(4);
+			var fissure = new Fissure();
+			fissure.SetInitialPlacement(2);
+			var nuclearDevice = new NuclearDevice();
+			nuclearDevice.SetInitialPlacement(6);
 			var internalThreats = new InternalThreat[] { skirmishers, fissure, nuclearDevice };
 
 			var bonusThreats = new Threat[0];
@@ -206,12 +213,16 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
-			var dimensionSpider = new DimensionSpider { TimeAppears = 6, CurrentZone = ZoneLocation.Blue };
-			var asteroid = new Asteroid { TimeAppears = 4, CurrentZone = ZoneLocation.Red };
-			var cryoshieldFighter = new CryoshieldFighter { TimeAppears = 1, CurrentZone = ZoneLocation.Red };
+			var dimensionSpider = new DimensionSpider();
+			dimensionSpider.SetInitialPlacement(6, ZoneLocation.Blue);
+			var asteroid = new Asteroid();
+			asteroid.SetInitialPlacement(4, ZoneLocation.Red);
+			var cryoshieldFighter = new CryoshieldFighter();
+			cryoshieldFighter.SetInitialPlacement(1, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { dimensionSpider, asteroid, cryoshieldFighter };
 
-			var shambler = new Shambler { TimeAppears = 5 };
+			var shambler = new Shambler();
+			shambler.SetInitialPlacement(5);
 			var internalThreats = new InternalThreat[] { shambler };
 
 			var bonusThreats = new Threat[0];
@@ -271,12 +282,16 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
-			var dimensionSpider = new DimensionSpider { TimeAppears = 6, CurrentZone = ZoneLocation.Blue };
-			var cryoshieldFrigate = new CryoshieldFrigate { TimeAppears = 4, CurrentZone = ZoneLocation.Red };
-			var energyCloud = new EnergyCloud { TimeAppears = 1, CurrentZone = ZoneLocation.Red };
+			var dimensionSpider = new DimensionSpider();
+			dimensionSpider.SetInitialPlacement(6, ZoneLocation.Blue);
+			var cryoshieldFrigate = new CryoshieldFrigate();
+			cryoshieldFrigate.SetInitialPlacement(4, ZoneLocation.Red);
+			var energyCloud = new EnergyCloud();
+			energyCloud.SetInitialPlacement(1, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { dimensionSpider, cryoshieldFrigate, energyCloud };
 
-			var battleBotUprising = new BattleBotUprising { TimeAppears = 5 };
+			var battleBotUprising = new BattleBotUprising();
+			battleBotUprising.SetInitialPlacement(5);
 			var internalThreats = new InternalThreat[] { battleBotUprising };
 
 			var bonusThreats = new Threat[0];
@@ -337,12 +352,16 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track3;
 
-			var spacecraftCarrier = new SpacecraftCarrier { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
-			var manOfWar = new ManOfWar { TimeAppears = 5, CurrentZone = ZoneLocation.White };
-			var frigate = new Frigate { TimeAppears = 7, CurrentZone = ZoneLocation.Red };
+			var spacecraftCarrier = new SpacecraftCarrier();
+			spacecraftCarrier.SetInitialPlacement(4, ZoneLocation.Blue);
+			var manOfWar = new ManOfWar();
+			manOfWar.SetInitialPlacement(5, ZoneLocation.White);
+			var frigate = new Frigate();
+			frigate.SetInitialPlacement(7, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { spacecraftCarrier, manOfWar, frigate };
 
-			var centralLaserJam = new CentralLaserJam { TimeAppears = 3 };
+			var centralLaserJam = new CentralLaserJam();
+			centralLaserJam.SetInitialPlacement(3);
 			var internalThreats = new InternalThreat[] { centralLaserJam };
 
 			var bonusThreats = new Threat[0];
@@ -383,15 +402,22 @@ namespace BLL.Test
 			};
 			const TrackConfiguration internalTrack = TrackConfiguration.Track7;
 
-			var armoredGrappler = new ArmoredGrappler { TimeAppears = 1, CurrentZone = ZoneLocation.Blue };
-			var meteoroid = new Meteoroid { TimeAppears = 4, CurrentZone = ZoneLocation.Blue };
-			var dimensionSpider = new DimensionSpider { TimeAppears = 2, CurrentZone = ZoneLocation.White };
-			var gunship = new Gunship { TimeAppears = 6, CurrentZone = ZoneLocation.White };
-			var asteroid = new Asteroid { TimeAppears = 5, CurrentZone = ZoneLocation.Red };
-			var destroyer = new Destroyer { TimeAppears = 8, CurrentZone = ZoneLocation.Red };
+			var armoredGrappler = new ArmoredGrappler();
+			armoredGrappler.SetInitialPlacement(1, ZoneLocation.Blue);
+			var meteoroid = new Meteoroid();
+			meteoroid.SetInitialPlacement(4, ZoneLocation.Blue);
+			var dimensionSpider = new DimensionSpider();
+			dimensionSpider.SetInitialPlacement(2, ZoneLocation.White);
+			var gunship = new Gunship();
+			gunship.SetInitialPlacement(6, ZoneLocation.White);
+			var asteroid = new Asteroid();
+			asteroid.SetInitialPlacement(5, ZoneLocation.Red);
+			var destroyer = new Destroyer();
+			destroyer.SetInitialPlacement(8, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { armoredGrappler, meteoroid, dimensionSpider, gunship, asteroid, destroyer };
 
-			var shambler = new Shambler{ TimeAppears = 4 };
+			var shambler = new Shambler();
+			shambler.SetInitialPlacement(4);
 			var internalThreats = new InternalThreat[] { shambler };
 
 			var bonusThreats = new Threat[0];
@@ -520,18 +546,26 @@ namespace BLL.Test
 				{ZoneLocation.White, TrackConfiguration.Track2},
 				{ZoneLocation.Red, TrackConfiguration.Track5}
 			};
-			var internalTrack = TrackConfiguration.Track4;
+			const TrackConfiguration internalTrack = TrackConfiguration.Track4;
 
-			var interstellarOctopus = new InterstellarOctopus { TimeAppears = 3, CurrentZone = ZoneLocation.Blue };
-			var meteoroid = new Meteoroid { TimeAppears = 8, CurrentZone = ZoneLocation.Blue };
-			var amoeba = new Amoeba { TimeAppears = 2, CurrentZone = ZoneLocation.White };
-			var stealthFighter = new StealthFighter { TimeAppears = 4, CurrentZone = ZoneLocation.White };
-			var spinningSaucer = new SpinningSaucer { TimeAppears = 7, CurrentZone = ZoneLocation.White };
-			var armoredGrappler = new ArmoredGrappler { TimeAppears = 1, CurrentZone = ZoneLocation.Red };
+			var interstellarOctopus = new InterstellarOctopus();
+			interstellarOctopus.SetInitialPlacement(3, ZoneLocation.Blue);
+			var meteoroid = new Meteoroid();
+			meteoroid.SetInitialPlacement(8, ZoneLocation.Blue);
+			var amoeba = new Amoeba();
+			amoeba.SetInitialPlacement(2, ZoneLocation.White);
+			var stealthFighter = new StealthFighter();
+			stealthFighter.SetInitialPlacement(4, ZoneLocation.White);
+			var spinningSaucer = new SpinningSaucer();
+			spinningSaucer.SetInitialPlacement(7, ZoneLocation.White);
+			var armoredGrappler = new ArmoredGrappler();
+			armoredGrappler.SetInitialPlacement(1, ZoneLocation.Red);
 			var externalThreats = new ExternalThreat[] { interstellarOctopus, meteoroid, amoeba, stealthFighter, spinningSaucer, armoredGrappler };
 
-			var commandosB = new CommandosB() { TimeAppears = 5 };
-			var hackedShieldsB = new HackedShieldsB() { TimeAppears = 8 };
+			var commandosB = new CommandosB();
+			commandosB.SetInitialPlacement(5);
+			var hackedShieldsB = new HackedShieldsB();
+			hackedShieldsB.SetInitialPlacement(8);
 			var internalThreats = new InternalThreat[] { commandosB, hackedShieldsB };
 
 			var bonusThreats = new Threat[0];

@@ -24,7 +24,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(3);
+			Attack(3);
 		}
 
 		public override string Id { get; } = "SI2-01";

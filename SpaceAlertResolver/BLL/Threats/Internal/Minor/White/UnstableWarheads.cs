@@ -34,7 +34,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(RemainingHealth * 3);
+			Attack(RemainingHealth * 3);
 		}
 
 		protected override void OnThreatTerminated()

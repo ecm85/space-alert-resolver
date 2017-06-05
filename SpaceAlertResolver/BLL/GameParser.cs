@@ -179,8 +179,9 @@ namespace BLL
 				if (nextThreatInfo != null && nextThreatInfo.IsValid())
 				{
 					var threat = nextThreatInfo.Threat;
-					threat.CurrentZone = nextThreatInfo.ZoneLocation.GetValueOrDefault();
-					threat.TimeAppears = nextThreatInfo.TimeAppears.GetValueOrDefault();
+					threat.SetInitialPlacement(
+						nextThreatInfo.TimeAppears.GetValueOrDefault(),
+						nextThreatInfo.ZoneLocation.GetValueOrDefault());
 					InitializeBonusThreats(nextThreatInfo);
 					externalThreats.Add(threat);
 					nextThreatInfo = null;
@@ -230,7 +231,7 @@ namespace BLL
 				if (nextThreatInfo != null && nextThreatInfo.IsValid())
 				{
 					var threat = nextThreatInfo.Threat;
-					threat.TimeAppears = nextThreatInfo.TimeAppears.GetValueOrDefault();
+					threat.SetInitialPlacement(nextThreatInfo.TimeAppears.GetValueOrDefault());
 					InitializeBonusThreats(nextThreatInfo);
 					internalThreats.Add(threat);
 					nextThreatInfo = null;

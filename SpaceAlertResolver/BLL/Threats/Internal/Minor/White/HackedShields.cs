@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(2);
+			Attack(2);
 		}
 	}
 }

@@ -30,7 +30,7 @@ namespace BLL.Threats.Internal.Serious.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(4);
+			Attack(4);
 		}
 
 		public override string Id { get; } = "SI3-101";
@@ -87,7 +87,7 @@ namespace BLL.Threats.Internal.Serious.Red
 					.Where(player => !player.IsKnockedOut)
 					.Select(player => player.CurrentStation.StationLocation.ZoneLocation())
 					.ToList();
-				Damage(2, stationsToDamage);
+				AttackSpecificZones(2, stationsToDamage);
 			}
 
 			public override string Id { get; } = "SI3-101";

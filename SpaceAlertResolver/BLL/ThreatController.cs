@@ -184,7 +184,7 @@ namespace BLL
 
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears, int position)
 		{
-			newThreat.TimeAppears = timeAppears;
+			newThreat.SetInitialPlacement(timeAppears);
 			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			newThreat.PlaceOnTrack(InternalTrack, position);
 			InternalThreats.Add(newThreat);
@@ -192,7 +192,7 @@ namespace BLL
 
 		public void AddInternalThreat(InternalThreat newThreat, int timeAppears)
 		{
-			newThreat.TimeAppears = timeAppears;
+			newThreat.SetInitialPlacement(timeAppears);
 			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			newThreat.PlaceOnTrack(InternalTrack);
 			InternalThreats.Add(newThreat);
@@ -205,8 +205,7 @@ namespace BLL
 
 		public void AddExternalThreat(ExternalThreat newThreat, int timeAppears, ZoneLocation zoneLocation)
 		{
-			newThreat.CurrentZone = zoneLocation;
-			newThreat.TimeAppears = timeAppears;
+			newThreat.SetInitialPlacement(timeAppears, zoneLocation);
 			newThreat.PlaceOnTrack(ExternalTracks[zoneLocation]);
 			newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
 			foreach (var threat in externalThreatStatusEffects.Concat(singleTurnExternalThreatStatusEffects))

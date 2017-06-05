@@ -19,14 +19,14 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void PerformYAction(int currentTurn)
 		{
 			if (IsAnyPlayerPresent())
-				Damage(2);
+				Attack(2);
 			else
 				Repair(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(4);
+			Attack(4);
 		}
 
 		public override string Id { get; } = "SI1-101";

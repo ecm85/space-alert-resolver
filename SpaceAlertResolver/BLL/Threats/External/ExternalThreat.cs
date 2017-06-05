@@ -9,13 +9,24 @@ namespace BLL.Threats.External
 {
 	public abstract class ExternalThreat : Threat
 	{
-		public ZoneLocation CurrentZone { get; set; }
+		private ZoneLocation _currentZone;
+		public override ZoneLocation CurrentZone => _currentZone;
+
+		public void SetInitialPlacement(int timeAppears, ZoneLocation currentZone)
+		{
+			TimeAppears = timeAppears;
+			_currentZone = currentZone;
+		}
+
 		public int Shields { get; protected set; }
 		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
 		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
 
 		protected int DistanceToShip => Track.DistanceToThreat(Position);
 
+		public override ThreatDamageType StandardDamageType { get; } = ThreatDamageType.Standard;
+
+		public override int? DamageDistanceToSource => DistanceToShip;
 		public virtual bool IsDamageable => IsOnTrack;
 
 		protected ExternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int shields, int health, int speed) :
@@ -61,38 +72,6 @@ namespace BLL.Threats.External
 		public virtual bool IsPriorityTargetFor(PlayerDamage damage)
 		{
 			return false;
-		}
-
-		protected void AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
-		{
-			Attack(amount, threatDamageType, zones);
-		}
-
-		protected int AttackCurrentZone(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
-		{
-			return Attack(amount, threatDamageType, new[] { CurrentZone });
-		}
-
-		protected void AttackAllZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
-		{
-			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>());
-		}
-
-		protected void AttackOtherTwoZones(int amount, ThreatDamageType threatDamageType = ThreatDamageType.Standard)
-		{
-			Attack(amount, threatDamageType, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList());
-		}
-
-		private int Attack(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations)
-		{
-			IsAttacking = true;
-			EventMaster.LogEvent("Attacking");
-			var bonusAttacks = GetThreatStatus(ThreatStatus.BonusAttack) ? 1 : 0;
-			var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType, zoneLocations, DistanceToShip);
-			AttackSittingDuck(damage);
-			IsAttacking = false;
-			EventMaster.LogEvent("Done Attacking");
-			return damage.DamageShielded;
 		}
 	}
 }

@@ -9,18 +9,18 @@
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 			Repair(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 		}
 
 		protected override void OnHealthReducedToZero()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BLL.ShipComponents;
 using BLL.Tracks;
 
 namespace BLL.Threats
@@ -11,14 +12,15 @@ namespace BLL.Threats
 		public event EventHandler Moved = (sender, args) => { };
 		public event EventHandler TurnEnded = (sender, args) => { };
 
-		public bool IsAttacking { get; set; }
+		public abstract ZoneLocation CurrentZone { get; }
+
+		public int? AmountAttackingFor { get; set; }
+		public ZoneLocation? ZoneUnderAttack { get; set; }
+
+		public abstract ThreatDamageType StandardDamageType { get; }
+		public abstract int? DamageDistanceToSource { get; }
 
 		public event EventHandler<ThreatDamageEventArgs> AttackedSittingDuck = (sender, args) => { };
-
-		protected void AttackSittingDuck(ThreatDamage threatDamage)
-		{
-			AttackedSittingDuck(this, new ThreatDamageEventArgs {ThreatDamage = threatDamage});
-		}
 
 		private IList<ThreatStatus> ThreatStatuses { get; } = new List<ThreatStatus>();
 
@@ -84,7 +86,7 @@ namespace BLL.Threats
 
 		protected virtual int PointsForSurviving => ThreatPoints.GetPointsForSurviving(ThreatType, Difficulty);
 
-		public int TimeAppears { get; set; }
+		public int TimeAppears { get; protected set; }
 		protected int TotalHealth { get; }
 		public int RemainingHealth { get; protected set; }
 		public int Speed { get; set; }
@@ -187,6 +189,44 @@ namespace BLL.Threats
 			}
 			Moved(null, null);
 			EventMaster.LogEvent("Done Moving");
+		}
+
+		protected int Attack(int amount, ThreatDamageType? threatDamageType = null)
+		{
+			return AttackSpecificZone(amount, CurrentZone, threatDamageType);
+		}
+
+		protected int AttackSpecificZone(int amount, ZoneLocation zone, ThreatDamageType? threatDamageType = null)
+		{
+			return AttackSpecificZones(amount, new [] {zone}, threatDamageType);
+		}
+
+		protected void AttackOtherTwoZones(int amount, ThreatDamageType? threatDamageType = null)
+		{
+			AttackSpecificZones(amount, EnumFactory.All<ZoneLocation>().Except(new[] { CurrentZone }).ToList(), threatDamageType);
+		}
+
+		protected void AttackAllZones(int amount, ThreatDamageType? threatDamageType = null)
+		{
+			AttackSpecificZones(amount, EnumFactory.All<ZoneLocation>(), threatDamageType);
+		}
+
+		protected int AttackSpecificZones(int amount, IList<ZoneLocation> zones, ThreatDamageType? threatDamageType = null)
+		{
+			var damageShielded = 0;
+			foreach (var zoneLocation in zones)
+			{
+				AmountAttackingFor = amount;
+				ZoneUnderAttack = zoneLocation;
+				EventMaster.LogEvent("Attacking");
+				var bonusAttacks = GetThreatStatus(ThreatStatus.BonusAttack) ? 1 : 0;
+				var damage = new ThreatDamage(amount + bonusAttacks, threatDamageType ?? StandardDamageType, zoneLocation, DamageDistanceToSource);
+				AttackedSittingDuck(this, new ThreatDamageEventArgs {ThreatDamage = damage});
+				damageShielded += damage.DamageShielded;
+			}
+			AmountAttackingFor = null;
+			EventMaster.LogEvent("Done Attacking");
+			return damageShielded;
 		}
 	}
 }

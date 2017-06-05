@@ -21,7 +21,7 @@
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(6);
+			Attack(6);
 		}
 
 		public override string Id { get; } = "E2-01";

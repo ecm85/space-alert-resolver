@@ -27,7 +27,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Damage(1, CurrentZones);
+			AttackSpecificZones(1, CurrentZones);
 		}
 
 		protected override void PerformZAction(int currentTurn)

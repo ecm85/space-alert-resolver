@@ -47,9 +47,9 @@ namespace BLL.Threats.Internal.Serious.Red
 			if (attachedPlayer != null)
 			{
 				if (attachedPlayer.Interceptors != null)
-					AttackSittingDuck(new ThreatDamage(5, ThreatDamageType.Standard, new[] {ZoneLocation.White}));
+					AttackSpecificZone(5, ZoneLocation.White, ThreatDamageType.Standard);
 				else
-					Damage(5);
+					Attack(5);
 			}
 		}
 

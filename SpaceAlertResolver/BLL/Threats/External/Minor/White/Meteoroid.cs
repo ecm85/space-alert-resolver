@@ -20,7 +20,7 @@ namespace BLL.Threats.External.Minor.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(RemainingHealth);
+			Attack(RemainingHealth);
 		}
 
 		public override string Id { get; } = "E1-10";

@@ -11,7 +11,7 @@ namespace BLL.Threats.Internal.Serious.Red
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.DrainReactors(new [] {CurrentZone});
-			Damage(4);
+			Attack(4);
 		}
 
 		public override string Id { get; } = "SI3-103";

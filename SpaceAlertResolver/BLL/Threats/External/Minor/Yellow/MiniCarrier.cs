@@ -9,7 +9,7 @@
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
+			Attack(2, ThreatDamageType.ReducedByTwoAgainstInterceptors);
 		}
 
 		protected override void PerformYAction(int currentTurn)

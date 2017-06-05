@@ -17,13 +17,13 @@ namespace BLL.Threats.Internal.Minor.White
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Damage(1);
+			Attack(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(3);
-			DamageOtherTwoZones(1);
+			Attack(3);
+			AttackOtherTwoZones(1);
 		}
 
 		public override string Id { get; } = "I1-101";

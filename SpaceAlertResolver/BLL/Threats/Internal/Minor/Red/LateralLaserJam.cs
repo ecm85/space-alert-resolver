@@ -25,15 +25,15 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			Damage(2);
+			Attack(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
 			var otherZone = CurrentZone == ZoneLocation.Blue ? ZoneLocation.Red : ZoneLocation.Blue;
-			Damage(3);
-			Damage(2, new[] {ZoneLocation.White});
-			Damage(1, new [] {otherZone});
+			Attack(3);
+			AttackSpecificZone(2, ZoneLocation.White);
+			AttackSpecificZone(1, otherZone);
 		}
 
 		public override string Id { get; } = "I3-101";

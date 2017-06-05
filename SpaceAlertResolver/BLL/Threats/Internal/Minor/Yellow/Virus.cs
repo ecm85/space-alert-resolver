@@ -22,7 +22,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			DamageAllZones(1);
+			AttackAllZones(1);
 		}
 
 		public override string Id { get; } = "I2-05";

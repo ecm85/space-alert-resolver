@@ -34,13 +34,13 @@ namespace BLL.Threats.Internal.Serious.White
 		private void EnergyLeaksOutFromShield(ZoneLocation zoneLocation)
 		{
 			var energyDrained = SittingDuck.DrainShields(new [] {zoneLocation});
-			Damage(energyDrained);
+			Attack(energyDrained);
 		}
 
 		private void EnergyLeaksOutFromReactor(ZoneLocation zoneLocation)
 		{
 			var energyDrained = SittingDuck.DrainReactors(new [] {zoneLocation});
-			Damage(energyDrained);
+			Attack(energyDrained);
 		}
 	}
 }

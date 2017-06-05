@@ -9,17 +9,17 @@
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			AttackCurrentZone(2, ThreatDamageType.Plasmatic);
+			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(2, ThreatDamageType.Plasmatic);
+			Attack(2, ThreatDamageType.Plasmatic);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(4, ThreatDamageType.Plasmatic);
+			Attack(4, ThreatDamageType.Plasmatic);
 		}
 
 		public override string Id { get; } = "SE2-101";

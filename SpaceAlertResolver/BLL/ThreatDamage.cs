@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BLL.ShipComponents;
+﻿using BLL.ShipComponents;
 
 namespace BLL
 {
@@ -7,15 +6,15 @@ namespace BLL
 	{
 		public int Amount { get; private set; }
 		public ThreatDamageType ThreatDamageType { get; private set; }
-		public IList<ZoneLocation> ZoneLocations { get; private set; }
+		public ZoneLocation ZoneLocation { get; private set; }
 		public int? DistanceToSource { get; private set; }
 		public int DamageShielded { get; set; }
 
-		internal ThreatDamage(int amount, ThreatDamageType threatDamageType, IList<ZoneLocation> zoneLocations, int? distanceToSource = null)
+		internal ThreatDamage(int amount, ThreatDamageType threatDamageType, ZoneLocation zoneLocation, int? distanceToSource = null)
 		{
 			Amount = amount;
 			ThreatDamageType = threatDamageType;
-			ZoneLocations = zoneLocations;
+			ZoneLocation = zoneLocation;
 			DistanceToSource = distanceToSource;
 		}
 	}

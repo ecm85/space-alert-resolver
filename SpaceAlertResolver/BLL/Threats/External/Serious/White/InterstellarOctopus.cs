@@ -24,7 +24,7 @@ namespace BLL.Threats.External.Serious.White
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(RemainingHealth * 2);
+			Attack(RemainingHealth * 2);
 		}
 
 		public override string Id { get; } = "SE1-06";

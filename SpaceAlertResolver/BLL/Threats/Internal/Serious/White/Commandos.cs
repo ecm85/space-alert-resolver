@@ -19,7 +19,7 @@ namespace BLL.Threats.Internal.Serious.White
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(new [] {CurrentStation});
-			Damage(4);
+			Attack(4);
 		}
 
 		public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)

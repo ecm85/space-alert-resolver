@@ -26,7 +26,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(5);
+			Attack(5);
 			SittingDuck.KnockOutPlayers(CurrentStations);
 		}
 

@@ -14,12 +14,12 @@ namespace BLL.Threats.Internal.Minor.White
 		{
 			var energyDrained = SittingDuck.DrainReactors(new [] {CurrentZone}, 1);
 			if (energyDrained == 0)
-				Damage(1);
+				Attack(1);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(2);
+			Attack(2);
 		}
 	}
 }

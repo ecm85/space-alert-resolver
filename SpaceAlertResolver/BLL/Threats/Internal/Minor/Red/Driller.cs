@@ -25,7 +25,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(4);
+			Attack(4);
 		}
 
 		public override string Id { get; } = "I3-107";

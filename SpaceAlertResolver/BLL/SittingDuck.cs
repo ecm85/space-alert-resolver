@@ -160,36 +160,30 @@ namespace BLL
 		private void TakeAttack(object sender, ThreatDamageEventArgs args)
 		{
 			var damage = args.ThreatDamage;
-			var damageShielded = 0;
 			var threat = sender as Threat;
-			foreach (var zone in damage.ZoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]))
+			var zone = ZonesByLocation[damage.ZoneLocation];
+			if (damage.ThreatDamageType == ThreatDamageType.ReducedByTwoAgainstInterceptors)
 			{
-				switch (damage.ThreatDamageType)
+				var amount = damage.Amount;
+				if (damage.DistanceToSource != null)
 				{
-					case ThreatDamageType.ReducedByTwoAgainstInterceptors:
-						var amount = damage.Amount;
-						if (damage.DistanceToSource != null)
-						{
-							var stationsBetweenThreatAndShip = InterceptorStations
-								.Where(station => station.StationLocation.DistanceFromShip() <= damage.DistanceToSource);
-							if (stationsBetweenThreatAndShip.Any(station => station.Players.Any()))
-								amount -= 2;
-						}
-						var damageResult = zone.TakeAttack(amount, ThreatDamageType.Standard);
-						if (damageResult.ShipDestroyed)
-							throw new LoseException(threat);
-						damageShielded += damageResult.DamageShielded;
-						break;
-					default:
-						damageResult = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
-						if (damageResult.ShipDestroyed)
-							throw new LoseException(threat);
-						damageShielded += damageResult.DamageShielded;
-						break;
+					var stationsBetweenThreatAndShip = InterceptorStations
+						.Where(station => station.StationLocation.DistanceFromShip() <= damage.DistanceToSource);
+					if (stationsBetweenThreatAndShip.Any(station => station.Players.Any()))
+						amount -= 2;
 				}
+				var damageResult = zone.TakeAttack(amount, ThreatDamageType.Standard);
+				if (damageResult.ShipDestroyed)
+					throw new LoseException(threat);
+				damage.DamageShielded += damageResult.DamageShielded;
 			}
-			
-			damage.DamageShielded = damageShielded;
+			else
+			{
+				var damageResult = zone.TakeAttack(damage.Amount, damage.ThreatDamageType);
+				if (damageResult.ShipDestroyed)
+					throw new LoseException(threat);
+				damage.DamageShielded += damageResult.DamageShielded;
+			}
 		}
 
 		public virtual int GetPlayerCount(StationLocation station)

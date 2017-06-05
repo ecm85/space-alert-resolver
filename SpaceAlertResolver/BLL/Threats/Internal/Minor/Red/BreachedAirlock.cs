@@ -23,7 +23,7 @@ namespace BLL.Threats.Internal.Minor.Red
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			Damage(3);
+			Attack(3);
 			SittingDuck.KnockOutPlayers(new [] {CurrentZone});
 		}
 

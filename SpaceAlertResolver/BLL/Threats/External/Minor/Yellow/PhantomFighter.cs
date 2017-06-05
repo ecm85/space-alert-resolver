@@ -31,12 +31,12 @@ namespace BLL.Threats.External.Minor.Yellow
 
 		protected override void PerformYAction(int currentTurn)
 		{
-			AttackCurrentZone(2);
+			Attack(2);
 		}
 
 		protected override void PerformZAction(int currentTurn)
 		{
-			AttackCurrentZone(3);
+			Attack(3);
 		}
 
 		public override string Id { get; } = "E2-03";
