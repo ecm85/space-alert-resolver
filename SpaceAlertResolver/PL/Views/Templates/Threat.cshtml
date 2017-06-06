@@ -1,5 +1,11 @@
 ﻿<div class="threat-wrapper" ng-class="{'phased-threat-wrapper': threat.isPhasedOut}">
-	<img id="threat{{trackId}}{{threatIndex}}" class="threat" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png"/>
+	<div class="threat-image-wrapper">
+		<img id="threat{{trackId}}{{threatIndex}}" class="threat" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png" />
+		<div class="threat-text-overlay" ng-if="threat.amountAttackingFor > 0">
+			<div>Attack {{threat.amountAttackingFor}}</div>
+			<div>{{threat.zoneUnderAttack}}</div>
+		</div>
+	</div>
 	<div class="threat-info">
 		<div class="threat-info-row">
 			<div class="threat-info-col-1">

@@ -1,4 +1,5 @@
-﻿using BLL.Threats;
+﻿using BLL.ShipComponents;
+using BLL.Threats;
 using BLL.Threats.External;
 using BLL.Threats.Internal;
 using Newtonsoft.Json;
@@ -25,7 +26,9 @@ namespace PL.Models
 		public bool NeedsBonusExternalThreat { get; set; }
 		public bool NeedsBonusInternalThreat { get; set; }
 
-		public bool IsAttacking { get; set; }
+		public int? AmountAttackingFor { get; set; }
+		[JsonConverter(typeof(StringEnumConverter))]
+		public ZoneLocation? ZoneUnderAttack { get; set; }
 
 		public InternalThreatModel BonusInternalThreat { get; set; }
 		public ExternalThreatModel BonusExternalThreat { get; set; }
@@ -48,6 +51,8 @@ namespace PL.Models
 			NeedsBonusExternalThreat = threat.NeedsBonusExternalThreat;
 			BonusInternalThreat = CreateBonusInternalThreatModel(threat);
 			BonusExternalThreat = CreateBonusExternalThreatModel(threat);
+			AmountAttackingFor = threat.AmountAttackingFor;
+			ZoneUnderAttack = threat.ZoneUnderAttack;
 		}
 
 		private static InternalThreatModel CreateBonusInternalThreatModel(Threat threat)

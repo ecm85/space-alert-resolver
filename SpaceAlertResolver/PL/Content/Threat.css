@@ -5,6 +5,24 @@
 	vertical-align: top;
 }
 
+.threat-image-wrapper {
+	position: relative;
+}
+
+.threat-text-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: yellow;
+	font-weight: 700;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	width: 100px;
+	text-shadow: 2px 2px 0px #FF0000;
+	font-size: 18px;
+	padding-top: 14px;
+	text-align: center;
+}
+
 .threat-wrapper {
 	display: block;
 	border: 3px solid red;
@@ -65,7 +83,7 @@
 
 .threat-time-appears-text {
 	color: yellow;
-    font-size: 1.0em;
+	font-size: 1.0em;
 	padding-top: 4px;
 }
 
