@@ -25,6 +25,7 @@ namespace BLL
 
 		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
 		public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
+		public event EventHandler LostGame = (sender, args) => { };
 		
 		public Game(
 			IList<Player> players,
@@ -112,7 +113,7 @@ namespace BLL
 			{
 				GameStatus = GameStatus.Lost;
 				KilledBy = loseException.Threat.DisplayName;
-				throw;
+				LostGame(this, EventArgs.Empty);
 			}
 		}
 

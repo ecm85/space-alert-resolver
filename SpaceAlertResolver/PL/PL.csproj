@@ -355,6 +355,7 @@
     <Compile Include="Controllers\SpaceAlertController.cs" />
     <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="EmailService.cs" />
+    <Compile Include="GamePhaseModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -366,6 +367,7 @@
     <Compile Include="Models\CannonModel.cs" />
     <Compile Include="Models\ExternalThreatModel.cs" />
     <Compile Include="Models\GameSnapshotModel.cs" />
+    <Compile Include="Models\GameTurnModel.cs" />
     <Compile Include="Models\InitialDamageModel.cs" />
     <Compile Include="Models\InputModel.cs" />
     <Compile Include="Models\InterceptorsModel.cs" />

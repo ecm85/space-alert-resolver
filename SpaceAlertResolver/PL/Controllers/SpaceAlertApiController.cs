@@ -45,59 +45,45 @@ namespace PL.Controllers
 			return inputModel;
 		}
 
-		[SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")] //TODO: Fix this
-		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
 		[HttpPost]
 		[Route("ProcessGame")]
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
-		public IList<IGrouping<int, GameSnapshotModel>> ProcessGame([FromBody]NewGameModel newGameModel)
+		public IList<GameTurnModel> ProcessGame([FromBody]NewGameModel newGameModel)
 		{
 			var game = newGameModel.ConvertToGame();
 			if (game.Players.First().Actions.All(action => action.FirstActionSegment.SegmentType == PlayerActionType.BattleBots))
 				throw new InvalidOperationException("Successfully triggered test Exception. You can't do that many battle bots!");
-			var models = new List<GameSnapshotModel>();
-			var currentTurnSnapshotModelsByPhase = new Dictionary<string, GameSnapshotModel>();
-			IList<GameSnapshotModel> currentPhaseSubSnapshotModels = null; 
-			var currentTurnSubSnapshotModelsByPhase = new Dictionary<string, IList<GameSnapshotModel>>();
+
+			game.StartGame();
+			var lost = false;
+			var turnModels = new List<GameTurnModel>();
+
 			game.PhaseStarting += (sender, eventArgs) =>
 			{
-				currentTurnSnapshotModelsByPhase[eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader] = null;
-				currentPhaseSubSnapshotModels = new List<GameSnapshotModel>();
+				turnModels.Last().Phases.Add(new GamePhaseModel {Description = eventArgs.PhaseHeader + eventArgs.PhaseSubHeader});
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Start of Phase", null));
 			};
 			game.PhaseEnded += (sender, eventArgs) =>
 			{
-				var key = eventArgs.PhaseHeader + "," + eventArgs.PhaseSubHeader;
-				currentTurnSnapshotModelsByPhase[key] =
-					new GameSnapshotModel((Game) sender, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader);
-				currentTurnSubSnapshotModelsByPhase[key] = currentPhaseSubSnapshotModels;
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase", null));
 			};
-			game.EventMaster.EventTriggered += (sender, eventArgs) => currentPhaseSubSnapshotModels.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader, null, true));
-			game.StartGame();
-			var lost = false;
+			game.EventMaster.EventTriggered += (sender, eventArgs) =>
+			{
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader));
+			};
+			game.LostGame += (sender, args) =>
+			{
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Lost!", null));
+				lost = true;
+			};
+
 			for (var i = 0; i < game.NumberOfTurns && !lost; i++)
 			{
-				try
-				{
-					game.PerformTurn();
-					foreach (var key in currentTurnSnapshotModelsByPhase.Keys)
-					{
-						models.AddRange(currentTurnSubSnapshotModelsByPhase[key]);
-						models.Add(currentTurnSnapshotModelsByPhase[key]);
-					}
-					currentTurnSnapshotModelsByPhase.Clear();
-					currentTurnSubSnapshotModelsByPhase.Clear();
-				}
-				catch (LoseException)
-				{
-					var currentPhase = currentTurnSnapshotModelsByPhase.Single(modelWithPhase => modelWithPhase.Value == null).Key;
-					var currentPhaseTokens = currentPhase.Split(',');
-					currentTurnSnapshotModelsByPhase[currentPhase] = new GameSnapshotModel(game, currentPhaseTokens[0], currentPhaseTokens[1]);
-					models.AddRange(currentTurnSnapshotModelsByPhase.Values);
-					lost = true;
-				}
+				turnModels.Add(new GameTurnModel { Turn = i });
+				game.PerformTurn();
 			}
 
-			return models.GroupBy(model => model.TurnNumber).ToList();
+			return turnModels;
 		}
 
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
