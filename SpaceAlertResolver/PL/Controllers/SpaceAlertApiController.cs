@@ -63,10 +63,6 @@ namespace PL.Controllers
 				turnModels.Last().Phases.Add(new GamePhaseModel {Description = eventArgs.PhaseHeader});
 				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Start of Phase"));
 			};
-			game.PhaseEnded += (sender, eventArgs) =>
-			{
-				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
-			};
 			game.EventMaster.EventTriggered += (sender, eventArgs) =>
 			{
 				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader));

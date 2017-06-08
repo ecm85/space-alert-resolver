@@ -24,7 +24,6 @@ namespace BLL
 		public string KilledBy { get; set; }
 
 		public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
-		public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
 		public event EventHandler LostGame = (sender, args) => { };
 		
 		public Game(
@@ -45,7 +44,6 @@ namespace BLL
 			var internalTrack = new Track(internalTrackConfiguration);
 			ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
 			ThreatController.PhaseStarting += (sender, args) =>  PhaseStarting(this, args);
-			ThreatController.PhaseEnded += (sender, args) => PhaseEnded(this, args);
 			SittingDuck = new SittingDuck(ThreatController, this, initialDamage);
 			var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);
 			foreach (var threat in allThreats)
@@ -61,7 +59,6 @@ namespace BLL
 		{
 			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.StartGame.GetDescription()});
 			CurrentTurn = 1;
-			PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.StartGame.GetDescription() });
 		}
 
 		private void PadPlayerActions()
@@ -79,7 +76,6 @@ namespace BLL
 			{
 				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
-				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 
 				PerformPlayerActions();
 
@@ -88,7 +84,6 @@ namespace BLL
 
 				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 				ResolveDamage(damage, interceptorDamage);
-				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 
 				ThreatController.MoveThreats(CurrentTurn);
 
@@ -105,7 +100,6 @@ namespace BLL
 					PerformEndOfGame();
 
 				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.EndTurn.GetDescription() });
-				PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.EndTurn.GetDescription() });
 
 				CurrentTurn++;
 			}
@@ -150,7 +144,6 @@ namespace BLL
 		{
 			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ComputerCheck.GetDescription() });
 			SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.PerformComputerCheck(Players, CurrentTurn);
-			PhaseEnded(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ComputerCheck.GetDescription() });
 		}
 
 		private IEnumerable<PlayerInterceptorDamage> GetInterceptorDamage()
@@ -206,10 +199,6 @@ namespace BLL
 				while (!player.GetActionForTurn(CurrentTurn).AllActionsPerformed())
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
 			}
-			PhaseEnded(this, new PhaseEventArgs
-			{
-				PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription()
-			});
 			ThreatController.OnPlayerActionsEnded();
 		}
 
