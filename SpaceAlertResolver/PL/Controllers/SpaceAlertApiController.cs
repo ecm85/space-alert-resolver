@@ -60,20 +60,20 @@ namespace PL.Controllers
 
 			game.PhaseStarting += (sender, eventArgs) =>
 			{
-				turnModels.Last().Phases.Add(new GamePhaseModel {Description = eventArgs.PhaseHeader + eventArgs.PhaseSubHeader});
-				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Start of Phase", null));
+				turnModels.Last().Phases.Add(new GamePhaseModel {Description = eventArgs.PhaseHeader});
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Start of Phase"));
 			};
 			game.PhaseEnded += (sender, eventArgs) =>
 			{
-				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase", null));
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
 			};
 			game.EventMaster.EventTriggered += (sender, eventArgs) =>
 			{
-				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader, eventArgs.PhaseSubHeader));
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, eventArgs.PhaseHeader));
 			};
 			game.LostGame += (sender, args) =>
 			{
-				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Lost!", null));
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Lost!"));
 				lost = true;
 			};
 

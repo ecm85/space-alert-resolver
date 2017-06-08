@@ -24,12 +24,11 @@ namespace PL.Models
 		public IEnumerable<PlayerModel> KnockedOutPlayers { get; set; }
 
 		public string PhaseDescription { get; }
-		public string PhaseSubDescription { get; }
 		public int TurnNumber { get; }
 
 		public IEnumerable<PlayerModel> Players { get; }
 
-		public GameSnapshotModel(Game game, string phaseDescription, string phaseSubDescription)
+		public GameSnapshotModel(Game game, string phaseDescription)
 		{
 			var internalThreats = game.ThreatController.InternalThreatsOnTrack.ToList();
 			var parentThreats = internalThreats.Where(threat => threat.Parent == null).ToList();
@@ -44,7 +43,6 @@ namespace PL.Models
 			InternalThreats = internalThreatsOnTrack.Select(threat => new InternalThreatModel(threat)).ToList();
 			InternalTrack = new TrackSnapshotModel(game.ThreatController.InternalTrack, threatPositions);
 			PhaseDescription = phaseDescription;
-			PhaseSubDescription = phaseSubDescription;
 			TurnNumber = game.CurrentTurn;
 			KilledBy = game.KilledBy;
 			GameStatus = game.GameStatus.GetDisplayName();

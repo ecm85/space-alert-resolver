@@ -16,6 +16,7 @@ angular.module("spaceAlertModule")
 			$scope.turnsPerTwoSeconds = 5;
 			let currentPhaseIndex = 0;
 			let currentTurnIndex = 0;
+			let currentSubPhaseIndex = 0;
 
 			var stop = function () {
 				if ($scope.playing != null) {
@@ -24,9 +25,14 @@ angular.module("spaceAlertModule")
 				}
 			};
 
+			var selectSubPhase = function(newSubPhaseIndex) {
+				currentSubPhaseIndex = newSubPhaseIndex;
+				$scope.currentSubPhase = $scope.currentPhase.subPhases[currentSubPhaseIndex];
+			}
 			var selectPhase = function (newPhaseIndex) {
 				currentPhaseIndex = newPhaseIndex;
-				$scope.currentPhase = $scope.currentTurn[currentPhaseIndex];
+				$scope.currentPhase = $scope.currentTurn.phases[currentPhaseIndex];
+				selectSubPhase(0);
 			}
 			var selectTurn = function(newTurnIndex) {
 				currentTurnIndex = newTurnIndex;
@@ -49,10 +55,20 @@ angular.module("spaceAlertModule")
 			var selectPhaseAutomatically = function (newPhaseIndex) {
 				selectPhase(newPhaseIndex);
 			}
+
+			var selectSubPhaseManually = function (newSubPhaseIndex) {
+				stop();
+				selectSubPhase(newSubPhaseIndex);
+			}
+			var selectSubPhaseAutomatically = function (newSubPhaseIndex) {
+				selectSubPhase(newSubPhaseIndex);
+			}
 			
 			var play = function() {
 				$scope.playing = $interval(function() {
-						if (!$scope.isAtEndOfTurn())
+						if (!$scope.isAtEndOfPhase())
+							selectSubPhaseAutomatically(currentSubPhaseIndex + 1);
+						else if (!$scope.isAtEndOfTurn())
 							selectPhaseAutomatically(currentPhaseIndex + 1);
 						else if (!$scope.isAtEndOfGame())
 							selectTurnAutomatically(currentTurnIndex + 1);
@@ -85,14 +101,26 @@ angular.module("spaceAlertModule")
 				return currentPhaseIndex;
 			}
 
+			$scope.currentSubPhaseIndex = function (newSubPhaseIndex) {
+				if (arguments.length) {
+					selectSubPhaseManually(newSubPhaseIndex);
+				}
+				return currentSubPhaseIndex;
+			}
+			$scope.isAtStartOfPhase = function() {
+				return currentSubPhaseIndex === 0;
+			}
 			$scope.isAtStartOfTurn = function() {
-				return currentPhaseIndex === 0;
+				return currentPhaseIndex === 0 && $scope.isAtStartOfPhase();
 			}
 			$scope.isAtStartOfGame = function() {
 				return currentTurnIndex === 0 && $scope.isAtStartOfTurn();
 			}
+			$scope.isAtEndOfPhase = function() {
+				return currentSubPhaseIndex === $scope.currentPhase.subPhases.length - 1;
+			}
 			$scope.isAtEndOfTurn = function() {
-				return currentPhaseIndex === $scope.currentTurn.length - 1;
+				return currentPhaseIndex === $scope.currentTurn.phases.length - 1 && $scope.isAtEndOfPhase();
 			}
 			$scope.isAtEndOfGame = function() {
 				return currentTurnIndex === turnCount - 1 && $scope.isAtEndOfTurn();
@@ -102,7 +130,7 @@ angular.module("spaceAlertModule")
 					selectPhaseManually(currentPhaseIndex - 1);
 				else if (!$scope.isAtStartOfGame()) {
 					selectTurnManually(currentTurnIndex - 1);
-					selectPhaseManually($scope.currentTurn.length - 1);
+					selectPhaseManually($scope.currentTurn.phases.length - 1);
 				}
 			}
 			$scope.goForwardOnePhase = function() {

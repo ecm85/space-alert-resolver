@@ -196,22 +196,20 @@ namespace BLL
 				.Where(player => !player.IsKnockedOut)
 				.OrderByDescending(player => player.IsPerformingMedic(CurrentTurn))
 				.ThenBy(player => player.Index);
-
+			PhaseStarting(this, new PhaseEventArgs
+			{
+				PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription()
+			});
 			foreach (var player in playerOrder)
 			{
-				PhaseStarting(this, new PhaseEventArgs
-				{
-					PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription(),
-					PhaseSubHeader = player.PlayerColor.ToString()
-				});
+				EventMaster.LogEvent(player.PlayerColor.ToString());
 				while (!player.GetActionForTurn(CurrentTurn).AllActionsPerformed())
 					player.CurrentStation.PerformNextPlayerAction(player, CurrentTurn);
-				PhaseEnded(this, new PhaseEventArgs
-				{
-					PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription(),
-					PhaseSubHeader = player.PlayerColor.ToString()
-				});
 			}
+			PhaseEnded(this, new PhaseEventArgs
+			{
+				PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription()
+			});
 			ThreatController.OnPlayerActionsEnded();
 		}
 

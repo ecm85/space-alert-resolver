@@ -104,20 +104,16 @@ namespace BLL
 				.OrderBy(threat => threat.TimeAppears)
 				.ThenBy(threat => threat.ThreatType)
 				.ToList();
-			foreach (var moveableThreat in allMoveableThreats)
+			PhaseStarting(this, new PhaseEventArgs
 			{
-				PhaseStarting(this, new PhaseEventArgs
-				{
-					PhaseHeader = ResolutionPhase.MoveThreats.GetDescription(),
-					PhaseSubHeader = moveableThreat.DisplayName
-				});
+				PhaseHeader = ResolutionPhase.MoveThreats.GetDescription()
+			});
+			foreach (var moveableThreat in allMoveableThreats)
 				moveableThreat.Move(currentTurn);
-				PhaseEnded(this, new PhaseEventArgs
-				{
-					PhaseHeader = ResolutionPhase.MoveThreats.GetDescription(),
-					PhaseSubHeader = moveableThreat.DisplayName
-				});
-			}
+			PhaseEnded(this, new PhaseEventArgs
+			{
+				PhaseHeader = ResolutionPhase.MoveThreats.GetDescription()
+			});
 		}
 
 		public void MoveOtherExternalThreats(int currentTurn, int amount, ExternalThreat source)

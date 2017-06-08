@@ -167,7 +167,7 @@ namespace BLL.Threats
 			for (var i = 0; i < amount; i++)
 			{
 				Position--;
-				EventMaster.LogEvent("Moved a space.");
+				EventMaster.LogEvent(DisplayName + " moved 1 space.");
 			}
 			var newPosition = Position;
 			var crossedBreakpoints = Track.GetCrossedBreakpoints(oldPosition, newPosition);
