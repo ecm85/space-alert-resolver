@@ -26,17 +26,23 @@ angular.module("spaceAlertModule")
 			};
 
 			var selectSubPhase = function(newSubPhaseIndex) {
+				if ($scope.currentSubPhase)
+					$scope.currentSubPhase.isSelected = false;
 				currentSubPhaseIndex = newSubPhaseIndex;
 				$scope.currentSubPhase = $scope.currentPhase.subPhases[currentSubPhaseIndex];
 				$scope.currentSubPhase.isSelected = true;
 			}
 			var selectPhase = function (newPhaseIndex) {
+				if ($scope.currentPhase)
+					$scope.currentPhase.isSelected = false;
 				currentPhaseIndex = newPhaseIndex;
 				$scope.currentPhase = $scope.currentTurn.phases[currentPhaseIndex];
 				$scope.currentPhase.isSelected = true;
 				selectSubPhase(0);
 			}
 			var selectTurn = function(newTurnIndex) {
+				if ($scope.currentTurn)
+					$scope.currentTurn.isSelected = false;
 				currentTurnIndex = newTurnIndex;
 				$scope.currentTurn = $scope.gameData[currentTurnIndex];
 				$scope.currentTurn.isSelected = true;

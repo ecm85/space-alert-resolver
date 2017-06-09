@@ -20,7 +20,9 @@
 			<div uib-accordion-group ng-repeat="turn in gameData" ng-class="{'panel-primary': turn.isSelected, 'panel-default': !turn.isSelected}" heading="{{$index + 1}}" is-open="turn.isSelected">
 				<uib-accordion>
 					<div uib-accordion-group ng-repeat="phase in currentTurn.phases" ng-class="{'panel-primary': phase.isSelected, 'panel-default': !phase.isSelected}" heading="{{phase.description}}" is-open="phase.isSelected">
-						Sub-phases!
+						<div>
+							<div ng-repeat="subPhase in phase.subPhases" class="btn" ng-class="{'btn-primary': subPhase.isSelected, 'btn-default': !subPhase.isSelected}">{{subPhase.phaseDescription}}</div>
+						</div>
 					</div>
 				</uib-accordion>
 			</div>
