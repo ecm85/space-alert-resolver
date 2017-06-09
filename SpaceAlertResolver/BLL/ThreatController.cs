@@ -83,6 +83,8 @@ namespace BLL
 
 		public void AddNewThreatsToTracks(int currentTurn)
 		{
+			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
+
 			foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
 			{
 				newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };

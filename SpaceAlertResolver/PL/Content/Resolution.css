@@ -9,6 +9,10 @@
 	margin: 20px 0;
 }
 
+.fast-collapse .collapsing {
+	transition-duration: 0.10s;
+}
+
 .phase-selector {
 	width:215px;
 	max-width:215px;

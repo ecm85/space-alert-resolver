@@ -57,7 +57,6 @@ namespace BLL
 
 		public void StartGame()
 		{
-			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.StartGame.GetDescription()});
 			CurrentTurn = 1;
 		}
 
@@ -74,15 +73,12 @@ namespace BLL
 		{
 			try
 			{
-				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 				ThreatController.AddNewThreatsToTracks(CurrentTurn);
 
 				PerformPlayerActions();
 
 				var damage = GetStandardDamage();
 				var interceptorDamage = GetInterceptorDamage();
-
-				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 				ResolveDamage(damage, interceptorDamage);
 
 				ThreatController.MoveThreats(CurrentTurn);
@@ -99,7 +95,6 @@ namespace BLL
 				if (CurrentTurn == NumberOfTurns)
 					PerformEndOfGame();
 
-				PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.EndTurn.GetDescription() });
 
 				CurrentTurn++;
 			}
@@ -182,6 +177,10 @@ namespace BLL
 
 		private void PerformPlayerActions()
 		{
+			PhaseStarting(this, new PhaseEventArgs
+			{
+				PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription()
+			});
 			foreach (var player in Players)
 				player.PerformStartOfPlayerActions(CurrentTurn);
 
@@ -189,10 +188,7 @@ namespace BLL
 				.Where(player => !player.IsKnockedOut)
 				.OrderByDescending(player => player.IsPerformingMedic(CurrentTurn))
 				.ThenBy(player => player.Index);
-			PhaseStarting(this, new PhaseEventArgs
-			{
-				PhaseHeader = ResolutionPhase.PerformPlayerActions.GetDescription()
-			});
+			
 			foreach (var player in playerOrder)
 			{
 				EventMaster.LogEvent(player.PlayerColor.ToString());
@@ -223,6 +219,7 @@ namespace BLL
 			IEnumerable<PlayerDamage> damages,
 			IEnumerable<PlayerInterceptorDamage> interceptorDamages)
 		{
+			PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.ResolveDamage.GetDescription() });
 			if (!ThreatController.DamageableExternalThreats.Any())
 				return;
 			var damagesByThreat = new Dictionary<ExternalThreat, IList<PlayerDamage>>();

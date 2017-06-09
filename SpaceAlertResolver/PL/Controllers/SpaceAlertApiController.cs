@@ -60,6 +60,8 @@ namespace PL.Controllers
 
 			game.PhaseStarting += (sender, eventArgs) =>
 			{
+				var lastPhase = turnModels.Last().Phases.LastOrDefault();
+				lastPhase?.SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
 				turnModels.Last().Phases.Add(new GamePhaseModel {Description = eventArgs.PhaseHeader});
 				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Start of Phase"));
 			};
@@ -77,6 +79,7 @@ namespace PL.Controllers
 			{
 				turnModels.Add(new GameTurnModel { Turn = i });
 				game.PerformTurn();
+				turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
 			}
 
 			return turnModels;
