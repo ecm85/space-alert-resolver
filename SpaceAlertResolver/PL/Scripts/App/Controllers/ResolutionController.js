@@ -28,15 +28,18 @@ angular.module("spaceAlertModule")
 			var selectSubPhase = function(newSubPhaseIndex) {
 				currentSubPhaseIndex = newSubPhaseIndex;
 				$scope.currentSubPhase = $scope.currentPhase.subPhases[currentSubPhaseIndex];
+				$scope.currentSubPhase.isSelected = true;
 			}
 			var selectPhase = function (newPhaseIndex) {
 				currentPhaseIndex = newPhaseIndex;
 				$scope.currentPhase = $scope.currentTurn.phases[currentPhaseIndex];
+				$scope.currentPhase.isSelected = true;
 				selectSubPhase(0);
 			}
 			var selectTurn = function(newTurnIndex) {
 				currentTurnIndex = newTurnIndex;
 				$scope.currentTurn = $scope.gameData[currentTurnIndex];
+				$scope.currentTurn.isSelected = true;
 				selectPhase(0);
 			}
 
@@ -86,27 +89,6 @@ angular.module("spaceAlertModule")
 					}
 				});
 
-			
-			$scope.currentTurnIndex = function(newTurnIndex) {
-				if (arguments.length) {
-					selectTurnManually(newTurnIndex);
-				}
-				return currentTurnIndex;
-			}
-
-			$scope.currentPhaseIndex = function (newPhaseIndex) {
-				if (arguments.length) {
-					selectPhaseManually(newPhaseIndex);
-				}
-				return currentPhaseIndex;
-			}
-
-			$scope.currentSubPhaseIndex = function (newSubPhaseIndex) {
-				if (arguments.length) {
-					selectSubPhaseManually(newSubPhaseIndex);
-				}
-				return currentSubPhaseIndex;
-			}
 			$scope.isAtStartOfPhase = function() {
 				return currentSubPhaseIndex === 0;
 			}

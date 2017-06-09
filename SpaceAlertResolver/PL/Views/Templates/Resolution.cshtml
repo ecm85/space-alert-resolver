@@ -15,15 +15,16 @@
 			<span class="fast-speed-label">Fast</span>
 		</div>
 	</div>
-	<div class="btn-group turn-selector">
-		<div ng-repeat="turn in gameData" class="btn btn-default turn-selector-option" ng-model="currentTurnIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">{{$index + 1}}</div>
-	</div>
 	<div>
-		<div class="btn-group btn-group-vertical phase-selector">
-			<div ng-repeat="phase in currentTurn.phases" class="btn btn-default phase-selector-option" ng-model="currentPhaseIndex" ng-model-options="{ getterSetter: true }" uib-btn-radio="$index">
-				<div>{{phase.description}}</div>
+		<uib-accordion>
+			<div uib-accordion-group ng-repeat="turn in gameData" ng-class="{'panel-primary': turn.isSelected, 'panel-default': !turn.isSelected}" heading="{{$index + 1}}" is-open="turn.isSelected">
+				<uib-accordion>
+					<div uib-accordion-group ng-repeat="phase in currentTurn.phases" ng-class="{'panel-primary': phase.isSelected, 'panel-default': !phase.isSelected}" heading="{{phase.description}}" is-open="phase.isSelected">
+						Sub-phases!
+					</div>
+				</uib-accordion>
 			</div>
-		</div>
+		</uib-accordion>
 	</div>
 	<div>
 		<h3>Damage</h3>
