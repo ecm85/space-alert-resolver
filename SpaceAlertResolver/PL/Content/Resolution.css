@@ -10,7 +10,7 @@
 }
 
 .fast-collapse .collapsing {
-	transition-duration: 0.10s;
+	transition: none;
 }
 
 .phase-selector {
