@@ -1,79 +1,79 @@
 ﻿.player-color-with-selector {
-	width: 243px;
-	display: inline-block;
+    width: 243px;
+    display: inline-block;
 }
 
 .player-icon-large {
-	width: 35px;
-	height: auto;
-	display: block;
-	margin: 0 auto;
+    width: 35px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .player-count-selectors {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .player-color-selector {
-	width: 23px;
-	height: 19px;
+    width: 23px;
+    height: 19px;
 }
 
 .player-color-selector-blue {
-	background-color: #000CFF;
+    background-color: #000CFF;
 }
 
 .player-color-selector-green {
-	background-color: #00CC17;
+    background-color: #00CC17;
 }
 
 .player-color-selector-red {
-	background-color: #FF2100;
+    background-color: #FF2100;
 }
 
 .player-color-selector-yellow {
-	background-color: #F6FF00;
+    background-color: #F6FF00;
 }
 
 .player-color-selector-purple {
-	background-color: #FF00E9;
+    background-color: #FF00E9;
 }
 
 .color-selector-button {
-	padding-top: 10px;
-	padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .player-panel {
-	width: 40%;
-	display: inline-block;
-	margin-right: 10px;
-	min-width: 750px;
+    width: 40%;
+    display: inline-block;
+    margin-right: 10px;
+    min-width: 750px;
 }
 
 .configurable-player-board {
-	cursor: pointer;
+    cursor: pointer;
 }
 
  .selected-track-wrapper {
-	display: inline-block;
-	vertical-align: bottom;
+    display: inline-block;
+    vertical-align: bottom;
  }
 
  .game-args-text {
-	display: none;
+    display: none;
  }
 
 .selectable-damage-token {
-	width: 67px;
-	height: auto;
-	border-top: 1px white solid;
-	border-left: 1px white solid;
-	box-shadow: 5px 5px 5px black;
-	border-radius: 20px;
+    width: 67px;
+    height: auto;
+    border-top: 1px white solid;
+    border-left: 1px white solid;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 20px;
 }
 
 .damageable-zone {
-	display: inline-block;
-	width: 125px;
+    display: inline-block;
+    width: 125px;
 }

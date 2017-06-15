@@ -1,31 +1,31 @@
 ﻿namespace BLL.Threats.External.Minor.Yellow
 {
-	public class Kamikaze : MinorYellowExternalThreat
-	{
-		internal Kamikaze()
-			: base(2, 5, 4)
-		{
-		}
+    public class Kamikaze : MinorYellowExternalThreat
+    {
+        internal Kamikaze()
+            : base(2, 5, 4)
+        {
+        }
 
-		protected override void PerformXAction(int currentTurn)
-		{
-			Speed++;
-			Shields = 1;
-		}
+        protected override void PerformXAction(int currentTurn)
+        {
+            Speed++;
+            Shields = 1;
+        }
 
-		protected override void PerformYAction(int currentTurn)
-		{
-			Speed++;
-			Shields = 0;
-		}
+        protected override void PerformYAction(int currentTurn)
+        {
+            Speed++;
+            Shields = 0;
+        }
 
-		protected override void PerformZAction(int currentTurn)
-		{
-			Attack(6);
-		}
+        protected override void PerformZAction(int currentTurn)
+        {
+            Attack(6);
+        }
 
-		public override string Id { get; } = "E2-01";
-		public override string DisplayName { get; } = "Kamikaze";
-		public override string FileName { get; } = "Kamikaze";
-	}
+        public override string Id { get; } = "E2-01";
+        public override string DisplayName { get; } = "Kamikaze";
+        public override string FileName { get; } = "Kamikaze";
+    }
 }

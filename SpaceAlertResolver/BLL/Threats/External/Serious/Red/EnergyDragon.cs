@@ -7,76 +7,76 @@ using BLL.Tracks;
 
 namespace BLL.Threats.External.Serious.Red
 {
-	public class EnergyDragon : SeriousRedExternalThreat
-	{
-		private int healthAtStartOfTurn;
-		private bool TookDamageThisTurn { get { return healthAtStartOfTurn > RemainingHealth; } }
+    public class EnergyDragon : SeriousRedExternalThreat
+    {
+        private int healthAtStartOfTurn;
+        private bool TookDamageThisTurn { get { return healthAtStartOfTurn > RemainingHealth; } }
 
-		internal EnergyDragon()
-			: base(3, 9, 4)
-		{
-			healthAtStartOfTurn = RemainingHealth;
-		}
+        internal EnergyDragon()
+            : base(3, 9, 4)
+        {
+            healthAtStartOfTurn = RemainingHealth;
+        }
 
-		public override void PlaceOnTrack(Track track, int trackPosition)
-		{
-			base.PlaceOnTrack(track, trackPosition);
-			ThreatController.DamageResolutionEnding += OnDamageResolutionEnding;
-		}
+        public override void PlaceOnTrack(Track track, int trackPosition)
+        {
+            base.PlaceOnTrack(track, trackPosition);
+            ThreatController.DamageResolutionEnding += OnDamageResolutionEnding;
+        }
 
-		protected override void PerformXAction(int currentTurn)
-		{
-			var damageShielded = Attack(2);
-			Repair(damageShielded);
-		}
+        protected override void PerformXAction(int currentTurn)
+        {
+            var damageShielded = Attack(2);
+            Repair(damageShielded);
+        }
 
-		protected override void PerformYAction(int currentTurn)
-		{
-			var damageShielded = Attack(3);
-			Repair(damageShielded);
-		}
+        protected override void PerformYAction(int currentTurn)
+        {
+            var damageShielded = Attack(3);
+            Repair(damageShielded);
+        }
 
-		protected override void PerformZAction(int currentTurn)
-		{
-			foreach(var zone in EnumFactory.All<ZoneLocation>())
-				Attack(1 + SittingDuck.GetEnergyInReactor(zone));
-		}
-		private void OnDamageResolutionEnding(object sender, EventArgs args)
-		{
-			if (TookDamageThisTurn)
-				Speed -= 2;
-		}
+        protected override void PerformZAction(int currentTurn)
+        {
+            foreach(var zone in EnumFactory.All<ZoneLocation>())
+                Attack(1 + SittingDuck.GetEnergyInReactor(zone));
+        }
+        private void OnDamageResolutionEnding(object sender, EventArgs args)
+        {
+            if (TookDamageThisTurn)
+                Speed -= 2;
+        }
 
-		protected override void OnTurnEnded(object sender, EventArgs args)
-		{
-			base.OnTurnEnded(sender, args);
-			if (TookDamageThisTurn)
-				Speed += 2;
-			healthAtStartOfTurn = RemainingHealth;
-		}
+        protected override void OnTurnEnded(object sender, EventArgs args)
+        {
+            base.OnTurnEnded(sender, args);
+            if (TookDamageThisTurn)
+                Speed += 2;
+            healthAtStartOfTurn = RemainingHealth;
+        }
 
-		public override void TakeDamage(IList<PlayerDamage> damages)
-		{
-			var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);
-			if (hitByPulse)
-			{
-				var oldShields = Shields;
-				Shields = 0;
-				base.TakeDamage(damages);
-				Shields = oldShields;
-			}
-			else
-				base.TakeDamage(damages);
-		}
+        public override void TakeDamage(IList<PlayerDamage> damages)
+        {
+            var hitByPulse = damages.Any(damage => damage.PlayerDamageType == PlayerDamageType.Pulse);
+            if (hitByPulse)
+            {
+                var oldShields = Shields;
+                Shields = 0;
+                base.TakeDamage(damages);
+                Shields = oldShields;
+            }
+            else
+                base.TakeDamage(damages);
+        }
 
-		protected override void OnThreatTerminated()
-		{
-			base.OnThreatTerminated();
-			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
-		}
+        protected override void OnThreatTerminated()
+        {
+            base.OnThreatTerminated();
+            ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
+        }
 
-		public override string Id { get; } = "SE3-108";
-		public override string DisplayName { get; } = "Energy Dragon";
-		public override string FileName { get; } = "EnergyDragon";
-	}
+        public override string Id { get; } = "SE3-108";
+        public override string DisplayName { get; } = "Energy Dragon";
+        public override string FileName { get; } = "EnergyDragon";
+    }
 }

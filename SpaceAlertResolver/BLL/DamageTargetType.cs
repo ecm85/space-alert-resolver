@@ -1,8 +1,8 @@
 ﻿namespace BLL
 {
-	public enum DamageTargetType
-	{
-		Single,
-		All
-	}
+    public enum DamageTargetType
+    {
+        Single,
+        All
+    }
 }

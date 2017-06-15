@@ -1,49 +1,49 @@
 ﻿<div class="modal-header">
-	<h3 class="modal-title" id="modal-title">{{playerTitle}}'s Actions</h3>
+    <h3 class="modal-title" id="modal-title">{{playerTitle}}'s Actions</h3>
 </div>
 <div class="modal-body" id="modal-body">
-	<div class="selected-player-board">
-		<h3>Selected Actions</h3>
-		<player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
-	</div>
-	<div ng-if="useDoubleActions" class="alert alert-info">To enter a double action, type the constituent actions. To enter a single action, type '-' as the second half.</div>
-	<div ng-if="cursor.errorMessage != null" class="alert alert-danger">{{cursor.errorMessage}}</div>
-	<uib-tabset>
-		<uib-tab index="0" heading="Single Actions">
-			<div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
-				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
-					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
-					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
-				</div>
-				<p class="action-choosable-key">{{action.hotkey}}</p>
-			</div>
-		</uib-tab>
-		<uib-tab index="1" heading="Double Actions" ng-if="useDoubleActions">
-			<div class="action-choosable-wrapper" ng-repeat="action in allDoubleActions">
-				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
-					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
-					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
-				</div>
-				<p class="action-choosable-key">{{action.hotkey}}</p>
-			</div>
-		</uib-tab>
-		<uib-tab index="2" heading="Specializations" ng-if="useSpecializations">
-			<div class="action-choosable-wrapper" ng-repeat="action in playerSpecializationActions">
-				<div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
-					<img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
-					<i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
-				</div>
-				<p class="action-choosable-key">{{action.hotkey}}</p>
-				<div class="btn btn-default" ng-if="action.canBeBonusAction" ng-click="addBonusActionAtCursor(action)">Add As Bonus</div>
-			</div>
-		</uib-tab>
-	</uib-tabset>
+    <div class="selected-player-board">
+        <h3>Selected Actions</h3>
+        <player-board player-color="playerColor" selected-actions="selectedActions" cursor="cursor"></player-board>
+    </div>
+    <div ng-if="useDoubleActions" class="alert alert-info">To enter a double action, type the constituent actions. To enter a single action, type '-' as the second half.</div>
+    <div ng-if="cursor.errorMessage != null" class="alert alert-danger">{{cursor.errorMessage}}</div>
+    <uib-tabset>
+        <uib-tab index="0" heading="Single Actions">
+            <div class="action-choosable-wrapper" ng-repeat="action in allSingleActions">
+                <div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+                    <img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+                    <i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+                </div>
+                <p class="action-choosable-key">{{action.hotkey}}</p>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Double Actions" ng-if="useDoubleActions">
+            <div class="action-choosable-wrapper" ng-repeat="action in allDoubleActions">
+                <div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+                    <img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+                    <i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+                </div>
+                <p class="action-choosable-key">{{action.hotkey}}</p>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="Specializations" ng-if="useSpecializations">
+            <div class="action-choosable-wrapper" ng-repeat="action in playerSpecializationActions">
+                <div ng-click="addActionAtCursor(action)" class="action-choosable-wrapper">
+                    <img ng-if="action.description != null" class="action-choosable-image" ng-src="~/Content/Images/Actions/{{action.description}}.png" />
+                    <i ng-if="action.description == null" class="fa fa-ban action-choosable-image-icon"></i>
+                </div>
+                <p class="action-choosable-key">{{action.hotkey}}</p>
+                <div class="btn btn-default" ng-if="action.canBeBonusAction" ng-click="addBonusActionAtCursor(action)">Add As Bonus</div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-	<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
 
 <script type="text/ng-template" id="templates/playerBoard">
-	@Html.Action("PlayerBoard", "Templates")
+    @Html.Action("PlayerBoard", "Templates")
 </script>

@@ -6,51 +6,51 @@ using BLL.Threats.Internal;
 
 namespace BLL
 {
-	public interface ISittingDuck
-	{
-		int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
-		int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
-		void DrainEnergy(StationLocation stationLocation, int? amount);
+    public interface ISittingDuck
+    {
+        int DrainShields(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
+        int DrainReactors(IEnumerable<ZoneLocation> zoneLocations, int? amount = null);
+        void DrainEnergy(StationLocation stationLocation, int? amount);
 
-		void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
+        void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations);
 
-		void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
-		void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
+        void AddZoneDebuff(IEnumerable<ZoneLocation> zoneLocations, ZoneDebuff debuff, InternalThreat source);
+        void RemoveZoneDebuffForSource(IEnumerable<ZoneLocation> zoneLocations, InternalThreat source);
 
-		int GetPlayerCount(StationLocation station);
-		IEnumerable<Player> GetPlayersInStation(StationLocation station);
+        int GetPlayerCount(StationLocation station);
+        IEnumerable<Player> GetPlayersInStation(StationLocation station);
 
-		void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
-		void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
-		void KnockOutPlayers(IEnumerable<StationLocation> locations);
-		void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
-		void KnockOutCaptain();
+        void KnockOutPlayersWithBattleBots(IEnumerable<StationLocation> locations);
+        void KnockOutPlayersWithoutBattleBots(IEnumerable<StationLocation> locations);
+        void KnockOutPlayers(IEnumerable<StationLocation> locations);
+        void KnockOutPlayers(IEnumerable<ZoneLocation> locations);
+        void KnockOutCaptain();
 
-		void DisableLowerRedInactiveBattleBots();
+        void DisableLowerRedInactiveBattleBots();
 
-		event EventHandler<RocketsRemovedEventArgs> RocketsModified;
-		event EventHandler CentralLaserCannonFired;
-		int RocketCount { get; }
-		void RemoveRocket();
-		int RemoveAllRockets();
-		void ShiftPlayersAfterPlayerActions(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
-		void ShiftPlayersAfterPlayerActions(IEnumerable<StationLocation> stationLocations, int turnToShift);
-		void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift);
+        event EventHandler<RocketsRemovedEventArgs> RocketsModified;
+        event EventHandler CentralLaserCannonFired;
+        int RocketCount { get; }
+        void RemoveRocket();
+        int RemoveAllRockets();
+        void ShiftPlayersAfterPlayerActions(IEnumerable<ZoneLocation> zoneLocations, int turnToShift);
+        void ShiftPlayersAfterPlayerActions(IEnumerable<StationLocation> stationLocations, int turnToShift);
+        void ShiftPlayersAndRepeatPreviousAction(IEnumerable<StationLocation> stationLocations, int turnToShift);
 
-		void SubscribeToMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
-		void SubscribeToMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
-		void UnsubscribeFromMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
-		void UnsubscribeFromMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
+        void SubscribeToMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
+        void SubscribeToMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
+        void UnsubscribeFromMovingIn(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
+        void UnsubscribeFromMovingOut(IEnumerable<StationLocation> stationLocations, EventHandler<PlayerMoveEventArgs> handler);
 
-		void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
-		bool DestroyFuelCapsule();
-		int GetEnergyInReactor(ZoneLocation zoneLocation);
-		void SealRedDoors();
-		void SealBlueDoors();
-		void RepairAllSealedDoors();
-		bool RedDoorIsSealed { get; }
-		bool BlueDoorIsSealed { get; }
-		int GetDamageToZone(ZoneLocation zoneLocation);
-		void TeleportPlayers(IEnumerable<Player> playersToTeleport, StationLocation newStationLocation);
-	}
+        void AddIrreparableMalfunctionToStations(IEnumerable<StationLocation> stationLocations, IrreparableMalfunction malfunction);
+        bool DestroyFuelCapsule();
+        int GetEnergyInReactor(ZoneLocation zoneLocation);
+        void SealRedDoors();
+        void SealBlueDoors();
+        void RepairAllSealedDoors();
+        bool RedDoorIsSealed { get; }
+        bool BlueDoorIsSealed { get; }
+        int GetDamageToZone(ZoneLocation zoneLocation);
+        void TeleportPlayers(IEnumerable<Player> playersToTeleport, StationLocation newStationLocation);
+    }
 }

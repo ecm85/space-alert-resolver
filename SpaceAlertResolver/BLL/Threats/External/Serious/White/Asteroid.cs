@@ -3,44 +3,44 @@ using BLL.Players;
 
 namespace BLL.Threats.External.Serious.White
 {
-	public class Asteroid : SeriousWhiteExternalThreat
-	{
-		private int breakpointsCrossed;
+    public class Asteroid : SeriousWhiteExternalThreat
+    {
+        private int breakpointsCrossed;
 
-		internal Asteroid()
-			: base(0, 9, 3)
-		{
-		}
+        internal Asteroid()
+            : base(0, 9, 3)
+        {
+        }
 
-		protected override void PerformXAction(int currentTurn)
-		{
-			breakpointsCrossed++;
-		}
+        protected override void PerformXAction(int currentTurn)
+        {
+            breakpointsCrossed++;
+        }
 
-		protected override void PerformYAction(int currentTurn)
-		{
-			breakpointsCrossed++;
-		}
+        protected override void PerformYAction(int currentTurn)
+        {
+            breakpointsCrossed++;
+        }
 
-		protected override void PerformZAction(int currentTurn)
-		{
-			Attack(RemainingHealth);
-		}
+        protected override void PerformZAction(int currentTurn)
+        {
+            Attack(RemainingHealth);
+        }
 
-		public override bool CanBeTargetedBy(PlayerDamage damage)
-		{
-			Check.ArgumentIsNotNull(damage, "damage");
-			return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
-		}
+        public override bool CanBeTargetedBy(PlayerDamage damage)
+        {
+            Check.ArgumentIsNotNull(damage, "damage");
+            return damage.PlayerDamageType != PlayerDamageType.Rocket && base.CanBeTargetedBy(damage);
+        }
 
-		protected override void OnHealthReducedToZero()
-		{
-			base.OnHealthReducedToZero();
-			Attack(2 * breakpointsCrossed);
-		}
+        protected override void OnHealthReducedToZero()
+        {
+            base.OnHealthReducedToZero();
+            Attack(2 * breakpointsCrossed);
+        }
 
-		public override string Id { get; } = "SE1-08";
-		public override string DisplayName { get; } = "Asteroid";
-		public override string FileName { get; } = "Asteroid";
-	}
+        public override string Id { get; } = "SE1-08";
+        public override string DisplayName { get; } = "Asteroid";
+        public override string FileName { get; } = "Asteroid";
+    }
 }

@@ -1,9 +1,9 @@
 ﻿namespace BLL.Players
 {
-	public enum PlayerActionStatus
-	{
-		NotPerformed,
-		Performing,
-		Performed
-	}
+    public enum PlayerActionStatus
+    {
+        NotPerformed,
+        Performing,
+        Performed
+    }
 }

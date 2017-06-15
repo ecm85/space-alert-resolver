@@ -1,6 +1,6 @@
 ﻿namespace BLL.ShipComponents
 {
-	public class Interceptors
-	{
-	}
+    public class Interceptors
+    {
+    }
 }

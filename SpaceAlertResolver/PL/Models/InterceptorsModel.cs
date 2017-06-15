@@ -1,7 +1,7 @@
 ﻿namespace PL.Models
 {
-	public class InterceptorsModel
-	{
-		
-	}
+    public class InterceptorsModel
+    {
+        
+    }
 }

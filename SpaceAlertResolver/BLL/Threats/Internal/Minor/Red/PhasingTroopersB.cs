@@ -2,19 +2,19 @@
 
 namespace BLL.Threats.Internal.Minor.Red
 {
-	public class PhasingTroopersB : PhasingTroopers
-	{
-		internal PhasingTroopersB() : base(StationLocation.LowerRed)
-		{
-		}
+    public class PhasingTroopersB : PhasingTroopers
+    {
+        internal PhasingTroopersB() : base(StationLocation.LowerRed)
+        {
+        }
 
-		protected override void PerformYAction(int currentTurn)
-		{
-			MoveBlue();
-		}
+        protected override void PerformYAction(int currentTurn)
+        {
+            MoveBlue();
+        }
 
-		public override string Id { get; } = "I3-105";
-		public override string DisplayName { get; } = "Phasing Troopers";
-		public override string FileName { get; } = "PhasingTroopersB";
-	}
+        public override string Id { get; } = "I3-105";
+        public override string DisplayName { get; } = "Phasing Troopers";
+        public override string FileName { get; } = "PhasingTroopersB";
+    }
 }

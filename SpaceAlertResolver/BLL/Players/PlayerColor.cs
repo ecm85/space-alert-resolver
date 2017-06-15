@@ -1,11 +1,11 @@
 ﻿namespace BLL.Players
 {
-	public enum PlayerColor
-	{
-		Blue,
-		Green,
-		Red,
-		Yellow,
-		Purple
-	}
+    public enum PlayerColor
+    {
+        Blue,
+        Green,
+        Red,
+        Yellow,
+        Purple
+    }
 }

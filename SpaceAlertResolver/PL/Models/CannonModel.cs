@@ -4,14 +4,14 @@ using Newtonsoft.Json.Converters;
 
 namespace PL.Models
 {
-	public class CannonModel
-	{
-		[JsonConverter(typeof(StringEnumConverter))]
-		public EnergyType? Energy { get; set; }
+    public class CannonModel
+    {
+        [JsonConverter(typeof(StringEnumConverter))]
+        public EnergyType? Energy { get; set; }
 
-		public CannonModel(IAlphaComponent cannon)
-		{
-			Energy = cannon.EnergyInCannon;
-		}
-	}
+        public CannonModel(IAlphaComponent cannon)
+        {
+            Energy = cannon.EnergyInCannon;
+        }
+    }
 }

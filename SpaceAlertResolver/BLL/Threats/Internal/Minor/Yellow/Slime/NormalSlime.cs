@@ -4,57 +4,57 @@ using BLL.ShipComponents;
 
 namespace BLL.Threats.Internal.Minor.Yellow.Slime
 {
-	public abstract class NormalSlime : BaseSlime
-	{
-		protected NormalSlime(StationLocation stationLocation) : base(2, stationLocation)
-		{
-			Progeny = new List<ProgenySlime>();
-		}
+    public abstract class NormalSlime : BaseSlime
+    {
+        protected NormalSlime(StationLocation stationLocation) : base(2, stationLocation)
+        {
+            Progeny = new List<ProgenySlime>();
+        }
 
-		protected override void PerformYAction(int currentTurn)
-		{
-			SpreadFrom(CurrentStation, Position);
-		}
+        protected override void PerformYAction(int currentTurn)
+        {
+            SpreadFrom(CurrentStation, Position);
+        }
 
-		private IList<ProgenySlime> Progeny { get; }
+        private IList<ProgenySlime> Progeny { get; }
 
-		public override IList<StationLocation> DisplayOnTrackStations
-		{
-			get
-			{
-				return base.DisplayOnTrackStations
-					.Concat(Progeny.Where(progeny => progeny.IsOnShip).SelectMany(progeny => progeny.CurrentStations))
-					.ToList();
-			}
-		}
+        public override IList<StationLocation> DisplayOnTrackStations
+        {
+            get
+            {
+                return base.DisplayOnTrackStations
+                    .Concat(Progeny.Where(progeny => progeny.IsOnShip).SelectMany(progeny => progeny.CurrentStations))
+                    .ToList();
+            }
+        }
 
-		protected override bool IsDefeatedWhenHealthReachesZero { get { return Progeny.All(progeny => !progeny.IsOnShip); } }
+        protected override bool IsDefeatedWhenHealthReachesZero { get { return Progeny.All(progeny => !progeny.IsOnShip); } }
 
-		public void OnProgenyKilled()
-		{
-			if (!IsOnShip && Progeny.All(progeny => !progeny.IsOnShip))
-				SetThreatStatus(ThreatStatus.Defeated, true);
-		}
+        public void OnProgenyKilled()
+        {
+            if (!IsOnShip && Progeny.All(progeny => !progeny.IsOnShip))
+                SetThreatStatus(ThreatStatus.Defeated, true);
+        }
 
-		public void OnProgenySurvived()
-		{
-			SetThreatStatus(ThreatStatus.Survived, true);
-		}
+        public void OnProgenySurvived()
+        {
+            SetThreatStatus(ThreatStatus.Survived, true);
+        }
 
-		protected abstract ProgenySlime CreateProgeny(StationLocation stationLocation);
+        protected abstract ProgenySlime CreateProgeny(StationLocation stationLocation);
 
-		public void SpreadFrom(StationLocation spreadFromStation, int position)
-		{
-			var spreadToStation = GetStationToSpreadTo(spreadFromStation);
-			if (spreadToStation == null ||
-			    ThreatController.DamageableInternalThreats.Any(threat => threat is BaseSlime && threat.CurrentStation == spreadToStation))
-				return;
-			var newProgeny = CreateProgeny(spreadToStation.Value);
-			Progeny.Add(newProgeny);
-			newProgeny.Initialize(SittingDuck, ThreatController, EventMaster);
-			ThreatController.AddInternalThreat(newProgeny, TimeAppears, position);
-		}
+        public void SpreadFrom(StationLocation spreadFromStation, int position)
+        {
+            var spreadToStation = GetStationToSpreadTo(spreadFromStation);
+            if (spreadToStation == null ||
+                ThreatController.DamageableInternalThreats.Any(threat => threat is BaseSlime && threat.CurrentStation == spreadToStation))
+                return;
+            var newProgeny = CreateProgeny(spreadToStation.Value);
+            Progeny.Add(newProgeny);
+            newProgeny.Initialize(SittingDuck, ThreatController, EventMaster);
+            ThreatController.AddInternalThreat(newProgeny, TimeAppears, position);
+        }
 
-		protected abstract StationLocation? GetStationToSpreadTo(StationLocation stationLocation);
-	}
+        protected abstract StationLocation? GetStationToSpreadTo(StationLocation stationLocation);
+    }
 }

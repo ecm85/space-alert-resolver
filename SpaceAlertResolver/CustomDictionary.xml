@@ -1,42 +1,42 @@
 ﻿<Dictionary>
-	<Acronyms>
-		<CasingExceptions>
-			<Acronym>BLL</Acronym>
-			<Acronym>MVC</Acronym>
-			<Acronym>Api</Acronym>
-			<Acronym>XYY</Acronym>
-			<Acronym>XYZ</Acronym>
-		</CasingExceptions>
-	</Acronyms>
-	<Words>
-		<Recognized>
-			<Word>Cryoshield</Word>
-			<Word>Cryoshielded</Word>
-			<Word>Stealthed</Word>
-			<Word>Gravolift</Word>
-			<Word>Debuff</Word>
-			<Word>Redward</Word>
-			<Word>Blueward</Word>
-			<Word>Megashield</Word>
-			<Word>Pulser</Word>
-			<Word>Needleship</Word>
-			<Word>Teleporter</Word>
-			<Word>Hypernavigator</Word>
-			<Word>Shambler</Word>
-			<Word>Shipward</Word>
-			<Word>ConsoleResolver</Word>
-			<Word>Mvc</Word>
-			<Word>Api</Word>
-			<Word>Xyy</Word>
-			<Word>Xyz</Word>
-		</Recognized>
-		<Compound>
-			<Term CompoundAlternate="KnockOut">knockout</Term>
-			<Term CompoundAlternate="SideLight">sidelight</Term>
-			<Term CompountAlternate="MineLayer">minelayer</Term>
-			<Term CompountAlternate="OnBoard">onboard</Term>
-			<Term CompoundAlternate="ConsoleResolver">ConsoleResolver</Term>
-			<Term CompoundAlternate="GrownUp">GrownUp</Term>
-		</Compound>
-	</Words>
+    <Acronyms>
+        <CasingExceptions>
+            <Acronym>BLL</Acronym>
+            <Acronym>MVC</Acronym>
+            <Acronym>Api</Acronym>
+            <Acronym>XYY</Acronym>
+            <Acronym>XYZ</Acronym>
+        </CasingExceptions>
+    </Acronyms>
+    <Words>
+        <Recognized>
+            <Word>Cryoshield</Word>
+            <Word>Cryoshielded</Word>
+            <Word>Stealthed</Word>
+            <Word>Gravolift</Word>
+            <Word>Debuff</Word>
+            <Word>Redward</Word>
+            <Word>Blueward</Word>
+            <Word>Megashield</Word>
+            <Word>Pulser</Word>
+            <Word>Needleship</Word>
+            <Word>Teleporter</Word>
+            <Word>Hypernavigator</Word>
+            <Word>Shambler</Word>
+            <Word>Shipward</Word>
+            <Word>ConsoleResolver</Word>
+            <Word>Mvc</Word>
+            <Word>Api</Word>
+            <Word>Xyy</Word>
+            <Word>Xyz</Word>
+        </Recognized>
+        <Compound>
+            <Term CompoundAlternate="KnockOut">knockout</Term>
+            <Term CompoundAlternate="SideLight">sidelight</Term>
+            <Term CompountAlternate="MineLayer">minelayer</Term>
+            <Term CompountAlternate="OnBoard">onboard</Term>
+            <Term CompoundAlternate="ConsoleResolver">ConsoleResolver</Term>
+            <Term CompoundAlternate="GrownUp">GrownUp</Term>
+        </Compound>
+    </Words>
 </Dictionary>

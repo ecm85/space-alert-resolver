@@ -1,62 +1,62 @@
 ﻿<div class="players players-upper-{{zoneId}} station-area">
-	<div ng-repeat="player in zone.upperStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
-		<img class="player-icon" ng-src="~/Content/Images/Players/Male{{player.playerColor}}.png"/>
-		<img class="active-battle-bots" ng-if="player.battleBots" src="~/Content/Images/BattleBots.png"/>
-	</div>
+    <div ng-repeat="player in zone.upperStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
+        <img class="player-icon" ng-src="~/Content/Images/Players/Male{{player.playerColor}}.png"/>
+        <img class="active-battle-bots" ng-if="player.battleBots" src="~/Content/Images/BattleBots.png"/>
+    </div>
 </div>
 <div class="threats-on-ship threats-upper-{{zoneId}} station-area" id="upper{{zoneId}}threats">
-	<img class="threat-on-ship" ng-repeat="threat in zone.upperStation.internalThreats" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png"/>
+    <img class="threat-on-ship" ng-repeat="threat in zone.upperStation.internalThreats" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png"/>
 </div>
 <div class="energy-cubes energy-cubes-upper-{{zoneId}} energy-cubes-max-{{zone.upperStation.maxEnergyCubes}} station-area">
-	<img class="energy-cube" ng-repeat="cube in zone.upperStation.energyCubes" src="~/Content/Images/GreenCube.png"/>
+    <img class="energy-cube" ng-repeat="cube in zone.upperStation.energyCubes" src="~/Content/Images/GreenCube.png"/>
 </div>
 <div class="energy-in-cannon-container energy-in-upper-{{zoneId}}-cannon station-area">
-	<img ng-if="zone.upperStation.cannon.energy" class="energy-cube" ng-src="~/Content/Images/{{zone.upperStation.cannon.energy === 'Battery' ? 'orange' : 'green'}}Cube.png "/>
+    <img ng-if="zone.upperStation.cannon.energy" class="energy-cube" ng-src="~/Content/Images/{{zone.upperStation.cannon.energy === 'Battery' ? 'orange' : 'green'}}Cube.png "/>
 </div>
 <div class="maintenance-cubes-container station-area">
-	<img ng-repeat="cube in zone.upperStation.computerCubes" class="computer-cube" src="~/Content/Images/whiteCube.png"/>
+    <img ng-repeat="cube in zone.upperStation.computerCubes" class="computer-cube" src="~/Content/Images/whiteCube.png"/>
 </div>
 <div class="players players-lower-{{zoneId}} station-area">
-	<div ng-repeat="player in zone.lowerStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
-		<img class="player-icon" ng-src="~/Content/Images/Players/Male{{player.playerColor}}.png"/>
-		<img class="active-battle-bots" ng-if="player.battleBots" src="~/Content/Images/BattleBots.png"/>
-	</div>
+    <div ng-repeat="player in zone.lowerStation.players" class="player" ng-class="{'player-with-battlebots': player.battleBots}">
+        <img class="player-icon" ng-src="~/Content/Images/Players/Male{{player.playerColor}}.png"/>
+        <img class="active-battle-bots" ng-if="player.battleBots" src="~/Content/Images/BattleBots.png"/>
+    </div>
 </div>
 <div class="threats-on-ship threats-lower-{{zoneId}} station-area" id="lower{{zoneId}}threats">
-	<img class="threat-on-ship" ng-repeat="threat in zone.lowerStation.internalThreats" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png" />
+    <img class="threat-on-ship" ng-repeat="threat in zone.lowerStation.internalThreats" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png" />
 </div>
 <div class="energy-cubes energy-cubes-lower-{{zoneId}} energy-cubes-max-{{zone.lowerStation.maxEnergyCubes}} station-area">
-	<img class="energy-cube" ng-repeat="cube in  zone.lowerStation.energyCubes" src="~/Content/Images/GreenCube.png"/>
+    <img class="energy-cube" ng-repeat="cube in  zone.lowerStation.energyCubes" src="~/Content/Images/GreenCube.png"/>
 </div>
 <div class="energy-in-cannon-container energy-in-lower-{{zoneId}}-cannon station-area">
-	<img ng-if="zone.lowerStation.cannon.energy" class="energy-cube" ng-src="~/Content/Images/{{zone.lowerStation.cannon.energy === 'Battery' ? 'orange' : 'green'}}Cube.png " />
+    <img ng-if="zone.lowerStation.cannon.energy" class="energy-cube" ng-src="~/Content/Images/{{zone.lowerStation.cannon.energy === 'Battery' ? 'orange' : 'green'}}Cube.png " />
 </div>
 
 <div class="inactive-lower-red-battle-bots station-area">
-	<img class="inactive-battle-bots" ng-if="zone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png" />
+    <img class="inactive-battle-bots" ng-if="zone.lowerStation.battleBots" src="~/Content/Images/BattleBots.png" />
 </div>
 <div class="inactive-upper-blue-battle-bots station-area">
-	<img class="inactive-battle-bots" ng-if="zone.upperStation.battleBots" src="~/Content/Images/BattleBots.png" />
+    <img class="inactive-battle-bots" ng-if="zone.upperStation.battleBots" src="~/Content/Images/BattleBots.png" />
 </div>
 <div class="inactive-interceptors-wrapper station-area">
-	<img class="inactive-interceptors" ng-if="zone.upperStation.interceptors" src="~/Content/Images/Interceptors.png" />
+    <img class="inactive-interceptors" ng-if="zone.upperStation.interceptors" src="~/Content/Images/Interceptors.png" />
 </div>
 <div class="rockets station-area">
-	<img class="rocket" ng-repeat="rocket in zone.lowerStation.rockets" src="~/Content/Images/rocket2.png" />
+    <img class="rocket" ng-repeat="rocket in zone.lowerStation.rockets" src="~/Content/Images/rocket2.png" />
 </div>
 <div class="battery-pack-container battery-pack-container-lower-red station-area">
-	<img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
+    <img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 </div>
 <div class="battery-pack-container battery-pack-container-lower-blue station-area">
-	<img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
+    <img ng-if="zone.lowerStation.batteryPackHasEnergy" class="energy-cube" src="~/Content/Images/OrangeCube.png" />
 </div>
 <div class="fuel-capsules-container station-area">
-	<img ng-repeat="fuelCapsule in zone.lowerStation.fuelCapsules" class="fuel-capsule" src="~/Content/Images/GreenCylinder.png"/>
+    <img ng-repeat="fuelCapsule in zone.lowerStation.fuelCapsules" class="fuel-capsule" src="~/Content/Images/GreenCylinder.png"/>
 </div>
 <div class="rocket-fired-this-turn-container station-area">
-	<img class="rocket rocket-this-turn" ng-if="zone.lowerStation.rocketFiredThisTurn" src="~/Content/Images/rocket2.png" />
+    <img class="rocket rocket-this-turn" ng-if="zone.lowerStation.rocketFiredThisTurn" src="~/Content/Images/rocket2.png" />
 </div>
 <div class="rocket-fired-last-turn-container station-area">
-	<img class="rocket rocket-last-turn" ng-if="zone.lowerStation.rocketFiredLastTurn" src="~/Content/Images/rocket2.png" />
+    <img class="rocket rocket-last-turn" ng-if="zone.lowerStation.rocketFiredLastTurn" src="~/Content/Images/rocket2.png" />
 </div>
 <img ng-repeat="damage in zone.damage" class="damage-token {{damage}}-damage-token" ng-src="~/Content/Images/Damage/{{damage}}.png"/>

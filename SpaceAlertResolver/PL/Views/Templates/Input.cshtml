@@ -1,159 +1,159 @@
 ﻿<h1>Game Input</h1>
 <h2>Players</h2>
 <div class="btn-group">
-	<div ng-repeat="playerCount in newGameData.playerCounts" class="btn btn-default" ng-model="newGameData.selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</div>
+    <div ng-repeat="playerCount in newGameData.playerCounts" class="btn btn-default" ng-model="newGameData.selectedPlayerCountRadio.model" uib-btn-radio="playerCount">{{playerCount}}</div>
 </div>
 <div class="checkbox">
-	<label type="checkbox">
-		<input type="checkbox" ng-model="newGameData.useDoubleActions"/>
-		Double Actions
-	</label>
+    <label type="checkbox">
+        <input type="checkbox" ng-model="newGameData.useDoubleActions"/>
+        Double Actions
+    </label>
 </div>
 <div class="checkbox">
-	<label type="checkbox">
-		<input type="checkbox" ng-model="newGameData.useSpecializations" />
-		Specializations
-	</label>
+    <label type="checkbox">
+        <input type="checkbox" ng-model="newGameData.useSpecializations" />
+        Specializations
+    </label>
 </div>
 <div class="checkbox">
-	<label type="checkbox">
-		<input type="checkbox" ng-model="newGameData.allowDamageEntry" />
-		Campaign Mode (damage carryover)
-	</label>
+    <label type="checkbox">
+        <input type="checkbox" ng-model="newGameData.allowDamageEntry" />
+        Campaign Mode (damage carryover)
+    </label>
 </div>
 <div>
-	<div ng-repeat="player in newGameData.players" class="panel panel-default player-panel" ng-if="player.isInGame">
-		<div class="panel-heading">
-			<div class="panel-title">
-				<div>
-					{{player.title}}
-				</div>
-			</div>
-		</div>
-		<div class="panel-body">
-			<div class="player-color-with-selector">
-				<img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
-				<div class="btn-group color-button-group">
-					<div ng-repeat="color in newGameData.colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
-						<span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
-					</div>
-				</div>
-			</div>
-			<select ng-if="newGameData.useSpecializations" ng-model="player.playerSpecialization" ng-options="playerSpecialization for playerSpecialization in playerSpecializations">
-				<option value="">Choose Specialization</option>
-			</select>
-			<player-board class="configurable-player-board" player-color="player.color.model" ng-click="openActionsDialog(player, 'lg')" selected-actions="player.actions"></player-board>
-		</div>
-	</div>
+    <div ng-repeat="player in newGameData.players" class="panel panel-default player-panel" ng-if="player.isInGame">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <div>
+                    {{player.title}}
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="player-color-with-selector">
+                <img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
+                <div class="btn-group color-button-group">
+                    <div ng-repeat="color in newGameData.colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
+                        <span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+            <select ng-if="newGameData.useSpecializations" ng-model="player.playerSpecialization" ng-options="playerSpecialization for playerSpecialization in playerSpecializations">
+                <option value="">Choose Specialization</option>
+            </select>
+            <player-board class="configurable-player-board" player-color="player.color.model" ng-click="openActionsDialog(player, 'lg')" selected-actions="player.actions"></player-board>
+        </div>
+    </div>
 </div>
 <h2>Threats and Tracks</h2>
 <div class="full-board">
-	<div class="external-tracks-wrapper">
-		<div class="selected-track-wrapper">
-			<track-with-threats
-				track="newGameData.selectedTracks.redTrack"
-				track-id="'red'"
-				zone-description="'Red'"
-				all-tracks="allTracks"
-				all-used-tracks="newGameData.allSelectedTracks"
-				track-is-configurable="true"
-				threats="newGameData.selectedThreats.redThreats"
-				all-threats="allExternalThreats"
-				all-used-threats="newGameData.allSelectedExternalThreats"
-				threats-are-configurable="true"></track-with-threats>
-		</div>
-		<div class="selected-track-wrapper">
-			<track-with-threats
-				track="newGameData.selectedTracks.whiteTrack"
-				track-id="'white'"
-				zone-description="'White'"
-				all-tracks="allTracks"
-				all-used-tracks="newGameData.allSelectedTracks"
-				track-is-configurable="true"
-				threats="newGameData.selectedThreats.whiteThreats"
-				all-threats="allExternalThreats"
-				all-used-threats="newGameData.allSelectedExternalThreats"
-				threats-are-configurable="true"></track-with-threats>
-		</div>
-		<div class="selected-track-wrapper">
-			<track-with-threats
-				track="newGameData.selectedTracks.blueTrack"
-				track-id="'blue'"
-				zone-description="'Blue'"
-				all-tracks="allTracks"
-				all-used-tracks="newGameData.allSelectedTracks"
-				track-is-configurable="true"
-				threats="newGameData.selectedThreats.blueThreats"
-				all-threats="allExternalThreats"
-				all-used-threats="newGameData.allSelectedExternalThreats"
-				threats-are-configurable="true"></track-with-threats>
-		</div>
-	</div>
-	<div class="sitting-duck-wrapper">
-		<img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
-	</div>
-	<div class="selected-track-wrapper">
-		<track-with-threats
-			track="newGameData.selectedTracks.internalTrack"
-			track-id="'internal'"
-			zone-description="'Internal'"
-			all-tracks="allTracks"
-			all-used-tracks="newGameData.allSelectedTracks"
-			track-is-configurable="true"
-			threats="newGameData.selectedThreats.internalThreats"
-			all-threats="allInternalThreats"
-			all-used-threats="newGameData.selectedThreats.internalThreats"
-			threats-are-configurable="true"></track-with-threats>
-	</div>
-	<div ng-if="anyThreatsCallInBonusThreats()">
-		<h2>Threats Called In</h2>
-		<div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusInternalThreat">
-			<bonus-threat-entry threat="threat" bonus-threat="threat.bonusInternalThreat" set-bonus-threat="setCalledInInternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
-		</div>
-		<div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusExternalThreat">
-			<bonus-threat-entry threat="threat" bonus-threat="threat.bonusExternalThreat" set-bonus-threat="setCalledInExternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
-		</div>
-	</div>
-	<div ng-if="newGameData.allowDamageEntry">
-		<h2>Initial Damage</h2>
-		<div ng-repeat="damageableZone in damageableZones" class="damageable-zone">
-			<h3>
-				{{damageableZone}}
-			</h3>
-			<div class="checkbox" ng-repeat="damageToken in allDamageTokens">
-				<label type="checkbox">
-					<input type="checkbox" ng-model="newGameData.damage[damageableZone][damageToken]" />
-					<img class="selectable-damage-token " ng-src="~/Content/Images/Damage/{{damageableZone}}-{{damageToken}}.png"/>
-				</label>
-			</div>
-		</div>
-	</div>
+    <div class="external-tracks-wrapper">
+        <div class="selected-track-wrapper">
+            <track-with-threats
+                track="newGameData.selectedTracks.redTrack"
+                track-id="'red'"
+                zone-description="'Red'"
+                all-tracks="allTracks"
+                all-used-tracks="newGameData.allSelectedTracks"
+                track-is-configurable="true"
+                threats="newGameData.selectedThreats.redThreats"
+                all-threats="allExternalThreats"
+                all-used-threats="newGameData.allSelectedExternalThreats"
+                threats-are-configurable="true"></track-with-threats>
+        </div>
+        <div class="selected-track-wrapper">
+            <track-with-threats
+                track="newGameData.selectedTracks.whiteTrack"
+                track-id="'white'"
+                zone-description="'White'"
+                all-tracks="allTracks"
+                all-used-tracks="newGameData.allSelectedTracks"
+                track-is-configurable="true"
+                threats="newGameData.selectedThreats.whiteThreats"
+                all-threats="allExternalThreats"
+                all-used-threats="newGameData.allSelectedExternalThreats"
+                threats-are-configurable="true"></track-with-threats>
+        </div>
+        <div class="selected-track-wrapper">
+            <track-with-threats
+                track="newGameData.selectedTracks.blueTrack"
+                track-id="'blue'"
+                zone-description="'Blue'"
+                all-tracks="allTracks"
+                all-used-tracks="newGameData.allSelectedTracks"
+                track-is-configurable="true"
+                threats="newGameData.selectedThreats.blueThreats"
+                all-threats="allExternalThreats"
+                all-used-threats="newGameData.allSelectedExternalThreats"
+                threats-are-configurable="true"></track-with-threats>
+        </div>
+    </div>
+    <div class="sitting-duck-wrapper">
+        <img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
+    </div>
+    <div class="selected-track-wrapper">
+        <track-with-threats
+            track="newGameData.selectedTracks.internalTrack"
+            track-id="'internal'"
+            zone-description="'Internal'"
+            all-tracks="allTracks"
+            all-used-tracks="newGameData.allSelectedTracks"
+            track-is-configurable="true"
+            threats="newGameData.selectedThreats.internalThreats"
+            all-threats="allInternalThreats"
+            all-used-threats="newGameData.selectedThreats.internalThreats"
+            threats-are-configurable="true"></track-with-threats>
+    </div>
+    <div ng-if="anyThreatsCallInBonusThreats()">
+        <h2>Threats Called In</h2>
+        <div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusInternalThreat">
+            <bonus-threat-entry threat="threat" bonus-threat="threat.bonusInternalThreat" set-bonus-threat="setCalledInInternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
+        </div>
+        <div ng-repeat="threat in newGameData.allSelectedThreats" ng-if="threat.needsBonusExternalThreat">
+            <bonus-threat-entry threat="threat" bonus-threat="threat.bonusExternalThreat" set-bonus-threat="setCalledInExternalThreat(threat)" clear-bonus-threat="clearBonusThreat(threat)"></bonus-threat-entry>
+        </div>
+    </div>
+    <div ng-if="newGameData.allowDamageEntry">
+        <h2>Initial Damage</h2>
+        <div ng-repeat="damageableZone in damageableZones" class="damageable-zone">
+            <h3>
+                {{damageableZone}}
+            </h3>
+            <div class="checkbox" ng-repeat="damageToken in allDamageTokens">
+                <label type="checkbox">
+                    <input type="checkbox" ng-model="newGameData.damage[damageableZone][damageToken]" />
+                    <img class="selectable-damage-token " ng-src="~/Content/Images/Damage/{{damageableZone}}-{{damageToken}}.png"/>
+                </label>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
-	<div class="alert alert-danger" ng-if="!newGameData.canCreateGame()">
-		<ul>
-			<li ng-if="newGameData.selectedTracks.redTrack == null">Select a red track</li>
-			<li ng-if="newGameData.selectedTracks.whiteTrack == null">Select a white track</li>
-			<li ng-if="newGameData.selectedTracks.blueTrack == null">Select a red track</li>
-			<li ng-if="newGameData.selectedTracks.internalTrack == null">Select an internal track</li>
-			<li ng-if="newGameData.isMissingBonusThreats()">Add threats for each threat that calls in bonus threats</li>
-		</ul>
-	</div>
-	<a href="#Resolution" class="btn btn-primary" ng-disabled="!newGameData.canCreateGame()">Create Game</a>
-	<button class="btn btn-default" ng-click="newGameData.initialize()">Reset</button>
+    <div class="alert alert-danger" ng-if="!newGameData.canCreateGame()">
+        <ul>
+            <li ng-if="newGameData.selectedTracks.redTrack == null">Select a red track</li>
+            <li ng-if="newGameData.selectedTracks.whiteTrack == null">Select a white track</li>
+            <li ng-if="newGameData.selectedTracks.blueTrack == null">Select a red track</li>
+            <li ng-if="newGameData.selectedTracks.internalTrack == null">Select an internal track</li>
+            <li ng-if="newGameData.isMissingBonusThreats()">Add threats for each threat that calls in bonus threats</li>
+        </ul>
+    </div>
+    <a href="#Resolution" class="btn btn-primary" ng-disabled="!newGameData.canCreateGame()">Create Game</a>
+    <button class="btn btn-default" ng-click="newGameData.initialize()">Reset</button>
 </div>
 <script type="text/ng-template" id="templates/actionsModal">
-	@Html.Action("ActionsDialog", "Templates")
+    @Html.Action("ActionsDialog", "Templates")
 </script>
 <script type="text/ng-template" id="templates/trackWithThreats">
-	@Html.Action("TrackWithThreats", "Templates")
+    @Html.Action("TrackWithThreats", "Templates")
 </script>
 <script type="text/ng-template" id="templates/trackModal">
-	@Html.Action("TrackDialog", "Templates")
+    @Html.Action("TrackDialog", "Templates")
 </script>
 <script type="text/ng-template" id="templates/threatsModal">
-	@Html.Action("ThreatsDialog", "Templates")
+    @Html.Action("ThreatsDialog", "Templates")
 </script>
 <script type="text/ng-template" id="templates/playerBoard">
-	@Html.Action("PlayerBoard", "Templates")
+    @Html.Action("PlayerBoard", "Templates")
 </script>

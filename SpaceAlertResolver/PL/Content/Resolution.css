@@ -1,84 +1,84 @@
 ﻿.game-sidebar {
-	display: inline-block;
-	width: 250px;
-	max-width: 250px;
-	vertical-align: top;
+    display: inline-block;
+    width: 250px;
+    max-width: 250px;
+    vertical-align: top;
 }
 
 .automated-run-through {
-	margin: 20px 0;
+    margin: 20px 0;
 }
 
 .fast-collapse .collapsing {
-	transition: none;
+    transition: none;
 }
 
 .phase-selector {
-	width:215px;
-	max-width:215px;
+    width:215px;
+    max-width:215px;
 }
 
 .turn-selector-option {
-	width:42px;
-	max-width:42px;
-	text-align: center;
+    width:42px;
+    max-width:42px;
+    text-align: center;
 }
 
 .fast-speed-label {
-	float: right;
+    float: right;
 }
 
 .speed-selection-container {
-	width: 200px;
+    width: 200px;
 }
 
 .speed-selector {
-	width: 200px;
+    width: 200px;
 }
 
 .interceptors-in-space {
-	width: 100px;
-	height: auto;
+    width: 100px;
+    height: auto;
 }
 
 .interceptors-zone {
-	position: relative;
+    position: relative;
     display: inline-block;
     width: 107px;
     height: 346px;
 }
 
 .interceptors-station {
-	border-bottom: 2px red dashed;
-	border-left: 2px red dashed;
-	border-right: 2px red dashed;
-	width: 107px;
-	padding-top: 30%;
+    border-bottom: 2px red dashed;
+    border-left: 2px red dashed;
+    border-right: 2px red dashed;
+    width: 107px;
+    padding-top: 30%;
 }
 
 .interceptors-station-1, .interceptors-station-2 {
-	height: 108px;
+    height: 108px;
 }
 
 .interceptors-station-3 {
-	height: 135px;
-	border-top: 2px red dashed;
+    height: 135px;
+    border-top: 2px red dashed;
 }
 
 .interceptors-in-space-placeholder {
-	opacity: .3;
+    opacity: .3;
 }
 
 .killed-by {
-	text-align: left;
+    text-align: left;
 }
 
 .player-boards {
-	display: inline-block;
-	width: 600px;
-	vertical-align: top;
+    display: inline-block;
+    width: 600px;
+    vertical-align: top;
 }
 
 .player-board {
-	display: inline-block;
+    display: inline-block;
 }

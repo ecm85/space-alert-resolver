@@ -1,83 +1,83 @@
 ﻿.track-wrapper {
-	display: inline-block;
-	width: 63px;
-	vertical-align: bottom;
-	padding-top: 10px;
+    display: inline-block;
+    width: 63px;
+    vertical-align: bottom;
+    padding-top: 10px;
 }
 
 .track-spaces-wrapper {
-	display: inline-block;
-	position: relative;
-	vertical-align: bottom;
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
 }
 
 .track-outline {
-	position: relative;
-	border-bottom: 350px solid black;
-	height: 0;
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	width: 63px;
-	display: table;
-	z-index: -3;
+    position: relative;
+    border-bottom: 350px solid black;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    width: 63px;
+    display: table;
+    z-index: -3;
 }
 
 .track-sections {
-	position: absolute;
-	bottom: 0;
-	display: table-cell;
-	z-index: -2;
+    position: absolute;
+    bottom: 0;
+    display: table-cell;
+    z-index: -2;
 }
 
 .track-section {
-	vertical-align: bottom;
-	margin-bottom: 8px;
+    vertical-align: bottom;
+    margin-bottom: 8px;
 }
 
 .track-space {
-	height: 18px;
-	width: 40px;
-	border: 1px solid #FBDA66;
-	margin-left: 11px;
-	margin-bottom: 2px;
-	z-index: -2;
+    height: 18px;
+    width: 40px;
+    border: 1px solid #FBDA66;
+    margin-left: 11px;
+    margin-bottom: 2px;
+    z-index: -2;
 }
 
 .track-breakpoint.track-space {
-	text-align: center;
+    text-align: center;
 }
 
 .track-section-1 > .track-breakpoint-x.track-space, .track-section-2 > .track-breakpoint-x.track-space, .track-section-3 > .track-breakpoint-x.track-space {
-	background: yellow;
+    background: yellow;
 }
 
 .track-section-1 > .track-breakpoint-y.track-space, .track-section-2 > .track-breakpoint-y.track-space, .track-section-3 > .track-breakpoint-y.track-space {
-	background: orange;
+    background: orange;
 }
 
 .track-section-1 > .track-breakpoint-z.track-space, .track-section-2 > .track-breakpoint-z.track-space, .track-section-3 > .track-breakpoint-z.track-space {
-	background: red;
+    background: red;
 }
 
 .track-space.threat-present {
-	border: 3px solid red;
-	line-height: .9em;
+    border: 3px solid red;
+    line-height: .9em;
 }
 
 
 .track-breakpoint-text {
-	font-weight: 900;
-	font-family: Arial;
+    font-weight: 900;
+    font-family: Arial;
 }
 
 .track-section-1 > .track-space{
-	background: linear-gradient(#522B1F, #322817);
+    background: linear-gradient(#522B1F, #322817);
 }
 
 .track-section-2 > .track-space{
-	background: linear-gradient(#7B3F34, #41260C);
+    background: linear-gradient(#7B3F34, #41260C);
 }
 
 .track-section-3 > .track-space{
-	background: linear-gradient(#EC6815, #8A5414);
+    background: linear-gradient(#EC6815, #8A5414);
 }

@@ -1,9 +1,9 @@
 ﻿namespace BLL.Threats
 {
-	public enum ThreatDifficulty
-	{
-		White,
-		Yellow,
-		Red
-	}
+    public enum ThreatDifficulty
+    {
+        White,
+        Yellow,
+        Red
+    }
 }

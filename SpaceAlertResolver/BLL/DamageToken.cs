@@ -1,12 +1,12 @@
 ﻿namespace BLL
 {
-	public enum DamageToken
-	{
-		Reactor,
-		Shield,
-		FrontCannon,
-		BackCannon,
-		Gravolift,
-		Structural
-	}
+    public enum DamageToken
+    {
+        Reactor,
+        Shield,
+        FrontCannon,
+        BackCannon,
+        Gravolift,
+        Structural
+    }
 }

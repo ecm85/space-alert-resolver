@@ -1,414 +1,414 @@
 ﻿.players {
-	position: absolute;
-	width: 100px;
-	height: 55px;
+    position: absolute;
+    width: 100px;
+    height: 55px;
 }
 
 .players-upper-white {
-	top: 115px;
-	left: 315px;
+    top: 115px;
+    left: 315px;
 }
 
 .players-lower-white {
-	top: 275px;
-	left: 315px;
+    top: 275px;
+    left: 315px;
 }
 
 .players-upper-blue {
-	top: 160px;
-	left: 448px;
+    top: 160px;
+    left: 448px;
 }
 
 .players-lower-blue {
-	top: 275px;
-	left: 515px;
+    top: 275px;
+    left: 515px;
 }
 
 .players-upper-red {
-	top: 160px;
-	left: 170px;
+    top: 160px;
+    left: 170px;
 }
 
 .players-lower-red {
-	top: 275px;
-	left: 115px;
+    top: 275px;
+    left: 115px;
 }
 
 .player {
-	margin-right: -15px;
-	display: inline-block;
+    margin-right: -15px;
+    display: inline-block;
 }
 
 .player-icon {
-	width: 25px;
-	height: auto;
+    width: 25px;
+    height: auto;
 }
 
 .threat-with-lines:hover .threat-on-ship-line {
-	display: block;
+    display: block;
 }
 
 .threats-upper-white {
-	top: 173px;
-	left: 315px;
+    top: 173px;
+    left: 315px;
 }
 
 .threats-lower-white {
-	top: 333px;
-	left: 315px;
+    top: 333px;
+    left: 315px;
 }
 
 .threats-upper-blue {
-	top: 218px;
-	left: 448px;
+    top: 218px;
+    left: 448px;
 }
 
 .threats-lower-blue {
-	top: 333px;
-	left: 515px;
+    top: 333px;
+    left: 515px;
 }
 
 .threats-upper-red {
-	top: 218px;
-	left: 170px;
+    top: 218px;
+    left: 170px;
 }
 
 .threats-lower-red {
-	top: 333px;
-	left: 115px;
+    top: 333px;
+    left: 115px;
 }
 
 .energy-cubes {
-	position: absolute;
-	height: 24px;
+    position: absolute;
+    height: 24px;
 }
 
 .energy-cubes-max-1 {
-	width: 21px;
+    width: 21px;
 }
 
 .energy-cubes-max-2 {
-	width: 40px;
+    width: 40px;
 }
 
 .energy-cubes-max-3 {
-	width: 59px;
+    width: 59px;
 }
 
 .energy-cubes-max-4 {
-	width: 78px;
+    width: 78px;
 }
 
 .energy-cubes-max-5 {
-	width: 97px;
+    width: 97px;
 }
 
 .energy-cubes-max-6 {
-	width: 116px; 
+    width: 116px; 
 }
 
 .energy-cubes-upper-white {
-	top: 75px;
-	left: 400px;
+    top: 75px;
+    left: 400px;
 }
 
 .energy-cubes-lower-white {
-	top: 360px;
-	left: 315px;
+    top: 360px;
+    left: 315px;
 }
 
 .energy-cubes-upper-blue {
-	top: 133px;
-	left: 550px;
+    top: 133px;
+    left: 550px;
 }
 
 .energy-cubes-lower-blue {
-	top: 360px;
-	left: 515px;
+    top: 360px;
+    left: 515px;
 }
 
 .energy-cubes-upper-red {
-	top: 133px;
-	left: 128px;
+    top: 133px;
+    left: 128px;
 }
 
 .energy-cubes-lower-red {
-	top: 360px;
-	left: 90px;
+    top: 360px;
+    left: 90px;
 }
 
 .energy-cube{
-	width: 20px;
-	height: auto;
-	margin-right: -2px;
+    width: 20px;
+    height: auto;
+    margin-right: -2px;
 }
 
 
 
 .rockets {
-	position: absolute;
-	top: 385px;
-	left: 535px;
-	height: 39px;
-	width: 80px;
+    position: absolute;
+    top: 385px;
+    left: 535px;
+    height: 39px;
+    width: 80px;
 }
 
 .rocket {
-	width: 40px;
-	height: auto;
-	margin-right: -20px
+    width: 40px;
+    height: auto;
+    margin-right: -20px
 }
 
 .inactive-lower-red-battle-bots {
-	position: absolute;
-	top: 368px;
-	left: 168px;
-	width: 45px;
-	height: 33px;
+    position: absolute;
+    top: 368px;
+    left: 168px;
+    width: 45px;
+    height: 33px;
 }
 
 .inactive-upper-blue-battle-bots {
-	position: absolute;
-	top: 184px;
-	left: 552px;
-	width: 45px;
-	height: 33px;
+    position: absolute;
+    top: 184px;
+    left: 552px;
+    width: 45px;
+    height: 33px;
 }
 
 .inactive-battle-bots {
-	height: auto;
-	width: 45px;
+    height: auto;
+    width: 45px;
 }
 
 .active-battle-bots {
-	width: 25px;
-	height: 25px;
-	vertical-align: bottom;
-	margin-left: -12.5px;
+    width: 25px;
+    height: 25px;
+    vertical-align: bottom;
+    margin-left: -12.5px;
 }
 
 .station-area {
-	background-color: rgba(50, 50, 50, .15);
-	z-index: 10;
-	/*border: yellow 1px solid;*/
+    background-color: rgba(50, 50, 50, .15);
+    z-index: 10;
+    /*border: yellow 1px solid;*/
 }
 
 .battery-pack-container {
-	position: absolute;
-	width: 20px;
-	height: 24px;
+    position: absolute;
+    width: 20px;
+    height: 24px;
 }
 
 .battery-pack-container-lower-blue {
-	top: 389px;
-	left: 646px;
+    top: 389px;
+    left: 646px;
 }
 
 .battery-pack-container-lower-red {
-	top: 389px;
-	left: 60px;
+    top: 389px;
+    left: 60px;
 }
 
 .energy-in-cannon-container {
-	position: absolute;
-	width: 20px;
-	height: 24px;
+    position: absolute;
+    width: 20px;
+    height: 24px;
 }
 
 .energy-in-upper-white-cannon {
-	top: 77px;
-	left: 349px;
+    top: 77px;
+    left: 349px;
 }
 
 .energy-in-lower-white-cannon {
-	top: 400px;
-	left: 349px;
+    top: 400px;
+    left: 349px;
 }
 
 .energy-in-upper-blue-cannon {
-	top: 116px;
-	left: 504px;
+    top: 116px;
+    left: 504px;
 }
 
 .energy-in-lower-blue-cannon {
-	top: 306px;
-	left: 640px;
+    top: 306px;
+    left: 640px;
 }
 
 .energy-in-upper-red-cannon {
-	top: 116px;
-	left: 197px;
+    top: 116px;
+    left: 197px;
 }
 
 .energy-in-lower-red-cannon {
-	top: 306px;
-	left: 53px;
+    top: 306px;
+    left: 53px;
 }
 
 .damage-token {
-	width: 67px;
-	position: absolute;
-	height: auto;
-	border-top: 1px white solid;
-	border-left: 1px white solid;
-	box-shadow: 5px 5px 5px black;
-	border-radius: 20px;
+    width: 67px;
+    position: absolute;
+    height: auto;
+    border-top: 1px white solid;
+    border-left: 1px white solid;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 20px;
 }
 
 .Red-Shield-damage-token {
-	top: 94px;
-	left: 91px;
+    top: 94px;
+    left: 91px;
 }
 
 .Red-FrontCannon-damage-token {
-	top: 38px;
-	left: 160px;
-	transform: rotate(-17deg);
+    top: 38px;
+    left: 160px;
+    transform: rotate(-17deg);
 }
 
 .Red-Gravolift-damage-token {
-	top: 200px;
-	left: 185px;
+    top: 200px;
+    left: 185px;
 }
 
 .Red-Reactor-damage-token {
-	top: 317px;
-	left: 110px;
+    top: 317px;
+    left: 110px;
 }
 
 .Red-BackCannon-damage-token {
-	top: 276px;
-	left: 6px;
-	transform: rotate(-18deg);
+    top: 276px;
+    left: 6px;
+    transform: rotate(-18deg);
 }
 
 .Red-Structural-damage-token {
-	top: 233px;
-	left: 81px;
+    top: 233px;
+    left: 81px;
 }
 
 .White-Shield-damage-token {
-	top: 28px;
-	left: 388px;
+    top: 28px;
+    left: 388px;
 }
 
 .White-FrontCannon-damage-token {
-	top: 2px;
-	left: 311px;
+    top: 2px;
+    left: 311px;
 }
 
 .White-Gravolift-damage-token {
-	top: 165px;
-	left: 325px;
+    top: 165px;
+    left: 325px;
 }
 
 .White-Reactor-damage-token {
-	top: 303px;
-	left: 330px;
+    top: 303px;
+    left: 330px;
 }
 
 .White-BackCannon-damage-token {
-	top: 421px;
-	left: 357px;
+    top: 421px;
+    left: 357px;
 }
 
 .White-Structural-damage-token {
-	top: 237px;
-	left: 357px;
+    top: 237px;
+    left: 357px;
 }
 
 .Blue-Shield-damage-token {
-	top: 100px;
-	left: 573px;
+    top: 100px;
+    left: 573px;
 }
 
 .Blue-FrontCannon-damage-token {
-	top: 44px;
-	left: 489px;
-	transform: rotate(18deg);
+    top: 44px;
+    left: 489px;
+    transform: rotate(18deg);
 }
 
 .Blue-Gravolift-damage-token {
-	top: 200px;
-	left: 461px;
+    top: 200px;
+    left: 461px;
 }
 
 .Blue-Reactor-damage-token {
-	top: 314px;
-	left: 532px;
+    top: 314px;
+    left: 532px;
 }
 
 .Blue-BackCannon-damage-token {
-	top: 275px;
-	left: 642px;
-	transform: rotate(17deg);
+    top: 275px;
+    left: 642px;
+    transform: rotate(17deg);
 }
 
 .Blue-Structural-damage-token {
-	top: 246px;
-	left: 568px;
+    top: 246px;
+    left: 568px;
 }
 
 .inactive-interceptors-wrapper {
-	position: absolute;
-	height: 33px;
-	width: 45px;
-	top: 230px;
-	left: 103px;
+    position: absolute;
+    height: 33px;
+    width: 45px;
+    top: 230px;
+    left: 103px;
 }
 
 .inactive-interceptors {
-	height: auto;
-	width: 45px;
+    height: auto;
+    width: 45px;
 }
 
 .fuel-capsules-container {
-	position: absolute;
-	top: 341px;
-	left: 252px;
-	height: 32px;
-	width: 60px;
+    position: absolute;
+    top: 341px;
+    left: 252px;
+    height: 32px;
+    width: 60px;
 }
 
 .fuel-capsule {
-	width: 18px;
-	height: auto;
+    width: 18px;
+    height: auto;
 }
 
 .rocket-fired-this-turn-container {
-	position: absolute;
-	top: 490px;
-	left: 380px;
-	width: 45px;
-	height: 35px;
+    position: absolute;
+    top: 490px;
+    left: 380px;
+    width: 45px;
+    height: 35px;
 }
 
 .rocket-fired-last-turn-container {
-	position: absolute;
-	top: 425px;
-	left: 240px;
-	width: 40px;
-	height: 40px;
+    position: absolute;
+    top: 425px;
+    left: 240px;
+    width: 40px;
+    height: 40px;
 }
 
 .rocket-last-turn {
-	transform: rotate(120deg);
+    transform: rotate(120deg);
 }
 
 .rocket-this-turn {
-	transform: rotate(30deg);
+    transform: rotate(30deg);
 }
 
 .maintenance-cubes-container {
-	position: absolute;
-	top: 207px;
-	left: 315px;
-	width: 59px;
-	height: 25px;
+    position: absolute;
+    top: 207px;
+    left: 315px;
+    width: 59px;
+    height: 25px;
 }
 
 .computer-cube {
-	width: 20px;
-	height: auto;
-	margin-right: -2px;
+    width: 20px;
+    height: auto;
+    margin-right: -2px;
 }

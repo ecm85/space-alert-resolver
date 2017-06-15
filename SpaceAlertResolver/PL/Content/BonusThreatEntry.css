@@ -1,9 +1,9 @@
 ﻿.bonus-threat-section {
-	display: inline-block;
-	vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .fa.add-new-threat-arrow{
-	font-size: 3em;
-	margin-top: 25px;
+    font-size: 3em;
+    margin-top: 25px;
 }

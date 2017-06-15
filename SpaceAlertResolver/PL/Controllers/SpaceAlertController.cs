@@ -2,12 +2,12 @@
 
 namespace PL.Controllers
 {
-	public class SpaceAlertController : Controller
-	{
-		[HttpGet]
-		public ActionResult Index()
-		{
-			return View();
-		}
-	}
+    public class SpaceAlertController : Controller
+    {
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+    }
 }

@@ -1,18 +1,18 @@
 ﻿.selectable-threat {
-	display: inline-block;
-	width: 166px;
-	margin-right: 3px;
-	margin-left: 3px;
-	margin-bottom: 12px;
-	text-align: center;
-	cursor: pointer;
+    display: inline-block;
+    width: 166px;
+    margin-right: 3px;
+    margin-left: 3px;
+    margin-bottom: 12px;
+    text-align: center;
+    cursor: pointer;
  }
 
  .selected-threat-to-add .threat-wrapper {
-	border: 3px yellow solid;
+    border: 3px yellow solid;
  }
 
   .threat-name {
-	 font-family: Consolas;
-	 font-size: .8em;
+     font-family: Consolas;
+     font-size: .8em;
  }

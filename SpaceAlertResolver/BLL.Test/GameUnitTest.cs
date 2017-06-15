@@ -2,8 +2,8 @@
 
 namespace BLL.Test
 {
-	[TestFixture]
-	public static class GameUnitTest
-	{
-	}
+    [TestFixture]
+    public static class GameUnitTest
+    {
+    }
 }
