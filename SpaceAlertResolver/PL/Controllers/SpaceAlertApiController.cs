@@ -77,7 +77,7 @@ namespace PL.Controllers
 
             for (var i = 0; i < game.NumberOfTurns && !lost; i++)
             {
-                turnModels.Add(new GameTurnModel { Turn = i });
+                turnModels.Add(new GameTurnModel { Turn = i + 1 });
                 game.PerformTurn();
                 turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
             }

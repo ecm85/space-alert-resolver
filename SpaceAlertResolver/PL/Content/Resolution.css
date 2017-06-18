@@ -82,3 +82,15 @@
 .player-board {
     display: inline-block;
 }
+
+.turn {
+	color: orange;
+}
+
+.phase {
+	color: blue;
+}
+
+.sub-phase {
+	color: darkviolet;
+}

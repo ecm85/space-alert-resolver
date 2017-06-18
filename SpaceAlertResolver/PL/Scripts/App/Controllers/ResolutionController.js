@@ -26,61 +26,25 @@ angular.module("spaceAlertModule")
             };
 
             var selectSubPhase = function(newSubPhaseIndex) {
-                if ($scope.currentSubPhase)
-                    $scope.currentSubPhase.isSelected = false;
                 currentSubPhaseIndex = newSubPhaseIndex;
-                $scope.currentSubPhase = $scope.currentPhase.subPhases[currentSubPhaseIndex];
-                $scope.currentSubPhase.isSelected = true;
             }
             var selectPhase = function (newPhaseIndex) {
-                if ($scope.currentPhase)
-                    $scope.currentPhase.isSelected = false;
                 currentPhaseIndex = newPhaseIndex;
-                $scope.currentPhase = $scope.currentTurn.phases[currentPhaseIndex];
-                $scope.currentPhase.isSelected = true;
                 selectSubPhase(0);
             }
             var selectTurn = function(newTurnIndex) {
-                if ($scope.currentTurn)
-                    $scope.currentTurn.isSelected = false;
                 currentTurnIndex = newTurnIndex;
-                $scope.currentTurn = $scope.gameData[currentTurnIndex];
-                $scope.currentTurn.isSelected = true;
                 selectPhase(0);
             }
 
-            var selectTurnManually = function (newTurnIndex) {
-                stop();
-                selectTurn(newTurnIndex);
-            }
-            var selectTurnAutomatically = function (newTurnIndex) {
-                selectTurn(newTurnIndex);
-            }
-
-            var selectPhaseManually = function (newPhaseIndex) {
-                stop();
-                selectPhase(newPhaseIndex);
-            }
-            var selectPhaseAutomatically = function (newPhaseIndex) {
-                selectPhase(newPhaseIndex);
-            }
-
-            var selectSubPhaseManually = function (newSubPhaseIndex) {
-                stop();
-                selectSubPhase(newSubPhaseIndex);
-            }
-            var selectSubPhaseAutomatically = function (newSubPhaseIndex) {
-                selectSubPhase(newSubPhaseIndex);
-            }
-            
             var play = function() {
                 $scope.playing = $interval(function() {
-                        if (!$scope.isAtEndOfPhase())
-                            selectSubPhaseAutomatically(currentSubPhaseIndex + 1);
-                        else if (!$scope.isAtEndOfTurn())
-                            selectPhaseAutomatically(currentPhaseIndex + 1);
-                        else if (!$scope.isAtEndOfGame())
-                            selectTurnAutomatically(currentTurnIndex + 1);
+                        if (!$scope.isAtLastSubPhase())
+                            selectSubPhase(currentSubPhaseIndex + 1);
+                        else if (!$scope.isAtLastPhase())
+                            selectPhase(currentPhaseIndex + 1);
+                        else if (!$scope.isAtLastTurn())
+                            selectTurn(currentTurnIndex + 1);
                         else {
                             stop();
                         }
@@ -95,39 +59,98 @@ angular.module("spaceAlertModule")
                     }
                 });
 
-            $scope.isAtStartOfPhase = function() {
+            $scope.isAtFirstSubPhase = function() {
                 return currentSubPhaseIndex === 0;
             }
-            $scope.isAtStartOfTurn = function() {
-                return currentPhaseIndex === 0 && $scope.isAtStartOfPhase();
+            $scope.isAtFirstPhase = function() {
+	            return currentPhaseIndex === 0;
             }
-            $scope.isAtStartOfGame = function() {
-                return currentTurnIndex === 0 && $scope.isAtStartOfTurn();
+            $scope.isAtFirstTurn = function() {
+                return currentTurnIndex === 0;
             }
-            $scope.isAtEndOfPhase = function() {
-                return currentSubPhaseIndex === $scope.currentPhase.subPhases.length - 1;
+            $scope.isAtLastSubPhase = function() {
+                return currentSubPhaseIndex === $scope.getCurrentPhase().subPhases.length - 1;
             }
-            $scope.isAtEndOfTurn = function() {
-                return currentPhaseIndex === $scope.currentTurn.phases.length - 1 && $scope.isAtEndOfPhase();
+            $scope.isAtLastPhase = function() {
+                return currentPhaseIndex === $scope.getCurrentTurn().phases.length - 1;
             }
-            $scope.isAtEndOfGame = function() {
-                return currentTurnIndex === turnCount - 1 && $scope.isAtEndOfTurn();
+            $scope.isAtLastTurn = function() {
+                return currentTurnIndex === turnCount - 1;
             }
-            $scope.goBackOnePhase = function() {
-                if (!$scope.isAtStartOfTurn())
-                    selectPhaseManually(currentPhaseIndex - 1);
-                else if (!$scope.isAtStartOfGame()) {
-                    selectTurnManually(currentTurnIndex - 1);
-                    selectPhaseManually($scope.currentTurn.phases.length - 1);
+
+            $scope.getCurrentTurn = function() {
+                return $scope.gameData[currentTurnIndex];
+            }
+
+            $scope.getCurrentPhase = function() {
+                return $scope.getCurrentTurn().phases[currentPhaseIndex];
+            }
+
+            $scope.getCurrentSubPhase = function() {
+                return $scope.getCurrentPhase().subPhases[currentSubPhaseIndex];
+            }
+
+            $scope.goBackOneSubPhase = function () {
+                stop();
+                if (!$scope.isAtFirstSubPhase())
+                    selectSubPhase(currentSubPhaseIndex - 1);
+                else if (!$scope.isAtFirstPhase()) {
+                    selectPhase(currentPhaseIndex - 1);
+                    selectSubPhase($scope.getCurrentPhase().subPhases.length - 1);
                 }
+                else if (!$scope.isAtFirstTurn()) {
+                    selectTurn(currentTurnIndex - 1);
+                    selectPhase($scope.getCurrentTurn().phases.length - 1);
+                    selectSubPhase($scope.getCurrentPhase().subPhases.length - 1);
+                }
+            }
+            $scope.goForwardOneSubPhase = function () {
+                stop();
+                if (!$scope.isAtLastSubPhase())
+                    selectSubPhase(currentSubPhaseIndex + 1);
+                else if (!$scope.isAtLastPhase()) {
+                    selectPhase(currentPhaseIndex + 1);
+                }
+                else if (!$scope.isAtLastTurn()) {
+                    selectTurn(currentTurnIndex + 1);
+                }
+            }
+
+            $scope.goBackOnePhase = function () {
+                stop();
+                if (!$scope.isAtFirstPhase())
+                    selectPhase(currentPhaseIndex - 1);
+                else if (!$scope.isAtFirstTurn()) {
+                    selectTurn(currentTurnIndex - 1);
+                    selectPhase($scope.getCurrentTurn().phases.length - 1);
+                }
+            	//TODO: Add else to go to beginning of game (will result in changing subphases)?
             }
             $scope.goForwardOnePhase = function() {
-                if (!$scope.isAtEndOfTurn())
-                    selectPhaseManually(currentPhaseIndex + 1);
-                else if (!$scope.isAtEndOfGame()) {
-                    selectTurnManually(currentTurnIndex + 1);
+                stop();
+                if (!$scope.isAtLastPhase())
+                    selectPhase(currentPhaseIndex + 1);
+                else if (!$scope.isAtLastTurn()) {
+                    selectTurn(currentTurnIndex + 1);
                 }
+            	//TODO: Add else to go to end of game (will result in changing subphases)?
             }
+
+            $scope.goBackOneTurn = function () {
+                stop();
+                if (!$scope.isAtFirstTurn()) {
+                    selectTurn(currentTurnIndex - 1);
+                }
+				//TODO: Add else to go to beginning of game (will result in changing phase and subphase)?
+            }
+            $scope.goForwardOneTurn = function () {
+                stop();
+                if (!$scope.isAtLastTurn()) {
+                    selectTurn(currentTurnIndex + 1);
+                }
+            	//TODO: Add else to go to end of game (will result in changing phase and subphase)?
+            }
+
             $scope.playPause = function() {
                 if ($scope.playing)
                     stop();
@@ -135,17 +158,13 @@ angular.module("spaceAlertModule")
                     play();
             }
             $scope.goToStart = function() {
-                if (!$scope.isAtStartOfGame()) {
-                    stop();
-                    selectTurnManually(0);
-                }
+                stop();
+                selectTurn(0);
             }
             $scope.goToEnd = function() {
-                if (!$scope.isAtEndOfGame()) {
-                    stop();
-                    selectTurnManually(turnCount - 1);
-                    selectPhaseManually($scope.currentTurn.length - 1);
-                }
+                stop();
+                selectTurn(turnCount - 1);
+                selectPhase($scope.getCurrentTurn().phases.length - 1);
             }
             $scope.$on('$destroy',
                 function() {
@@ -156,6 +175,6 @@ angular.module("spaceAlertModule")
                 return currentTurnIndex;
             }
 
-            selectTurnManually(0);
+            selectTurn(0);
         }
     ]);
