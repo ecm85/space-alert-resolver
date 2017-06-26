@@ -1,6 +1,6 @@
 ﻿.threat {
-    width: 100px;
-    height: 90px;
+    width: 72px;
+    height: 65px;
     position: relative;
     vertical-align: top;
 }
@@ -17,10 +17,10 @@
     color: yellow;
     font-weight: 700;
     font-family: "Comic Sans MS", cursive, sans-serif;
-    width: 100px;
+    width: 71px;
     text-shadow: 2px 2px 0px #FF0000;
-    font-size: 18px;
-    padding-top: 14px;
+    font-size: 15px;
+    padding-top: 6px;
     text-align: center;
 }
 
@@ -28,7 +28,6 @@
     display: block;
     border: 3px solid red;
     margin-bottom: 5px;
-    width: 166px;
 }
 
 .threat-wrapper.phased-threat-wrapper {
@@ -40,15 +39,12 @@
     padding-right: 2px;
     padding-top: 5px;
     display: inline-block;
+    text-align: center;
 }
 
-.threat-info-col-1, .threat-info-col-2 {
+.threat-info-col-1, .threat-info-col-2, .threat-info-col-3 {
     display: inline-block;
     vertical-align: top;
-}
-
-.threat-info-row {
-    text-align: center;
 }
 
 .threat-health-wrapper,
@@ -95,14 +91,15 @@
 }
 
 .threat-health, .threat-speed, .threat-total-inaccessibility, .threat-shield, .threat-time-appears, .threat-buff-count, .threat-debuff-count {
-    width: 25px;
+    width: 24px;
     height: auto;
 }
 
  .remove-threat-action {
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 2.3em;
     color: blue;
     text-align: center;
     cursor: pointer;
+    padding-top: 25%;
  }

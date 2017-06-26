@@ -13,11 +13,11 @@
 
 .track-outline {
     position: relative;
-    border-bottom: 350px solid black;
+    border-bottom: 275px solid black;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    width: 63px;
+    width: 53px;
     display: table;
     z-index: -3;
 }
@@ -35,8 +35,8 @@
 }
 
 .track-space {
-    height: 18px;
-    width: 40px;
+    height: 13px;
+    width: 31px;
     border: 1px solid #FBDA66;
     margin-left: 11px;
     margin-bottom: 2px;
@@ -64,10 +64,12 @@
     line-height: .9em;
 }
 
-
 .track-breakpoint-text {
     font-weight: 900;
     font-family: Arial;
+    font-size: 10px;
+    margin-top: -10px;
+    vertical-align: top;
 }
 
 .track-section-1 > .track-space{
