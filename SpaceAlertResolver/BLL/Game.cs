@@ -42,7 +42,7 @@ namespace BLL
                 trackConfigurationWithZone => trackConfigurationWithZone.Key,
                 trackConfigurationWithZone => new Track(trackConfigurationWithZone.Value));
             var internalTrack = new Track(internalTrackConfiguration);
-            ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats);
+            ThreatController = new ThreatController(externalTracksByZone, internalTrack, externalThreats, internalThreats, EventMaster);
             ThreatController.PhaseStarting += (sender, args) =>  PhaseStarting(this, args);
             SittingDuck = new SittingDuck(ThreatController, this, initialDamage);
             var allThreats = bonusThreats.Concat(internalThreats).Concat(externalThreats);

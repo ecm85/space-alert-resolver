@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using BLL.ShipComponents;
 using BLL.Threats;
@@ -23,8 +24,7 @@ namespace BLL
         private readonly IList<ThreatStatus> externalThreatStatusEffects = new List<ThreatStatus>();
         private readonly IList<ThreatStatus> singleTurnExternalThreatStatusEffects = new List<ThreatStatus>();
         public event EventHandler<PhaseEventArgs> PhaseStarting = (sender, args) => { };
-        public event EventHandler<PhaseEventArgs> PhaseEnded = (sender, args) => { };
-
+        private EventMaster EventMaster { get; }
 
         public IEnumerable<ExternalThreat> DamageableExternalThreats
         {
@@ -73,29 +73,42 @@ namespace BLL
 
         public IEnumerable<InternalThreat> InternalThreatsOnShip { get {return InternalThreats.Where(threat => threat.IsOnShip);} }
 
-        internal ThreatController(IDictionary<ZoneLocation, Track> externalTracks, Track internalTrack, IList<ExternalThreat> externalThreats, IList<InternalThreat> internalThreats)
+        internal ThreatController(
+            IDictionary<ZoneLocation, Track> externalTracks,
+            Track internalTrack,
+            IList<ExternalThreat> externalThreats,
+            IList<InternalThreat> internalThreats,
+            EventMaster eventMaster)
         {
             InternalTrack = internalTrack;
             ExternalTracks = externalTracks;
             ExternalThreats = externalThreats.ToList();
             InternalThreats = internalThreats.ToList();
+            EventMaster = eventMaster;
         }
 
         public void AddNewThreatsToTracks(int currentTurn)
         {
             PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.AddNewThreats.GetDescription() });
 
-            foreach (var newThreat in ExternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+            var newExternalThreats = ExternalThreats.Where(threat => threat.TimeAppears == currentTurn).ToList();
+            foreach (var newThreat in newExternalThreats)
             {
                 newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
                 newThreat.PlaceOnTrack(ExternalTracks[newThreat.CurrentZone]);
+                EventMaster.LogEvent(string.Format(CultureInfo.CurrentCulture, "{0} Appeared", newThreat.DisplayName));
             }
 
-            foreach (var newThreat in InternalThreats.Where(threat => threat.TimeAppears == currentTurn))
+            var newInternalThreats = InternalThreats.Where(threat => threat.TimeAppears == currentTurn).ToList();
+            foreach (var newThreat in newInternalThreats)
             {
                 newThreat.AttackedSittingDuck += (sender, args) => { ThreatAttackedShip(sender, args);  };
                 newThreat.PlaceOnTrack(InternalTrack);
+                EventMaster.LogEvent(string.Format(CultureInfo.CurrentCulture, "{0} Appeared", newThreat.DisplayName));
             }
+
+            if (!newExternalThreats.Any() && !newInternalThreats.Any())
+                EventMaster.LogEvent("No New Threats Appear.");
         }
 
         public void MoveThreats(int currentTurn)
@@ -112,10 +125,6 @@ namespace BLL
             });
             foreach (var moveableThreat in allMoveableThreats)
                 moveableThreat.Move(currentTurn);
-            PhaseEnded(this, new PhaseEventArgs
-            {
-                PhaseHeader = ResolutionPhase.MoveThreats.GetDescription()
-            });
         }
 
         public void MoveOtherExternalThreats(int currentTurn, int amount, ExternalThreat source)

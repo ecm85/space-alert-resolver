@@ -96,7 +96,7 @@ namespace BLL.Test
         {
             var driller = new Driller {CurrentStation = currentStation};
             driller.SetInitialPlacement(3);
-            var threatController = new ThreatController(null, null, new List<ExternalThreat>(), new List<InternalThreat>());
+            var threatController = new ThreatController(null, null, new List<ExternalThreat>(), new List<InternalThreat>(), null);
             var mockSittingDuck = new Mock<SittingDuck>(MockBehavior.Strict, threatController, null, null);
 
             foreach (var countByLocation in countsByLocation)
