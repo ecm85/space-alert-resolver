@@ -1,131 +1,132 @@
 ﻿<div class="game-sidebar">
-    <div class="btn-toolbar automated-run-through">
-        <div class="btn-group">
-            <div class="btn btn-default" ng-click="goToStart()"><div><i class="fa fa-reply"></i></div>Start</div>
-        </div>
-
-        <div class="btn-group">
-            <div class="btn btn-default turn" ng-click="goBackOneTurn()"><div><i class="fa fa-fast-backward"></i></div>Turn</div>
-            <div class="btn btn-default phase" ng-click="goBackOnePhase()"><div><i class="fa fa-step-backward"></i></div>Phase</div>
-            <div class="btn btn-default sub-phase" ng-click="goBackOneSubPhase()"><div><i class="fa fa-backward"></i></div>Step</div>
-        </div>
-
-        <div class="btn-group">
-            <div class="btn btn-default" ng-click="playPause()">
-                <div><i ng-class="{'fa-play': !playing, 'fa-pause': playing}" class="fa"></i></div>
-				<span ng-if="!playing">Play</span>
-				<span ng-if="playing">Pause</span>
-            </div>
-        </div>
-
-        <div class="btn-group">
-            <div class="btn btn-default sub-phase" ng-click="goForwardOneSubPhase()"><div><i class="fa fa-forward"></i></div>Step</div>
-            <div class="btn btn-default phase" ng-click="goForwardOnePhase()"><div><i class="fa fa-step-forward"></i></div>Phase</div>
-            <div class="btn btn-default turn" ng-click="goForwardOneTurn()"><div><i class="fa fa-fast-forward"></i></div>Turn</div>
-        </div>
-
-        <div class="btn-group">
-            <div class="btn btn-default" ng-click="goToEnd()"><div><i class="fa fa-share"></i></div>End</div>
-        </div>
-    </div>
-
-    <div class="speed-selection-container">
-        <input class="speed-selector" type="range" ng-model="turnsPerTwoSeconds" min="1" max="10"/>
-        <div class="speed-selection-labels-container">
-            <span class="slow-speed-label">Slow</span>
-            <span class="fast-speed-label">Fast</span>
-        </div>
-    </div>
+    
     <h1 class="turn">Turn {{getCurrentTurn().turn}}</h1>
     <h2 class="phase">{{getCurrentPhase().description}}</h2>
     <h3 class="sub-phase">{{getCurrentSubPhase().phaseDescription}}</h3>
-    <div>
-        <h3>Damage</h3>
-        <table class="table table-condensed">
-            <tr>
-                <th>Red</th>
-                <th>White</th>
-                <th>Blue</th>
-            </tr>
-            <tr>
-                <td ng-class="{'danger': getCurrentSubPhase().redZone.totalDamage > 6}">{{getCurrentSubPhase().redZone.totalDamage}}</td>
-                <td ng-class="{'danger': getCurrentSubPhase().whiteZone.totalDamage > 6}">{{getCurrentSubPhase().whiteZone.totalDamage}}</td>
-                <td ng-class="{'danger': getCurrentSubPhase().blueZone.totalDamage > 6}">{{getCurrentSubPhase().blueZone.totalDamage}}</td>
-            </tr>
-        </table>
-        <dl>
-            <dt>Game Status</dt>
-            <dd>{{getCurrentSubPhase().gameStatus}}</dd>
-            <dt ng-if="getCurrentSubPhase().killedBy != null">Killed By</dt>
-            <dd ng-if="getCurrentSubPhase().killedBy != null">{{getCurrentSubPhase().killedBy}}</dd>
-        </dl>
-        <div ng-if="getCurrentSubPhase().defeatedThreats.length > 0">
-            <h3>Defeated Threats</h3>
-            <table class="table table-condensed">
-                <tr>
-                    <th>Threat</th>
-                    <th>Points</th>
-                </tr>
-                <tr ng-repeat="threat in getCurrentSubPhase().defeatedThreats">
-                    <td>{{threat.displayName}}</td>
-                    <td>{{threat.points}}</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{{getCurrentSubPhase().totalDefeatedPoints}}</td>
-                </tr>
-            </table>
-        </div>
-        <div ng-if="getCurrentSubPhase().survivedThreats.length > 0">
-            <h3>Survived Threats</h3>
-            <table class="table table-condensed">
-                <tr>
-                    <th>Threat</th>
-                    <th>Points</th>
-                </tr>
-                <tr ng-repeat="threat in getCurrentSubPhase().survivedThreats">
-                    <td>{{threat.displayName}}</td>
-                    <td>{{threat.points}}</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{{getCurrentSubPhase().totalSurvivedPoints}}</td>
-                </tr>
-            </table>
-        </div>
-        <div ng-if="getCurrentSubPhase().knockedOutPlayers">
-            <h3>Knocked Out Players</h3>
-            <div ng-repeat="player in getCurrentSubPhase().knockedOutPlayers">{{player.playerColor}}</div>
-        </div>
-    </div>
+	<div>
+		<h3>Damage</h3>
+		<table class="table table-condensed">
+			<tr>
+				<th>Red</th>
+				<th>White</th>
+				<th>Blue</th>
+			</tr>
+			<tr>
+				<td ng-class="{'danger': getCurrentSubPhase().redZone.totalDamage > 6}">{{getCurrentSubPhase().redZone.totalDamage}}</td>
+				<td ng-class="{'danger': getCurrentSubPhase().whiteZone.totalDamage > 6}">{{getCurrentSubPhase().whiteZone.totalDamage}}</td>
+				<td ng-class="{'danger': getCurrentSubPhase().blueZone.totalDamage > 6}">{{getCurrentSubPhase().blueZone.totalDamage}}</td>
+			</tr>
+		</table>
+		<dl>
+			<dt>Game Status</dt>
+			<dd>{{getCurrentSubPhase().gameStatus}}</dd>
+			<dt ng-if="getCurrentSubPhase().killedBy != null">Killed By</dt>
+			<dd ng-if="getCurrentSubPhase().killedBy != null">{{getCurrentSubPhase().killedBy}}</dd>
+		</dl>
+		<div ng-if="getCurrentSubPhase().defeatedThreats.length > 0">
+			<h3>Defeated Threats</h3>
+			<table class="table table-condensed">
+				<tr>
+					<th>Threat</th>
+					<th>Points</th>
+				</tr>
+				<tr ng-repeat="threat in getCurrentSubPhase().defeatedThreats">
+					<td>{{threat.displayName}}</td>
+					<td>{{threat.points}}</td>
+				</tr>
+				<tr>
+					<td>Total</td>
+					<td>{{getCurrentSubPhase().totalDefeatedPoints}}</td>
+				</tr>
+			</table>
+		</div>
+		<div ng-if="getCurrentSubPhase().survivedThreats.length > 0">
+			<h3>Survived Threats</h3>
+			<table class="table table-condensed">
+				<tr>
+					<th>Threat</th>
+					<th>Points</th>
+				</tr>
+				<tr ng-repeat="threat in getCurrentSubPhase().survivedThreats">
+					<td>{{threat.displayName}}</td>
+					<td>{{threat.points}}</td>
+				</tr>
+				<tr>
+					<td>Total</td>
+					<td>{{getCurrentSubPhase().totalSurvivedPoints}}</td>
+				</tr>
+			</table>
+		</div>
+		<div ng-if="getCurrentSubPhase().knockedOutPlayers">
+			<h3>Knocked Out Players</h3>
+			<div ng-repeat="player in getCurrentSubPhase().knockedOutPlayers">{{player.playerColor}}</div>
+		</div>
+	</div>
+	<div class="speed-selection-container">
+		<h4>Playback Speed</h4>
+		<input class="speed-selector" type="range" ng-model="turnsPerTwoSeconds" min="1" max="10"/>
+		<div class="speed-selection-labels-container">
+			<span class="slow-speed-label">Slow</span>
+			<span class="fast-speed-label">Fast</span>
+		</div>
+	</div>
 </div>
 <div class="full-board">
-    <div class="external-tracks-wrapper">
-        <track-with-threats track="getCurrentSubPhase().redZone.track" threats="getCurrentSubPhase().redZone.externalThreats" track-id="'red'"></track-with-threats>
-        <track-with-threats track="getCurrentSubPhase().whiteZone.track" threats="getCurrentSubPhase().whiteZone.externalThreats" track-id="'white'"></track-with-threats>
-        <track-with-threats track="getCurrentSubPhase().blueZone.track" threats="getCurrentSubPhase().blueZone.externalThreats" track-id="'blue'"></track-with-threats>
-        <div class="interceptors-zone">
-            <div class="interceptors-station interceptors-station-3">
-                <img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation3.players" class="interceptors-in-space" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-                <img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation3.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
-            </div>
-            <div class="interceptors-station interceptors-station-2">
-                <img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation2.players" class="interceptors-in-space interceptors-in-space-2" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-                <img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation2.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
-            </div>
-            <div class="interceptors-station interceptors-station-1">
-                <img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation1.players" class="interceptors-in-space interceptors-in-space-1" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png" />
-                <img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation1.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png" />
-            </div>
-        </div>
-    </div>
-    <div class="sitting-duck-wrapper">
-        <img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
-        <standard-zone zone="getCurrentSubPhase().whiteZone" zone-id="'white'"></standard-zone>
-        <standard-zone zone="getCurrentSubPhase().redZone" zone-id="'red'"></standard-zone>
-        <standard-zone zone="getCurrentSubPhase().blueZone" zone-id="'blue'"></standard-zone>
-    </div>
-    <track-with-threats track="getCurrentSubPhase().internalTrack" threats="getCurrentSubPhase().internalThreats" track-id="'internal'"></track-with-threats>
+	<div class="btn-toolbar automated-run-through">
+		<div class="btn-group">
+			<div class="btn btn-default" ng-click="goToStart()"><div><i class="fa fa-reply"></i></div>Start</div>
+		</div>
+
+		<div class="btn-group">
+			<div class="btn btn-default turn" ng-click="goBackOneTurn()"><div><i class="fa fa-fast-backward"></i></div>Turn</div>
+			<div class="btn btn-default phase" ng-click="goBackOnePhase()"><div><i class="fa fa-step-backward"></i></div>Phase</div>
+			<div class="btn btn-default sub-phase" ng-click="goBackOneSubPhase()"><div><i class="fa fa-backward"></i></div>Step</div>
+		</div>
+
+		<div class="btn-group">
+			<div class="btn btn-default" ng-click="playPause()">
+				<div><i ng-class="{'fa-play': !playing, 'fa-pause': playing}" class="fa"></i></div>
+				<span ng-if="!playing">Play</span>
+				<span ng-if="playing">Pause</span>
+			</div>
+		</div>
+
+		<div class="btn-group">
+			<div class="btn btn-default sub-phase" ng-click="goForwardOneSubPhase()"><div><i class="fa fa-forward"></i></div>Step</div>
+			<div class="btn btn-default phase" ng-click="goForwardOnePhase()"><div><i class="fa fa-step-forward"></i></div>Phase</div>
+			<div class="btn btn-default turn" ng-click="goForwardOneTurn()"><div><i class="fa fa-fast-forward"></i></div>Turn</div>
+		</div>
+
+		<div class="btn-group">
+			<div class="btn btn-default" ng-click="goToEnd()"><div><i class="fa fa-share"></i></div>End</div>
+		</div>
+	</div>
+	<div class="external-tracks-wrapper">
+		<track-with-threats track="getCurrentSubPhase().redZone.track" threats="getCurrentSubPhase().redZone.externalThreats" track-id="'red'"></track-with-threats>
+		<track-with-threats track="getCurrentSubPhase().whiteZone.track" threats="getCurrentSubPhase().whiteZone.externalThreats" track-id="'white'"></track-with-threats>
+		<track-with-threats track="getCurrentSubPhase().blueZone.track" threats="getCurrentSubPhase().blueZone.externalThreats" track-id="'blue'"></track-with-threats>
+		<div class="interceptors-zone">
+			<div class="interceptors-station interceptors-station-3">
+				<img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation3.players" class="interceptors-in-space" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png"/>
+				<img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation3.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png"/>
+			</div>
+			<div class="interceptors-station interceptors-station-2">
+				<img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation2.players" class="interceptors-in-space interceptors-in-space-2" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png"/>
+				<img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation2.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png"/>
+			</div>
+			<div class="interceptors-station interceptors-station-1">
+				<img ng-repeat="player in getCurrentSubPhase().interceptorsZone.interceptorsStation1.players" class="interceptors-in-space interceptors-in-space-1" ng-src="~/Content/Images/Interceptors{{player.playerColor}}.png"/>
+				<img ng-if="getCurrentSubPhase().interceptorsZone.interceptorsStation1.players.length == 0" class="interceptors-in-space interceptors-in-space-placeholder" ng-src="~/Content/Images/Interceptors.png"/>
+			</div>
+		</div>
+	</div>
+	<div class="sitting-duck-wrapper">
+		<img class="sitting-duck" src="~/Content/Images/board-front.jpg"/>
+		<standard-zone zone="getCurrentSubPhase().whiteZone" zone-id="'white'"></standard-zone>
+		<standard-zone zone="getCurrentSubPhase().redZone" zone-id="'red'"></standard-zone>
+		<standard-zone zone="getCurrentSubPhase().blueZone" zone-id="'blue'"></standard-zone>
+	</div>
+	<track-with-threats track="getCurrentSubPhase().internalTrack" threats="getCurrentSubPhase().internalThreats" track-id="'internal'"></track-with-threats>
 </div>
 <div class="player-boards">
     <div class="player-board" ng-repeat="player in getCurrentSubPhase().players">
