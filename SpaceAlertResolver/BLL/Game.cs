@@ -73,6 +73,11 @@ namespace BLL
         {
             try
             {
+                if (CurrentTurn == NumberOfTurns + 1)
+                {
+                    PerformEndOfGame();
+                    return;
+                }
                 ThreatController.AddNewThreatsToTracks(CurrentTurn);
 
                 PerformPlayerActions();
@@ -92,10 +97,6 @@ namespace BLL
                 if (isEndOfPhase)
                     PerformEndOfPhase();
 
-                if (CurrentTurn == NumberOfTurns)
-                    PerformEndOfGame();
-
-
                 CurrentTurn++;
             }
             catch (LoseException loseException)
@@ -108,17 +109,24 @@ namespace BLL
 
         private void PerformEndOfGame()
         {
-            ThreatController.MoveThreats(CurrentTurn + 1);
+            ThreatController.MoveThreats(CurrentTurn);
+
+            PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.FinalRocketMove.GetDescription() });
             var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
             if (rocketFiredLastTurn != null)
                 ResolveDamage(new [] {rocketFiredLastTurn.PerformAttack(null)}, new List<PlayerInterceptorDamage>());
+
+            PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.InterceptorsReturnToShip.GetDescription() });
             var playersInFarInterceptors = SittingDuck.InterceptorStations
                 .Where(station => station.StationLocation.DistanceFromShip() > 1)
                 .SelectMany(station => station.Players);
-            foreach(var player in playersInFarInterceptors)
+            foreach (var player in playersInFarInterceptors)
                 player.KnockOut();
-            CalculateScore();
+
+            PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.JumpToHyperspace.GetDescription() });
             ThreatController.OnJumpingToHyperspace();
+
+            CalculateScore();
             GameStatus = GameStatus.Won;
         }
 

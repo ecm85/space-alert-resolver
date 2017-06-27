@@ -165,6 +165,7 @@ angular.module("spaceAlertModule")
                 stop();
                 selectTurn(turnCount - 1);
                 selectPhase($scope.getCurrentTurn().phases.length - 1);
+                selectSubPhase($scope.getCurrentPhase().subPhases.length - 1);
             }
             $scope.$on('$destroy',
                 function() {

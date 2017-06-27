@@ -8,7 +8,10 @@ namespace BLL
         PerformPlayerActions,
         ResolveDamage,
         MoveThreats,
-        ComputerCheck
+        ComputerCheck,
+		FinalRocketMove,
+		InterceptorsReturnToShip,
+		JumpToHyperspace
     }
 
     public static class ResolutionPhaseExtensions
@@ -27,7 +30,13 @@ namespace BLL
                     return "Resolve Damage";
                 case ResolutionPhase.MoveThreats:
                     return "Threats Move";
-                default:
+				case ResolutionPhase.FinalRocketMove:
+		            return "Final Rocket Moves";
+				case ResolutionPhase.InterceptorsReturnToShip:
+		            return "Interceptors Return to Ship";
+				case ResolutionPhase.JumpToHyperspace:
+		            return "Jump to Hyperspace";
+				default:
                     throw new InvalidOperationException("Invalid resolution phase encountered.");
             }
         }

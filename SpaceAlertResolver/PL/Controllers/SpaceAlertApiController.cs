@@ -55,7 +55,6 @@ namespace PL.Controllers
                 throw new InvalidOperationException("Successfully triggered test Exception. You can't do that many battle bots!");
 
             game.StartGame();
-            var lost = false;
             var turnModels = new List<GameTurnModel>();
 
             game.PhaseStarting += (sender, eventArgs) =>
@@ -72,12 +71,11 @@ namespace PL.Controllers
             game.LostGame += (sender, args) =>
             {
                 turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "Lost!"));
-                lost = true;
             };
 
-            for (var i = 0; i < game.NumberOfTurns && !lost; i++)
-            {
-                turnModels.Add(new GameTurnModel { Turn = i + 1 });
+			while(game.GameStatus == GameStatus.InProgress)
+			{ 
+                turnModels.Add(new GameTurnModel { Turn = game.CurrentTurn });
                 game.PerformTurn();
                 turnModels.Last().Phases.Last().SubPhases.Add(new GameSnapshotModel(game, "End of Phase"));
             }
