@@ -323,8 +323,8 @@ namespace BLL.ShipComponents
                     PerformAdvancedEnergyTechnician();
                     break;
                 case PlayerSpecialization.Hypernavigator:
-                    if (currentTurn == 9 || currentTurn == 10)
-                        SittingDuck.Game.NumberOfTurns = currentTurn + 1;
+                    if (currentTurn == SittingDuck.Game.NumberOfTurns - 1  || currentTurn == SittingDuck.Game.NumberOfTurns - 2)
+                        SittingDuck.Game.NumberOfTurns = currentTurn;
                     break;
                 case PlayerSpecialization.Mechanic:
                     PerformAdvancedMechanic(performingPlayer);

@@ -109,8 +109,6 @@ namespace BLL
 
         private void PerformEndOfGame()
         {
-            ThreatController.MoveThreats(CurrentTurn);
-
             PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.FinalRocketMove.GetDescription() });
             var rocketFiredLastTurn = SittingDuck.BlueZone.LowerBlueStation.RocketsComponent.RocketFiredLastTurn;
             if (rocketFiredLastTurn != null)
@@ -122,6 +120,8 @@ namespace BLL
                 .SelectMany(station => station.Players);
             foreach (var player in playersInFarInterceptors)
                 player.KnockOut();
+
+            ThreatController.MoveThreats(CurrentTurn);
 
             PhaseStarting(this, new PhaseEventArgs { PhaseHeader = ResolutionPhase.JumpToHyperspace.GetDescription() });
             ThreatController.OnJumpingToHyperspace();
