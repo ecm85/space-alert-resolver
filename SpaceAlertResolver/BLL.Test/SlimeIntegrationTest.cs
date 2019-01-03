@@ -1067,7 +1067,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
             Assert.AreEqual(blueDamage, game.SittingDuck.BlueZone.TotalDamage);

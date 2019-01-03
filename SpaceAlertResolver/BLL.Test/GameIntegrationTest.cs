@@ -39,7 +39,7 @@ namespace BLL.Test
             var bonusThreats = new Threat[0];
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
 
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
@@ -87,7 +87,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
 
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
@@ -229,7 +229,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
             Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
@@ -298,7 +298,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
             Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
@@ -368,7 +368,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
             Assert.AreEqual(0, game.SittingDuck.BlueZone.TotalDamage);
@@ -426,7 +426,7 @@ namespace BLL.Test
             game.StartGame();
             try
             {
-                for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+                for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                     game.PerformTurn();
             }
             catch (LoseException loseException)
@@ -572,7 +572,7 @@ namespace BLL.Test
 
             var game = new Game(players, internalThreats, externalThreats, bonusThreats, externalTracksByZone, internalTrack, null);
             game.StartGame();
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Assert.AreEqual(GameStatus.Won, game.GameStatus);
             Assert.AreEqual(2, game.SittingDuck.BlueZone.TotalDamage);

@@ -47,7 +47,7 @@ namespace ConsoleResolver
             game.LostGame += (sender, args) => 
                 Console.WriteLine("Killed on turn {0} by: {1}", game.CurrentTurn, game.KilledBy);
 
-            for (var currentTurn = 0; currentTurn < game.NumberOfTurns; currentTurn++)
+            for (var currentTurn = 0; currentTurn < game.NumberOfTurns + 1; currentTurn++)
                 game.PerformTurn();
             Console.WriteLine("Damage Taken:\r\nBlue: {0}\r\nRed: {1}\r\nWhite: {2}",
                 game.SittingDuck.BlueZone.TotalDamage,

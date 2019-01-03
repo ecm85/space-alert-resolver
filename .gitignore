@@ -2,7 +2,7 @@
 /SpaceAlertResolver/packages
 /SpaceAlertResolver/ConsoleResolverTest/bin
 /SpaceAlertResolver/ConsoleResolverTest/obj
-/SpaceAlertResolver/.vs/config/applicationhost.config
+/SpaceAlertResolver/.vs
 *.dll
 *.pdb
 /SpaceAlertResolver/PL/bin
