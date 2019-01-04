@@ -244,6 +244,12 @@ namespace BLL.Test
         }
 
         [Test]
+        public static void ThisShouldFail()
+        {
+            Assert.Fail("This is a test of the build.");
+        }
+
+        [Test]
         public static void EzraCampaign1Mission2()
         {
             var players = new List<Player>
