@@ -1,7 +1,12 @@
 ﻿angular.module("spaceAlertModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'cfp.hotkeys', 'ngRoute'])
     .config([
         '$routeProvider',
-        function($routeProvider) {
+        function ($routeProvider, $locationProvider) {
+
+            $locationProvider.html5Mode({
+                enabled: true
+            });
+
             $routeProvider
                 .when('/Input',
                 {
