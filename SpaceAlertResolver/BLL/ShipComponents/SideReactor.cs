@@ -10,10 +10,18 @@
 
         public override void PerformBAction(bool isHeroic)
         {
+            FillToCapacity(isHeroic);
+        }
+
+        public void FillToCapacity(bool isHeroic)
+        {
             var energyToPull = Capacity - Energy;
+            var oldSourceEnergy = Source.Energy;
             Source.Energy -= energyToPull;
-            Energy += energyToPull;
-            if (energyToPull > 0 && isHeroic)
+            var newSourceEnergy = Source.Energy;
+            var energyPulled = oldSourceEnergy - newSourceEnergy;
+            Energy += energyPulled;
+            if (energyPulled > 0 && isHeroic)
                 Energy++;
         }
     }
