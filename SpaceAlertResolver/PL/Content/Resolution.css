@@ -97,3 +97,18 @@
 .sub-phase {
 	color: darkviolet;
 }
+
+
+.unused-damage-token {
+    width: 67px;
+    height: auto;
+    border-top: 1px white solid;
+    border-left: 1px white solid;
+    box-shadow: 5px 5px 5px black;
+    border-radius: 20px;
+}
+
+.damage-pile-zone {
+    display: inline-grid;
+    width: 125px;
+}

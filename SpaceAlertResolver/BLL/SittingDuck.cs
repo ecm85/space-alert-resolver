@@ -35,6 +35,7 @@ namespace BLL
             var redDoors = new Doors();
             var blueDoors = new Doors();
 
+            var damageRandomizer = new Random();
 
             var interceptors = new Interceptors();
 
@@ -44,9 +45,9 @@ namespace BLL
 
             BlueDoors = blueDoors;
             RedDoors = redDoors;
-            WhiteZone = CreateWhiteZone(threatController, initialDamage, redDoors, blueDoors);
-            RedZone = CreateRedZone(threatController, initialDamage, redDoors, WhiteZone, interceptors);
-            BlueZone = CreateBlueZone(threatController, initialDamage, WhiteZone, blueDoors);
+            WhiteZone = CreateWhiteZone(threatController, initialDamage, redDoors, blueDoors, damageRandomizer);
+            RedZone = CreateRedZone(threatController, initialDamage, redDoors, WhiteZone, interceptors, damageRandomizer);
+            BlueZone = CreateBlueZone(threatController, initialDamage, WhiteZone, blueDoors, damageRandomizer);
 
             ZonesByLocation = new Zone[] {RedZone, WhiteZone, BlueZone}.ToDictionary(zone => zone.ZoneLocation);
             InterceptorStations = new [] {interceptorStation1, interceptorStation2, interceptorStation3};
@@ -93,9 +94,10 @@ namespace BLL
             ThreatController threatController,
             ILookup<ZoneLocation, DamageToken> initialDamage,
             WhiteZone whiteZone,
-            Doors blueDoors)
+            Doors blueDoors,
+            Random damageRandomizer)
         {
-            var blueZone = new BlueZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, blueDoors, this);
+            var blueZone = new BlueZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, blueDoors, this, damageRandomizer);
             DamageZone(initialDamage, ZoneLocation.Blue, blueZone);
             blueZone.LowerBlueStation.RocketsComponent.RocketsModified += (sender, args) => RocketsModified(sender, args);
             return blueZone;
@@ -106,9 +108,10 @@ namespace BLL
             ILookup<ZoneLocation, DamageToken> initialDamage,
             Doors redDoors,
             WhiteZone whiteZone,
-            Interceptors interceptors)
+            Interceptors interceptors,
+            Random damageRandomizer)
         {
-            var redZone = new RedZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors);
+            var redZone = new RedZone(threatController, whiteZone.LowerWhiteStation.CentralReactor, redDoors, this, interceptors, damageRandomizer);
             DamageZone(initialDamage, ZoneLocation.Red, redZone);
             return redZone;
         }
@@ -117,9 +120,10 @@ namespace BLL
             ThreatController threatController,
             ILookup<ZoneLocation, DamageToken> initialDamage,
             Doors redDoors,
-            Doors blueDoors)
+            Doors blueDoors,
+            Random damageRandomizer)
         {
-            var whiteZone = new WhiteZone(threatController, redDoors, blueDoors, this);
+            var whiteZone = new WhiteZone(threatController, redDoors, blueDoors, this, damageRandomizer);
             DamageZone(initialDamage, ZoneLocation.White, whiteZone);
             whiteZone.UpperWhiteStation.AlphaComponent.CannonFired += (sender, args) => CentralLaserCannonFired(this, EventArgs.Empty);
             return whiteZone;

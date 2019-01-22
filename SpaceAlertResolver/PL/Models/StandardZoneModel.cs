@@ -15,8 +15,9 @@ namespace PL.Models
         public StandardStationModel UpperStation { get; set; }
         public IEnumerable<string> Damage { get; set; }
         public int TotalDamage { get; set; }
+        public IEnumerable<string> UnusedDamage { get; set; }
 
-        protected StandardZoneModel(Game game, ZoneLocation zoneLocation)
+            protected StandardZoneModel(Game game, ZoneLocation zoneLocation)
         {
             var zone = game.SittingDuck.ZonesByLocation[zoneLocation];
             ZoneLocation = zoneLocation;
@@ -31,6 +32,9 @@ namespace PL.Models
                 .ToList();
             Track = new TrackSnapshotModel(game.ThreatController.ExternalTracks[zoneLocation], externalThreatPositions);
             Damage = zone.CurrentDamageTokens
+                .Select(damage => string.Format(CultureInfo.InvariantCulture, "{0}-{1}", zoneLocation, damage))
+                .ToList();
+            UnusedDamage = zone.UnusedDamageTokens
                 .Select(damage => string.Format(CultureInfo.InvariantCulture, "{0}-{1}", zoneLocation, damage))
                 .ToList();
             TotalDamage = zone.TotalDamage;

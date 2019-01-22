@@ -1,0 +1,18 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Damage Piles</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <h2>Damage Piles</h2>
+    <div ng-repeat="damageableZone in damageableZones" class="damage-pile-zone">
+        <h3>
+            {{damageableZone.name}}
+        </h3>
+        <div ng-repeat="damageToken in damageableZone.damage">
+            <img class="unused-damage-token " ng-src="~/Content/Images/Damage/{{damageToken}}.png" />
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+</div>
+

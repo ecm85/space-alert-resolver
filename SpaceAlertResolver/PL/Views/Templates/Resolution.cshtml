@@ -70,6 +70,7 @@
 			<span class="fast-speed-label">Fast</span>
 		</div>
 	</div>
+	<div class="btn btn-default" ng-click="openDamageDialog('lg')">View Damage Piles</div>
 </div>
 <div class="full-board">
 	<div class="btn-toolbar automated-run-through">
@@ -140,4 +141,8 @@
 
 <script type="text/ng-template" id="templates/trackWithThreats">
     @Html.Action("TrackWithThreats", "Templates")
+</script>
+
+<script type="text/ng-template" id="templates/damageModal">
+    @Html.Action("DamageDialog", "Templates")
 </script>

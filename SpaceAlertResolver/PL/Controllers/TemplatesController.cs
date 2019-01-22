@@ -9,6 +9,11 @@ namespace PL.Controllers
             return PartialView();
         }
 
+        public ActionResult DamageDialog()
+        {
+            return PartialView();
+        }
+
         public ActionResult StandardZone()
         {
             return PartialView();

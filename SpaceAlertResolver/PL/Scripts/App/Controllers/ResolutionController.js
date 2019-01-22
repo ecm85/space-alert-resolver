@@ -3,7 +3,7 @@
 angular.module("spaceAlertModule")
     .controller("ResolutionController",
     [
-        "$scope", "gameData", '$interval', '$animate', function($scope, gameData, $interval, $animate) {
+        "$scope", "gameData", '$interval', '$animate', '$uibModal', function($scope, gameData, $interval, $animate, $uibModal) {
             //TODO: Remove the need for this (shouldn't need to do this check, on error it sohuld never hit this controller)
             //Check if gamedata got populated - will be undefined if there was an error
             if (!gameData)
@@ -175,6 +175,28 @@ angular.module("spaceAlertModule")
             $scope.getActionCursor = function() {
                 return currentTurnIndex;
             }
+
+            $scope.openDamageDialog = function (size) {
+                stop();
+                $uibModal.open({
+                    animation: true,
+                    templateUrl: 'templates/damageModal',
+                    controller: 'DamageModalInstanceCtrl',
+                    size: size,
+                    resolve: {
+                      
+                        redDamage: function () {
+                            return $scope.getCurrentSubPhase().redZone.unusedDamage;
+                        },
+                        blueDamage: function () {
+                            return $scope.getCurrentSubPhase().blueZone.unusedDamage;
+                        },
+                        whiteDamage: function () {
+                            return $scope.getCurrentSubPhase().whiteZone.unusedDamage;
+                        }
+                    }
+                });
+            };
 
             selectTurn(0);
         }

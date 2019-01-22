@@ -24,12 +24,15 @@ namespace BLL.ShipComponents
         public abstract UpperStation UpperStation { get; }
         public abstract LowerStation LowerStation { get; }
 
-        protected Zone()
+        private Random DamageRandomizer { get; }
+
+        protected Zone(Random damageRandomizer)
         {
             Gravolift = new Gravolift();
+            DamageRandomizer = damageRandomizer;
             DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
             CurrentDamageTokenList = new List<DamageToken>();
-            UnusedDamageTokenList = EnumFactory.All<DamageToken>().Shuffle(new Random()).ToList();
+            UnusedDamageTokenList = EnumFactory.All<DamageToken>().Shuffle(DamageRandomizer).ToList();
         }
 
         public ThreatDamageResult TakeAttack(int amount, ThreatDamageType damageType)
@@ -147,7 +150,7 @@ namespace BLL.ShipComponents
             var damageToRepair = damageRepairOrder.First(damage => CurrentDamageTokens.Contains(damage));
             CurrentDamageTokenList.Remove(damageToRepair);
             UnusedDamageTokenList.Add(damageToRepair);
-            UnusedDamageTokenList = UnusedDamageTokens.Shuffle().ToList();
+            UnusedDamageTokenList = UnusedDamageTokens.Shuffle(DamageRandomizer).ToList();
             var component = GetDamageableComponent(damageToRepair);
             component?.Repair();
             if (damageToRepair == DamageToken.Structural)

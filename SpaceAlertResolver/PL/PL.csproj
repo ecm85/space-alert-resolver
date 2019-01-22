@@ -343,6 +343,7 @@
     <Content Include="Scripts\App\Directives\Track.js" />
     <Content Include="Scripts\App\Directives\TrackWithThreats.js" />
     <Content Include="Scripts\App\Directives\RouteLoadingIndicator.js" />
+    <Content Include="Scripts\App\ModalInstanceControllers\DamageModalInstanceController.js" />
     <Content Include="Scripts\App\ModalInstanceControllers\ActionsModalInstanceController.js" />
     <Content Include="Scripts\App\ModalInstanceControllers\ThreatsModalInstanceController.js" />
     <Content Include="Scripts\App\ModalInstanceControllers\TrackModalInstanceController.js" />
@@ -559,6 +560,7 @@
     <Content Include="Views\Templates\ReportBug.cshtml" />
     <Content Include="Views\Templates\Loading.cshtml" />
     <Content Include="Views\Templates\BonusThreatEntry.cshtml" />
+    <Content Include="Views\Templates\DamageDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

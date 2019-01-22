@@ -1,4 +1,6 @@
-﻿namespace BLL.ShipComponents
+﻿using System;
+
+namespace BLL.ShipComponents
 {
     public class WhiteZone : Zone
     {
@@ -8,7 +10,7 @@
         public UpperWhiteStation UpperWhiteStation { get; set; }
         public LowerWhiteStation LowerWhiteStation { get; set; }
 
-        internal WhiteZone(ThreatController threatController, Doors redDoors, Doors blueDoors, SittingDuck sittingDuck)
+        internal WhiteZone(ThreatController threatController, Doors redDoors, Doors blueDoors, SittingDuck sittingDuck, Random damageRandomizer) : base(damageRandomizer)
         {
             LowerWhiteStation = new LowerWhiteStation(
                 threatController,
