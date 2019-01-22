@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL
 {
@@ -22,6 +23,27 @@ namespace BLL
             {
                 action(value, index);
                 index++;
+            }
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        {
+            return source.Shuffle(new Random());
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random random)
+        {
+            return source.ShuffleIterator(random);
+        }
+
+        private static IEnumerable<T> ShuffleIterator<T>(this IEnumerable<T> source, Random random)
+        {
+            var buffer = source.ToList();
+            while(buffer.Any())
+            {
+                var nextIndex = random.Next(0, buffer.Count - 1);
+                yield return buffer[nextIndex];
+                buffer.RemoveAt(nextIndex);
             }
         }
     }

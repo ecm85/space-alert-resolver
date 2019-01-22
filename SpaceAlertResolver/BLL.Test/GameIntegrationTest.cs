@@ -49,9 +49,9 @@ namespace BLL.Test
             Assert.AreEqual(0, game.ThreatController.DefeatedThreats.Count());
             Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(2, game.TotalPoints);
-            Assert.AreEqual(5, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count);
+            Assert.AreEqual(5, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
         }
 
         [Test]
@@ -97,9 +97,9 @@ namespace BLL.Test
             Assert.AreEqual(3, game.ThreatController.DefeatedThreats.Count());
             Assert.AreEqual(3, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(30, game.TotalPoints);
-            Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count);
-            Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count);
-            Assert.AreEqual(4, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count);
+            Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+            Assert.AreEqual(3, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+            Assert.AreEqual(4, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
         }
 
         private static IList<Player> GetPlayers()
@@ -238,9 +238,9 @@ namespace BLL.Test
             Assert.AreEqual(3, game.ThreatController.DefeatedThreats.Count());
             Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(20 + 4 + 2 + 2, game.TotalPoints);
-            Assert.AreEqual(1, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count);
+            Assert.AreEqual(1, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
         }
 
         [Test]
@@ -308,9 +308,9 @@ namespace BLL.Test
             Assert.AreEqual(1, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(20 + 4 + 2, game.TotalPoints);
             Assert.AreEqual(2, players.Count(player => player.IsKnockedOut));
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count);
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
         }
 
         [Test]
@@ -378,9 +378,9 @@ namespace BLL.Test
             Assert.AreEqual(0, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(28 + 1 + 9, game.TotalPoints);
             Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count);
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(0).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(1).CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.Zones.ElementAt(2).CurrentDamageTokens.Count());
         }
 
         [Test]
@@ -439,9 +439,9 @@ namespace BLL.Test
                 Assert.AreEqual(6, game.ThreatController.DefeatedThreats.Count());
                 Assert.AreEqual(0, game.ThreatController.SurvivedThreats.Count());
                 Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
-                Assert.AreEqual(0, game.SittingDuck.BlueZone.CurrentDamageTokens.Count);
-                Assert.AreEqual(6, game.SittingDuck.RedZone.CurrentDamageTokens.Count);
-                Assert.AreEqual(0, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count);
+                Assert.AreEqual(0, game.SittingDuck.BlueZone.CurrentDamageTokens.Count());
+                Assert.AreEqual(6, game.SittingDuck.RedZone.CurrentDamageTokens.Count());
+                Assert.AreEqual(0, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count());
             }
         }
 
@@ -581,9 +581,9 @@ namespace BLL.Test
             Assert.AreEqual(6, game.ThreatController.DefeatedThreats.Count());
             Assert.AreEqual(2, game.ThreatController.SurvivedThreats.Count());
             Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
-            Assert.AreEqual(2, game.SittingDuck.BlueZone.CurrentDamageTokens.Count);
-            Assert.AreEqual(0, game.SittingDuck.RedZone.CurrentDamageTokens.Count);
-            Assert.AreEqual(5, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count);
+            Assert.AreEqual(2, game.SittingDuck.BlueZone.CurrentDamageTokens.Count());
+            Assert.AreEqual(0, game.SittingDuck.RedZone.CurrentDamageTokens.Count());
+            Assert.AreEqual(5, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count());
         }
 
         private static Player CreateGreenPlayerDoubleActionsCampaignMission2()

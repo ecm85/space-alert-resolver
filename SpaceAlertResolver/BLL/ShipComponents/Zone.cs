@@ -8,14 +8,16 @@ namespace BLL.ShipComponents
 {
     public abstract class Zone
     {
-        public int TotalDamage => CurrentDamageTokens.Count + ExtraDamageTaken;
+        public int TotalDamage => CurrentDamageTokens.Count() + ExtraDamageTaken;
         private int ExtraDamageTaken { get; set; }
 
         public Gravolift Gravolift { get; }
         public IEnumerable<Player> Players => UpperStation.Players.Concat(LowerStation.Players).ToList();
         private IDictionary<InternalThreat, ZoneDebuff> DebuffsBySource { get; }
-        public List<DamageToken> CurrentDamageTokens  { get; }
-        private static readonly Random random = new Random();
+        private IList<DamageToken> CurrentDamageTokenList { get; }
+        private IList<DamageToken> UnusedDamageTokenList { get; set; }
+        public IEnumerable<DamageToken> CurrentDamageTokens => CurrentDamageTokenList;
+        public IEnumerable<DamageToken> UnusedDamageTokens => UnusedDamageTokenList; 
         private bool HasStructuralCarryoverDamage { get; set; }
 
         public abstract ZoneLocation ZoneLocation { get; }
@@ -26,7 +28,8 @@ namespace BLL.ShipComponents
         {
             Gravolift = new Gravolift();
             DebuffsBySource = new Dictionary<InternalThreat, ZoneDebuff>();
-            CurrentDamageTokens = new List<DamageToken>();
+            CurrentDamageTokenList = new List<DamageToken>();
+            UnusedDamageTokenList = EnumFactory.All<DamageToken>().Shuffle(new Random()).ToList();
         }
 
         public ThreatDamageResult TakeAttack(int amount, ThreatDamageType damageType)
@@ -55,7 +58,7 @@ namespace BLL.ShipComponents
                 .Aggregate(damage, (current, doubleDamageDebuff) => current * 2);
             if (HasStructuralCarryoverDamage)
                 damageDone *= 2;
-            var newDamageTokens = GetNewDamageTokens(Math.Min(damageDone, 6 - TotalDamage ));
+            var newDamageTokens = UnusedDamageTokens.Take(Math.Min(damageDone, 6 - TotalDamage )).ToList();
             foreach (var newDamageToken in newDamageTokens)
                 TakeDamage(newDamageToken);
             var extraDamageTaken = damageDone > newDamageTokens.Count ? damageDone - newDamageTokens.Count : 0;
@@ -66,7 +69,8 @@ namespace BLL.ShipComponents
 
         public void TakeDamage(DamageToken newDamageToken, bool isCampaignDamage = false)
         {
-            CurrentDamageTokens.Add(newDamageToken);
+            CurrentDamageTokenList.Add(newDamageToken);
+            UnusedDamageTokenList.Remove(newDamageToken);
             var damageableComponent = GetDamageableComponent(newDamageToken);
             damageableComponent?.SetDamaged(isCampaignDamage);
             if (newDamageToken == DamageToken.Structural && isCampaignDamage)
@@ -92,19 +96,6 @@ namespace BLL.ShipComponents
                 default:
                     throw new InvalidOperationException("Invalid damage token encountered.");
             }
-        }
-
-        private IList<DamageToken> GetNewDamageTokens(int count)
-        {
-            var openTokens = EnumFactory.All<DamageToken>().Except(CurrentDamageTokens).ToList();
-            var newDamageTokens = new List<DamageToken>();
-            for (var i = 0; i < count; i++)
-            {
-                var selectedToken = openTokens[random.Next(openTokens.Count)];
-                openTokens.Remove(selectedToken);
-                newDamageTokens.Add(selectedToken);
-            }
-            return newDamageTokens;
         }
 
         public int DrainShield(int? amount)
@@ -154,7 +145,9 @@ namespace BLL.ShipComponents
                 DamageTokenRepairOrderInUpperDeck :
                 DamageTokenRepairOrderInLowerDeck;
             var damageToRepair = damageRepairOrder.First(damage => CurrentDamageTokens.Contains(damage));
-            CurrentDamageTokens.Remove(damageToRepair);
+            CurrentDamageTokenList.Remove(damageToRepair);
+            UnusedDamageTokenList.Add(damageToRepair);
+            UnusedDamageTokenList = UnusedDamageTokens.Shuffle().ToList();
             var component = GetDamageableComponent(damageToRepair);
             component?.Repair();
             if (damageToRepair == DamageToken.Structural)

@@ -1074,9 +1074,9 @@ namespace BLL.Test
             Assert.AreEqual(redDamage, game.SittingDuck.RedZone.TotalDamage);
             Assert.AreEqual(whiteDamage, game.SittingDuck.WhiteZone.TotalDamage);
             Assert.AreEqual(0, players.Count(player => player.IsKnockedOut));
-            Assert.AreEqual(blueDamage, game.SittingDuck.BlueZone.CurrentDamageTokens.Count);
-            Assert.AreEqual(redDamage, game.SittingDuck.RedZone.CurrentDamageTokens.Count);
-            Assert.AreEqual(whiteDamage, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count);
+            Assert.AreEqual(blueDamage, game.SittingDuck.BlueZone.CurrentDamageTokens.Count());
+            Assert.AreEqual(redDamage, game.SittingDuck.RedZone.CurrentDamageTokens.Count());
+            Assert.AreEqual(whiteDamage, game.SittingDuck.WhiteZone.CurrentDamageTokens.Count());
             var battleBotsAreDisabledInPlace = game.SittingDuck.RedZone.LowerRedStation.BattleBotsComponent.BattleBots?.IsDisabled ?? false;
             Assert.AreEqual(battleBotsDisabled, battleBotsAreDisabledInPlace);
 
