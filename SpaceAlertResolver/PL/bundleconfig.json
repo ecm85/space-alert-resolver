@@ -8,8 +8,8 @@
   {
     "outputFileName": "wwwroot/js/app.js",
     "inputFiles": [
-      "Scripts/app/SpaceAlertModule.js",
-      "Scripts/app/**/*.js"
+      "Scripts/App/SpaceAlertModule.js",
+      "Scripts/App/**/*.js"
     ]
   },
   {
@@ -40,7 +40,7 @@
     "outputFileName": "wwwroot/js/bootstrap.js",
     "inputFiles": [
       "Scripts/bootstrap.js",
-      "~/Scripts/respond.js"
+      "Scripts/respond.js"
     ]
   }
 ]
