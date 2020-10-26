@@ -2,10 +2,10 @@
 {
     public enum PlayerColor
     {
-        blue,
-        green,
-        red,
-        yellow,
-        purple
+        Blue,
+        Green,
+        Red,
+        Yellow,
+        Purple
     }
 }

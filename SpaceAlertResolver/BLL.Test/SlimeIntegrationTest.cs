@@ -78,8 +78,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track1;
             const int timeAppears = 5;
@@ -108,8 +108,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
 
 
@@ -133,7 +133,7 @@ namespace BLL.Test
         {
             var players = new List<Player>
             {
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.green)
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track1;
             const int timeAppears = 3;
@@ -163,8 +163,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track4;
             const int timeAppears = 5;
@@ -193,8 +193,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track4;
             const int timeAppears = 3;
@@ -226,8 +226,8 @@ namespace BLL.Test
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.MoveBlue, PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track5;
             const int timeAppears = 4;
@@ -258,8 +258,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track4;
             const int timeAppears = 4;
@@ -290,8 +290,8 @@ namespace BLL.Test
                     null, null,
                     null, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track4;
             const int timeAppears = 4;
@@ -312,7 +312,7 @@ namespace BLL.Test
         {
             var players = new List<Player>
             {
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.green)
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track4;
             const int timeAppears = 3;
@@ -344,8 +344,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track6;
             const int timeAppears = 5;
@@ -374,8 +374,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track6;
             const int timeAppears = 3;
@@ -407,7 +407,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateDoubleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed, PlayerActionType.ChangeDeck,
@@ -418,8 +418,8 @@ namespace BLL.Test
                     null, null,
                     PlayerActionType.BattleBots, null,
                     PlayerActionType.BattleBots, null
-                }), 1, PlayerColor.red, PlayerSpecialization.EnergyTechnician),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red, PlayerSpecialization.EnergyTechnician),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track6;
             const int timeAppears = 4;
@@ -452,7 +452,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -465,8 +465,8 @@ namespace BLL.Test
                     PlayerActionType.BattleBots,
                     PlayerActionType.MoveBlue,
                     PlayerActionType.BattleBots
-                }), 1, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -499,8 +499,8 @@ namespace BLL.Test
                     PlayerActionType.BattleBots,
                     PlayerActionType.MoveBlue,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -533,7 +533,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -544,8 +544,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 1, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -576,8 +576,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -610,7 +610,7 @@ namespace BLL.Test
                     PlayerActionType.BattleBots,
                     null,
                     PlayerActionType.BattleBots 
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -623,8 +623,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 1, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -655,7 +655,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots,
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -668,8 +668,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 1, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -716,9 +716,9 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
-                new Player(redPlayerActions, 1, PlayerColor.red, PlayerSpecialization.SpecialOps),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                new Player(redPlayerActions, 1, PlayerColor.Red, PlayerSpecialization.SpecialOps),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -753,8 +753,8 @@ namespace BLL.Test
             redPlayerActions.Add(new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.BattleBots, PlayerActionType.AdvancedSpecialization));
             var players = new List<Player>
             {
-                new Player(redPlayerActions, 0, PlayerColor.red, PlayerSpecialization.SpecialOps),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                new Player(redPlayerActions, 0, PlayerColor.Red, PlayerSpecialization.SpecialOps),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -787,7 +787,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -800,8 +800,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 1, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                }), 1, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -834,8 +834,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -868,8 +868,8 @@ namespace BLL.Test
                     PlayerActionType.BattleBots,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -900,8 +900,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots,
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -936,8 +936,8 @@ namespace BLL.Test
             redPlayerActions.Add(new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.BattleBots, PlayerActionType.AdvancedSpecialization));
             var players = new List<Player>
             {
-                new Player(redPlayerActions, 1, PlayerColor.red, PlayerSpecialization.SpecialOps),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.green)
+                new Player(redPlayerActions, 1, PlayerColor.Red, PlayerSpecialization.SpecialOps),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 2, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -970,8 +970,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots,
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -1004,8 +1004,8 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.BattleBots
-                }), 0, PlayerColor.red),
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.green)
+                }), 0, PlayerColor.Red),
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 1, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track7;
             const int timeAppears = 4;
@@ -1026,7 +1026,7 @@ namespace BLL.Test
         {
             var players = new List<Player>
             {
-                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.green)
+                new Player(PlayerActionFactory.CreateSingleActionList(ComputerMaintenanceActions), 0, PlayerColor.Green)
             };
             const TrackConfiguration internalTrack = TrackConfiguration.Track6;
             const int timeAppears = 3;

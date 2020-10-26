@@ -68,7 +68,7 @@ angular.module("spaceAlertModule")
                         .concat(newGameData.selectedThreats.internalThreats);
                 };
 
-                newGameData.colors = ['blue', 'green', 'red', 'yellow', 'purple'];
+                newGameData.colors = ['Blue', 'Green', 'Red', 'Yellow', 'Purple'];
                 newGameData.playerCounts = [1, 2, 3, 4, 5];
 
                 newGameData.players = [
