@@ -32,7 +32,7 @@
         </div>
         <div class="panel-body">
             <div class="player-color-with-selector">
-                <img class="player-icon-large" ng-src="@Url.Content("~")/Images/Players/Male{{player.color.model}}.png"/>
+                <img class="player-icon-large" ng-src="@Url.Content("~")/Images/Players/male-{{player.color.model}}.png"/>
                 <div class="btn-group color-button-group">
                     <div ng-repeat="color in newGameData.colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
                         <span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>

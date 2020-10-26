@@ -1,6 +1,6 @@
 ﻿<div class="boards" ng-class="{'small': smallBoard}">
-    <img class="board-1" ng-class="{'small': smallBoard}" ng-src="@Url.Content("~")/Images/Boards/{{playerColor}}1.png" />
-    <img class="board-2" ng-class="{'small': smallBoard}" ng-src="@Url.Content("~")/Images/Boards/{{playerColor}}2.png" />
+    <img class="board-1" ng-class="{'small': smallBoard}" ng-src="@Url.Content("~")/Images/Boards/{{playerColor}}-1.png" />
+    <img class="board-2" ng-class="{'small': smallBoard}" ng-src="@Url.Content("~")/Images/Boards/{{playerColor}}-2.png" />
 
     <div ng-repeat="selectedAction in selectedActions" class="selected-action-wrapper selected-action-wrapper-{{$index}}" ng-class="{'cursor': $parent.cursor.index === $index, 'configurable-action': !$parent.immutableCursor && $parent.cursor, 'small': smallBoard}" ng-click="moveCursor($index)">
         <img ng-if="selectedAction.description != null" class="action-selected-image" ng-class="{'small': smallBoard}" ng-src="@Url.Content("~")/Images/Actions/{{selectedAction.description}}.png" />
