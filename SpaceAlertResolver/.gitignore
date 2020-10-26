@@ -2,3 +2,5 @@
 *.user
 bin
 obj
+PL/wwwroot/css
+PL/wwwroot/js
