@@ -28,8 +28,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\css\site.css" />
-  </ItemGroup>
-
 </Project>
