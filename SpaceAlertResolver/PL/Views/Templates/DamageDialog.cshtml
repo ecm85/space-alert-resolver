@@ -8,7 +8,7 @@
             {{damageableZone.name}}
         </h3>
         <div ng-repeat="damageToken in damageableZone.damage">
-            <img class="unused-damage-token " ng-src="~/Content/Images/Damage/{{damageToken}}.png" />
+            <img class="unused-damage-token " ng-src="@Url.Content("~")/Images/Damage/{{damageToken}}.png" />
         </div>
     </div>
 </div>

@@ -34,5 +34,5 @@
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
 <script type="text/ng-template" id="templates/threat">
-    @Html.Action("Threat", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/Threat.cshtml")
 </script>

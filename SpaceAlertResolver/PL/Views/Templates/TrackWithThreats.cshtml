@@ -25,9 +25,9 @@
 </div>
 
 <script type="text/ng-template" id="templates/threat">
-    @Html.Action("Threat", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/Threat.cshtml")
 </script>
 
 <script type="text/ng-template" id="templates/track">
-    @Html.Action("Track", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/Track.cshtml")
 </script>

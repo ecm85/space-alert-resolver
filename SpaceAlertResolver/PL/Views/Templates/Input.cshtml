@@ -32,7 +32,7 @@
         </div>
         <div class="panel-body">
             <div class="player-color-with-selector">
-                <img class="player-icon-large" ng-src="~/Content/Images/Players/Male{{player.color.model}}.png"/>
+                <img class="player-icon-large" ng-src="@Url.Content("~")/Images/Players/Male{{player.color.model}}.png"/>
                 <div class="btn-group color-button-group">
                     <div ng-repeat="color in newGameData.colors" class="btn btn-default color-selector-button" ng-model="player.color.model" uib-btn-radio="color">
                         <span class="badge player-color-selector player-color-selector-{{color}}">&nbsp;</span>
@@ -90,7 +90,7 @@
         </div>
     </div>
     <div class="sitting-duck-wrapper">
-        <img class="sitting-duck" src="~/Content/Images/board-front.jpg" />
+        <img class="sitting-duck" src="~/Images/board-front.jpg" />
     </div>
     <div class="selected-track-wrapper">
         <track-with-threats
@@ -123,7 +123,7 @@
             <div class="checkbox" ng-repeat="damageToken in allDamageTokens">
                 <label type="checkbox">
                     <input type="checkbox" ng-model="newGameData.damage[damageableZone][damageToken]" />
-                    <img class="selectable-damage-token " ng-src="~/Content/Images/Damage/{{damageableZone}}-{{damageToken}}.png"/>
+                    <img class="selectable-damage-token " ng-src="@Url.Content("~")/Images/Damage/{{damageableZone}}-{{damageToken}}.png" />
                 </label>
             </div>
         </div>
@@ -143,17 +143,17 @@
     <button class="btn btn-default" ng-click="newGameData.initialize()">Reset</button>
 </div>
 <script type="text/ng-template" id="templates/actionsModal">
-    @Html.Action("ActionsDialog", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/ActionsDialog.cshtml")
 </script>
 <script type="text/ng-template" id="templates/trackWithThreats">
-    @Html.Action("TrackWithThreats", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/TrackWithThreats.cshtml")
 </script>
 <script type="text/ng-template" id="templates/trackModal">
-    @Html.Action("TrackDialog", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/TrackDialog.cshtml")
 </script>
 <script type="text/ng-template" id="templates/threatsModal">
-    @Html.Action("ThreatsDialog", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/ThreatsDialog.cshtml")
 </script>
 <script type="text/ng-template" id="templates/playerBoard">
-    @Html.Action("PlayerBoard", "Templates")
+    @await Html.PartialAsync("~/Views/Templates/PlayerBoard.cshtml")
 </script>

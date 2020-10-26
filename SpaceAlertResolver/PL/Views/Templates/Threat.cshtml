@@ -1,6 +1,6 @@
 ﻿<div class="threat-wrapper" ng-class="{'phased-threat-wrapper': threat.isPhasedOut}">
     <div class="threat-image-wrapper">
-        <img id="threat{{trackId}}{{threatIndex}}" class="threat" ng-src="~/Content/Images/Threats/{{threat.fileName}}.png" />
+        <img id="threat{{trackId}}{{threatIndex}}" class="threat" ng-src="@Url.Content("~")/Images/Threats/{{threat.fileName}}.png" />
         <div class="threat-text-overlay" ng-if="threat.amountAttackingFor > 0">
             <div>Attack {{threat.amountAttackingFor}}</div>
             <div>{{threat.zoneUnderAttack}}</div>
@@ -9,35 +9,35 @@
     <div class="threat-info">
         <div class="threat-info-col-1">
             <div class="threat-time-appears-wrapper">
-                <img class="threat-time-appears" src="~/content/Images/threatTimeAppears.png"/>
+                <img class="threat-time-appears" src="~/Images/threatTimeAppears.png"/>
                 <div class="threat-time-appears-text">{{threat.timeAppears || '?'}}</div>
             </div>
             <div class="threat-speed-wrapper">
-                <img class="threat-speed" src="~/Content/Images/threatSpeed.png"/>
+                <img class="threat-speed" src="~/Images/threatSpeed.png"/>
                 <div class="threat-speed-text">{{threat.speed}}</div>
             </div>
         </div>
         <div class="threat-info-col-2">
             <div class="threat-health-wrapper">
-                <img class="threat-health" src="~/Content/Images/redCube.png"/>
+                <img class="threat-health" src="~/Images/redCube.png"/>
                 <div class="threat-health-text">{{threat.remainingHealth}}</div>
             </div>
             <div ng-if="threat.shields" class="threat-shield-wrapper">
-                <img class="threat-shield" src="~/Content/Images/greenCube.png"/>
+                <img class="threat-shield" src="~/Images/greenCube.png"/>
                 <div class="threat-shield-text">{{threat.shields}}</div>
             </div>
             <div ng-if="threat.totalInaccessibility" class="threat-total-inaccessibility-wrapper">
-                <img class="threat-total-inaccessibility" src="~/Content/Images/greenCube.png"/>
+                <img class="threat-total-inaccessibility" src="~/Images/greenCube.png"/>
                 <div class="threat-total-inaccessibility-text">{{threat.totalInaccessibility}}</div>
             </div>
         </div>
         <div class="threat-info-col-2" ng-if="threat.buffCount || threat.debuffCount || removable">
             <div ng-if="threat.buffCount" class="threat-buff-count-wrapper">
-                <img class="threat-buff-count" src="~/Content/Images/whiteCube.png" />
+                <img class="threat-buff-count" src="~/Images/whiteCube.png" />
                 <div class="threat-buff-count-text">{{threat.buffCount}}</div>
             </div>
             <div ng-if="threat.debuffCount" class="threat-debuff-count-wrapper">
-                <img class="threat-debuff-count" src="~/Content/Images/blackCube.png" />
+                <img class="threat-debuff-count" src="~/Images/blackCube.png" />
                 <div class="threat-debuff-count-text">{{threat.debuffCount}}</div>
             </div>
 			<div ng-if="removable" class="remove-threat-action" ng-click="removeThreat()">

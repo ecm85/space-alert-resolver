@@ -1,0 +1,46 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/css/site.css",
+    "inputFiles": [
+      "Content/*.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/app.js",
+    "inputFiles": [
+      "Scripts/app/SpaceAlertModule.js",
+      "Scripts/app/**/*.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/jquery.js",
+    "inputFiles": [
+      "Scripts/jquery-1.10.2.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/jqueryval.js",
+    "inputFiles": [
+      "Scripts/jquery.validate*"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/hotkeys.js",
+    "inputFiles": [
+      "Scripts/hotkeys.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/modernizr.js",
+    "inputFiles": [
+      "Scripts/modernizr-*"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bootstrap.js",
+    "inputFiles": [
+      "Scripts/bootstrap.js",
+      "~/Scripts/respond.js"
+    ]
+  }
+]
