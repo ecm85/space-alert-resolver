@@ -60,8 +60,8 @@ namespace BLL.Test
             var computerActions = computerActionTypes
                 .Select(action => new PlayerAction(action, null, null))
                 .ToList();
-            var player = new Player(actions, 0, PlayerColor.Green);
-            var computerPlayer = new Player(computerActions, 1, PlayerColor.Purple);
+            var player = new Player(actions, 0, PlayerColor.green);
+            var computerPlayer = new Player(computerActions, 1, PlayerColor.purple);
             var players = new[] {player, computerPlayer};
             var game = new Game(players, new List<InternalThreat>(), new List<ExternalThreat>(), new List<Threat>(), externalTracks, TrackConfiguration.Track4, null);
             game.StartGame();

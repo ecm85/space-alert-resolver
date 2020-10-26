@@ -21,7 +21,7 @@ namespace BLL.Test
         [Test]
         public static void JustAFighterNoActions()
         {
-            var players = Enumerable.Range(0, 1).Select(index => new Player (new List<PlayerAction>(), 0, PlayerColor.Blue)).ToList();
+            var players = Enumerable.Range(0, 1).Select(index => new Player (new List<PlayerAction>(), 0, PlayerColor.blue)).ToList();
 
             var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
             {
@@ -118,7 +118,7 @@ namespace BLL.Test
                     PlayerActionType.Alpha,
                     PlayerActionType.Alpha,
                     PlayerActionType.Alpha
-                }), 0, PlayerColor.Blue),
+                }), 0, PlayerColor.blue),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed,
@@ -131,7 +131,7 @@ namespace BLL.Test
                     PlayerActionType.Charlie,
                     PlayerActionType.BattleBots,
                     PlayerActionType.Alpha
-                }), 1, PlayerColor.Green),
+                }), 1, PlayerColor.green),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     null,
@@ -141,7 +141,7 @@ namespace BLL.Test
                     PlayerActionType.Charlie,
                     PlayerActionType.ChangeDeck,
                     PlayerActionType.Charlie
-                }), 2, PlayerColor.Purple),
+                }), 2, PlayerColor.purple),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.ChangeDeck,
@@ -151,7 +151,7 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.Charlie
-                }), 3, PlayerColor.Red),
+                }), 3, PlayerColor.red),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     null,
@@ -161,14 +161,14 @@ namespace BLL.Test
                     null,
                     null,
                     PlayerActionType.Charlie
-                }), 4, PlayerColor.Yellow),
+                }), 4, PlayerColor.yellow),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.TeleportBlueLower,
                     PlayerActionType.TeleportRedUpper,
                     PlayerActionType.TeleportWhiteLower,
                     PlayerActionType.TeleportWhiteUpper
-                }), 5, PlayerColor.Blue)
+                }), 5, PlayerColor.blue)
             };
             return players;
         }
@@ -183,26 +183,26 @@ namespace BLL.Test
                     PlayerActionType.MoveRed, null, PlayerActionType.BasicSpecialization,
                     PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
                     PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, null
-                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Alpha,
                     PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.MoveBlue, PlayerActionType.MoveBlue,
                     null, PlayerActionType.Alpha, PlayerActionType.Bravo, PlayerActionType.Alpha, null
-                }), 1, PlayerColor.Green),
+                }), 1, PlayerColor.green),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     null, null, null,
                     PlayerActionType.MoveBlue, PlayerActionType.Charlie, PlayerActionType.ChangeDeck, PlayerActionType.BattleBots,
                     PlayerActionType.BattleBots,
                     null, PlayerActionType.MoveRed, null, PlayerActionType.Charlie
-                }), 2, PlayerColor.Purple),
+                }), 2, PlayerColor.purple),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.Charlie, null, null,
                     PlayerActionType.BasicSpecialization, null, PlayerActionType.ChangeDeck, null,
                     PlayerActionType.BasicSpecialization, null, null, null, PlayerActionType.Charlie
-                }), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst),
+                }), 3, PlayerColor.red, PlayerSpecialization.DataAnalyst),
             };
 
             var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
@@ -253,25 +253,25 @@ namespace BLL.Test
                     null, PlayerActionType.MoveBlue, PlayerActionType.BasicSpecialization,
                     null, PlayerActionType.AdvancedSpecialization, PlayerActionType.ChangeDeck, PlayerActionType.Alpha, 
                     PlayerActionType.Alpha, null, null, null, null
-                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null,
                     null, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveBlue,
                     PlayerActionType.BasicSpecialization, null, null, null, null
-                }), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner),
+                }), 1, PlayerColor.green, PlayerSpecialization.PulseGunner),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.MoveRed, PlayerActionType.ChangeDeck, PlayerActionType.Bravo,
                     PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha, null,
                     null, null, null, null, null
-                }), 2, PlayerColor.Purple),
+                }), 2, PlayerColor.purple),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.Charlie, null, null,
                     PlayerActionType.BasicSpecialization, PlayerActionType.MoveBlue, PlayerActionType.Alpha, PlayerActionType.Alpha,
                     PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, null, null
-                }), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst)
+                }), 3, PlayerColor.red, PlayerSpecialization.DataAnalyst)
             };
 
             var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
@@ -323,25 +323,25 @@ namespace BLL.Test
                     PlayerActionType.MoveBlue, null, PlayerActionType.BasicSpecialization,
                     PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, null,
                     PlayerActionType.ChangeDeck, null, null, null, PlayerActionType.Charlie
-                }), 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician),
+                }), 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     null, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck,
                     PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.MoveRed, PlayerActionType.MoveRed,
                     PlayerActionType.Alpha, PlayerActionType.MoveBlue, null, null, PlayerActionType.Charlie
-                }), 1, PlayerColor.Green, PlayerSpecialization.PulseGunner),
+                }), 1, PlayerColor.green, PlayerSpecialization.PulseGunner),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     null, null, PlayerActionType.AdvancedSpecialization,
                     PlayerActionType.MoveRed, PlayerActionType.BasicSpecialization, null, PlayerActionType.Alpha,
                     PlayerActionType.Alpha, PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null, PlayerActionType.Charlie
-                }), 2, PlayerColor.Purple, PlayerSpecialization.Mechanic),
+                }), 2, PlayerColor.purple, PlayerSpecialization.Mechanic),
                 new Player(PlayerActionFactory.CreateSingleActionList(new PlayerActionType?[]
                 {
                     PlayerActionType.Charlie, null, PlayerActionType.Alpha,
                     PlayerActionType.BasicSpecialization, PlayerActionType.Alpha, PlayerActionType.Alpha, PlayerActionType.Alpha,
                     PlayerActionType.Charlie, PlayerActionType.ChangeDeck, null, null, PlayerActionType.AdvancedSpecialization
-                }), 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst)
+                }), 3, PlayerColor.red, PlayerSpecialization.DataAnalyst)
             };
 
             var externalTracksByZone = new Dictionary<ZoneLocation, TrackConfiguration>
@@ -462,7 +462,7 @@ namespace BLL.Test
                 new PlayerAction(null, null, null),
                 new PlayerAction(PlayerActionType.Charlie, null, null)
             };
-            var greenPlayer = new Player(greenActions, 1, PlayerColor.Green);
+            var greenPlayer = new Player(greenActions, 1, PlayerColor.green);
             return greenPlayer;
         }
 
@@ -483,7 +483,7 @@ namespace BLL.Test
                 new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.ChangeDeck, null),
                 new PlayerAction(PlayerActionType.Charlie, null, null)
             };
-            var redPlayer = new Player(redActions, 3, PlayerColor.Red);
+            var redPlayer = new Player(redActions, 3, PlayerColor.red);
             return redPlayer;
         }
 
@@ -504,7 +504,7 @@ namespace BLL.Test
                 new PlayerAction(null, null, null),
                 new PlayerAction(PlayerActionType.MoveBlue, PlayerActionType.Charlie, null)
             };
-            var yellowPlayer = new Player(yellowActions, 2, PlayerColor.Yellow, PlayerSpecialization.SpecialOps);
+            var yellowPlayer = new Player(yellowActions, 2, PlayerColor.yellow, PlayerSpecialization.SpecialOps);
             return yellowPlayer;
         }
 
@@ -525,7 +525,7 @@ namespace BLL.Test
                 new PlayerAction(null, null, null),
                 new PlayerAction(null, null, null)
             };
-            var bluePlayer = new Player(blueActions, 0, PlayerColor.Blue);
+            var bluePlayer = new Player(blueActions, 0, PlayerColor.blue);
             return bluePlayer;
         }
 
@@ -603,7 +603,7 @@ namespace BLL.Test
                 new PlayerAction(PlayerActionType.ChangeDeck, null, null),
                 new PlayerAction(PlayerActionType.Charlie, null, null)
             };
-            var greenPlayer = new Player(greenActions, 1, PlayerColor.Green, PlayerSpecialization.Mechanic);
+            var greenPlayer = new Player(greenActions, 1, PlayerColor.green, PlayerSpecialization.Mechanic);
             return greenPlayer;
         }
 
@@ -624,7 +624,7 @@ namespace BLL.Test
                 new PlayerAction(PlayerActionType.MoveRed, null, null),
                 new PlayerAction(PlayerActionType.AdvancedSpecialization, null, null)
             };
-            var redPlayer = new Player(redActions, 3, PlayerColor.Red, PlayerSpecialization.DataAnalyst);
+            var redPlayer = new Player(redActions, 3, PlayerColor.red, PlayerSpecialization.DataAnalyst);
             return redPlayer;
         }
 
@@ -645,7 +645,7 @@ namespace BLL.Test
                 new PlayerAction(null, null, null),
                 new PlayerAction(PlayerActionType.Charlie, null, null)
             };
-            var yellowPlayer = new Player(yellowActions, 2, PlayerColor.Yellow, PlayerSpecialization.SpecialOps);
+            var yellowPlayer = new Player(yellowActions, 2, PlayerColor.yellow, PlayerSpecialization.SpecialOps);
             return yellowPlayer;
         }
 
@@ -666,7 +666,7 @@ namespace BLL.Test
                 new PlayerAction(null, null, null),
                 new PlayerAction(PlayerActionType.Charlie, null, null)
             };
-            var bluePlayer = new Player(blueActions, 0, PlayerColor.Blue, PlayerSpecialization.EnergyTechnician);
+            var bluePlayer = new Player(blueActions, 0, PlayerColor.blue, PlayerSpecialization.EnergyTechnician);
             return bluePlayer;
         }
     }
