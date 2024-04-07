@@ -20,3 +20,19 @@ resource "aws_lambda_function" "lambda" {
     mode = "PassThrough"
   }
 }
+
+resource "aws_lambda_permission" "allow_api_gateway_1" {
+  statement_id  = "AllowExecutionFromApiGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.rest_api.arn}/*/*/"
+}
+
+resource "aws_lambda_permission" "allow_api_gateway_2" {
+  statement_id  = "AllowExecutionFromApiGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.rest_api.arn}/*/*/*"
+}

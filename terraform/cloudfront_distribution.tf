@@ -37,7 +37,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
       origin_ssl_protocols     = ["TLSv1.2"]
     }
 
-    domain_name = "ximufoi9a2.execute-api.us-east-2.amazonaws.com"
+    domain_name = "${aws_api_gateway_rest_api.rest_api.id}.execute-api.us-east-2.amazonaws.com"
     origin_id   = "Space Alert Resolver Api Gateway"
     origin_path = "/Live"
   }
