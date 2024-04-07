@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/lambda.zip
+          path: SpaceAlertResolver/PL/lambda.zip
 
   terraform-plan:
     needs: build
@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/lambda.zip
+          path: SpaceAlertResolver/PL/lambda.zip
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -91,7 +91,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/lambda.zip
+          path: SpaceAlertResolver/PL/lambda.zip
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
