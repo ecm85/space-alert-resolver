@@ -38,7 +38,7 @@ jobs:
           name: build
           path: SpaceAlertResolver/lambda.zip
 
-terraform-plan:
+  terraform-plan:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -78,7 +78,7 @@ terraform-plan:
           name: terraform
           path: terraform.tar
 
-terraform-apply:
+  terraform-apply:
     needs: terraform-plan
     environment: terraform-apply
     runs-on: ubuntu-latest
