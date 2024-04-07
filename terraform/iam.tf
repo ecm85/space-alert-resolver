@@ -12,7 +12,7 @@ resource "aws_iam_policy" "lambda_execution_policy" {
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": resources = ["*"]
+      "Resource": ["*"]
     }
   ],
   "Version": "2012-10-17"
