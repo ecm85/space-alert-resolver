@@ -20,6 +20,7 @@ provider "aws" {
   region = "us-east-2"
 }
 
-provider "aws-alternate" {
+provider "aws" {
   region = "us-east-1"
+  alias  = "aws-alternate"
 }

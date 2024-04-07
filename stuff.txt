@@ -51,3 +51,16 @@ long poll
 batchGame processing endpoint
 fix tests
 crash fix from contamination
+
+
+cache_policy_id?
+separate out to two projects
+  api with swagger
+  client with templates and bundling
+make apply not automatic
+add non-automatic destroy
+update deprecated actions:
+  checkout v2
+  setup dotnet v1
+  upload artifact v3
+
