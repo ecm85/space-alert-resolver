@@ -7,7 +7,7 @@ resource "aws_iam_policy" "lambda_execution_policy" {
   "Statement": [
     {
       "Action": [
-        "logs:CreateLogGroup"
+        "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
@@ -19,7 +19,6 @@ resource "aws_iam_policy" "lambda_execution_policy" {
 }
 POLICY
 }
-
 
 resource "aws_iam_role" "lambda_role" {
   assume_role_policy = <<POLICY
