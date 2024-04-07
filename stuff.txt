@@ -1,0 +1,53 @@
+1. get terraform working and front and back end deployable separately
+2. fix bugs from lukas
+  Virus, Psionic Sattelite, Contamination, transmitter satellite delay fix
+  saboteur image fix
+  manowar damage fix
+  slime rockets when all gone fix
+  polarized fighter <> energy snake (id swap)
+  seeker not fighting back fix
+  
+  
+3. Other changes from lukas
+3. create new frontend site
+4. make some labels
+5. make test site to read labels
+
+new site
+new UI
+generate data grid programatically?
+print labels
+try scanning labels
+data matrix
+bug fixes
+
+
+9
+seeker
+contamination
+psionic satellite
+slime
+manOWar
+energysnake & polarized fighter
+parasite
+saboteur (and knockout immunity)
+
+
+score
+knockoutPenalty
+css
+missing ship
+variable range backend
+variable range frontend
+computer delay in space
+remove knocked out players
+(knockout immunity)
+
+
+remove exceesive states
+mr commit
+polling
+long poll
+batchGame processing endpoint
+fix tests
+crash fix from contamination

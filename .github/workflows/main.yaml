@@ -21,7 +21,7 @@ jobs:
       - name: Get dotnet lambda tools
         run: dotnet tool install -g Amazon.Lambda.Tools
 
-      - name: Build and upload to Lambda
+      - name: Build
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
@@ -31,4 +31,88 @@ jobs:
           dotnet build -c Release -nologo
           cd ./PL
           dotnet lambda package -o lambda.zip -c Release --no-build
-          aws lambda update-function-code --function-name space-alert-resolver --zip-file fileb://lambda.zip
+
+      - name: Save build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: SpaceAlertResolver/lambda.zip
+
+terraform-plan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: SpaceAlertResolver/lambda.zip
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.5
+
+      - name: Terraform Plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-2
+          TF_INPUT: 0
+          TF_IN_AUTOMATION: 1
+        run: |
+          cd $GITHUB_WORKSPACE/terraform
+          terraform init
+          terraform plan -out=.terraform.plan
+
+      - name: Tar files
+        run: tar cvf terraform.tar terraform/.terraform terraform/.terraform.plan terraform/.terraform.lock.hcl
+
+      - name: Save TF Plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform
+          path: terraform.tar
+
+  terraform-apply:
+    needs: terraform-plan
+    environment: terraform-apply
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: SpaceAlertResolver/lambda.zip
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.5
+
+      - name: Download TF Plan
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform
+
+      - name: Extract TF Plan
+        run: tar -xf terraform.tar
+
+      - name: Terraform Apply
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-2
+          TF_INPUT: 0
+          TF_IN_AUTOMATION: 1
+        run: |
+          cd $GITHUB_WORKSPACE/terraform
+          terraform apply .terraform.plan
