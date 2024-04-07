@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: terraform/lambda.zip
+          path: terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -91,7 +91,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: terraform/lambda.zip
+          path: terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
