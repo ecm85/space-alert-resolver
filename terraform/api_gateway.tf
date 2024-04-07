@@ -79,7 +79,7 @@ resource "aws_api_gateway_method_response" "proxy_gateway_method_response" {
 resource "aws_api_gateway_model" "empty_gateway_model" {
   content_type = "application/json"
   description  = "This is a default empty schema model"
-  name         = "Empty"
+  name         = "Space Alert Empty Model"
   rest_api_id  = aws_api_gateway_rest_api.rest_api.id
   schema       = "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Empty Schema\",\n  \"type\" : \"object\"\n}"
 }
@@ -87,13 +87,12 @@ resource "aws_api_gateway_model" "empty_gateway_model" {
 resource "aws_api_gateway_model" "error_gateway_model" {
   content_type = "application/json"
   description  = "This is a default error schema model"
-  name         = "Error"
+  name         = "Space Alert Error Model"
   rest_api_id  = aws_api_gateway_rest_api.rest_api.id
   schema       = "{\n  \"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Error Schema\",\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"message\" : { \"type\" : \"string\" }\n  }\n}"
 }
 
 resource "aws_api_gateway_resource" "gateway_resource" {
-  parent_id   = ""
   path_part   = ""
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
 }
@@ -120,8 +119,20 @@ resource "aws_api_gateway_rest_api" "rest_api" {
 resource "aws_api_gateway_stage" "api_gateway_stage" {
   cache_cluster_enabled = "false"
   cache_cluster_size    = "0.5"
-  deployment_id         = "coz1x5"
+  deployment_id         =  aws_api_gateway_deployment.deployment.id
   rest_api_id           = aws_api_gateway_rest_api.rest_api.id
   stage_name            = "Live"
   xray_tracing_enabled  = "false"
+}
+
+resource "aws_api_gateway_deployment" "deployment" {
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
+
+  triggers = {
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.rest_api.body))
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
