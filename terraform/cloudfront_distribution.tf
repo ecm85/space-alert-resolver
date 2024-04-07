@@ -1,5 +1,6 @@
 data aws_acm_certificate cert {
-  domain = "*.stormtide.net"
+  provider = "aws-alternate"
+  domain   = "*.stormtide.net"
 }
 
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
