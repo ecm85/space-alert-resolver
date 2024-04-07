@@ -5,7 +5,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "5.44.0"
-      configuration_aliases = [ aws.aws-alternate ]
+      configuration_aliases = [ aws.east ]
     }
   }
 
@@ -23,5 +23,5 @@ provider "aws" {
 
 provider "aws" {
   region = "us-east-1"
-  alias  = "aws-alternate"
+  alias  = "east"
 }

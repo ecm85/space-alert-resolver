@@ -1,5 +1,5 @@
 data aws_acm_certificate cert {
-  provider = "aws-alternate"
+  provider = east
   domain   = "*.stormtide.net"
 }
 
