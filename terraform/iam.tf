@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "lambda_execution_policy" {
-  name = "AWSLambdaBasicExecutionRole-32dfd47a-f0a6-46db-8768-bacf71fb39ec"
+  name = "AWSLambdaBasicExecutionRole-lambda-execution-role"
   path = "/service-role/"
 
   policy = <<POLICY
@@ -43,13 +43,13 @@ resource "aws_iam_role" "lambda_role" {
 }
 POLICY
 
-  managed_policy_arns  = ["arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-32dfd47a-f0a6-46db-8768-bacf71fb39ec"]
+  managed_policy_arns  = ["arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"]
   max_session_duration = "3600"
   name                 = "space-alert-resolver-role-th1q8vfz"
   path                 = "/service-role/"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_role_policy_attachment" {
-  policy_arn = "arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-32dfd47a-f0a6-46db-8768-bacf71fb39ec"
+  policy_arn = "arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"
   role       = "space-alert-resolver-role-th1q8vfz"
 }
