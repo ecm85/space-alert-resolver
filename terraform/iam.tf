@@ -50,6 +50,6 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_role_policy_attachment" {
-  policy_arn = "arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"
-  role       = "space-alert-resolver-role"
+  policy_arn = aws_iam_policy.lambda_execution_policy.arn
+  role       = aws_iam_role.lambda_role.name
 }
