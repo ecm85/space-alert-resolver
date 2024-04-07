@@ -1,4 +1,4 @@
-resource "aws_cloudfront_distribution" "tfer--E1J850GXMXCKY6" {
+resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   aliases = ["space-alert-resolver.stormtide.net"]
 
   default_cache_behavior {

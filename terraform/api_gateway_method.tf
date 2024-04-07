@@ -1,12 +1,12 @@
-resource "aws_api_gateway_method" "tfer--ximufoi9a2-002F-g44r1ze2hl-002F-ANY" {
+resource "aws_api_gateway_method" "gateway_method" {
   api_key_required = "false"
   authorization    = "NONE"
   http_method      = "ANY"
-  resource_id      = "g44r1ze2hl"
-  rest_api_id      = "ximufoi9a2"
+  resource_id      = aws_api_gateway_resource.gateway_resource.id
+  rest_api_id      = aws_api_gateway_rest_api.rest_api.id
 }
 
-resource "aws_api_gateway_method" "tfer--ximufoi9a2-002F-g99mrh-002F-ANY" {
+resource "aws_api_gateway_method" "proxy_gateway_method" {
   api_key_required = "false"
   authorization    = "NONE"
   http_method      = "ANY"
@@ -15,6 +15,6 @@ resource "aws_api_gateway_method" "tfer--ximufoi9a2-002F-g99mrh-002F-ANY" {
     "method.request.path.proxy" = "true"
   }
 
-  resource_id = "g99mrh"
-  rest_api_id = "ximufoi9a2"
+  resource_id = aws_api_gateway_resource.proxy_gateway_resource.id
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
 }

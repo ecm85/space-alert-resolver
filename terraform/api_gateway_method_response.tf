@@ -1,13 +1,13 @@
-resource "aws_api_gateway_method_response" "tfer--ximufoi9a2-002F-g44r1ze2hl-002F-ANY-002F-200" {
+resource "aws_api_gateway_method_response" "gateway_method_response" {
   http_method = "ANY"
-  resource_id = "g44r1ze2hl"
-  rest_api_id = "ximufoi9a2"
+  resource_id = aws_api_gateway_resource.gateway_resource.id
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
 }
 
-resource "aws_api_gateway_method_response" "tfer--ximufoi9a2-002F-g99mrh-002F-ANY-002F-200" {
+resource "aws_api_gateway_method_response" "proxy_gateway_method_response" {
   http_method = "ANY"
-  resource_id = "g99mrh"
-  rest_api_id = "ximufoi9a2"
+  resource_id = aws_api_gateway_resource.proxy_gateway_resource.id
+  rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
 }

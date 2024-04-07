@@ -1,4 +1,4 @@
-resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-002D-32dfd47a-002D-f0a6-002D-46db-002D-8768-002D-bacf71fb39ec" {
+resource "aws_iam_policy" "lambda_execution_policy" {
   name = "AWSLambdaBasicExecutionRole-32dfd47a-f0a6-46db-8768-bacf71fb39ec"
   path = "/service-role/"
 

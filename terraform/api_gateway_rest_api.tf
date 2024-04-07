@@ -1,4 +1,4 @@
-resource "aws_api_gateway_rest_api" "tfer--space-002D-alert-002D-resolver" {
+resource "aws_api_gateway_rest_api" "rest_api" {
   api_key_source               = "HEADER"
   binary_media_types           = ["*/*"]
   disable_execute_api_endpoint = "false"

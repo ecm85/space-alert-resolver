@@ -1,4 +1,4 @@
-resource "aws_iam_role" "tfer--space-002D-alert-002D-resolver-002D-role-002D-th1q8vfz" {
+resource "aws_iam_role" "lambda_role" {
   assume_role_policy = <<POLICY
 {
   "Statement": [

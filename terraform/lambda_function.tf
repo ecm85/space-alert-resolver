@@ -1,4 +1,4 @@
-resource "aws_lambda_function" "tfer--space-002D-alert-002D-resolver" {
+resource "aws_lambda_function" "lambda" {
   architectures = ["x86_64"]
 
   ephemeral_storage {
