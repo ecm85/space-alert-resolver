@@ -45,11 +45,11 @@ POLICY
 
   managed_policy_arns  = ["arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"]
   max_session_duration = "3600"
-  name                 = "space-alert-resolver-role-th1q8vfz"
+  name                 = "space-alert-resolver-role"
   path                 = "/service-role/"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_role_policy_attachment" {
   policy_arn = "arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"
-  role       = "space-alert-resolver-role-th1q8vfz"
+  role       = "space-alert-resolver-role"
 }

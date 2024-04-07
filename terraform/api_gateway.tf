@@ -79,7 +79,7 @@ resource "aws_api_gateway_method_response" "proxy_gateway_method_response" {
 resource "aws_api_gateway_model" "empty_gateway_model" {
   content_type = "application/json"
   description  = "This is a default empty schema model"
-  name         = "Space Alert Empty Model"
+  name         = "space-alert-empty-model"
   rest_api_id  = aws_api_gateway_rest_api.rest_api.id
   schema       = "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Empty Schema\",\n  \"type\" : \"object\"\n}"
 }
@@ -87,14 +87,14 @@ resource "aws_api_gateway_model" "empty_gateway_model" {
 resource "aws_api_gateway_model" "error_gateway_model" {
   content_type = "application/json"
   description  = "This is a default error schema model"
-  name         = "Space Alert Error Model"
+  name         = "space-alert-error-model"
   rest_api_id  = aws_api_gateway_rest_api.rest_api.id
   schema       = "{\n  \"$schema\" : \"http://json-schema.org/draft-04/schema#\",\n  \"title\" : \"Error Schema\",\n  \"type\" : \"object\",\n  \"properties\" : {\n    \"message\" : { \"type\" : \"string\" }\n  }\n}"
 }
 
 resource "aws_api_gateway_resource" "gateway_resource" {
   parent_id   = aws_api_gateway_rest_api.rest_api.root_resource_id
-  path_part   = ""
+  path_part   = "/"
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
 }
 
