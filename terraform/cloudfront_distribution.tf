@@ -1,3 +1,7 @@
+data aws_acm_certificate cert {
+  domain_name = "*.stormtide.net"
+}
+
 resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   aliases = ["space-alert-resolver.stormtide.net"]
 
@@ -48,7 +52,7 @@ resource "aws_cloudfront_distribution" "cloudfront_distribution" {
   retain_on_delete = "false"
 
   viewer_certificate {
-    acm_certificate_arn            = "arn:aws:acm:us-east-1:854713338508:certificate/69701efd-b6ed-4912-88c6-e6ec338a6c8b"
+    acm_certificate_arn            = aws_acm_certificate.cert.arn
     cloudfront_default_certificate = "false"
     minimum_protocol_version       = "TLSv1.2_2019"
     ssl_support_method             = "sni-only"

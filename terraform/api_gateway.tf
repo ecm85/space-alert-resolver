@@ -9,7 +9,7 @@ resource "aws_api_gateway_integration" "gateway_integration" {
   rest_api_id             = aws_api_gateway_rest_api.rest_api.id
   timeout_milliseconds    = "29000"
   type                    = "AWS_PROXY"
-  uri                     = "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:854713338508:function:space-alert-resolver/invocations"
+  uri                     = aws_lambda_function.lambda.invoke_arn
 }
 
 resource "aws_api_gateway_integration" "proxy_gateway_integration" {
@@ -24,7 +24,7 @@ resource "aws_api_gateway_integration" "proxy_gateway_integration" {
   rest_api_id             = aws_api_gateway_rest_api.rest_api.id
   timeout_milliseconds    = "29000"
   type                    = "AWS_PROXY"
-  uri                     = "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:854713338508:function:space-alert-resolver/invocations"
+  uri                     = aws_lambda_function.lambda.invoke_arn
 }
 
 resource "aws_api_gateway_integration_response" "gateway_integration_response" {

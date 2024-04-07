@@ -6,19 +6,13 @@ resource "aws_iam_policy" "lambda_execution_policy" {
 {
   "Statement": [
     {
-      "Action": "logs:CreateLogGroup",
-      "Effect": "Allow",
-      "Resource": "arn:aws:logs:us-east-2:854713338508:*"
-    },
-    {
       "Action": [
+        "logs:CreateLogGroup"
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": [
-        "arn:aws:logs:us-east-2:854713338508:log-group:/aws/lambda/space-alert-resolver:*"
-      ]
+      "Resource": resources = ["*"]
     }
   ],
   "Version": "2012-10-17"
@@ -43,7 +37,6 @@ resource "aws_iam_role" "lambda_role" {
 }
 POLICY
 
-  managed_policy_arns  = ["arn:aws:iam::854713338508:policy/service-role/AWSLambdaBasicExecutionRole-lambda-execution-role"]
   max_session_duration = "3600"
   name                 = "space-alert-resolver-role"
   path                 = "/service-role/"

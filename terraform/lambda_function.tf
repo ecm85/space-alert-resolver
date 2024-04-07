@@ -10,7 +10,7 @@ resource "aws_lambda_function" "lambda" {
   memory_size                    = "2048"
   package_type                   = "Zip"
   reserved_concurrent_executions = "-1"
-  role                           = "arn:aws:iam::854713338508:role/service-role/space-alert-resolver-role-th1q8vfz"
+  role                           = aws_iam_role.lambda_role.arn
   runtime                        = "dotnetcore3.1"
   filename                       = "lambda.zip"
   source_code_hash               = filebase64sha256("lambda.zip")
