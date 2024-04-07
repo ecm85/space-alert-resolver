@@ -30,13 +30,13 @@ jobs:
           cd $GITHUB_WORKSPACE/SpaceAlertResolver
           dotnet build -c Release -nologo
           cd ./PL
-          dotnet lambda package -o lambda.zip -c Release --no-build
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/lambda.zip -c Release --no-build
 
       - name: Save build
         uses: actions/upload-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/PL/lambda.zip
+          path: terraform/lambda.zip
 
   terraform-plan:
     needs: build
@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/PL/lambda.zip
+          path: terraform/lambda.zip
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -91,7 +91,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: SpaceAlertResolver/PL/lambda.zip
+          path: terraform/lambda.zip
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
