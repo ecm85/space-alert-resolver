@@ -22,7 +22,7 @@ resource "aws_lambda_function" "lambda" {
 }
 
 resource "aws_lambda_permission" "allow_api_gateway_1" {
-  statement_id  = "AllowExecutionFromApiGateway"
+  statement_id  = "AllowSpaceAlertExecutionFromApiGateway1"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda.function_name
   principal     = "apigateway.amazonaws.com"
@@ -30,7 +30,7 @@ resource "aws_lambda_permission" "allow_api_gateway_1" {
 }
 
 resource "aws_lambda_permission" "allow_api_gateway_2" {
-  statement_id  = "AllowExecutionFromApiGateway"
+  statement_id  = "AllowSpaceAlertExecutionFromApiGateway2"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda.function_name
   principal     = "apigateway.amazonaws.com"
