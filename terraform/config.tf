@@ -5,11 +5,7 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "5.44.0"
-    }
-    aws = {
-      alias  = "aws-alternate"
-      source  = "hashicorp/aws"
-      version = "5.44.0"
+      configuration_aliases = [ aws.aws-alternate ]
     }
   }
 
