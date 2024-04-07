@@ -2,7 +2,7 @@ resource "aws_api_gateway_integration" "gateway_integration" {
   cache_namespace         = aws_api_gateway_rest_api.rest_api.root_resource_id
   connection_type         = "INTERNET"
   content_handling        = "CONVERT_TO_TEXT"
-  http_method             = "ANY"
+  http_method             = aws_api_gateway_method.gateway_method.http_method
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_MATCH"
   resource_id             = aws_api_gateway_rest_api.rest_api.root_resource_id
@@ -17,7 +17,7 @@ resource "aws_api_gateway_integration" "proxy_gateway_integration" {
   cache_namespace         = aws_api_gateway_resource.proxy_gateway_resource.id
   connection_type         = "INTERNET"
   content_handling        = "CONVERT_TO_TEXT"
-  http_method             = "ANY"
+  http_method             = aws_api_gateway_method.proxy_gateway_method.http_method
   integration_http_method = "POST"
   passthrough_behavior    = "WHEN_NO_MATCH"
   resource_id             = aws_api_gateway_resource.proxy_gateway_resource.id
@@ -28,14 +28,14 @@ resource "aws_api_gateway_integration" "proxy_gateway_integration" {
 }
 
 resource "aws_api_gateway_integration_response" "gateway_integration_response" {
-  http_method = "ANY"
+  http_method = aws_api_gateway_integration.gateway_integration.http_method
   resource_id = aws_api_gateway_rest_api.rest_api.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
 }
 
 resource "aws_api_gateway_integration_response" "proxy_gateway_integration_response" {
-  http_method = "ANY"
+  http_method = aws_api_gateway_integration.proxy_gateway_integration.http_method
   resource_id = aws_api_gateway_resource.proxy_gateway_resource.id
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
@@ -63,14 +63,14 @@ resource "aws_api_gateway_method" "proxy_gateway_method" {
 }
 
 resource "aws_api_gateway_method_response" "gateway_method_response" {
-  http_method = "ANY"
+  http_method = aws_api_gateway_method.gateway_method.http_method
   resource_id = aws_api_gateway_rest_api.rest_api.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
 }
 
 resource "aws_api_gateway_method_response" "proxy_gateway_method_response" {
-  http_method = "ANY"
+  http_method = aws_api_gateway_method.proxy_gateway_method.http_method
   resource_id = aws_api_gateway_resource.proxy_gateway_resource.id
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   status_code = "200"
