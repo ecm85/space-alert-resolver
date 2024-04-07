@@ -6,6 +6,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.44.0"
     }
+    aws = {
+      alias  = "aws-alternate"
+      source  = "hashicorp/aws"
+      version = "5.44.0"
+    }
   }
 
   backend "s3" {
