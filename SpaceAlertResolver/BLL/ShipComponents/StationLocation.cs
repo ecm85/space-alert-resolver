@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace BLL.ShipComponents
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum StationLocation
     {
         UpperRed,

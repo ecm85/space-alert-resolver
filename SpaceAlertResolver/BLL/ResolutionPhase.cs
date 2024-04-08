@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace BLL
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ResolutionPhase
     {
         AddNewThreats,

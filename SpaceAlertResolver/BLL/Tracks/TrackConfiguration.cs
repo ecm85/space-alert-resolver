@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace BLL.Tracks
 {
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TrackConfiguration
     {
         Track1 = 1,

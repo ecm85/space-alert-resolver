@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace BLL.Players
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PlayerDamageType
     {
         HeavyLaser,

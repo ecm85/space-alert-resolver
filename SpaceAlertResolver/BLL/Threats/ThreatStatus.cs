@@ -1,5 +1,8 @@
-﻿namespace BLL.Threats
+﻿using System.Text.Json.Serialization;
+
+namespace BLL.Threats
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ThreatStatus
     {
         NotAppeared,

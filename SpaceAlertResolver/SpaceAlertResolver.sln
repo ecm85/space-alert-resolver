@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30427.197
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{C08FBAC9-7DB3-4189-A22D-CAF504EBC3C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Test", "BLL.Test\BLL.Test.csproj", "{4DA9D0E6-5C96-41EC-A74C-DEE409389809}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Test", "BLL.Test\BLL.Test.csproj", "{4DA9D0E6-5C96-41EC-A74C-DEE409389809}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CEB9218E-CD34-4A63-8D0A-2675657EA002}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CustomDictionary.xml = CustomDictionary.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{DA7C221F-45E8-4DFD-B915-72423FF995DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{DA7C221F-45E8-4DFD-B915-72423FF995DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{57EC506B-4087-4B46-9D2D-B1E8E6A07598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DA7C221F-45E8-4DFD-B915-72423FF995DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA7C221F-45E8-4DFD-B915-72423FF995DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA7C221F-45E8-4DFD-B915-72423FF995DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57EC506B-4087-4B46-9D2D-B1E8E6A07598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EC506B-4087-4B46-9D2D-B1E8E6A07598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EC506B-4087-4B46-9D2D-B1E8E6A07598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EC506B-4087-4B46-9D2D-B1E8E6A07598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

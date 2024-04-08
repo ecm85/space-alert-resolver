@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace BLL.Tracks
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum TrackBreakpointType
     {
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "X")]
