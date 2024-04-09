@@ -71,7 +71,9 @@ jobs:
           path: terraform/api-lambda.zip
 
   terraform-plan:
-    needs: build
+    needs:
+      - build-pl
+      - build-api
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
