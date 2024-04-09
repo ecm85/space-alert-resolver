@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using BLL.Players;
 
 namespace API.Models
 {
     public class PlayerSpecializationActionModel : ActionModel
     {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PlayerSpecialization PlayerSpecialization { get; set; }
         public bool CanBeBonusAction { get; set; }
 

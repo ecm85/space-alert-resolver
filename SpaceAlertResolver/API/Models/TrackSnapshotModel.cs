@@ -7,7 +7,6 @@ namespace API.Models
 {
     public class TrackSnapshotModel
     {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TrackConfiguration Track { get; set; }
         public int TrackIndex { get; set; }
         public string DisplayName => Track.DisplayName();

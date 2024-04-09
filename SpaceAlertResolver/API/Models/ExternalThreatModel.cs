@@ -8,7 +8,6 @@ namespace API.Models
     public class ExternalThreatModel : ThreatModel
     {
         public int Shields { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ZoneLocation CurrentZone { get; set; }
         public int Position { get; set; }
 

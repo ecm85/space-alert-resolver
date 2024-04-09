@@ -9,15 +9,12 @@ namespace API.Models
     public class PlayerModel
     {
         public int Index { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public StationLocation StationLocation { get; set; }
         public bool HasBattleBots { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PlayerColor PlayerColor { get; set; }
         public BattleBotsModel BattleBots { get; set; }
         public IEnumerable<ActionModel> Actions { get; set; }
         public InterceptorsModel Interceptors { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public PlayerSpecialization? PlayerSpecialization { get; set; }
 
         [JsonConstructor]

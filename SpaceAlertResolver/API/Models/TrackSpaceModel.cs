@@ -7,7 +7,6 @@ namespace API.Models
     {
         public int Space { get; set; }
         public bool HasAnyThreats { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TrackBreakpointType? Breakpoint { get; set; }
 
         [JsonConstructor]

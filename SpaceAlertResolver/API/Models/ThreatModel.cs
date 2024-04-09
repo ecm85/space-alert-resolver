@@ -8,9 +8,7 @@ namespace API.Models
 {
     public class ThreatModel
     {
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ThreatType ThreatType { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ThreatDifficulty ThreatDifficulty { get; set; }
         public int RemainingHealth { get; set; }
         public int Speed { get; set; }
@@ -26,7 +24,6 @@ namespace API.Models
         public bool NeedsBonusInternalThreat { get; set; }
 
         public int? AmountAttackingFor { get; set; }
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ZoneLocation? ZoneUnderAttack { get; set; }
 
         public InternalThreatModel BonusInternalThreat { get; set; }
