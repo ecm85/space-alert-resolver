@@ -12,7 +12,7 @@ resource "aws_lambda_function" "lambda" {
   reserved_concurrent_executions = "-1"
   role                           = aws_iam_role.lambda_role.arn
   runtime                        = "dotnet6"
-  filename                       = "lambda.zip"
+  filename                       = "api-lambda.zip"
   source_code_hash               = filebase64sha256("api-lambda.zip")
   timeout                        = "15"
 
