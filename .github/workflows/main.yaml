@@ -6,7 +6,7 @@ on:
 
 jobs:
   # JobName
-  build:
+  build-pl:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,13 +30,44 @@ jobs:
           cd $GITHUB_WORKSPACE/SpaceAlertResolver
           dotnet build -c Release -nologo
           cd ./PL
-          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/lambda.zip -c Release --no-build
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/pl-lambda.zip -c Release --no-build
 
       - name: Save build
         uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: terraform/lambda.zip
+          name: pl
+          path: terraform/pl-lambda.zip
+  build-api:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Get dotnet lambda tools
+        run: dotnet tool install -g Amazon.Lambda.Tools
+
+      - name: Build
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-2
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver
+          dotnet build -c Release -nologo
+          cd ./API
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/api-lambda.zip -c Release --no-build
+
+      - name: Save build
+        uses: actions/upload-artifact@v3
+        with:
+          name: api
+          path: terraform/api-lambda.zip
 
   terraform-plan:
     needs: build
@@ -49,7 +80,13 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: build
+          name: pl
+          path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: api
           path: terraform
 
       - name: Setup Terraform
@@ -90,7 +127,13 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: build
+          name: pl
+          path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: api
           path: terraform
 
       - name: Setup Terraform

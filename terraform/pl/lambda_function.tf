@@ -13,7 +13,7 @@ resource "aws_lambda_function" "lambda" {
   role                           = aws_iam_role.lambda_role.arn
   runtime                        = "dotnet6"
   filename                       = "lambda.zip"
-  source_code_hash               = filebase64sha256("lambda.zip")
+  source_code_hash               = filebase64sha256("pl-lambda.zip")
   timeout                        = "15"
 
   tracing_config {
