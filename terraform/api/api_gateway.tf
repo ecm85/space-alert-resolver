@@ -130,4 +130,11 @@ resource "aws_api_gateway_deployment" "deployment" {
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = [
+    aws_api_gateway_method.gateway_method,
+    aws_api_gateway_method.proxy_gateway_method,
+    aws_api_gateway_integration.gateway_integration,
+    aws_api_gateway_integration.proxy_gateway_integration,
+  ]
 }
