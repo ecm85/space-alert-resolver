@@ -6,7 +6,7 @@ resource "aws_lambda_function" "lambda" {
   }
 
   function_name                  = "space-alert-api"
-  handler                        = "API"
+  handler                        = "API::API.LambdaEntryPoint::FunctionHandlerAsync"
   memory_size                    = "2048"
   package_type                   = "Zip"
   reserved_concurrent_executions = "-1"
