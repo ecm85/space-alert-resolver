@@ -20,7 +20,7 @@ angular.module("spaceAlertModule")
                 if (anyDataToInclude) {
                     const includeEmail = $scope.email != null;
                     $http({
-                        url: 'SendGameMessage?senderEmailAddress=' + (includeEmail ? $scope.email : ''),
+                        url: 'https://space-alert-api.stormtide.net/SpaceAlert/SendGameMessage?senderEmailAddress=' + (includeEmail ? $scope.email : ''),
                         method: "POST",
                         data: {
                             messageText: data

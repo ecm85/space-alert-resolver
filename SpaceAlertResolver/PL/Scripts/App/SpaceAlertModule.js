@@ -9,7 +9,7 @@
                     controller: 'InputController',
                     resolve: {
                         'inputData': ['$http', function ($http) {
-                            return $http.get('NewGameInput').then(function (response) { return response.data; });
+                            return $http.get('https://space-alert-api.stormtide.net/SpaceAlert/NewGameInput').then(function (response) { return response.data; });
                         }]
                     }
                 })
@@ -35,7 +35,7 @@
                         'gameData': ['$location', '$http', 'newGameData', function ($location, $http, newGameData) {
                             if (newGameData.canCreateGame()) {
                                 return $http({
-                                        url: 'ProcessGame',
+                                        url: 'https://space-alert-api.stormtide.net/SpaceAlert/ProcessGame',
                                         method: "POST",
                                         data: newGameData.manualData || newGameData.getGameArgs(),
                                         headers: { 'Content-Type': 'application/json' }
@@ -46,7 +46,7 @@
                                         },
                                         function (response) {
                                             $http({
-                                                url: 'SendGameMessage?senderEmailAddress=',
+                                                url: 'https://space-alert-api.stormtide.net/SpaceAlert/SendGameMessage?senderEmailAddress=',
                                                 method: "POST",
                                                 data: {
                                                     messageText: "Submitted data: " + JSON.stringify(newGameData.manualData || newGameData.getGameArgs())
