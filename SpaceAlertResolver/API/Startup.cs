@@ -21,7 +21,7 @@ namespace API
         {
             app.UseMiddleware<NoCacheMiddleware>();
             app.UseRouting();
-            app.UseEndpoints();
+            app.UseEndpoints(_ => { });
             app.UseSwagger();
             app.UseSwaggerUI();
         }
