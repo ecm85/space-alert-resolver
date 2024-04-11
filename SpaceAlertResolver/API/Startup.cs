@@ -21,7 +21,12 @@ namespace API
         {
             app.UseMiddleware<NoCacheMiddleware>();
             app.UseRouting();
-            app.UseEndpoints(_ => { });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=SpaceAlert}/{action=Index}/{id?}");
+            });
             app.UseSwagger();
             app.UseSwaggerUI();
         }
