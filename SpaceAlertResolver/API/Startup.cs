@@ -11,7 +11,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-	        services.AddControllers();
+            services.AddControllers();
             services.AddDistributedMemoryCache();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -21,6 +21,7 @@ namespace API
         {
             app.UseMiddleware<NoCacheMiddleware>();
             app.UseRouting();
+            app.UseEndpoints();
             app.UseSwagger();
             app.UseSwaggerUI();
         }
