@@ -29,6 +29,7 @@ namespace API
             });
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.UseCors();
         }
     }
 }
