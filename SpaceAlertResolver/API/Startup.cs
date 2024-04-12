@@ -15,7 +15,14 @@ namespace API
             services.AddDistributedMemoryCache();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.WithOrigins("https://space-alert-resolver.stormtide.net");
+                    });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
