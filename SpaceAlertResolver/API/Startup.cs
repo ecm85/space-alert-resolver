@@ -28,7 +28,8 @@ namespace API
         public void Configure(IApplicationBuilder app)
         {
             app.UseMiddleware<NoCacheMiddleware>();
-            app.UseRouting();
+			app.UseRouting();
+            app.UseCors();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -37,7 +38,6 @@ namespace API
             });
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors();
         }
     }
 }
