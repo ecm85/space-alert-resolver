@@ -15,6 +15,7 @@ namespace API
             services.AddDistributedMemoryCache();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app)
