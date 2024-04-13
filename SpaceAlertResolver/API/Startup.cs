@@ -27,8 +27,9 @@ namespace API
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseOptions();
             app.UseMiddleware<NoCacheMiddleware>();
-			app.UseRouting();
+            app.UseRouting();
             app.UseCors();
             app.UseEndpoints(endpoints =>
             {
