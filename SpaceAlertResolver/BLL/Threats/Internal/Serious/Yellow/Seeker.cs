@@ -40,8 +40,6 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		)
 		{
 			base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-			if (!isHeroic)
-				performingPlayer.BattleBots.IsDisabled = true;
 			if (IsDefeated)
 				performingPlayer.KnockOutFromOwnAction();
 		}
