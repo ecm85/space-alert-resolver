@@ -21,7 +21,8 @@ namespace API
             IEnumerable<string> bccAddresses,
             string bodyHtml,
             string bodyText,
-            string subject)
+            string subject,
+            string senderAddress)
         {
             var messageId = "";
             try
@@ -55,7 +56,8 @@ namespace API
                                 Charset = "UTF-8",
                                 Data = subject
                             }
-                        }
+                        },
+                        Source = senderAddress
                     });
                 messageId = response.MessageId;
             }

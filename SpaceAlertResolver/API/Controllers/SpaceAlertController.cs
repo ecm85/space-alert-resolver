@@ -104,7 +104,8 @@ namespace API.Controllers
 				Enumerable.Empty<string>(),
 				model.MessageText,
 				model.MessageText,
-				subject);
+				subject,
+				spaceAlertEmail);
 		}
 	}
 }
