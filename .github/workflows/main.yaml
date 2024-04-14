@@ -23,8 +23,6 @@ jobs:
           cd $GITHUB_WORKSPACE/SpaceAlertResolver/API
           dotnet tool restore
           dotnet csharpier --check .
-          cd ./PL
-          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/pl-lambda.zip -c Release --no-build
   build-pl:
     runs-on: ubuntu-latest
     steps:
@@ -90,6 +88,7 @@ jobs:
     needs:
       - build-pl
       - build-api
+      - verify-csharp-format-api
     runs-on: ubuntu-latest
     steps:
       - name: Get Source
