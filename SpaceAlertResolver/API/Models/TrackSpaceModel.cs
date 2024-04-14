@@ -3,16 +3,13 @@ using BLL.Tracks;
 
 namespace API.Models
 {
-    public class TrackSpaceModel
-    {
-        public int Space { get; set; }
-        public bool HasAnyThreats { get; set; }
-        public TrackBreakpointType? Breakpoint { get; set; }
+	public class TrackSpaceModel
+	{
+		public int Space { get; set; }
+		public bool HasAnyThreats { get; set; }
+		public TrackBreakpointType? Breakpoint { get; set; }
 
-        [JsonConstructor]
-        public TrackSpaceModel()
-        {
-            
-        }
-    }
+		[JsonConstructor]
+		public TrackSpaceModel() { }
+	}
 }

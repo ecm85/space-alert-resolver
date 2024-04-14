@@ -2,14 +2,14 @@
 
 namespace BLL
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum DamageToken
-    {
-        Reactor,
-        Shield,
-        FrontCannon,
-        BackCannon,
-        Gravolift,
-        Structural
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum DamageToken
+	{
+		Reactor,
+		Shield,
+		FrontCannon,
+		BackCannon,
+		Gravolift,
+		Structural
+	}
 }

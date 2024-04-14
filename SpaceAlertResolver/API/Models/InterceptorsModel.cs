@@ -1,7 +1,4 @@
 ﻿namespace API.Models
 {
-    public class InterceptorsModel
-    {
-        
-    }
+	public class InterceptorsModel { }
 }

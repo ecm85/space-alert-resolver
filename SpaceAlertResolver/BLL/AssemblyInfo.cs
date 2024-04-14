@@ -5,7 +5,5 @@
 
 namespace BLL
 {
-    public class AssemblyInfo
-    {
-    }
+	public class AssemblyInfo { }
 }

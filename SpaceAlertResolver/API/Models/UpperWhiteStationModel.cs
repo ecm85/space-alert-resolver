@@ -5,13 +5,22 @@ using BLL.ShipComponents;
 
 namespace API.Models
 {
-    public class UpperWhiteStationModel : StandardStationModel
-    {
-        public IEnumerable<int> ComputerCubes { get; set; }
+	public class UpperWhiteStationModel : StandardStationModel
+	{
+		public IEnumerable<int> ComputerCubes { get; set; }
 
-        public UpperWhiteStationModel(Game game) : base(game, StationLocation.UpperWhite)
-        {
-            ComputerCubes = Enumerable.Range(1, game.SittingDuck.WhiteZone.UpperWhiteStation.ComputerComponent.RemainingComputerCheckTurns.Count);
-        }
-    }
+		public UpperWhiteStationModel(Game game)
+			: base(game, StationLocation.UpperWhite)
+		{
+			ComputerCubes = Enumerable.Range(
+				1,
+				game.SittingDuck
+					.WhiteZone
+					.UpperWhiteStation
+					.ComputerComponent
+					.RemainingComputerCheckTurns
+					.Count
+			);
+		}
+	}
 }

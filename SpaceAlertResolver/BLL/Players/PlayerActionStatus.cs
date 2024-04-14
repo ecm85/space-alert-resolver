@@ -2,11 +2,11 @@
 
 namespace BLL.Players
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum PlayerActionStatus
-    {
-        NotPerformed,
-        Performing,
-        Performed
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum PlayerActionStatus
+	{
+		NotPerformed,
+		Performing,
+		Performed
+	}
 }

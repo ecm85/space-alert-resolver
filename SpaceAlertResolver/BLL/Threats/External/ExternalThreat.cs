@@ -7,76 +7,85 @@ using BLL.ShipComponents;
 
 namespace BLL.Threats.External
 {
-    public abstract class ExternalThreat : Threat
-    {
-        private ZoneLocation _currentZone;
-        public override ZoneLocation CurrentZone => _currentZone;
+	public abstract class ExternalThreat : Threat
+	{
+		private ZoneLocation _currentZone;
+		public override ZoneLocation CurrentZone => _currentZone;
 
-        public void SetInitialPlacement(int timeAppears, ZoneLocation currentZone)
-        {
-            TimeAppears = timeAppears;
-            _currentZone = currentZone;
-        }
+		public void SetInitialPlacement(int timeAppears, ZoneLocation currentZone)
+		{
+			TimeAppears = timeAppears;
+			_currentZone = currentZone;
+		}
 
-        protected void MoveToNewZone(ZoneLocation newZone)
-        {
-            _currentZone = newZone;
-        }
+		protected void MoveToNewZone(ZoneLocation newZone)
+		{
+			_currentZone = newZone;
+		}
 
-        public int Shields { get; protected set; }
-        //public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
-        //public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
+		public int Shields { get; protected set; }
 
-        protected int DistanceToShip => Track.DistanceToThreat(Position);
+		//public event EventHandler<ThreatDamageEventArgs> TakingDamage = (sender, args) => { };
+		//public event EventHandler<ThreatDamageEventArgs> TooKDamage = (sender, args) => { };
 
-        public override ThreatDamageType StandardDamageType { get; } = ThreatDamageType.Standard;
+		protected int DistanceToShip => Track.DistanceToThreat(Position);
 
-        public override int? DamageDistanceToSource => DistanceToShip;
-        public virtual bool IsDamageable => IsOnTrack;
+		public override ThreatDamageType StandardDamageType { get; } = ThreatDamageType.Standard;
 
-        protected ExternalThreat(ThreatType threatType, ThreatDifficulty difficulty, int shields, int health, int speed) :
-            base(threatType, difficulty, health, speed)
-        {
-            Shields = shields;
-        }
+		public override int? DamageDistanceToSource => DistanceToShip;
+		public virtual bool IsDamageable => IsOnTrack;
 
-        public void TakeIrreducibleDamage(int amount)
-        {
-            RemainingHealth -= amount;
-            CheckDefeated();
-        }
+		protected ExternalThreat(
+			ThreatType threatType,
+			ThreatDifficulty difficulty,
+			int shields,
+			int health,
+			int speed
+		)
+			: base(threatType, difficulty, health, speed)
+		{
+			Shields = shields;
+		}
 
-        public virtual void TakeDamage(IList<PlayerDamage> damages)
-        {
-            TakeDamage(damages, null);
-        }
+		public void TakeIrreducibleDamage(int amount)
+		{
+			RemainingHealth -= amount;
+			CheckDefeated();
+		}
 
-        protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
-        {
-            var damageSum = damages.Sum(damage => damage.Amount);
-            TakeDamage(damageSum, maxDamageTaken);
-        }
+		public virtual void TakeDamage(IList<PlayerDamage> damages)
+		{
+			TakeDamage(damages, null);
+		}
 
-        protected void TakeDamage(int damageSum, int? maxDamageTaken)
-        {
-            var bonusShields = GetThreatStatus(ThreatStatus.BonusShield) ? 1 : 0;
-            var damageDealt = damageSum - (Shields + bonusShields);
-            if (damageDealt > 0)
-                RemainingHealth -= maxDamageTaken.HasValue ? Math.Min(damageDealt, maxDamageTaken.Value) : damageDealt;
-            CheckDefeated();
-        }
+		protected void TakeDamage(IEnumerable<PlayerDamage> damages, int? maxDamageTaken)
+		{
+			var damageSum = damages.Sum(damage => damage.Amount);
+			TakeDamage(damageSum, maxDamageTaken);
+		}
 
-        public virtual bool CanBeTargetedBy(PlayerDamage damage)
-        {
-            Check.ArgumentIsNotNull(damage, "damage");
-            var isInRange = damage.AffectedDistances.Contains(DistanceToShip);
-            var gunCanHitCurrentZone = damage.AffectedZones.Contains(CurrentZone);
-            return IsDamageable && isInRange && gunCanHitCurrentZone;
-        }
+		protected void TakeDamage(int damageSum, int? maxDamageTaken)
+		{
+			var bonusShields = GetThreatStatus(ThreatStatus.BonusShield) ? 1 : 0;
+			var damageDealt = damageSum - (Shields + bonusShields);
+			if (damageDealt > 0)
+				RemainingHealth -= maxDamageTaken.HasValue
+					? Math.Min(damageDealt, maxDamageTaken.Value)
+					: damageDealt;
+			CheckDefeated();
+		}
 
-        public virtual bool IsPriorityTargetFor(PlayerDamage damage)
-        {
-            return false;
-        }
-    }
+		public virtual bool CanBeTargetedBy(PlayerDamage damage)
+		{
+			Check.ArgumentIsNotNull(damage, "damage");
+			var isInRange = damage.AffectedDistances.Contains(DistanceToShip);
+			var gunCanHitCurrentZone = damage.AffectedZones.Contains(CurrentZone);
+			return IsDamageable && isInRange && gunCanHitCurrentZone;
+		}
+
+		public virtual bool IsPriorityTargetFor(PlayerDamage damage)
+		{
+			return false;
+		}
+	}
 }

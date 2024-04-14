@@ -2,10 +2,10 @@
 
 namespace BLL
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum DamageTargetType
-    {
-        Single,
-        All
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum DamageTargetType
+	{
+		Single,
+		All
+	}
 }

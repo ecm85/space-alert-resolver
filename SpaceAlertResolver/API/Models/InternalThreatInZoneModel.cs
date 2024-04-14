@@ -1,7 +1,7 @@
 ﻿namespace API.Models
 {
-    public class InternalThreatInZoneModel
-    {
-        public string FileName { get; set; }
-    }
+	public class InternalThreatInZoneModel
+	{
+		public string FileName { get; set; }
+	}
 }

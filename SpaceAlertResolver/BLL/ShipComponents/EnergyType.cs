@@ -2,10 +2,10 @@
 
 namespace BLL.ShipComponents
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum EnergyType
-    {
-        Standard,
-        Battery
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum EnergyType
+	{
+		Standard,
+		Battery
+	}
 }

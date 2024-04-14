@@ -2,13 +2,13 @@
 
 namespace API.Models
 {
-    public class CannonModel
-    {
-        public EnergyType? Energy { get; set; }
+	public class CannonModel
+	{
+		public EnergyType? Energy { get; set; }
 
-        public CannonModel(IAlphaComponent cannon)
-        {
-            Energy = cannon.EnergyInCannon;
-        }
-    }
+		public CannonModel(IAlphaComponent cannon)
+		{
+			Energy = cannon.EnergyInCannon;
+		}
+	}
 }

@@ -2,13 +2,13 @@
 
 namespace BLL.Players
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum PlayerColor
-    {
-        Blue,
-        Green,
-        Red,
-        Yellow,
-        Purple
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum PlayerColor
+	{
+		Blue,
+		Green,
+		Red,
+		Yellow,
+		Purple
+	}
 }

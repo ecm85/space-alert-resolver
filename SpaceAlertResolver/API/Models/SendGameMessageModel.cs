@@ -1,7 +1,7 @@
 ﻿namespace API.Models
 {
-    public class SendGameMessageModel
-    {
-        public string MessageText { get; set; }
-    }
+	public class SendGameMessageModel
+	{
+		public string MessageText { get; set; }
+	}
 }

@@ -2,12 +2,12 @@
 
 namespace BLL
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum ZoneDebuff
-    {
-        DoubleDamage,
-        DisruptedOptics,
-        IneffectiveShields,
-        ReversedShields
-    }
+	[JsonConverter(typeof(JsonStringEnumConverter))]
+	public enum ZoneDebuff
+	{
+		DoubleDamage,
+		DisruptedOptics,
+		IneffectiveShields,
+		ReversedShields
+	}
 }
