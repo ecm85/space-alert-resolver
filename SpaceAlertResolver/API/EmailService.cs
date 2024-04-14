@@ -1,34 +1,70 @@
 ﻿using System.Globalization;
 using System.Net;
 using System.Net.Mail;
+using Amazon.SimpleEmail;
+using Amazon.SimpleEmail.Model;
 
 namespace API
 {
-    public static class EmailService
+    public class EmailService
     {
-        public static void SendEmail(string messageText, string senderEmailAddress)
+        private IAmazonSimpleEmailService AmazonSimpleEmailService { get; }
+        
+        public EmailService(IAmazonSimpleEmailService amazonSimpleEmailService)
         {
-            using (var smtpClient = new SmtpClient())
+            AmazonSimpleEmailService = amazonSimpleEmailService;
+        }
+
+        public async Task<string> SendEmailAsync(
+            IEnumerable<string> toAddresses,
+            IEnumerable<string> ccAddresses,
+            IEnumerable<string> bccAddresses,
+            string bodyHtml,
+            string bodyText,
+            string subject)
+        {
+            var messageId = "";
+            try
             {
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Host = "smtp.gmail.com";
-                smtpClient.Port = 587;
-                smtpClient.EnableSsl = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                var emailAddress = "spacealerthelp@gmail.com";
-                smtpClient.Credentials = new NetworkCredential(emailAddress, "spacealerthelp");
-                using (var message = new MailMessage())
-                {
-                    message.From = new MailAddress(emailAddress);
-                    message.To.Add(emailAddress);
-                    var subject = "Space Alert Resolver Message";
-                    if (!string.IsNullOrWhiteSpace(senderEmailAddress))
-                        subject += string.Format(CultureInfo.CurrentCulture, " From {0}", senderEmailAddress);
-                    message.Body = messageText;
-                    message.Subject = subject;
-                    smtpClient.Send(message);
-                }
+                var response = await AmazonSimpleEmailService.SendEmailAsync(
+                    new SendEmailRequest
+                    {
+                        Destination = new Destination
+                        {
+                            BccAddresses = bccAddresses.ToList(),
+                            CcAddresses = ccAddresses.ToList(),
+                            ToAddresses = toAddresses.ToList()
+						},
+                        Message = new Message
+                        {
+                            Body = new Body
+                            {
+                                Html = new Content
+                                {
+                                    Charset = "UTF-8",
+                                    Data = bodyHtml
+                                },
+                                Text = new Content
+                                {
+                                    Charset = "UTF-8",
+                                    Data = bodyText
+                                }
+                            },
+                            Subject = new Content
+                            {
+                                Charset = "UTF-8",
+                                Data = subject
+                            }
+                        }
+                    });
+                messageId = response.MessageId;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SendEmailAsync failed with exception: " + ex.Message);
+            }
+
+            return messageId;
         }
     }
 }

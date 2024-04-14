@@ -1,3 +1,5 @@
+using Amazon.SimpleEmail;
+
 namespace API
 {
     public class Startup
@@ -15,7 +17,10 @@ namespace API
             services.AddDistributedMemoryCache();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddCors(options =>
+            services.AddAWSService<IAmazonSimpleEmailService>();
+            services.AddTransient<EmailService>();
+
+			services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                     policy =>

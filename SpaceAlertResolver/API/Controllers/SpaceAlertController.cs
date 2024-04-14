@@ -14,6 +14,13 @@ namespace API.Controllers
 	[Route("[controller]")]
 	public class SpaceAlertController : ControllerBase
 	{
+		private EmailService EmailService { get; }
+
+		public SpaceAlertController(EmailService emailService)
+		{
+			EmailService = emailService;
+		}
+		
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
 		[HttpGet]
 		[Route("NewGameInput")]
@@ -85,9 +92,19 @@ namespace API.Controllers
 		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Really?")]
 		[HttpPost]
 		[Route("SendGameMessage")]
-		public void SendGameMessage([FromBody] SendGameMessageModel model, string senderEmailAddress)
+		public async Task SendGameMessage([FromBody] SendGameMessageModel model, string senderEmailAddress)
 		{
-			EmailService.SendEmail(model.MessageText, senderEmailAddress);
+			var subject = "Space Alert Resolver Message";
+			if (!string.IsNullOrWhiteSpace(senderEmailAddress))
+				subject += $"From {senderEmailAddress}";
+			const string spaceAlertEmail = "spacealerthelp@gmail.com";
+			await EmailService.SendEmailAsync(
+				new[] { spaceAlertEmail },
+				Enumerable.Empty<string>(),
+				Enumerable.Empty<string>(),
+				model.MessageText,
+				model.MessageText,
+				subject);
 		}
 	}
 }

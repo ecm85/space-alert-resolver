@@ -9,7 +9,8 @@ resource "aws_iam_policy" "lambda_execution_policy" {
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
-        "logs:PutLogEvents"
+        "logs:PutLogEvents",
+        "ses: SendEmail"
       ],
       "Effect": "Allow",
       "Resource": ["*"]
