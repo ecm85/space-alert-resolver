@@ -11,7 +11,7 @@ namespace BLL.Threats.External.Serious.Yellow
 
 		protected override void PerformXAction(int currentTurn)
 		{
-			SittingDuck.ShiftPlayersAfterPlayerActions(new[] { CurrentZone }, currentTurn + 1);
+			SittingDuck.ShiftPlayersAfterPlayerActions(new[] { CurrentZone }, currentTurn);
 		}
 
 		protected override void PerformYAction(int currentTurn)
