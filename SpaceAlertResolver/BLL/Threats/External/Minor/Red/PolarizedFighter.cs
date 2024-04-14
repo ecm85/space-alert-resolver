@@ -25,7 +25,7 @@ namespace BLL.Threats.External.Minor.Red
 			Attack(4);
 		}
 
-		public override string Id { get; } = "E3-108";
+		public override string Id { get; } = "E3-109";
 		public override string DisplayName { get; } = "Polarized Fighter";
 		public override string FileName { get; } = "PolarizedFighter";
 

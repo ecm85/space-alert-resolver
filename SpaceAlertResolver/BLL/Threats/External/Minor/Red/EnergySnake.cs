@@ -76,7 +76,7 @@ namespace BLL.Threats.External.Minor.Red
 			ThreatController.DamageResolutionEnding -= OnDamageResolutionEnding;
 		}
 
-		public override string Id { get; } = "E3-109";
+		public override string Id { get; } = "E3-108";
 		public override string DisplayName { get; } = "Energy Snake";
 		public override string FileName { get; } = "EnergySnake";
 	}
