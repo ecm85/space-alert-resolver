@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Common;
 using BLL.Players;
@@ -17,7 +17,7 @@ namespace BLL.ShipComponents
 		)
 			: base(stationLocation, threatController)
 		{
-			MovingIn += UseBattleBots;
+			MovedIn += UseBattleBots;
 			InterceptorComponent = interceptorComponent;
 		}
 
@@ -49,7 +49,7 @@ namespace BLL.ShipComponents
 			Check.ArgumentIsNotNull(performingPlayer, "performingPlayer");
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
-			OnPlayerMovingIn(performingPlayer, currentTurn);
+			OnPlayerMovedIn(performingPlayer, currentTurn);
 		}
 
 		public override void PerformNextPlayerAction(Player performingPlayer, int currentTurn)

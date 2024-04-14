@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Players;
@@ -107,9 +107,9 @@ namespace BLL.ShipComponents
 
 		public override void MovePlayerIn(Player performingPlayer, int? currentTurn = null)
 		{
-			OnPlayerMovingIn(performingPlayer, currentTurn);
 			Players.Add(performingPlayer);
 			performingPlayer.CurrentStation = this;
+			OnPlayerMovedIn(performingPlayer, currentTurn);
 		}
 
 		public bool CanMoveOutTowardsRed()

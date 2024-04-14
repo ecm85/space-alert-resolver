@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Players;
 using BLL.ShipComponents;
@@ -17,7 +17,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		{
 			foreach (var adjacentLocation in AdjacentLocations())
 				DroneLocations.Add(adjacentLocation);
-			SittingDuck.SubscribeToMovingIn(DroneLocations, PoisonPlayer);
+			SittingDuck.SubscribeToMovedIn(DroneLocations, PoisonPlayer);
 			SittingDuck.SubscribeToMovingOut(DroneLocations, PoisonPlayer);
 		}
 
@@ -60,7 +60,7 @@ namespace BLL.Threats.Internal.Minor.Yellow
 		protected override void OnThreatTerminated()
 		{
 			base.OnThreatTerminated();
-			SittingDuck.UnsubscribeFromMovingIn(DroneLocations, PoisonPlayer);
+			SittingDuck.UnsubscribeFromMovedIn(DroneLocations, PoisonPlayer);
 			SittingDuck.UnsubscribeFromMovingOut(DroneLocations, PoisonPlayer);
 		}
 

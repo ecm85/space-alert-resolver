@@ -10,7 +10,7 @@ namespace BLL.ShipComponents
 	{
 		public StationLocation StationLocation { get; }
 		public IList<Player> Players { get; private set; }
-		public event EventHandler<PlayerMoveEventArgs> MovingIn = (sender, args) => { };
+		public event EventHandler<PlayerMoveEventArgs> MovedIn = (sender, args) => { };
 		public event EventHandler<PlayerMoveEventArgs> MovingOut = (sender, args) => { };
 		public IList<IrreparableMalfunction> IrreparableMalfunctions { get; private set; }
 		protected ThreatController ThreatController { get; }
@@ -48,9 +48,9 @@ namespace BLL.ShipComponents
 			threat.TakeDamage(damage, performingPlayer, isHeroic, StationLocation);
 		}
 
-		protected void OnPlayerMovingIn(Player performingPlayer, int? currentTurn)
+		protected void OnPlayerMovedIn(Player performingPlayer, int? currentTurn)
 		{
-			MovingIn(
+			MovedIn(
 				this,
 				new PlayerMoveEventArgs
 				{

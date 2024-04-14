@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BLL.Players;
 using BLL.ShipComponents;
@@ -53,7 +53,7 @@ namespace BLL
 			int turnToShift
 		);
 
-		void SubscribeToMovingIn(
+		void SubscribeToMovedIn(
 			IEnumerable<StationLocation> stationLocations,
 			EventHandler<PlayerMoveEventArgs> handler
 		);
@@ -61,7 +61,7 @@ namespace BLL
 			IEnumerable<StationLocation> stationLocations,
 			EventHandler<PlayerMoveEventArgs> handler
 		);
-		void UnsubscribeFromMovingIn(
+		void UnsubscribeFromMovedIn(
 			IEnumerable<StationLocation> stationLocations,
 			EventHandler<PlayerMoveEventArgs> handler
 		);

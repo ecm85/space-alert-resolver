@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BLL.Players;
@@ -312,9 +312,8 @@ namespace BLL
 
 		public void TransferEnergyToShields(IEnumerable<ZoneLocation> zoneLocations)
 		{
-			foreach (
-				var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation])
-			)
+			var zones = zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]);
+			foreach (var zone in zones)
 				zone.UpperStation.FillToCapacity();
 		}
 
@@ -330,9 +329,8 @@ namespace BLL
 			InternalThreat source
 		)
 		{
-			foreach (
-				var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation])
-			)
+			var zones = zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]);
+			foreach (var zone in zones)
 				zone.AddDebuff(debuff, source);
 		}
 
@@ -341,9 +339,8 @@ namespace BLL
 			InternalThreat source
 		)
 		{
-			foreach (
-				var zone in zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation])
-			)
+			var zones = zoneLocations.Select(zoneLocation => ZonesByLocation[zoneLocation]);
+			foreach (var zone in zones)
 				zone.RemoveDebuffForSource(source);
 		}
 
@@ -369,11 +366,10 @@ namespace BLL
 			int turnToShift
 		)
 		{
-			foreach (
-				var player in zoneLocations
-					.Select(zoneLocation => ZonesByLocation[zoneLocation])
-					.SelectMany(zone => zone.Players)
-			)
+			var playersInZones = zoneLocations
+				.Select(zoneLocation => ZonesByLocation[zoneLocation])
+				.SelectMany(zone => zone.Players);
+			foreach (var player in playersInZones)
 				player.ShiftAfterPlayerActions(turnToShift);
 		}
 
@@ -382,11 +378,10 @@ namespace BLL
 			int turnToShift
 		)
 		{
-			foreach (
-				var player in stationLocations
-					.Select(stationLocation => StationsByLocation[stationLocation])
-					.SelectMany(station => station.Players)
-			)
+			var playersInStations = stationLocations
+				.Select(stationLocation => StationsByLocation[stationLocation])
+				.SelectMany(station => station.Players);
+			foreach (var player in playersInStations)
 				player.ShiftAfterPlayerActions(turnToShift);
 		}
 
@@ -395,25 +390,23 @@ namespace BLL
 			int turnToShift
 		)
 		{
-			foreach (
-				var player in stationLocations
-					.Select(stationLocation => StationsByLocation[stationLocation])
-					.SelectMany(station => station.Players)
-			)
+			var playersInStations = stationLocations
+				.Select(stationLocation => StationsByLocation[stationLocation])
+				.SelectMany(station => station.Players);
+			foreach (var player in playersInStations)
 				player.ShiftAndRepeatPreviousActionAfterPlayerActions(turnToShift);
 		}
 
-		public void SubscribeToMovingIn(
+		public void SubscribeToMovedIn(
 			IEnumerable<StationLocation> stationLocations,
 			EventHandler<PlayerMoveEventArgs> handler
 		)
 		{
-			foreach (
-				var station in stationLocations.Select(stationLocation =>
-					StationsByLocation[stationLocation]
-				)
-			)
-				station.MovingIn += handler;
+			var stations = stationLocations.Select(stationLocation =>
+				StationsByLocation[stationLocation]
+			);
+			foreach (var station in stations)
+				station.MovedIn += handler;
 		}
 
 		public void SubscribeToMovingOut(
@@ -421,25 +414,23 @@ namespace BLL
 			EventHandler<PlayerMoveEventArgs> handler
 		)
 		{
-			foreach (
-				var station in stationLocations.Select(stationLocation =>
-					StationsByLocation[stationLocation]
-				)
-			)
+			var stations = stationLocations.Select(stationLocation =>
+				StationsByLocation[stationLocation]
+			);
+			foreach (var station in stations)
 				station.MovingOut += handler;
 		}
 
-		public void UnsubscribeFromMovingIn(
+		public void UnsubscribeFromMovedIn(
 			IEnumerable<StationLocation> stationLocations,
 			EventHandler<PlayerMoveEventArgs> handler
 		)
 		{
-			foreach (
-				var station in stationLocations.Select(stationLocation =>
-					StationsByLocation[stationLocation]
-				)
-			)
-				station.MovingIn -= handler;
+			var stations = stationLocations.Select(stationLocation =>
+				StationsByLocation[stationLocation]
+			);
+			foreach (var station in stations)
+				station.MovedIn -= handler;
 		}
 
 		public void UnsubscribeFromMovingOut(
@@ -447,11 +438,10 @@ namespace BLL
 			EventHandler<PlayerMoveEventArgs> handler
 		)
 		{
-			foreach (
-				var station in stationLocations.Select(stationLocation =>
-					StationsByLocation[stationLocation]
-				)
-			)
+			var stations = stationLocations.Select(stationLocation =>
+				StationsByLocation[stationLocation]
+			);
+			foreach (var station in stations)
 				station.MovingOut -= handler;
 		}
 
@@ -460,11 +450,10 @@ namespace BLL
 			IrreparableMalfunction malfunction
 		)
 		{
-			foreach (
-				var station in stationLocations.Select(stationLocation =>
-					StationsByLocation[stationLocation]
-				)
-			)
+			var stations = stationLocations.Select(stationLocation =>
+				StationsByLocation[stationLocation]
+			);
+			foreach (var station in stations)
 				station.IrreparableMalfunctions.Add(malfunction);
 		}
 

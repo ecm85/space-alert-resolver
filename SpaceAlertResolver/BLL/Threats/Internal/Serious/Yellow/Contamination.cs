@@ -33,7 +33,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
 		protected override void PerformZAction(int currentTurn)
 		{
 			SittingDuck.KnockOutPlayers(CurrentStations);
-			SittingDuck.SubscribeToMovingIn(CurrentStations, KnockOutPlayer);
+			SittingDuck.SubscribeToMovedIn(CurrentStations, KnockOutPlayer);
 		}
 
 		public override string Id { get; } = "SI2-04";

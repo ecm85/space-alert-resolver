@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BLL.Players;
 using BLL.ShipComponents;
 using BLL.Tracks;
@@ -18,7 +18,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 		public override void PlaceOnTrack(Track track, int trackPosition)
 		{
 			base.PlaceOnTrack(track, trackPosition);
-			SittingDuck.SubscribeToMovingIn(CurrentStations, DelayPlayer);
+			SittingDuck.SubscribeToMovedIn(CurrentStations, DelayPlayer);
 		}
 
 		private static void DelayPlayer(object sender, PlayerMoveEventArgs args)
@@ -33,7 +33,7 @@ namespace BLL.Threats.Internal.Minor.Yellow.Slime
 		protected override void OnHealthReducedToZero()
 		{
 			base.OnHealthReducedToZero();
-			SittingDuck.UnsubscribeFromMovingIn(CurrentStations, DelayPlayer);
+			SittingDuck.UnsubscribeFromMovedIn(CurrentStations, DelayPlayer);
 		}
 	}
 }
