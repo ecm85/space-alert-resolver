@@ -7,10 +7,27 @@ on:
 
 jobs:
   # JobName
+  verify-csharp-format-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Verify
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/API
+          dotnet tool restore
+          dotnet csharpier --check .
+          cd ./PL
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/pl-lambda.zip -c Release --no-build
   build-pl:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Source
         uses: actions/checkout@v2
 
@@ -41,7 +58,6 @@ jobs:
   build-api:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Source
         uses: actions/checkout@v2
 
@@ -76,7 +92,6 @@ jobs:
       - build-api
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Source
         uses: actions/checkout@v2
 
@@ -123,7 +138,6 @@ jobs:
     environment: terraform-apply
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Get Source
         uses: actions/checkout@v2
 
