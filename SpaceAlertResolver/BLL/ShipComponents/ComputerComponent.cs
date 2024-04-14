@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using BLL.Players;
 
@@ -33,13 +33,18 @@ namespace BLL.ShipComponents
 
 		public void PerformComputerCheck(IEnumerable<Player> players, int currentTurn)
 		{
-			if (maintenanceNeededThisPhase)
+			if (!maintenanceNeededThisPhase)
 			{
-				foreach (var player in players)
-					player.ShiftAfterPlayerActions(currentTurn);
-				maintenanceNeededThisPhase = false;
-				RemainingComputerCheckTurns.Remove(currentTurn);
+				return;
 			}
+
+			var playersOnShip = players
+				.Where(player => player.CurrentStation.StationLocation.IsOnShip())
+				.ToList();
+			foreach (var player in playersOnShip)
+				player.ShiftAfterPlayerActions(currentTurn);
+			maintenanceNeededThisPhase = false;
+			RemainingComputerCheckTurns.Remove(currentTurn);
 		}
 
 		public bool ShouldCheckComputer(int currentTurn)
