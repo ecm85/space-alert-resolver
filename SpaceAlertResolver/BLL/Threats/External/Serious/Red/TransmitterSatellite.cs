@@ -34,7 +34,7 @@ namespace BLL.Threats.External.Serious.Red
 			SittingDuck.KnockOutCaptain();
 			SittingDuck.ShiftPlayersAfterPlayerActions(
 				EnumFactory.All<StationLocation>(),
-				currentTurn + 1
+				currentTurn
 			);
 		}
 

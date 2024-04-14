@@ -20,7 +20,7 @@ namespace BLL.Threats.External.Serious.Yellow
 				EnumFactory
 					.All<StationLocation>()
 					.Where(stationLocation => stationLocation.IsOnShip()),
-				currentTurn + 1
+				currentTurn
 			);
 		}
 
