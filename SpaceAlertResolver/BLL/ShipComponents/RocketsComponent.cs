@@ -60,6 +60,8 @@ namespace BLL.ShipComponents
 
 		public void RemoveRocket()
 		{
+			if (!Rockets.Any())
+				return;
 			Rockets.Remove(Rockets.First());
 			RocketsModified(this, new RocketsRemovedEventArgs { RocketsRemovedCount = 1 });
 		}
