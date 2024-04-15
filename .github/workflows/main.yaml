@@ -96,7 +96,7 @@ jobs:
 
       - name: Build
         run: |
-          cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI/client
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI
           corepack enable
           yarn install
           yarn run build
@@ -110,6 +110,7 @@ jobs:
     needs:
       - build-pl
       - build-api
+      - build-ui
       - verify-csharp-format-api
     runs-on: ubuntu-latest
     steps:
