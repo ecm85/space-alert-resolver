@@ -16,7 +16,7 @@ module.exports = {
 	},
 	output: {
 		publicPath: '/',
-		path: path.resolve(__dirname, '../terraform/build'),
+		path: path.resolve(__dirname, 'build'),
 		filename: '[name].js?[chunkhash]',
 		chunkFilename: '[name].[id].js?[chunkhash]'
 	},

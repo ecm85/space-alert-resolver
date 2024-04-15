@@ -13,4 +13,4 @@
 .terraform.lock.hcl
 .terraform.plan
 node_modules/
-terraform/build/
+build/
