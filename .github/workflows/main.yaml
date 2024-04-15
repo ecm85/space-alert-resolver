@@ -185,7 +185,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui
-          path: terraform/pl
+          path: terraform/ui
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
