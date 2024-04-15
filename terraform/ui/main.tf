@@ -2,9 +2,17 @@ resource "aws_s3_bucket" "website" {
   bucket = "space-alert-ui"
 }
 
+resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
+  bucket = aws_s3_bucket.website.id
+  rule {
+    object_ownership = "ObjectWriter"
+  }
+}
+
 resource "aws_s3_bucket_acl" "website" {
   bucket = aws_s3_bucket.website.bucket
   acl    = "private"
+  depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
 }
 
 data "aws_iam_policy_document" "website" {
