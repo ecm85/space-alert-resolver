@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"allowUnreachableCode": false,
+		"alwaysStrict": true,
+		"baseUrl": ".",
+		"esModuleInterop": true,
+		"importHelpers": true,
+		"jsx": "preserve",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noErrorTruncation": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"sourceMap": false,
+		"strictNullChecks": false,
+		"target": "es2022"
+	}
+}

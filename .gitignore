@@ -7,3 +7,10 @@
 *.pdb
 /SpaceAlertResolver/PL/bin
 /SpaceAlertResolver/PL/obj
+.git
+.idea
+.terraform/
+.terraform.lock.hcl
+.terraform.plan
+node_modules/
+terraform/build/

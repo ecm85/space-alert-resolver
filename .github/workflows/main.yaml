@@ -83,7 +83,29 @@ jobs:
         with:
           name: api
           path: terraform/api-lambda.zip
+  build-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Source
+        uses: actions/checkout@v2
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18.19.0
+
+      - name: Build
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI/client
+          corepack enable
+          yarn install
+          yarn run build
+
+      - name: Save build
+        uses: actions/upload-artifact@v3
+        with:
+          name: ui
+          path: build
   terraform-plan:
     needs:
       - build-pl
@@ -105,6 +127,12 @@ jobs:
         with:
           name: api
           path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ui
+          path: terraform/pl
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -151,6 +179,12 @@ jobs:
         with:
           name: api
           path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ui
+          path: terraform/pl
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
