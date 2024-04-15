@@ -105,7 +105,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ui
-          path: build
+          path: SpaceAlertResolver/UI/build
   terraform-plan:
     needs:
       - build-pl
