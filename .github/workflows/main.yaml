@@ -133,7 +133,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui
-          path: terraform/build
+          path: terraform/ui/build
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -185,7 +185,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui
-          path: terraform/build
+          path: terraform/ui/build
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
