@@ -1232,6 +1232,16 @@
   dependencies:
     "@types/node" "*"
 
+"@types/dom-webcodecs@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@types/dom-webcodecs/-/dom-webcodecs-0.1.11.tgz#2e36e5cc71789551f107e2fe15d956845fa19567"
+  integrity sha512-yPEZ3z7EohrmOxbk/QTAa0yonMFkNkjnVXqbGb7D4rMr+F1dGQ8ZUFxXkyLLJuiICPejZ0AZE9Rrk9wUCczx4A==
+
+"@types/emscripten@^1.39.10":
+  version "1.39.10"
+  resolved "https://registry.yarnpkg.com/@types/emscripten/-/emscripten-1.39.10.tgz#da6e58a6171b46a41d3694f812d845d515c77e18"
+  integrity sha512-TB/6hBkYQJxsZHSqyeuO1Jt0AB/bW6G7rHt9g7lML7SOF6lbgcHvw/Lr+69iqN0qxgXLhWKScAon73JNnptuDw==
+
 "@types/eslint-scope@^3.7.3":
   version "3.7.7"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.7.tgz#3108bd5f18b0cdb277c867b3dd449c9ed7079ac5"
@@ -1894,6 +1904,14 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+barcode-detector@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/barcode-detector/-/barcode-detector-2.2.5.tgz#65facf3130521d361aa481bc81d3a82dde254a5d"
+  integrity sha512-l7ruC001dSriDc1d+UHKyt+M1n1zP4j+faYJKJLGdWOtlgbH0UoSJhUGQZODL3NT3j9100KzJYh0CZDRGDKC5Q==
+  dependencies:
+    "@types/dom-webcodecs" "^0.1.11"
+    zxing-wasm "1.2.7"
 
 batch@0.6.1:
   version "0.6.1"
@@ -5300,3 +5318,10 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zxing-wasm@1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/zxing-wasm/-/zxing-wasm-1.2.7.tgz#dd4f2017acc49e86cfab87141c6717de1f5ab7b0"
+  integrity sha512-XPmxWve7aNXkCIeXbap3cvzegn4z2eq8K8hL5jdCG6Jl5f/4pluCgcJfTguyHvCRTTLePax4y4q0QLK5Nay2NA==
+  dependencies:
+    "@types/emscripten" "^1.39.10"

@@ -7,7 +7,6 @@ function main() {
 	if (!rootElement) {
 		throw new Error('Missing root DOM element.');
 	}
-
 	const rootComponent = <Application />;
 
 	createRoot(rootElement).render(rootComponent);
