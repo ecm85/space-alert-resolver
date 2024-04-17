@@ -97,10 +97,10 @@ export default function Application() {
 			const camera2IsBack = cameraIsBack(cameraInfo2);
 
 			if (camera1IsBack && !camera2IsBack) {
-				return 1;
+				return -1;
 			}
 			if (camera2IsBack && !camera1IsBack) {
-				return -1;
+				return 1;
 			}
 
 			return 0;
