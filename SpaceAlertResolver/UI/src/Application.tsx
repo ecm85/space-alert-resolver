@@ -22,7 +22,7 @@ export default function Application() {
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
 	const [desiredBarcodeCount, setDesiredBarcodeCount] = useState<number>(1);
-	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>();
+	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>(0);
 
 	const setErrorState = (error: string) => {
 		setError(error);
@@ -45,10 +45,10 @@ export default function Application() {
 	const scan = async () => {
 		try {
 			const barcodes = await tryGetBarcodes();
-			const validBarcodes = barcodes.filter(barcode => !!barcode.rawValue);
+			const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
 			setDetectedBarcodeCount(validBarcodes.length);
-			if (barcodes?.length == desiredBarcodeCount) {
-				handleScan(barcodes);
+			if (validBarcodes?.length == desiredBarcodeCount) {
+				handleScan(validBarcodes);
 			} else {
 				setScanTimeoutId(window.setTimeout(scan, 250));
 			}
@@ -193,6 +193,7 @@ export default function Application() {
 	};
 
 	const handleStartCameraClicked = () => {
+		setBarcodes([]);
 		setWorkflowState(IWorkflowState.CameraStarting);
 	};
 
