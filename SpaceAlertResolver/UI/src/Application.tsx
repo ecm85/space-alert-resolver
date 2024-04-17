@@ -21,8 +21,10 @@ export default function Application() {
 	const [error, setError] = useState('');
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
-	const [desiredBarcodeCount, setDesiredBarcodeCount] = useState<number>(1);
+	const [desiredBarcodeCountText, setDesiredBarcodeCountText] = useState<string>('1');
 	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>(0);
+	const parsedDesiredBarcodeCount = +desiredBarcodeCountText;
+	const desiredBarcodeCount = parsedDesiredBarcodeCount > 0 ? parsedDesiredBarcodeCount : null;
 
 	const setErrorState = (error: string) => {
 		setError(error);
@@ -202,28 +204,31 @@ export default function Application() {
 	});
 
 	const handleDesiredBarcodeCountChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newDesiredBarcodeCount = +e.target.value;
-		if (newDesiredBarcodeCount > 0) {
-			setDesiredBarcodeCount(newDesiredBarcodeCount);
-		}
+		const newDesiredBarcodeCount = e.target.value;
+		setDesiredBarcodeCountText(newDesiredBarcodeCount);
 	};
+
+	const canStartScanning =
+		workflowState === IWorkflowState.Initial || workflowState === IWorkflowState.Done;
 
 	return (
 		<div>
-			{(workflowState === IWorkflowState.Initial || workflowState === IWorkflowState.Done) && (
-				<button onClick={handleStartCameraClicked}>Start Camera</button>
-			)}
 			<div>
 				<label># of barcodes to scan</label>
 				<input
+					disabled={!canStartScanning}
 					type='number'
 					onChange={handleDesiredBarcodeCountChanged}
-					value={desiredBarcodeCount}></input>
+					value={desiredBarcodeCountText}></input>
 			</div>
+			{
+				<button
+					onClick={handleStartCameraClicked}
+					disabled={desiredBarcodeCount === null || !canStartScanning}>
+					Start Camera
+				</button>
+			}
 			<canvas hidden ref={canvasRef}></canvas>
-			<div className={styles.videoWrapper}>
-				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
-			</div>
 			{workflowState === IWorkflowState.Error && (
 				<>
 					<div>Uh Oh! Something went wrong.</div>
@@ -253,6 +258,9 @@ export default function Application() {
 							))}
 						</div>
 					))}
+			</div>
+			<div className={styles.videoWrapper}>
+				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
 			</div>
 		</div>
 	);
