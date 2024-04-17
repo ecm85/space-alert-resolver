@@ -226,6 +226,11 @@ export default function Application() {
 					barcodes.map((barcode, index) => (
 						<div>
 							Barcode {index + 1}: {barcode.rawValue}
+							{barcode.cornerPoints.map(cornerPoint => (
+								<div>
+									X: {cornerPoint.x}, Y: {cornerPoint.y}
+								</div>
+							))}
 						</div>
 					))}
 			</div>
