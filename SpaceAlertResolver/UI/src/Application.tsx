@@ -201,13 +201,15 @@ export default function Application() {
 					<div>{error}</div>
 				</>
 			)}
-			{cameraLogs.length > 0 && (
+			{cameraLogs.length > 0 ? (
 				<div>
 					Camera Logs:{' '}
 					{cameraLogs.map(log => (
 						<div>{log}</div>
 					))}
 				</div>
+			) : (
+				<div>No camera logs.</div>
 			)}
 			<div>
 				{barcodes.length > 0 &&
