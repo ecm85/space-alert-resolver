@@ -43,7 +43,7 @@ export default function Application() {
 	const scan = async () => {
 		try {
 			const data = await tryGetData();
-			if (data?.length) {
+			if (data?.length && data[0].rawValue) {
 				handleScan(data);
 			} else {
 				setScanTimeoutId(window.setTimeout(scan, 250));
