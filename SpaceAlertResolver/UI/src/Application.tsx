@@ -21,13 +21,15 @@ export default function Application() {
 	const [error, setError] = useState('');
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
+	const [desiredBarcodeCount, setDesiredBarcodeCount] = useState<number>();
+	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>();
 
 	const setErrorState = (error: string) => {
 		setError(error);
 		setWorkflowState(IWorkflowState.Error);
 	};
 
-	const tryGetData = () => {
+	const tryGetBarcodes = () => {
 		if (videoRef.current.readyState !== videoRef.current.HAVE_ENOUGH_DATA) {
 			return null;
 		}
@@ -42,9 +44,11 @@ export default function Application() {
 
 	const scan = async () => {
 		try {
-			const data = await tryGetData();
-			if (data?.length && data[0].rawValue) {
-				handleScan(data);
+			const barcodes = await tryGetBarcodes();
+			const validBarcodes = barcodes.filter(barcode => !!barcode.rawValue);
+			setDetectedBarcodeCount(validBarcodes.length);
+			if (barcodes?.length == desiredBarcodeCount) {
+				handleScan(barcodes);
 			} else {
 				setScanTimeoutId(window.setTimeout(scan, 250));
 			}
@@ -53,8 +57,8 @@ export default function Application() {
 		}
 	};
 
-	const handleScan = (data: DetectedBarcode[]) => {
-		setBarcodes(data);
+	const handleScan = (barcodes: DetectedBarcode[]) => {
+		setBarcodes(barcodes);
 		setWorkflowState(IWorkflowState.Done);
 	};
 
@@ -196,11 +200,19 @@ export default function Application() {
 		[styles.hiddenVideo]: workflowState !== IWorkflowState.CameraStarted
 	});
 
+	const handleDesiredBarcodeCountChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const newDesiredBarcodeCount = +e.target.value;
+		setDesiredBarcodeCount(newDesiredBarcodeCount);
+	};
+
 	return (
 		<div>
-			{workflowState === IWorkflowState.Initial && (
-				<button onClick={handleStartCameraClicked}>Start Camera</button>
-			)}
+			{workflowState === IWorkflowState.Initial ||
+				(workflowState === IWorkflowState.Done && (
+					<button onClick={handleStartCameraClicked}>Start Camera</button>
+				))}
+			<label># of barcodes to scan</label>
+			<input type='number' onChange={handleDesiredBarcodeCountChanged}></input>
 			<canvas hidden ref={canvasRef}></canvas>
 			<div className={styles.videoWrapper}>
 				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
@@ -221,6 +233,7 @@ export default function Application() {
 			) : (
 				<div>No camera logs.</div>
 			)}
+			<div>Detected Barcodes: {detectedBarcodeCount}</div>
 			<div>
 				{barcodes.length > 0 &&
 					barcodes.map((barcode, index) => (
