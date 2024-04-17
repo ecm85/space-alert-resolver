@@ -173,9 +173,12 @@ export default function Application() {
 	}, [workflowState]);
 
 	const stopCamera = () => {
-		const tracks = mediaStream.getTracks();
-		for (let i = 0; i < tracks.length; i++) {
-			tracks[i].stop();
+		videoRef.current.src = '';
+		if (mediaStream) {
+			const tracks = mediaStream.getTracks();
+			for (let i = 0; i < tracks.length; i++) {
+				tracks[i].stop();
+			}
 		}
 		if (scanTimeoutId) {
 			window.clearTimeout(scanTimeoutId);
