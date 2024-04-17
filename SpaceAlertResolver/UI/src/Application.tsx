@@ -7,6 +7,7 @@ enum IWorkflowState {
 	Initial,
 	CameraStarting,
 	CameraStarted,
+	Done,
 	Error
 }
 
@@ -54,7 +55,7 @@ export default function Application() {
 
 	const handleScan = (data: DetectedBarcode[]) => {
 		setBarcodes(data);
-		stopCamera();
+		setWorkflowState(IWorkflowState.Done);
 	};
 
 	const startSpecificCameraFromStream = async (stream: MediaStream, newCameraLogs: string[]) => {
@@ -169,6 +170,8 @@ export default function Application() {
 			case IWorkflowState.CameraStarting:
 				startCamera();
 				break;
+			case IWorkflowState.Done:
+				stopCamera();
 		}
 	}, [workflowState]);
 
