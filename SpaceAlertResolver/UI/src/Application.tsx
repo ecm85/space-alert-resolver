@@ -210,8 +210,10 @@ export default function Application() {
 			{(workflowState === IWorkflowState.Initial || workflowState === IWorkflowState.Done) && (
 				<button onClick={handleStartCameraClicked}>Start Camera</button>
 			)}
-			<label># of barcodes to scan</label>
-			<input type='number' onChange={handleDesiredBarcodeCountChanged}></input>
+			<div>
+				<label># of barcodes to scan</label>
+				<input type='number' onChange={handleDesiredBarcodeCountChanged}></input>
+			</div>
 			<canvas hidden ref={canvasRef}></canvas>
 			<div className={styles.videoWrapper}>
 				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
