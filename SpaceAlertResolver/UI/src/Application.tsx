@@ -220,7 +220,11 @@ export default function Application() {
 			)}
 			<div>
 				{barcodes.length > 0 &&
-					barcodes.map((barcode, index) => <div>Barcode {index + 1}: barcode.rawValue</div>)}
+					barcodes.map((barcode, index) => (
+						<div>
+							Barcode {index + 1}: {barcode.rawValue}
+						</div>
+					))}
 			</div>
 		</div>
 	);
