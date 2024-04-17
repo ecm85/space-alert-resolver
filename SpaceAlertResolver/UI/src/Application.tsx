@@ -21,7 +21,7 @@ export default function Application() {
 	const [error, setError] = useState('');
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
-	const [desiredBarcodeCount, setDesiredBarcodeCount] = useState<number>();
+	const [desiredBarcodeCount, setDesiredBarcodeCount] = useState<number>(1);
 	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>();
 
 	const setErrorState = (error: string) => {
@@ -202,7 +202,9 @@ export default function Application() {
 
 	const handleDesiredBarcodeCountChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newDesiredBarcodeCount = +e.target.value;
-		setDesiredBarcodeCount(newDesiredBarcodeCount);
+		if (newDesiredBarcodeCount > 0) {
+			setDesiredBarcodeCount(newDesiredBarcodeCount);
+		}
 	};
 
 	return (
@@ -212,7 +214,10 @@ export default function Application() {
 			)}
 			<div>
 				<label># of barcodes to scan</label>
-				<input type='number' onChange={handleDesiredBarcodeCountChanged}></input>
+				<input
+					type='number'
+					onChange={handleDesiredBarcodeCountChanged}
+					value={desiredBarcodeCount}></input>
 			</div>
 			<canvas hidden ref={canvasRef}></canvas>
 			<div className={styles.videoWrapper}>
