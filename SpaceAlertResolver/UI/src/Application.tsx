@@ -72,7 +72,7 @@ export default function Application() {
 		try {
 			const initialCamera = await navigator.mediaDevices.getUserMedia({
 				audio: true,
-				video: { facingMode: { ideal: 'user' } }
+				video: { facingMode: { ideal: 'environment' } }
 			});
 			return await startSpecificCameraFromStream(initialCamera, newCameraLogs);
 		} catch (error) {
