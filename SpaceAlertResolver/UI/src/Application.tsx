@@ -19,6 +19,7 @@ export default function Application() {
 	const [cameraLogs, setCameraLogs] = useState<string[]>([]);
 	const [error, setError] = useState('');
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
+	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
 
 	const setErrorState = (error: string) => {
 		setError(error);
@@ -44,7 +45,7 @@ export default function Application() {
 			if (data?.length) {
 				handleScan(data);
 			} else {
-				this.scanTimeoutId = window.setTimeout(this.scan, 250);
+				setScanTimeoutId(window.setTimeout(scan, 250));
 			}
 		} catch (error) {
 			console.info(`unable to detect qr code: - ${error.message}`);
@@ -175,6 +176,9 @@ export default function Application() {
 		const tracks = mediaStream.getTracks();
 		for (let i = 0; i < tracks.length; i++) {
 			tracks[i].stop();
+		}
+		if (scanTimeoutId) {
+			window.clearTimeout(scanTimeoutId);
 		}
 	};
 
