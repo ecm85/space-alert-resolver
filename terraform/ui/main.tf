@@ -114,6 +114,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = []
     target_origin_id = local.s3_origin_id
 
     viewer_protocol_policy = "redirect-to-https"
