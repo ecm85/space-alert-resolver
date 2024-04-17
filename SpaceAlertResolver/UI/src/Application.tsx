@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
+import cx from 'classnames';
+import styles from './Application.css';
 
 enum IWorkflowState {
 	Initial,
@@ -13,7 +15,6 @@ export default function Application() {
 	const videoRef = useRef<HTMLVideoElement>();
 	const [mediaStream, setMediaStream] = useState<MediaStream>(null);
 	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
-	console.log(BarcodeDetector.getSupportedFormats());
 	const barcodeDetector = new BarcodeDetector();
 	const [cameraLogs, setCameraLogs] = useState<string[]>([]);
 	const [error, setError] = useState('');
@@ -62,6 +63,7 @@ export default function Application() {
 			await scan();
 			return true;
 		} catch (error) {
+			console.log(error);
 			setCameraLogs([...cameraLogs, `unable to start camera: ${stream.id} - ${error.message}`]);
 			return false;
 		}
@@ -113,6 +115,7 @@ export default function Application() {
 			});
 			return await startSpecificCameraFromStream(camera);
 		} catch (error) {
+			console.log(error);
 			setCameraLogs([
 				...cameraLogs,
 				`unable to get camera: ${cameraInfo.label} - ${error.message}`
@@ -123,9 +126,11 @@ export default function Application() {
 
 	const startPreferredCameraAsync = async () => {
 		try {
+			console.log(1);
 			if (await startSpecificCameraByEnsuringAccess()) {
 				return true;
 			}
+			console.log(2);
 			const cameraInfos = await getCameraInfos();
 			const orderedCameraInfos = orderCameraInfos(cameraInfos);
 			for (const cameraInfo of orderedCameraInfos) {
@@ -133,8 +138,12 @@ export default function Application() {
 					return true;
 				}
 			}
+			console.log(3);
+			console.log(`${orderCameraInfos.length} cameras`);
+			setCameraLogs([...cameraLogs, `couldn't start any of ${orderCameraInfos.length} cameras`]);
 			return false;
 		} catch (error) {
+			console.log(4);
 			setCameraLogs([...cameraLogs, `unable to access camera: ${error.message}`]);
 			return false;
 		}
@@ -146,6 +155,7 @@ export default function Application() {
 			if (startedCamera) {
 				setWorkflowState(IWorkflowState.CameraStarted);
 			} else {
+				console.log(cameraLogs);
 				setErrorState(
 					'Could not start camera.' +
 						(cameraLogs.length ? `Errors: ${cameraLogs.join(' ----- ')}` : '')
@@ -174,12 +184,19 @@ export default function Application() {
 		setWorkflowState(IWorkflowState.CameraStarting);
 	};
 
+	const captureVideoClassName = cx(styles.video, {
+		[styles.hiddenVideo]: workflowState !== IWorkflowState.CameraStarted
+	});
+
 	return (
 		<div>
 			{workflowState === IWorkflowState.Initial && (
 				<button onClick={handleStartCameraClicked}>Start Camera</button>
 			)}
 			<canvas hidden ref={canvasRef}></canvas>
+			<div className={styles.videoWrapper}>
+				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
+			</div>
 			{workflowState === IWorkflowState.Error && (
 				<>
 					<div>Uh Oh! Something went wrong.</div>
@@ -187,7 +204,7 @@ export default function Application() {
 				</>
 			)}
 			<div>
-				{barcodes.length &&
+				{barcodes.length > 0 &&
 					barcodes.map((barcode, index) => <div>Barcode {index + 1}: barcode.rawValue</div>)}
 			</div>
 		</div>
