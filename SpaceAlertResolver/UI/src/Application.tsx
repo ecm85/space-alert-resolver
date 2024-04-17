@@ -207,10 +207,9 @@ export default function Application() {
 
 	return (
 		<div>
-			{workflowState === IWorkflowState.Initial ||
-				(workflowState === IWorkflowState.Done && (
-					<button onClick={handleStartCameraClicked}>Start Camera</button>
-				))}
+			{(workflowState === IWorkflowState.Initial || workflowState === IWorkflowState.Done) && (
+				<button onClick={handleStartCameraClicked}>Start Camera</button>
+			)}
 			<label># of barcodes to scan</label>
 			<input type='number' onChange={handleDesiredBarcodeCountChanged}></input>
 			<canvas hidden ref={canvasRef}></canvas>
