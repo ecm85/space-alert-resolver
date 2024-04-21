@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { BarcodeDetector } from 'barcode-detector';
+import React, { useState, useEffect, useRef } from 'react';
 import cx from 'classnames';
 import styles from './Application.css';
+import { useCamera } from './useCamera';
+import { useBarcodeScanning } from './useBarcodeScanning';
 
-enum IWorkflowState {
+export enum IWorkflowState {
 	Initial,
 	CameraStarting,
 	CameraStarted,
@@ -12,164 +13,54 @@ enum IWorkflowState {
 }
 
 export default function Application() {
-	const canvasRef = useRef<HTMLCanvasElement>();
-	const videoRef = useRef<HTMLVideoElement>();
-	const [mediaStream, setMediaStream] = useState<MediaStream>(null);
-	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
-	const barcodeDetector = new BarcodeDetector();
-	const [cameraLogs, setCameraLogs] = useState<string[]>([]);
-	const [error, setError] = useState('');
-	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
-	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
 	const [desiredBarcodeCountText, setDesiredBarcodeCountText] = useState<string>('1');
-	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>(0);
 	const parsedDesiredBarcodeCount = +desiredBarcodeCountText;
 	const desiredBarcodeCount = parsedDesiredBarcodeCount > 0 ? parsedDesiredBarcodeCount : null;
+	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
+	const canvasRef = useRef<HTMLCanvasElement>();
+	const videoRef = useRef<HTMLVideoElement>();
 
-	const setErrorState = (error: string) => {
-		setError(error);
-		setWorkflowState(IWorkflowState.Error);
-	};
+	const {
+		barcodes,
+		detectedBarcodeCount,
+		scan,
+		scanTimeoutId,
+		reset: resetBarcodeScanning
+	} = useBarcodeScanning({
+		canvasRef,
+		desiredBarcodeCount,
+		videoRef
+	});
 
-	const tryGetBarcodes = () => {
-		if (videoRef.current.readyState !== videoRef.current.HAVE_ENOUGH_DATA) {
-			return null;
+	const {
+		startCamera,
+		stopCamera,
+		cameraStarted,
+		cameraLogs,
+		error,
+		reset: resetUseCamera
+	} = useCamera({
+		scan,
+		videoRef
+	});
+
+	useEffect(() => {
+		if (cameraStarted) {
+			setWorkflowState(IWorkflowState.CameraStarted);
 		}
-		const canvas = canvasRef.current.getContext('2d');
-		const { videoWidth, videoHeight } = videoRef.current;
-		canvasRef.current.height = videoHeight;
-		canvasRef.current.width = videoWidth;
-		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
-		const imageData = canvas.getImageData(0, 0, videoWidth, videoHeight);
-		return barcodeDetector.detect(imageData);
-	};
+	}, [cameraStarted]);
 
-	const scan = async () => {
-		try {
-			const barcodes = await tryGetBarcodes();
-			const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
-			setDetectedBarcodeCount(validBarcodes.length);
-			if (validBarcodes?.length == desiredBarcodeCount) {
-				handleScan(validBarcodes);
-			} else {
-				setScanTimeoutId(window.setTimeout(scan, 250));
-			}
-		} catch (error) {
-			console.info(`unable to detect qr code: - ${error.message}`);
+	useEffect(() => {
+		if (error) {
+			setWorkflowState(IWorkflowState.Error);
 		}
-	};
+	}, [error]);
 
-	const handleScan = (barcodes: DetectedBarcode[]) => {
-		setBarcodes(barcodes);
-		setWorkflowState(IWorkflowState.Done);
-	};
-
-	const startSpecificCameraFromStream = async (stream: MediaStream, newCameraLogs: string[]) => {
-		try {
-			videoRef.current.srcObject = stream;
-			setMediaStream(stream);
-			await scan();
-			return true;
-		} catch (error) {
-			newCameraLogs.push(`unable to start camera: ${stream.id} - ${error.message}`);
-			return false;
+	useEffect(() => {
+		if (barcodes.length) {
+			setWorkflowState(IWorkflowState.Done);
 		}
-	};
-
-	const startSpecificCameraByEnsuringAccess = async (newCameraLogs: string[]) => {
-		try {
-			const initialCamera = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-				video: { facingMode: { ideal: 'environment' } }
-			});
-			return await startSpecificCameraFromStream(initialCamera, newCameraLogs);
-		} catch (error) {
-			newCameraLogs.push(`unable to get camera: ${error.message}`);
-			return false;
-		}
-	};
-
-	const getCameraInfos = async () => {
-		const devices = await navigator.mediaDevices.enumerateDevices();
-		return devices.filter(device => device.kind === 'videoinput');
-	};
-
-	const cameraIsBack = (cameraInfo: MediaDeviceInfo) => {
-		return (cameraInfo.label || '').toLowerCase().includes('back');
-	};
-
-	const orderCameraInfos = (camerasInfos: MediaDeviceInfo[]) => {
-		return [...camerasInfos].sort((cameraInfo1, cameraInfo2) => {
-			const camera1IsBack = cameraIsBack(cameraInfo1);
-			const camera2IsBack = cameraIsBack(cameraInfo2);
-
-			if (camera1IsBack && !camera2IsBack) {
-				return -1;
-			}
-			if (camera2IsBack && !camera1IsBack) {
-				return 1;
-			}
-
-			return 0;
-		});
-	};
-
-	const startSpecificCameraFromInfo = async (
-		cameraInfo: MediaDeviceInfo,
-		newCameraLogs: string[]
-	) => {
-		try {
-			const camera = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-				video: { deviceId: { exact: cameraInfo.deviceId } }
-			});
-			return await startSpecificCameraFromStream(camera, newCameraLogs);
-		} catch (error) {
-			newCameraLogs.push(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
-			return false;
-		}
-	};
-
-	const startPreferredCameraAsync = async (newCameraLogs: string[]) => {
-		try {
-			if (await startSpecificCameraByEnsuringAccess(newCameraLogs)) {
-				return true;
-			}
-			const cameraInfos = await getCameraInfos();
-			newCameraLogs.push(`got ${cameraInfos.length} camera infos`);
-			let cameraIndex = 0;
-			for (const cameraInfo of cameraInfos) {
-				newCameraLogs.push(`camera info ${cameraIndex}: ${cameraInfo.label}`);
-				cameraIndex++;
-			}
-			const orderedCameraInfos = orderCameraInfos(cameraInfos);
-			for (const cameraInfo of orderedCameraInfos) {
-				newCameraLogs.push(`trying to start ${cameraInfo.label}`);
-				if (await startSpecificCameraFromInfo(cameraInfo, newCameraLogs)) {
-					return true;
-				}
-			}
-			newCameraLogs.push(`couldn't start any of ${orderCameraInfos.length} cameras`);
-			return false;
-		} catch (error) {
-			newCameraLogs.push(`unable to access camera: ${error.message}`);
-			return false;
-		}
-	};
-
-	const startCamera = () => {
-		const newCameraLogs: string[] = [];
-		const startPreferredCamera = async () => {
-			const startedCamera = await startPreferredCameraAsync(newCameraLogs);
-			if (startedCamera) {
-				setWorkflowState(IWorkflowState.CameraStarted);
-			} else {
-				setErrorState('Could not start camera.');
-			}
-		};
-		startPreferredCamera().catch(exception => setErrorState(exception.toString()));
-		setCameraLogs(newCameraLogs);
-	};
+	});
 
 	useEffect(() => {
 		switch (workflowState) {
@@ -178,25 +69,21 @@ export default function Application() {
 				break;
 			case IWorkflowState.Done:
 				stopCamera();
+				if (scanTimeoutId) {
+					window.clearTimeout(scanTimeoutId);
+				}
+				break;
 		}
 	}, [workflowState]);
 
-	const stopCamera = () => {
-		videoRef.current.src = '';
-		if (mediaStream) {
-			const tracks = mediaStream.getTracks();
-			for (let i = 0; i < tracks.length; i++) {
-				tracks[i].stop();
-			}
-		}
-		if (scanTimeoutId) {
-			window.clearTimeout(scanTimeoutId);
-		}
+	const handleStartCameraClicked = () => {
+		resetUseCamera();
+		resetBarcodeScanning();
+		setWorkflowState(IWorkflowState.CameraStarting);
 	};
 
-	const handleStartCameraClicked = () => {
-		setBarcodes([]);
-		setWorkflowState(IWorkflowState.CameraStarting);
+	const handleStopCameraClicked = () => {
+		setWorkflowState(IWorkflowState.Done);
 	};
 
 	const captureVideoClassName = cx(styles.video, {
@@ -209,7 +96,9 @@ export default function Application() {
 	};
 
 	const canStartScanning =
-		workflowState === IWorkflowState.Initial || workflowState === IWorkflowState.Done;
+		workflowState === IWorkflowState.Initial ||
+		workflowState === IWorkflowState.Done ||
+		workflowState === IWorkflowState.Error;
 
 	return (
 		<div>
@@ -221,13 +110,16 @@ export default function Application() {
 					onChange={handleDesiredBarcodeCountChanged}
 					value={desiredBarcodeCountText}></input>
 			</div>
-			{
-				<button
-					onClick={handleStartCameraClicked}
-					disabled={desiredBarcodeCount === null || !canStartScanning}>
-					Start Camera
-				</button>
-			}
+			<button
+				onClick={handleStartCameraClicked}
+				disabled={desiredBarcodeCount === null || !canStartScanning}>
+				Start Camera
+			</button>
+			<button
+				onClick={handleStopCameraClicked}
+				disabled={workflowState !== IWorkflowState.CameraStarted}>
+				Stop Camera
+			</button>
 			<canvas hidden ref={canvasRef}></canvas>
 			{workflowState === IWorkflowState.Error && (
 				<>
