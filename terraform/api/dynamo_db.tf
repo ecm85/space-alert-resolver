@@ -7,14 +7,4 @@ resource "aws_dynamodb_table" "game_table" {
     name = "GameId"
     type = "S"
   }
-
-  attribute {
-    name = "ConnectionId"
-    type = "S"
-  }
-
-  attribute {
-    name = "CreatedDate"
-    type = "S"
-  }
 }

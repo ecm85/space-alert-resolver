@@ -12,7 +12,9 @@ resource "aws_iam_policy" "lambda_execution_policy" {
         "logs:PutLogEvents",
         "ses:SendEmail",
         "dynamodb:GetItem",
-        "dynamodb:PutItem"
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem"
       ],
       "Effect": "Allow",
       "Resource": ["*"]
