@@ -10,7 +10,9 @@ resource "aws_iam_policy" "lambda_execution_policy" {
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
-        "ses:SendEmail"
+        "ses:SendEmail",
+        "dynamodb:GetItem",
+        "dynamodb:PutItem"
       ],
       "Effect": "Allow",
       "Resource": ["*"]
