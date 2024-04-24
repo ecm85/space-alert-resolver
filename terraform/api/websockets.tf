@@ -27,5 +27,6 @@ resource "aws_apigatewayv2_route" "start_game" {
 resource "aws_apigatewayv2_integration" "start_game" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
   integration_type = "HTTP"
+  http_method      = "POST"
   integration_uri = "https://space-alert-api.stormtide.net/Hub/StartGame"
 }
