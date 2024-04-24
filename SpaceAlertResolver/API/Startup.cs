@@ -26,20 +26,9 @@ namespace API
 			{
 				options.AddDefaultPolicy(policy =>
 				{
-					policy
-						//.WithOrigins(
-						//	"http://localhost:6510",
-						//	"http://localhost:5000",
-						//	"https://localhost:5001",
-						//	"https://space-alert-resolver.stormtide.net",
-						//	"https://space-alert.stormtide.net"
-						//)
-						.AllowAnyOrigin()
-						.AllowAnyHeader()
-						.WithMethods("GET", "POST");
+					policy.AllowAnyOrigin().AllowAnyHeader().WithMethods("GET", "POST");
 				});
 			});
-			services.AddSignalR();
 		}
 
 		public void Configure(IApplicationBuilder app)
@@ -54,7 +43,6 @@ namespace API
 					name: "default",
 					pattern: "{controller=SpaceAlert}/{action=Index}/{id?}"
 				);
-				endpoints.MapHub<GameHub>("hub");
 			});
 			app.UseSwagger();
 			app.UseSwaggerUI();

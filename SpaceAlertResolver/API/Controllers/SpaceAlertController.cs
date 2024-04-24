@@ -12,7 +12,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class SpaceAlertController : ControllerBase
+	public class SpaceAlertController : Controller
 	{
 		private EmailService EmailService { get; }
 
