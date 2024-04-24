@@ -27,13 +27,14 @@ namespace API
 				options.AddDefaultPolicy(policy =>
 				{
 					policy
-						.WithOrigins(
-							"http://localhost:6510",
-							"http://localhost:5000",
-							"https://localhost:5001",
-							"https://space-alert-resolver.stormtide.net",
-							"https://space-alert.stormtide.net"
-						)
+						//.WithOrigins(
+						//	"http://localhost:6510",
+						//	"http://localhost:5000",
+						//	"https://localhost:5001",
+						//	"https://space-alert-resolver.stormtide.net",
+						//	"https://space-alert.stormtide.net"
+						//)
+						.AllowAnyOrigin()
 						.AllowAnyHeader()
 						.WithMethods("GET", "POST");
 				});
