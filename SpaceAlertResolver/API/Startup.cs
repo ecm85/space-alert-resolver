@@ -22,24 +22,20 @@ namespace API
 			services.AddAWSService<IAmazonSimpleEmailService>();
 			services.AddTransient<EmailService>();
 
-			var allowedOrigins = Environment.IsDevelopment()
-				? new[]
-				{
-					"http://localhost:6510",
-					"http://localhost:5000",
-					"https://localhost:5001"
-				}
-				: new[]
-				{
-					"https://space-alert-resolver.stormtide.net",
-					"https://space-alert.stormtide.net"
-				};
-
 			services.AddCors(options =>
 			{
 				options.AddDefaultPolicy(policy =>
 				{
-					policy.WithOrigins(allowedOrigins).AllowAnyHeader().WithMethods("GET", "POST");
+					policy
+						.WithOrigins(
+							"http://localhost:6510",
+							"http://localhost:5000",
+							"https://localhost:5001",
+							"https://space-alert-resolver.stormtide.net",
+							"https://space-alert.stormtide.net"
+						)
+						.AllowAnyHeader()
+						.WithMethods("GET", "POST");
 				});
 			});
 			services.AddSignalR();
