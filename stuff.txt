@@ -1,17 +1,17 @@
-1. get terraform working and front and back end deployable separately
-2. fix bugs from lukas
-  Virus, Psionic Sattelite, Contamination, transmitter satellite delay fix
-  saboteur image fix
-  manowar damage fix
-  slime rockets when all gone fix
-  polarized fighter <> energy snake (id swap)
-  seeker not fighting back fix
-  
-  
-3. Other changes from lukas
-3. create new frontend site
-4. make some labels
-5. make test site to read labels
+- New repo to generate labels
+  - Figure out card counts
+- New site
+  - Figure out player to host communication
+  - Build new UI
+
+
+- TODO about bonus action?
+- Check for other TODOs
+- read TODO
+- Other changes from lukas
+- create new frontend site
+- make some labels
+- make test site to read labels
 
 new site
 new UI
@@ -54,9 +54,6 @@ crash fix from contamination
 
 
 cache_policy_id?
-separate out to two projects
-  api with swagger
-  client with templates and bundling
 make apply not automatic
 add non-automatic destroy
 update deprecated actions:

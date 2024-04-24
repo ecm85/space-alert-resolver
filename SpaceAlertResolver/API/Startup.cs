@@ -4,12 +4,14 @@ namespace API
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		public Startup(IWebHostEnvironment environment, IConfiguration configuration)
 		{
 			Configuration = configuration;
+			Environment = environment;
 		}
 
 		public IConfiguration Configuration { get; }
+		public IWebHostEnvironment Environment { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -20,27 +22,42 @@ namespace API
 			services.AddAWSService<IAmazonSimpleEmailService>();
 			services.AddTransient<EmailService>();
 
+			var allowedOrigins = Environment.IsDevelopment()
+				? new[]
+				{
+					"http://localhost:6510",
+					"http://localhost:5000",
+					"https://localhost:5001"
+				}
+				: new[]
+				{
+					"https://space-alert-resolver.stormtide.net",
+					"https://space-alert.stormtide.net"
+				};
+
 			services.AddCors(options =>
 			{
 				options.AddDefaultPolicy(policy =>
 				{
-					policy.WithOrigins("https://space-alert-resolver.stormtide.net");
+					policy.WithOrigins(allowedOrigins).AllowAnyHeader().WithMethods("GET", "POST");
 				});
 			});
+			services.AddSignalR();
 		}
 
 		public void Configure(IApplicationBuilder app)
 		{
+			app.UseCors();
 			app.UseOptions();
 			app.UseMiddleware<NoCacheMiddleware>();
 			app.UseRouting();
-			app.UseCors();
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=SpaceAlert}/{action=Index}/{id?}"
 				);
+				endpoints.MapHub<GameHub>("hub");
 			});
 			app.UseSwagger();
 			app.UseSwaggerUI();

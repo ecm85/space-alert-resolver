@@ -1,8 +1,7 @@
 import cx from 'classnames';
-import styles from './Application.css';
-import { useCamera } from './useCamera';
-import { useBarcodeScanning } from './useBarcodeScanning';
+import styles from './BarcodeScanner.css';
 import React, { useState, useEffect, useRef } from 'react';
+import { useBarcodeScanning, useCamera } from '~/hooks';
 
 export enum IWorkflowState {
 	Initial,

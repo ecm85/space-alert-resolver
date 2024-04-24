@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="9.0.0" />
-    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
     <PackageReference Include="Amazon.Lambda.Core" Version="2.2.0" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.302.21" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.300" />
     <PackageReference Include="AWSSDK.SimpleEmail" Version="3.7.300.74" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />

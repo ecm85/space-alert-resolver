@@ -1,0 +1,32 @@
+commits to implement:
+
+- Poll if server got a game from third party
+- Complete score calculation
+- long poll
+- fix knockoutPenalty table conditional
+- css
+- remove excessive states
+- Add BatchGame processing endpoint
+- fix tests
+- Remove knocked out players from board
+- Set timeAppears of bonus threat to 0 as backend cant parse null
+
+- Add variable range interceptor option to backend
+- Add variable range interceptors option to frontend
+
+- fix missing ship
+  - updated csproj to include .jpg (why does it work now?)
+- Parasite bug fix
+  - Changed list to hashset?
+  - changed X and Y to add more conditions (need to investigate if they're right)
+- Contamination crash fix
+  - fixed contamination - done
+  - asked about rest
+- Fix Slime destroy empty rockets crash. Add Ico
+  - fixed slime - done
+  - added icon
+- Fix saboteur image. Fix knockout immunity
+  - fix saboteur - done
+  - updated knockout immunity - this is wrong
+
+  
