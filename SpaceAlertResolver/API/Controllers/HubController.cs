@@ -32,7 +32,7 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		[Route("StartGame")]
+		[Route("CreateGame")]
 		public async Task<IActionResult> CreateGame([FromBody] APIGatewayProxyRequest request)
 		{
 			var requestContext = request.RequestContext;
