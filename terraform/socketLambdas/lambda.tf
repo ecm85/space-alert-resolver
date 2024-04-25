@@ -26,7 +26,7 @@ resource "aws_lambda_permission" "allow_api_gateway_create_game_1" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create-game-lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/"
+  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}"
 }
 
 resource "aws_lambda_permission" "allow_api_gateway_create_game_2" {
