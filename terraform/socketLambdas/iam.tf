@@ -1,5 +1,5 @@
 resource "aws_iam_policy" "lambda_execution_policy" {
-  name = "space-alert-api-lambda-execution-role"
+  name = "websocket-lambda-execution-role"
   path = "/service-role/"
 
   policy = <<POLICY
