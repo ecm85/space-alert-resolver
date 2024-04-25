@@ -114,12 +114,18 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/SpaceAlertResolver
           dotnet build -c Release -nologo
+
           cd ./CreateGameLambda
           dotnet lambda package -o $GITHUB_WORKSPACE/terraform/create-game-lambda.zip -c Release --no-build
+          cd ..
+
           cd ./JoinGameLambda
           dotnet lambda package -o $GITHUB_WORKSPACE/terraform/join-game-lambda.zip -c Release --no-build
+          cd ..
+
           cd ./SendToHostLambda
           dotnet lambda package -o $GITHUB_WORKSPACE/terraform/send-to-host-lambda.zip -c Release --no-build
+          cd ..
 
       - name: Save build
         uses: actions/upload-artifact@v3
