@@ -15,11 +15,14 @@ resource "aws_apigatewayv2_deployment" "deployment" {
     redeployment = sha1(join(",", tolist([
       jsonencode(aws_apigatewayv2_integration.create_game),
       jsonencode(aws_apigatewayv2_route.create_game),
+      jsonencode(aws_apigatewayv2_integration.default),
+      jsonencode(aws_apigatewayv2_route.default)
     ])))
   }
 
   depends_on = [
-    aws_apigatewayv2_route.create_game
+    aws_apigatewayv2_route.create_game,
+    aws_apigatewayv2_route.default
   ]
 }
 
@@ -39,6 +42,19 @@ resource "aws_apigatewayv2_route" "create_game" {
 }
 
 resource "aws_apigatewayv2_integration" "create_game" {
+  api_id           = aws_apigatewayv2_api.sockets_gateway.id
+  integration_type = "HTTP"
+  integration_method = "POST"
+  integration_uri = "https://space-alert-api.stormtide.net/Hub/CreateGame"
+}
+
+resource "aws_apigatewayv2_route" "default" {
+  api_id    = aws_apigatewayv2_api.sockets_gateway.id
+  route_key = "$default"
+  target    = "integrations/${aws_apigatewayv2_integration.default.id}"
+}
+
+resource "aws_apigatewayv2_integration" "default" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
   integration_type = "HTTP"
   integration_method = "POST"
