@@ -46,9 +46,12 @@ resource "aws_apigatewayv2_route" "create_game" {
 
 resource "aws_apigatewayv2_integration" "create_game" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
-  integration_type = "HTTP"
-  integration_method = "POST"
-  integration_uri = "https://space-alert-api.stormtide.net/Hub/CreateGame"
+  integration_type = "AWS_PROXY"
+  connection_type           = "INTERNET"
+  content_handling_strategy = "CONVERT_TO_TEXT"
+  integration_method        = "POST"
+  integration_uri           = aws_lambda_function.create-game-lambda.invoke_arn
+  passthrough_behavior      = "WHEN_NO_MATCH"
 }
 
 resource "aws_apigatewayv2_route" "default" {
@@ -59,7 +62,10 @@ resource "aws_apigatewayv2_route" "default" {
 
 resource "aws_apigatewayv2_integration" "default" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
-  integration_type = "HTTP"
-  integration_method = "POST"
-  integration_uri = "https://space-alert-api.stormtide.net/Hub/CreateGame"
+  integration_type = "AWS_PROXY"
+  connection_type           = "INTERNET"
+  content_handling_strategy = "CONVERT_TO_TEXT"
+  integration_method        = "POST"
+  integration_uri           = aws_lambda_function.create-game-lambda.invoke_arn
+  passthrough_behavior      = "WHEN_NO_MATCH"
 }

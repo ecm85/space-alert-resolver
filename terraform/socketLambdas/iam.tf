@@ -10,7 +10,10 @@ resource "aws_iam_policy" "lambda_execution_policy" {
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
-        "ses:SendEmail"
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem"
       ],
       "Effect": "Allow",
       "Resource": ["*"]
@@ -38,7 +41,7 @@ resource "aws_iam_role" "lambda_role" {
 POLICY
 
   max_session_duration = "3600"
-  name                 = "space-alert-api-role"
+  name                 = "lambda_socket_role"
   path                 = "/service-role/"
 }
 

@@ -7,7 +7,7 @@ on:
 
 jobs:
   # JobName
-  verify-csharp-format-api:
+  verify-csharp-format:
     runs-on: ubuntu-latest
     steps:
       - name: Get Source
@@ -21,6 +21,15 @@ jobs:
       - name: Verify
         run: |
           cd $GITHUB_WORKSPACE/SpaceAlertResolver/API
+          dotnet tool restore
+          dotnet csharpier --check .
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/CreateGameLambda
+          dotnet tool restore
+          dotnet csharpier --check .
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/JoinGameLambda
+          dotnet tool restore
+          dotnet csharpier --check .
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/SendToHostLambda
           dotnet tool restore
           dotnet csharpier --check .
   build-pl:
@@ -83,6 +92,43 @@ jobs:
         with:
           name: api
           path: terraform/api-lambda.zip
+  build-websocket-lambdas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Get dotnet lambda tools
+        run: dotnet tool install -g Amazon.Lambda.Tools
+
+      - name: Build
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
+          AWS_DEFAULT_REGION: us-east-2
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver
+          dotnet build -c Release -nologo
+          cd ./CreateGameLambda
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/create-game-lambda.zip -c Release --no-build
+          cd ./JoinGameLambda
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/join-game-lambda.zip -c Release --no-build
+          cd ./SendToHostLambda
+          dotnet lambda package -o $GITHUB_WORKSPACE/terraform/send-to-host-lambda.zip -c Release --no-build
+
+      - name: Save build
+        uses: actions/upload-artifact@v3
+        with:
+          name: socket_lambdas
+          path:
+            - terraform/create-game-lambda.zip
+            - terraform/join-game-lambda.zip
+            - terraform/send-to-host-lambda.zip
   build-ui:
     runs-on: ubuntu-latest
     steps:
@@ -111,6 +157,7 @@ jobs:
       - build-pl
       - build-api
       - build-ui
+      - build-websocket-lambdas
       - verify-csharp-format-api
     runs-on: ubuntu-latest
     steps:
@@ -127,6 +174,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api
+          path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: socket_lambdas
           path: terraform
 
       - name: Download build artifacts
@@ -179,6 +232,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api
+          path: terraform
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: socket_lambdas
           path: terraform
 
       - name: Download build artifacts
