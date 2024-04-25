@@ -21,20 +21,20 @@ resource "aws_lambda_function" "create-game-lambda" {
   }
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_create_game_1" {
+resource "aws_lambda_permission" "allow_api_gateway_create_game" {
   statement_id  = "AllowCreateGameExecutionFromApiGateway1"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create-game-lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}"
+  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/$default"
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_create_game_2" {
+resource "aws_lambda_permission" "allow_api_gateway_create_game" {
   statement_id  = "AllowCreateGameExecutionFromApiGateway2"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create-game-lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/*"
+  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/CreateGame"
 }
 
 resource "aws_lambda_function" "join-game-lambda" {
@@ -60,20 +60,12 @@ resource "aws_lambda_function" "join-game-lambda" {
   }
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_join_game_1" {
-  statement_id  = "AllowJoinGameExecutionFromApiGateway1"
+resource "aws_lambda_permission" "allow_api_gateway_join_game" {
+  statement_id  = "AllowJoinGameExecutionFromApiGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.join-game-lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/"
-}
-
-resource "aws_lambda_permission" "allow_api_gateway_join_game_2" {
-  statement_id  = "AllowJoinGameExecutionFromApiGateway2"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.join-game-lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/*"
+  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/JoinGame"
 }
 
 resource "aws_lambda_function" "send-to-host-lambda" {
@@ -99,18 +91,10 @@ resource "aws_lambda_function" "send-to-host-lambda" {
   }
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_send_to_host_1" {
-  statement_id  = "AllowSendToHostExecutionFromApiGateway1"
+resource "aws_lambda_permission" "allow_api_gateway_send_to_host" {
+  statement_id  = "AllowSendToHostExecutionFromApiGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.send-to-host-lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/"
-}
-
-resource "aws_lambda_permission" "allow_api_gateway_send_to_host_2" {
-  statement_id  = "AllowSendToHostExecutionFromApiGateway2"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.send-to-host-lambda.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/*/*"
+  source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/SendToHost"
 }
