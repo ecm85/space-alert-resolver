@@ -1,7 +1,7 @@
 resource "aws_apigatewayv2_api" "sockets_gateway" {
   name = "space-alert-sockets-gateway"
   protocol_type = "WEBSOCKET"
-  route_selection_expression = "request.body.action"
+  route_selection_expression = "$request.body.action"
 }
 
 resource "aws_apigatewayv2_deployment" "deployment" {
