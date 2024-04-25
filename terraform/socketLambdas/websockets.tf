@@ -46,7 +46,7 @@ resource "aws_apigatewayv2_route" "create_game" {
 
 resource "aws_apigatewayv2_integration" "create_game" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
-  integration_type = "AWS_PROXY"
+  integration_type = "AWS"
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
   integration_method        = "POST"
