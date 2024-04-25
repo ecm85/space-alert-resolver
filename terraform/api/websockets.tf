@@ -8,7 +8,7 @@ resource "aws_apigatewayv2_deployment" "deployment" {
   api_id = aws_apigatewayv2_api.sockets_gateway.id
 
   depends_on = [
-    aws_apigatewayv2_route.start_game
+    aws_apigatewayv2_route.create_game
   ]
 }
 
@@ -18,15 +18,15 @@ resource "aws_apigatewayv2_stage" "Stage" {
   deployment_id = aws_apigatewayv2_deployment.deployment.id
 }
 
-resource "aws_apigatewayv2_route" "start_game" {
+resource "aws_apigatewayv2_route" "create_game" {
   api_id    = aws_apigatewayv2_api.sockets_gateway.id
-  route_key = "StartGame"
-  target    = "integrations/${aws_apigatewayv2_integration.start_game.id}"
+  route_key = "CreateGame"
+  target    = "integrations/${aws_apigatewayv2_integration.create_game.id}"
 }
 
-resource "aws_apigatewayv2_integration" "start_game" {
+resource "aws_apigatewayv2_integration" "create_game" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
   integration_type = "HTTP"
   integration_method = "POST"
-  integration_uri = "https://space-alert-api.stormtide.net/Hub/StartGame"
+  integration_uri = "https://space-alert-api.stormtide.net/Hub/CreateGame"
 }
