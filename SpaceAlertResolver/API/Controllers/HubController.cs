@@ -33,9 +33,10 @@ namespace API.Controllers
 
 		[HttpPost]
 		[Route("CreateGame")]
-		public async Task<IActionResult> CreateGame([FromBody] APIGatewayProxyRequest request)
+		public async Task<IActionResult> CreateGame([FromBody] object request)
 		{
-			var requestContext = request.RequestContext;
+			Console.WriteLine(JsonSerializer.Serialize(request));
+			var requestContext = ((APIGatewayProxyRequest)request).RequestContext;
 			var connectionId = requestContext.ConnectionId;
 			var code = (string)null;
 			do
