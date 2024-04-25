@@ -14,15 +14,12 @@ resource "aws_apigatewayv2_deployment" "deployment" {
   triggers = {
     redeployment = sha1(join(",", tolist([
       jsonencode(aws_apigatewayv2_integration.create_game),
-      jsonencode(aws_apigatewayv2_route.create_game),
-      jsonencode(aws_apigatewayv2_integration.default),
-      jsonencode(aws_apigatewayv2_route.default)
+      jsonencode(aws_apigatewayv2_route.create_game)
     ])))
   }
 
   depends_on = [
-    aws_apigatewayv2_route.create_game,
-    aws_apigatewayv2_route.default
+    aws_apigatewayv2_route.create_game
   ]
 }
 
@@ -45,22 +42,6 @@ resource "aws_apigatewayv2_route" "create_game" {
 }
 
 resource "aws_apigatewayv2_integration" "create_game" {
-  api_id           = aws_apigatewayv2_api.sockets_gateway.id
-  integration_type = "AWS_PROXY"
-  connection_type           = "INTERNET"
-  content_handling_strategy = "CONVERT_TO_TEXT"
-  integration_method        = "POST"
-  integration_uri           = aws_lambda_function.create-game-lambda.invoke_arn
-  passthrough_behavior      = "WHEN_NO_MATCH"
-}
-
-resource "aws_apigatewayv2_route" "default" {
-  api_id    = aws_apigatewayv2_api.sockets_gateway.id
-  route_key = "$default"
-  target    = "integrations/${aws_apigatewayv2_integration.default.id}"
-}
-
-resource "aws_apigatewayv2_integration" "default" {
   api_id           = aws_apigatewayv2_api.sockets_gateway.id
   integration_type = "AWS_PROXY"
   connection_type           = "INTERNET"
