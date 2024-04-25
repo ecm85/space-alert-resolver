@@ -158,7 +158,7 @@ jobs:
       - build-api
       - build-ui
       - build-websocket-lambdas
-      - verify-csharp-format-api
+      - verify-csharp-format
     runs-on: ubuntu-latest
     steps:
       - name: Get Source
