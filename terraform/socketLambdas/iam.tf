@@ -13,7 +13,8 @@ resource "aws_iam_policy" "lambda_execution_policy" {
         "dynamodb:GetItem",
         "dynamodb:PutItem",
         "dynamodb:UpdateItem",
-        "dynamodb:DeleteItem"
+        "dynamodb:DeleteItem",
+        "execute-api:ManageConnections"
       ],
       "Effect": "Allow",
       "Resource": ["*"]
