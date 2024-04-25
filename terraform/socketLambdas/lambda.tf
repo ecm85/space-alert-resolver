@@ -21,7 +21,7 @@ resource "aws_lambda_function" "create-game-lambda" {
   }
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_create_game" {
+resource "aws_lambda_permission" "allow_api_gateway_create_game_1" {
   statement_id  = "AllowCreateGameExecutionFromApiGateway1"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create-game-lambda.function_name
@@ -29,7 +29,7 @@ resource "aws_lambda_permission" "allow_api_gateway_create_game" {
   source_arn    = "${aws_apigatewayv2_api.sockets_gateway.execution_arn}/*/$default"
 }
 
-resource "aws_lambda_permission" "allow_api_gateway_create_game" {
+resource "aws_lambda_permission" "allow_api_gateway_create_game_2" {
   statement_id  = "AllowCreateGameExecutionFromApiGateway2"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create-game-lambda.function_name
