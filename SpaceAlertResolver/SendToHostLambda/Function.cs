@@ -44,11 +44,17 @@ namespace SendToHostLambda
 				}
 				else
 				{
+					var hostConnectionId = existingGame.Item[GameService.ConnectionIdField].S;
 					await webSocketService.SendMessage(
 						requestContext,
 						"ClientMessageReceived",
-						connectionId,
+						hostConnectionId,
 						new { sendToHostRequest.Text }
+					);
+					await webSocketService.SendMessage(
+						requestContext,
+						"YourMessageSent",
+						connectionId
 					);
 				}
 			}

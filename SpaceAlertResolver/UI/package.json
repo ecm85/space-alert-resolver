@@ -42,7 +42,6 @@
 		"webpack-dev-server": "^4.9.2"
 	},
 	"dependencies": {
-		"@microsoft/signalr": "^8.0.0",
 		"@reduxjs/toolkit": "^1.8.2",
 		"@types/react-redux": "^7.1.24",
 		"barcode-detector": "^2.2.5",
