@@ -32,6 +32,9 @@ resource "aws_apigatewayv2_stage" "Stage" {
   deployment_id = aws_apigatewayv2_deployment.deployment.id
   default_route_settings {
     data_trace_enabled = true
+    logging_level = "INFO"
+    throttling_rate_limit = 100
+    throttling_burst_limit = 50
   }
 }
 
