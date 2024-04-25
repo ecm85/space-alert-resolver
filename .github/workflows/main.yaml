@@ -125,10 +125,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: socket_lambdas
-          path:
-            - terraform/create-game-lambda.zip
-            - terraform/join-game-lambda.zip
-            - terraform/send-to-host-lambda.zip
+          path: |
+            terraform/create-game-lambda.zip
+            terraform/join-game-lambda.zip
+            terraform/send-to-host-lambda.zip
   build-ui:
     runs-on: ubuntu-latest
     steps:
