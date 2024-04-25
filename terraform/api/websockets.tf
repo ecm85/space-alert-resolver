@@ -7,6 +7,13 @@ resource "aws_apigatewayv2_api" "sockets_gateway" {
 resource "aws_apigatewayv2_deployment" "deployment" {
   api_id = aws_apigatewayv2_api.sockets_gateway.id
 
+  triggers = {
+    redeployment = sha1(join(",", tolist([
+      jsonencode(aws_apigatewayv2_integration.create_game),
+      jsonencode(aws_apigatewayv2_route.create_game),
+    ])))
+  }
+
   depends_on = [
     aws_apigatewayv2_route.create_game
   ]
