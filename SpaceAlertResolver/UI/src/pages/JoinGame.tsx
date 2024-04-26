@@ -29,7 +29,7 @@ export function JoinGame() {
 	}, [connectionStarted]);
 
 	const handleGameCodeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setGameCode(event.target.value);
+		setGameCode(event.target.value.toUpperCase());
 	};
 
 	const handleNameChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
