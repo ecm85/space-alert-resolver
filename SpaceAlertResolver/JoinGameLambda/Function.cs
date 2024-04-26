@@ -24,12 +24,11 @@ namespace JoinGameLambda
 			var gameService = new GameService();
 			var webSocketService = new WebSocketService();
 			context.Logger.Log(request.Body);
-			var joinGameRequest = JsonSerializer.Deserialize<JoinGameRequest>(
-				request.Body,
-				new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-			);
 			var requestContext = request.RequestContext;
 			var connectionId = requestContext.ConnectionId;
+			var joinGameRequest = webSocketService.DeserializeRequest<JoinGameRequest>(
+				request.Body
+			);
 			var existingGame = await gameService.GetGame(joinGameRequest.Code);
 			if (existingGame.Item == null)
 			{

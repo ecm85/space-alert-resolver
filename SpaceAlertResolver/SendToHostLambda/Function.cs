@@ -21,14 +21,14 @@ namespace SendToHostLambda
 			ILambdaContext context
 		)
 		{
-			var sendToHostRequest = JsonSerializer.Deserialize<SendToHostRequest>(
-				request.Body,
-				new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+			var gameService = new GameService();
+			var webSocketService = new WebSocketService();
+			var sendToHostRequest = webSocketService.DeserializeRequest<SendToHostRequest>(
+				request.Body
 			);
 			var requestContext = request.RequestContext;
 			var connectionId = requestContext.ConnectionId;
-			var gameService = new GameService();
-			var webSocketService = new WebSocketService();
+
 			var existingGame = await gameService.GetGame(sendToHostRequest.Code);
 			if (existingGame.Item == null)
 			{

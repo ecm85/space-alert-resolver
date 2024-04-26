@@ -3,6 +3,7 @@ using System.Text.Json;
 using Amazon.ApiGatewayManagementApi;
 using Amazon.ApiGatewayManagementApi.Model;
 using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Runtime.Internal;
 
 namespace LambdaShared
 {
@@ -30,6 +31,21 @@ namespace LambdaShared
 			};
 			stream.Position = 0;
 			await apiClient.PostToConnectionAsync(postConnectionRequest);
+		}
+
+		private class Request<T>
+		{
+			public T Data { get; set; }
+			public string Action { get; set; }
+		}
+
+		public T DeserializeRequest<T>(string body)
+		{
+			var joinGameRequest = JsonSerializer.Deserialize<Request<T>>(
+				body,
+				new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+			);
+			return joinGameRequest.Data;
 		}
 	}
 }
