@@ -14,7 +14,9 @@ resource "aws_apigatewayv2_deployment" "deployment" {
   triggers = {
     redeployment = sha1(join(",", tolist([
       jsonencode(aws_apigatewayv2_integration.create_game),
-      jsonencode(aws_apigatewayv2_route.create_game)
+      jsonencode(aws_apigatewayv2_route.create_game),
+      jsonencode(aws_apigatewayv2_integration.join_game),
+      jsonencode(aws_apigatewayv2_route.join_game)
     ])))
   }
 
@@ -48,5 +50,37 @@ resource "aws_apigatewayv2_integration" "create_game" {
   content_handling_strategy = "CONVERT_TO_TEXT"
   integration_method        = "POST"
   integration_uri           = aws_lambda_function.create-game-lambda.invoke_arn
+  passthrough_behavior      = "WHEN_NO_MATCH"
+}
+
+resource "aws_apigatewayv2_route" "join_game" {
+  api_id    = aws_apigatewayv2_api.sockets_gateway.id
+  route_key = "JoinGame"
+  target    = "integrations/${aws_apigatewayv2_integration.join_game.id}"
+}
+
+resource "aws_apigatewayv2_integration" "join_game" {
+  api_id           = aws_apigatewayv2_api.sockets_gateway.id
+  integration_type = "AWS_PROXY"
+  connection_type           = "INTERNET"
+  content_handling_strategy = "CONVERT_TO_TEXT"
+  integration_method        = "POST"
+  integration_uri           = aws_lambda_function.join-game-lambda.invoke_arn
+  passthrough_behavior      = "WHEN_NO_MATCH"
+}
+
+resource "aws_apigatewayv2_route" "send_to_host" {
+  api_id    = aws_apigatewayv2_api.sockets_gateway.id
+  route_key = "SendToHost"
+  target    = "integrations/${aws_apigatewayv2_integration.send_to_host.id}"
+}
+
+resource "aws_apigatewayv2_integration" "send_to_host" {
+  api_id           = aws_apigatewayv2_api.sockets_gateway.id
+  integration_type = "AWS_PROXY"
+  connection_type           = "INTERNET"
+  content_handling_strategy = "CONVERT_TO_TEXT"
+  integration_method        = "POST"
+  integration_uri           = aws_lambda_function.send-to-host-lambda.invoke_arn
   passthrough_behavior      = "WHEN_NO_MATCH"
 }
