@@ -51,7 +51,7 @@ namespace SendToHostLambda
 						requestContext,
 						"ClientMessageReceived",
 						hostConnectionId,
-						new { sendToHostRequest.Text }
+						new { text = sendToHostRequest.Text }
 					);
 					await webSocketService.SendMessage(
 						requestContext,

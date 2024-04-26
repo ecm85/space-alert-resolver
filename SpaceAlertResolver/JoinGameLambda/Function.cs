@@ -52,7 +52,7 @@ namespace JoinGameLambda
 						requestContext,
 						"ClientJoined",
 						hostConnectionId,
-						new { joinGameRequest.Name }
+						new { name = joinGameRequest.Name }
 					);
 				}
 			}
