@@ -3,7 +3,8 @@ using System.Text.Json;
 using Amazon.ApiGatewayManagementApi;
 using Amazon.ApiGatewayManagementApi.Model;
 using Amazon.Lambda.APIGatewayEvents;
-using Amazon.Runtime.Internal;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace LambdaShared
 {
@@ -41,11 +42,7 @@ namespace LambdaShared
 
 		public T DeserializeRequest<T>(string body)
 		{
-			var joinGameRequest = JsonSerializer.Deserialize<Request<T>>(
-				body,
-				new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-			);
-			return joinGameRequest.Data;
+			return JsonConvert.DeserializeObject<Request<T>>(body).Data;
 		}
 	}
 }
