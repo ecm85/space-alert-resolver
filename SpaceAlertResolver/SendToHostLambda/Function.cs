@@ -21,7 +21,10 @@ namespace SendToHostLambda
 			ILambdaContext context
 		)
 		{
-			var sendToHostRequest = JsonSerializer.Deserialize<SendToHostRequest>(request.Body);
+			var sendToHostRequest = JsonSerializer.Deserialize<SendToHostRequest>(
+				request.Body,
+				new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+			);
 			var requestContext = request.RequestContext;
 			var connectionId = requestContext.ConnectionId;
 			var gameService = new GameService();

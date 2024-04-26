@@ -32,7 +32,7 @@ export function CreateGame() {
 		<div>
 			<h2>Create Game</h2>
 			{gameCode && <div>Game Code: {gameCode}</div>}
-			{clients.length && (
+			{clients.length > 0 && (
 				<div>
 					<h3>Clients</h3>
 					{clients.map(client => (
