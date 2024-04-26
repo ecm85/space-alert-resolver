@@ -6,25 +6,43 @@ export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string>(null);
 	const { connection, connectionStarted } = useWebSocket();
 	const [clients, setClients] = useState<string[]>([]);
+	const [newClient, setNewClient] = useState<string>(null);
 	const startGame = async () => {
 		connection.send(JSON.stringify({ action: 'CreateGame' }));
 	};
+
+	const handleMessage = (messageEventData: MessageEventData) => {
+		switch (messageEventData.event) {
+			case 'GameCreated':
+				setGameCode(messageEventData.data.code);
+				return true;
+			case 'ClientJoined':
+				setNewClient(messageEventData.data.name);
+				return true;
+			default:
+				return false;
+		}
+	};
+
+	useEffect(() => {
+		if (newClient) {
+			setClients([...clients, newClient]);
+			setNewClient(null);
+		}
+	}, [newClient]);
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const onMessage = (messageEvent: MessageEvent<any>) => {
+		const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
+		const success = handleMessage(messageEventData);
+		if (!success) {
+			console.log(`Event unhandled: ${messageEvent.data}`);
+		}
+	};
 	useEffect(() => {
 		if (connectionStarted) {
-			connection.onmessage = messageEvent => {
-				const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
-				switch (messageEventData.event) {
-					case 'GameCreated':
-						setGameCode(messageEventData.data.code);
-						break;
-					case 'ClientJoined':
-						setClients([...clients, messageEvent.data.name]);
-						break;
-					default:
-						console.log(`Event unhandled: ${messageEvent.data}`);
-				}
-			};
-
+			connection.addEventListener('message', onMessage);
+			// connection.onmessage = onMessage;
 			startGame();
 		}
 	}, [connectionStarted]);
