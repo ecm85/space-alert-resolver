@@ -13,26 +13,24 @@ export enum IWorkflowState {
 }
 
 export interface BarcodeScannerProps {
+	validateBarcodes(barcodes: DetectedBarcode[]): React.ReactNode;
 	onBarcodesScan(barcodes: DetectedBarcode[]): void;
 }
 
-export function BarcodeScanner({ onBarcodesScan }: BarcodeScannerProps) {
-	const desiredBarcodeCountText = 12;
-	const parsedDesiredBarcodeCount = +desiredBarcodeCountText;
-	const desiredBarcodeCount = parsedDesiredBarcodeCount > 0 ? parsedDesiredBarcodeCount : null;
+export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScannerProps) {
 	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
 	const canvasRef = useRef<HTMLCanvasElement>();
 	const videoRef = useRef<HTMLVideoElement>();
 
 	const {
 		barcodes,
-		detectedBarcodeCount,
+		validationError,
 		scan,
 		scanTimeoutId,
 		reset: resetBarcodeScanning
 	} = useBarcodeScanning({
 		canvasRef,
-		desiredBarcodeCount,
+		validateBarcodes,
 		videoRef
 	});
 
@@ -101,10 +99,7 @@ export function BarcodeScanner({ onBarcodesScan }: BarcodeScannerProps) {
 
 	return (
 		<div>
-			<Button
-				variant='contained'
-				onClick={handleStartCameraClicked}
-				disabled={desiredBarcodeCount === null || !canStartScanning}>
+			<Button variant='contained' onClick={handleStartCameraClicked} disabled={!canStartScanning}>
 				Start Camera
 			</Button>
 			<Button
@@ -120,7 +115,7 @@ export function BarcodeScanner({ onBarcodesScan }: BarcodeScannerProps) {
 					<div>{error}</div>
 				</>
 			)}
-			<div>Detected Barcodes: {detectedBarcodeCount}</div>
+			{validationError}
 			<div className={styles.videoWrapper}>
 				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
 			</div>

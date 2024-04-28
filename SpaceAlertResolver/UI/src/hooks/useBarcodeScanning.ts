@@ -1,28 +1,29 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
-	desiredBarcodeCount: number;
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
 	canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+	validateBarcodes(barcodes: DetectedBarcode[]): ReactNode;
 }
 
 export const useBarcodeScanning = ({
-	desiredBarcodeCount,
+	validateBarcodes,
 	videoRef,
 	canvasRef
 }: useBarcodeScanningProps) => {
 	const initialBarcodes: DetectedBarcode[] = [];
 	const barcodeDetector = new BarcodeDetector();
-	const [detectedBarcodeCount, setDetectedBarcodeCount] = useState<number>(0);
 	const [barcodes, setBarcodes] = useState(initialBarcodes);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
+	const [validationError, setValidationError] = useState<ReactNode>([]);
 	const scan = async () => {
 		try {
 			const barcodes = await tryGetBarcodes();
 			const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
-			setDetectedBarcodeCount(validBarcodes.length);
-			if (validBarcodes?.length == desiredBarcodeCount) {
+			const newValidationError = validateBarcodes(validBarcodes);
+			setValidationError(newValidationError);
+			if (newValidationError) {
 				setBarcodes(barcodes);
 			} else {
 				setScanTimeoutId(window.setTimeout(scan, 250));
@@ -48,9 +49,9 @@ export const useBarcodeScanning = ({
 	};
 	return {
 		scan,
-		detectedBarcodeCount,
 		barcodes,
 		scanTimeoutId,
-		reset
+		reset,
+		validationError
 	};
 };
