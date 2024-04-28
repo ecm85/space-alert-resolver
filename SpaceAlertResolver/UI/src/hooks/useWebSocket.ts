@@ -15,7 +15,7 @@ export const useWebSocket = () => {
 	useEffect(() => {
 		createSocketConnection();
 		return () => {
-			connection.close();
+			connection?.close();
 		};
 	}, []);
 

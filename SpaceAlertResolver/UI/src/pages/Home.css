@@ -1,0 +1,19 @@
+.card-row {
+	display: flex;
+	flex-direction: row;
+	column-gap: 1rem;
+	max-width: 1000px;
+}
+
+.card {
+	flex: 1;
+}
+
+@media (max-width: 600px) {
+	.card-row {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+		max-width: initial;
+	}
+}
