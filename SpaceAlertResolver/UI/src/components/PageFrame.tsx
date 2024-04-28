@@ -23,7 +23,7 @@ export function PageFrame() {
 		handleCloseNavMenu();
 	};
 	const handleJoinGameClicked = () => {
-		navigate('/join');
+		navigate('/client');
 		handleCloseNavMenu();
 	};
 	const pages = [

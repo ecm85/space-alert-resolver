@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { CreateGame, Home, JoinGame } from '~/pages';
+import { Client, CreateGame, Home } from '~/pages';
 import { PageFrame } from './components/PageFrame';
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
 		element: <PageFrame />,
 		children: [
 			{ path: '/', element: <Home /> },
-			{ path: '/join', element: <JoinGame /> },
+			{ path: '/client', element: <Client /> },
 			{ path: '/create', element: <CreateGame /> }
 		]
 	}

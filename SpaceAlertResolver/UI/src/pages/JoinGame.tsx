@@ -1,12 +1,21 @@
+import { Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
-import { useWebSocket } from '~/hooks';
+import { useStateRef } from '~/hooks';
 import { MessageEventData } from '~/models';
+import styles from './JoinGame.css';
 
-export function JoinGame() {
-	const [gameCode, setGameCode] = useState<string>(null);
+export interface JoinGameProps {
+	connectionStarted: boolean;
+	connection: WebSocket;
+	onGameJoined(gameCode: string): void;
+}
+
+export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGameProps) {
+	const [gameCode, setGameCode, gameCodeRef] = useStateRef<string>(null);
 	const [name, setName] = useState<string>(null);
-	const { connection, connectionStarted } = useWebSocket();
 	const [message, setMessage] = useState<string>(null);
+	const [joining, setJoining] = useState(false);
 	useEffect(() => {
 		if (connectionStarted) {
 			connection.onmessage = messageEvent => {
@@ -19,7 +28,7 @@ export function JoinGame() {
 						setMessage('That code is invalid.');
 						break;
 					case 'YouJoined':
-						setMessage('You successfully joined the game!');
+						onGameJoined(gameCodeRef.current);
 						break;
 					default:
 						console.log(`Event unhandled: ${messageEvent.data}`);
@@ -36,35 +45,22 @@ export function JoinGame() {
 		setName(event.target.value);
 	};
 
-	const canJoin = connectionStarted && gameCode?.length === 4 && !!name;
+	const canJoin = connectionStarted && gameCode?.length === 4 && !!name && !joining;
 
 	const handleJoinClicked = () => {
+		setJoining(true);
 		connection.send(JSON.stringify({ action: 'JoinGame', data: { name, code: gameCode } }));
 	};
 
 	return (
 		<div>
 			<h2>Join Game</h2>
-			<div>
-				<label>
-					Your name:
-					<input type='text' value={name} onChange={handleNameChanged} maxLength={50}></input>
-				</label>
-			</div>
-			<div>
-				<label>
-					Game Code:
-					<input
-						type='text'
-						value={gameCode}
-						onChange={handleGameCodeChanged}
-						maxLength={4}></input>
-				</label>
-			</div>
-			<div>
-				<button disabled={!canJoin} onClick={handleJoinClicked}>
-					Join Game
-				</button>
+			<div className={styles['inputs']}>
+				<TextField label='Your name:' value={name} onChange={handleNameChanged}></TextField>
+				<TextField label='Game Code:' value={gameCode} onChange={handleGameCodeChanged}></TextField>
+				<Button variant='contained' disabled={!canJoin} onClick={handleJoinClicked}>
+					{!joining ? 'Join Game' : 'Joining...'}
+				</Button>
 			</div>
 			{message && <div>{message}</div>}
 		</div>

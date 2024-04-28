@@ -10,7 +10,7 @@ export function Home() {
 		navigate('/create');
 	};
 	const handleJoinGameClicked = () => {
-		navigate('/join');
+		navigate('/client');
 	};
 	return (
 		<div>
