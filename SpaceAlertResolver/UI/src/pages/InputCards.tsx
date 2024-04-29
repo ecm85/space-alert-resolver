@@ -62,6 +62,10 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			[4, 11]
 		];
 		const trailingCards = [5, 6];
+		const dividingLine =
+			sortedByX[6].boundingBox.bottom +
+			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
+
 		const invalidPairs = pairs.filter(
 			pair => !pairIsValid(sortedByX[pair[0]], sortedByX[pair[1]], dividingLine)
 		);
@@ -78,9 +82,6 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				</div>
 			);
 		}
-		const dividingLine =
-			sortedByX[6].boundingBox.bottom +
-			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
 		const invalidTrailingCards = trailingCards.filter(
 			cardIndex => !sortedByX[cardIndex].cornerPoints.every(point => point.y < dividingLine)
 		);
