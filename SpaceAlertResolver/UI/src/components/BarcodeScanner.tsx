@@ -65,6 +65,9 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 
 	useEffect(() => {
 		switch (workflowState) {
+			case IWorkflowState.Initial:
+				stopCamera();
+				break;
 			case IWorkflowState.CameraStarting:
 				startCamera();
 				break;
@@ -85,7 +88,7 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 	};
 
 	const handleStopCameraClicked = () => {
-		setWorkflowState(IWorkflowState.Done);
+		setWorkflowState(IWorkflowState.Initial);
 	};
 
 	const captureVideoClassName = cx(styles.video, {

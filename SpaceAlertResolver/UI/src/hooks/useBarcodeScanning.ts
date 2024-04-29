@@ -30,6 +30,7 @@ export const useBarcodeScanning = ({
 			}
 		} catch (error) {
 			console.info(`unable to detect qr code: - ${error.message}`);
+			console.info(error);
 		}
 	};
 	const tryGetBarcodes = () => {

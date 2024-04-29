@@ -40,8 +40,8 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const areValidBoards = (barcodes: DetectedBarcode[]) => {
 		const sortedByX = sortByX(barcodes);
 		const dividingLine =
-			sortedByX[7].boundingBox.bottom +
-			(sortedByX[12].boundingBox.top - sortedByX[7].boundingBox.bottom) / 2;
+			sortedByX[6].boundingBox.bottom +
+			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
 		const pairs = [
 			[1, 8],
 			[2, 9],
