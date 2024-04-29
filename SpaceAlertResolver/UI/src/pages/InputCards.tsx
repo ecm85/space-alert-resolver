@@ -37,45 +37,58 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		return [...barcodes].sort((first, second) => first.boundingBox.left - second.boundingBox.left);
 	};
 
-	const areValidBoards = (barcodes: DetectedBarcode[]) => {
-		const sortedByX = sortByX(barcodes);
-		const dividingLine =
-			sortedByX[6].boundingBox.bottom +
-			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
-		const pairs = [
-			[1, 8],
-			[2, 9],
-			[3, 10],
-			[4, 10],
-			[5, 12]
-		];
-		const pairsValid = pairs.every(pair => pairIsValid(sortedByX[pair[0]], sortedByX[pair[1]]));
-		return (
-			pairsValid &&
-			sortedByX
-				.slice(7)
-				.every(barcode => barcode.cornerPoints.every(point => point.y < dividingLine))
-		);
-	};
-
-	const pairIsValid = (first: DetectedBarcode, second: DetectedBarcode) => {
+	const pairIsValid = (first: DetectedBarcode, second: DetectedBarcode, dividingLine: number) => {
 		const upperCode = first.boundingBox.bottom > second.boundingBox.bottom ? first : second;
 		const lowerCode = upperCode === first ? second : first;
 		const lowerCodeCenter = lowerCode.boundingBox.left + lowerCode.boundingBox.width / 2;
 		const upperCodeLeft = upperCode.boundingBox.left;
 		const upperCodeRight = upperCode.boundingBox.left + upperCode.boundingBox.width;
-		return lowerCodeCenter > upperCodeLeft && lowerCodeCenter < upperCodeRight;
+		const xAlignmentIsCorrect = lowerCodeCenter > upperCodeLeft && lowerCodeCenter < upperCodeRight;
+		const yAlignmentIsCorrect =
+			upperCode.boundingBox.bottom < dividingLine && lowerCode.boundingBox.top > dividingLine;
+		return xAlignmentIsCorrect && yAlignmentIsCorrect;
 	};
 
 	const validateBarcodes = (barcodes: DetectedBarcode[]) => {
 		if (barcodes.length != 12) {
 			return <div>Looking for 12 barcodes. Found: {barcodes.length}.</div>;
 		}
-		if (!areValidBoards(barcodes)) {
+		const sortedByX = sortByX(barcodes);
+		const pairs = [
+			[0, 7],
+			[1, 8],
+			[2, 9],
+			[3, 10],
+			[4, 11]
+		];
+		const trailingCards = [5, 6];
+		const invalidPairs = pairs.filter(
+			pair => !pairIsValid(sortedByX[pair[0]], sortedByX[pair[1]], dividingLine)
+		);
+		if (invalidPairs.length > 0) {
 			return (
 				<div>
 					Barcodes are not aligned correctly. Ensure the codes for 8-12 are directly below the codes
-					for 1-5
+					for 1-5. Codes out of alignment:
+					{invalidPairs.map(invalidPair => (
+						<div>
+							{invalidPair[0] + 1} is not aligned with {invalidPair[1] + 1}
+						</div>
+					))}
+				</div>
+			);
+		}
+		const dividingLine =
+			sortedByX[6].boundingBox.bottom +
+			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
+		const invalidTrailingCards = trailingCards.filter(
+			cardIndex => !sortedByX[cardIndex].cornerPoints.every(point => point.y < dividingLine)
+		);
+		if (invalidTrailingCards.length > 0) {
+			return (
+				<div>
+					Barcodes are not aligned correctly. Ensure there's a clear line between the top and bottom
+					boards.
 				</div>
 			);
 		}
