@@ -79,6 +79,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				</div>
 			);
 		}
+		return null;
 	};
 
 	const barcodesInOrder = (barcodes: DetectedBarcode[]) => {

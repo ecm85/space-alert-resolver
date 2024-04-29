@@ -23,7 +23,7 @@ export const useBarcodeScanning = ({
 			const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
 			const newValidationError = validateBarcodes(validBarcodes);
 			setValidationError(newValidationError);
-			if (newValidationError) {
+			if (!newValidationError) {
 				setBarcodes(barcodes);
 			} else {
 				setScanTimeoutId(window.setTimeout(scan, 250));
