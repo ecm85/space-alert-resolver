@@ -49,6 +49,14 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		return xAlignmentIsCorrect && yAlignmentIsCorrect;
 	};
 
+	const getDividingLine = (first: DetectedBarcode, second: DetectedBarcode) => {
+		const upperCode = first.boundingBox.bottom > second.boundingBox.bottom ? first : second;
+		const lowerCode = upperCode === first ? second : first;
+		return (
+			upperCode.boundingBox.bottom + (lowerCode.boundingBox.top - upperCode.boundingBox.bottom) / 2
+		);
+	};
+
 	const validateBarcodes = (barcodes: DetectedBarcode[]) => {
 		if (barcodes.length != 12) {
 			return <div>Looking for 12 barcodes. Found: {barcodes.length}.</div>;
@@ -62,9 +70,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			[4, 11]
 		];
 		const trailingCards = [5, 6];
-		const dividingLine =
-			sortedByX[6].boundingBox.bottom +
-			(sortedByX[11].boundingBox.top - sortedByX[6].boundingBox.bottom) / 2;
+		const dividingLine = getDividingLine(sortedByX[0], sortedByX[1]);
 
 		const invalidPairs = pairs.filter(
 			pair => !pairIsValid(sortedByX[pair[0]], sortedByX[pair[1]], dividingLine)
@@ -98,9 +104,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 
 	const barcodesInOrder = (barcodes: DetectedBarcode[]) => {
 		const sortedByX = sortByX(barcodes);
-		const dividingLine =
-			sortedByX[7].boundingBox.bottom +
-			(sortedByX[12].boundingBox.top - sortedByX[7].boundingBox.bottom) / 2;
+		const dividingLine = getDividingLine(sortedByX[0], sortedByX[1]);
 		const top = [];
 		const bottom = [];
 		for (const barcode of barcodes) {
