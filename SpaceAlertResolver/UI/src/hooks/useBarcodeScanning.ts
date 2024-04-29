@@ -37,7 +37,9 @@ export const useBarcodeScanning = ({
 		if (videoRef.current.readyState !== videoRef.current.HAVE_ENOUGH_DATA) {
 			return null;
 		}
-		const canvas = canvasRef.current.getContext('2d');
+		const canvas = canvasRef.current.getContext('2d', {
+			willReadFrequently: true
+		});
 		const { videoWidth, videoHeight } = videoRef.current;
 		canvasRef.current.height = videoHeight;
 		canvasRef.current.width = videoWidth;

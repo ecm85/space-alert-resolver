@@ -1,15 +1,14 @@
 import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-import { useWebSocket } from '~/hooks';
+import { useStateRef, useWebSocket } from '~/hooks';
 import { MessageEventData } from '~/models';
 import styles from './CreateGame.css';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string>(null);
 	const { connection, connectionStarted } = useWebSocket();
-	const [clients, setClients] = useState<string[]>([]);
-	const [newClient, setNewClient] = useState<string>(null);
+	const [clients, setClients, clientsRef] = useStateRef<string[]>([]);
 	const startGame = async () => {
 		connection.send(JSON.stringify({ action: 'CreateGame' }));
 	};
@@ -21,19 +20,12 @@ export function CreateGame() {
 				setGameCode(messageEventData.data.code);
 				return true;
 			case 'ClientJoined':
-				setNewClient(messageEventData.data.name);
+				setClients([...clientsRef.current, messageEventData.data.name]);
 				return true;
 			default:
 				return false;
 		}
 	};
-
-	useEffect(() => {
-		if (newClient) {
-			setClients([...clients, newClient]);
-			setNewClient(null);
-		}
-	}, [newClient]);
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onMessage = (messageEvent: MessageEvent<any>) => {
