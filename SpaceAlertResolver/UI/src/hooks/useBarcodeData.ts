@@ -30,7 +30,7 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 	};
 
 	const getBarcodeData = (barcode: DetectedBarcode) => {
-		const value = barcode.rawValue.split('*').slice(1, -2).join('-');
+		const value = barcode.rawValue.split('*').slice(1, -1).join('*');
 
 		if (value.startsWith('S')) {
 			const index = +value.substring(1, 1);
