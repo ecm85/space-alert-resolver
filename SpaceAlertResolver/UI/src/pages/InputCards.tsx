@@ -42,13 +42,14 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		canvas.putImageData(newImageData, 0, 0);
 		let index = 1;
 		for (const barcode of barcodes) {
-			canvas.strokeRect(
+			canvas.fillRect(
 				barcode.boundingBox.left,
 				barcode.boundingBox.top,
 				barcode.boundingBox.width,
 				barcode.boundingBox.height
 			);
-			canvas.strokeText(index.toString(), barcode.boundingBox.left, barcode.boundingBox.top);
+			canvas.fillStyle = 'red';
+			canvas.fillText(index.toString(), barcode.boundingBox.left, barcode.boundingBox.top);
 			index++;
 		}
 	};
