@@ -50,8 +50,9 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				barcode.boundingBox.width,
 				barcode.boundingBox.height
 			);
+			canvas.font = '25px monospace';
 			canvas.fillStyle = 'red';
-			canvas.fillText(index.toString(), barcode.boundingBox.left, barcode.boundingBox.top);
+			canvas.fillText(index.toString(), barcode.boundingBox.left, barcode.boundingBox.bottom);
 			index++;
 		}
 	};
