@@ -37,8 +37,8 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[], newImageData: ImageData) => {
 		setBarcodes(barcodesInOrder(newBarcodes));
 		const canvas = canvasRef.current.getContext('2d');
-		canvasRef.current.height = 300;
-		canvasRef.current.width = 300;
+		canvasRef.current.height = newImageData.height;
+		canvasRef.current.width = newImageData.width;
 		canvas.putImageData(newImageData, 0, 0);
 		let index = 1;
 		for (const barcode of barcodes) {

@@ -30,8 +30,11 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 	};
 
 	const getBarcodeData = (barcode: DetectedBarcode) => {
-		const value = barcode.rawValue.split('*').slice(1, -1).join('*');
+		const values = barcode.rawValue.split('*').slice(1, -1);
+		return values.flatMap(value => getBarcodeDataToken(value));
+	};
 
+	const getBarcodeDataToken = (value: string) => {
 		if (value.startsWith('S')) {
 			const index = +value.substring(1, 1);
 			const specialization = getSpecialization(index);
@@ -54,6 +57,7 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 				return [`${value.substring(0, 2)}${color}`];
 			}
 		}
+
 		const foo = value
 			.replace('L', '<')
 			.replace('R', '>')
