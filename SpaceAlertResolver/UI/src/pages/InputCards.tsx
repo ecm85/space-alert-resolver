@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BarcodeScanner } from '~/components/BarcodeScanner';
 import { MessageEventData } from '~/models';
+import styles from './InputCards.css';
 
 export interface InputCardsProps {
 	gameCode: string;
@@ -124,7 +125,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		const top = [];
 		const bottom = [];
 		for (const barcode of barcodes) {
-			if (barcode.boundingBox.top > dividingLine) {
+			if (barcode.boundingBox.bottom < dividingLine) {
 				top.push(barcode);
 			} else {
 				bottom.push(barcode);
@@ -160,7 +161,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	};
 
 	const getBarcodeData = (barcode: DetectedBarcode) => {
-		const value = barcode.rawValue;
+		const value = barcode.rawValue.split('*').slice(1, -1).join('-');
 
 		if (value.startsWith('S')) {
 			const index = +value.substring(1, 1);
@@ -240,7 +241,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 					validateBarcodes={validateBarcodes}
 				/>
 			)}
-			{barcodes && <canvas ref={canvasRef}></canvas>}
+			{barcodes && <canvas className={styles['canvas']} ref={canvasRef}></canvas>}
 			<div>
 				{barcodeData.length > 0 &&
 					barcodeData.map((barcodeData, index) => (
