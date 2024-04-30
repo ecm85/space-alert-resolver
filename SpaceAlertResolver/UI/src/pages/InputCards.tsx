@@ -41,7 +41,8 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		canvasRef.current.width = newImageData.width;
 		canvas.putImageData(newImageData, 0, 0);
 		let index = 1;
-		for (const barcode of barcodes) {
+		for (const barcode of newBarcodes) {
+			canvas.fillStyle = 'blue';
 			canvas.fillRect(
 				barcode.boundingBox.left,
 				barcode.boundingBox.top,
