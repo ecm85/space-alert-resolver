@@ -14,7 +14,7 @@ export enum IWorkflowState {
 
 export interface BarcodeScannerProps {
 	validateBarcodes(barcodes: DetectedBarcode[]): React.ReactNode;
-	onBarcodesScan(barcodes: DetectedBarcode[]): void;
+	onBarcodesScan(barcodes: DetectedBarcode[], imageData: ImageData): void;
 }
 
 export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScannerProps) {
@@ -24,6 +24,7 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 
 	const {
 		barcodes,
+		imageData,
 		validationError,
 		scan,
 		scanTimeoutId,
@@ -76,7 +77,7 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 				if (scanTimeoutId) {
 					window.clearTimeout(scanTimeoutId);
 				}
-				onBarcodesScan(barcodes);
+				onBarcodesScan(barcodes, imageData);
 				break;
 		}
 	}, [workflowState]);

@@ -17,6 +17,7 @@ export const useBarcodeScanning = ({
 	const [barcodes, setBarcodes] = useState(initialBarcodes);
 	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
 	const [validationError, setValidationError] = useState<ReactNode>([]);
+	const [imageData, setImageData] = useState<ImageData>(null);
 	const scan = async () => {
 		try {
 			const barcodes = await tryGetBarcodes();
@@ -44,8 +45,9 @@ export const useBarcodeScanning = ({
 		canvasRef.current.height = videoHeight;
 		canvasRef.current.width = videoWidth;
 		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
-		const imageData = canvas.getImageData(0, 0, videoWidth, videoHeight);
-		return barcodeDetector.detect(imageData);
+		const newImageData = canvas.getImageData(0, 0, videoWidth, videoHeight);
+		setImageData(newImageData);
+		return barcodeDetector.detect(newImageData);
 	};
 	const reset = () => {
 		setBarcodes(initialBarcodes);
@@ -53,6 +55,7 @@ export const useBarcodeScanning = ({
 	return {
 		scan,
 		barcodes,
+		imageData,
 		scanTimeoutId,
 		reset,
 		validationError
