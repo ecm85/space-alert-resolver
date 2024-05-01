@@ -1,15 +1,16 @@
 .video {
-	width: 100%;
-	height: auto;
-}
-
-.video.hiddenVideo {
 	width: 1px;
 	height: 1px;
 }
 
-.videoWrapper {
-	max-height: 300px;
-	max-width: 300px;
-	position: relative;
+.buttons {
+	display: flex;
+	flex-direction: row;
+	column-gap: 1rem;
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
 }

@@ -1,13 +1,16 @@
-fix routes - hitting /create directly should work
 use well-known domain for apigateway, on both client and server?
 look-and-feel
+h2's
 exclude tricky letters/numbers in codes: DILO01 ?
 test invalid code
 test expired code somehow?
 allow reconnecting to game?
-address joining to host list hack? try useStateRef
 make able to send code to clients (copy to clipboard, get from URL)
-
+allow re-scan
+allow full-screen video
+allow 'enhance' for post-video screenshot
+show codes as you scan?
+sometimes showing codes backwards (but getting the right codes?)
 
 - New repo to generate labels
   - Figure out card counts

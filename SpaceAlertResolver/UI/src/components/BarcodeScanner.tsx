@@ -1,8 +1,8 @@
-import cx from 'classnames';
 import styles from './BarcodeScanner.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, MutableRefObject } from 'react';
 import { useBarcodeScanning, useCamera } from '~/hooks';
 import { Button } from '@mui/material';
+import Typography from '@mui/material/Typography/Typography';
 
 export enum IWorkflowState {
 	Initial,
@@ -14,17 +14,22 @@ export enum IWorkflowState {
 
 export interface BarcodeScannerProps {
 	validateBarcodes(barcodes: DetectedBarcode[]): React.ReactNode;
-	onBarcodesScan(barcodes: DetectedBarcode[], imageData: ImageData): void;
+	onBarcodesScan(barcodes: DetectedBarcode[]): void;
+	drawDetectedBarcodes(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): void;
+	canvasRef: MutableRefObject<HTMLCanvasElement>;
 }
 
-export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScannerProps) {
+export function BarcodeScanner({
+	onBarcodesScan,
+	validateBarcodes,
+	drawDetectedBarcodes,
+	canvasRef
+}: BarcodeScannerProps) {
 	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
-	const canvasRef = useRef<HTMLCanvasElement>();
 	const videoRef = useRef<HTMLVideoElement>();
 
 	const {
 		barcodes,
-		imageData,
 		validationError,
 		scan,
 		scanTimeoutId,
@@ -32,7 +37,8 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 	} = useBarcodeScanning({
 		canvasRef,
 		validateBarcodes,
-		videoRef
+		videoRef,
+		drawDetectedBarcodes
 	});
 
 	const {
@@ -77,7 +83,7 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 				if (scanTimeoutId) {
 					window.clearTimeout(scanTimeoutId);
 				}
-				onBarcodesScan(barcodes, imageData);
+				onBarcodesScan(barcodes);
 				break;
 		}
 	}, [workflowState]);
@@ -92,37 +98,44 @@ export function BarcodeScanner({ onBarcodesScan, validateBarcodes }: BarcodeScan
 		setWorkflowState(IWorkflowState.Initial);
 	};
 
-	const captureVideoClassName = cx(styles.video, {
-		[styles.hiddenVideo]: workflowState !== IWorkflowState.CameraStarted
-	});
-
 	const canStartScanning =
 		workflowState === IWorkflowState.Initial ||
 		workflowState === IWorkflowState.Done ||
 		workflowState === IWorkflowState.Error;
 
 	return (
-		<div>
-			<Button variant='contained' onClick={handleStartCameraClicked} disabled={!canStartScanning}>
-				Start Camera
-			</Button>
-			<Button
-				variant='contained'
-				onClick={handleStopCameraClicked}
-				disabled={workflowState !== IWorkflowState.CameraStarted}>
-				Stop Camera
-			</Button>
-			<canvas hidden ref={canvasRef}></canvas>
+		<div className={styles['root']}>
+			<div className={styles['buttons']}>
+				<Button variant='contained' onClick={handleStartCameraClicked} disabled={!canStartScanning}>
+					{workflowState === IWorkflowState.Initial ? 'Start Camera' : 'Scan Again'}
+				</Button>
+				<Button
+					variant='contained'
+					onClick={handleStopCameraClicked}
+					disabled={workflowState !== IWorkflowState.CameraStarted}>
+					Stop Camera
+				</Button>
+			</div>
+			{workflowState === IWorkflowState.CameraStarting && (
+				<Typography variant='body1'>Starting camera...</Typography>
+			)}
 			{workflowState === IWorkflowState.Error && (
 				<>
-					<div>Uh Oh! Something went wrong.</div>
-					<div>{error}</div>
+					<Typography variant='body1'>Uh Oh! Something went wrong.</Typography>
+					<Typography variant='body1'>{error}</Typography>
 				</>
 			)}
 			{validationError}
-			<div className={styles.videoWrapper}>
-				<video playsInline className={captureVideoClassName} autoPlay muted ref={videoRef}></video>
-			</div>
+			<video
+				playsInline
+				className={styles['video']}
+				autoPlay
+				muted
+				ref={videoRef}
+				controls
+				disablePictureInPicture
+				disableRemotePlayback
+				controlsList='nodownload'></video>
 		</div>
 	);
 }
