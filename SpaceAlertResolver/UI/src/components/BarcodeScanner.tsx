@@ -67,7 +67,13 @@ export function BarcodeScanner({
 	return (
 		<>
 			{validationError}
-			<video className={styles['video']} autoPlay muted ref={videoRef}></video>
+			<video
+				className={styles['video']}
+				autoPlay
+				webkit-playsinline
+				playsinline
+				muted
+				ref={videoRef}></video>
 		</>
 	);
 }
