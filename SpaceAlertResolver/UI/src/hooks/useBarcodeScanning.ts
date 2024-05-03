@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
@@ -7,26 +7,22 @@ export interface useBarcodeScanningProps {
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 }
 
-const timeout = 50;
-
 export const useBarcodeScanning = ({
 	videoRef,
 	canvasRef,
 	onBarcodesScan
 }: useBarcodeScanningProps) => {
 	const barcodeDetector = new BarcodeDetector();
-	const [timeoutId, setTimeoutId] = useState<number>(null);
 	const [validationError, setValidationError] = useState<ReactNode>([]);
 	const scan = async () => {
+		console.log('scan');
 		try {
-			if (videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
+			if (videoRef.current && videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
 				const newValidationError = await tryGetBarcodes();
 				setValidationError(newValidationError);
-				if (newValidationError) {
-					setTimeoutId(window.setTimeout(scan, timeout));
-				}
+				return !newValidationError;
 			} else {
-				setTimeoutId(window.setTimeout(scan, timeout));
+				return false;
 			}
 		} catch (error) {
 			console.info(`unable to detect qr code: - ${error.message}`);
@@ -46,13 +42,6 @@ export const useBarcodeScanning = ({
 		const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
 		return onBarcodesScan(validBarcodes, canvas);
 	};
-	useEffect(() => {
-		return () => {
-			if (timeoutId) {
-				clearTimeout(timeoutId);
-			}
-		};
-	}, []);
 	return {
 		scan,
 		validationError

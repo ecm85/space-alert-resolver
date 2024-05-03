@@ -51,11 +51,13 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	};
 
 	return (
-		<>
+		<div className={styles['root']}>
 			<h2>GameCode: {gameCode}</h2>
 			{message && <div>{message}</div>}
 			<BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} canvasRef={canvasRef} />
-			<canvas className={styles['canvas']} ref={canvasRef}></canvas>
+			<div className={styles['canvas-wrapper']}>
+				<canvas className={styles['canvas']} ref={canvasRef}></canvas>
+			</div>
 			<div>
 				{barcodeData.length > 0 &&
 					barcodeData.map((barcodeData, index) => (
@@ -67,6 +69,6 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 						</div>
 					))}
 			</div>
-		</>
+		</div>
 	);
 }

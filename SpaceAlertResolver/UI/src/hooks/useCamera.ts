@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
 export interface useCameraProps {
-	scan(): Promise<void>;
+	processCamera(): Promise<void>;
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
+	onError(error: string): void;
 }
 
-export const useCamera = ({ scan, videoRef }: useCameraProps) => {
-	const initialError = '';
-	const [mediaStream, setMediaStream] = useState<MediaStream>(null);
-	const [error, setError] = useState(initialError);
-	const [cameraStarted, setCameraStarted] = useState(false);
+export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) => {
+	const mediaStreamRef = useRef<MediaStream>(null);
+	const cameraStartedRef = useRef(false);
 	const startPreferredCameraAsync = async () => {
 		try {
 			if (await startSpecificCameraByEnsuringAccess()) {
@@ -41,21 +40,23 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 		const startPreferredCamera = async () => {
 			const startedCamera = await startPreferredCameraAsync();
 			if (startedCamera) {
-				setCameraStarted(true);
+				cameraStartedRef.current = true;
 			} else {
-				setError('Could not start camera.');
+				onError('Could not start camera.');
 			}
 		};
 		startPreferredCamera().catch(exception => {
-			setError(exception);
+			onError(exception);
 		});
 	};
 
 	const stopCamera = () => {
-		setCameraStarted(false);
-		videoRef.current.src = '';
-		if (mediaStream) {
-			const tracks = mediaStream.getTracks();
+		cameraStartedRef.current = false;
+		if (videoRef.current) {
+			videoRef.current.src = '';
+		}
+		if (mediaStreamRef.current) {
+			const tracks = mediaStreamRef.current.getTracks();
 			for (let i = 0; i < tracks.length; i++) {
 				tracks[i].stop();
 			}
@@ -78,8 +79,8 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 	const startSpecificCameraFromStream = async (stream: MediaStream) => {
 		try {
 			videoRef.current.srcObject = stream;
-			setMediaStream(stream);
-			await scan();
+			mediaStreamRef.current = stream;
+			await processCamera();
 			return true;
 		} catch (error) {
 			console.log(`unable to start camera: ${stream.id} - ${error.message}`);
@@ -125,5 +126,5 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	return { cameraStarted, startCamera, stopCamera, videoRef, error };
+	return { cameraStartedRef, startCamera, stopCamera, videoRef };
 };

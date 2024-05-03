@@ -9,12 +9,15 @@ export interface BarcodeScannerProps {
 	onError(error: string): void;
 }
 
+const timeout = 50;
+
 export function BarcodeScanner({
 	onCameraStart,
 	onError,
 	canvasRef,
 	onBarcodesScan
 }: BarcodeScannerProps) {
+	const intervalIdRef = useRef<number>(null);
 	const videoRef = useRef<HTMLVideoElement>();
 	const { validationError, scan } = useBarcodeScanning({
 		canvasRef,
@@ -22,37 +25,44 @@ export function BarcodeScanner({
 		onBarcodesScan
 	});
 
-	const { startCamera, stopCamera, cameraStarted, error } = useCamera({
-		scan,
-		videoRef
+	const processCamera = async () => {
+		const newIntervalId = window.setInterval(async () => {
+			const success = await scan();
+			if (success) {
+				window.clearInterval(newIntervalId);
+			}
+		}, timeout);
+		intervalIdRef.current = newIntervalId;
+	};
+
+	const { startCamera, stopCamera, cameraStartedRef } = useCamera({
+		processCamera,
+		videoRef,
+		onError
 	});
 
 	useEffect(() => {
 		if (videoRef.current) {
-			console.log('starting camera');
 			startCamera();
 		}
 	}, [videoRef]);
 
 	useEffect(() => {
-		if (cameraStarted) {
+		if (cameraStartedRef.current) {
 			onCameraStart();
 		}
-	}, [cameraStarted]);
+	}, [cameraStartedRef.current]);
 
 	useEffect(() => {
 		return () => {
-			if (cameraStarted) {
+			if (cameraStartedRef.current) {
 				stopCamera();
 			}
+			if (intervalIdRef.current) {
+				window.clearInterval(intervalIdRef.current);
+			}
 		};
-	});
-
-	useEffect(() => {
-		if (error) {
-			onError(error);
-		}
-	}, [error]);
+	}, []);
 
 	return (
 		<>
