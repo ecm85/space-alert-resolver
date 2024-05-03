@@ -1,11 +1,10 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
 	canvasRef: React.MutableRefObject<HTMLCanvasElement>;
-	validateBarcodes(barcodes: DetectedBarcode[]): ReactNode;
-	drawDetectedBarcodes(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): void;
+	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 }
 
 const timeout = 50;
@@ -13,31 +12,21 @@ const timeout = 50;
 export const useBarcodeScanning = ({
 	videoRef,
 	canvasRef,
-	validateBarcodes,
-	drawDetectedBarcodes
+	onBarcodesScan
 }: useBarcodeScanningProps) => {
-	const initialBarcodes: DetectedBarcode[] = [];
 	const barcodeDetector = new BarcodeDetector();
-	const [barcodes, setBarcodes] = useState(initialBarcodes);
-	const [cancelled, setCancelled] = useState(false);
+	const [timeoutId, setTimeoutId] = useState<number>(null);
 	const [validationError, setValidationError] = useState<ReactNode>([]);
 	const scan = async () => {
 		try {
 			if (videoRef.current.readyState === videoRef.current.HAVE_ENOUGH_DATA) {
-				const barcodes = await tryGetBarcodes();
-				const newValidationError = validateBarcodes(barcodes);
+				const newValidationError = await tryGetBarcodes();
 				setValidationError(newValidationError);
-				if (!newValidationError) {
-					setBarcodes(barcodes);
-				} else {
-					if (!cancelled) {
-						window.setTimeout(scan, timeout);
-					}
+				if (newValidationError) {
+					setTimeoutId(window.setTimeout(scan, timeout));
 				}
 			} else {
-				if (!cancelled) {
-					window.setTimeout(scan, timeout);
-				}
+				setTimeoutId(window.setTimeout(scan, timeout));
 			}
 		} catch (error) {
 			console.info(`unable to detect qr code: - ${error.message}`);
@@ -55,21 +44,17 @@ export const useBarcodeScanning = ({
 		const imageData = canvas.getImageData(0, 0, videoWidth, videoHeight);
 		const barcodes = await barcodeDetector.detect(imageData);
 		const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
-		drawDetectedBarcodes(validBarcodes, canvas);
-		return validBarcodes;
+		return onBarcodesScan(validBarcodes, canvas);
 	};
-	const reset = () => {
-		setBarcodes(initialBarcodes);
-		setCancelled(false);
-	};
-	const cancelScanning = () => {
-		setCancelled(true);
-	};
+	useEffect(() => {
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+		};
+	}, []);
 	return {
 		scan,
-		barcodes,
-		cancelScanning,
-		reset,
 		validationError
 	};
 };

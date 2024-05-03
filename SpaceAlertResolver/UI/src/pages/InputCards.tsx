@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BarcodeScanner } from '~/components/BarcodeScanner';
+import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { useBarcodeData } from '~/hooks';
 import { useCardScanning } from '~/hooks/useCardScanning';
 import { MessageEventData } from '~/models';
@@ -37,21 +37,24 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		};
 	}, []);
 
-	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
-		const { barcodesInOrder } = getBarcodesInOrder(newBarcodes);
-		setBarcodes(barcodesInOrder);
+	const handleBarcodesScanned = (
+		newBarcodes: DetectedBarcode[],
+		canvas: CanvasRenderingContext2D
+	) => {
+		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
+		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
+		const errors = validateBarcodes(barcodesInOrder, dividingLine);
+		if (!errors) {
+			setBarcodes(barcodesInOrder);
+		}
+		return errors;
 	};
 
 	return (
 		<>
 			<h2>GameCode: {gameCode}</h2>
 			{message && <div>{message}</div>}
-			<BarcodeScanner
-				onBarcodesScan={handleBarcodesScanned}
-				validateBarcodes={validateBarcodes}
-				drawDetectedBarcodes={drawDetectedBarcodes}
-				canvasRef={canvasRef}
-			/>
+			<BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} canvasRef={canvasRef} />
 			<canvas className={styles['canvas']} ref={canvasRef}></canvas>
 			<div>
 				{barcodeData.length > 0 &&

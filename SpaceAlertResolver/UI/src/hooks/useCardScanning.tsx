@@ -41,8 +41,11 @@ export function useCardScanning() {
 		);
 	};
 
-	const drawDetectedBarcodes = (barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
-		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(barcodes);
+	const drawDetectedBarcodes = (
+		barcodesInOrder: DetectedBarcode[],
+		dividingLine: number,
+		canvas: CanvasRenderingContext2D
+	) => {
 		const dividingLineWidth = 3;
 		if (dividingLine) {
 			canvas.fillStyle = 'blue';
@@ -64,13 +67,14 @@ export function useCardScanning() {
 		}
 	};
 
-	const validateBarcodes = (barcodes: DetectedBarcode[]) => {
-		if (barcodes.length != 12) {
+	const validateBarcodes = (barcodesInOrder: DetectedBarcode[], dividingLine: number) => {
+		if (barcodesInOrder.length != 12) {
 			return (
-				<Typography variant='body1'>Looking for 12 barcodes. Found: {barcodes.length}.</Typography>
+				<Typography variant='body1'>
+					Looking for 12 barcodes. Found: {barcodesInOrder.length}.
+				</Typography>
 			);
 		}
-		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(barcodes);
 		if (dividingLine === null) {
 			return (
 				<Typography variant='body1'>Ensure that the bottom row is below the top row.</Typography>
