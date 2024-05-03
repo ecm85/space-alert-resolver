@@ -48,11 +48,14 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 				setError('Could not start camera.');
 			}
 		};
-		startPreferredCamera().catch(exception => {
-			setError(exception);
-		});
-		setCameraLogs(newCameraLogs);
-		console.log(newCameraLogs);
+		startPreferredCamera()
+			.catch(exception => {
+				setError(exception);
+			})
+			.finally(() => {
+				setCameraLogs(newCameraLogs);
+				console.log(newCameraLogs);
+			});
 	};
 
 	const stopCamera = () => {
