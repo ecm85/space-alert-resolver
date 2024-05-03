@@ -14,11 +14,13 @@ export enum IWorkflowState {
 
 export interface BarcodeScanningWorkflowProps {
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
+	onClear(): void;
 	canvasRef: MutableRefObject<HTMLCanvasElement>;
 }
 
 export function BarcodeScanningWorkflow({
 	onBarcodesScan,
+	onClear,
 	canvasRef
 }: BarcodeScanningWorkflowProps) {
 	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
@@ -37,11 +39,21 @@ export function BarcodeScanningWorkflow({
 	};
 
 	const handleStartCameraClicked = () => {
+		onClear();
 		setWorkflowState(IWorkflowState.CameraStarting);
 	};
 
 	const handleStopCameraClicked = () => {
+		onClear();
 		setWorkflowState(IWorkflowState.Initial);
+	};
+
+	const handleBarcodesScanned = (barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
+		const result = onBarcodesScan(barcodes, canvas);
+		if (!result) {
+			setWorkflowState(IWorkflowState.Done);
+		}
+		return result;
 	};
 
 	return (
@@ -69,7 +81,7 @@ export function BarcodeScanningWorkflow({
 			{isScanning && (
 				<BarcodeScanner
 					canvasRef={canvasRef}
-					onBarcodesScan={onBarcodesScan}
+					onBarcodesScan={handleBarcodesScanned}
 					onCameraStart={handleCameraStarted}
 					onError={handleError}
 				/>

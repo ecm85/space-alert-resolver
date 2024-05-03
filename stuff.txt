@@ -1,3 +1,5 @@
+handle server error after deploy? also show error on client when server error on socket?
+
 use well-known domain for apigateway, on both client and server?
 look-and-feel
 h2's

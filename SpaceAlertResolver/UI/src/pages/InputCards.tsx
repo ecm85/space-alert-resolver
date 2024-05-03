@@ -37,6 +37,12 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		};
 	}, []);
 
+	const handleClear = () => {
+		setBarcodes([]);
+		const context = canvasRef.current.getContext('2d');
+		context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+	};
+
 	const handleBarcodesScanned = (
 		newBarcodes: DetectedBarcode[],
 		canvas: CanvasRenderingContext2D
@@ -54,7 +60,11 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		<div className={styles['root']}>
 			<h2>GameCode: {gameCode}</h2>
 			{message && <div>{message}</div>}
-			<BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} canvasRef={canvasRef} />
+			<BarcodeScanningWorkflow
+				onBarcodesScan={handleBarcodesScanned}
+				canvasRef={canvasRef}
+				onClear={handleClear}
+			/>
 			<div className={styles['canvas-wrapper']}>
 				<canvas className={styles['canvas']} ref={canvasRef}></canvas>
 			</div>
