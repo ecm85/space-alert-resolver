@@ -22,20 +22,30 @@ export function BarcodeScanner({
 		onBarcodesScan
 	});
 
-	const { startCamera, cameraStarted, error } = useCamera({
+	const { startCamera, stopCamera, cameraStarted, error } = useCamera({
 		scan,
 		videoRef
 	});
 
 	useEffect(() => {
-		startCamera();
-	}, []);
+		if (videoRef.current) {
+			startCamera();
+		}
+	}, [videoRef]);
 
 	useEffect(() => {
 		if (cameraStarted) {
 			onCameraStart();
 		}
 	}, [cameraStarted]);
+
+	useEffect(() => {
+		return () => {
+			if (cameraStarted) {
+				stopCamera();
+			}
+		};
+	});
 
 	useEffect(() => {
 		if (error) {

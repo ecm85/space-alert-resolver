@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export interface useCameraProps {
 	scan(): void;
@@ -131,13 +131,5 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	useEffect(() => {
-		return () => {
-			if (cameraStarted) {
-				stopCamera();
-			}
-		};
-	});
-
-	return { cameraStarted, startCamera, videoRef, cameraLogs, error };
+	return { cameraStarted, startCamera, stopCamera, videoRef, cameraLogs, error };
 };
