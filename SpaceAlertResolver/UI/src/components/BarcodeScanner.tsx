@@ -32,7 +32,7 @@ export function BarcodeScanner({
 		barcodes,
 		validationError,
 		scan,
-		scanTimeoutId,
+		cancelScanning,
 		reset: resetBarcodeScanning
 	} = useBarcodeScanning({
 		canvasRef,
@@ -74,18 +74,14 @@ export function BarcodeScanner({
 		switch (workflowState) {
 			case IWorkflowState.Initial:
 				stopCamera();
-				if (scanTimeoutId) {
-					window.clearTimeout(scanTimeoutId);
-				}
+				cancelScanning();
 				break;
 			case IWorkflowState.CameraStarting:
 				startCamera();
 				break;
 			case IWorkflowState.Done:
 				stopCamera();
-				if (scanTimeoutId) {
-					window.clearTimeout(scanTimeoutId);
-				}
+				cancelScanning();
 				onBarcodesScan(barcodes);
 				break;
 		}

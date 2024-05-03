@@ -19,7 +19,7 @@ export const useBarcodeScanning = ({
 	const initialBarcodes: DetectedBarcode[] = [];
 	const barcodeDetector = new BarcodeDetector();
 	const [barcodes, setBarcodes] = useState(initialBarcodes);
-	const [scanTimeoutId, setScanTimeoutId] = useState<number>(null);
+	const [cancelled, setCancelled] = useState(false);
 	const [validationError, setValidationError] = useState<ReactNode>([]);
 	const scan = async () => {
 		try {
@@ -30,10 +30,14 @@ export const useBarcodeScanning = ({
 				if (!newValidationError) {
 					setBarcodes(barcodes);
 				} else {
-					setScanTimeoutId(window.setTimeout(scan, timeout));
+					if (!cancelled) {
+						window.setTimeout(scan, timeout);
+					}
 				}
 			} else {
-				setScanTimeoutId(window.setTimeout(scan, timeout));
+				if (!cancelled) {
+					window.setTimeout(scan, timeout);
+				}
 			}
 		} catch (error) {
 			console.info(`unable to detect qr code: - ${error.message}`);
@@ -57,11 +61,15 @@ export const useBarcodeScanning = ({
 	};
 	const reset = () => {
 		setBarcodes(initialBarcodes);
+		setCancelled(false);
+	};
+	const cancelScanning = () => {
+		setCancelled(true);
 	};
 	return {
 		scan,
 		barcodes,
-		scanTimeoutId,
+		cancelScanning,
 		reset,
 		validationError
 	};
