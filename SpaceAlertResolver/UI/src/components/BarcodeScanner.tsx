@@ -71,7 +71,7 @@ export function BarcodeScanner({
 				className={styles['video']}
 				autoPlay
 				webkit-playsinline
-				playsinline
+				playsInline
 				muted
 				ref={videoRef}></video>
 		</>
