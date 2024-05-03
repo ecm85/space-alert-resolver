@@ -45,6 +45,7 @@ export const useBarcodeScanning = ({
 			willReadFrequently: true
 		});
 		const { videoWidth, videoHeight } = videoRef.current;
+		console.log(videoRef.current);
 		canvasRef.current.height = videoHeight;
 		canvasRef.current.width = videoWidth;
 		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);

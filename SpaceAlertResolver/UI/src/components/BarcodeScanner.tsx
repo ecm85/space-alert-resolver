@@ -126,16 +126,7 @@ export function BarcodeScanner({
 				</>
 			)}
 			{validationError}
-			<video
-				playsInline
-				className={styles['video']}
-				autoPlay
-				muted
-				ref={videoRef}
-				controls
-				disablePictureInPicture
-				disableRemotePlayback
-				controlsList='nodownload'></video>
+			<video className={styles['video']} autoPlay muted ref={videoRef}></video>
 		</div>
 	);
 }
