@@ -3,6 +3,7 @@ import { BarcodeScanner } from '~/components/BarcodeScanner';
 import { useBarcodeData } from '~/hooks';
 import { useCardScanning } from '~/hooks/useCardScanning';
 import { MessageEventData } from '~/models';
+import styles from './InputCards.css';
 
 export interface InputCardsProps {
 	gameCode: string;
@@ -51,7 +52,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				drawDetectedBarcodes={drawDetectedBarcodes}
 				canvasRef={canvasRef}
 			/>
-			<canvas ref={canvasRef}></canvas>
+			<canvas className={styles['canvas']} ref={canvasRef}></canvas>
 			<div>
 				{barcodeData.length > 0 &&
 					barcodeData.map((barcodeData, index) => (
