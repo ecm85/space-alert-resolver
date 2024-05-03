@@ -41,11 +41,9 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		newBarcodes: DetectedBarcode[],
 		canvas: CanvasRenderingContext2D
 	) => {
-		console.log(newBarcodes);
 		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
 		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
 		const errors = validateBarcodes(barcodesInOrder, dividingLine);
-		console.log(errors);
 		if (!errors) {
 			setBarcodes(barcodesInOrder);
 		}

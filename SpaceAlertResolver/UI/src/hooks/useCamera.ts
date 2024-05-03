@@ -8,54 +8,47 @@ export interface useCameraProps {
 export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 	const initialError = '';
 	const [mediaStream, setMediaStream] = useState<MediaStream>(null);
-	const [cameraLogs, setCameraLogs] = useState<string[]>([]);
 	const [error, setError] = useState(initialError);
 	const [cameraStarted, setCameraStarted] = useState(false);
-	const startPreferredCameraAsync = async (newCameraLogs: string[]) => {
+	const startPreferredCameraAsync = async () => {
 		try {
-			if (await startSpecificCameraByEnsuringAccess(newCameraLogs)) {
+			if (await startSpecificCameraByEnsuringAccess()) {
 				return true;
 			}
 			const cameraInfos = await getCameraInfos();
-			newCameraLogs.push(`got ${cameraInfos.length} camera infos`);
+			console.log(`got ${cameraInfos.length} camera infos`);
 			let cameraIndex = 0;
 			for (const cameraInfo of cameraInfos) {
-				newCameraLogs.push(`camera info ${cameraIndex}: ${cameraInfo.label}`);
+				console.log(`camera info ${cameraIndex}: ${cameraInfo.label}`);
 				cameraIndex++;
 			}
 			const orderedCameraInfos = orderCameraInfos(cameraInfos);
 			for (const cameraInfo of orderedCameraInfos) {
-				newCameraLogs.push(`trying to start ${cameraInfo.label}`);
-				if (await startSpecificCameraFromInfo(cameraInfo, newCameraLogs)) {
+				console.log(`trying to start ${cameraInfo.label}`);
+				if (await startSpecificCameraFromInfo(cameraInfo)) {
 					return true;
 				}
 			}
-			newCameraLogs.push(`couldn't start any of ${orderCameraInfos.length} cameras`);
+			console.log(`couldn't start any of ${orderCameraInfos.length} cameras`);
 			return false;
 		} catch (error) {
-			newCameraLogs.push(`unable to access camera: ${error.message}`);
+			console.log(`unable to access camera: ${error.message}`);
 			return false;
 		}
 	};
 
 	const startCamera = () => {
-		const newCameraLogs: string[] = [];
 		const startPreferredCamera = async () => {
-			const startedCamera = await startPreferredCameraAsync(newCameraLogs);
+			const startedCamera = await startPreferredCameraAsync();
 			if (startedCamera) {
 				setCameraStarted(true);
 			} else {
 				setError('Could not start camera.');
 			}
 		};
-		startPreferredCamera()
-			.catch(exception => {
-				setError(exception);
-			})
-			.finally(() => {
-				setCameraLogs(newCameraLogs);
-				console.log(newCameraLogs);
-			});
+		startPreferredCamera().catch(exception => {
+			setError(exception);
+		});
 	};
 
 	const stopCamera = () => {
@@ -69,43 +62,40 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 		}
 	};
 
-	const startSpecificCameraFromInfo = async (
-		cameraInfo: MediaDeviceInfo,
-		newCameraLogs: string[]
-	) => {
+	const startSpecificCameraFromInfo = async (cameraInfo: MediaDeviceInfo) => {
 		try {
 			const camera = await navigator.mediaDevices.getUserMedia({
 				audio: true,
 				video: { deviceId: { exact: cameraInfo.deviceId } }
 			});
-			return await startSpecificCameraFromStream(camera, newCameraLogs);
+			return await startSpecificCameraFromStream(camera);
 		} catch (error) {
-			newCameraLogs.push(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
+			console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
 			return false;
 		}
 	};
 
-	const startSpecificCameraFromStream = async (stream: MediaStream, newCameraLogs: string[]) => {
+	const startSpecificCameraFromStream = async (stream: MediaStream) => {
 		try {
 			videoRef.current.srcObject = stream;
 			setMediaStream(stream);
 			await scan();
 			return true;
 		} catch (error) {
-			newCameraLogs.push(`unable to start camera: ${stream.id} - ${error.message}`);
+			console.log(`unable to start camera: ${stream.id} - ${error.message}`);
 			return false;
 		}
 	};
 
-	const startSpecificCameraByEnsuringAccess = async (newCameraLogs: string[]) => {
+	const startSpecificCameraByEnsuringAccess = async () => {
 		try {
 			const initialCamera = await navigator.mediaDevices.getUserMedia({
 				audio: true,
 				video: { facingMode: { ideal: 'environment' } }
 			});
-			return await startSpecificCameraFromStream(initialCamera, newCameraLogs);
+			return await startSpecificCameraFromStream(initialCamera);
 		} catch (error) {
-			newCameraLogs.push(`unable to get camera: ${error.message}`);
+			console.log(`unable to get camera: ${error.message}`);
 			return false;
 		}
 	};
@@ -135,5 +125,5 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	return { cameraStarted, startCamera, stopCamera, videoRef, cameraLogs, error };
+	return { cameraStarted, startCamera, stopCamera, videoRef, error };
 };
