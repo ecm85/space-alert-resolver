@@ -74,6 +74,9 @@ export function BarcodeScanner({
 		switch (workflowState) {
 			case IWorkflowState.Initial:
 				stopCamera();
+				if (scanTimeoutId) {
+					window.clearTimeout(scanTimeoutId);
+				}
 				break;
 			case IWorkflowState.CameraStarting:
 				startCamera();
