@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export interface useCameraProps {
-	scan(): void;
+	scan(): Promise<void>;
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
 }
 
@@ -52,6 +52,7 @@ export const useCamera = ({ scan, videoRef }: useCameraProps) => {
 			setError(exception);
 		});
 		setCameraLogs(newCameraLogs);
+		console.log(newCameraLogs);
 	};
 
 	const stopCamera = () => {

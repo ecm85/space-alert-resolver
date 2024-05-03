@@ -29,6 +29,7 @@ export function BarcodeScanner({
 
 	useEffect(() => {
 		if (videoRef.current) {
+			console.log('starting camera');
 			startCamera();
 		}
 	}, [videoRef]);
