@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using LambdaShared;
@@ -46,6 +47,9 @@ namespace SendToHostLambda
 				}
 				else
 				{
+					context.Logger.Log(
+						$"Data from client: {JsonSerializer.Serialize(sendToHostRequest.Data)}"
+					);
 					var hostConnectionId = existingGame.Item[GameService.ConnectionIdField].S;
 					await webSocketService.SendMessage(
 						requestContext,
