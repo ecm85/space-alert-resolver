@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 
 export interface useCameraProps {
-	processCamera(): Promise<void>;
+	processCamera(): void;
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
+	canvasRef: React.MutableRefObject<HTMLCanvasElement>;
 	onError(error: string): void;
 }
 
-export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) => {
+export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCameraProps) => {
 	const mediaStreamRef = useRef<MediaStream>(null);
 	const cameraStartedRef = useRef(false);
 	const startPreferredCameraAsync = async () => {
@@ -69,18 +70,18 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				audio: true,
 				video: { deviceId: { exact: cameraInfo.deviceId } }
 			});
-			return await startSpecificCameraFromStream(camera);
+			return startSpecificCameraFromStream(camera);
 		} catch (error) {
 			console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
 			return false;
 		}
 	};
 
-	const startSpecificCameraFromStream = async (stream: MediaStream) => {
+	const startSpecificCameraFromStream = (stream: MediaStream) => {
 		try {
 			videoRef.current.srcObject = stream;
 			mediaStreamRef.current = stream;
-			await processCamera();
+			processCamera();
 			return true;
 		} catch (error) {
 			console.log(`unable to start camera: ${stream.id} - ${error.message}`);
@@ -94,7 +95,7 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				audio: true,
 				video: { facingMode: { ideal: 'environment' } }
 			});
-			return await startSpecificCameraFromStream(initialCamera);
+			return startSpecificCameraFromStream(initialCamera);
 		} catch (error) {
 			console.log(`unable to get camera: ${error.message}`);
 			return false;
@@ -126,5 +127,15 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	return { cameraStartedRef, startCamera, stopCamera, videoRef };
+	const drawCameraOnCanvas = () => {
+		const canvas = canvasRef.current.getContext('2d', {
+			willReadFrequently: true
+		});
+		const { videoWidth, videoHeight } = videoRef.current;
+		canvasRef.current.height = videoHeight;
+		canvasRef.current.width = videoWidth;
+		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
+	};
+
+	return { cameraStartedRef, startCamera, stopCamera, drawCameraOnCanvas };
 };

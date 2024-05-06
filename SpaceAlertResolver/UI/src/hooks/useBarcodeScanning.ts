@@ -3,13 +3,15 @@ import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
 	videoRef: React.MutableRefObject<HTMLVideoElement>;
-	canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+	cameraCanvasRef: React.MutableRefObject<HTMLCanvasElement>;
+	barcodeCanvasRef: React.MutableRefObject<HTMLCanvasElement>;
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 }
 
 export const useBarcodeScanning = ({
 	videoRef,
-	canvasRef,
+	cameraCanvasRef,
+	barcodeCanvasRef,
 	onBarcodesScan
 }: useBarcodeScanningProps) => {
 	const barcodeDetector = new BarcodeDetector();
@@ -30,17 +32,19 @@ export const useBarcodeScanning = ({
 		}
 	};
 	const tryGetBarcodes = async () => {
-		const canvas = canvasRef.current.getContext('2d', {
+		const cameraCanvas = cameraCanvasRef.current.getContext('2d', {
+			willReadFrequently: true
+		});
+		const barcodeCanvas = barcodeCanvasRef.current.getContext('2d', {
 			willReadFrequently: true
 		});
 		const { videoWidth, videoHeight } = videoRef.current;
-		canvasRef.current.height = videoHeight;
-		canvasRef.current.width = videoWidth;
-		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
-		const imageData = canvas.getImageData(0, 0, videoWidth, videoHeight);
+		barcodeCanvasRef.current.height = videoHeight;
+		barcodeCanvasRef.current.width = videoWidth;
+		const imageData = cameraCanvas.getImageData(0, 0, videoWidth, videoHeight);
 		const barcodes = await barcodeDetector.detect(imageData);
 		const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
-		return onBarcodesScan(validBarcodes, canvas);
+		return onBarcodesScan(validBarcodes, barcodeCanvas);
 	};
 	return {
 		scan,

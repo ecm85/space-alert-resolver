@@ -3,6 +3,16 @@
 	max-height: 80vh;
 }
 
+.canvas-overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.canvas-wrapper {
+	position: relative;
+}
+
 .root {
 	display: flex;
 	flex-direction: column;

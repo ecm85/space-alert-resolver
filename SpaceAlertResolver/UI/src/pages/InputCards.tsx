@@ -13,7 +13,8 @@ export interface InputCardsProps {
 export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const [message, setMessage] = useState<string>(null);
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
-	const canvasRef = useRef<HTMLCanvasElement>(null);
+	const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
+	const barcodeCanvasRef = useRef<HTMLCanvasElement>(null);
 	const { barcodeData } = useBarcodeData({ barcodes });
 
 	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
@@ -39,8 +40,10 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 
 	const handleClear = () => {
 		setBarcodes([]);
-		const context = canvasRef.current.getContext('2d');
-		context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+		const cameraContext = cameraCanvasRef.current.getContext('2d');
+		cameraContext.clearRect(0, 0, cameraCanvasRef.current.width, cameraCanvasRef.current.height);
+		const barcodeContext = barcodeCanvasRef.current.getContext('2d');
+		barcodeContext.clearRect(0, 0, barcodeCanvasRef.current.width, barcodeCanvasRef.current.height);
 	};
 
 	const handleBarcodesScanned = (
@@ -62,11 +65,13 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			{message && <div>{message}</div>}
 			<BarcodeScanningWorkflow
 				onBarcodesScan={handleBarcodesScanned}
-				canvasRef={canvasRef}
+				barcodeCanvasRef={barcodeCanvasRef}
+				cameraCanvasRef={cameraCanvasRef}
 				onClear={handleClear}
 			/>
 			<div className={styles['canvas-wrapper']}>
-				<canvas className={styles['canvas']} ref={canvasRef}></canvas>
+				<canvas className={styles['canvas']} ref={cameraCanvasRef}></canvas>
+				<canvas className={styles['canvas-overlay']} ref={barcodeCanvasRef}></canvas>
 			</div>
 			<div>
 				{barcodeData.length > 0 &&

@@ -3,42 +3,50 @@ import { useBarcodeScanning, useCamera } from '~/hooks';
 import styles from './BarcodeScanner.css';
 
 export interface BarcodeScannerProps {
-	canvasRef: MutableRefObject<HTMLCanvasElement>;
+	cameraCanvasRef: MutableRefObject<HTMLCanvasElement>;
+	barcodeCanvasRef: MutableRefObject<HTMLCanvasElement>;
 	onCameraStart(): void;
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 	onError(error: string): void;
 }
 
-const timeout = 50;
+const cameraTimeout = 10;
+const canvasTimeout = 100;
 
 export function BarcodeScanner({
 	onCameraStart,
 	onError,
-	canvasRef,
+	cameraCanvasRef,
+	barcodeCanvasRef,
 	onBarcodesScan
 }: BarcodeScannerProps) {
-	const intervalIdRef = useRef<number>(null);
+	const cameraIntervalIdRef = useRef<number>(null);
+	const canvasIntervalIdRef = useRef<number>(null);
 	const videoRef = useRef<HTMLVideoElement>();
 	const { validationError, scan } = useBarcodeScanning({
-		canvasRef,
+		barcodeCanvasRef,
+		cameraCanvasRef,
 		videoRef,
 		onBarcodesScan
 	});
 
-	const processCamera = async () => {
-		const newIntervalId = window.setInterval(async () => {
+	const processCamera = () => {
+		const canvasIntervalId = window.setInterval(async () => {
 			const success = await scan();
 			if (success) {
-				window.clearInterval(newIntervalId);
+				window.clearInterval(canvasIntervalId);
 			}
-		}, timeout);
-		intervalIdRef.current = newIntervalId;
+		}, canvasTimeout);
+		canvasIntervalIdRef.current = canvasIntervalId;
+		const cameraIntervalId = window.setInterval(drawCameraOnCanvas, cameraTimeout);
+		cameraIntervalIdRef.current = cameraIntervalId;
 	};
 
-	const { startCamera, stopCamera, cameraStartedRef } = useCamera({
+	const { startCamera, stopCamera, cameraStartedRef, drawCameraOnCanvas } = useCamera({
 		processCamera,
 		videoRef,
-		onError
+		onError,
+		canvasRef: cameraCanvasRef
 	});
 
 	useEffect(() => {
@@ -58,8 +66,11 @@ export function BarcodeScanner({
 			if (cameraStartedRef.current) {
 				stopCamera();
 			}
-			if (intervalIdRef.current) {
-				window.clearInterval(intervalIdRef.current);
+			if (cameraIntervalIdRef.current) {
+				window.clearInterval(cameraIntervalIdRef.current);
+			}
+			if (canvasIntervalIdRef.current) {
+				window.clearInterval(canvasIntervalIdRef.current);
 			}
 		};
 	}, []);
