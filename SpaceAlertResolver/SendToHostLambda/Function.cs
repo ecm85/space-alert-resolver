@@ -63,7 +63,7 @@ namespace SendToHostLambda
 						requestContext,
 						"ClientMessageReceived",
 						hostConnectionId,
-						new { data = sendToHostRequest.Data, connectionId }
+						new { barcodeData = sendToHostRequest.Data.BarcodeData, connectionId }
 					);
 					await webSocketService.SendMessage(
 						requestContext,
