@@ -1,4 +1,4 @@
-import { Button } from '@mui/base';
+import { Button } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { useBarcodeData } from '~/hooks';
