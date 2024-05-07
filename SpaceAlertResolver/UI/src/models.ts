@@ -21,13 +21,15 @@ export interface ClientJoinedEvent {
 	event: 'ClientJoined';
 	data: {
 		name: string;
+		connectionId: string;
 	};
 }
 
 export interface ClientMessageReceivedEvent {
 	event: 'ClientMessageReceived';
 	data: {
-		text: string;
+		connectionId: string;
+		barcodeData: string[][];
 	};
 }
 
@@ -43,3 +45,8 @@ export type MessageEventData =
 	| ClientJoinedEvent
 	| ClientMessageReceivedEvent
 	| YourMessageSentEvent;
+
+export interface Client {
+	name: string;
+	connectionId: string;
+}

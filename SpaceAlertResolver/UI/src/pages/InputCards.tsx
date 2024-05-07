@@ -1,3 +1,4 @@
+import { Button } from '@mui/base';
 import React, { useEffect, useRef, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { useBarcodeData } from '~/hooks';
@@ -59,6 +60,13 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		return errors;
 	};
 
+	const handleSendToServerClicked = () => {
+		const data = {
+			barcodeData
+		};
+		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
+	};
+
 	return (
 		<div className={styles['root']}>
 			<h2>GameCode: {gameCode}</h2>
@@ -73,17 +81,13 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				<canvas className={styles['canvas']} ref={cameraCanvasRef}></canvas>
 				<canvas className={styles['canvas-overlay']} ref={barcodeCanvasRef}></canvas>
 			</div>
-			<div>
-				{barcodeData.length > 0 &&
-					barcodeData.map((barcodeData, index) => (
-						<div>
-							Barcode {index + 1}:{' '}
-							{barcodeData.map(barcodePiece => (
-								<div>{barcodePiece}</div>
-							))}
-						</div>
-					))}
-			</div>
+			{barcodeData.length > 0 && (
+				<div>
+					<Button onClick={handleSendToServerClicked} variant='contained'>
+						Submit Cards
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }

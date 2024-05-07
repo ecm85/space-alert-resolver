@@ -2,13 +2,15 @@ import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
-import { MessageEventData } from '~/models';
+import { Client, MessageEventData } from '~/models';
 import styles from './CreateGame.css';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string>(null);
 	const { connection, connectionStarted } = useWebSocket();
-	const [clients, setClients, clientsRef] = useStateRef<string[]>([]);
+	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
+	const [barcodeDataByConnectionId, setBarcodeDataByConnectionId, barcodeDataByConnectionIdRef] =
+		useStateRef<Record<string, string[][]>>({});
 	const startGame = async () => {
 		connection.send(JSON.stringify({ action: 'CreateGame' }));
 	};
@@ -20,7 +22,13 @@ export function CreateGame() {
 				setGameCode(messageEventData.data.code);
 				return true;
 			case 'ClientJoined':
-				setClients([...clientsRef.current, messageEventData.data.name]);
+				setClients([...clientsRef.current, { ...messageEventData.data }]);
+				return true;
+			case 'ClientMessageReceived':
+				setBarcodeDataByConnectionId({
+					...barcodeDataByConnectionIdRef.current,
+					[messageEventData.data.connectionId]: messageEventData.data.barcodeData
+				});
 				return true;
 			default:
 				return false;
@@ -59,9 +67,28 @@ export function CreateGame() {
 			{clients.length > 0 && (
 				<div>
 					<h3>Clients</h3>
-					{clients.map(client => (
-						<div>{client}</div>
-					))}
+					<ul>
+						{clients.map(client => (
+							<li>
+								<>
+									{client.name}
+									<ul>
+										{barcodeDataByConnectionId[client.connectionId]?.map((barcodeData, index) => (
+											<li>
+												Barcode {index + 1}:{' '}
+												{barcodeData.map((barcodePiece, index) => (
+													<span>
+														{index > 0 && <span>-</span>}
+														{barcodePiece}
+													</span>
+												))}
+											</li>
+										))}
+									</ul>
+								</>
+							</li>
+						))}
+					</ul>
 				</div>
 			)}
 		</div>
