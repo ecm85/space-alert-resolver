@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { useBarcodeData } from '~/hooks';
@@ -11,12 +11,22 @@ export interface InputCardsProps {
 	connection: WebSocket;
 }
 
+enum SendingToHostState {
+	Initial,
+	Sending,
+	Sent,
+	Error
+}
+
 export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const [message, setMessage] = useState<string>(null);
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
 	const barcodeCanvasRef = useRef<HTMLCanvasElement>(null);
 	const { barcodeData } = useBarcodeData({ barcodes });
+	const [sendingToHostState, setSendingToHostState] = useState<SendingToHostState>(
+		SendingToHostState.Initial
+	);
 
 	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
 
@@ -32,9 +42,13 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 					break;
 				case 'YourMessageSent':
 					setMessage('Your cards have been sent to the host.');
+					setSendingToHostState(SendingToHostState.Sent);
 					break;
 				default:
 					console.log(`Event unhandled: ${messageEvent.data}`);
+					if (sendingToHostState === SendingToHostState.Sending) {
+						setSendingToHostState(SendingToHostState.Error);
+					}
 			}
 		};
 	}, []);
@@ -65,6 +79,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			barcodeData
 		};
 		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
+		setSendingToHostState(SendingToHostState.Sending);
 	};
 
 	return (
@@ -83,9 +98,22 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			</div>
 			{barcodeData.length > 0 && (
 				<div>
-					<Button onClick={handleSendToServerClicked} variant='contained'>
-						Submit Cards
-					</Button>
+					{sendingToHostState === SendingToHostState.Initial && (
+						<Button onClick={handleSendToServerClicked} variant='contained'>
+							Submit Cards
+						</Button>
+					)}
+					{sendingToHostState === SendingToHostState.Sending && (
+						<Button variant='contained' disabled>
+							Submitting...
+						</Button>
+					)}
+					{sendingToHostState === SendingToHostState.Error && (
+						<Typography variant='body1'>There was an error submitting your cards.</Typography>
+					)}
+					{sendingToHostState === SendingToHostState.Sent && (
+						<Typography variant='body1'>Your cards have been submitted.</Typography>
+					)}
 				</div>
 			)}
 		</div>
