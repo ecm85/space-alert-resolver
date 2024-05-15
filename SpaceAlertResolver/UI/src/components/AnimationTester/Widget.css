@@ -1,0 +1,42 @@
+.thing {
+	width: 100px;
+	height: 100px;
+	background-color: black;
+	isolation: isolate;
+	z-index: 1;
+}
+
+.root {
+	width: 200px;
+	height: 200px;
+	background-color: green;
+	padding: 5px;
+}
+
+.thing-from-left {
+	animation-duration: 1s;
+	animation-name: from-left;
+}
+
+.thing-from-right {
+	animation-duration: 1s;
+	animation-name: from-right;
+}
+
+@keyframes from-left {
+	from {
+		margin-left: -200px;
+	}
+	to {
+		margin-left: 0px;
+	}
+}
+
+@keyframes from-right {
+	from {
+		margin-left: 200px;
+	}
+	to {
+		margin-left: 0px;
+	}
+}
