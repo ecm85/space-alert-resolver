@@ -4,7 +4,6 @@ const TerserWebpackPlugin = require('terser-webpack-plugin');
 const EsLintPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 const treatWarningsAsErrors = !process.argv.includes('--watch');
@@ -15,6 +14,7 @@ module.exports = {
 		index: ['./src/index.tsx']
 	},
 	output: {
+		clean: false,
 		publicPath: '/',
 		path: path.resolve(__dirname, 'build'),
 		filename: '[name].js?[chunkhash]',
@@ -82,8 +82,7 @@ module.exports = {
 	</body>
 </html>
 `
-		}),
-		new CleanWebpackPlugin()
+		})
 	],
 	optimization: {
 		minimize: true,

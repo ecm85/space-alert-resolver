@@ -15,5 +15,6 @@
 node_modules/
 /SpaceAlertResolver/UI/Client/build
 /SpaceAlertResolver/terraform/build
-build/*
-!build/Boards/*.png
+
+/SpaceAlertResolver/UI/build/*
+!/SpaceAlertResolver/UI/build/Images/*
