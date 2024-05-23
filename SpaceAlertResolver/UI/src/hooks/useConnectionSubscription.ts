@@ -29,7 +29,9 @@ export function useConnectionSubscription({
 			setIsSubscribed(true);
 		}
 		return () => {
-			connection.removeEventListener('message', handleMessage);
+			if (connectionStarted) {
+				connection.removeEventListener('message', handleMessage);
+			}
 		};
 	}, [connectionStarted]);
 
