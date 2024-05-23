@@ -8,5 +8,5 @@ export interface PlayerBoardProps {
 
 export function PlayerBoard({ playerColor }: PlayerBoardProps) {
 	console.log(playerColor);
-	return <img src='\Boards\Green-1.png' />;
+	return <img src='\Images\Boards\Green-1.png' />;
 }
