@@ -1,6 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
+import { PlayerBoard } from '~/components/PlayerBoard';
 import { useBarcodeData } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData, PlayerColor } from '~/models';
@@ -55,10 +56,12 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		}
 	};
 
+	const playerColor = manualPlayerColor != null ? manualPlayerColor : deducedPlayerColor;
+
 	const handleSendToServerClicked = () => {
 		const data = {
 			barcodeData,
-			playerColor: manualPlayerColor != null ? manualPlayerColor : deducedPlayerColor
+			playerColor
 		};
 		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
 		setWorkflowState(WorkflowState.Uploading);
@@ -88,7 +91,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			{hasNotAlreadyScanned && <BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} />}
 			{hasAlreadyScanned && (
 				<div>
-					{/*TODO: Show Player Board*/}
+					<PlayerBoard barcodeData={barcodeData} playerColor={playerColor} />
 					{workflowState === WorkflowState.ChooseColor && (
 						<div>
 							{/* TODO: Show color picker */}

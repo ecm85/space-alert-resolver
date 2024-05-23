@@ -13,4 +13,7 @@
 .terraform.lock.hcl
 .terraform.plan
 node_modules/
-build/
+/SpaceAlertResolver/UI/Client/build
+/SpaceAlertResolver/terraform/build
+build/*
+!build/Boards/*.png
