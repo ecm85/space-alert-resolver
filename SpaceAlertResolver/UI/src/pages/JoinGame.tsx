@@ -1,7 +1,8 @@
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useStateRef } from '~/hooks';
+import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData } from '~/models';
 import styles from './JoinGame.css';
 
@@ -16,26 +17,27 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 	const [name, setName] = useState<string>(null);
 	const [message, setMessage] = useState<string>(null);
 	const [joining, setJoining] = useState(false);
-	useEffect(() => {
-		if (connectionStarted) {
-			connection.onmessage = messageEvent => {
-				const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
-				switch (messageEventData.event) {
-					case 'ExpiredGameCode':
-						setMessage('That code is expired.');
-						break;
-					case 'InvalidGameCode':
-						setMessage('That code is invalid.');
-						break;
-					case 'YouJoined':
-						onGameJoined(gameCodeRef.current);
-						break;
-					default:
-						console.log(`Event unhandled: ${messageEvent.data}`);
-				}
-			};
+	const handleMessage = (messageEventData: MessageEventData) => {
+		switch (messageEventData.event) {
+			case 'ExpiredGameCode':
+				setMessage('That code is expired.');
+				return true;
+			case 'InvalidGameCode':
+				setMessage('That code is invalid.');
+				return true;
+			case 'YouJoined':
+				onGameJoined(gameCodeRef.current);
+				return true;
+			default:
+				return false;
 		}
-	}, [connectionStarted]);
+	};
+
+	const { isSubscribed } = useConnectionSubscription({
+		onMessage: handleMessage,
+		connection,
+		connectionStarted
+	});
 
 	const handleGameCodeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setGameCode(event.target.value.toUpperCase());
@@ -45,7 +47,7 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 		setName(event.target.value);
 	};
 
-	const canJoin = connectionStarted && gameCode?.length === 4 && !!name && !joining;
+	const canJoin = connectionStarted && isSubscribed && gameCode?.length === 4 && !!name && !joining;
 
 	const handleJoinClicked = () => {
 		setJoining(true);

@@ -1,80 +1,78 @@
 import styles from './BarcodeScanningWorkflow.css';
-import React, { useState, MutableRefObject, ReactNode } from 'react';
-import { Button } from '@mui/material';
+import React, { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
+import { useCardScanning } from '~/hooks/useCardScanning';
+import { Button } from '@mui/material';
 
-export enum IWorkflowState {
+export enum WorkflowState {
 	Initial,
 	CameraStarting,
 	CameraStarted,
-	Done,
 	Error
 }
 
 export interface BarcodeScanningWorkflowProps {
-	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
-	onClear(): void;
-	cameraCanvasRef: MutableRefObject<HTMLCanvasElement>;
-	barcodeCanvasRef: MutableRefObject<HTMLCanvasElement>;
+	onBarcodesScan(barcodes: DetectedBarcode[]): void;
 }
 
-export function BarcodeScanningWorkflow({
-	onBarcodesScan,
-	onClear,
-	cameraCanvasRef,
-	barcodeCanvasRef
-}: BarcodeScanningWorkflowProps) {
-	const [workflowState, setWorkflowState] = useState(IWorkflowState.Initial);
+export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkflowProps) {
+	const [workflowState, setWorkflowState] = useState(WorkflowState.Initial);
+	const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
+	const barcodeCanvasRef = useRef<HTMLCanvasElement>(null);
 	const [error, setError] = useState(null);
 	const isScanning =
-		workflowState === IWorkflowState.CameraStarting ||
-		workflowState === IWorkflowState.CameraStarted;
+		workflowState === WorkflowState.CameraStarting || workflowState === WorkflowState.CameraStarted;
+	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
 
 	const handleError = (newError: string) => {
-		setWorkflowState(IWorkflowState.Error);
+		setWorkflowState(WorkflowState.Error);
 		setError(newError);
 	};
 
 	const handleCameraStarted = () => {
-		setWorkflowState(IWorkflowState.CameraStarted);
+		setWorkflowState(WorkflowState.CameraStarted);
 	};
 
-	const handleStartCameraClicked = () => {
-		onClear();
-		setWorkflowState(IWorkflowState.CameraStarting);
+	const handleBarcodesScanned = (
+		newBarcodes: DetectedBarcode[],
+		canvas: CanvasRenderingContext2D
+	) => {
+		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
+		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
+		const errors = validateBarcodes(barcodesInOrder, dividingLine);
+		if (!errors) {
+			onBarcodesScan(barcodesInOrder);
+		}
+		return errors;
+	};
+
+	const handleScanClicked = () => {
+		setWorkflowState(WorkflowState.CameraStarting);
 	};
 
 	const handleStopCameraClicked = () => {
-		onClear();
-		setWorkflowState(IWorkflowState.Initial);
-	};
-
-	const handleBarcodesScanned = (barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
-		const result = onBarcodesScan(barcodes, canvas);
-		if (!result) {
-			setWorkflowState(IWorkflowState.Done);
-		}
-		return result;
+		setWorkflowState(WorkflowState.Initial);
 	};
 
 	return (
 		<div className={styles['root']}>
 			<div className={styles['buttons']}>
-				<Button variant='contained' onClick={handleStartCameraClicked} disabled={isScanning}>
-					{workflowState === IWorkflowState.Initial ? 'Start Camera' : 'Scan Again'}
+				<Button variant='contained' onClick={handleScanClicked} disabled={isScanning}>
+					Start Camera
 				</Button>
 				<Button
 					variant='contained'
 					onClick={handleStopCameraClicked}
-					disabled={workflowState !== IWorkflowState.CameraStarted}>
+					disabled={workflowState !== WorkflowState.CameraStarted}>
 					Stop Camera
 				</Button>
 			</div>
-			{workflowState === IWorkflowState.CameraStarting && (
+			{/*TODO: Show help*/}
+			{workflowState === WorkflowState.CameraStarting && (
 				<Typography variant='body1'>Starting camera...</Typography>
 			)}
-			{workflowState === IWorkflowState.Error && (
+			{workflowState === WorkflowState.Error && (
 				<>
 					<Typography variant='body1'>Uh Oh! Something went wrong.</Typography>
 					<Typography variant='body1'>{error}</Typography>
@@ -89,6 +87,10 @@ export function BarcodeScanningWorkflow({
 					onError={handleError}
 				/>
 			)}
+			<div className={styles['canvas-wrapper']}>
+				<canvas className={styles['canvas']} ref={cameraCanvasRef}></canvas>
+				<canvas className={styles['canvas-overlay']} ref={barcodeCanvasRef}></canvas>
+			</div>
 		</div>
 	);
 }

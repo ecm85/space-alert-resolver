@@ -9,3 +9,20 @@
 	flex-direction: column;
 	row-gap: 1rem;
 }
+
+.canvas {
+	max-width: 100%;
+	max-height: 80vh;
+}
+
+.canvas-overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-width: 100%;
+	max-height: 80vh;
+}
+
+.canvas-wrapper {
+	position: relative;
+}

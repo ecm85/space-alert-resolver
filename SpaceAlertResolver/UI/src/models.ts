@@ -30,6 +30,7 @@ export interface ClientMessageReceivedEvent {
 	data: {
 		connectionId: string;
 		barcodeData: string[][];
+		playerColor: PlayerColor;
 	};
 }
 
@@ -49,4 +50,14 @@ export type MessageEventData =
 export interface Client {
 	name: string;
 	connectionId: string;
+	barcodeData?: string[][];
+	playerColor?: PlayerColor;
+}
+
+export enum PlayerColor {
+	Red = 0,
+	Blue,
+	Green,
+	Yellow,
+	Purple
 }

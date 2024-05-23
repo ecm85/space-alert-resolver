@@ -19,6 +19,7 @@ namespace SendToHostLambda
 		private class SendToHostRequestData
 		{
 			public string[][] BarcodeData { get; set; }
+			public int PlayerColor { get; set; }
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(
@@ -56,14 +57,19 @@ namespace SendToHostLambda
 						$"Data from client 1: {JsonSerializer.Serialize(sendToHostRequest.Data)}"
 					);
 					context.Logger.Log(
-						$"Data from client 2: {JsonSerializer.Serialize(sendToHostRequest.Data.BarcodeData[0])}"
+						$"Data from client 2: {JsonSerializer.Serialize(sendToHostRequest.Data.PlayerColor)}"
 					);
 					var hostConnectionId = existingGame.Item[GameService.ConnectionIdField].S;
 					await webSocketService.SendMessage(
 						requestContext,
 						"ClientMessageReceived",
 						hostConnectionId,
-						new { barcodeData = sendToHostRequest.Data.BarcodeData, connectionId }
+						new
+						{
+							barcodeData = sendToHostRequest.Data.BarcodeData,
+							playerColor = sendToHostRequest.Data.PlayerColor,
+							connectionId
+						}
 					);
 					await webSocketService.SendMessage(
 						requestContext,

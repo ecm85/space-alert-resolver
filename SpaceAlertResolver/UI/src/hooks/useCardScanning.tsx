@@ -46,6 +46,8 @@ export function useCardScanning() {
 		dividingLine: number,
 		canvas: CanvasRenderingContext2D
 	) => {
+		// TODO: Show line between columns?
+		// TODO: Update colors
 		const dividingLineWidth = 3;
 		if (dividingLine) {
 			canvas.fillStyle = 'blue';

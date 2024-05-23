@@ -2,6 +2,7 @@ import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
+import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
 import styles from './CreateGame.css';
 
@@ -9,8 +10,6 @@ export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string>(null);
 	const { connection, connectionStarted } = useWebSocket();
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
-	const [barcodeDataByConnectionId, setBarcodeDataByConnectionId, barcodeDataByConnectionIdRef] =
-		useStateRef<Record<string, string[][]>>({});
 	const startGame = async () => {
 		connection.send(JSON.stringify({ action: 'CreateGame' }));
 	};
@@ -24,31 +23,40 @@ export function CreateGame() {
 			case 'ClientJoined':
 				setClients([...clientsRef.current, { ...messageEventData.data }]);
 				return true;
-			case 'ClientMessageReceived':
-				setBarcodeDataByConnectionId({
-					...barcodeDataByConnectionIdRef.current,
-					[messageEventData.data.connectionId]: messageEventData.data.barcodeData
-				});
+			case 'ClientMessageReceived': {
+				const connectionId = messageEventData.data.connectionId;
+				const updatedClient = clientsRef.current.filter(
+					client => client.connectionId === connectionId
+				)[0];
+				const otherClients = clientsRef.current.filter(
+					client => client.connectionId !== connectionId
+				);
+				setClients([
+					...otherClients,
+					{
+						...updatedClient,
+						...messageEventData.data
+					}
+				]);
 				return true;
+			}
 			default:
 				return false;
 		}
 	};
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const onMessage = (messageEvent: MessageEvent<any>) => {
-		const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
-		const success = handleMessage(messageEventData);
-		if (!success) {
-			console.log(`Event unhandled: ${messageEvent.data}`);
-		}
-	};
+	const { isSubscribed } = useConnectionSubscription({
+		onMessage: handleMessage,
+		connection,
+		connectionStarted
+	});
+
 	useEffect(() => {
-		if (connectionStarted) {
-			connection.addEventListener('message', onMessage);
+		if (isSubscribed) {
 			startGame();
 		}
-	}, [connectionStarted]);
+	}, [isSubscribed]);
+
 	return (
 		<div>
 			<h2>Create Game</h2>
@@ -73,7 +81,7 @@ export function CreateGame() {
 								<>
 									{client.name}
 									<ul>
-										{barcodeDataByConnectionId[client.connectionId]?.map((barcodeData, index) => (
+										{client.barcodeData?.map((barcodeData, index) => (
 											<li>
 												Barcode {index + 1}:{' '}
 												{barcodeData.map((barcodePiece, index) => (

@@ -1,3 +1,5 @@
+import { PlayerColor } from '~/models';
+
 export interface BarcodeDataProps {
 	barcodes: DetectedBarcode[];
 }
@@ -25,20 +27,21 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 				return 'SquadLeader';
 			case 9:
 				return 'Mechanic';
-			case 10:
 		}
 	};
 
-	const getBarcodeData = (barcode: DetectedBarcode) => {
+	const parseBarcode = (barcode: DetectedBarcode) => {
 		const values = barcode.rawValue.split('*').slice(1, -1);
-		return values.flatMap(value => getBarcodeDataToken(value));
+		const barcodeData = values.flatMap(value => getBarcodeDataToken(value));
+		const playerColor = values
+			.map(value => tryParseEmptySpot(value))
+			.filter(spot => spot.color != null)[0]?.color;
+		return { barcodeData, playerColor };
 	};
 
 	const getBarcodeDataToken = (value: string) => {
-		if (value.startsWith('S')) {
-			const index = +value.substring(1, 1);
-			const specialization = getSpecialization(index);
-			const levelCode = value.substring(2, 1);
+		const { specialization, levelCode } = tryParseSpecialization(value);
+		if (specialization != null) {
 			const basic = `Basic${specialization}`;
 			const advanced = `Advanced${specialization}`;
 			// TODO: Orientation (for level 2)
@@ -50,12 +53,9 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 			return getHeroicCards(value);
 		}
 
-		if (value.length == 3) {
-			const playerSpot = +value.substring(0, 2);
-			if (Number.isNaN(playerSpot)) {
-				const color = getColor(value.substring(2, 1));
-				return [`${value.substring(0, 2)}${color}`];
-			}
+		const { playerSpot } = tryParseEmptySpot(value);
+		if (playerSpot != null) {
+			return [`${playerSpot}`];
 		}
 
 		const foo = value
@@ -68,6 +68,27 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 			.replace('^', 'Down');
 		// TODO: Orientation
 		return [`${foo}`];
+	};
+
+	const tryParseEmptySpot = (value: string) => {
+		if (value.length == 3) {
+			const playerSpot = +value.substring(0, 2);
+			if (!Number.isNaN(playerSpot)) {
+				const color = getColor(value.substring(2, 1));
+				return { playerSpot, color };
+			}
+		}
+		return {};
+	};
+
+	const tryParseSpecialization = (value: string) => {
+		if (value.startsWith('S')) {
+			const index = +value.substring(1, 1);
+			const specialization = getSpecialization(index);
+			const levelCode = value.substring(2, 1);
+			return { specialization, levelCode };
+		}
+		return {};
 	};
 
 	const getHeroicCards = (code: string) => {
@@ -90,17 +111,21 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 	const getColor = (value: string) => {
 		switch (value) {
 			case 'B':
-				return 'Blue';
+				return PlayerColor.Blue;
 			case 'G':
-				return 'Green';
+				return PlayerColor.Green;
 			case 'P':
-				return 'Purple';
+				return PlayerColor.Purple;
 			case 'R':
-				return 'Red';
+				return PlayerColor.Red;
 			case 'Y':
-				return 'Yellow';
+				return PlayerColor.Yellow;
 		}
 	};
 
-	return { barcodeData: barcodes.map(barcode => getBarcodeData(barcode)) };
+	const parsedBarcodes = barcodes.map(barcode => parseBarcode(barcode));
+	const barcodeData = parsedBarcodes.map(parsed => parsed.barcodeData);
+	const playerColors = parsedBarcodes.map(parsed => parsed.playerColor);
+	const playerColor = playerColors.filter(color => color != null)[0];
+	return { barcodeData, playerColor };
 }

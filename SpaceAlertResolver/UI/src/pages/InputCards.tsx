@@ -1,9 +1,9 @@
 import { Button, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { useBarcodeData } from '~/hooks';
-import { useCardScanning } from '~/hooks/useCardScanning';
-import { MessageEventData } from '~/models';
+import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
+import { MessageEventData, PlayerColor } from '~/models';
 import styles from './InputCards.css';
 
 export interface InputCardsProps {
@@ -11,108 +11,114 @@ export interface InputCardsProps {
 	connection: WebSocket;
 }
 
-enum SendingToHostState {
-	Initial,
-	Sending,
-	Sent,
-	Error
+export enum WorkflowState {
+	Scanning,
+	Scanned,
+	ChooseColor,
+	Uploading,
+	ErrorUploading,
+	Uploaded
 }
 
 export function InputCards({ gameCode, connection }: InputCardsProps) {
-	const [message, setMessage] = useState<string>(null);
+	const [workflowState, setWorkflowState] = useState(WorkflowState.Scanning);
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
-	const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
-	const barcodeCanvasRef = useRef<HTMLCanvasElement>(null);
-	const { barcodeData } = useBarcodeData({ barcodes });
-	const [sendingToHostState, setSendingToHostState] = useState<SendingToHostState>(
-		SendingToHostState.Initial
-	);
+	const [message, setMessage] = useState('');
+	const { barcodeData, playerColor: deducedPlayerColor } = useBarcodeData({ barcodes });
+	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor>(null);
 
-	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
-
-	useEffect(() => {
-		connection.onmessage = messageEvent => {
-			const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
-			switch (messageEventData.event) {
-				case 'ExpiredGameCode':
-					setMessage('That code is expired.');
-					break;
-				case 'InvalidGameCode':
-					setMessage('That code is invalid.');
-					break;
-				case 'YourMessageSent':
-					setMessage('Your cards have been sent to the host.');
-					setSendingToHostState(SendingToHostState.Sent);
-					break;
-				default:
-					console.log(`Event unhandled: ${messageEvent.data}`);
-					if (sendingToHostState === SendingToHostState.Sending) {
-						setSendingToHostState(SendingToHostState.Error);
-					}
-			}
-		};
-	}, []);
-
-	const handleClear = () => {
-		setBarcodes([]);
-		const cameraContext = cameraCanvasRef.current.getContext('2d');
-		cameraContext.clearRect(0, 0, cameraCanvasRef.current.width, cameraCanvasRef.current.height);
-		const barcodeContext = barcodeCanvasRef.current.getContext('2d');
-		barcodeContext.clearRect(0, 0, barcodeCanvasRef.current.width, barcodeCanvasRef.current.height);
+	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
+		setBarcodes(newBarcodes);
 	};
 
-	const handleBarcodesScanned = (
-		newBarcodes: DetectedBarcode[],
-		canvas: CanvasRenderingContext2D
-	) => {
-		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
-		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
-		const errors = validateBarcodes(barcodesInOrder, dividingLine);
-		if (!errors) {
-			setBarcodes(barcodesInOrder);
+	useEffect(() => {
+		if (workflowState === WorkflowState.Scanning && barcodeData.length > 0) {
+			setWorkflowState(
+				deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned
+			);
 		}
-		return errors;
+	}, [workflowState, barcodeData, deducedPlayerColor]);
+
+	const handleScanAgainClicked = () => {
+		setBarcodes([]);
+		setWorkflowState(WorkflowState.Scanning);
+	};
+
+	const handleMessage = (messageEventData: MessageEventData) => {
+		switch (messageEventData.event) {
+			case 'YourMessageSent':
+				setMessage('Your cards have been sent to the host.');
+				setWorkflowState(WorkflowState.Uploaded);
+				return true;
+			default:
+				return false;
+		}
 	};
 
 	const handleSendToServerClicked = () => {
 		const data = {
-			barcodeData
+			barcodeData,
+			playerColor: manualPlayerColor != null ? manualPlayerColor : deducedPlayerColor
 		};
 		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
-		setSendingToHostState(SendingToHostState.Sending);
+		setWorkflowState(WorkflowState.Uploading);
+	};
+
+	const { isSubscribed } = useConnectionSubscription({
+		connection,
+		onMessage: handleMessage,
+		connectionStarted: true
+	});
+
+	const canRescanStates = [WorkflowState.Scanned, WorkflowState.Uploaded];
+
+	const hasNotAlreadyScanned = workflowState === WorkflowState.Scanning;
+	const hasAlreadyScanned = !hasNotAlreadyScanned;
+
+	const handleColorPicked = () => {
+		// TODO:
+		setManualPlayerColor(PlayerColor.Blue);
 	};
 
 	return (
 		<div className={styles['root']}>
 			<h2>GameCode: {gameCode}</h2>
 			{message && <div>{message}</div>}
-			<BarcodeScanningWorkflow
-				onBarcodesScan={handleBarcodesScanned}
-				barcodeCanvasRef={barcodeCanvasRef}
-				cameraCanvasRef={cameraCanvasRef}
-				onClear={handleClear}
-			/>
-			<div className={styles['canvas-wrapper']}>
-				<canvas className={styles['canvas']} ref={cameraCanvasRef}></canvas>
-				<canvas className={styles['canvas-overlay']} ref={barcodeCanvasRef}></canvas>
-			</div>
-			{barcodeData.length > 0 && (
+
+			{hasNotAlreadyScanned && <BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} />}
+			{hasAlreadyScanned && (
 				<div>
-					{sendingToHostState === SendingToHostState.Initial && (
-						<Button onClick={handleSendToServerClicked} variant='contained'>
-							Submit Cards
-						</Button>
+					{/*TODO: Show Player Board*/}
+					{workflowState === WorkflowState.ChooseColor && (
+						<div>
+							{/* TODO: Show color picker */}
+							<Button onClick={handleColorPicked}>This is a fake button</Button>
+						</div>
 					)}
-					{sendingToHostState === SendingToHostState.Sending && (
-						<Button variant='contained' disabled>
-							Submitting...
-						</Button>
+					{canRescanStates && (
+						<div>
+							<Button onClick={handleScanAgainClicked}>Scan Again</Button>
+						</div>
 					)}
-					{sendingToHostState === SendingToHostState.Error && (
-						<Typography variant='body1'>There was an error submitting your cards.</Typography>
-					)}
-					{sendingToHostState === SendingToHostState.Sent && (
-						<Typography variant='body1'>Your cards have been submitted.</Typography>
+					{isSubscribed && (
+						<div>
+							{workflowState === WorkflowState.Scanned && (
+								<Button onClick={handleSendToServerClicked} variant='contained'>
+									Submit Cards
+								</Button>
+							)}
+							{workflowState === WorkflowState.Uploading && (
+								<Button variant='contained' disabled>
+									Submitting...
+								</Button>
+							)}
+							{workflowState === WorkflowState.ErrorUploading && (
+								<Typography variant='body1'>There was an error submitting your cards.</Typography>
+							)}
+							{workflowState === WorkflowState.Uploaded && (
+								<Typography variant='body1'>Your cards have been submitted.</Typography>
+							)}
+						</div>
 					)}
 				</div>
 			)}
