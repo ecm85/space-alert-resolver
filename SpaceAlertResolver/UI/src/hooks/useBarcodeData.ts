@@ -110,7 +110,7 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 
 		const { playerSpot } = tryParseEmptySpot(value);
 		if (playerSpot != null) {
-			return `${playerSpot}`;
+			return null;
 		}
 	};
 

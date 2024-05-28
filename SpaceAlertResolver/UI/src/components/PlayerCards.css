@@ -7,3 +7,7 @@
 .card {
 	width: 100%;
 }
+
+.card-wrapper {
+	flex: 1;
+}

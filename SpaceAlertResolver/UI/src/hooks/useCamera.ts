@@ -128,6 +128,9 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 	};
 
 	const drawCameraOnCanvas = () => {
+		if (canvasRef.current == null) {
+			return;
+		}
 		const canvas = canvasRef.current.getContext('2d', {
 			willReadFrequently: true
 		});
