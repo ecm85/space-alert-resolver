@@ -22,16 +22,6 @@
 	position: relative;
 }
 
-.card {
-	width: 100%;
-}
-
-.cards-wrapper {
-	position: absolute;
-	top: 28%;
-	display: flex;
-}
-
 .cards-wrapper-1 {
 	width: 36%;
 	left: 4.3%;

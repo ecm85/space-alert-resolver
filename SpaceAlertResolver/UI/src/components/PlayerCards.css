@@ -1,0 +1,9 @@
+.cards-wrapper {
+	position: absolute;
+	top: 28%;
+	display: flex;
+}
+
+.card {
+	width: 100%;
+}
