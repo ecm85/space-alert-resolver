@@ -31,7 +31,14 @@ export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
 			<div className={styles['board-wrapper']}>
 				<img className={topBoardImageClassName} src={`\\Images\\Boards\\${displayColor}-1.png`} />
 				<div className={styles['cards-wrapper']}>
-					{barcodeData.slice(0, 6).map(scannedCard => (
+					{barcodeData.slice(0, 3).map(scannedCard => (
+						<div className={styles['card-wrapper']}>
+							<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
+						</div>
+					))}
+				</div>
+				<div className={styles['cards-wrapper']}>
+					{barcodeData.slice(3, 7).map(scannedCard => (
 						<div className={styles['card-wrapper']}>
 							<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
 						</div>
@@ -44,7 +51,7 @@ export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
 					src={`\\Images\\Boards\\${displayColor}-2.png`}
 				/>
 				<div className={styles['cards-wrapper']}>
-					{barcodeData.slice(6, 11).map(scannedCard => (
+					{barcodeData.slice(7, 12).map(scannedCard => (
 						<div className={styles['card-wrapper']}>
 							<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
 						</div>
