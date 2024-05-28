@@ -22,15 +22,30 @@
 	position: relative;
 }
 
-.card-wrapper {
-	display: flex;
-	flex-direction: row;
-}
-
 .card {
 	width: 100%;
 }
 
 .cards-wrapper {
 	position: absolute;
+	top: 28%;
+	display: flex;
+}
+
+.cards-wrapper-1 {
+	width: 36%;
+	left: 4.3%;
+	column-gap: 10%;
+}
+
+.cards-wrapper-4 {
+	left: 46%;
+	width: 49.3%;
+	column-gap: 7%;
+}
+
+.cards-wrapper-7 {
+	width: 61.8%;
+	left: 4.2%;
+	column-gap: 6%;
 }
