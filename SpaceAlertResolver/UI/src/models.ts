@@ -29,7 +29,7 @@ export interface ClientMessageReceivedEvent {
 	event: 'ClientMessageReceived';
 	data: {
 		connectionId: string;
-		barcodeData: string[][];
+		barcodeData: string[];
 		playerColor: PlayerColor;
 	};
 }
@@ -50,7 +50,7 @@ export type MessageEventData =
 export interface Client {
 	name: string;
 	connectionId: string;
-	barcodeData?: string[][];
+	barcodeData?: string[];
 	playerColor?: PlayerColor;
 }
 
@@ -60,4 +60,10 @@ export enum PlayerColor {
 	Green,
 	Yellow,
 	Purple
+}
+
+export enum Orientation {
+	Top,
+	Bottom,
+	Other
 }

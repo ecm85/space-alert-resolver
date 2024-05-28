@@ -1,0 +1,33 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
+}
+
+.top-board {
+	width: 100%;
+	height: auto;
+}
+
+.bottom-board {
+	width: 70%;
+	height: auto;
+}
+
+.missing-color {
+	filter: grayscale(100%);
+}
+
+.board-wrapper {
+	position: relative;
+}
+
+.card-wrapper {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+}
+
+.card {
+	width: 100%;
+}

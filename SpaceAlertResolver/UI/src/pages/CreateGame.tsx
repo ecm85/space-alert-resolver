@@ -81,15 +81,9 @@ export function CreateGame() {
 								<>
 									{client.name}
 									<ul>
-										{client.barcodeData?.map((barcodeData, index) => (
+										{client.barcodeData?.map((scannedCard, index) => (
 											<li>
-												Barcode {index + 1}:{' '}
-												{barcodeData.map((barcodePiece, index) => (
-													<span>
-														{index > 0 && <span>-</span>}
-														{barcodePiece}
-													</span>
-												))}
+												Barcode {index + 1}: {scannedCard}
 											</li>
 										))}
 									</ul>

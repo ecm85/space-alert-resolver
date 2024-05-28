@@ -44,9 +44,11 @@ export const useBarcodeScanning = ({
 		const imageData = cameraCanvas.getImageData(0, 0, videoWidth, videoHeight);
 		const barcodes = await barcodeDetector.detect(imageData);
 		// TODO: Only accept barcodes in valid format (via a predicate passed in)
+		// Valid = starts and ends with digit* / *digit, and is good orientation
 		const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
 		return onBarcodesScan(validBarcodes, barcodeCanvas);
 	};
+
 	return {
 		scan,
 		validationError
