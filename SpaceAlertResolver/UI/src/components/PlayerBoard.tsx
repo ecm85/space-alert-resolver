@@ -30,22 +30,26 @@ export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
 		<div className={styles['root']}>
 			<div className={styles['board-wrapper']}>
 				<img className={topBoardImageClassName} src={`\\Images\\Boards\\${displayColor}-1.png`} />
-				{barcodeData.slice(0, 6).map(scannedCard => (
-					<div className={styles['card-wrapper']}>
-						<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
-					</div>
-				))}
+				<div className={styles['cards-wrapper']}>
+					{barcodeData.slice(0, 6).map(scannedCard => (
+						<div className={styles['card-wrapper']}>
+							<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
+						</div>
+					))}
+				</div>
 			</div>
 			<div className={styles['board-wrapper']}>
 				<img
 					className={bottomBoardImageClassName}
 					src={`\\Images\\Boards\\${displayColor}-2.png`}
 				/>
-				{barcodeData.slice(6, 11).map(scannedCard => (
-					<div className={styles['card-wrapper']}>
-						<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
-					</div>
-				))}
+				<div className={styles['cards-wrapper']}>
+					{barcodeData.slice(6, 11).map(scannedCard => (
+						<div className={styles['card-wrapper']}>
+							<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);
