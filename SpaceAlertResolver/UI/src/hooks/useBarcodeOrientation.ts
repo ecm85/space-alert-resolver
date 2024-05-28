@@ -2,21 +2,14 @@ import { Orientation } from '~/models';
 
 export function useBarcodeOrientation() {
 	const getOrientation = (barcode: DetectedBarcode) => {
-		const [trueUpperLeft, trueUpperRight, trueLowerRight, trueLowerLeft] = barcode.cornerPoints;
-		if (
-			trueUpperLeft.x < trueUpperRight.x &&
-			trueLowerLeft.x < trueLowerRight.x &&
-			trueUpperLeft.y < trueLowerLeft.y &&
-			trueUpperRight.y < trueLowerRight.y
-		)
+		const {
+			cornerPoints: [trueUpperLeft],
+			boundingBox
+		} = barcode;
+		if (trueUpperLeft.x === boundingBox.left && trueUpperLeft.y === boundingBox.top)
 			return Orientation.Top;
-		if (
-			trueUpperLeft.x > trueUpperRight.x &&
-			trueLowerLeft.x > trueLowerRight.x &&
-			trueUpperLeft.y > trueLowerLeft.y &&
-			trueUpperRight.y > trueLowerRight.y
-		)
-			return Orientation.Top;
+		if (trueUpperLeft.x === boundingBox.right && trueUpperLeft.y === boundingBox.bottom)
+			return Orientation.Bottom;
 		return Orientation.Other;
 	};
 	return { getOrientation };
