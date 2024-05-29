@@ -1,6 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
+import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
 import { useBarcodeData } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
@@ -93,10 +94,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 				<div>
 					<PlayerBoard barcodeData={barcodeData} playerColor={playerColor} />
 					{workflowState === WorkflowState.ChooseColor && (
-						<div>
-							{/* TODO: Show color picker */}
-							<Button onClick={handleColorPicked}>This is a fake button</Button>
-						</div>
+						<ColorPicker onPickColor={handleColorPicked} value={manualPlayerColor} />
 					)}
 					{canRescanStates && (
 						<div>
