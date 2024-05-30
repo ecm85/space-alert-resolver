@@ -9,11 +9,10 @@ import { Middleware } from '@reduxjs/toolkit';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStorybookStore } from '../src/state/store';
 
-export const storybookReduxMiddleware: Middleware =
-	() => (next) => (reduxAction) => {
-		storybookAction('dispatch')(reduxAction);
-		return next(reduxAction);
-	};
+export const storybookReduxMiddleware: Middleware = () => (next) => (reduxAction) => {
+	storybookAction('dispatch')(reduxAction);
+	return next(reduxAction);
+};
 
 initialize({
 	onUnhandledRequest: 'bypass',
@@ -22,7 +21,7 @@ initialize({
 	},
 })
 	.events.on('request:unhandled', ({ request }) => {
-		if (request.url.includes('localhost9230')) {
+		if (request.url.includes('localhost6511')) {
 			storybookAction('network')({ url: request.url });
 		}
 	})
@@ -46,18 +45,11 @@ const preview: Preview = {
 	},
 	decorators: [
 		(Story, context) => {
-			return createElement(
-				MemoryRouter,
-				{},
-				createElement(Story, context as any),
-			);
+			return createElement(MemoryRouter, {}, createElement(Story, context as any));
 		},
 		(Story, context) => {
 			return createElement(ReduxProvider, {
-				store: createStorybookStore(
-					context.args.preloadedState,
-					storybookReduxMiddleware,
-				),
+				store: createStorybookStore(context.args.preloadedState, storybookReduxMiddleware),
 				children: createElement(Story, context as any),
 			});
 		},

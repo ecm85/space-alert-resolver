@@ -13,11 +13,11 @@
 		"build-prod": "tsc && vite build --mode prod",
 		"prettier-ci": "prettier --check .",
 		"prettier-write": "prettier --write .",
-		"storybook": "storybook dev -p 9230",
+		"storybook": "storybook dev -p 6511",
 		"build-storybook": "storybook build",
 		"build-storybook-ci": "storybook build --quiet --loglevel error",
 		"test-storybook": "test-storybook",
-		"test-storybook-ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn run build-storybook-ci && npx http-server storybook-static --port 9230 --silent\" \"npx wait-on http://127.0.0.1:9230 && yarn run test-storybook --url http://127.0.0.1:9230\""
+		"test-storybook-ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn run build-storybook-ci && npx http-server storybook-static --port 6511 --silent\" \"npx wait-on http://127.0.0.1:6511 && yarn run test-storybook --url http://127.0.0.1:6511\""
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.4",

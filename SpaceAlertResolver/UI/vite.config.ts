@@ -7,7 +7,7 @@ export default defineConfig({
 	plugins: [react(), tsconfigPaths()],
 	server: {
 		host: 'localhost',
-		port: 9229,
+		port: 6510,
 	},
 	build: {
 		rollupOptions: {
