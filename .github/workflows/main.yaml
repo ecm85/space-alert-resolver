@@ -32,6 +32,24 @@ jobs:
           cd $GITHUB_WORKSPACE/SpaceAlertResolver/SendToHostLambda
           dotnet tool restore
           dotnet csharpier --check .
+  verify-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18.19.0
+
+      - name: Verify
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI
+          corepack enable
+          yarn install
+          yarn run lint-ci
+          yarn run prettier-ci
   build-pl:
     runs-on: ubuntu-latest
     steps:
