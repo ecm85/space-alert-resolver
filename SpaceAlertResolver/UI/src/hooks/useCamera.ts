@@ -1,14 +1,14 @@
-import { useRef } from 'react';
+import { useRef, MutableRefObject } from 'react';
 
 export interface useCameraProps {
 	processCamera(): void;
-	videoRef: React.MutableRefObject<HTMLVideoElement>;
-	canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+	videoRef: MutableRefObject<HTMLVideoElement | null>;
+	canvasRef: MutableRefObject<HTMLCanvasElement | null>;
 	onError(error: string): void;
 }
 
 export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCameraProps) => {
-	const mediaStreamRef = useRef<MediaStream>(null);
+	const mediaStreamRef = useRef<MediaStream | null>(null);
 	const cameraStartedRef = useRef(false);
 	const startPreferredCameraAsync = async () => {
 		try {
@@ -32,7 +32,9 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 			console.log(`couldn't start any of ${orderCameraInfos.length} cameras`);
 			return false;
 		} catch (error) {
-			console.log(`unable to access camera: ${error.message}`);
+			if (error instanceof Error) {
+				console.log(`unable to access camera: ${error.message}`);
+			}
 			return false;
 		}
 	};
@@ -46,7 +48,7 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 				onError('Could not start camera.');
 			}
 		};
-		startPreferredCamera().catch(exception => {
+		startPreferredCamera().catch((exception) => {
 			onError(exception);
 		});
 	};
@@ -68,23 +70,30 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 		try {
 			const camera = await navigator.mediaDevices.getUserMedia({
 				audio: true,
-				video: { deviceId: { exact: cameraInfo.deviceId } }
+				video: { deviceId: { exact: cameraInfo.deviceId } },
 			});
 			return startSpecificCameraFromStream(camera);
 		} catch (error) {
-			console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
+			if (error instanceof Error) {
+				console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
+			}
 			return false;
 		}
 	};
 
 	const startSpecificCameraFromStream = (stream: MediaStream) => {
 		try {
+			if (videoRef.current == null) {
+				return false;
+			}
 			videoRef.current.srcObject = stream;
 			mediaStreamRef.current = stream;
 			processCamera();
 			return true;
 		} catch (error) {
-			console.log(`unable to start camera: ${stream.id} - ${error.message}`);
+			if (error instanceof Error) {
+				console.log(`unable to start camera: ${stream.id} - ${error.message}`);
+			}
 			return false;
 		}
 	};
@@ -93,11 +102,13 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 		try {
 			const initialCamera = await navigator.mediaDevices.getUserMedia({
 				audio: true,
-				video: { facingMode: { ideal: 'environment' } }
+				video: { facingMode: { ideal: 'environment' } },
 			});
 			return startSpecificCameraFromStream(initialCamera);
 		} catch (error) {
-			console.log(`unable to get camera: ${error.message}`);
+			if (error instanceof Error) {
+				console.log(`unable to get camera: ${error.message}`);
+			}
 			return false;
 		}
 	};
@@ -120,7 +131,7 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 
 	const getCameraInfos = async () => {
 		const devices = await navigator.mediaDevices.enumerateDevices();
-		return devices.filter(device => device.kind === 'videoinput');
+		return devices.filter((device) => device.kind === 'videoinput');
 	};
 
 	const cameraIsBack = (cameraInfo: MediaDeviceInfo) => {
@@ -128,11 +139,11 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 	};
 
 	const drawCameraOnCanvas = () => {
-		if (canvasRef.current == null) {
+		if (canvasRef.current == null || videoRef.current == null) {
 			return;
 		}
 		const canvas = canvasRef.current.getContext('2d', {
-			willReadFrequently: true
+			willReadFrequently: true,
 		});
 		const { videoWidth, videoHeight } = videoRef.current;
 		canvasRef.current.height = videoHeight;

@@ -1,6 +1,6 @@
 import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import styles from './Home.css';
+import styles from './Home.module.css';
 
 export function Home() {
 	const navigate = useNavigate();

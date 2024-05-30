@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
-import styles from './CreateGame.css';
+import styles from './CreateGame.module.css';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string | null>(null);

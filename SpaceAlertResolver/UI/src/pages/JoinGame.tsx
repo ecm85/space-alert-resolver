@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { useStateRef } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData } from '~/models';
-import styles from './JoinGame.css';
+import styles from './JoinGame.module.css';
 
 export interface JoinGameProps {
 	connectionStarted: boolean;
-	connection: WebSocket;
+	connection: WebSocket | null;
 	onGameJoined(gameCode: string): void;
 }
 
@@ -53,7 +53,7 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 
 	const handleJoinClicked = () => {
 		setJoining(true);
-		connection.send(JSON.stringify({ action: 'JoinGame', data: { name, code: gameCode } }));
+		connection?.send(JSON.stringify({ action: 'JoinGame', data: { name, code: gameCode } }));
 	};
 
 	return (

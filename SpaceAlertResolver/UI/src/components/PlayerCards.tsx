@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import styles from './PlayerCards.css';
+import styles from './PlayerCards.module.css';
 import { ParsedBarcode } from '~/models';
 
 export interface PlayerCardsProps {

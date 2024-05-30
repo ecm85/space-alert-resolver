@@ -1,6 +1,6 @@
 import { ParsedBarcode, PlayerColor } from '~/models';
 import cx from 'classnames';
-import styles from './PlayerBoard.css';
+import styles from './PlayerBoard.module.css';
 import { PlayerCards } from './PlayerCards';
 
 export interface PlayerBoardProps {

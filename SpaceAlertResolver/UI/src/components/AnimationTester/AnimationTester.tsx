@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { Widget } from './Widget';
-import styles from './AnimationTester.css';
+import styles from './AnimationTester.module.css';
 import { usePrevious } from '~/hooks/usePrevious';
 
 export function AnimationTester() {

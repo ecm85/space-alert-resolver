@@ -1,10 +1,10 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState, MutableRefObject } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
-	videoRef: React.MutableRefObject<HTMLVideoElement>;
-	cameraCanvasRef: React.MutableRefObject<HTMLCanvasElement>;
-	barcodeCanvasRef: React.MutableRefObject<HTMLCanvasElement>;
+	videoRef: MutableRefObject<HTMLVideoElement | null>;
+	cameraCanvasRef: MutableRefObject<HTMLCanvasElement | null>;
+	barcodeCanvasRef: MutableRefObject<HTMLCanvasElement | null>;
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 }
 
@@ -27,17 +27,29 @@ export const useBarcodeScanning = ({
 				return false;
 			}
 		} catch (error) {
-			console.info(`unable to detect qr code: - ${error.message}`);
+			if (error instanceof Error) {
+				console.info(`unable to detect qr code: - ${error.message}`);
+			}
 			console.info(error);
 		}
 	};
 	const tryGetBarcodes = async () => {
+		if (
+			cameraCanvasRef.current == null ||
+			barcodeCanvasRef.current == null ||
+			videoRef.current == null
+		) {
+			throw new Error('Unable to get canvas.');
+		}
 		const cameraCanvas = cameraCanvasRef.current.getContext('2d', {
 			willReadFrequently: true,
 		});
 		const barcodeCanvas = barcodeCanvasRef.current.getContext('2d', {
 			willReadFrequently: true,
 		});
+		if (cameraCanvas == null || barcodeCanvas == null) {
+			throw new Error('Unable to get canvas context');
+		}
 		const { videoWidth, videoHeight } = videoRef.current;
 		barcodeCanvasRef.current.height = videoHeight;
 		barcodeCanvasRef.current.width = videoWidth;

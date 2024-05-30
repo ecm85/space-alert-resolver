@@ -42,7 +42,7 @@ export function useCardScanning() {
 
 	const drawDetectedBarcodes = (
 		barcodesInOrder: DetectedBarcode[],
-		dividingLine: number,
+		dividingLine: number | null,
 		canvas: CanvasRenderingContext2D,
 	) => {
 		// TODO: Show line between columns?
@@ -68,7 +68,7 @@ export function useCardScanning() {
 		}
 	};
 
-	const validateBarcodes = (barcodesInOrder: DetectedBarcode[], dividingLine: number) => {
+	const validateBarcodes = (barcodesInOrder: DetectedBarcode[], dividingLine: number | null) => {
 		if (barcodesInOrder.length != 12) {
 			return (
 				<Typography variant="body1">

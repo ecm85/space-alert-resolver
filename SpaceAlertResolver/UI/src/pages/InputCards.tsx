@@ -6,11 +6,11 @@ import { PlayerBoard } from '~/components/PlayerBoard';
 import { useBarcodeData } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData, PlayerColor } from '~/models';
-import styles from './InputCards.css';
+import styles from './InputCards.module.css';
 
 export interface InputCardsProps {
 	gameCode: string;
-	connection: WebSocket;
+	connection: WebSocket | null;
 }
 
 export enum WorkflowState {
@@ -64,7 +64,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			barcodeData,
 			playerColor,
 		};
-		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
+		connection?.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
 		setWorkflowState(WorkflowState.Uploading);
 	};
 

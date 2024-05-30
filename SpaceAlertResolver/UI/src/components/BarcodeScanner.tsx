@@ -1,10 +1,10 @@
 import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
 import { useBarcodeScanning, useCamera } from '~/hooks';
-import styles from './BarcodeScanner.css';
+import styles from './BarcodeScanner.module.css';
 
 export interface BarcodeScannerProps {
-	cameraCanvasRef: MutableRefObject<HTMLCanvasElement>;
-	barcodeCanvasRef: MutableRefObject<HTMLCanvasElement>;
+	cameraCanvasRef: MutableRefObject<HTMLCanvasElement | null>;
+	barcodeCanvasRef: MutableRefObject<HTMLCanvasElement | null>;
 	onCameraStart(): void;
 	onBarcodesScan(barcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D): ReactNode;
 	onError(error: string): void;
@@ -20,9 +20,9 @@ export function BarcodeScanner({
 	barcodeCanvasRef,
 	onBarcodesScan,
 }: BarcodeScannerProps) {
-	const cameraIntervalIdRef = useRef<number>(null);
-	const canvasIntervalIdRef = useRef<number>(null);
-	const videoRef = useRef<HTMLVideoElement>();
+	const cameraIntervalIdRef = useRef<number | null>(null);
+	const canvasIntervalIdRef = useRef<number | null>(null);
+	const videoRef = useRef<HTMLVideoElement | null>(null);
 	const { validationError, scan } = useBarcodeScanning({
 		barcodeCanvasRef,
 		cameraCanvasRef,

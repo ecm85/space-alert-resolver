@@ -4,13 +4,13 @@ import { MessageEventData } from '~/models';
 export interface useConnectionSubscriptionProps {
 	onMessage(messageEventData: MessageEventData): boolean;
 	connectionStarted: boolean;
-	connection: WebSocket;
+	connection: WebSocket | null;
 }
 
 export function useConnectionSubscription({
 	onMessage,
 	connectionStarted,
-	connection
+	connection,
 }: useConnectionSubscriptionProps) {
 	const [isSubscribed, setIsSubscribed] = useState(false);
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,17 +25,17 @@ export function useConnectionSubscription({
 
 	useEffect(() => {
 		if (connectionStarted) {
-			connection.addEventListener('message', handleMessage);
+			connection?.addEventListener('message', handleMessage);
 			setIsSubscribed(true);
 		}
 		return () => {
 			if (connectionStarted) {
-				connection.removeEventListener('message', handleMessage);
+				connection?.removeEventListener('message', handleMessage);
 			}
 		};
 	}, [connectionStarted]);
 
 	return {
-		isSubscribed
+		isSubscribed,
 	};
 }

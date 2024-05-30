@@ -2,7 +2,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import PersonIcon from '@mui/icons-material/Person';
 import { PlayerColor } from '~/models';
-import styles from './ColorPicker.css';
+import styles from './ColorPicker.module.css';
 
 export interface ColorPickerProps {
 	value: PlayerColor | null;

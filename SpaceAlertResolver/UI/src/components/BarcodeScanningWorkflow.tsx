@@ -1,4 +1,4 @@
-import styles from './BarcodeScanningWorkflow.css';
+import styles from './BarcodeScanningWorkflow.module.css';
 import { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
@@ -20,7 +20,7 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 	const [workflowState, setWorkflowState] = useState(WorkflowState.Initial);
 	const cameraCanvasRef = useRef<HTMLCanvasElement>(null);
 	const barcodeCanvasRef = useRef<HTMLCanvasElement>(null);
-	const [error, setError] = useState(null);
+	const [error, setError] = useState<string | null>(null);
 	const isScanning =
 		workflowState === WorkflowState.CameraStarting || workflowState === WorkflowState.CameraStarted;
 	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();

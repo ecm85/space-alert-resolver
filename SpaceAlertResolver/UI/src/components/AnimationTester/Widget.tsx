@@ -1,4 +1,4 @@
-import styles from './Widget.css';
+import styles from './Widget.module.css';
 import cx from 'classnames';
 
 interface WidgetProps {
