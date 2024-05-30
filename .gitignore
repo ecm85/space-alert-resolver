@@ -27,8 +27,7 @@ node_modules/
 !/SpaceAlertResolver/UI/.yarn/versions
 !/SpaceAlertResolver/UI/.yarn/cache
 !/SpaceAlertResolver/UI/.yarn/unplugged
-/SpaceAlertResolver/UI/dist/
+/SpaceAlertResolver/UI/dist/*
+!/SpaceAlertResolver/UI/dist/Images
 /SpaceAlertResolver/UI//node_modules/
 /SpaceAlertResolver/UI/storybook-static/
-
-

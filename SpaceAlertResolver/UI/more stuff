@@ -1,0 +1,42 @@
+connect - nothing
+create game - double actions? also include if use specializations
+join game - include client connection id to host
+sendToHost - 
+
+
+-----
+
+
+1. initial
+2. joined
+3a. joined, scanned, color picked
+3b. joined, scanned, color picked
+4. sending to host
+5. sent to host
+
+
+1. enter player number, enter code -> 2
+2. scan cards -> 3a/b
+3a. send to host -> 4
+3b. pick color -> 3a
+4 -> 5
+
+
+
+
+scan card workflow:
+
+----
+
+option to hide cards
+	what should show for specialization and heroic backs? should show full card back always? if so, should show full front always?
+	where get back images? where did we get front images? Scans, vassal, homedrone, elsewhere?
+
+get github build working
+get github linting working
+get sublime recognizing packages
+make github lint code
+add story, test storybook locally
+make github build/test storybook
+
+test color picker

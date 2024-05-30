@@ -151,13 +151,13 @@ jobs:
           cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI
           corepack enable
           yarn install
-          yarn run build
+          yarn run build-prod
 
       - name: Save build
         uses: actions/upload-artifact@v3
         with:
           name: ui
-          path: SpaceAlertResolver/UI/build
+          path: SpaceAlertResolver/UI/dist
   terraform-plan:
     needs:
       - build-pl
@@ -192,7 +192,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui
-          path: terraform/ui/build
+          path: terraform/ui/dist
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -250,7 +250,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui
-          path: terraform/ui/build
+          path: terraform/ui/dist
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

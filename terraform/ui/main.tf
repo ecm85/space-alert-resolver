@@ -63,7 +63,7 @@ locals {
     "js"   = "text/javascript"
     "html" = "text/html"
   }
-  bucket_source = "${path.module}/build"
+  bucket_source = "${path.module}/dist"
   bucket_pass1 = [for local_path in fileset(local.bucket_source, "**") : {
     full_path      = "${local.bucket_source}/${local_path}"
     local_path     = local_path
