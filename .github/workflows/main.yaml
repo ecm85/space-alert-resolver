@@ -183,6 +183,7 @@ jobs:
       - build-ui
       - build-websocket-lambdas
       - verify-csharp-format
+      - verify-ui
     runs-on: ubuntu-latest
     steps:
       - name: Get Source
