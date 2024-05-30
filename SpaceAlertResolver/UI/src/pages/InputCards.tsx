@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
@@ -19,7 +19,7 @@ export enum WorkflowState {
 	ChooseColor,
 	Uploading,
 	ErrorUploading,
-	Uploaded
+	Uploaded,
 }
 
 export function InputCards({ gameCode, connection }: InputCardsProps) {
@@ -27,7 +27,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [message, setMessage] = useState('');
 	const { barcodeData, playerColor: deducedPlayerColor } = useBarcodeData({ barcodes });
-	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor>(null);
+	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor | null>(null);
 
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
 		setBarcodes(newBarcodes);
@@ -36,7 +36,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	useEffect(() => {
 		if (workflowState === WorkflowState.Scanning && barcodeData.length > 0) {
 			setWorkflowState(
-				deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned
+				deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned,
 			);
 		}
 	}, [workflowState, barcodeData, deducedPlayerColor]);
@@ -62,7 +62,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const handleSendToServerClicked = () => {
 		const data = {
 			barcodeData,
-			playerColor
+			playerColor,
 		};
 		connection.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
 		setWorkflowState(WorkflowState.Uploading);
@@ -71,7 +71,7 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 	const { isSubscribed } = useConnectionSubscription({
 		connection,
 		onMessage: handleMessage,
-		connectionStarted: true
+		connectionStarted: true,
 	});
 
 	const canRescanStates = [WorkflowState.Scanned, WorkflowState.Uploaded];
@@ -104,20 +104,20 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 					{isSubscribed && (
 						<div>
 							{workflowState === WorkflowState.Scanned && (
-								<Button onClick={handleSendToServerClicked} variant='contained'>
+								<Button onClick={handleSendToServerClicked} variant="contained">
 									Submit Cards
 								</Button>
 							)}
 							{workflowState === WorkflowState.Uploading && (
-								<Button variant='contained' disabled>
+								<Button variant="contained" disabled>
 									Submitting...
 								</Button>
 							)}
 							{workflowState === WorkflowState.ErrorUploading && (
-								<Typography variant='body1'>There was an error submitting your cards.</Typography>
+								<Typography variant="body1">There was an error submitting your cards.</Typography>
 							)}
 							{workflowState === WorkflowState.Uploaded && (
-								<Typography variant='body1'>Your cards have been submitted.</Typography>
+								<Typography variant="body1">Your cards have been submitted.</Typography>
 							)}
 						</div>
 					)}

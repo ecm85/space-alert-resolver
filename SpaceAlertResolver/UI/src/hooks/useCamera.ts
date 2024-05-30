@@ -137,7 +137,7 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 		const { videoWidth, videoHeight } = videoRef.current;
 		canvasRef.current.height = videoHeight;
 		canvasRef.current.width = videoWidth;
-		canvas.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
+		canvas?.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
 	};
 
 	return { cameraStartedRef, startCamera, stopCamera, drawCameraOnCanvas };

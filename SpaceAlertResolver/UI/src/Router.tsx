@@ -1,4 +1,3 @@
-import React from 'react';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { Client, CreateGame, Home } from '~/pages';
 import { PageFrame } from './components/PageFrame';
@@ -11,9 +10,9 @@ const router = createHashRouter([
 		children: [
 			{ path: '/', element: <Home /> },
 			{ path: '/client', element: <Client /> },
-			{ path: '/create', element: <CreateGame /> }
-		]
-	}
+			{ path: '/create', element: <CreateGame /> },
+		],
+	},
 ]);
 
 export function Router() {

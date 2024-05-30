@@ -18,3 +18,17 @@ node_modules/
 
 /SpaceAlertResolver/UI/build/*
 !/SpaceAlertResolver/UI/build/Images
+
+/SpaceAlertResolver/UI/.yarn/*
+!/SpaceAlertResolver/UI/.yarn/patches
+!/SpaceAlertResolver/UI/.yarn/plugins
+!/SpaceAlertResolver/UI/.yarn/releases
+!/SpaceAlertResolver/UI/.yarn/sdks
+!/SpaceAlertResolver/UI/.yarn/versions
+!/SpaceAlertResolver/UI/.yarn/cache
+!/SpaceAlertResolver/UI/.yarn/unplugged
+/SpaceAlertResolver/UI/dist/
+/SpaceAlertResolver/UI//node_modules/
+/SpaceAlertResolver/UI/storybook-static/
+
+

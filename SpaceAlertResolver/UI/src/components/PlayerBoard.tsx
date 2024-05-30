@@ -1,12 +1,11 @@
-import React from 'react';
-import { PlayerColor } from '~/models';
+import { ParsedBarcode, PlayerColor } from '~/models';
 import cx from 'classnames';
 import styles from './PlayerBoard.css';
 import { PlayerCards } from './PlayerCards';
 
 export interface PlayerBoardProps {
-	barcodeData: string[];
-	playerColor: PlayerColor;
+	barcodeData: ParsedBarcode[];
+	playerColor: PlayerColor | null;
 }
 
 const playerBoardsByColor: Record<PlayerColor, string> = {
@@ -14,18 +13,18 @@ const playerBoardsByColor: Record<PlayerColor, string> = {
 	[PlayerColor.Red]: 'Red',
 	[PlayerColor.Green]: 'Green',
 	[PlayerColor.Yellow]: 'Yellow',
-	[PlayerColor.Purple]: 'Purple'
+	[PlayerColor.Purple]: 'Purple',
 };
 
 export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
-	const matchingColor = playerBoardsByColor[playerColor];
+	const matchingColor = playerColor == null ? null : playerBoardsByColor[playerColor];
 	const hasSelectedColor = matchingColor != null;
 	const displayColor = hasSelectedColor ? matchingColor : 'Green';
 	const topBoardImageClassName = cx(styles['top-board'], {
-		[styles['missing-color']]: !hasSelectedColor
+		[styles['missing-color']]: !hasSelectedColor,
 	});
 	const bottomBoardImageClassName = cx(styles['bottom-board'], {
-		[styles['missing-color']]: !hasSelectedColor
+		[styles['missing-color']]: !hasSelectedColor,
 	});
 	return (
 		<div className={styles['root']}>

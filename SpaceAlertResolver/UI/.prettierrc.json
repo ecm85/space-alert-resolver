@@ -1,9 +1,7 @@
 {
-	"singleQuote": true,
-	"jsxSingleQuote": true,
-	"trailingComma": "none",
-	"bracketSameLine": true,
-	"arrowParens": "avoid",
+	"$schema": "http://json.schemastore.org/prettierrc",
+	"bracketSameLine": false,
 	"endOfLine": "auto",
-	"singleAttributePerLine": false
+	"singleQuote": true,
+	"useTabs": true
 }

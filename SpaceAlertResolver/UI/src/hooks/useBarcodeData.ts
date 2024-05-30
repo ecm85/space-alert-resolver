@@ -36,7 +36,7 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 		const value = barcode.rawValue.split('*').slice(1, -1).join('*');
 		const orientation = getOrientation(barcode);
 		const barcodeData = getBarcodeDataToken(value, orientation);
-		const playerColor = tryParseEmptySpot(value)?.color;
+		const playerColor = tryParseEmptySpot(value)?.color ?? null;
 		return { barcodeData, playerColor };
 	};
 
@@ -55,7 +55,7 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 	const GetSpecializationForOrientation = (
 		basic: string,
 		advanced: string,
-		orientation: Orientation
+		orientation: Orientation,
 	) => {
 		switch (orientation) {
 			case Orientation.Top:
@@ -112,6 +112,8 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 		if (playerSpot != null) {
 			return null;
 		}
+
+		throw new Error(`Unexpected barcode: ${value}`);
 	};
 
 	const tryParseEmptySpot = (value: string) => {
@@ -149,6 +151,8 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 				return GetHeroicCardForOrientation('HeroicBattleBots', 'TeleportUpperWhite', orientation);
 			case 'H6':
 				return GetHeroicCardForOrientation('HeroicBattleBots', 'TeleportLowerWhite', orientation);
+			default:
+				throw new Error(`Unexpected heroic card: ${code}`);
 		}
 	};
 
@@ -164,12 +168,15 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 				return PlayerColor.Red;
 			case 'Y':
 				return PlayerColor.Yellow;
+			default:
+				throw new Error(`Unexpected color: ${value}`);
 		}
 	};
 
-	const parsedBarcodes = barcodes.map(barcode => parseBarcode(barcode));
-	const barcodeData = parsedBarcodes.map(parsed => parsed.barcodeData);
-	const playerColors = parsedBarcodes.map(parsed => parsed.playerColor);
-	const playerColor = playerColors.filter(color => color != null)[0];
+	const parsedBarcodes = barcodes.map((barcode) => parseBarcode(barcode));
+	const barcodeData = parsedBarcodes.map((parsed) => parsed.barcodeData);
+	const playerColors = parsedBarcodes.map((parsed) => parsed.playerColor);
+	const playerColor =
+		playerColors.length === 0 ? null : playerColors.filter((color) => color != null)[0];
 	return { barcodeData, playerColor };
 }

@@ -1,3 +1,7 @@
-node_modules/
-build/
 yarn.lock
+.pnp.*
+.yarn/
+dist/
+node_modules/
+storybook-static/
+*/mockServiceWorker.js

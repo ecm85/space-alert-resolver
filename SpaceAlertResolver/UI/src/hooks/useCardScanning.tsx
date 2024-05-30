@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import React from 'react';
 
 export function useCardScanning() {
 	const getBarcodesInOrder = (barcodes: DetectedBarcode[]) => {
@@ -44,7 +43,7 @@ export function useCardScanning() {
 	const drawDetectedBarcodes = (
 		barcodesInOrder: DetectedBarcode[],
 		dividingLine: number,
-		canvas: CanvasRenderingContext2D
+		canvas: CanvasRenderingContext2D,
 	) => {
 		// TODO: Show line between columns?
 		// TODO: Update colors
@@ -60,7 +59,7 @@ export function useCardScanning() {
 				barcode.boundingBox.left,
 				barcode.boundingBox.top,
 				barcode.boundingBox.width,
-				barcode.boundingBox.height
+				barcode.boundingBox.height,
 			);
 			canvas.font = '25px monospace';
 			canvas.fillStyle = 'red';
@@ -72,24 +71,24 @@ export function useCardScanning() {
 	const validateBarcodes = (barcodesInOrder: DetectedBarcode[], dividingLine: number) => {
 		if (barcodesInOrder.length != 12) {
 			return (
-				<Typography variant='body1'>
+				<Typography variant="body1">
 					Looking for 12 barcodes. Found: {barcodesInOrder.length}.
 				</Typography>
 			);
 		}
 		if (dividingLine === null) {
 			return (
-				<Typography variant='body1'>Ensure that the bottom row is below the top row.</Typography>
+				<Typography variant="body1">Ensure that the bottom row is below the top row.</Typography>
 			);
 		}
 		const firstRow = barcodesInOrder.slice(0, 7);
 		const secondRow = barcodesInOrder.slice(7);
 		if (
-			firstRow.some(barcode => barcode.boundingBox.bottom > dividingLine) ||
-			secondRow.some(barcode => barcode.boundingBox.top < dividingLine)
+			firstRow.some((barcode) => barcode.boundingBox.bottom > dividingLine) ||
+			secondRow.some((barcode) => barcode.boundingBox.top < dividingLine)
 		) {
 			return (
-				<Typography variant='body1'>
+				<Typography variant="body1">
 					Ensure the dividing line separates the rows clearly.
 				</Typography>
 			);
@@ -100,6 +99,6 @@ export function useCardScanning() {
 	return {
 		getBarcodesInOrder,
 		validateBarcodes,
-		drawDetectedBarcodes
+		drawDetectedBarcodes,
 	};
 }

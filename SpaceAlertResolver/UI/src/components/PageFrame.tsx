@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -28,7 +27,7 @@ export function PageFrame() {
 	};
 	const pages = [
 		{ name: 'Create Game', handler: handleCreateGameClicked },
-		{ name: 'Join Game', handler: handleJoinGameClicked }
+		{ name: 'Join Game', handler: handleJoinGameClicked },
 	];
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -41,15 +40,15 @@ export function PageFrame() {
 
 	return (
 		<>
-			<AppBar position='static'>
-				<Container maxWidth='xl'>
+			<AppBar position="static">
+				<Container maxWidth="xl">
 					<Toolbar disableGutters>
 						<RocketLaunchIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 						<Typography
-							variant='h6'
+							variant="h6"
 							noWrap
-							component='a'
-							href='/'
+							component="a"
+							href="/"
 							sx={{
 								mr: 2,
 								display: { xs: 'none', md: 'flex' },
@@ -57,44 +56,46 @@ export function PageFrame() {
 								fontWeight: 700,
 								letterSpacing: '.3rem',
 								color: 'inherit',
-								textDecoration: 'none'
-							}}>
+								textDecoration: 'none',
+							}}
+						>
 							Space Alert
 						</Typography>
 
 						<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-							<IconButton size='large' onClick={handleOpenNavMenu} color='inherit'>
+							<IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
 								<MenuIcon />
 							</IconButton>
 							<Menu
 								anchorEl={anchorElNav}
 								anchorOrigin={{
 									vertical: 'bottom',
-									horizontal: 'left'
+									horizontal: 'left',
 								}}
 								keepMounted
 								transformOrigin={{
 									vertical: 'top',
-									horizontal: 'left'
+									horizontal: 'left',
 								}}
 								open={Boolean(anchorElNav)}
 								onClose={handleCloseNavMenu}
 								sx={{
-									display: { xs: 'block', md: 'none' }
-								}}>
-								{pages.map(page => (
+									display: { xs: 'block', md: 'none' },
+								}}
+							>
+								{pages.map((page) => (
 									<MenuItem key={page.name} onClick={page.handler}>
-										<Typography textAlign='center'>{page.name}</Typography>
+										<Typography textAlign="center">{page.name}</Typography>
 									</MenuItem>
 								))}
 							</Menu>
 						</Box>
 						<RocketLaunchIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 						<Typography
-							variant='h5'
+							variant="h5"
 							noWrap
-							component='a'
-							href='/'
+							component="a"
+							href="/"
 							sx={{
 								mr: 2,
 								display: { xs: 'flex', md: 'none' },
@@ -103,16 +104,18 @@ export function PageFrame() {
 								fontWeight: 700,
 								letterSpacing: '.3rem',
 								color: 'inherit',
-								textDecoration: 'none'
-							}}>
+								textDecoration: 'none',
+							}}
+						>
 							Space Alert
 						</Typography>
 						<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-							{pages.map(page => (
+							{pages.map((page) => (
 								<Button
 									key={page.name}
 									onClick={page.handler}
-									sx={{ my: 2, color: 'white', display: 'block' }}>
+									sx={{ my: 2, color: 'white', display: 'block' }}
+								>
 									{page.name}
 								</Button>
 							))}
@@ -120,7 +123,7 @@ export function PageFrame() {
 					</Toolbar>
 				</Container>
 			</AppBar>
-			<Container maxWidth='xl'>
+			<Container maxWidth="xl">
 				<Outlet />
 			</Container>
 		</>

@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
@@ -12,7 +12,7 @@ export const useBarcodeScanning = ({
 	videoRef,
 	cameraCanvasRef,
 	barcodeCanvasRef,
-	onBarcodesScan
+	onBarcodesScan,
 }: useBarcodeScanningProps) => {
 	const barcodeDetector = new BarcodeDetector();
 	const [validationError, setValidationError] = useState<ReactNode>([]);
@@ -33,10 +33,10 @@ export const useBarcodeScanning = ({
 	};
 	const tryGetBarcodes = async () => {
 		const cameraCanvas = cameraCanvasRef.current.getContext('2d', {
-			willReadFrequently: true
+			willReadFrequently: true,
 		});
 		const barcodeCanvas = barcodeCanvasRef.current.getContext('2d', {
-			willReadFrequently: true
+			willReadFrequently: true,
 		});
 		const { videoWidth, videoHeight } = videoRef.current;
 		barcodeCanvasRef.current.height = videoHeight;
@@ -45,12 +45,12 @@ export const useBarcodeScanning = ({
 		const barcodes = await barcodeDetector.detect(imageData);
 		// TODO: Only accept barcodes in valid format (via a predicate passed in)
 		// Valid = starts and ends with digit* / *digit, and is good orientation
-		const validBarcodes = barcodes?.filter(barcode => !!barcode.rawValue) ?? [];
+		const validBarcodes = barcodes?.filter((barcode) => !!barcode.rawValue) ?? [];
 		return onBarcodesScan(validBarcodes, barcodeCanvas);
 	};
 
 	return {
 		scan,
-		validationError
+		validationError,
 	};
 };

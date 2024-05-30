@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Widget.css';
 import cx from 'classnames';
 
@@ -13,7 +12,7 @@ export function Widget({ isOn, previousLeft, previousRight }: WidgetProps) {
 	const animateFromRight = isOn && previousRight;
 	const thingClassName = cx(styles['thing'], {
 		[styles['thing-from-left']]: animateFromLeft,
-		[styles['thing-from-right']]: animateFromRight
+		[styles['thing-from-right']]: animateFromRight,
 	});
 	return <div className={styles['root']}>{isOn && <div className={thingClassName}></div>}</div>;
 }

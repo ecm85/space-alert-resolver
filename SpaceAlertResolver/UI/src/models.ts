@@ -59,11 +59,13 @@ export enum PlayerColor {
 	Blue,
 	Green,
 	Yellow,
-	Purple
+	Purple,
 }
 
 export enum Orientation {
 	Top,
 	Bottom,
-	Other
+	Other,
 }
+
+export type ParsedBarcode = string | null;

@@ -1,4 +1,4 @@
-import React, { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
+import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
 import { useBarcodeScanning, useCamera } from '~/hooks';
 import styles from './BarcodeScanner.css';
 
@@ -18,7 +18,7 @@ export function BarcodeScanner({
 	onError,
 	cameraCanvasRef,
 	barcodeCanvasRef,
-	onBarcodesScan
+	onBarcodesScan,
 }: BarcodeScannerProps) {
 	const cameraIntervalIdRef = useRef<number>(null);
 	const canvasIntervalIdRef = useRef<number>(null);
@@ -27,7 +27,7 @@ export function BarcodeScanner({
 		barcodeCanvasRef,
 		cameraCanvasRef,
 		videoRef,
-		onBarcodesScan
+		onBarcodesScan,
 	});
 
 	const processCamera = () => {
@@ -46,7 +46,7 @@ export function BarcodeScanner({
 		processCamera,
 		videoRef,
 		onError,
-		canvasRef: cameraCanvasRef
+		canvasRef: cameraCanvasRef,
 	});
 
 	useEffect(() => {
@@ -84,7 +84,8 @@ export function BarcodeScanner({
 				webkit-playsinline
 				playsInline
 				muted
-				ref={videoRef}></video>
+				ref={videoRef}
+			></video>
 		</>
 	);
 }

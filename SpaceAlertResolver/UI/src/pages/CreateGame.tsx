@@ -1,17 +1,17 @@
 import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
 import styles from './CreateGame.css';
 
 export function CreateGame() {
-	const [gameCode, setGameCode] = useState<string>(null);
+	const [gameCode, setGameCode] = useState<string | null>(null);
 	const { connection, connectionStarted } = useWebSocket();
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
 	const startGame = async () => {
-		connection.send(JSON.stringify({ action: 'CreateGame' }));
+		connection?.send(JSON.stringify({ action: 'CreateGame' }));
 	};
 	const isLoading = !gameCode;
 
@@ -26,17 +26,17 @@ export function CreateGame() {
 			case 'ClientMessageReceived': {
 				const connectionId = messageEventData.data.connectionId;
 				const updatedClient = clientsRef.current.filter(
-					client => client.connectionId === connectionId
+					(client) => client.connectionId === connectionId,
 				)[0];
 				const otherClients = clientsRef.current.filter(
-					client => client.connectionId !== connectionId
+					(client) => client.connectionId !== connectionId,
 				);
 				setClients([
 					...otherClients,
 					{
 						...updatedClient,
-						...messageEventData.data
-					}
+						...messageEventData.data,
+					},
 				]);
 				return true;
 			}
@@ -48,7 +48,7 @@ export function CreateGame() {
 	const { isSubscribed } = useConnectionSubscription({
 		onMessage: handleMessage,
 		connection,
-		connectionStarted
+		connectionStarted,
 	});
 
 	useEffect(() => {
@@ -61,13 +61,13 @@ export function CreateGame() {
 		<div>
 			<h2>Create Game</h2>
 			<div>
-				<Typography variant='body1'>
+				<Typography variant="body1">
 					Game Code:{' '}
 					{isLoading ? (
-						<Skeleton variant='text' className={styles['skeleton']} />
+						<Skeleton variant="text" className={styles['skeleton']} />
 					) : (
 						<div>
-							<Typography variant='h5'>{gameCode}</Typography>
+							<Typography variant="h5">{gameCode}</Typography>
 						</div>
 					)}
 				</Typography>
@@ -76,7 +76,7 @@ export function CreateGame() {
 				<div>
 					<h3>Clients</h3>
 					<ul>
-						{clients.map(client => (
+						{clients.map((client) => (
 							<li>
 								<>
 									{client.name}

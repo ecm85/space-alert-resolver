@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Widget } from './Widget';
 import styles from './AnimationTester.css';
 import { usePrevious } from '~/hooks/usePrevious';
@@ -9,23 +9,23 @@ export function AnimationTester() {
 		{
 			one: true,
 			two: false,
-			three: false
+			three: false,
 		},
 		{
 			one: false,
 			two: true,
-			three: false
+			three: false,
 		},
 		{
 			one: false,
 			two: false,
-			three: true
+			three: true,
 		},
 		{
 			one: false,
 			two: true,
-			three: false
-		}
+			three: false,
+		},
 	];
 	const [stateIndex, setStateIndex] = useState(0);
 	const previousStateIndex = usePrevious(stateIndex);
@@ -44,7 +44,7 @@ export function AnimationTester() {
 				previousRight={previousState?.three}
 			/>
 			<Widget isOn={widgetState.three} previousLeft={previousState?.two} />
-			<Button className={styles['button']} variant='contained' onClick={handleToggleClicked}>
+			<Button className={styles['button']} variant="contained" onClick={handleToggleClicked}>
 				Toggle
 			</Button>
 		</div>

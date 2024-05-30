@@ -1,5 +1,5 @@
 import styles from './BarcodeScanningWorkflow.css';
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
 import { useCardScanning } from '~/hooks/useCardScanning';
@@ -9,7 +9,7 @@ export enum WorkflowState {
 	Initial,
 	CameraStarting,
 	CameraStarted,
-	Error
+	Error,
 }
 
 export interface BarcodeScanningWorkflowProps {
@@ -36,7 +36,7 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 
 	const handleBarcodesScanned = (
 		newBarcodes: DetectedBarcode[],
-		canvas: CanvasRenderingContext2D
+		canvas: CanvasRenderingContext2D,
 	) => {
 		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
 		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
@@ -58,24 +58,25 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 	return (
 		<div className={styles['root']}>
 			<div className={styles['buttons']}>
-				<Button variant='contained' onClick={handleScanClicked} disabled={isScanning}>
+				<Button variant="contained" onClick={handleScanClicked} disabled={isScanning}>
 					Start Camera
 				</Button>
 				<Button
-					variant='contained'
+					variant="contained"
 					onClick={handleStopCameraClicked}
-					disabled={workflowState !== WorkflowState.CameraStarted}>
+					disabled={workflowState !== WorkflowState.CameraStarted}
+				>
 					Stop Camera
 				</Button>
 			</div>
 			{/*TODO: Show help*/}
 			{workflowState === WorkflowState.CameraStarting && (
-				<Typography variant='body1'>Starting camera...</Typography>
+				<Typography variant="body1">Starting camera...</Typography>
 			)}
 			{workflowState === WorkflowState.Error && (
 				<>
-					<Typography variant='body1'>Uh Oh! Something went wrong.</Typography>
-					<Typography variant='body1'>{error}</Typography>
+					<Typography variant="body1">Uh Oh! Something went wrong.</Typography>
+					<Typography variant="body1">{error}</Typography>
 				</>
 			)}
 			{isScanning && (

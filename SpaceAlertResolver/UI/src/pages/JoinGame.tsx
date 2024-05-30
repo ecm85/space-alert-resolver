@@ -13,9 +13,9 @@ export interface JoinGameProps {
 }
 
 export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGameProps) {
-	const [gameCode, setGameCode, gameCodeRef] = useStateRef<string>(null);
-	const [name, setName] = useState<string>(null);
-	const [message, setMessage] = useState<string>(null);
+	const [gameCode, setGameCode, gameCodeRef] = useStateRef<string | null>(null);
+	const [name, setName] = useState<string | null>(null);
+	const [message, setMessage] = useState<string | null>(null);
 	const [joining, setJoining] = useState(false);
 	const handleMessage = (messageEventData: MessageEventData) => {
 		switch (messageEventData.event) {
@@ -26,7 +26,9 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 				setMessage('That code is invalid.');
 				return true;
 			case 'YouJoined':
-				onGameJoined(gameCodeRef.current);
+				if (gameCodeRef.current != null) {
+					onGameJoined(gameCodeRef.current);
+				}
 				return true;
 			default:
 				return false;
@@ -36,7 +38,7 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 	const { isSubscribed } = useConnectionSubscription({
 		onMessage: handleMessage,
 		connection,
-		connectionStarted
+		connectionStarted,
 	});
 
 	const handleGameCodeChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +60,9 @@ export function JoinGame({ connectionStarted, connection, onGameJoined }: JoinGa
 		<div>
 			<h2>Join Game</h2>
 			<div className={styles['inputs']}>
-				<TextField label='Your name:' value={name} onChange={handleNameChanged}></TextField>
-				<TextField label='Game Code:' value={gameCode} onChange={handleGameCodeChanged}></TextField>
-				<Button variant='contained' disabled={!canJoin} onClick={handleJoinClicked}>
+				<TextField label="Your name:" value={name} onChange={handleNameChanged}></TextField>
+				<TextField label="Game Code:" value={gameCode} onChange={handleGameCodeChanged}></TextField>
+				<Button variant="contained" disabled={!canJoin} onClick={handleJoinClicked}>
 					{!joining ? 'Join Game' : 'Joining...'}
 				</Button>
 			</div>
