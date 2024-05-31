@@ -32,11 +32,7 @@ option to hide cards
 	what should show for specialization and heroic backs? should show full card back always? if so, should show full front always?
 	where get back images? where did we get front images? Scans, vassal, homedrone, elsewhere?
 
-get github build working
-get github linting working
-get sublime recognizing packages
-make github lint code
 add story, test storybook locally
 make github build/test storybook
-
 test color picker
+test site (after lint changes)

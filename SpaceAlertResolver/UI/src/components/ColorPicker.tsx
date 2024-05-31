@@ -9,7 +9,7 @@ export interface ColorPickerProps {
 	onPickColor(color: PlayerColor): void;
 }
 
-export function ColorPicker({ onPickColor }: ColorPickerProps) {
+export function ColorPicker({ value, onPickColor }: ColorPickerProps) {
 	const allPlayerColors = [
 		PlayerColor.Red,
 		PlayerColor.Blue,
@@ -17,15 +17,26 @@ export function ColorPicker({ onPickColor }: ColorPickerProps) {
 		PlayerColor.Yellow,
 		PlayerColor.Purple,
 	];
+	const classNames: Record<PlayerColor, string> = {
+		[PlayerColor.Red]: 'red',
+		[PlayerColor.Blue]: 'blue',
+		[PlayerColor.Green]: 'green',
+		[PlayerColor.Yellow]: 'yellow',
+		[PlayerColor.Purple]: 'purple',
+	};
 	const createColorPickedHandler = (playerColor: PlayerColor) => () => {
 		onPickColor(playerColor);
 	};
 	return (
 		<div>
-			<ToggleButtonGroup>
+			<ToggleButtonGroup value={value}>
 				{allPlayerColors.map((playerColor) => (
-					<ToggleButton value={playerColor} onClick={createColorPickedHandler(playerColor)}>
-						<PersonIcon className={styles[playerColor]} />
+					<ToggleButton
+						key={playerColor}
+						value={playerColor}
+						onClick={createColorPickedHandler(playerColor)}
+					>
+						<PersonIcon className={styles[classNames[playerColor]]} />
 					</ToggleButton>
 				))}
 			</ToggleButtonGroup>
