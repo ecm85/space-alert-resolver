@@ -1,5 +1,6 @@
 import { Orientation, PlayerColor } from '~/models';
 import { useBarcodeOrientation } from './useBarcodeOrientation';
+import { DetectedBarcode } from 'barcode-detector';
 
 export interface BarcodeDataProps {
 	barcodes: DetectedBarcode[];

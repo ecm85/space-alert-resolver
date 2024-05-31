@@ -69,3 +69,19 @@ export enum Orientation {
 }
 
 export type ParsedBarcode = string | null;
+
+export enum BarcodeScanningWorkflowState {
+	Initial,
+	CameraStarting,
+	CameraStarted,
+	Error,
+}
+
+export enum InputCardsWorkflowState {
+	Scanning,
+	Scanned,
+	ChooseColor,
+	Uploading,
+	ErrorUploading,
+	Uploaded,
+}

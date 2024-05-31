@@ -1,4 +1,5 @@
 import { Orientation } from '~/models';
+import { DetectedBarcode } from 'barcode-detector';
 
 export function useBarcodeOrientation() {
 	const getOrientation = (barcode: DetectedBarcode) => {

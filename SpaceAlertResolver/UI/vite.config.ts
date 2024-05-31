@@ -10,6 +10,7 @@ export default defineConfig({
 		port: 6510,
 	},
 	build: {
+		emptyOutDir: false,
 		rollupOptions: {
 			output: {
 				manualChunks: {

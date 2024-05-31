@@ -10,9 +10,6 @@ export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string | null>(null);
 	const { connection, connectionStarted } = useWebSocket();
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
-	const startGame = async () => {
-		connection?.send(JSON.stringify({ action: 'CreateGame' }));
-	};
 	const isLoading = !gameCode;
 
 	const handleMessage = (messageEventData: MessageEventData) => {
@@ -52,10 +49,13 @@ export function CreateGame() {
 	});
 
 	useEffect(() => {
+		const startGame = async () => {
+			connection?.send(JSON.stringify({ action: 'CreateGame' }));
+		};
 		if (isSubscribed) {
 			startGame();
 		}
-	}, [isSubscribed]);
+	}, [isSubscribed, connection]);
 
 	return (
 		<div>

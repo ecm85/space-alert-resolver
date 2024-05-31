@@ -1,5 +1,5 @@
 import { ReactNode, useState, MutableRefObject } from 'react';
-import { BarcodeDetector } from 'barcode-detector';
+import { DetectedBarcode, BarcodeDetector } from 'barcode-detector';
 
 export interface useBarcodeScanningProps {
 	videoRef: MutableRefObject<HTMLVideoElement | null>;

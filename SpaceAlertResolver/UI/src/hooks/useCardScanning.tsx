@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { DetectedBarcode } from 'barcode-detector';
 
 export function useCardScanning() {
 	const getBarcodesInOrder = (barcodes: DetectedBarcode[]) => {

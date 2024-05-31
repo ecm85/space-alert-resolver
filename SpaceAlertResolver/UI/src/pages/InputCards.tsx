@@ -5,21 +5,13 @@ import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
 import { useBarcodeData } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
-import { MessageEventData, PlayerColor } from '~/models';
+import { MessageEventData, PlayerColor, InputCardsWorkflowState as WorkflowState } from '~/models';
 import styles from './InputCards.module.css';
+import { DetectedBarcode } from 'barcode-detector';
 
 export interface InputCardsProps {
 	gameCode: string;
 	connection: WebSocket | null;
-}
-
-export enum WorkflowState {
-	Scanning,
-	Scanned,
-	ChooseColor,
-	Uploading,
-	ErrorUploading,
-	Uploaded,
 }
 
 export function InputCards({ gameCode, connection }: InputCardsProps) {

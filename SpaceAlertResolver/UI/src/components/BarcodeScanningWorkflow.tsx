@@ -4,13 +4,8 @@ import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
 import { useCardScanning } from '~/hooks/useCardScanning';
 import { Button } from '@mui/material';
-
-export enum WorkflowState {
-	Initial,
-	CameraStarting,
-	CameraStarted,
-	Error,
-}
+import { DetectedBarcode } from 'barcode-detector';
+import { BarcodeScanningWorkflowState as WorkflowState } from '~/models';
 
 export interface BarcodeScanningWorkflowProps {
 	onBarcodesScan(barcodes: DetectedBarcode[]): void;
@@ -69,7 +64,7 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 					Stop Camera
 				</Button>
 			</div>
-			{/*TODO: Show help*/}
+			{/* TODO: Show help */}
 			{workflowState === WorkflowState.CameraStarting && (
 				<Typography variant="body1">Starting camera...</Typography>
 			)}

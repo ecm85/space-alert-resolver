@@ -8,6 +8,7 @@
 	"scripts": {
 		"start": "vite",
 		"start-tsc": "tsc --watch",
+		"start-lint": "esw . --report-unused-disable-directives --max-warnings 0",
 		"lint-ci": "eslint . --report-unused-disable-directives --max-warnings 0",
 		"build-local": "tsc && vite build",
 		"build-prod": "tsc && vite build --mode prod",

@@ -17,7 +17,7 @@ export const useWebSocket = () => {
 		return () => {
 			connection?.close();
 		};
-	}, []);
+	}, [connection]);
 
 	return {
 		connection,
