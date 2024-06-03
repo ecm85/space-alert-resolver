@@ -1,15 +1,36 @@
+.root {
+	--color-red-primary: hsl(8, 70%, 50%);
+	--color-red-secondary: hsl(8, 100%, 90%);
+	--color-blue-primary: hsl(237, 70%, 50%);
+	--color-blue-secondary: hsl(237, 100%, 90%);
+	--color-green-primary: hsl(120, 70%, 40%);
+	--color-green-secondary: hsl(120, 100%, 90%);
+	--color-purple-primary: hsl(305, 70%, 50%);
+	--color-purple-secondary: hsl(305, 100%, 90%);
+	--color-yellow-primary: hsl(46, 70%, 50%);
+	--color-yellow-secondary: hsl(46, 100%, 90%);
+}
 .red {
-	color: #ff2100;
+	background-color: var(--color-red-secondary);
+	color: var(--color-red-primary);
 }
 .blue {
-	color: #000cff;
+	background-color: var(--color-blue-secondary);
+	color: var(--color-blue-primary);
 }
 .green {
-	color: #00cc17;
+	background-color: var(--color-green-secondary);
+	color: var(--color-green-primary);
 }
 .purple {
-	color: #ff00e9;
+	background-color: var(--color-purple-secondary);
+	color: var(--color-purple-primary);
 }
 .yellow {
-	color: #f6ff00;
+	background-color: var(--color-yellow-secondary);
+	color: var(--color-yellow-primary);
+}
+.person-icon {
+	border-radius: 20px;
+	padding: 8px;
 }

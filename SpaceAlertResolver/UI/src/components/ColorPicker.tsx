@@ -3,6 +3,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import PersonIcon from '@mui/icons-material/Person';
 import { PlayerColor } from '~/models';
 import styles from './ColorPicker.module.css';
+import cx from 'classnames';
 
 export interface ColorPickerProps {
 	value: PlayerColor | null;
@@ -28,15 +29,15 @@ export function ColorPicker({ value, onPickColor }: ColorPickerProps) {
 		onPickColor(playerColor);
 	};
 	return (
-		<div>
-			<ToggleButtonGroup value={value}>
+		<div className={styles['root']}>
+			<ToggleButtonGroup value={value} size="small">
 				{allPlayerColors.map((playerColor) => (
 					<ToggleButton
 						key={playerColor}
 						value={playerColor}
 						onClick={createColorPickedHandler(playerColor)}
 					>
-						<PersonIcon className={styles[classNames[playerColor]]} />
+						<PersonIcon className={cx(styles['person-icon'], styles[classNames[playerColor]])} />
 					</ToggleButton>
 				))}
 			</ToggleButtonGroup>
