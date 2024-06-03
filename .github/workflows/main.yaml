@@ -50,6 +50,23 @@ jobs:
           yarn install
           yarn run lint-ci
           yarn run prettier-ci
+  test-storybook-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Source
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18.19.0
+
+      - name: Verify
+        run: |
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver/UI
+          corepack enable
+          yarn install
+          yarn run test-storybook-ci
   build-pl:
     runs-on: ubuntu-latest
     steps:
@@ -184,6 +201,7 @@ jobs:
       - build-websocket-lambdas
       - verify-csharp-format
       - verify-ui
+      - test-storybook-ui
     runs-on: ubuntu-latest
     steps:
       - name: Get Source
