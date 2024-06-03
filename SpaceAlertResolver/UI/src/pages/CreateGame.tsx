@@ -1,6 +1,6 @@
 import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
@@ -8,54 +8,57 @@ import styles from './CreateGame.module.css';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string | null>(null);
-	const { connection, connectionStarted } = useWebSocket();
+	const { connectionRef, connectionStarted } = useWebSocket();
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
 	const isLoading = !gameCode;
 
-	const handleMessage = (messageEventData: MessageEventData) => {
-		switch (messageEventData.event) {
-			case 'GameCreated':
-				setGameCode(messageEventData.data.code);
-				return true;
-			case 'ClientJoined':
-				setClients([...clientsRef.current, { ...messageEventData.data }]);
-				return true;
-			case 'ClientMessageReceived': {
-				const connectionId = messageEventData.data.connectionId;
-				const updatedClient = clientsRef.current.filter(
-					(client) => client.connectionId === connectionId,
-				)[0];
-				const otherClients = clientsRef.current.filter(
-					(client) => client.connectionId !== connectionId,
-				);
-				setClients([
-					...otherClients,
-					{
-						...updatedClient,
-						...messageEventData.data,
-					},
-				]);
-				return true;
+	const handleMessage = useCallback(
+		(messageEventData: MessageEventData) => {
+			switch (messageEventData.event) {
+				case 'GameCreated':
+					setGameCode(messageEventData.data.code);
+					return true;
+				case 'ClientJoined':
+					setClients([...clientsRef.current, { ...messageEventData.data }]);
+					return true;
+				case 'ClientMessageReceived': {
+					const connectionId = messageEventData.data.connectionId;
+					const updatedClient = clientsRef.current.filter(
+						(client) => client.connectionId === connectionId,
+					)[0];
+					const otherClients = clientsRef.current.filter(
+						(client) => client.connectionId !== connectionId,
+					);
+					setClients([
+						...otherClients,
+						{
+							...updatedClient,
+							...messageEventData.data,
+						},
+					]);
+					return true;
+				}
+				default:
+					return false;
 			}
-			default:
-				return false;
-		}
-	};
+		},
+		[clientsRef, setGameCode, setClients],
+	);
 
 	const { isSubscribed } = useConnectionSubscription({
 		onMessage: handleMessage,
-		connection,
+		connectionRef,
 		connectionStarted,
 	});
 
 	useEffect(() => {
 		const startGame = async () => {
-			connection?.send(JSON.stringify({ action: 'CreateGame' }));
+			connectionRef.current?.send(JSON.stringify({ action: 'CreateGame' }));
 		};
 		if (isSubscribed) {
 			startGame();
 		}
-	}, [isSubscribed, connection]);
+	}, [isSubscribed, connectionRef]);
 
 	return (
 		<div>

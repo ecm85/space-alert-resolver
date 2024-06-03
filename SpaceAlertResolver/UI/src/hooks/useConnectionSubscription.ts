@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import { MessageEventData } from '~/models';
 
 export interface useConnectionSubscriptionProps {
 	onMessage(messageEventData: MessageEventData): boolean;
 	connectionStarted: boolean;
-	connection: WebSocket | null;
+	connectionRef: MutableRefObject<WebSocket | null>;
 }
 
 export function useConnectionSubscription({
 	onMessage,
 	connectionStarted,
-	connection,
+	connectionRef,
 }: useConnectionSubscriptionProps) {
 	const [isSubscribed, setIsSubscribed] = useState(false);
 
 	useEffect(() => {
+		console.log('mounting useConnectionSubscription');
+		console.log(connectionRef);
+		console.log(connectionStarted);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const handleMessage = (messageEvent: MessageEvent<any>) => {
 			const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
@@ -25,15 +28,17 @@ export function useConnectionSubscription({
 			// TODO: Handle error better (and across all subscribers?)
 		};
 		if (connectionStarted) {
-			connection?.addEventListener('message', handleMessage);
+			connectionRef.current?.addEventListener('message', handleMessage);
 			setIsSubscribed(true);
 		}
+		const connectionToClose = connectionRef.current;
 		return () => {
+			console.log('unmounting useConnectionSubscription');
 			if (connectionStarted) {
-				connection?.removeEventListener('message', handleMessage);
+				connectionToClose?.removeEventListener('message', handleMessage);
 			}
 		};
-	}, [connectionStarted, connection, onMessage]);
+	}, [connectionStarted, connectionRef, onMessage]);
 
 	return {
 		isSubscribed,

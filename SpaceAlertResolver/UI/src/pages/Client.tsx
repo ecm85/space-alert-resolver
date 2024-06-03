@@ -5,15 +5,15 @@ import { JoinGame } from './JoinGame';
 
 export function Client() {
 	const [gameCode, setGameCode] = useState<string | null>(null);
-	const { connection, connectionStarted } = useWebSocket();
+	const { connectionRef, connectionStarted } = useWebSocket();
 
 	const handleGameJoined = (newGameCode: string) => {
 		setGameCode(newGameCode);
 	};
 
 	return gameCode ? (
-		<InputCards {...{ connection, gameCode }} />
+		<InputCards {...{ connectionRef, gameCode }} />
 	) : (
-		<JoinGame {...{ connection, connectionStarted }} onGameJoined={handleGameJoined} />
+		<JoinGame {...{ connectionRef, connectionStarted }} onGameJoined={handleGameJoined} />
 	);
 }

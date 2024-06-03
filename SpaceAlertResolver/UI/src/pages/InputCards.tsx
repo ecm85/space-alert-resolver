@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useCallback, useEffect, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
@@ -11,10 +11,10 @@ import { DetectedBarcode } from 'barcode-detector';
 
 export interface InputCardsProps {
 	gameCode: string;
-	connection: WebSocket | null;
+	connectionRef: MutableRefObject<WebSocket | null>;
 }
 
-export function InputCards({ gameCode, connection }: InputCardsProps) {
+export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const [workflowState, setWorkflowState] = useState(WorkflowState.Scanning);
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [message, setMessage] = useState('');
@@ -38,16 +38,19 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 		setWorkflowState(WorkflowState.Scanning);
 	};
 
-	const handleMessage = (messageEventData: MessageEventData) => {
-		switch (messageEventData.event) {
-			case 'YourMessageSent':
-				setMessage('Your cards have been sent to the host.');
-				setWorkflowState(WorkflowState.Uploaded);
-				return true;
-			default:
-				return false;
-		}
-	};
+	const handleMessage = useCallback(
+		(messageEventData: MessageEventData) => {
+			switch (messageEventData.event) {
+				case 'YourMessageSent':
+					setMessage('Your cards have been sent to the host.');
+					setWorkflowState(WorkflowState.Uploaded);
+					return true;
+				default:
+					return false;
+			}
+		},
+		[setMessage, setWorkflowState],
+	);
 
 	const playerColor = manualPlayerColor != null ? manualPlayerColor : deducedPlayerColor;
 
@@ -56,12 +59,14 @@ export function InputCards({ gameCode, connection }: InputCardsProps) {
 			barcodeData,
 			playerColor,
 		};
-		connection?.send(JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }));
+		connectionRef.current?.send(
+			JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }),
+		);
 		setWorkflowState(WorkflowState.Uploading);
 	};
 
 	const { isSubscribed } = useConnectionSubscription({
-		connection,
+		connectionRef,
 		onMessage: handleMessage,
 		connectionStarted: true,
 	});
