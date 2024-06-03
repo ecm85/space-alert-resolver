@@ -15,9 +15,6 @@ export function useConnectionSubscription({
 	const [isSubscribed, setIsSubscribed] = useState(false);
 
 	useEffect(() => {
-		console.log('mounting useConnectionSubscription');
-		console.log(connectionRef);
-		console.log(connectionStarted);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const handleMessage = (messageEvent: MessageEvent<any>) => {
 			const messageEventData = JSON.parse(messageEvent.data) as MessageEventData;
@@ -33,7 +30,6 @@ export function useConnectionSubscription({
 		}
 		const connectionToClose = connectionRef.current;
 		return () => {
-			console.log('unmounting useConnectionSubscription');
 			if (connectionStarted) {
 				connectionToClose?.removeEventListener('message', handleMessage);
 			}
