@@ -20,14 +20,17 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 		workflowState === WorkflowState.CameraStarting || workflowState === WorkflowState.CameraStarted;
 	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
 
-	const handleError = (newError: string) => {
-		setWorkflowState(WorkflowState.Error);
-		setError(newError);
-	};
+	const handleError = useCallback(
+		(newError: string) => {
+			setWorkflowState(WorkflowState.Error);
+			setError(newError);
+		},
+		[setWorkflowState, setError],
+	);
 
-	const handleCameraStarted = () => {
+	const handleCameraStarted = useCallback(() => {
 		setWorkflowState(WorkflowState.CameraStarted);
-	};
+	}, [setWorkflowState]);
 
 	const handleBarcodesScanned = useCallback(
 		(newBarcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
