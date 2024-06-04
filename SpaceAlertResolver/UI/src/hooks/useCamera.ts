@@ -1,16 +1,76 @@
-import { useRef, MutableRefObject } from 'react';
+import { useRef, MutableRefObject, useCallback } from 'react';
 
 export interface useCameraProps {
 	processCamera(): void;
 	videoRef: MutableRefObject<HTMLVideoElement | null>;
-	canvasRef: MutableRefObject<HTMLCanvasElement | null>;
 	onError(error: string): void;
 }
 
-export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCameraProps) => {
+export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) => {
 	const mediaStreamRef = useRef<MediaStream | null>(null);
 	const cameraStartedRef = useRef(false);
-	const startPreferredCameraAsync = async () => {
+	const startPreferredCameraAsync = useCallback(async () => {
+		const startSpecificCameraFromInfo = async (cameraInfo: MediaDeviceInfo) => {
+			try {
+				const camera = await navigator.mediaDevices.getUserMedia({
+					audio: true,
+					video: { deviceId: { exact: cameraInfo.deviceId } },
+				});
+				return startSpecificCameraFromStream(camera);
+			} catch (error) {
+				if (error instanceof Error) {
+					console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
+				}
+				return false;
+			}
+		};
+
+		const startSpecificCameraFromStream = (stream: MediaStream) => {
+			try {
+				if (videoRef.current == null) {
+					return false;
+				}
+				videoRef.current.srcObject = stream;
+				mediaStreamRef.current = stream;
+				processCamera();
+				return true;
+			} catch (error) {
+				if (error instanceof Error) {
+					console.log(`unable to start camera: ${stream.id} - ${error.message}`);
+				}
+				return false;
+			}
+		};
+		const startSpecificCameraByEnsuringAccess = async () => {
+			try {
+				const initialCamera = await navigator.mediaDevices.getUserMedia({
+					audio: true,
+					video: { facingMode: { ideal: 'environment' } },
+				});
+				return startSpecificCameraFromStream(initialCamera);
+			} catch (error) {
+				if (error instanceof Error) {
+					console.log(`unable to get camera: ${error.message}`);
+				}
+				return false;
+			}
+		};
+
+		const orderCameraInfos = (camerasInfos: MediaDeviceInfo[]) => {
+			return [...camerasInfos].sort((cameraInfo1, cameraInfo2) => {
+				const camera1IsBack = cameraIsBack(cameraInfo1);
+				const camera2IsBack = cameraIsBack(cameraInfo2);
+
+				if (camera1IsBack && !camera2IsBack) {
+					return -1;
+				}
+				if (camera2IsBack && !camera1IsBack) {
+					return 1;
+				}
+
+				return 0;
+			});
+		};
 		try {
 			if (await startSpecificCameraByEnsuringAccess()) {
 				return true;
@@ -37,7 +97,7 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 			}
 			return false;
 		}
-	};
+	}, [processCamera, videoRef]);
 
 	const startCamera = () => {
 		const startPreferredCamera = async () => {
@@ -66,69 +126,6 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 		}
 	};
 
-	const startSpecificCameraFromInfo = async (cameraInfo: MediaDeviceInfo) => {
-		try {
-			const camera = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-				video: { deviceId: { exact: cameraInfo.deviceId } },
-			});
-			return startSpecificCameraFromStream(camera);
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log(`unable to get camera: ${cameraInfo.label} - ${error.message}`);
-			}
-			return false;
-		}
-	};
-
-	const startSpecificCameraFromStream = (stream: MediaStream) => {
-		try {
-			if (videoRef.current == null) {
-				return false;
-			}
-			videoRef.current.srcObject = stream;
-			mediaStreamRef.current = stream;
-			processCamera();
-			return true;
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log(`unable to start camera: ${stream.id} - ${error.message}`);
-			}
-			return false;
-		}
-	};
-
-	const startSpecificCameraByEnsuringAccess = async () => {
-		try {
-			const initialCamera = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-				video: { facingMode: { ideal: 'environment' } },
-			});
-			return startSpecificCameraFromStream(initialCamera);
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log(`unable to get camera: ${error.message}`);
-			}
-			return false;
-		}
-	};
-
-	const orderCameraInfos = (camerasInfos: MediaDeviceInfo[]) => {
-		return [...camerasInfos].sort((cameraInfo1, cameraInfo2) => {
-			const camera1IsBack = cameraIsBack(cameraInfo1);
-			const camera2IsBack = cameraIsBack(cameraInfo2);
-
-			if (camera1IsBack && !camera2IsBack) {
-				return -1;
-			}
-			if (camera2IsBack && !camera1IsBack) {
-				return 1;
-			}
-
-			return 0;
-		});
-	};
-
 	const getCameraInfos = async () => {
 		const devices = await navigator.mediaDevices.enumerateDevices();
 		return devices.filter((device) => device.kind === 'videoinput');
@@ -138,18 +135,5 @@ export const useCamera = ({ processCamera, videoRef, onError, canvasRef }: useCa
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	const drawCameraOnCanvas = () => {
-		if (canvasRef.current == null || videoRef.current == null) {
-			return;
-		}
-		const canvas = canvasRef.current.getContext('2d', {
-			willReadFrequently: true,
-		});
-		const { videoWidth, videoHeight } = videoRef.current;
-		canvasRef.current.height = videoHeight;
-		canvasRef.current.width = videoWidth;
-		canvas?.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
-	};
-
-	return { cameraStartedRef, startCamera, stopCamera, drawCameraOnCanvas };
+	return { cameraStartedRef, startCamera, stopCamera };
 };

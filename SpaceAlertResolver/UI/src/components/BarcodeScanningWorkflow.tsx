@@ -1,5 +1,5 @@
 import styles from './BarcodeScanningWorkflow.module.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
 import { useCardScanning } from '~/hooks/useCardScanning';
@@ -29,18 +29,18 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 		setWorkflowState(WorkflowState.CameraStarted);
 	};
 
-	const handleBarcodesScanned = (
-		newBarcodes: DetectedBarcode[],
-		canvas: CanvasRenderingContext2D,
-	) => {
-		const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
-		drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
-		const errors = validateBarcodes(barcodesInOrder, dividingLine);
-		if (!errors) {
-			onBarcodesScan(barcodesInOrder);
-		}
-		return errors;
-	};
+	const handleBarcodesScanned = useCallback(
+		(newBarcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
+			const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
+			drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
+			const errors = validateBarcodes(barcodesInOrder, dividingLine);
+			if (!errors) {
+				onBarcodesScan(barcodesInOrder);
+			}
+			return errors;
+		},
+		[getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes, onBarcodesScan],
+	);
 
 	const handleScanClicked = () => {
 		setWorkflowState(WorkflowState.CameraStarting);

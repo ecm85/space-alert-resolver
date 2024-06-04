@@ -1,4 +1,4 @@
-import { MutableRefObject, ReactNode, useEffect, useRef } from 'react';
+import { MutableRefObject, ReactNode, useCallback, useEffect, useRef } from 'react';
 import { useBarcodeScanning, useCamera } from '~/hooks';
 import styles from './BarcodeScanner.module.css';
 import { DetectedBarcode } from 'barcode-detector';
@@ -31,7 +31,20 @@ export function BarcodeScanner({
 		onBarcodesScan,
 	});
 
-	const processCamera = () => {
+	const processCamera = useCallback(() => {
+		const drawCameraOnCanvas = () => {
+			if (cameraCanvasRef.current == null || videoRef.current == null) {
+				return;
+			}
+			const canvas = cameraCanvasRef.current.getContext('2d', {
+				willReadFrequently: true,
+			});
+			const { videoWidth, videoHeight } = videoRef.current;
+			cameraCanvasRef.current.height = videoHeight;
+			cameraCanvasRef.current.width = videoWidth;
+			canvas?.drawImage(videoRef.current, 0, 0, videoWidth, videoHeight);
+		};
+
 		const canvasIntervalId = window.setInterval(async () => {
 			const success = await scan();
 			if (success) {
@@ -41,13 +54,12 @@ export function BarcodeScanner({
 		canvasIntervalIdRef.current = canvasIntervalId;
 		const cameraIntervalId = window.setInterval(drawCameraOnCanvas, cameraTimeout);
 		cameraIntervalIdRef.current = cameraIntervalId;
-	};
+	}, [cameraCanvasRef, scan]);
 
-	const { startCamera, stopCamera, cameraStartedRef, drawCameraOnCanvas } = useCamera({
+	const { startCamera, stopCamera, cameraStartedRef } = useCamera({
 		processCamera,
 		videoRef,
 		onError,
-		canvasRef: cameraCanvasRef,
 	});
 
 	useEffect(() => {
