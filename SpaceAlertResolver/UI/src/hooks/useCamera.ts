@@ -99,7 +99,7 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 		}
 	}, [processCamera, videoRef]);
 
-	const startCamera = () => {
+	const startCamera = useCallback(() => {
 		const startPreferredCamera = async () => {
 			const startedCamera = await startPreferredCameraAsync();
 			if (startedCamera) {
@@ -111,9 +111,9 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 		startPreferredCamera().catch((exception) => {
 			onError(exception);
 		});
-	};
+	}, [startPreferredCameraAsync, onError]);
 
-	const stopCamera = () => {
+	const stopCamera = useCallback(() => {
 		cameraStartedRef.current = false;
 		if (videoRef.current) {
 			videoRef.current.src = '';
@@ -124,7 +124,7 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				tracks[i].stop();
 			}
 		}
-	};
+	}, [videoRef]);
 
 	const getCameraInfos = async () => {
 		const devices = await navigator.mediaDevices.enumerateDevices();
