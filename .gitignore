@@ -13,12 +13,8 @@
 .terraform.lock.hcl
 .terraform.plan
 node_modules/
-/SpaceAlertResolver/UI/Client/build
-/SpaceAlertResolver/terraform/build
-
-/SpaceAlertResolver/UI/build/*
-!/SpaceAlertResolver/UI/build/Images
-
+/build
+/dist
 /SpaceAlertResolver/UI/.yarn/*
 !/SpaceAlertResolver/UI/.yarn/patches
 !/SpaceAlertResolver/UI/.yarn/plugins
@@ -27,7 +23,5 @@ node_modules/
 !/SpaceAlertResolver/UI/.yarn/versions
 !/SpaceAlertResolver/UI/.yarn/cache
 !/SpaceAlertResolver/UI/.yarn/unplugged
-/SpaceAlertResolver/UI/dist/*
-!/SpaceAlertResolver/UI/dist/Images
 /SpaceAlertResolver/UI//node_modules/
 /SpaceAlertResolver/UI/storybook-static/
