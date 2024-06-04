@@ -13,8 +13,8 @@
 .terraform.lock.hcl
 .terraform.plan
 node_modules/
-/build
-/dist
+build/
+dist/
 /SpaceAlertResolver/UI/.yarn/*
 !/SpaceAlertResolver/UI/.yarn/patches
 !/SpaceAlertResolver/UI/.yarn/plugins
