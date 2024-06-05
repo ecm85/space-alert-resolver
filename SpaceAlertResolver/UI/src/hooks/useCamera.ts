@@ -3,13 +3,14 @@ import { useRef, MutableRefObject, useCallback } from 'react';
 export interface useCameraProps {
 	processCamera(): void;
 	videoRef: MutableRefObject<HTMLVideoElement | null>;
+	onCameraStart(): void;
 	onError(error: string): void;
 }
 
-export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) => {
+export const useCamera = ({ processCamera, videoRef, onCameraStart, onError }: useCameraProps) => {
 	const mediaStreamRef = useRef<MediaStream | null>(null);
-	const cameraStartedRef = useRef(false);
-	const startPreferredCameraAsync = useCallback(async () => {
+	const cameraStartedRef = useRef<boolean>(false);
+	const startCamera = useCallback(() => {
 		const startSpecificCameraFromInfo = async (cameraInfo: MediaDeviceInfo) => {
 			try {
 				const camera = await navigator.mediaDevices.getUserMedia({
@@ -24,7 +25,6 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				return false;
 			}
 		};
-
 		const startSpecificCameraFromStream = (stream: MediaStream) => {
 			try {
 				if (videoRef.current == null) {
@@ -55,7 +55,6 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				return false;
 			}
 		};
-
 		const orderCameraInfos = (camerasInfos: MediaDeviceInfo[]) => {
 			return [...camerasInfos].sort((cameraInfo1, cameraInfo2) => {
 				const camera1IsBack = cameraIsBack(cameraInfo1);
@@ -71,50 +70,56 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 				return 0;
 			});
 		};
-		try {
-			if (await startSpecificCameraByEnsuringAccess()) {
-				return true;
-			}
-			const cameraInfos = await getCameraInfos();
-			console.log(`got ${cameraInfos.length} camera infos`);
-			let cameraIndex = 0;
-			for (const cameraInfo of cameraInfos) {
-				console.log(`camera info ${cameraIndex}: ${cameraInfo.label}`);
-				cameraIndex++;
-			}
-			const orderedCameraInfos = orderCameraInfos(cameraInfos);
-			for (const cameraInfo of orderedCameraInfos) {
-				console.log(`trying to start ${cameraInfo.label}`);
-				if (await startSpecificCameraFromInfo(cameraInfo)) {
+		const startPreferredCameraAsync = async () => {
+			try {
+				if (await startSpecificCameraByEnsuringAccess()) {
 					return true;
 				}
+				const cameraInfos = await getCameraInfos();
+				console.log(`got ${cameraInfos.length} camera infos`);
+				let cameraIndex = 0;
+				for (const cameraInfo of cameraInfos) {
+					console.log(`camera info ${cameraIndex}: ${cameraInfo.label}`);
+					cameraIndex++;
+				}
+				const orderedCameraInfos = orderCameraInfos(cameraInfos);
+				for (const cameraInfo of orderedCameraInfos) {
+					console.log(`trying to start ${cameraInfo.label}`);
+					if (await startSpecificCameraFromInfo(cameraInfo)) {
+						return true;
+					}
+				}
+				console.log(`couldn't start any of ${orderCameraInfos.length} cameras`);
+				return false;
+			} catch (error) {
+				if (error instanceof Error) {
+					console.log(`unable to access camera: ${error.message}`);
+				}
+				return false;
 			}
-			console.log(`couldn't start any of ${orderCameraInfos.length} cameras`);
-			return false;
-		} catch (error) {
-			if (error instanceof Error) {
-				console.log(`unable to access camera: ${error.message}`);
-			}
-			return false;
-		}
-	}, [processCamera, videoRef]);
-
-	const startCamera = useCallback(() => {
+		};
 		const startPreferredCamera = async () => {
 			const startedCamera = await startPreferredCameraAsync();
 			if (startedCamera) {
 				cameraStartedRef.current = true;
+				onCameraStart();
 			} else {
 				onError('Could not start camera.');
 			}
 		};
+		if (cameraStartedRef.current === true) {
+			return;
+		}
 		startPreferredCamera().catch((exception) => {
 			onError(exception);
 		});
-	}, [startPreferredCameraAsync, onError]);
+	}, [onError, onCameraStart, processCamera, videoRef]);
 
 	const stopCamera = useCallback(() => {
-		cameraStartedRef.current = false;
+		if (cameraStartedRef.current === false) {
+			return;
+		}
+		cameraStartedRef.current = true;
 		if (videoRef.current) {
 			videoRef.current.src = '';
 		}
@@ -135,5 +140,5 @@ export const useCamera = ({ processCamera, videoRef, onError }: useCameraProps) 
 		return (cameraInfo.label || '').toLowerCase().includes('back');
 	};
 
-	return { cameraStartedRef, startCamera, stopCamera };
+	return { startCamera, stopCamera };
 };

@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import { MutableRefObject, useCallback, useEffect, useState } from 'react';
+import { MutableRefObject, useCallback, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
@@ -23,15 +23,10 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
 		setBarcodes(newBarcodes);
+		setWorkflowState(
+			deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned,
+		);
 	};
-
-	useEffect(() => {
-		if (workflowState === WorkflowState.Scanning && barcodeData.length > 0) {
-			setWorkflowState(
-				deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned,
-			);
-		}
-	}, [workflowState, barcodeData, deducedPlayerColor]);
 
 	const handleScanAgainClicked = () => {
 		setBarcodes([]);

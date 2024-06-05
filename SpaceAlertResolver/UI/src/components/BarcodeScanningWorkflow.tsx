@@ -1,11 +1,12 @@
 import styles from './BarcodeScanningWorkflow.module.css';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, MutableRefObject, useEffect } from 'react';
 import Typography from '@mui/material/Typography/Typography';
 import { BarcodeScanner } from './BarcodeScanner';
 import { useCardScanning } from '~/hooks/useCardScanning';
 import { Button } from '@mui/material';
 import { DetectedBarcode } from 'barcode-detector';
 import { BarcodeScanningWorkflowState as WorkflowState } from '~/models';
+import { useBarcodeValidation } from '~/hooks/useBarcodeValidation';
 
 export interface BarcodeScanningWorkflowProps {
 	onBarcodesScan(barcodes: DetectedBarcode[]): void;
@@ -18,7 +19,11 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 	const [error, setError] = useState<string | null>(null);
 	const isScanning =
 		workflowState === WorkflowState.CameraStarting || workflowState === WorkflowState.CameraStarted;
-	const { getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes } = useCardScanning();
+	const [lastScanResult, setLastScanResult] = useState({
+		barcodesInOrder: [] as DetectedBarcode[],
+		dividingLine: null as number | null,
+	});
+	const { getBarcodesInOrder, drawDetectedBarcodes } = useCardScanning();
 
 	const handleError = useCallback(
 		(newError: string) => {
@@ -33,17 +38,40 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 	}, [setWorkflowState]);
 
 	const handleBarcodesScanned = useCallback(
-		(newBarcodes: DetectedBarcode[], canvas: CanvasRenderingContext2D) => {
-			const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
-			drawDetectedBarcodes(barcodesInOrder, dividingLine, canvas);
-			const errors = validateBarcodes(barcodesInOrder, dividingLine);
-			if (!errors) {
-				onBarcodesScan(barcodesInOrder);
+		(newBarcodes: DetectedBarcode[], videoRef: MutableRefObject<HTMLVideoElement | null>) => {
+			if (barcodeCanvasRef.current === null) {
+				throw new Error('Barcode canvas was null somehow');
 			}
-			return errors;
+			if (videoRef.current === null) {
+				throw new Error('Video was null somehow');
+			}
+			const { barcodesInOrder, dividingLine } = getBarcodesInOrder(newBarcodes);
+			const barcodeCanvas = barcodeCanvasRef.current.getContext('2d', {
+				willReadFrequently: true,
+			});
+			if (barcodeCanvas === null) {
+				throw new Error('Barcode canvas context was null somehow');
+			}
+			const { videoHeight, videoWidth } = videoRef.current;
+			barcodeCanvasRef.current.height = videoHeight;
+			barcodeCanvasRef.current.width = videoWidth;
+			drawDetectedBarcodes(barcodesInOrder, dividingLine, barcodeCanvas);
+			setLastScanResult({ barcodesInOrder, dividingLine });
 		},
-		[getBarcodesInOrder, drawDetectedBarcodes, validateBarcodes, onBarcodesScan],
+		[getBarcodesInOrder, drawDetectedBarcodes],
 	);
+
+	const { hasEnoughBarcodes, dividingLineExists, dividingLineIsValid } = useBarcodeValidation({
+		...lastScanResult,
+	});
+
+	const isValid = hasEnoughBarcodes && dividingLineExists && dividingLineIsValid;
+
+	useEffect(() => {
+		if (isValid) {
+			onBarcodesScan(lastScanResult.barcodesInOrder);
+		}
+	}, [isValid, onBarcodesScan, lastScanResult.barcodesInOrder]);
 
 	const handleScanClicked = () => {
 		setWorkflowState(WorkflowState.CameraStarting);
@@ -80,7 +108,6 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 			{isScanning && (
 				<BarcodeScanner
 					cameraCanvasRef={cameraCanvasRef}
-					barcodeCanvasRef={barcodeCanvasRef}
 					onBarcodesScan={handleBarcodesScanned}
 					onCameraStart={handleCameraStarted}
 					onError={handleError}
@@ -90,6 +117,20 @@ export function BarcodeScanningWorkflow({ onBarcodesScan }: BarcodeScanningWorkf
 				<canvas className={styles['canvas']} ref={cameraCanvasRef}></canvas>
 				<canvas className={styles['canvas-overlay']} ref={barcodeCanvasRef}></canvas>
 			</div>
+			{isScanning &&
+				(!hasEnoughBarcodes ? (
+					<Typography variant="body1">
+						Looking for 12 barcodes. Found: {lastScanResult.barcodesInOrder.length}.
+					</Typography>
+				) : !dividingLineExists ? (
+					<Typography variant="body1">Ensure that the bottom row is below the top row.</Typography>
+				) : !dividingLineIsValid ? (
+					<Typography variant="body1">
+						Ensure the dividing line separates the rows clearly.
+					</Typography>
+				) : (
+					<></>
+				))}
 		</div>
 	);
 }

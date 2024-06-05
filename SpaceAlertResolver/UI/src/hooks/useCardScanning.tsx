@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { DetectedBarcode } from 'barcode-detector';
 import { useCallback } from 'react';
 
@@ -73,40 +72,8 @@ export function useCardScanning() {
 		[],
 	);
 
-	const validateBarcodes = useCallback(
-		(barcodesInOrder: DetectedBarcode[], dividingLine: number | null) => {
-			if (barcodesInOrder.length != 12) {
-				return (
-					<Typography variant="body1">
-						Looking for 12 barcodes. Found: {barcodesInOrder.length}.
-					</Typography>
-				);
-			}
-			if (dividingLine === null) {
-				return (
-					<Typography variant="body1">Ensure that the bottom row is below the top row.</Typography>
-				);
-			}
-			const firstRow = barcodesInOrder.slice(0, 7);
-			const secondRow = barcodesInOrder.slice(7);
-			if (
-				firstRow.some((barcode) => barcode.boundingBox.bottom > dividingLine) ||
-				secondRow.some((barcode) => barcode.boundingBox.top < dividingLine)
-			) {
-				return (
-					<Typography variant="body1">
-						Ensure the dividing line separates the rows clearly.
-					</Typography>
-				);
-			}
-			return null;
-		},
-		[],
-	);
-
 	return {
 		getBarcodesInOrder,
-		validateBarcodes,
 		drawDetectedBarcodes,
 	};
 }
