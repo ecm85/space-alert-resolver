@@ -78,12 +78,12 @@ export function CreateGame() {
 					<h3>Clients</h3>
 					<ul>
 						{clients.map((client) => (
-							<li>
+							<li key={client.connectionId}>
 								<>
 									{client.name}
 									<ul>
 										{client.barcodeData?.map((scannedCard, index) => (
-											<li>
+											<li key={index}>
 												Barcode {index + 1}: {scannedCard}
 											</li>
 										))}

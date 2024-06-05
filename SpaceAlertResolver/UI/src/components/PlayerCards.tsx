@@ -11,8 +11,8 @@ export function PlayerCards({ wrapperClassName, barcodeData }: PlayerCardsProps)
 	const className = cx(wrapperClassName, styles['cards-wrapper']);
 	return (
 		<div className={className}>
-			{barcodeData.map((scannedCard) => (
-				<div className={styles['card-wrapper']}>
+			{barcodeData.map((scannedCard, index) => (
+				<div key={index} className={styles['card-wrapper']}>
 					{scannedCard != null && (
 						<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
 					)}
