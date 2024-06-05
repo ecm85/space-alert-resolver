@@ -30,6 +30,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 
 	const handleScanAgainClicked = () => {
 		setBarcodes([]);
+		setManualPlayerColor(null);
 		setWorkflowState(WorkflowState.Scanning);
 	};
 
@@ -71,9 +72,9 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const hasNotAlreadyScanned = workflowState === WorkflowState.Scanning;
 	const hasAlreadyScanned = !hasNotAlreadyScanned;
 
-	const handleColorPicked = () => {
-		// TODO:
-		setManualPlayerColor(PlayerColor.Blue);
+	const handleColorPicked = (newManualPlayerColor: PlayerColor) => {
+		setManualPlayerColor(newManualPlayerColor);
+		setWorkflowState(WorkflowState.Scanned);
 	};
 
 	return (
@@ -83,36 +84,32 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 
 			{hasNotAlreadyScanned && <BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} />}
 			{hasAlreadyScanned && (
-				<div>
+				<div className={styles['already-scanned']}>
+					<ColorPicker onPickColor={handleColorPicked} value={manualPlayerColor} />
 					<PlayerBoard barcodeData={barcodeData} playerColor={playerColor} />
-					{workflowState === WorkflowState.ChooseColor && (
-						<ColorPicker onPickColor={handleColorPicked} value={manualPlayerColor} />
-					)}
-					{canRescanStates && (
-						<div>
-							<Button onClick={handleScanAgainClicked}>Scan Again</Button>
-						</div>
-					)}
-					{isSubscribed && (
-						<div>
-							{workflowState === WorkflowState.Scanned && (
-								<Button onClick={handleSendToServerClicked} variant="contained">
-									Submit Cards
-								</Button>
-							)}
-							{workflowState === WorkflowState.Uploading && (
-								<Button variant="contained" disabled>
-									Submitting...
-								</Button>
-							)}
-							{workflowState === WorkflowState.ErrorUploading && (
-								<Typography variant="body1">There was an error submitting your cards.</Typography>
-							)}
-							{workflowState === WorkflowState.Uploaded && (
-								<Typography variant="body1">Your cards have been submitted.</Typography>
-							)}
-						</div>
-					)}
+					<div>
+						{isSubscribed && workflowState === WorkflowState.Scanned && (
+							<Button onClick={handleSendToServerClicked} variant="contained">
+								Submit Cards
+							</Button>
+						)}
+						{workflowState === WorkflowState.Uploading && (
+							<Button variant="contained" disabled>
+								Submitting...
+							</Button>
+						)}
+						{canRescanStates && (
+							<Button onClick={handleScanAgainClicked} color="secondary">
+								Scan Again
+							</Button>
+						)}
+						{workflowState === WorkflowState.ErrorUploading && (
+							<Typography variant="body1">There was an error submitting your cards.</Typography>
+						)}
+						{workflowState === WorkflowState.Uploaded && (
+							<Typography variant="body1">Your cards have been submitted.</Typography>
+						)}
+					</div>
 				</div>
 			)}
 		</div>
