@@ -64,16 +64,14 @@ export function CreateGame() {
 		<div>
 			<h2>Create Game</h2>
 			<div>
-				<Typography variant="body1">
-					Game Code:{' '}
-					{isLoading ? (
-						<Skeleton variant="text" className={styles['skeleton']} />
-					) : (
-						<div>
-							<Typography variant="h5">{gameCode}</Typography>
-						</div>
-					)}
-				</Typography>
+				<Typography variant="body1">Game Code: </Typography>
+				{isLoading ? (
+					<Skeleton variant="text" className={styles['skeleton']} />
+				) : (
+					<div>
+						<Typography variant="h5">{gameCode}</Typography>
+					</div>
+				)}
 			</div>
 			{clients.length > 0 && (
 				<div>
