@@ -94,14 +94,7 @@ export function BarcodeScanner({
 	return (
 		<>
 			{validationError}
-			<video
-				className={styles['video']}
-				autoPlay
-				webkit-playsinline
-				playsInline
-				muted
-				ref={videoRef}
-			></video>
+			<video className={styles['video']} autoPlay playsInline muted ref={videoRef}></video>
 		</>
 	);
 }
