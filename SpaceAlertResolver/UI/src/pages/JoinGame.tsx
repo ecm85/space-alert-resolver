@@ -13,8 +13,8 @@ export interface JoinGameProps {
 }
 
 export function JoinGame({ connectionStarted, connectionRef, onGameJoined }: JoinGameProps) {
-	const [gameCode, setGameCode, gameCodeRef] = useStateRef<string | null>(null);
-	const [name, setName] = useState<string | null>(null);
+	const [gameCode, setGameCode, gameCodeRef] = useStateRef<string>('');
+	const [name, setName] = useState<string>('');
 	const [message, setMessage] = useState<string | null>(null);
 	const [joining, setJoining] = useState(false);
 	const handleMessage = useCallback(
