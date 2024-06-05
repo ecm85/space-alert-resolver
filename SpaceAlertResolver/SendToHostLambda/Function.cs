@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using LambdaShared;
@@ -13,13 +14,7 @@ namespace SendToHostLambda
 		private class SendToHostRequest
 		{
 			public string Code { get; set; }
-			public SendToHostRequestData Data { get; set; }
-		}
-
-		private class SendToHostRequestData
-		{
-			public string[][] BarcodeData { get; set; }
-			public int PlayerColor { get; set; }
+			public JsonObject Data { get; set; }
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(
@@ -54,22 +49,14 @@ namespace SendToHostLambda
 				else
 				{
 					context.Logger.Log(
-						$"Data from client 1: {JsonSerializer.Serialize(sendToHostRequest.Data)}"
-					);
-					context.Logger.Log(
-						$"Data from client 2: {JsonSerializer.Serialize(sendToHostRequest.Data.PlayerColor)}"
+						$"Data from client: {JsonSerializer.Serialize(sendToHostRequest.Data)}"
 					);
 					var hostConnectionId = existingGame.Item[GameService.ConnectionIdField].S;
 					await webSocketService.SendMessage(
 						requestContext,
 						"ClientMessageReceived",
 						hostConnectionId,
-						new
-						{
-							barcodeData = sendToHostRequest.Data.BarcodeData,
-							playerColor = sendToHostRequest.Data.PlayerColor,
-							connectionId
-						}
+						new { sendToHostRequest.Data, connectionId }
 					);
 					await webSocketService.SendMessage(
 						requestContext,
