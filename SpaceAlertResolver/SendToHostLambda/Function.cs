@@ -1,8 +1,8 @@
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using LambdaShared;
+using Newtonsoft.Json.Linq;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -14,7 +14,7 @@ namespace SendToHostLambda
 		private class SendToHostRequest
 		{
 			public string Code { get; set; }
-			public JsonObject Data { get; set; }
+			public JObject Data { get; set; }
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(
