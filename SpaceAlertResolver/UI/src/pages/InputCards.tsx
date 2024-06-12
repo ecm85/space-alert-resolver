@@ -8,6 +8,7 @@ import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData, PlayerColor, InputCardsWorkflowState as WorkflowState } from '~/models';
 import styles from './InputCards.module.css';
 import { DetectedBarcode } from 'barcode-detector';
+import { useSendToHostMessaging } from '~/hooks/useSendToHostMessaging';
 
 export interface InputCardsProps {
 	gameCode: string;
@@ -20,6 +21,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const [message, setMessage] = useState('');
 	const { barcodeData, playerColor: deducedPlayerColor } = useBarcodeData({ barcodes });
 	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor | null>(null);
+	const { serialize } = useSendToHostMessaging();
 
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
 		setBarcodes(newBarcodes);
@@ -55,8 +57,12 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 			barcodeData,
 			playerColor,
 		};
+		const { message, messageType } = serialize(data);
 		connectionRef.current?.send(
-			JSON.stringify({ action: 'SendToHost', data: { code: gameCode, data } }),
+			JSON.stringify({
+				action: 'SendToHost',
+				data: { code: gameCode, message, messageType },
+			}),
 		);
 		setWorkflowState(WorkflowState.Uploading);
 	};

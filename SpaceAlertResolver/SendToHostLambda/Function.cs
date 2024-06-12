@@ -15,6 +15,7 @@ namespace SendToHostLambda
 		{
 			public string Code { get; set; }
 			public string Message { get; set; }
+			public string MessageType { get; set; }
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(
@@ -56,7 +57,12 @@ namespace SendToHostLambda
 						requestContext,
 						"ClientMessageReceived",
 						hostConnectionId,
-						new { sendToHostRequest.Message, connectionId }
+						new
+						{
+							sendToHostRequest.Message,
+							sendToHostRequest.MessageType,
+							connectionId
+						}
 					);
 					await webSocketService.SendMessage(
 						requestContext,

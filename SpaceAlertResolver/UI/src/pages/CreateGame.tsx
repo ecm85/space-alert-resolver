@@ -5,12 +5,14 @@ import { useStateRef, useWebSocket } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
 import styles from './CreateGame.module.css';
+import { useSendToHostMessaging } from '~/hooks/useSendToHostMessaging';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string | null>(null);
 	const { connectionRef, connectionStarted } = useWebSocket();
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
 	const isLoading = !gameCode;
+	const { deserialize } = useSendToHostMessaging();
 
 	const handleMessage = useCallback(
 		(messageEventData: MessageEventData) => {
@@ -23,26 +25,27 @@ export function CreateGame() {
 					return true;
 				case 'ClientMessageReceived': {
 					const connectionId = messageEventData.data.connectionId;
-					const updatedClient = clientsRef.current.filter(
+					const clientToUpdate = clientsRef.current.filter(
 						(client) => client.connectionId === connectionId,
 					)[0];
 					const otherClients = clientsRef.current.filter(
 						(client) => client.connectionId !== connectionId,
 					);
-					setClients([
-						...otherClients,
-						{
-							...updatedClient,
-							...messageEventData.data,
-						},
-					]);
+					const { message, messageType } = messageEventData.data;
+					const { barcodeData, playerColor } = deserialize(message, messageType);
+					const updatedClient: Client = {
+						...clientToUpdate,
+						barcodeData,
+						playerColor,
+					};
+					setClients([...otherClients, updatedClient]);
 					return true;
 				}
 				default:
 					return false;
 			}
 		},
-		[clientsRef, setGameCode, setClients],
+		[clientsRef, setGameCode, setClients, deserialize],
 	);
 
 	const { isSubscribed } = useConnectionSubscription({

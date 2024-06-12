@@ -29,9 +29,14 @@ export interface ClientMessageReceivedEvent {
 	event: 'ClientMessageReceived';
 	data: {
 		connectionId: string;
-		barcodeData: string[];
-		playerColor: PlayerColor;
+		messageType: string;
+		message: string;
 	};
+}
+
+export interface PlayerInput {
+	barcodeData: ParsedBarcode[];
+	playerColor: PlayerColor | null;
 }
 
 export interface YourMessageSentEvent {
@@ -50,8 +55,8 @@ export type MessageEventData =
 export interface Client {
 	name: string;
 	connectionId: string;
-	barcodeData?: string[];
-	playerColor?: PlayerColor;
+	barcodeData?: ParsedBarcode[];
+	playerColor?: PlayerColor | null;
 }
 
 export enum PlayerColor {
