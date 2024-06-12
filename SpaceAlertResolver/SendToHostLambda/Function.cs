@@ -49,7 +49,7 @@ namespace SendToHostLambda
 				else
 				{
 					context.Logger.Log(
-						$"Data from client: {JsonSerializer.Serialize(sendToHostRequest.Message)}"
+						$"Data from client: {JsonSerializer.Serialize(request.Body)}"
 					);
 					var hostConnectionId = existingGame.Item[GameService.ConnectionIdField].S;
 					await webSocketService.SendMessage(
