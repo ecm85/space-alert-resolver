@@ -6,6 +6,7 @@ import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { Client, MessageEventData } from '~/models';
 import styles from './CreateGame.module.css';
 import { useSendToHostMessaging } from '~/hooks/useSendToHostMessaging';
+import { PlayerBoard } from '~/components/PlayerBoard';
 
 export function CreateGame() {
 	const [gameCode, setGameCode] = useState<string | null>(null);
@@ -84,13 +85,12 @@ export function CreateGame() {
 							<li key={client.connectionId}>
 								<>
 									{client.name}
-									<ul>
-										{client.barcodeData?.map((scannedCard, index) => (
-											<li key={index}>
-												Barcode {index + 1}: {scannedCard}
-											</li>
-										))}
-									</ul>
+									{client.barcodeData != null && client.playerColor != null && (
+										<PlayerBoard
+											barcodeData={client.barcodeData}
+											playerColor={client.playerColor}
+										/>
+									)}
 								</>
 							</li>
 						))}
