@@ -59,8 +59,8 @@ namespace SendToHostLambda
 						hostConnectionId,
 						new
 						{
-							sendToHostRequest.Message,
-							sendToHostRequest.MessageType,
+							message = sendToHostRequest.Message,
+							messageType = sendToHostRequest.MessageType,
 							connectionId
 						}
 					);
