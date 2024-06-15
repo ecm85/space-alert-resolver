@@ -112,9 +112,9 @@ export function useScannedCards({ barcodes }: useScannedCardsProps) {
 
 	const tryParseSpecialization = (value: string) => {
 		if (value.startsWith('S')) {
-			const index = +value.substring(1, 1);
+			const index = +value.substring(1, 2);
 			const specialization = getSpecialization(index);
-			const levelCode = value.substring(2, 1);
+			const levelCode = value.substring(2, 3);
 			return { specialization, levelCode };
 		}
 		return {};
