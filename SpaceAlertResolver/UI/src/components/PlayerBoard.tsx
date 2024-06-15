@@ -1,11 +1,12 @@
-import { ParsedBarcode, PlayerColor } from '~/models';
+import { ScannedCard, PlayerColor } from '~/models';
 import cx from 'classnames';
 import styles from './PlayerBoard.module.css';
 import { PlayerCards } from './PlayerCards';
 
 export interface PlayerBoardProps {
-	barcodeData: ParsedBarcode[];
+	scannedCards: ScannedCard[];
 	playerColor: PlayerColor | null;
+	hideCards?: boolean;
 }
 
 const playerBoardsByColor: Record<PlayerColor, string> = {
@@ -16,7 +17,7 @@ const playerBoardsByColor: Record<PlayerColor, string> = {
 	[PlayerColor.Purple]: 'Purple',
 };
 
-export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
+export function PlayerBoard({ playerColor, scannedCards, hideCards }: PlayerBoardProps) {
 	const matchingColor = playerColor == null ? null : playerBoardsByColor[playerColor];
 	const hasSelectedColor = matchingColor != null;
 	const displayColor = hasSelectedColor ? matchingColor : 'Green';
@@ -31,11 +32,13 @@ export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
 			<div className={styles['board-wrapper']}>
 				<img className={topBoardImageClassName} src={`\\Images\\Boards\\${displayColor}-1.png`} />
 				<PlayerCards
-					barcodeData={barcodeData.slice(0, 3)}
+					hideCards={hideCards}
+					scannedCards={scannedCards.slice(0, 3)}
 					wrapperClassName={styles['cards-wrapper-1']}
 				/>
 				<PlayerCards
-					barcodeData={barcodeData.slice(3, 7)}
+					hideCards={hideCards}
+					scannedCards={scannedCards.slice(3, 7)}
 					wrapperClassName={styles['cards-wrapper-4']}
 				/>
 			</div>
@@ -45,7 +48,8 @@ export function PlayerBoard({ playerColor, barcodeData }: PlayerBoardProps) {
 					src={`\\Images\\Boards\\${displayColor}-2.png`}
 				/>
 				<PlayerCards
-					barcodeData={barcodeData.slice(7, 12)}
+					hideCards={hideCards}
+					scannedCards={scannedCards.slice(7, 12)}
 					wrapperClassName={styles['cards-wrapper-7']}
 				/>
 			</div>

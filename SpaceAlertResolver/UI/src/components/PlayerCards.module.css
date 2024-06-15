@@ -1,11 +1,7 @@
 .cards-wrapper {
 	position: absolute;
-	top: 28%;
+	top: 18%;
 	display: flex;
-}
-
-.card {
-	width: 100%;
 }
 
 .card-wrapper {

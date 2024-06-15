@@ -33,10 +33,10 @@ export function CreateGame() {
 						(client) => client.connectionId !== connectionId,
 					);
 					const { message, messageType } = messageEventData.data;
-					const { barcodeData, playerColor } = deserialize(message, messageType);
+					const { scannedCards, playerColor } = deserialize(message, messageType);
 					const updatedClient: Client = {
 						...clientToUpdate,
-						barcodeData,
+						scannedCards,
 						playerColor,
 					};
 					setClients([...otherClients, updatedClient]);
@@ -85,9 +85,9 @@ export function CreateGame() {
 							<li key={client.connectionId}>
 								<>
 									{client.name}
-									{client.barcodeData != null && client.playerColor != null && (
+									{client.scannedCards != null && client.playerColor != null && (
 										<PlayerBoard
-											barcodeData={client.barcodeData}
+											scannedCards={client.scannedCards}
 											playerColor={client.playerColor}
 										/>
 									)}

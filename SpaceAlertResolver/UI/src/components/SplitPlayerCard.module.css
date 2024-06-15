@@ -1,0 +1,22 @@
+.card-top {
+	width: 100%;
+}
+
+.card-back {
+	width: 100%;
+}
+
+.card-bottom {
+	transform: rotate(180deg);
+	width: 100%;
+}
+
+.upside-down {
+	transform: rotate(180deg);
+}
+
+.split-card-pieces-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}

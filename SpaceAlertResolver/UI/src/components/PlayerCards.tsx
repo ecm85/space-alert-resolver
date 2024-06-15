@@ -1,21 +1,21 @@
 import cx from 'classnames';
 import styles from './PlayerCards.module.css';
-import { ParsedBarcode } from '~/models';
+import { ScannedCard } from '~/models';
+import { PlayerCard } from './PlayerCard';
 
 export interface PlayerCardsProps {
 	wrapperClassName: string;
-	barcodeData: ParsedBarcode[];
+	scannedCards: ScannedCard[];
+	hideCards?: boolean;
 }
 
-export function PlayerCards({ wrapperClassName, barcodeData }: PlayerCardsProps) {
+export function PlayerCards({ wrapperClassName, scannedCards, hideCards }: PlayerCardsProps) {
 	const className = cx(wrapperClassName, styles['cards-wrapper']);
 	return (
 		<div className={className}>
-			{barcodeData.map((scannedCard, index) => (
+			{scannedCards.map((scannedCard, index) => (
 				<div key={index} className={styles['card-wrapper']}>
-					{scannedCard != null && (
-						<img className={styles['card']} src={`\\Images\\Cards\\${scannedCard}.png`} />
-					)}
+					{scannedCard != null && <PlayerCard scannedCard={scannedCard} hideCard={hideCards} />}
 				</div>
 			))}
 		</div>

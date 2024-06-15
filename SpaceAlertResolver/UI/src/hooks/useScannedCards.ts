@@ -1,12 +1,12 @@
-import { Orientation, PlayerColor } from '~/models';
+import { Orientation, PlayerColor, ScannedCard } from '~/models';
 import { useBarcodeOrientation } from './useBarcodeOrientation';
 import { DetectedBarcode } from 'barcode-detector';
 
-export interface BarcodeDataProps {
+export interface useScannedCardsProps {
 	barcodes: DetectedBarcode[];
 }
 
-export function useBarcodeData({ barcodes }: BarcodeDataProps) {
+export function useScannedCards({ barcodes }: useScannedCardsProps) {
 	const { getOrientation } = useBarcodeOrientation();
 	const getSpecialization = (index: number) => {
 		switch (index) {
@@ -33,76 +33,58 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 		}
 	};
 
-	const parseBarcode = (barcode: DetectedBarcode) => {
+	const parseBarcode = (
+		barcode: DetectedBarcode,
+	): { scannedCard: ScannedCard; playerColor: PlayerColor | null } => {
 		const value = barcode.rawValue.split('*').slice(1, -1).join('*');
 		const orientation = getOrientation(barcode);
-		const barcodeData = getBarcodeDataToken(value, orientation);
+		const scannedCard = getScannedCard(value, orientation);
 		const playerColor = tryParseEmptySpot(value)?.color ?? null;
-		return { barcodeData, playerColor };
+		return { scannedCard, playerColor };
 	};
 
-	const GetTokenForOrientation = (tokens: string[], orientation: Orientation) => {
-		switch (orientation) {
-			case Orientation.Top:
-				return tokens[0];
-			case Orientation.Bottom:
-				return tokens[1];
-			case Orientation.Other:
-			default:
-				throw new Error(`Unexpected orientation: ${orientation}`);
-		}
+	const convertStandardCard = (token: string) => {
+		return token
+			.replace('L', '<')
+			.replace('R', '>')
+			.replace('D', '^')
+			.replace('X', 'BattleBots')
+			.replace('<', 'Red')
+			.replace('>', 'Blue')
+			.replace('^', 'Down');
 	};
 
-	const GetSpecializationForOrientation = (
-		basic: string,
-		advanced: string,
-		orientation: Orientation,
-	) => {
-		switch (orientation) {
-			case Orientation.Top:
-				return basic;
-			case Orientation.Bottom:
-				return advanced;
-			case Orientation.Other:
-			default:
-				throw new Error(`Unexpected orientation: ${orientation}`);
-		}
-	};
-
-	const GetHeroicCardForOrientation = (top: string, bottom: string, orientation: Orientation) => {
-		switch (orientation) {
-			case Orientation.Top:
-				return top;
-			case Orientation.Bottom:
-				return bottom;
-			case Orientation.Other:
-			default:
-				throw new Error(`Unexpected orientation: ${orientation}`);
-		}
-	};
-
-	const getBarcodeDataToken = (value: string, orientation: Orientation) => {
+	const getScannedCard = (value: string, orientation: Orientation): ScannedCard => {
 		if (value.indexOf('*') != -1) {
 			const tokens = value.split('*');
-			const token = GetTokenForOrientation(tokens, orientation);
-			const replaced = token
-				.replace('L', '<')
-				.replace('R', '>')
-				.replace('D', '^')
-				.replace('X', 'BattleBots')
-				.replace('<', 'Red')
-				.replace('>', 'Blue')
-				.replace('^', 'Down');
-			return replaced;
+			const rawTop = tokens[0];
+			const rawBottom = tokens[1];
+			const isSingleAction = rawTop.length === 1;
+			const movements = ['L', 'R', 'D'];
+			const back = isSingleAction
+				? 'SingleBack'
+				: movements.includes(rawTop.charAt(0))
+					? 'MoveXDoubleBack'
+					: 'ActionXDoubleBack';
+			return {
+				type: 'split',
+				top: convertStandardCard(rawTop),
+				bottom: convertStandardCard(rawBottom),
+				back,
+				orientation,
+			};
 		}
 
 		const { specialization, levelCode } = tryParseSpecialization(value);
 		if (specialization != null) {
 			const basic = `Basic${specialization}`;
 			const advanced = `Advanced${specialization}`;
-			return levelCode == 'a'
-				? basic
-				: GetSpecializationForOrientation(basic, advanced, orientation);
+			if (levelCode == 'a') {
+				return { type: 'whole', front: `Level1${basic}`, back: 'Level1Specialization' };
+			}
+			const top = `Level2${basic}`;
+			const bottom = `Level2${advanced}`;
+			return { type: 'split', top, bottom, back: 'Level2Specialization', orientation };
 		}
 
 		if (value.startsWith('H')) {
@@ -138,20 +120,56 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 		return {};
 	};
 
-	const getHeroicCards = (code: string, orientation: Orientation) => {
+	const getHeroicCards = (code: string, orientation: Orientation): ScannedCard => {
 		switch (code) {
 			case 'H1':
-				return GetHeroicCardForOrientation('HeroicA', 'TeleportLowerBlue', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicA',
+					bottom: 'TeleportLowerBlue',
+					back: 'HeroicBack',
+					orientation,
+				};
 			case 'H2':
-				return GetHeroicCardForOrientation('HeroicA', 'TeleportLowerRed', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicA',
+					bottom: 'TeleportLowerRed',
+					back: 'HeroicBack',
+					orientation,
+				};
 			case 'H3':
-				return GetHeroicCardForOrientation('HeroicB', 'TeleportUpperRed', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicB',
+					bottom: 'TeleportUpperRed',
+					back: 'HeroicBack',
+					orientation,
+				};
 			case 'H4':
-				return GetHeroicCardForOrientation('HeroicB', 'TeleportUpperBlue', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicB',
+					bottom: 'TeleportUpperBlue',
+					back: 'HeroicBack',
+					orientation,
+				};
 			case 'H5':
-				return GetHeroicCardForOrientation('HeroicBattleBots', 'TeleportUpperWhite', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicBattleBots',
+					bottom: 'TeleportUpperWhite',
+					back: 'HeroicBack',
+					orientation,
+				};
 			case 'H6':
-				return GetHeroicCardForOrientation('HeroicBattleBots', 'TeleportLowerWhite', orientation);
+				return {
+					type: 'split',
+					top: 'HeroicBattleBots',
+					bottom: 'TeleportLowerWhite',
+					back: 'HeroicBack',
+					orientation,
+				};
 			default:
 				throw new Error(`Unexpected heroic card: ${code}`);
 		}
@@ -175,9 +193,9 @@ export function useBarcodeData({ barcodes }: BarcodeDataProps) {
 	};
 
 	const parsedBarcodes = barcodes.map((barcode) => parseBarcode(barcode));
-	const barcodeData = parsedBarcodes.map((parsed) => parsed.barcodeData);
+	const scannedCards = parsedBarcodes.map((parsed) => parsed.scannedCard);
 	const playerColors = parsedBarcodes.map((parsed) => parsed.playerColor);
 	const playerColor =
 		playerColors.length === 0 ? null : playerColors.filter((color) => color != null)[0];
-	return { barcodeData, playerColor };
+	return { scannedCards, playerColor };
 }

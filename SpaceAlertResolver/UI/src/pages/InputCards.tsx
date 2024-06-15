@@ -3,7 +3,7 @@ import { MutableRefObject, useCallback, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
-import { useBarcodeData } from '~/hooks';
+import { useScannedCards } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
 import { MessageEventData, PlayerColor, InputCardsWorkflowState as WorkflowState } from '~/models';
 import styles from './InputCards.module.css';
@@ -19,7 +19,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const [workflowState, setWorkflowState] = useState(WorkflowState.Scanning);
 	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
 	const [message, setMessage] = useState('');
-	const { barcodeData, playerColor: deducedPlayerColor } = useBarcodeData({ barcodes });
+	const { scannedCards, playerColor: deducedPlayerColor } = useScannedCards({ barcodes });
 	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor | null>(null);
 	const { serialize } = useSendToHostMessaging();
 
@@ -54,7 +54,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 
 	const handleSendToServerClicked = () => {
 		const data = {
-			barcodeData,
+			scannedCards,
 			playerColor,
 		};
 		const { message, messageType } = serialize(data);
@@ -92,7 +92,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 			{hasAlreadyScanned && (
 				<div className={styles['already-scanned']}>
 					<ColorPicker onPickColor={handleColorPicked} value={manualPlayerColor} />
-					<PlayerBoard barcodeData={barcodeData} playerColor={playerColor} />
+					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} />
 					<div>
 						{isSubscribed && workflowState === WorkflowState.Scanned && (
 							<Button onClick={handleSendToServerClicked} variant="contained">

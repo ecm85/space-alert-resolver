@@ -35,7 +35,7 @@ export interface ClientMessageReceivedEvent {
 }
 
 export interface PlayerInput {
-	barcodeData: ParsedBarcode[];
+	scannedCards: ScannedCard[];
 	playerColor: PlayerColor | null;
 }
 
@@ -55,7 +55,7 @@ export type MessageEventData =
 export interface Client {
 	name: string;
 	connectionId: string;
-	barcodeData?: ParsedBarcode[];
+	scannedCards?: ScannedCard[];
 	playerColor?: PlayerColor | null;
 }
 
@@ -73,7 +73,17 @@ export enum Orientation {
 	Other,
 }
 
-export type ParsedBarcode = string | null;
+export type WholeCard = { type: 'whole'; front: string; back: string };
+export type SplitCard = {
+	type: 'split';
+	top: string;
+	bottom: string;
+	back: string;
+	orientation: Orientation;
+};
+export type SkippedCard = null;
+
+export type ScannedCard = WholeCard | SplitCard | SkippedCard;
 
 export enum BarcodeScanningWorkflowState {
 	Initial,
