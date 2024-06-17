@@ -5,7 +5,12 @@ import { ColorPicker } from '~/components/ColorPicker';
 import { PlayerBoard } from '~/components/PlayerBoard';
 import { useScannedCards } from '~/hooks';
 import { useConnectionSubscription } from '~/hooks/useConnectionSubscription';
-import { MessageEventData, PlayerColor, InputCardsWorkflowState as WorkflowState } from '~/models';
+import {
+	MessageEventData,
+	PlayerColor,
+	ScannedCard,
+	InputCardsWorkflowState as WorkflowState,
+} from '~/models';
 import styles from './InputCards.module.css';
 import { DetectedBarcode } from 'barcode-detector';
 import { useSendToHostMessaging } from '~/hooks/useSendToHostMessaging';
@@ -17,22 +22,23 @@ export interface InputCardsProps {
 
 export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const [workflowState, setWorkflowState] = useState(WorkflowState.Scanning);
-	const [barcodes, setBarcodes] = useState<DetectedBarcode[]>([]);
+	const [scannedCards, setScannedCards] = useState<ScannedCard[]>([]);
 	const [message, setMessage] = useState('');
-	const { scannedCards, playerColor: deducedPlayerColor } = useScannedCards({ barcodes });
-	const [manualPlayerColor, setManualPlayerColor] = useState<PlayerColor | null>(null);
+	const { parseBarcodes } = useScannedCards();
+	const [playerColor, setPlayerColor] = useState<PlayerColor | null>(null);
 	const { serialize } = useSendToHostMessaging();
 
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
-		setBarcodes(newBarcodes);
-		setWorkflowState(
-			deducedPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned,
-		);
+		const { scannedCards: newScannedCards, playerColor: newPlayerColor } =
+			parseBarcodes(newBarcodes);
+		setScannedCards(newScannedCards);
+		setPlayerColor(newPlayerColor);
+		setWorkflowState(newPlayerColor == null ? WorkflowState.ChooseColor : WorkflowState.Scanned);
 	};
 
 	const handleScanAgainClicked = () => {
-		setBarcodes([]);
-		setManualPlayerColor(null);
+		setScannedCards([]);
+		setPlayerColor(null);
 		setWorkflowState(WorkflowState.Scanning);
 	};
 
@@ -49,8 +55,6 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 		},
 		[setMessage, setWorkflowState],
 	);
-
-	const playerColor = manualPlayerColor != null ? manualPlayerColor : deducedPlayerColor;
 
 	const handleSendToServerClicked = () => {
 		const data = {
@@ -78,8 +82,8 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const hasNotAlreadyScanned = workflowState === WorkflowState.Scanning;
 	const hasAlreadyScanned = !hasNotAlreadyScanned;
 
-	const handleColorPicked = (newManualPlayerColor: PlayerColor) => {
-		setManualPlayerColor(newManualPlayerColor);
+	const handleColorPicked = (newPlayerColor: PlayerColor) => {
+		setPlayerColor(newPlayerColor);
 		setWorkflowState(WorkflowState.Scanned);
 	};
 
@@ -91,7 +95,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 			{hasNotAlreadyScanned && <BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} />}
 			{hasAlreadyScanned && (
 				<div className={styles['already-scanned']}>
-					<ColorPicker onPickColor={handleColorPicked} value={manualPlayerColor} />
+					<ColorPicker onPickColor={handleColorPicked} value={playerColor} />
 					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} />
 					<div>
 						{isSubscribed && workflowState === WorkflowState.Scanned && (

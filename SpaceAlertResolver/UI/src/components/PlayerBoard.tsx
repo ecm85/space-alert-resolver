@@ -1,5 +1,4 @@
 import { ScannedCard, PlayerColor } from '~/models';
-import cx from 'classnames';
 import styles from './PlayerBoard.module.css';
 import { PlayerCards } from './PlayerCards';
 
@@ -20,17 +19,11 @@ const playerBoardsByColor: Record<PlayerColor, string> = {
 export function PlayerBoard({ playerColor, scannedCards, hideCards }: PlayerBoardProps) {
 	const matchingColor = playerColor == null ? null : playerBoardsByColor[playerColor];
 	const hasSelectedColor = matchingColor != null;
-	const displayColor = hasSelectedColor ? matchingColor : 'Green';
-	const topBoardImageClassName = cx(styles['top-board'], {
-		[styles['missing-color']]: !hasSelectedColor,
-	});
-	const bottomBoardImageClassName = cx(styles['bottom-board'], {
-		[styles['missing-color']]: !hasSelectedColor,
-	});
+	const displayColor = hasSelectedColor ? matchingColor : 'Grey';
 	return (
 		<div className={styles['root']}>
 			<div className={styles['board-wrapper']}>
-				<img className={topBoardImageClassName} src={`\\Images\\Boards\\${displayColor}-1.png`} />
+				<img className={styles['top-board']} src={`\\Images\\Boards\\${displayColor}-1.png`} />
 				<PlayerCards
 					hideCards={hideCards}
 					scannedCards={scannedCards.slice(0, 3)}
@@ -43,10 +36,7 @@ export function PlayerBoard({ playerColor, scannedCards, hideCards }: PlayerBoar
 				/>
 			</div>
 			<div className={styles['board-wrapper']}>
-				<img
-					className={bottomBoardImageClassName}
-					src={`\\Images\\Boards\\${displayColor}-2.png`}
-				/>
+				<img className={styles['bottom-board']} src={`\\Images\\Boards\\${displayColor}-2.png`} />
 				<PlayerCards
 					hideCards={hideCards}
 					scannedCards={scannedCards.slice(7, 12)}

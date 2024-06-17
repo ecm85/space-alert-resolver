@@ -84,7 +84,7 @@ export function CreateGame() {
 						{clients.map((client) => (
 							<li key={client.connectionId}>
 								<>
-									{client.name}
+									<Typography variant="body1">{client.name}</Typography>
 									{client.scannedCards != null && client.playerColor != null && (
 										<PlayerBoard
 											scannedCards={client.scannedCards}
