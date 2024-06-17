@@ -2,11 +2,7 @@ import { Orientation, PlayerColor, ScannedCard } from '~/models';
 import { useBarcodeOrientation } from './useBarcodeOrientation';
 import { DetectedBarcode } from 'barcode-detector';
 
-export interface useScannedCardsProps {
-	barcodes: DetectedBarcode[];
-}
-
-export function useScannedCards({ barcodes }: useScannedCardsProps) {
+export function useScannedCards() {
 	const { getOrientation } = useBarcodeOrientation();
 	const getSpecialization = (index: number) => {
 		switch (index) {
@@ -192,10 +188,13 @@ export function useScannedCards({ barcodes }: useScannedCardsProps) {
 		}
 	};
 
-	const parsedBarcodes = barcodes.map((barcode) => parseBarcode(barcode));
-	const scannedCards = parsedBarcodes.map((parsed) => parsed.scannedCard);
-	const playerColors = parsedBarcodes.map((parsed) => parsed.playerColor);
-	const playerColor =
-		playerColors.length === 0 ? null : playerColors.filter((color) => color != null)[0];
-	return { scannedCards, playerColor };
+	const parseBarcodes = (barcodes: DetectedBarcode[]) => {
+		const parsedBarcodes = barcodes.map((barcode) => parseBarcode(barcode));
+		const scannedCards = parsedBarcodes.map((parsed) => parsed.scannedCard);
+		const playerColors = parsedBarcodes.map((parsed) => parsed.playerColor);
+		const playerColor =
+			playerColors.length === 0 ? null : playerColors.filter((color) => color != null)[0];
+		return { scannedCards, playerColor };
+	};
+	return { parseBarcodes };
 }
