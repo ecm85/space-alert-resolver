@@ -37,8 +37,7 @@ namespace BLL.Threats.Internal.Serious.Yellow
         public override void TakeDamage(int damage, Player performingPlayer, bool isHeroic, StationLocation? stationLocation)
         {
             base.TakeDamage(damage, performingPlayer, isHeroic, stationLocation);
-            if (!isHeroic)
-                performingPlayer.BattleBots.IsDisabled = true;
+
             if (IsDefeated)
                 performingPlayer.KnockOutFromOwnAction();
         }
