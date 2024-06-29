@@ -19,7 +19,8 @@ namespace SendToHostLambda
 		}
 
 		public async Task<APIGatewayProxyResponse> FunctionHandler(
-			APIGatewayProxyRequest request, ILambdaContext context
+			APIGatewayProxyRequest request,
+			ILambdaContext context
 		)
 		{
 			var gameService = new GameService();
