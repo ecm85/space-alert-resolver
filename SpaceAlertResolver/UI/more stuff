@@ -24,15 +24,27 @@ sendToHost -
 
 
 
-scan card workflow:
-
 ----
 
 option to hide cards
 	what should show for specialization and heroic backs? should show full card back always? if so, should show full front always?
 	where get back images? where did we get front images? Scans, vassal, homedrone, elsewhere?
 
-add story, test storybook locally
-make github build/test storybook
-test color picker
-test site (after lint changes)
+handle socket errors better
+can't send board to server
+disallow change color after submitting? don't show board until picked color?
+
+favicon / site.webmanifest
+test scanning in:
+  chrome
+  firefox
+  android chrome
+  android firefox
+  ios chrome
+  ios safari
+  ios firefox
+
+unit-test useScannedCards with sample barcodes
+make 'detectable' and 'non-detectable' boards
+allow entering manually
+send to server
