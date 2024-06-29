@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, FormControlLabel, FormGroup, Switch, Typography } from '@mui/material';
 import { MutableRefObject, useCallback, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
@@ -27,6 +27,7 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 	const { parseBarcodes } = useScannedCards();
 	const [playerColor, setPlayerColor] = useState<PlayerColor | null>(null);
 	const { serialize } = useSendToHostMessaging();
+	const [hideCards, setHideCards] = useState(true);
 
 	const handleBarcodesScanned = (newBarcodes: DetectedBarcode[]) => {
 		const { scannedCards: newScannedCards, playerColor: newPlayerColor } =
@@ -96,7 +97,13 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 			{hasAlreadyScanned && (
 				<div className={styles['already-scanned']}>
 					<ColorPicker onPickColor={handleColorPicked} value={playerColor} />
-					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} />
+					<FormGroup>
+						<FormControlLabel
+							control={<Switch value={hideCards} onChange={() => setHideCards(!hideCards)} />}
+							label="Hide cards (reveal turn-by-turn)"
+						/>
+					</FormGroup>
+					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} hideCards />
 					<div>
 						{isSubscribed && workflowState === WorkflowState.Scanned && (
 							<Button onClick={handleSendToServerClicked} variant="contained">

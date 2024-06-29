@@ -1,4 +1,4 @@
-import { Skeleton } from '@mui/material';
+import { FormControlLabel, FormGroup, Skeleton, Switch } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useCallback, useEffect, useState } from 'react';
 import { useStateRef, useWebSocket } from '~/hooks';
@@ -14,6 +14,7 @@ export function CreateGame() {
 	const [clients, setClients, clientsRef] = useStateRef<Client[]>([]);
 	const isLoading = !gameCode;
 	const { deserialize } = useSendToHostMessaging();
+	const [hideCards, setHideCards] = useState(true);
 
 	const handleMessage = useCallback(
 		(messageEventData: MessageEventData) => {
@@ -77,6 +78,12 @@ export function CreateGame() {
 					</div>
 				)}
 			</div>
+			<FormGroup>
+				<FormControlLabel
+					control={<Switch value={hideCards} onChange={() => setHideCards(!hideCards)} />}
+					label="Hide cards (reveal turn-by-turn)"
+				/>
+			</FormGroup>
 			{clients.length > 0 && (
 				<div>
 					<h3>Clients</h3>
@@ -89,6 +96,7 @@ export function CreateGame() {
 										<PlayerBoard
 											scannedCards={client.scannedCards}
 											playerColor={client.playerColor}
+											hideCards={hideCards}
 										/>
 									)}
 								</>
