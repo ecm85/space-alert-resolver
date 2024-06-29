@@ -20,16 +20,7 @@ jobs:
 
       - name: Verify
         run: |
-          cd $GITHUB_WORKSPACE/SpaceAlertResolver/API
-          dotnet tool restore
-          dotnet csharpier --check .
-          cd $GITHUB_WORKSPACE/SpaceAlertResolver/CreateGameLambda
-          dotnet tool restore
-          dotnet csharpier --check .
-          cd $GITHUB_WORKSPACE/SpaceAlertResolver/JoinGameLambda
-          dotnet tool restore
-          dotnet csharpier --check .
-          cd $GITHUB_WORKSPACE/SpaceAlertResolver/SendToHostLambda
+          cd $GITHUB_WORKSPACE/SpaceAlertResolver
           dotnet tool restore
           dotnet csharpier --check .
   verify-ui:
