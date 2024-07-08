@@ -76,11 +76,11 @@ export function useScannedCards() {
 			const basic = `Basic${specialization}`;
 			const advanced = `Advanced${specialization}`;
 			if (levelCode == 'a') {
-				return { type: 'whole', front: `Level1${basic}`, back: 'Level1Specialization' };
+				return { type: 'whole', front: `Level1${basic}`, back: 'Level1SpecializationBack' };
 			}
 			const top = `Level2${basic}`;
 			const bottom = `Level2${advanced}`;
-			return { type: 'split', top, bottom, back: 'Level2Specialization', orientation };
+			return { type: 'split', top, bottom, back: 'Level2SpecializationBack', orientation };
 		}
 
 		if (value.startsWith('H')) {
