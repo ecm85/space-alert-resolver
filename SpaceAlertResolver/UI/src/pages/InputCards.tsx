@@ -99,11 +99,11 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 					<ColorPicker onPickColor={handleColorPicked} value={playerColor} />
 					<FormGroup>
 						<FormControlLabel
-							control={<Switch value={hideCards} onChange={() => setHideCards(!hideCards)} />}
+							control={<Switch checked={hideCards} onChange={() => setHideCards(!hideCards)} />}
 							label="Hide cards (reveal turn-by-turn)"
 						/>
 					</FormGroup>
-					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} hideCards />
+					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} hideCards={hideCards} />
 					<div>
 						{isSubscribed && workflowState === WorkflowState.Scanned && (
 							<Button onClick={handleSendToServerClicked} variant="contained">

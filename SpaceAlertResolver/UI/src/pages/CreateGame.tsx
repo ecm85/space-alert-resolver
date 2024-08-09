@@ -80,7 +80,7 @@ export function CreateGame() {
 			</div>
 			<FormGroup>
 				<FormControlLabel
-					control={<Switch value={hideCards} onChange={() => setHideCards(!hideCards)} />}
+					control={<Switch checked={hideCards} onChange={() => setHideCards(!hideCards)} />}
 					label="Hide cards (reveal turn-by-turn)"
 				/>
 			</FormGroup>
