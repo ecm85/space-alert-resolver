@@ -103,7 +103,11 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 							label="Hide cards (reveal turn-by-turn)"
 						/>
 					</FormGroup>
-					<PlayerBoard scannedCards={scannedCards} playerColor={playerColor} hideCards={hideCards} />
+					<PlayerBoard
+						scannedCards={scannedCards}
+						playerColor={playerColor}
+						hideCards={hideCards}
+					/>
 					<div>
 						{isSubscribed && workflowState === WorkflowState.Scanned && (
 							<Button onClick={handleSendToServerClicked} variant="contained">
