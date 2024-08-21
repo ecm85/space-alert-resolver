@@ -8,9 +8,10 @@ import cx from 'classnames';
 export interface ColorPickerProps {
 	value: PlayerColor | null;
 	onPickColor(color: PlayerColor): void;
+	className?: string;
 }
 
-export function ColorPicker({ value, onPickColor }: ColorPickerProps) {
+export function ColorPicker({ value, onPickColor, className }: ColorPickerProps) {
 	const allPlayerColors = [
 		PlayerColor.Red,
 		PlayerColor.Blue,
@@ -28,8 +29,9 @@ export function ColorPicker({ value, onPickColor }: ColorPickerProps) {
 	const createColorPickedHandler = (playerColor: PlayerColor) => () => {
 		onPickColor(playerColor);
 	};
+	const rootClassName = cx(className, styles['root']);
 	return (
-		<div className={styles['root']}>
+		<div className={rootClassName}>
 			<ToggleButtonGroup value={value} size="small">
 				{allPlayerColors.map((playerColor) => (
 					<ToggleButton

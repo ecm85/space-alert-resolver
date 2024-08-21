@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, FormGroup, Switch, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { MutableRefObject, useCallback, useState } from 'react';
 import { BarcodeScanningWorkflow } from '~/components/BarcodeScanningWorkflow';
 import { ColorPicker } from '~/components/ColorPicker';
@@ -14,6 +14,7 @@ import {
 import styles from './InputCards.module.css';
 import { DetectedBarcode } from 'barcode-detector';
 import { useSendToHostMessaging } from '~/hooks/useSendToHostMessaging';
+import { HideCardsSwitch } from './HideCardsSwitch';
 
 export interface InputCardsProps {
 	gameCode: string;
@@ -96,13 +97,10 @@ export function InputCards({ gameCode, connectionRef }: InputCardsProps) {
 			{hasNotAlreadyScanned && <BarcodeScanningWorkflow onBarcodesScan={handleBarcodesScanned} />}
 			{hasAlreadyScanned && (
 				<div className={styles['already-scanned']}>
-					<ColorPicker onPickColor={handleColorPicked} value={playerColor} />
-					<FormGroup>
-						<FormControlLabel
-							control={<Switch checked={hideCards} onChange={() => setHideCards(!hideCards)} />}
-							label="Hide cards (reveal turn-by-turn)"
-						/>
-					</FormGroup>
+					<div>
+						<ColorPicker onPickColor={handleColorPicked} value={playerColor} />
+						<HideCardsSwitch hideCards={hideCards} onChangeHideCards={setHideCards} />
+					</div>
 					<PlayerBoard
 						scannedCards={scannedCards}
 						playerColor={playerColor}

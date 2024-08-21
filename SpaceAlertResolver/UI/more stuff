@@ -24,7 +24,23 @@ sendToHost -
 
 
 
-----
+-------
+
+1
+47 upside down
+93
+151
+155 upside down
+157
+158
+160 upside down
+177
+199 upside down
+227
+245 upside down
+
+
+-----
 
 option to hide cards
 	what should show for specialization and heroic backs? should show full card back always? if so, should show full front always?
@@ -48,3 +64,7 @@ unit-test useScannedCards with sample barcodes
 make 'detectable' and 'non-detectable' boards
 allow entering manually
 send to server
+
+
+input cards: move 'hide cards' to same row/div as color picker
+on host, showing 'hide cards' too early?
